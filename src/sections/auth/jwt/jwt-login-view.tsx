@@ -41,13 +41,15 @@ export default function JwtLoginView() {
   const password = useBoolean();
 
   const LoginSchema = Yup.object().shape({
-    email: Yup.string().required('Email is required').email('Email must be a valid email address'),
+    email: Yup.string()
+      .required('Email is required')
+      .email('Email must be a valid email address'),
     password: Yup.string().required('Password is required'),
   });
 
   const defaultValues = {
-    email: 'demo@minimals.cc',
-    password: 'demo1234',
+    email: 'jerebac@hotmail.com',
+    password: 'qwer1234',
   };
 
   const methods = useForm({
@@ -80,7 +82,11 @@ export default function JwtLoginView() {
       <Stack direction="row" spacing={0.5}>
         <Typography variant="body2">New user?</Typography>
 
-        <Link component={RouterLink} href={paths.auth.jwt.register} variant="subtitle2">
+        <Link
+          component={RouterLink}
+          href={paths.auth.jwt.register}
+          variant="subtitle2"
+        >
           Create an account
         </Link>
       </Stack>
@@ -99,14 +105,23 @@ export default function JwtLoginView() {
           endAdornment: (
             <InputAdornment position="end">
               <IconButton onClick={password.onToggle} edge="end">
-                <Iconify icon={password.value ? 'solar:eye-bold' : 'solar:eye-closed-bold'} />
+                <Iconify
+                  icon={
+                    password.value ? 'solar:eye-bold' : 'solar:eye-closed-bold'
+                  }
+                />
               </IconButton>
             </InputAdornment>
           ),
         }}
       />
 
-      <Link variant="body2" color="inherit" underline="always" sx={{ alignSelf: 'flex-end' }}>
+      <Link
+        variant="body2"
+        color="inherit"
+        underline="always"
+        sx={{ alignSelf: 'flex-end' }}
+      >
         Forgot password?
       </Link>
 
@@ -128,7 +143,8 @@ export default function JwtLoginView() {
       {renderHead}
 
       <Alert severity="info" sx={{ mb: 3 }}>
-        Use email : <strong>demo@minimals.cc</strong> / password :<strong> demo1234</strong>
+        Use email : <strong>demo@minimals.cc</strong> / password :
+        <strong> demo1234</strong>
       </Alert>
 
       {!!errorMsg && (
