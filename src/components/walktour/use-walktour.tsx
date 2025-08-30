@@ -1,5 +1,11 @@
 import { useRef, useState } from 'react';
-import { Step, STATUS, LIFECYCLE, StoreHelpers, CallBackProps } from 'react-joyride';
+import {
+  Step,
+  STATUS,
+  LIFECYCLE,
+  StoreHelpers,
+  CallBackProps,
+} from 'react-joyride';
 
 import WalktourProgressBar from './walktour-progress-bar';
 

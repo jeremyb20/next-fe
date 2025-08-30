@@ -53,7 +53,9 @@ export default function OverviewAnalyticsView() {
             title="New Users"
             total={1352831}
             color="info"
-            icon={<img alt="icon" src="/assets/icons/glass/ic_glass_users.png" />}
+            icon={
+              <img alt="icon" src="/assets/icons/glass/ic_glass_users.png" />
+            }
           />
         </Grid>
 
@@ -71,7 +73,9 @@ export default function OverviewAnalyticsView() {
             title="Bug Reports"
             total={234}
             color="error"
-            icon={<img alt="icon" src="/assets/icons/glass/ic_glass_message.png" />}
+            icon={
+              <img alt="icon" src="/assets/icons/glass/ic_glass_message.png" />
+            }
           />
         </Grid>
 
@@ -156,7 +160,14 @@ export default function OverviewAnalyticsView() {
           <AnalyticsCurrentSubject
             title="Current Subject"
             chart={{
-              categories: ['English', 'History', 'Physics', 'Geography', 'Chinese', 'Math'],
+              categories: [
+                'English',
+                'History',
+                'Physics',
+                'Geography',
+                'Chinese',
+                'Math',
+              ],
               series: [
                 { name: 'Series 1', data: [80, 50, 30, 40, 100, 20] },
                 { name: 'Series 2', data: [20, 30, 40, 80, 20, 80] },
@@ -171,11 +182,17 @@ export default function OverviewAnalyticsView() {
         </Grid>
 
         <Grid xs={12} md={6} lg={4}>
-          <AnalyticsOrderTimeline title="Order Timeline" list={_analyticOrderTimeline} />
+          <AnalyticsOrderTimeline
+            title="Order Timeline"
+            list={_analyticOrderTimeline}
+          />
         </Grid>
 
         <Grid xs={12} md={6} lg={4}>
-          <AnalyticsTrafficBySite title="Traffic by Site" list={_analyticTraffic} />
+          <AnalyticsTrafficBySite
+            title="Traffic by Site"
+            list={_analyticTraffic}
+          />
         </Grid>
 
         <Grid xs={12} md={6} lg={8}>

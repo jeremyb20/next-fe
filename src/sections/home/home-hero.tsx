@@ -26,7 +26,10 @@ import { varFade, MotionContainer } from 'src/components/animate';
 
 const StyledRoot = styled('div')(({ theme }) => ({
   ...bgGradient({
-    color: alpha(theme.palette.background.default, theme.palette.mode === 'light' ? 0.9 : 0.94),
+    color: alpha(
+      theme.palette.background.default,
+      theme.palette.mode === 'light' ? 0.9 : 0.94
+    ),
     imgUrl: '/assets/background/overlay_3.jpg',
   }),
   width: '100%',
@@ -210,8 +213,8 @@ export default function HomeHero() {
 
       <m.div variants={varFade().in}>
         <Typography variant="body2" sx={{ textAlign: 'center' }}>
-          The starting point for your next project is based on MUI.Easy customization Helps you
-          build apps faster and better.
+          The starting point for your next project is based on MUI.Easy
+          customization Helps you build apps faster and better.
         </Typography>
       </m.div>
 
@@ -234,7 +237,11 @@ export default function HomeHero() {
       </m.div>
 
       <m.div variants={varFade().in}>
-        <Stack spacing={1.5} direction={{ xs: 'column-reverse', sm: 'row' }} sx={{ mb: 5 }}>
+        <Stack
+          spacing={1.5}
+          direction={{ xs: 'column-reverse', sm: 'row' }}
+          sx={{ mb: 5 }}
+        >
           <Stack alignItems="center" spacing={2}>
             <Button
               component={RouterLink}
@@ -259,7 +266,11 @@ export default function HomeHero() {
                 alignItems: 'center',
               }}
             >
-              <Iconify icon="eva:external-link-fill" width={16} sx={{ mr: 0.5 }} />
+              <Iconify
+                icon="eva:external-link-fill"
+                width={16}
+                sx={{ mr: 0.5 }}
+              />
               Get Free Version
             </Link>
           </Stack>
@@ -387,7 +398,11 @@ export default function HomeHero() {
     <>
       <StyledPolygon />
       <StyledPolygon anchor="right" opacity={0.48} />
-      <StyledPolygon anchor="right" opacity={0.48} sx={{ height: 48, zIndex: 10 }} />
+      <StyledPolygon
+        anchor="right"
+        opacity={0.48}
+        sx={{ height: 48, zIndex: 10 }}
+      />
       <StyledPolygon anchor="right" sx={{ zIndex: 11, height: 24 }} />
     </>
   );

@@ -34,7 +34,11 @@ export function fToNow(date: InputValue) {
     : '';
 }
 
-export function isBetween(inputDate: Date | string | number, startDate: Date, endDate: Date) {
+export function isBetween(
+  inputDate: Date | string | number,
+  startDate: Date,
+  endDate: Date
+) {
   const date = new Date(inputDate);
 
   const results =
@@ -46,7 +50,9 @@ export function isBetween(inputDate: Date | string | number, startDate: Date, en
 
 export function isAfter(startDate: Date | null, endDate: Date | null) {
   const results =
-    startDate && endDate ? new Date(startDate).getTime() > new Date(endDate).getTime() : false;
+    startDate && endDate
+      ? new Date(startDate).getTime() > new Date(endDate).getTime()
+      : false;
 
   return results;
 }

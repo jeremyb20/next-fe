@@ -39,8 +39,8 @@ export default function TransitionsDialog() {
         <DialogTitle>{`Use Google's location service?`}</DialogTitle>
 
         <DialogContent sx={{ color: 'text.secondary' }}>
-          Let Google help apps determine location. This means sending anonymous location data to
-          Google, even when no apps are running.
+          Let Google help apps determine location. This means sending anonymous
+          location data to Google, even when no apps are running.
         </DialogContent>
 
         <DialogActions>

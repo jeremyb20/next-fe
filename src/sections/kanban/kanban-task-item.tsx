@@ -42,8 +42,10 @@ export default function KanbanTaskItem({
   const renderPriority = (
     <Iconify
       icon={
-        (task.priority === 'low' && 'solar:double-alt-arrow-down-bold-duotone') ||
-        (task.priority === 'medium' && 'solar:double-alt-arrow-right-bold-duotone') ||
+        (task.priority === 'low' &&
+          'solar:double-alt-arrow-down-bold-duotone') ||
+        (task.priority === 'medium' &&
+          'solar:double-alt-arrow-right-bold-duotone') ||
         'solar:double-alt-arrow-up-bold-duotone'
       }
       sx={{
@@ -94,7 +96,11 @@ export default function KanbanTaskItem({
           color: 'text.disabled',
         }}
       >
-        <Iconify width={16} icon="solar:chat-round-dots-bold" sx={{ mr: 0.25 }} />
+        <Iconify
+          width={16}
+          icon="solar:chat-round-dots-bold"
+          sx={{ mr: 0.25 }}
+        />
         <Box component="span" sx={{ mr: 1 }}>
           {task.comments.length}
         </Box>

@@ -49,7 +49,8 @@ export default function MailView() {
 
   const { labels, labelsLoading } = useGetLabels();
 
-  const { mails, mailsLoading, mailsError, mailsEmpty } = useGetMails(selectedLabelId);
+  const { mails, mailsLoading, mailsError, mailsEmpty } =
+    useGetMails(selectedLabelId);
 
   const { mail, mailLoading, mailError } = useGetMail(selectedMailId);
 
@@ -181,7 +182,9 @@ export default function MailView() {
       ) : (
         <MailDetails
           mail={mail}
-          renderLabel={(id: string) => labels.filter((label) => label.id === id)[0]}
+          renderLabel={(id: string) =>
+            labels.filter((label) => label.id === id)[0]
+          }
         />
       )}
     </>
@@ -233,7 +236,9 @@ export default function MailView() {
         </Stack>
       </Container>
 
-      {openCompose.value && <MailCompose onCloseCompose={openCompose.onFalse} />}
+      {openCompose.value && (
+        <MailCompose onCloseCompose={openCompose.onFalse} />
+      )}
     </>
   );
 }

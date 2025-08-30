@@ -44,7 +44,9 @@ export default function UserNewEditForm({ currentUser }: Props) {
 
   const NewUserSchema = Yup.object().shape({
     name: Yup.string().required('Name is required'),
-    email: Yup.string().required('Email is required').email('Email must be a valid email address'),
+    email: Yup.string()
+      .required('Email is required')
+      .email('Email must be a valid email address'),
     phoneNumber: Yup.string().required('Phone number is required'),
     address: Yup.string().required('Address is required'),
     country: Yup.string().required('Country is required'),
@@ -174,7 +176,9 @@ export default function UserNewEditForm({ currentUser }: Props) {
                         {...field}
                         checked={field.value !== 'active'}
                         onChange={(event) =>
-                          field.onChange(event.target.checked ? 'banned' : 'active')
+                          field.onChange(
+                            event.target.checked ? 'banned' : 'active'
+                          )
                         }
                       />
                     )}
@@ -185,7 +189,10 @@ export default function UserNewEditForm({ currentUser }: Props) {
                     <Typography variant="subtitle2" sx={{ mb: 0.5 }}>
                       Banned
                     </Typography>
-                    <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+                    <Typography
+                      variant="body2"
+                      sx={{ color: 'text.secondary' }}
+                    >
                       Apply disable account
                     </Typography>
                   </>
@@ -203,7 +210,8 @@ export default function UserNewEditForm({ currentUser }: Props) {
                     Email Verified
                   </Typography>
                   <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                    Disabling this will automatically send the user a verification email
+                    Disabling this will automatically send the user a
+                    verification email
                   </Typography>
                 </>
               }
@@ -254,7 +262,11 @@ export default function UserNewEditForm({ currentUser }: Props) {
             </Box>
 
             <Stack alignItems="flex-end" sx={{ mt: 3 }}>
-              <LoadingButton type="submit" variant="contained" loading={isSubmitting}>
+              <LoadingButton
+                type="submit"
+                variant="contained"
+                loading={isSubmitting}
+              >
                 {!currentUser ? 'Create User' : 'Save Changes'}
               </LoadingButton>
             </Stack>

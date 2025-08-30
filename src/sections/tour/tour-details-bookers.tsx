@@ -65,8 +65,18 @@ type BookerItemProps = {
 
 function BookerItem({ booker, selected, onSelected }: BookerItemProps) {
   return (
-    <Stack component={Card} direction="row" spacing={2} key={booker.id} sx={{ p: 3 }}>
-      <Avatar alt={booker.name} src={booker.avatarUrl} sx={{ width: 48, height: 48 }} />
+    <Stack
+      component={Card}
+      direction="row"
+      spacing={2}
+      key={booker.id}
+      sx={{ p: 3 }}
+    >
+      <Avatar
+        alt={booker.name}
+        src={booker.avatarUrl}
+        sx={{ width: 48, height: 48 }}
+      />
 
       <Stack spacing={2} flexGrow={1}>
         <ListItemText
@@ -135,7 +145,9 @@ function BookerItem({ booker, selected, onSelected }: BookerItemProps) {
         variant={selected ? 'text' : 'outlined'}
         color={selected ? 'success' : 'inherit'}
         startIcon={
-          selected ? <Iconify width={18} icon="eva:checkmark-fill" sx={{ mr: -0.75 }} /> : null
+          selected ? (
+            <Iconify width={18} icon="eva:checkmark-fill" sx={{ mr: -0.75 }} />
+          ) : null
         }
         onClick={onSelected}
       >

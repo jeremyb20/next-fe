@@ -67,7 +67,13 @@ export default function AppNewInvoice({
         <Button
           size="small"
           color="inherit"
-          endIcon={<Iconify icon="eva:arrow-ios-forward-fill" width={18} sx={{ ml: -0.5 }} />}
+          endIcon={
+            <Iconify
+              icon="eva:arrow-ios-forward-fill"
+              width={18}
+              sx={{ ml: -0.5 }}
+            />
+          }
         >
           View All
         </Button>
@@ -128,7 +134,10 @@ function AppNewInvoiceRow({ row }: AppNewInvoiceRowProps) {
         </TableCell>
 
         <TableCell align="right" sx={{ pr: 1 }}>
-          <IconButton color={popover.open ? 'inherit' : 'default'} onClick={popover.onOpen}>
+          <IconButton
+            color={popover.open ? 'inherit' : 'default'}
+            onClick={popover.onOpen}
+          >
             <Iconify icon="eva:more-vertical-fill" />
           </IconButton>
         </TableCell>

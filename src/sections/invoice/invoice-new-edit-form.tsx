@@ -144,7 +144,12 @@ export default function InvoiceNewEditForm({ currentInvoice }: Props) {
         <InvoiceNewEditDetails />
       </Card>
 
-      <Stack justifyContent="flex-end" direction="row" spacing={2} sx={{ mt: 3 }}>
+      <Stack
+        justifyContent="flex-end"
+        direction="row"
+        spacing={2}
+        sx={{ mt: 3 }}
+      >
         <LoadingButton
           color="inherit"
           size="large"

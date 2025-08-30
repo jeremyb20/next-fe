@@ -8,7 +8,13 @@ import Container from '@mui/material/Container';
 
 import { paths } from 'src/routes/paths';
 
-import { _userAbout, _userPlans, _userPayment, _userInvoices, _userAddressBook } from 'src/_mock';
+import {
+  _userAbout,
+  _userPlans,
+  _userPayment,
+  _userInvoices,
+  _userAddressBook,
+} from 'src/_mock';
 
 import Iconify from 'src/components/iconify';
 import { useSettingsContext } from 'src/components/settings';
@@ -57,9 +63,12 @@ export default function AccountView() {
 
   const [currentTab, setCurrentTab] = useState('general');
 
-  const handleChangeTab = useCallback((event: React.SyntheticEvent, newValue: string) => {
-    setCurrentTab(newValue);
-  }, []);
+  const handleChangeTab = useCallback(
+    (event: React.SyntheticEvent, newValue: string) => {
+      setCurrentTab(newValue);
+    },
+    []
+  );
 
   return (
     <Container maxWidth={settings.themeStretch ? false : 'lg'}>
@@ -83,7 +92,12 @@ export default function AccountView() {
         }}
       >
         {TABS.map((tab) => (
-          <Tab key={tab.value} label={tab.label} icon={tab.icon} value={tab.value} />
+          <Tab
+            key={tab.value}
+            label={tab.label}
+            icon={tab.icon}
+            value={tab.value}
+          />
         ))}
       </Tabs>
 
@@ -100,7 +114,9 @@ export default function AccountView() {
 
       {currentTab === 'notifications' && <AccountNotifications />}
 
-      {currentTab === 'social' && <AccountSocialLinks socialLinks={_userAbout.socialLinks} />}
+      {currentTab === 'social' && (
+        <AccountSocialLinks socialLinks={_userAbout.socialLinks} />
+      )}
 
       {currentTab === 'security' && <AccountChangePassword />}
     </Container>

@@ -57,7 +57,9 @@ export default function AutocompleteView() {
               fullWidth
               options={top100Films}
               getOptionLabel={(option) => option.title}
-              renderInput={(params) => <TextField {...params} label="Combo box" margin="none" />}
+              renderInput={(params) => (
+                <TextField {...params} label="Combo box" margin="none" />
+              )}
               renderOption={(props, option) => (
                 <li {...props} key={option.title}>
                   {option.title}
@@ -72,7 +74,9 @@ export default function AutocompleteView() {
               placeholder="Choose a country"
               fullWidth
               value={singleCountry}
-              onChange={(event, newValue) => setSingleCountry(newValue as string)}
+              onChange={(event, newValue) =>
+                setSingleCountry(newValue as string)
+              }
               options={countries.map((option) => option.label)}
               getOptionLabel={(option) => option}
             />
@@ -90,7 +94,10 @@ export default function AutocompleteView() {
             />
           </ComponentBlock>
 
-          <ComponentBlock title="Controllable states" sx={{ flexDirection: 'column' }}>
+          <ComponentBlock
+            title="Controllable states"
+            sx={{ flexDirection: 'column' }}
+          >
             <Autocomplete
               fullWidth
               value={value}
@@ -103,7 +110,9 @@ export default function AutocompleteView() {
                 setInputValue(newInputValue);
               }}
               getOptionLabel={(option) => option}
-              renderInput={(params) => <TextField {...params} label="Controllable" />}
+              renderInput={(params) => (
+                <TextField {...params} label="Controllable" />
+              )}
               renderOption={(props, option) => (
                 <li {...props} key={option}>
                   {option}
@@ -124,7 +133,9 @@ export default function AutocompleteView() {
               freeSolo
               options={top100Films.map((option) => option.title)}
               getOptionLabel={(option) => option}
-              renderInput={(params) => <TextField {...params} label="freeSolo" />}
+              renderInput={(params) => (
+                <TextField {...params} label="freeSolo" />
+              )}
               renderOption={(props, option) => (
                 <li {...props} key={option}>
                   {option}
@@ -162,7 +173,11 @@ export default function AutocompleteView() {
               getOptionLabel={(option) => option.title}
               defaultValue={top100Films.slice(0, 8)}
               renderInput={(params) => (
-                <TextField {...params} label="Multiple Select" placeholder="Favorites" />
+                <TextField
+                  {...params}
+                  label="Multiple Select"
+                  placeholder="Favorites"
+                />
               )}
               renderOption={(props, option) => (
                 <li {...props} key={option.title}>
@@ -192,11 +207,20 @@ export default function AutocompleteView() {
               getOptionLabel={(option) => option.title}
               defaultValue={top100Films.slice(0, 1)}
               renderInput={(params) => (
-                <TextField {...params} label="Checkboxes" placeholder="Favorites" />
+                <TextField
+                  {...params}
+                  label="Checkboxes"
+                  placeholder="Favorites"
+                />
               )}
               renderOption={(props, option, { selected }) => (
                 <li {...props} key={option.title}>
-                  <Checkbox key={option.title} size="small" disableRipple checked={selected} />
+                  <Checkbox
+                    key={option.title}
+                    size="small"
+                    disableRipple
+                    checked={selected}
+                  />
                   {option.title}
                 </li>
               )}
@@ -220,7 +244,11 @@ export default function AutocompleteView() {
               getOptionLabel={(option) => option.title}
               defaultValue={top100Films[13]}
               renderInput={(params) => (
-                <TextField {...params} label="Size Medium" placeholder="Favorites" />
+                <TextField
+                  {...params}
+                  label="Size Medium"
+                  placeholder="Favorites"
+                />
               )}
               renderOption={(props, option) => (
                 <li {...props} key={option.title}>
@@ -237,7 +265,11 @@ export default function AutocompleteView() {
               getOptionLabel={(option) => option.title}
               defaultValue={[top100Films[13]]}
               renderInput={(params) => (
-                <TextField {...params} label="Size small" placeholder="Favorites" />
+                <TextField
+                  {...params}
+                  label="Size small"
+                  placeholder="Favorites"
+                />
               )}
               renderOption={(props, option) => (
                 <li {...props} key={option.title}>
@@ -320,7 +352,8 @@ const top100Films = [
   { title: 'Alien', year: 1979 },
   { title: 'Sunset Boulevard', year: 1950 },
   {
-    title: 'Dr. Strangelove or: How I Learned to Stop Worrying and Love the Bomb',
+    title:
+      'Dr. Strangelove or: How I Learned to Stop Worrying and Love the Bomb',
     year: 1964,
   },
   { title: 'The Great Dictator', year: 1940 },

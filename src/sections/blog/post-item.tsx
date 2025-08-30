@@ -35,7 +35,15 @@ export default function PostItem({ post, index }: Props) {
 
   const mdUp = useResponsive('up', 'md');
 
-  const { coverUrl, title, totalViews, totalComments, totalShares, author, createdAt } = post;
+  const {
+    coverUrl,
+    title,
+    totalViews,
+    totalComments,
+    totalShares,
+    author,
+    createdAt,
+  } = post;
 
   const latestPost = index === 0 || index === 1 || index === 2;
 
@@ -171,7 +179,11 @@ export function PostContent({
       </Typography>
 
       <Link color="inherit" component={RouterLink} href={linkTo}>
-        <TextMaxLine variant={mdUp && latestPostLarge ? 'h5' : 'subtitle2'} line={2} persistent>
+        <TextMaxLine
+          variant={mdUp && latestPostLarge ? 'h5' : 'subtitle2'}
+          line={2}
+          persistent
+        >
           {title}
         </TextMaxLine>
       </Link>

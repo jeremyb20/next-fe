@@ -43,7 +43,9 @@ export default function JwtRegisterView() {
   const RegisterSchema = Yup.object().shape({
     firstName: Yup.string().required('First name required'),
     lastName: Yup.string().required('Last name required'),
-    email: Yup.string().required('Email is required').email('Email must be a valid email address'),
+    email: Yup.string()
+      .required('Email is required')
+      .email('Email must be a valid email address'),
     password: Yup.string().required('Password is required'),
   });
 
@@ -67,7 +69,12 @@ export default function JwtRegisterView() {
 
   const onSubmit = handleSubmit(async (data) => {
     try {
-      await register?.(data.email, data.password, data.firstName, data.lastName);
+      await register?.(
+        data.email,
+        data.password,
+        data.firstName,
+        data.lastName
+      );
 
       router.push(returnTo || PATH_AFTER_LOGIN);
     } catch (error) {
@@ -84,7 +91,11 @@ export default function JwtRegisterView() {
       <Stack direction="row" spacing={0.5}>
         <Typography variant="body2"> Already have an account? </Typography>
 
-        <Link href={paths.auth.jwt.login} component={RouterLink} variant="subtitle2">
+        <Link
+          href={paths.auth.jwt.login}
+          component={RouterLink}
+          variant="subtitle2"
+        >
           Sign in
         </Link>
       </Stack>
@@ -130,7 +141,11 @@ export default function JwtRegisterView() {
           endAdornment: (
             <InputAdornment position="end">
               <IconButton onClick={password.onToggle} edge="end">
-                <Iconify icon={password.value ? 'solar:eye-bold' : 'solar:eye-closed-bold'} />
+                <Iconify
+                  icon={
+                    password.value ? 'solar:eye-bold' : 'solar:eye-closed-bold'
+                  }
+                />
               </IconButton>
             </InputAdornment>
           ),

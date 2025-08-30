@@ -35,7 +35,10 @@ export const _addressBooks = [...Array(24)].map((_, index) => ({
 
 export const _contacts = [...Array(20)].map((_, index) => {
   const status =
-    (index % 2 && 'online') || (index % 3 && 'offline') || (index % 4 && 'alway') || 'busy';
+    (index % 2 && 'online') ||
+    (index % 3 && 'offline') ||
+    (index % 4 && 'alway') ||
+    'busy';
 
   return {
     id: _mock.id(index),
@@ -66,9 +69,17 @@ export const _notifications = [...Array(9)].map((_, index) => ({
     null,
     null,
   ][index],
-  type: ['friend', 'project', 'file', 'tags', 'payment', 'order', 'chat', 'mail', 'delivery'][
-    index
-  ],
+  type: [
+    'friend',
+    'project',
+    'file',
+    'tags',
+    'payment',
+    'order',
+    'chat',
+    'mail',
+    'delivery',
+  ][index],
   category: [
     'Communication',
     'Project UI',
@@ -83,7 +94,8 @@ export const _notifications = [...Array(9)].map((_, index) => ({
   isUnRead: _mock.boolean(index),
   createdAt: _mock.time(index),
   title:
-    (index === 0 && `<p><strong>Deja Brady</strong> sent you a friend request</p>`) ||
+    (index === 0 &&
+      `<p><strong>Deja Brady</strong> sent you a friend request</p>`) ||
     (index === 1 &&
       `<p><strong>Jayvon Hull</strong> mentioned you in <strong><a href='#'>Minimal UI</a></strong></p>`) ||
     (index === 2 &&

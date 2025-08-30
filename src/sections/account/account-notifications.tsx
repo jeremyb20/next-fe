@@ -90,7 +90,10 @@ export default function AccountNotifications() {
             </Grid>
 
             <Grid xs={12} md={8}>
-              <Stack spacing={1} sx={{ p: 3, borderRadius: 2, bgcolor: 'background.neutral' }}>
+              <Stack
+                spacing={1}
+                sx={{ p: 3, borderRadius: 2, bgcolor: 'background.neutral' }}
+              >
                 <Controller
                   name="selected"
                   control={control}
@@ -104,7 +107,11 @@ export default function AccountNotifications() {
                           control={
                             <Switch
                               checked={field.value.includes(item.id)}
-                              onChange={() => field.onChange(getSelected(values.selected, item.id))}
+                              onChange={() =>
+                                field.onChange(
+                                  getSelected(values.selected, item.id)
+                                )
+                              }
                             />
                           }
                           sx={{
@@ -122,7 +129,12 @@ export default function AccountNotifications() {
           </Grid>
         ))}
 
-        <LoadingButton type="submit" variant="contained" loading={isSubmitting} sx={{ ml: 'auto' }}>
+        <LoadingButton
+          type="submit"
+          variant="contained"
+          loading={isSubmitting}
+          sx={{ ml: 'auto' }}
+        >
           Save Changes
         </LoadingButton>
       </Stack>

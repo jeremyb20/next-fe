@@ -14,7 +14,8 @@ interface StyledIconButtonProps extends IconButtonProps {
 }
 
 const StyledIconButton = styled(IconButton, {
-  shouldForwardProp: (prop) => prop !== 'filled' && prop !== 'hasChild' && prop !== 'shape',
+  shouldForwardProp: (prop) =>
+    prop !== 'filled' && prop !== 'hasChild' && prop !== 'shape',
 })<StyledIconButtonProps>(({ filled, shape, hasChild, theme }) => ({
   color: 'inherit',
   transition: theme.transitions.create('all', {
@@ -117,12 +118,28 @@ export default function CarouselArrows({
   }
 
   return (
-    <Stack direction="row" alignItems="center" display="inline-flex" sx={sx} {...other}>
-      <StyledIconButton filled={filled} shape={shape} onClick={onPrev} {...leftButtonProps}>
+    <Stack
+      direction="row"
+      alignItems="center"
+      display="inline-flex"
+      sx={sx}
+      {...other}
+    >
+      <StyledIconButton
+        filled={filled}
+        shape={shape}
+        onClick={onPrev}
+        {...leftButtonProps}
+      >
         <LeftIcon icon={icon} isRTL={isRTL} />
       </StyledIconButton>
 
-      <StyledIconButton filled={filled} shape={shape} onClick={onNext} {...rightButtonProps}>
+      <StyledIconButton
+        filled={filled}
+        shape={shape}
+        onClick={onNext}
+        {...rightButtonProps}
+      >
         <RightIcon icon={icon} isRTL={isRTL} />
       </StyledIconButton>
     </Stack>

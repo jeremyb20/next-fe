@@ -127,7 +127,11 @@ export default function BankingWidgetSummary({
           alignItems="center"
           sx={{ typography: 'body2' }}
         >
-          <Iconify icon={percent < 0 ? 'eva:trending-down-fill' : 'eva:trending-up-fill'} />
+          <Iconify
+            icon={
+              percent < 0 ? 'eva:trending-down-fill' : 'eva:trending-up-fill'
+            }
+          />
 
           <Box sx={{ typography: 'subtitle2' }}>
             {percent > 0 && '+'}

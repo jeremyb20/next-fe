@@ -61,8 +61,12 @@ export default function AccordionView() {
           <ComponentBlock title="Simple" spacing={0}>
             {_accordions.map((accordion, index) => (
               <Accordion key={accordion.value} disabled={index === 3}>
-                <AccordionSummary expandIcon={<Iconify icon="eva:arrow-ios-downward-fill" />}>
-                  <Typography variant="subtitle1">{accordion.heading}</Typography>
+                <AccordionSummary
+                  expandIcon={<Iconify icon="eva:arrow-ios-downward-fill" />}
+                >
+                  <Typography variant="subtitle1">
+                    {accordion.heading}
+                  </Typography>
                 </AccordionSummary>
                 <AccordionDetails>
                   <Typography>{accordion.detail}</Typography>
@@ -79,11 +83,18 @@ export default function AccordionView() {
                 expanded={controlled === item.value}
                 onChange={handleChangeControlled(item.value)}
               >
-                <AccordionSummary expandIcon={<Iconify icon="eva:arrow-ios-downward-fill" />}>
-                  <Typography variant="subtitle1" sx={{ width: '33%', flexShrink: 0 }}>
+                <AccordionSummary
+                  expandIcon={<Iconify icon="eva:arrow-ios-downward-fill" />}
+                >
+                  <Typography
+                    variant="subtitle1"
+                    sx={{ width: '33%', flexShrink: 0 }}
+                  >
                     {item.heading}
                   </Typography>
-                  <Typography sx={{ color: 'text.secondary' }}>{item.subHeading}</Typography>
+                  <Typography sx={{ color: 'text.secondary' }}>
+                    {item.subHeading}
+                  </Typography>
                 </AccordionSummary>
                 <AccordionDetails>
                   <Typography>{item.detail}</Typography>

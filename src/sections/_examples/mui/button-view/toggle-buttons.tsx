@@ -11,7 +11,15 @@ import ComponentBlock from '../../component-block';
 
 // ----------------------------------------------------------------------
 
-const COLORS = ['standard', 'primary', 'secondary', 'info', 'success', 'warning', 'error'] as const;
+const COLORS = [
+  'standard',
+  'primary',
+  'secondary',
+  'info',
+  'success',
+  'warning',
+  'error',
+] as const;
 
 const SIZES = ['small', 'medium', 'large'] as const;
 
@@ -26,15 +34,24 @@ export default function ToggleButtons() {
 
   const [selected, setSelected] = useState(true);
 
-  const handleAlignment = (event: React.MouseEvent<HTMLElement>, newAlignment: string | null) => {
+  const handleAlignment = (
+    event: React.MouseEvent<HTMLElement>,
+    newAlignment: string | null
+  ) => {
     setAlignment(newAlignment);
   };
 
-  const handleFormat = (event: React.MouseEvent<HTMLElement>, newFormats: string[]) => {
+  const handleFormat = (
+    event: React.MouseEvent<HTMLElement>,
+    newFormats: string[]
+  ) => {
     setFormats(newFormats);
   };
 
-  const handleChange = (event: React.MouseEvent<HTMLElement>, nextView: string) => {
+  const handleChange = (
+    event: React.MouseEvent<HTMLElement>,
+    nextView: string
+  ) => {
     setView(nextView);
   };
 
@@ -84,7 +101,11 @@ export default function ToggleButtons() {
   return (
     <Masonry columns={3} spacing={3}>
       <ComponentBlock title="Exclusive selection">
-        <ToggleButtonGroup value={alignment} exclusive onChange={handleAlignment}>
+        <ToggleButtonGroup
+          value={alignment}
+          exclusive
+          onChange={handleAlignment}
+        >
           {alignContent}
         </ToggleButtonGroup>
       </ComponentBlock>
@@ -126,7 +147,12 @@ export default function ToggleButtons() {
       </ComponentBlock>
 
       <ComponentBlock title="Vertical & Standalone buttons">
-        <ToggleButtonGroup orientation="vertical" value={view} exclusive onChange={handleChange}>
+        <ToggleButtonGroup
+          orientation="vertical"
+          value={view}
+          exclusive
+          onChange={handleChange}
+        >
           {viewContent}
         </ToggleButtonGroup>
 

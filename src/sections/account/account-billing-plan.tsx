@@ -11,7 +11,11 @@ import CardHeader from '@mui/material/CardHeader';
 
 import { useBoolean } from 'src/hooks/use-boolean';
 
-import { PlanFreeIcon, PlanStarterIcon, PlanPremiumIcon } from 'src/assets/icons';
+import {
+  PlanFreeIcon,
+  PlanStarterIcon,
+  PlanPremiumIcon,
+} from 'src/assets/icons';
 
 import Label from 'src/components/label';
 import Iconify from 'src/components/iconify';
@@ -34,7 +38,11 @@ type Props = {
   }[];
 };
 
-export default function AccountBillingPlan({ cardList, addressBook, plans }: Props) {
+export default function AccountBillingPlan({
+  cardList,
+  addressBook,
+  plans,
+}: Props) {
   const openAddress = useBoolean();
 
   const openCards = useBoolean();
@@ -45,9 +53,13 @@ export default function AccountBillingPlan({ cardList, addressBook, plans }: Pro
 
   const [selectedPlan, setSelectedPlan] = useState('');
 
-  const [selectedAddress, setSelectedAddress] = useState<IAddressItem | null>(primaryAddress);
+  const [selectedAddress, setSelectedAddress] = useState<IAddressItem | null>(
+    primaryAddress
+  );
 
-  const [selectedCard, setSelectedCard] = useState<IPaymentCard | null>(primaryCard);
+  const [selectedCard, setSelectedCard] = useState<IPaymentCard | null>(
+    primaryCard
+  );
 
   const handleSelectPlan = useCallback(
     (newValue: string) => {
@@ -117,7 +129,10 @@ export default function AccountBillingPlan({ cardList, addressBook, plans }: Pro
           {plan.price || 'Free'}
 
           {!!plan.price && (
-            <Box component="span" sx={{ typography: 'body2', color: 'text.disabled', ml: 0.5 }}>
+            <Box
+              component="span"
+              sx={{ typography: 'body2', color: 'text.disabled', ml: 0.5 }}
+            >
               /mo
             </Box>
           )}
@@ -140,7 +155,11 @@ export default function AccountBillingPlan({ cardList, addressBook, plans }: Pro
             <Grid xs={12} md={4} sx={{ color: 'text.secondary' }}>
               Plan
             </Grid>
-            <Grid xs={12} md={8} sx={{ typography: 'subtitle2', textTransform: 'capitalize' }}>
+            <Grid
+              xs={12}
+              md={8}
+              sx={{ typography: 'subtitle2', textTransform: 'capitalize' }}
+            >
               {selectedPlan || '-'}
             </Grid>
           </Grid>
@@ -152,7 +171,9 @@ export default function AccountBillingPlan({ cardList, addressBook, plans }: Pro
             <Grid xs={12} md={8}>
               <Button
                 onClick={openAddress.onTrue}
-                endIcon={<Iconify width={16} icon="eva:arrow-ios-downward-fill" />}
+                endIcon={
+                  <Iconify width={16} icon="eva:arrow-ios-downward-fill" />
+                }
                 sx={{ typography: 'subtitle2', p: 0, borderRadius: 0 }}
               >
                 {selectedAddress?.name}
@@ -185,7 +206,9 @@ export default function AccountBillingPlan({ cardList, addressBook, plans }: Pro
             <Grid xs={12} md={8}>
               <Button
                 onClick={openCards.onTrue}
-                endIcon={<Iconify width={16} icon="eva:arrow-ios-downward-fill" />}
+                endIcon={
+                  <Iconify width={16} icon="eva:arrow-ios-downward-fill" />
+                }
                 sx={{ typography: 'subtitle2', p: 0, borderRadius: 0 }}
               >
                 {selectedCard?.cardNumber}
@@ -196,7 +219,12 @@ export default function AccountBillingPlan({ cardList, addressBook, plans }: Pro
 
         <Divider sx={{ borderStyle: 'dashed' }} />
 
-        <Stack spacing={1.5} direction="row" justifyContent="flex-end" sx={{ p: 3 }}>
+        <Stack
+          spacing={1.5}
+          direction="row"
+          justifyContent="flex-end"
+          sx={{ p: 3 }}
+        >
           <Button variant="outlined">Cancel Plan</Button>
           <Button variant="contained">Upgrade Plan</Button>
         </Stack>

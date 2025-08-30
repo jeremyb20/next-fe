@@ -53,9 +53,12 @@ const TABS = [
 export default function ButtonView() {
   const [currentTab, setCurrentTab] = useState('contained');
 
-  const handleChangeTab = useCallback((event: React.SyntheticEvent, newValue: string) => {
-    setCurrentTab(newValue);
-  }, []);
+  const handleChangeTab = useCallback(
+    (event: React.SyntheticEvent, newValue: string) => {
+      setCurrentTab(newValue);
+    },
+    []
+  );
 
   return (
     <>

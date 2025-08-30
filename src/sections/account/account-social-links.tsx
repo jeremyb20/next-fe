@@ -79,7 +79,12 @@ export default function AccountSocialLinks({ socialLinks }: Props) {
           />
         ))}
 
-        <LoadingButton type="submit" variant="contained" loading={isSubmitting} sx={{ ml: 'auto' }}>
+        <LoadingButton
+          type="submit"
+          variant="contained"
+          loading={isSubmitting}
+          sx={{ ml: 'auto' }}
+        >
           Save Changes
         </LoadingButton>
       </Stack>

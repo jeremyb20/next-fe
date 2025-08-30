@@ -21,8 +21,12 @@ import FormProvider, { RHFCode, RHFTextField } from 'src/components/hook-form';
 
 export default function ClassicVerifyView() {
   const VerifySchema = Yup.object().shape({
-    code: Yup.string().min(6, 'Code must be at least 6 characters').required('Code is required'),
-    email: Yup.string().required('Email is required').email('Email must be a valid email address'),
+    code: Yup.string()
+      .min(6, 'Code must be at least 6 characters')
+      .required('Code is required'),
+    email: Yup.string()
+      .required('Email is required')
+      .email('Email must be a valid email address'),
   });
 
   const defaultValues = {
@@ -107,8 +111,8 @@ export default function ClassicVerifyView() {
         <Typography variant="h3">Please check your email!</Typography>
 
         <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-          We have emailed a 6-digit confirmation code to acb@domain, please enter the code in below
-          box to verify your email.
+          We have emailed a 6-digit confirmation code to acb@domain, please
+          enter the code in below box to verify your email.
         </Typography>
       </Stack>
     </>

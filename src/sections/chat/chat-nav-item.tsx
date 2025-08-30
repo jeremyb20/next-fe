@@ -31,18 +31,29 @@ type Props = {
   conversation: IChatConversation;
 };
 
-export default function ChatNavItem({ selected, collapse, conversation, onCloseMobile }: Props) {
+export default function ChatNavItem({
+  selected,
+  collapse,
+  conversation,
+  onCloseMobile,
+}: Props) {
   const { user } = useMockedUser();
 
   const mdUp = useResponsive('up', 'md');
 
   const router = useRouter();
 
-  const { group, displayName, displayText, participants, lastActivity, hasOnlineInGroup } =
-    useGetNavItem({
-      conversation,
-      currentUserId: `${user?.id}`,
-    });
+  const {
+    group,
+    displayName,
+    displayText,
+    participants,
+    lastActivity,
+    hasOnlineInGroup,
+  } = useGetNavItem({
+    conversation,
+    currentUserId: `${user?.id}`,
+  });
 
   const singleParticipant = participants[0];
 
@@ -69,14 +80,22 @@ export default function ChatNavItem({ selected, collapse, conversation, onCloseM
     >
       <AvatarGroup variant="compact" sx={{ width: 48, height: 48 }}>
         {participants.slice(0, 2).map((participant) => (
-          <Avatar key={participant.id} alt={participant.name} src={participant.avatarUrl} />
+          <Avatar
+            key={participant.id}
+            alt={participant.name}
+            src={participant.avatarUrl}
+          />
         ))}
       </AvatarGroup>
     </Badge>
   );
 
   const renderSingle = (
-    <Badge key={status} variant={status} anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}>
+    <Badge
+      key={status}
+      variant={status}
+      anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+    >
       <Avatar alt={name} src={avatarUrl} sx={{ width: 48, height: 48 }} />
     </Badge>
   );
@@ -115,7 +134,9 @@ export default function ChatNavItem({ selected, collapse, conversation, onCloseM
               noWrap: true,
               component: 'span',
               variant: conversation.unreadCount ? 'subtitle2' : 'body2',
-              color: conversation.unreadCount ? 'text.primary' : 'text.secondary',
+              color: conversation.unreadCount
+                ? 'text.primary'
+                : 'text.secondary',
             }}
           />
 

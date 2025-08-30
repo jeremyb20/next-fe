@@ -70,7 +70,9 @@ export default function EditorView() {
           </Grid>
 
           <Grid xs={12} md={4}>
-            <Stack sx={{ p: 3, borderRadius: 2, bgcolor: 'background.neutral' }}>
+            <Stack
+              sx={{ p: 3, borderRadius: 2, bgcolor: 'background.neutral' }}
+            >
               <Typography variant="h6" sx={{ mb: 2 }}>
                 Preview Plain Text
               </Typography>

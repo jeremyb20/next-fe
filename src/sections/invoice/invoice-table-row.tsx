@@ -41,7 +41,15 @@ export default function InvoiceTableRow({
   onEditRow,
   onDeleteRow,
 }: Props) {
-  const { sent, invoiceNumber, createDate, dueDate, status, invoiceTo, totalAmount } = row;
+  const {
+    sent,
+    invoiceNumber,
+    createDate,
+    dueDate,
+    status,
+    invoiceTo,
+    totalAmount,
+  } = row;
 
   const confirm = useBoolean();
 
@@ -124,7 +132,10 @@ export default function InvoiceTableRow({
         </TableCell>
 
         <TableCell align="right" sx={{ px: 1 }}>
-          <IconButton color={popover.open ? 'inherit' : 'default'} onClick={popover.onOpen}>
+          <IconButton
+            color={popover.open ? 'inherit' : 'default'}
+            onClick={popover.onOpen}
+          >
             <Iconify icon="eva:more-vertical-fill" />
           </IconButton>
         </TableCell>

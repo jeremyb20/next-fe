@@ -25,7 +25,11 @@ import {
 import EmptyContent from 'src/components/empty-content';
 import { useSettingsContext } from 'src/components/settings';
 
-import { IProductItem, IProductFilters, IProductFilterValue } from 'src/types/product';
+import {
+  IProductItem,
+  IProductFilters,
+  IProductFilterValue,
+} from 'src/types/product';
 
 import ProductList from '../product-list';
 import ProductSort from '../product-sort';
@@ -66,12 +70,15 @@ export default function ProductShopView() {
 
   const { searchResults, searchLoading } = useSearchProducts(debouncedQuery);
 
-  const handleFilters = useCallback((name: string, value: IProductFilterValue) => {
-    setFilters((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
-  }, []);
+  const handleFilters = useCallback(
+    (name: string, value: IProductFilterValue) => {
+      setFilters((prevState) => ({
+        ...prevState,
+        [name]: value,
+      }));
+    },
+    []
+  );
 
   const handleResetFilters = useCallback(() => {
     setFilters(defaultFilters);
@@ -128,7 +135,11 @@ export default function ProductShopView() {
           categoryOptions={['all', ...PRODUCT_CATEGORY_OPTIONS]}
         />
 
-        <ProductSort sort={sortBy} onSort={handleSortBy} sortOptions={PRODUCT_SORT_OPTIONS} />
+        <ProductSort
+          sort={sortBy}
+          onSort={handleSortBy}
+          sortOptions={PRODUCT_SORT_OPTIONS}
+        />
       </Stack>
     </Stack>
   );
@@ -145,7 +156,9 @@ export default function ProductShopView() {
     />
   );
 
-  const renderNotFound = <EmptyContent filled title="No Data" sx={{ py: 10 }} />;
+  const renderNotFound = (
+    <EmptyContent filled title="No Data" sx={{ py: 10 }} />
+  );
 
   return (
     <Container
@@ -233,7 +246,9 @@ function applyFilter({
   }
 
   if (min !== 0 || max !== 200) {
-    inputData = inputData.filter((product) => product.price >= min && product.price <= max);
+    inputData = inputData.filter(
+      (product) => product.price >= min && product.price <= max
+    );
   }
 
   if (rating) {

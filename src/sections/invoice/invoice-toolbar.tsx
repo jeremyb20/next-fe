@@ -71,7 +71,9 @@ export default function InvoiceToolbar({
           </Tooltip>
 
           <PDFDownloadLink
-            document={<InvoicePDF invoice={invoice} currentStatus={currentStatus} />}
+            document={
+              <InvoicePDF invoice={invoice} currentStatus={currentStatus} />
+            }
             fileName={invoice.invoiceNumber}
             style={{ textDecoration: 'none' }}
           >

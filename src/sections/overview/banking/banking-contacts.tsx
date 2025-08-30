@@ -22,7 +22,12 @@ interface Props extends CardProps {
   }[];
 }
 
-export default function BankingContacts({ title, subheader, list, ...other }: Props) {
+export default function BankingContacts({
+  title,
+  subheader,
+  list,
+  ...other
+}: Props) {
   return (
     <Card {...other}>
       <CardHeader
@@ -32,7 +37,13 @@ export default function BankingContacts({ title, subheader, list, ...other }: Pr
           <Button
             size="small"
             color="inherit"
-            endIcon={<Iconify icon="eva:arrow-ios-forward-fill" width={18} sx={{ ml: -0.5 }} />}
+            endIcon={
+              <Iconify
+                icon="eva:arrow-ios-forward-fill"
+                width={18}
+                sx={{ ml: -0.5 }}
+              />
+            }
           >
             View All
           </Button>
@@ -42,7 +53,10 @@ export default function BankingContacts({ title, subheader, list, ...other }: Pr
       <Stack spacing={3} sx={{ p: 3 }}>
         {list.map((contact) => (
           <Stack direction="row" alignItems="center" key={contact.id}>
-            <Avatar src={contact.avatarUrl} sx={{ width: 48, height: 48, mr: 2 }} />
+            <Avatar
+              src={contact.avatarUrl}
+              sx={{ width: 48, height: 48, mr: 2 }}
+            />
 
             <ListItemText primary={contact.name} secondary={contact.email} />
 

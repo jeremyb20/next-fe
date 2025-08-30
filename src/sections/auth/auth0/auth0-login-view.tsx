@@ -71,7 +71,7 @@ export default function Auth0LoginView() {
   return (
     <>
       <Typography variant="h4" sx={{ mb: 5 }}>
-        Sign in to Minimal
+        Sign in to Minimal Test
       </Typography>
 
       <Stack spacing={2}>

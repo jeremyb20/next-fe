@@ -36,7 +36,11 @@ import { ConfirmDialog } from 'src/components/custom-dialog';
 import { useSettingsContext } from 'src/components/settings';
 import CustomBreadcrumbs from 'src/components/custom-breadcrumbs';
 
-import { IProductItem, IProductTableFilters, IProductTableFilterValue } from 'src/types/product';
+import {
+  IProductItem,
+  IProductTableFilters,
+  IProductTableFilterValue,
+} from 'src/types/product';
 
 import ProductTableToolbar from '../product-table-toolbar';
 import ProductTableFiltersResult from '../product-table-filters-result';
@@ -83,7 +87,9 @@ export default function ProductListView() {
 
   const [filters, setFilters] = useState(defaultFilters);
 
-  const [selectedRowIds, setSelectedRowIds] = useState<GridRowSelectionModel>([]);
+  const [selectedRowIds, setSelectedRowIds] = useState<GridRowSelectionModel>(
+    []
+  );
 
   const [columnVisibilityModel, setColumnVisibilityModel] =
     useState<GridColumnVisibilityModel>(HIDE_COLUMNS);
@@ -101,12 +107,15 @@ export default function ProductListView() {
 
   const canReset = !isEqual(defaultFilters, filters);
 
-  const handleFilters = useCallback((name: string, value: IProductTableFilterValue) => {
-    setFilters((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
-  }, []);
+  const handleFilters = useCallback(
+    (name: string, value: IProductTableFilterValue) => {
+      setFilters((prevState) => ({
+        ...prevState,
+        [name]: value,
+      }));
+    },
+    []
+  );
 
   const handleResetFilters = useCallback(() => {
     setFilters(defaultFilters);
@@ -124,7 +133,9 @@ export default function ProductListView() {
   );
 
   const handleDeleteRows = useCallback(() => {
-    const deleteRows = tableData.filter((row) => !selectedRowIds.includes(row.id));
+    const deleteRows = tableData.filter(
+      (row) => !selectedRowIds.includes(row.id)
+    );
 
     enqueueSnackbar('Delete success!');
 
@@ -293,7 +304,9 @@ export default function ProductListView() {
               setSelectedRowIds(newSelectionModel);
             }}
             columnVisibilityModel={columnVisibilityModel}
-            onColumnVisibilityModelChange={(newModel) => setColumnVisibilityModel(newModel)}
+            onColumnVisibilityModelChange={(newModel) =>
+              setColumnVisibilityModel(newModel)
+            }
             slots={{
               toolbar: () => (
                 <>
@@ -318,7 +331,9 @@ export default function ProductListView() {
                         <Button
                           size="small"
                           color="error"
-                          startIcon={<Iconify icon="solar:trash-bin-trash-bold" />}
+                          startIcon={
+                            <Iconify icon="solar:trash-bin-trash-bold" />
+                          }
                           onClick={confirmRows.onTrue}
                         >
                           Delete ({selectedRowIds.length})
@@ -360,7 +375,8 @@ export default function ProductListView() {
         title="Delete"
         content={
           <>
-            Are you sure want to delete <strong> {selectedRowIds.length} </strong> items?
+            Are you sure want to delete{' '}
+            <strong> {selectedRowIds.length} </strong> items?
           </>
         }
         action={
@@ -392,11 +408,15 @@ function applyFilter({
   const { stock, publish } = filters;
 
   if (stock.length) {
-    inputData = inputData.filter((product) => stock.includes(product.inventoryType));
+    inputData = inputData.filter((product) =>
+      stock.includes(product.inventoryType)
+    );
   }
 
   if (publish.length) {
-    inputData = inputData.filter((product) => publish.includes(product.publish));
+    inputData = inputData.filter((product) =>
+      publish.includes(product.publish)
+    );
   }
 
   return inputData;

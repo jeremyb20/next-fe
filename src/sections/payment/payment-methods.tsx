@@ -91,7 +91,13 @@ type OptionItemProps = PaperProps & {
   onOpen: VoidFunction;
 };
 
-function OptionItem({ option, selected, isCredit, onOpen, ...other }: OptionItemProps) {
+function OptionItem({
+  option,
+  selected,
+  isCredit,
+  onOpen,
+  ...other
+}: OptionItemProps) {
   const { value, label } = option;
 
   return (
@@ -111,7 +117,11 @@ function OptionItem({ option, selected, isCredit, onOpen, ...other }: OptionItem
         primary={
           <Stack direction="row" alignItems="center">
             <Iconify
-              icon={selected ? 'eva:checkmark-circle-2-fill' : 'eva:radio-button-off-fill'}
+              icon={
+                selected
+                  ? 'eva:checkmark-circle-2-fill'
+                  : 'eva:radio-button-off-fill'
+              }
               width={24}
               sx={{
                 mr: 2,
@@ -131,7 +141,9 @@ function OptionItem({ option, selected, isCredit, onOpen, ...other }: OptionItem
                 </>
               )}
               {value === 'paypal' && <Iconify icon="logos:paypal" width={24} />}
-              {value === 'cash' && <Iconify icon="solar:wad-of-money-bold" width={24} />}
+              {value === 'cash' && (
+                <Iconify icon="solar:wad-of-money-bold" width={24} />
+              )}
             </Stack>
           </Stack>
         }
@@ -146,7 +158,12 @@ function OptionItem({ option, selected, isCredit, onOpen, ...other }: OptionItem
             pt: 2.5,
           }}
         >
-          <TextField select fullWidth label="Cards" SelectProps={{ native: true }}>
+          <TextField
+            select
+            fullWidth
+            label="Cards"
+            SelectProps={{ native: true }}
+          >
             {CARD_OPTIONS.map((card) => (
               <option key={card.value} value={card.value}>
                 {card.label}

@@ -60,7 +60,9 @@ export default function ChatRoom({ participants, conversation }: Props) {
 
   const group = participants.length > 1;
 
-  const attachments = uniq(flatten(conversation.messages.map((messages) => messages.attachments)));
+  const attachments = uniq(
+    flatten(conversation.messages.map((messages) => messages.attachments))
+  );
 
   const renderContent = (
     <>
@@ -102,7 +104,11 @@ export default function ChatRoom({ participants, conversation }: Props) {
       {lgUp ? (
         <Iconify
           width={16}
-          icon={collapseDesktop ? 'eva:arrow-ios-back-fill' : 'eva:arrow-ios-forward-fill'}
+          icon={
+            collapseDesktop
+              ? 'eva:arrow-ios-back-fill'
+              : 'eva:arrow-ios-forward-fill'
+          }
         />
       ) : (
         <Iconify width={16} icon="eva:arrow-ios-back-fill" />

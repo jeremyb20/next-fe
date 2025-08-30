@@ -32,16 +32,22 @@ const TABS = [
 export default function PickerView() {
   const [currentTab, setCurrentTab] = useState('date');
 
-  const handleChangeTab = useCallback((event: React.SyntheticEvent, newValue: string) => {
-    setCurrentTab(newValue);
-  }, []);
+  const handleChangeTab = useCallback(
+    (event: React.SyntheticEvent, newValue: string) => {
+      setCurrentTab(newValue);
+    },
+    []
+  );
 
   return (
     <>
       <ComponentHero>
         <CustomBreadcrumbs
           heading="Date / Time pickers"
-          links={[{ name: 'Components', href: paths.components }, { name: 'Date / Time pickers' }]}
+          links={[
+            { name: 'Components', href: paths.components },
+            { name: 'Date / Time pickers' },
+          ]}
           moreLink={[
             'https://mui.com/components/pickers',
             'https://mui.com/x/react-date-pickers/getting-started/',

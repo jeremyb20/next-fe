@@ -66,7 +66,13 @@ export default function HomeAdvertisement() {
             target="_blank"
             rel="noopener"
             href={paths.freeUI}
-            endIcon={<Iconify icon="eva:external-link-fill" width={16} sx={{ mr: 0.5 }} />}
+            endIcon={
+              <Iconify
+                icon="eva:external-link-fill"
+                width={16}
+                sx={{ mr: 0.5 }}
+              />
+            }
             sx={{
               color: 'common.white',
               '&:hover': { borderColor: 'currentColor' },

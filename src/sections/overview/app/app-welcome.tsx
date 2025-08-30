@@ -13,7 +13,13 @@ type Props = StackProps & {
   action?: React.ReactNode;
 };
 
-export default function AppWelcome({ title, description, action, img, ...other }: Props) {
+export default function AppWelcome({
+  title,
+  description,
+  action,
+  img,
+  ...other
+}: Props) {
   const theme = useTheme();
 
   return (

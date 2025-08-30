@@ -7,7 +7,11 @@ import { useResponsive } from 'src/hooks/use-responsive';
 
 import { fTimestamp } from 'src/utils/format-time';
 
-import { ICalendarView, ICalendarRange, ICalendarEvent } from 'src/types/calendar';
+import {
+  ICalendarView,
+  ICalendarRange,
+  ICalendarEvent,
+} from 'src/types/calendar';
 
 // ----------------------------------------------------------------------
 
@@ -26,7 +30,9 @@ export default function useCalendar() {
 
   const [selectedRange, setSelectedRange] = useState<ICalendarRange>(null);
 
-  const [view, setView] = useState<ICalendarView>(smUp ? 'dayGridMonth' : 'listWeek');
+  const [view, setView] = useState<ICalendarView>(
+    smUp ? 'dayGridMonth' : 'listWeek'
+  );
 
   const onOpenForm = useCallback(() => {
     setOpenForm(true);
@@ -114,7 +120,10 @@ export default function useCalendar() {
   );
 
   const onResizeEvent = useCallback(
-    (arg: EventResizeDoneArg, updateEvent: (eventData: Partial<ICalendarEvent>) => void) => {
+    (
+      arg: EventResizeDoneArg,
+      updateEvent: (eventData: Partial<ICalendarEvent>) => void
+    ) => {
       const { event } = arg;
 
       updateEvent({
@@ -128,7 +137,10 @@ export default function useCalendar() {
   );
 
   const onDropEvent = useCallback(
-    (arg: EventDropArg, updateEvent: (eventData: Partial<ICalendarEvent>) => void) => {
+    (
+      arg: EventDropArg,
+      updateEvent: (eventData: Partial<ICalendarEvent>) => void
+    ) => {
       const { event } = arg;
 
       updateEvent({

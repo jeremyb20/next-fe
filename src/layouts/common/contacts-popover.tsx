@@ -39,16 +39,23 @@ export default function ContactsPopover() {
         <Iconify icon="solar:users-group-rounded-bold-duotone" width={24} />
       </IconButton>
 
-      <CustomPopover open={popover.open} onClose={popover.onClose} sx={{ width: 320 }}>
+      <CustomPopover
+        open={popover.open}
+        onClose={popover.onClose}
+        sx={{ width: 320 }}
+      >
         <Typography variant="h6" sx={{ p: 1.5 }}>
-          Contacts <Typography component="span">({_contacts.length})</Typography>
+          Contacts{' '}
+          <Typography component="span">({_contacts.length})</Typography>
         </Typography>
 
         <Scrollbar sx={{ height: 320 }}>
           {_contacts.map((contact) => (
             <MenuItem key={contact.id} sx={{ p: 1 }}>
               <Badge
-                variant={contact.status as 'alway' | 'online' | 'busy' | 'offline'}
+                variant={
+                  contact.status as 'alway' | 'online' | 'busy' | 'offline'
+                }
                 anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
                 sx={{ mr: 2 }}
               >
@@ -57,7 +64,11 @@ export default function ContactsPopover() {
 
               <ListItemText
                 primary={contact.name}
-                secondary={contact.status === 'offline' ? fToNow(contact.lastActivity) : ''}
+                secondary={
+                  contact.status === 'offline'
+                    ? fToNow(contact.lastActivity)
+                    : ''
+                }
                 primaryTypographyProps={{ typography: 'subtitle2' }}
                 secondaryTypographyProps={{
                   typography: 'caption',

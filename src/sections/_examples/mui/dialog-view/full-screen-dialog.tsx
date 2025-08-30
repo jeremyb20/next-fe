@@ -53,7 +53,12 @@ export default function FullScreenDialog() {
               Sound
             </Typography>
 
-            <Button autoFocus color="inherit" variant="contained" onClick={dialog.onFalse}>
+            <Button
+              autoFocus
+              color="inherit"
+              variant="contained"
+              onClick={dialog.onFalse}
+            >
               Save
             </Button>
           </Toolbar>
@@ -67,7 +72,10 @@ export default function FullScreenDialog() {
           <Divider />
 
           <ListItemButton>
-            <ListItemText primary="Default notification ringtone" secondary="Tethys" />
+            <ListItemText
+              primary="Default notification ringtone"
+              secondary="Tethys"
+            />
           </ListItemButton>
         </List>
       </Dialog>

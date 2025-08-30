@@ -128,7 +128,11 @@ export default function PostListView() {
           hrefItem={(title: string) => paths.dashboard.post.details(title)}
         />
 
-        <PostSort sort={sortBy} onSort={handleSortBy} sortOptions={POST_SORT_OPTIONS} />
+        <PostSort
+          sort={sortBy}
+          onSort={handleSortBy}
+          sortOptions={POST_SORT_OPTIONS}
+        />
       </Stack>
 
       <Tabs
@@ -146,14 +150,19 @@ export default function PostListView() {
             label={tab}
             icon={
               <Label
-                variant={((tab === 'all' || tab === filters.publish) && 'filled') || 'soft'}
+                variant={
+                  ((tab === 'all' || tab === filters.publish) && 'filled') ||
+                  'soft'
+                }
                 color={(tab === 'published' && 'info') || 'default'}
               >
                 {tab === 'all' && posts.length}
 
-                {tab === 'published' && posts.filter((post) => post.publish === 'published').length}
+                {tab === 'published' &&
+                  posts.filter((post) => post.publish === 'published').length}
 
-                {tab === 'draft' && posts.filter((post) => post.publish === 'draft').length}
+                {tab === 'draft' &&
+                  posts.filter((post) => post.publish === 'draft').length}
               </Label>
             }
             sx={{ textTransform: 'capitalize' }}

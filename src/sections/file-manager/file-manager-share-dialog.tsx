@@ -80,7 +80,10 @@ export default function FileManagerShareDialog({
 
       <DialogActions sx={{ justifyContent: 'space-between' }}>
         {onCopyLink && (
-          <Button startIcon={<Iconify icon="eva:link-2-fill" />} onClick={onCopyLink}>
+          <Button
+            startIcon={<Iconify icon="eva:link-2-fill" />}
+            onClick={onCopyLink}
+          >
             Copy link
           </Button>
         )}

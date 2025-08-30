@@ -16,7 +16,11 @@ type PaymentItemProps = StackProps & {
   card: IPaymentCard;
 };
 
-export default function PaymentCardItem({ card, sx, ...other }: PaymentItemProps) {
+export default function PaymentCardItem({
+  card,
+  sx,
+  ...other
+}: PaymentItemProps) {
   const popover = usePopover();
 
   return (
@@ -35,7 +39,9 @@ export default function PaymentCardItem({ card, sx, ...other }: PaymentItemProps
       >
         <Stack direction="row" alignItems="center" spacing={1}>
           <Iconify
-            icon={(card.cardType === 'visa' && 'logos:visa') || 'logos:mastercard'}
+            icon={
+              (card.cardType === 'visa' && 'logos:visa') || 'logos:mastercard'
+            }
             width={36}
           />
 

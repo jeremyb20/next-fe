@@ -26,13 +26,23 @@ type Props = {
   onIncrease: VoidFunction;
 };
 
-export default function CheckoutCartProduct({ row, onDelete, onDecrease, onIncrease }: Props) {
+export default function CheckoutCartProduct({
+  row,
+  onDelete,
+  onDecrease,
+  onIncrease,
+}: Props) {
   const { name, size, price, colors, coverUrl, quantity, available } = row;
 
   return (
     <TableRow>
       <TableCell sx={{ display: 'flex', alignItems: 'center' }}>
-        <Avatar variant="rounded" alt={name} src={coverUrl} sx={{ width: 64, height: 64, mr: 2 }} />
+        <Avatar
+          variant="rounded"
+          alt={name}
+          src={coverUrl}
+          sx={{ width: 64, height: 64, mr: 2 }}
+        />
 
         <Stack spacing={0.5}>
           <Typography noWrap variant="subtitle2" sx={{ maxWidth: 240 }}>
@@ -63,7 +73,11 @@ export default function CheckoutCartProduct({ row, onDelete, onDecrease, onIncre
             disabledIncrease={quantity >= available}
           />
 
-          <Typography variant="caption" component="div" sx={{ color: 'text.secondary', mt: 1 }}>
+          <Typography
+            variant="caption"
+            component="div"
+            sx={{ color: 'text.secondary', mt: 1 }}
+          >
             available: {available}
           </Typography>
         </Box>

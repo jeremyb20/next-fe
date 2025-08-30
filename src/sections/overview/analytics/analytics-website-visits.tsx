@@ -24,7 +24,12 @@ interface Props extends CardProps {
   };
 }
 
-export default function AnalyticsWebsiteVisits({ title, subheader, chart, ...other }: Props) {
+export default function AnalyticsWebsiteVisits({
+  title,
+  subheader,
+  chart,
+  ...other
+}: Props) {
   const { labels, colors, series, options } = chart;
 
   const chartOptions = useChart({

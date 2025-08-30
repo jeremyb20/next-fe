@@ -42,7 +42,13 @@ interface Props extends CardProps {
   };
 }
 
-export default function EcommerceSaleByGender({ title, subheader, total, chart, ...other }: Props) {
+export default function EcommerceSaleByGender({
+  title,
+  subheader,
+  total,
+  chart,
+  ...other
+}: Props) {
   const theme = useTheme();
 
   const {

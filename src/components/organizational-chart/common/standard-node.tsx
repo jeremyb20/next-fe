@@ -54,7 +54,12 @@ export default function StandardNode({ node, onEdit, onDelete, sx }: Props) {
           {node.name}
         </Typography>
 
-        <Typography variant="caption" component="div" noWrap sx={{ color: 'text.secondary' }}>
+        <Typography
+          variant="caption"
+          component="div"
+          noWrap
+          sx={{ color: 'text.secondary' }}
+        >
           {node.role}
         </Typography>
       </Card>

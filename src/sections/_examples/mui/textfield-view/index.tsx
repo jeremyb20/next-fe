@@ -40,9 +40,12 @@ const TABS = [
 export default function TextfieldView() {
   const [currentTab, setCurrentTab] = useState('outlined');
 
-  const handleChangeTab = useCallback((event: React.SyntheticEvent, newValue: string) => {
-    setCurrentTab(newValue);
-  }, []);
+  const handleChangeTab = useCallback(
+    (event: React.SyntheticEvent, newValue: string) => {
+      setCurrentTab(newValue);
+    },
+    []
+  );
 
   return (
     <>

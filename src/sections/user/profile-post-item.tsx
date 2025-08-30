@@ -41,9 +41,12 @@ export default function ProfilePostItem({ post }: Props) {
 
   const [message, setMessage] = useState('');
 
-  const handleChangeMessage = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
-    setMessage(event.target.value);
-  }, []);
+  const handleChangeMessage = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      setMessage(event.target.value);
+    },
+    []
+  );
 
   const handleAttach = useCallback(() => {
     if (fileRef.current) {
@@ -109,7 +112,9 @@ export default function ProfilePostItem({ post }: Props) {
               </Box>
             </Stack>
 
-            <Box sx={{ typography: 'body2', color: 'text.secondary' }}>{comment.message}</Box>
+            <Box sx={{ typography: 'body2', color: 'text.secondary' }}>
+              {comment.message}
+            </Box>
           </Paper>
         </Stack>
       ))}
@@ -150,7 +155,8 @@ export default function ProfilePostItem({ post }: Props) {
           pl: 1.5,
           height: 40,
           borderRadius: 1,
-          border: (theme) => `solid 1px ${alpha(theme.palette.grey[500], 0.32)}`,
+          border: (theme) =>
+            `solid 1px ${alpha(theme.palette.grey[500], 0.32)}`,
         }}
       />
 
@@ -189,7 +195,11 @@ export default function ProfilePostItem({ post }: Props) {
           }}
         >
           {post.personLikes.map((person) => (
-            <Avatar key={person.name} alt={person.name} src={person.avatarUrl} />
+            <Avatar
+              key={person.name}
+              alt={person.name}
+              src={person.avatarUrl}
+            />
           ))}
         </AvatarGroup>
       )}
@@ -220,7 +230,12 @@ export default function ProfilePostItem({ post }: Props) {
       </Typography>
 
       <Box sx={{ p: 1 }}>
-        <Image alt={post.media} src={post.media} ratio="16/9" sx={{ borderRadius: 1.5 }} />
+        <Image
+          alt={post.media}
+          src={post.media}
+          ratio="16/9"
+          sx={{ borderRadius: 1.5 }}
+        />
       </Box>
 
       {renderActions}

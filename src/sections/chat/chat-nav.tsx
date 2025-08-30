@@ -200,7 +200,12 @@ export default function ChatNav({
 
   const renderContent = (
     <>
-      <Stack direction="row" alignItems="center" justifyContent="center" sx={{ p: 2.5, pb: 0 }}>
+      <Stack
+        direction="row"
+        alignItems="center"
+        justifyContent="center"
+        sx={{ p: 2.5, pb: 0 }}
+      >
         {!collapseDesktop && (
           <>
             <ChatNavAccount />
@@ -210,7 +215,11 @@ export default function ChatNav({
 
         <IconButton onClick={handleToggleNav}>
           <Iconify
-            icon={collapseDesktop ? 'eva:arrow-ios-forward-fill' : 'eva:arrow-ios-back-fill'}
+            icon={
+              collapseDesktop
+                ? 'eva:arrow-ios-forward-fill'
+                : 'eva:arrow-ios-back-fill'
+            }
           />
         </IconButton>
 

@@ -5,7 +5,11 @@ import { useTheme } from '@mui/material/styles';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Unstable_Grid2';
 
-import { _bankingContacts, _bankingCreditCard, _bankingRecentTransitions } from 'src/_mock';
+import {
+  _bankingContacts,
+  _bankingCreditCard,
+  _bankingRecentTransitions,
+} from 'src/_mock';
 
 import { useSettingsContext } from 'src/components/settings';
 
@@ -93,7 +97,17 @@ export default function OverviewBankingView() {
               title="Balance Statistics"
               subheader="(+43% Income | +12% Expense) than last year"
               chart={{
-                categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'],
+                categories: [
+                  'Jan',
+                  'Feb',
+                  'Mar',
+                  'Apr',
+                  'May',
+                  'Jun',
+                  'Jul',
+                  'Aug',
+                  'Sep',
+                ],
                 series: [
                   {
                     type: 'Week',
@@ -182,7 +196,10 @@ export default function OverviewBankingView() {
 
         <Grid xs={12} md={4}>
           <Stack spacing={3}>
-            <BankingQuickTransfer title="Quick Transfer" list={_bankingContacts} />
+            <BankingQuickTransfer
+              title="Quick Transfer"
+              list={_bankingContacts}
+            />
 
             <BankingContacts
               title="Contacts"

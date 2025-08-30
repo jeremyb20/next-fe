@@ -28,7 +28,12 @@ interface Props extends CardProps {
   list: ItemProps[];
 }
 
-export default function EcommerceLatestProducts({ title, subheader, list, ...other }: Props) {
+export default function EcommerceLatestProducts({
+  title,
+  subheader,
+  list,
+  ...other
+}: Props) {
   return (
     <Card {...other}>
       <CardHeader title={title} subheader={subheader} />
@@ -63,16 +68,26 @@ function ProductItem({ product }: ProductItemProps) {
       />
 
       <ListItemText
-        primary={<Link sx={{ color: 'text.primary', typography: 'subtitle2' }}>{name}</Link>}
+        primary={
+          <Link sx={{ color: 'text.primary', typography: 'subtitle2' }}>
+            {name}
+          </Link>
+        }
         secondary={
           <>
             {!!priceSale && (
-              <Box component="span" sx={{ textDecoration: 'line-through', mr: 0.5 }}>
+              <Box
+                component="span"
+                sx={{ textDecoration: 'line-through', mr: 0.5 }}
+              >
                 {fCurrency(priceSale)}
               </Box>
             )}
 
-            <Box component="span" sx={{ color: priceSale ? 'error.main' : 'text.secondary' }}>
+            <Box
+              component="span"
+              sx={{ color: priceSale ? 'error.main' : 'text.secondary' }}
+            >
               {fCurrency(price)}
             </Box>
           </>

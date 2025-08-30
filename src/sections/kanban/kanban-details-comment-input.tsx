@@ -27,8 +27,17 @@ export default function KanbanDetailsCommentInput() {
         {user?.displayName?.charAt(0).toUpperCase()}
       </Avatar>
 
-      <Paper variant="outlined" sx={{ p: 1, flexGrow: 1, bgcolor: 'transparent' }}>
-        <InputBase fullWidth multiline rows={2} placeholder="Type a message" sx={{ px: 1 }} />
+      <Paper
+        variant="outlined"
+        sx={{ p: 1, flexGrow: 1, bgcolor: 'transparent' }}
+      >
+        <InputBase
+          fullWidth
+          multiline
+          rows={2}
+          placeholder="Type a message"
+          sx={{ px: 1 }}
+        />
 
         <Stack direction="row" alignItems="center">
           <Stack direction="row" flexGrow={1}>

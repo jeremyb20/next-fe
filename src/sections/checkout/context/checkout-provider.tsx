@@ -46,7 +46,8 @@ export function CheckoutProvider({ children }: Props) {
     );
 
     const subTotal: number = state.items.reduce(
-      (total: number, item: ICheckoutItem) => total + item.quantity * item.price,
+      (total: number, item: ICheckoutItem) =>
+        total + item.quantity * item.price,
       0
     );
 
@@ -76,16 +77,18 @@ export function CheckoutProvider({ children }: Props) {
 
   const onAddToCart = useCallback(
     (newItem: ICheckoutItem) => {
-      const updatedItems: ICheckoutItem[] = state.items.map((item: ICheckoutItem) => {
-        if (item.id === newItem.id) {
-          return {
-            ...item,
-            colors: uniq([...item.colors, ...newItem.colors]),
-            quantity: item.quantity + 1,
-          };
+      const updatedItems: ICheckoutItem[] = state.items.map(
+        (item: ICheckoutItem) => {
+          if (item.id === newItem.id) {
+            return {
+              ...item,
+              colors: uniq([...item.colors, ...newItem.colors]),
+              quantity: item.quantity + 1,
+            };
+          }
+          return item;
         }
-        return item;
-      });
+      );
 
       if (!updatedItems.some((item: ICheckoutItem) => item.id === newItem.id)) {
         updatedItems.push(newItem);
@@ -98,7 +101,9 @@ export function CheckoutProvider({ children }: Props) {
 
   const onDeleteCart = useCallback(
     (itemId: string) => {
-      const updatedItems = state.items.filter((item: ICheckoutItem) => item.id !== itemId);
+      const updatedItems = state.items.filter(
+        (item: ICheckoutItem) => item.id !== itemId
+      );
 
       update('items', updatedItems);
     },
@@ -225,5 +230,9 @@ export function CheckoutProvider({ children }: Props) {
     ]
   );
 
-  return <CheckoutContext.Provider value={memoizedValue}>{children}</CheckoutContext.Provider>;
+  return (
+    <CheckoutContext.Provider value={memoizedValue}>
+      {children}
+    </CheckoutContext.Provider>
+  );
 }

@@ -16,7 +16,15 @@ import ComponentBlock from '../component-block';
 
 // ----------------------------------------------------------------------
 
-const COLORS = ['default', 'primary', 'secondary', 'info', 'success', 'warning', 'error'] as const;
+const COLORS = [
+  'default',
+  'primary',
+  'secondary',
+  'info',
+  'success',
+  'warning',
+  'error',
+] as const;
 
 // ----------------------------------------------------------------------
 
@@ -97,11 +105,17 @@ export default function LabelView() {
               End Icon
             </Label>
 
-            <Label color="primary" startIcon={<Iconify icon="fluent:mail-24-filled" />}>
+            <Label
+              color="primary"
+              startIcon={<Iconify icon="fluent:mail-24-filled" />}
+            >
               Start Icon
             </Label>
 
-            <Label color="primary" endIcon={<Iconify icon="fluent:mail-24-filled" />}>
+            <Label
+              color="primary"
+              endIcon={<Iconify icon="fluent:mail-24-filled" />}
+            >
               End Icon
             </Label>
           </ComponentBlock>

@@ -21,7 +21,11 @@ export default function HomeColorPresets() {
   const renderDescription = (
     <Stack spacing={3} sx={{ textAlign: 'center' }}>
       <m.div variants={varFade().inDown}>
-        <Typography component="div" variant="overline" sx={{ color: 'text.disabled' }}>
+        <Typography
+          component="div"
+          variant="overline"
+          sx={{ color: 'text.disabled' }}
+        >
           choose your style
         </Typography>
       </m.div>
@@ -40,7 +44,11 @@ export default function HomeColorPresets() {
 
   const renderContent = (
     <Box sx={{ position: 'relative' }}>
-      <Image disabledEffect alt="grid" src="/assets/images/home/presets/grid.webp" />
+      <Image
+        disabledEffect
+        alt="grid"
+        src="/assets/images/home/presets/grid.webp"
+      />
 
       <Box sx={{ position: 'absolute', top: 0 }}>
         <m.div variants={varFade().inUp}>
@@ -54,7 +62,10 @@ export default function HomeColorPresets() {
 
       <Box sx={{ position: 'absolute', top: 0 }}>
         <m.div variants={varFade().inDown}>
-          <m.div animate={{ y: [0, -15, 0] }} transition={{ duration: 8, repeat: Infinity }}>
+          <m.div
+            animate={{ y: [0, -15, 0] }}
+            transition={{ duration: 8, repeat: Infinity }}
+          >
             <Image
               disabledEffect
               alt="sidebar"
@@ -66,7 +77,10 @@ export default function HomeColorPresets() {
 
       <Box sx={{ position: 'absolute', top: 0 }}>
         <m.div variants={varFade().inDown}>
-          <m.div animate={{ y: [-5, 10, -5] }} transition={{ duration: 8, repeat: Infinity }}>
+          <m.div
+            animate={{ y: [-5, 10, -5] }}
+            transition={{ duration: 8, repeat: Infinity }}
+          >
             <Image
               disabledEffect
               alt="chart"
@@ -78,7 +92,10 @@ export default function HomeColorPresets() {
 
       <Box sx={{ position: 'absolute', top: 0 }}>
         <m.div variants={varFade().inDown}>
-          <m.div animate={{ y: [-25, 5, -25] }} transition={{ duration: 10, repeat: Infinity }}>
+          <m.div
+            animate={{ y: [-25, 5, -25] }}
+            transition={{ duration: 10, repeat: Infinity }}
+          >
             <Image
               disabledEffect
               alt="sidebar"

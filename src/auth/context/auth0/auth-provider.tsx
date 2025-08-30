@@ -20,8 +20,14 @@ type Props = {
 };
 
 function AuthProviderWrapper({ children }: Props) {
-  const { isAuthenticated, user, isLoading, loginWithRedirect, loginWithPopup, logout } =
-    useAuth0();
+  const {
+    isAuthenticated,
+    user,
+    isLoading,
+    loginWithRedirect,
+    loginWithPopup,
+    logout,
+  } = useAuth0();
 
   const [popupClick, setPopupClick] = useState(true);
 
@@ -44,7 +50,9 @@ function AuthProviderWrapper({ children }: Props) {
 
   // ----------------------------------------------------------------------
 
-  const checkAuthenticated = isAuthenticated ? 'authenticated' : 'unauthenticated';
+  const checkAuthenticated = isAuthenticated
+    ? 'authenticated'
+    : 'unauthenticated';
 
   const status = popupClick && isLoading ? 'loading' : checkAuthenticated;
 
@@ -68,7 +76,11 @@ function AuthProviderWrapper({ children }: Props) {
     [handleLoginWithPopup, handleLogout, loginWithRedirect, status, user]
   );
 
-  return <AuthContext.Provider value={memoizedValue}>{children}</AuthContext.Provider>;
+  return (
+    <AuthContext.Provider value={memoizedValue}>
+      {children}
+    </AuthContext.Provider>
+  );
 }
 
 // ----------------------------------------------------------------------

@@ -19,7 +19,11 @@ import Iconify from 'src/components/iconify';
 import Scrollbar from 'src/components/scrollbar';
 import { ColorPicker } from 'src/components/color-utils';
 
-import { ICalendarEvent, ICalendarFilters, ICalendarFilterValue } from 'src/types/calendar';
+import {
+  ICalendarEvent,
+  ICalendarFilters,
+  ICalendarFilterValue,
+} from 'src/types/calendar';
 
 // ----------------------------------------------------------------------
 
@@ -119,7 +123,11 @@ export default function CalendarFilters({
       <Typography variant="subtitle2">Range</Typography>
 
       <Stack spacing={2}>
-        <DatePicker label="Start date" value={filters.startDate} onChange={handleFilterStartDate} />
+        <DatePicker
+          label="Start date"
+          value={filters.startDate}
+          onChange={handleFilterStartDate}
+        />
 
         <DatePicker
           label="End date"

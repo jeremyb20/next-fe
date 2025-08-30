@@ -2,7 +2,11 @@ import Box from '@mui/material/Box';
 import { useTheme } from '@mui/material/styles';
 
 import Image from 'src/components/image';
-import Carousel, { useCarousel, CarouselDots, CarouselArrows } from 'src/components/carousel';
+import Carousel, {
+  useCarousel,
+  CarouselDots,
+  CarouselArrows,
+} from 'src/components/carousel';
 
 // ----------------------------------------------------------------------
 
@@ -36,7 +40,12 @@ export default function CarouselBasic3({ data }: Props) {
         },
       }}
     >
-      <CarouselArrows filled shape="rounded" onNext={carousel.onNext} onPrev={carousel.onPrev}>
+      <CarouselArrows
+        filled
+        shape="rounded"
+        onNext={carousel.onNext}
+        onPrev={carousel.onPrev}
+      >
         <Carousel ref={carousel.carouselRef} {...carousel.carouselSettings}>
           {data.map((item) => (
             <CarouselItem key={item.id} item={item} />

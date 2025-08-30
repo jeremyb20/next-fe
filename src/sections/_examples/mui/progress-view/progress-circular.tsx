@@ -6,7 +6,15 @@ import ComponentBlock from '../../component-block';
 
 // ----------------------------------------------------------------------
 
-const COLORS = ['inherit', 'primary', 'secondary', 'info', 'success', 'warning', 'error'] as const;
+const COLORS = [
+  'inherit',
+  'primary',
+  'secondary',
+  'info',
+  'success',
+  'warning',
+  'error',
+] as const;
 
 type CircularProps = {
   progress: number;
@@ -14,7 +22,11 @@ type CircularProps = {
 
 export default function ProgressCircular({ progress }: CircularProps) {
   const renderLabel = (text: string) => (
-    <Typography variant="overline" component="div" sx={{ color: 'text.secondary', mb: 1 }}>
+    <Typography
+      variant="overline"
+      component="div"
+      sx={{ color: 'text.secondary', mb: 1 }}
+    >
       {text}
     </Typography>
   );
@@ -38,7 +50,11 @@ export default function ProgressCircular({ progress }: CircularProps) {
           <CircularProgress color="info" variant="determinate" value={50} />
           <CircularProgress color="info" variant="determinate" value={75} />
           <CircularProgress color="info" variant="determinate" value={100} />
-          <CircularProgress color="info" variant="determinate" value={progress} />
+          <CircularProgress
+            color="info"
+            variant="determinate"
+            value={progress}
+          />
         </ComponentBlock>
       </div>
 

@@ -5,7 +5,9 @@ import Button from '@mui/material/Button';
 
 import { fDate } from 'src/utils/format-time';
 
-import CustomDateRangePicker, { useDateRangePicker } from 'src/components/custom-date-range-picker';
+import CustomDateRangePicker, {
+  useDateRangePicker,
+} from 'src/components/custom-date-range-picker';
 
 import ComponentBlock from '../../component-block';
 

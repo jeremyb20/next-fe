@@ -15,7 +15,9 @@ import { useBoolean } from 'src/hooks/use-boolean';
 
 import Iconify from 'src/components/iconify';
 import Scrollbar from 'src/components/scrollbar';
-import CustomDateRangePicker, { useDateRangePicker } from 'src/components/custom-date-range-picker';
+import CustomDateRangePicker, {
+  useDateRangePicker,
+} from 'src/components/custom-date-range-picker';
 
 import { IKanbanTask } from 'src/types/kanban';
 
@@ -68,9 +70,12 @@ export default function KanbanDetails({
 
   const rangePicker = useDateRangePicker(task.due[0], task.due[1]);
 
-  const handleChangeTaskName = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
-    setTaskName(event.target.value);
-  }, []);
+  const handleChangeTaskName = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      setTaskName(event.target.value);
+    },
+    []
+  );
 
   const handleUpdateTask = useCallback(
     (event: React.KeyboardEvent<HTMLInputElement>) => {
@@ -90,9 +95,12 @@ export default function KanbanDetails({
     [onUpdateTask, task, taskName]
   );
 
-  const handleChangeTaskDescription = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
-    setTaskDescription(event.target.value);
-  }, []);
+  const handleChangeTaskDescription = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      setTaskDescription(event.target.value);
+    },
+    []
+  );
 
   const handleChangePriority = useCallback((newValue: string) => {
     setPriority(newValue);
@@ -127,7 +135,9 @@ export default function KanbanDetails({
 
   const renderAssignee = (
     <Stack direction="row">
-      <StyledLabel sx={{ height: 40, lineHeight: '40px' }}>Assignee</StyledLabel>
+      <StyledLabel sx={{ height: 40, lineHeight: '40px' }}>
+        Assignee
+      </StyledLabel>
 
       <Stack direction="row" flexWrap="wrap" alignItems="center" spacing={1}>
         {task.assignee.map((user) => (
@@ -162,7 +172,13 @@ export default function KanbanDetails({
       {!!task.labels.length && (
         <Stack direction="row" flexWrap="wrap" alignItems="center" spacing={1}>
           {task.labels.map((label) => (
-            <Chip key={label} color="info" label={label} size="small" variant="soft" />
+            <Chip
+              key={label}
+              color="info"
+              label={label}
+              size="small"
+              variant="soft"
+            />
           ))}
         </Stack>
       )}
@@ -210,7 +226,10 @@ export default function KanbanDetails({
     <Stack direction="row" alignItems="center">
       <StyledLabel>Priority</StyledLabel>
 
-      <KanbanDetailsPriority priority={priority} onChangePriority={handleChangePriority} />
+      <KanbanDetailsPriority
+        priority={priority}
+        onChangePriority={handleChangePriority}
+      />
     </Stack>
   );
 

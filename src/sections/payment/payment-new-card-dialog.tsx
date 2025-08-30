@@ -53,7 +53,11 @@ export default function PaymentNewCardDialog({ onClose, ...other }: Props) {
                 InputProps={{
                   endAdornment: (
                     <InputAdornment position="end">
-                      <IconButton size="small" edge="end" onClick={popover.onOpen}>
+                      <IconButton
+                        size="small"
+                        edge="end"
+                        onClick={popover.onOpen}
+                      >
                         <Iconify icon="eva:info-outline" />
                       </IconButton>
                     </InputAdornment>

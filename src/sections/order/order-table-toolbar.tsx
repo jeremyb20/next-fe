@@ -22,7 +22,11 @@ type Props = {
   dateError: boolean;
 };
 
-export default function OrderTableToolbar({ filters, onFilters, dateError }: Props) {
+export default function OrderTableToolbar({
+  filters,
+  onFilters,
+  dateError,
+}: Props) {
   const popover = usePopover();
 
   const handleFilterName = useCallback(
@@ -94,7 +98,13 @@ export default function OrderTableToolbar({ filters, onFilters, dateError }: Pro
           }}
         />
 
-        <Stack direction="row" alignItems="center" spacing={2} flexGrow={1} sx={{ width: 1 }}>
+        <Stack
+          direction="row"
+          alignItems="center"
+          spacing={2}
+          flexGrow={1}
+          sx={{ width: 1 }}
+        >
           <TextField
             fullWidth
             value={filters.name}
@@ -103,7 +113,10 @@ export default function OrderTableToolbar({ filters, onFilters, dateError }: Pro
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
-                  <Iconify icon="eva:search-fill" sx={{ color: 'text.disabled' }} />
+                  <Iconify
+                    icon="eva:search-fill"
+                    sx={{ color: 'text.disabled' }}
+                  />
                 </InputAdornment>
               ),
             }}

@@ -15,7 +15,9 @@ export default function PostCommentForm() {
   const CommentSchema = Yup.object().shape({
     comment: Yup.string().required('Comment is required'),
     name: Yup.string().required('Name is required'),
-    email: Yup.string().required('Email is required').email('Email must be a valid email address'),
+    email: Yup.string()
+      .required('Email is required')
+      .email('Email must be a valid email address'),
   });
 
   const defaultValues = {
@@ -70,7 +72,11 @@ export default function PostCommentForm() {
             </IconButton>
           </Stack>
 
-          <LoadingButton type="submit" variant="contained" loading={isSubmitting}>
+          <LoadingButton
+            type="submit"
+            variant="contained"
+            loading={isSubmitting}
+          >
             Post comment
           </LoadingButton>
         </Stack>

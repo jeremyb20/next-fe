@@ -33,7 +33,13 @@ interface Props extends BoxProps {
   list: ItemProps[];
 }
 
-export default function BookingNewest({ title, subheader, list, sx, ...other }: Props) {
+export default function BookingNewest({
+  title,
+  subheader,
+  list,
+  sx,
+  ...other
+}: Props) {
   const theme = useTheme();
 
   const carousel = useCarousel({
@@ -65,7 +71,9 @@ export default function BookingNewest({ title, subheader, list, sx, ...other }: 
       <CardHeader
         title={title}
         subheader={subheader}
-        action={<CarouselArrows onNext={carousel.onNext} onPrev={carousel.onPrev} />}
+        action={
+          <CarouselArrows onNext={carousel.onNext} onPrev={carousel.onPrev} />
+        }
         sx={{
           p: 0,
           mb: 3,
@@ -88,7 +96,16 @@ type BookingItemProps = {
 };
 
 function BookingItem({ item }: BookingItemProps) {
-  const { avatarUrl, name, duration, bookedAt, guests, coverUrl, price, isHot } = item;
+  const {
+    avatarUrl,
+    name,
+    duration,
+    bookedAt,
+    guests,
+    coverUrl,
+    price,
+    isHot,
+  } = item;
 
   return (
     <Paper
@@ -130,7 +147,11 @@ function BookingItem({ item }: BookingItemProps) {
           sx={{ color: 'text.secondary', typography: 'caption' }}
         >
           <Stack direction="row" alignItems="center">
-            <Iconify width={16} icon="solar:calendar-date-bold" sx={{ mr: 0.5, flexShrink: 0 }} />
+            <Iconify
+              width={16}
+              icon="solar:calendar-date-bold"
+              sx={{ mr: 0.5, flexShrink: 0 }}
+            />
             {duration}
           </Stack>
 
@@ -158,7 +179,12 @@ function BookingItem({ item }: BookingItemProps) {
       </Label>
 
       <Box sx={{ p: 1, position: 'relative' }}>
-        <Image alt={coverUrl} src={coverUrl} ratio="1/1" sx={{ borderRadius: 1.5 }} />
+        <Image
+          alt={coverUrl}
+          src={coverUrl}
+          ratio="1/1"
+          sx={{ borderRadius: 1.5 }}
+        />
       </Box>
     </Paper>
   );

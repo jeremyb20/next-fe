@@ -26,7 +26,10 @@ function PlanStarterIcon({ ...other }: BoxProps) {
       <g transform="translate(0 -5)">
         <g transform="translate(0 9.15)">
           <g transform="translate(9.167 19.963)">
-            <path fill={PRIMARY_DARK} d="M53.333 17.467H61.666V24.953H53.333z" />
+            <path
+              fill={PRIMARY_DARK}
+              d="M53.333 17.467H61.666V24.953H53.333z"
+            />
 
             <path
               fill={PRIMARY_DARKER}

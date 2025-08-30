@@ -2,9 +2,16 @@ import { paramCase, snakeCase } from 'src/utils/change-case';
 
 // ----------------------------------------------------------------------
 
-const getHref = (category: string, name: string) => `/components/${category}/${paramCase(name)}`;
+const getHref = (category: string, name: string) =>
+  `/components/${category}/${paramCase(name)}`;
 
-export const foundationNav = ['Colors', 'Typography', 'Shadows', 'Grid', 'Icons'].map((name) => ({
+export const foundationNav = [
+  'Colors',
+  'Typography',
+  'Shadows',
+  'Grid',
+  'Icons',
+].map((name) => ({
   name,
   href: getHref('foundation', name),
   icon: `/assets/icons/components/ic_${snakeCase(name)}.svg`,

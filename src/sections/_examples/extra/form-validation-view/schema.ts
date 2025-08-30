@@ -7,7 +7,9 @@ export const FormSchema = Yup.object().shape({
     .required('Full name is required')
     .min(6, 'Mininum 6 characters')
     .max(32, 'Maximum 32 characters'),
-  email: Yup.string().required('Email is required').email('Email must be a valid email address'),
+  email: Yup.string()
+    .required('Email is required')
+    .email('Email must be a valid email address'),
   age: Yup.number()
     .required('Age is required')
     .moreThan(18, 'Age must be between 18 and 100')
@@ -28,13 +30,25 @@ export const FormSchema = Yup.object().shape({
     .required('Confirm password is required')
     .oneOf([Yup.ref('password')], "Password's not match"),
   //
-  slider: Yup.number().required('Slider is required').min(10, 'Mininum value is >= 10'),
+  slider: Yup.number()
+    .required('Slider is required')
+    .min(10, 'Mininum value is >= 10'),
   sliderRange: Yup.mixed()
     .required('Slider range is is required')
-    .test('min', 'Range must be between 20 and 80', (value: any) => value[0] >= 20)
-    .test('max', 'Range must be between 20 and 80', (value: any) => value[1] <= 80),
+    .test(
+      'min',
+      'Range must be between 20 and 80',
+      (value: any) => value[0] >= 20
+    )
+    .test(
+      'max',
+      'Range must be between 20 and 80',
+      (value: any) => value[1] <= 80
+    ),
   //
-  singleUpload: Yup.mixed<any>().nullable().required('Single upload is required'),
+  singleUpload: Yup.mixed<any>()
+    .nullable()
+    .required('Single upload is required'),
   multiUpload: Yup.array().min(2, 'Must have at least 2 items'),
   //
   checkbox: Yup.boolean().oneOf([true], 'Checkbox is required'),
@@ -49,5 +63,7 @@ export const FormSchema = Yup.object().shape({
   switch: Yup.boolean().oneOf([true], 'Switch is required'),
   radioGroup: Yup.string().required('Choose at least one option'),
   editor: Yup.string().required('Editor is required'),
-  autocomplete: Yup.mixed<any>().nullable().required('Autocomplete is required'),
+  autocomplete: Yup.mixed<any>()
+    .nullable()
+    .required('Autocomplete is required'),
 });

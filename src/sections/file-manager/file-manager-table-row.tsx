@@ -41,7 +41,12 @@ type Props = {
   onDeleteRow: VoidFunction;
 };
 
-export default function FileManagerTableRow({ row, selected, onSelectRow, onDeleteRow }: Props) {
+export default function FileManagerTableRow({
+  row,
+  selected,
+  onSelectRow,
+  onDeleteRow,
+}: Props) {
   const theme = useTheme();
 
   const { name, size, type, modifiedAt, shared, isFavorited } = row;
@@ -62,9 +67,12 @@ export default function FileManagerTableRow({ row, selected, onSelectRow, onDele
 
   const popover = usePopover();
 
-  const handleChangeInvite = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
-    setInviteEmail(event.target.value);
-  }, []);
+  const handleChangeInvite = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      setInviteEmail(event.target.value);
+    },
+    []
+  );
 
   const handleClick = useDoubleClick({
     click: () => {
@@ -102,9 +110,12 @@ export default function FileManagerTableRow({ row, selected, onSelectRow, onDele
           [`&.${tableRowClasses.selected}, &:hover`]: {
             backgroundColor: 'background.paper',
             boxShadow: theme.customShadows.z20,
-            transition: theme.transitions.create(['background-color', 'box-shadow'], {
-              duration: theme.transitions.duration.shortest,
-            }),
+            transition: theme.transitions.create(
+              ['background-color', 'box-shadow'],
+              {
+                duration: theme.transitions.duration.shortest,
+              }
+            ),
             '&:hover': {
               backgroundColor: 'background.paper',
               boxShadow: theme.customShadows.z20,
@@ -183,7 +194,11 @@ export default function FileManagerTableRow({ row, selected, onSelectRow, onDele
           >
             {shared &&
               shared.map((person) => (
-                <Avatar key={person.id} alt={person.name} src={person.avatarUrl} />
+                <Avatar
+                  key={person.id}
+                  alt={person.name}
+                  src={person.avatarUrl}
+                />
               ))}
           </AvatarGroup>
         </TableCell>
@@ -204,7 +219,10 @@ export default function FileManagerTableRow({ row, selected, onSelectRow, onDele
             sx={{ p: 0.75 }}
           />
 
-          <IconButton color={popover.open ? 'inherit' : 'default'} onClick={popover.onOpen}>
+          <IconButton
+            color={popover.open ? 'inherit' : 'default'}
+            onClick={popover.onOpen}
+          >
             <Iconify icon="eva:more-vertical-fill" />
           </IconButton>
         </TableCell>

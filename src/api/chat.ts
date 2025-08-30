@@ -22,7 +22,11 @@ const options = {
 export function useGetContacts() {
   const URL = [endpoints.chat, { params: { endpoint: 'contacts' } }];
 
-  const { data, isLoading, error, isValidating } = useSWR(URL, fetcher, options);
+  const { data, isLoading, error, isValidating } = useSWR(
+    URL,
+    fetcher,
+    options
+  );
 
   const memoizedValue = useMemo(
     () => ({
@@ -43,7 +47,11 @@ export function useGetContacts() {
 export function useGetConversations() {
   const URL = [endpoints.chat, { params: { endpoint: 'conversations' } }];
 
-  const { data, isLoading, error, isValidating } = useSWR(URL, fetcher, options);
+  const { data, isLoading, error, isValidating } = useSWR(
+    URL,
+    fetcher,
+    options
+  );
 
   const memoizedValue = useMemo(() => {
     const byId = keyBy(data?.conversations, 'id') || {};
@@ -71,7 +79,11 @@ export function useGetConversation(conversationId: string) {
     ? [endpoints.chat, { params: { conversationId, endpoint: 'conversation' } }]
     : '';
 
-  const { data, isLoading, error, isValidating } = useSWR(URL, fetcher, options);
+  const { data, isLoading, error, isValidating } = useSWR(
+    URL,
+    fetcher,
+    options
+  );
 
   const memoizedValue = useMemo(
     () => ({
@@ -88,8 +100,14 @@ export function useGetConversation(conversationId: string) {
 
 // ----------------------------------------------------------------------
 
-export async function sendMessage(conversationId: string, messageData: IChatMessage) {
-  const CONVERSATIONS_URL = [endpoints.chat, { params: { endpoint: 'conversations' } }];
+export async function sendMessage(
+  conversationId: string,
+  messageData: IChatMessage
+) {
+  const CONVERSATIONS_URL = [
+    endpoints.chat,
+    { params: { endpoint: 'conversations' } },
+  ];
 
   const CONVERSATION_URL = [
     endpoints.chat,
@@ -167,7 +185,10 @@ export async function createConversation(conversationData: IChatConversation) {
   mutate(
     URL,
     (currentData: any) => {
-      const conversations: IChatConversation[] = [...currentData.conversations, conversationData];
+      const conversations: IChatConversation[] = [
+        ...currentData.conversations,
+        conversationData,
+      ];
       return {
         ...currentData,
         conversations,
@@ -202,7 +223,9 @@ export async function clickConversation(conversationId: string) {
     (currentData: any) => {
       const conversations: IChatConversations = currentData.conversations.map(
         (conversation: IChatConversation) =>
-          conversation.id === conversationId ? { ...conversation, unreadCount: 0 } : conversation
+          conversation.id === conversationId
+            ? { ...conversation, unreadCount: 0 }
+            : conversation
       );
 
       return {

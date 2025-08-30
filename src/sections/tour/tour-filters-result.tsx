@@ -45,7 +45,9 @@ export default function TourFiltersResult({
   };
 
   const handleRemoveTourGuide = (inputValue: ITourGuide) => {
-    const newValue = filters.tourGuides.filter((item) => item.name !== inputValue.name);
+    const newValue = filters.tourGuides.filter(
+      (item) => item.name !== inputValue.name
+    );
     onFilters('tourGuides', newValue);
   };
 
@@ -63,10 +65,20 @@ export default function TourFiltersResult({
         </Box>
       </Box>
 
-      <Stack flexGrow={1} spacing={1} direction="row" flexWrap="wrap" alignItems="center">
+      <Stack
+        flexGrow={1}
+        spacing={1}
+        direction="row"
+        flexWrap="wrap"
+        alignItems="center"
+      >
         {filters.startDate && filters.endDate && (
           <Block label="Available:">
-            <Chip size="small" label={shortLabel} onDelete={handleRemoveAvailable} />
+            <Chip
+              size="small"
+              label={shortLabel}
+              onDelete={handleRemoveAvailable}
+            />
           </Block>
         )}
 

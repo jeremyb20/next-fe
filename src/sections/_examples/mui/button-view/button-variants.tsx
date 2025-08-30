@@ -9,7 +9,15 @@ import ComponentBlock from '../../component-block';
 
 // ----------------------------------------------------------------------
 
-const COLORS = ['inherit', 'primary', 'secondary', 'info', 'success', 'warning', 'error'] as const;
+const COLORS = [
+  'inherit',
+  'primary',
+  'secondary',
+  'info',
+  'success',
+  'warning',
+  'error',
+] as const;
 
 const SIZES = ['small', 'medium', 'large'] as const;
 
@@ -67,7 +75,11 @@ export default function ButtonVariant({ variant = 'text' }: Props) {
           Icon Left
         </Button>
 
-        <Button variant={variant} color="error" endIcon={<Iconify icon="ic:round-access-alarm" />}>
+        <Button
+          variant={variant}
+          color="error"
+          endIcon={<Iconify icon="ic:round-access-alarm" />}
+        >
           Icon Right
         </Button>
 

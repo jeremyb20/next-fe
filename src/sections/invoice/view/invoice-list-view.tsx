@@ -45,7 +45,11 @@ import {
   TablePaginationCustom,
 } from 'src/components/table';
 
-import { IInvoice, IInvoiceTableFilters, IInvoiceTableFilterValue } from 'src/types/invoice';
+import {
+  IInvoice,
+  IInvoiceTableFilters,
+  IInvoiceTableFilterValue,
+} from 'src/types/invoice';
 
 import InvoiceAnalytic from '../invoice-analytic';
 import InvoiceTableRow from '../invoice-table-row';
@@ -184,7 +188,9 @@ export default function InvoiceListView() {
   );
 
   const handleDeleteRows = useCallback(() => {
-    const deleteRows = tableData.filter((row) => !table.selected.includes(row.id));
+    const deleteRows = tableData.filter(
+      (row) => !table.selected.includes(row.id)
+    );
 
     enqueueSnackbar('Delete success!');
 
@@ -194,7 +200,13 @@ export default function InvoiceListView() {
       totalRowsInPage: dataInPage.length,
       totalRowsFiltered: dataFiltered.length,
     });
-  }, [dataFiltered.length, dataInPage.length, enqueueSnackbar, table, tableData]);
+  }, [
+    dataFiltered.length,
+    dataInPage.length,
+    enqueueSnackbar,
+    table,
+    tableData,
+  ]);
 
   const handleEditRow = useCallback(
     (id: string) => {
@@ -258,7 +270,13 @@ export default function InvoiceListView() {
           <Scrollbar>
             <Stack
               direction="row"
-              divider={<Divider orientation="vertical" flexItem sx={{ borderStyle: 'dashed' }} />}
+              divider={
+                <Divider
+                  orientation="vertical"
+                  flexItem
+                  sx={{ borderStyle: 'dashed' }}
+                />
+              }
               sx={{ py: 2 }}
             >
               <InvoiceAnalytic
@@ -315,7 +333,10 @@ export default function InvoiceListView() {
             onChange={handleFilterStatus}
             sx={{
               px: 2.5,
-              boxShadow: `inset 0 -2px 0 0 ${alpha(theme.palette.grey[500], 0.08)}`,
+              boxShadow: `inset 0 -2px 0 0 ${alpha(
+                theme.palette.grey[500],
+                0.08
+              )}`,
             }}
           >
             {TABS.map((tab) => (
@@ -327,7 +348,9 @@ export default function InvoiceListView() {
                 icon={
                   <Label
                     variant={
-                      ((tab.value === 'all' || tab.value === filters.status) && 'filled') || 'soft'
+                      ((tab.value === 'all' || tab.value === filters.status) &&
+                        'filled') ||
+                      'soft'
                     }
                     color={tab.color}
                   >
@@ -343,7 +366,9 @@ export default function InvoiceListView() {
             onFilters={handleFilters}
             //
             dateError={dateError}
-            serviceOptions={INVOICE_SERVICE_OPTIONS.map((option) => option.name)}
+            serviceOptions={INVOICE_SERVICE_OPTIONS.map(
+              (option) => option.name
+            )}
           />
 
           {canReset && (
@@ -399,7 +424,10 @@ export default function InvoiceListView() {
             />
 
             <Scrollbar>
-              <Table size={table.dense ? 'small' : 'medium'} sx={{ minWidth: 800 }}>
+              <Table
+                size={table.dense ? 'small' : 'medium'}
+                sx={{ minWidth: 800 }}
+              >
                 <TableHeadCustom
                   order={table.order}
                   orderBy={table.orderBy}
@@ -435,7 +463,11 @@ export default function InvoiceListView() {
 
                   <TableEmptyRows
                     height={denseHeight}
-                    emptyRows={emptyRows(table.page, table.rowsPerPage, dataFiltered.length)}
+                    emptyRows={emptyRows(
+                      table.page,
+                      table.rowsPerPage,
+                      dataFiltered.length
+                    )}
                   />
 
                   <TableNoData notFound={notFound} />
@@ -463,7 +495,8 @@ export default function InvoiceListView() {
         title="Delete"
         content={
           <>
-            Are you sure want to delete <strong> {table.selected.length} </strong> items?
+            Are you sure want to delete{' '}
+            <strong> {table.selected.length} </strong> items?
           </>
         }
         action={
@@ -511,7 +544,8 @@ function applyFilter({
   if (name) {
     inputData = inputData.filter(
       (invoice) =>
-        invoice.invoiceNumber.toLowerCase().indexOf(name.toLowerCase()) !== -1 ||
+        invoice.invoiceNumber.toLowerCase().indexOf(name.toLowerCase()) !==
+          -1 ||
         invoice.invoiceTo.name.toLowerCase().indexOf(name.toLowerCase()) !== -1
     );
   }
@@ -528,7 +562,9 @@ function applyFilter({
 
   if (!dateError) {
     if (startDate && endDate) {
-      inputData = inputData.filter((invoice) => isBetween(invoice.createDate, startDate, endDate));
+      inputData = inputData.filter((invoice) =>
+        isBetween(invoice.createDate, startDate, endDate)
+      );
     }
   }
 

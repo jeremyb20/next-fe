@@ -232,7 +232,11 @@ export default function ReactHookForm({ debug }: Props) {
                       <InputAdornment position="end">
                         <IconButton onClick={password.onToggle} edge="end">
                           <Iconify
-                            icon={password.value ? 'solar:eye-bold' : 'solar:eye-closed-bold'}
+                            icon={
+                              password.value
+                                ? 'solar:eye-bold'
+                                : 'solar:eye-closed-bold'
+                            }
                           />
                         </IconButton>
                       </InputAdornment>
@@ -251,7 +255,11 @@ export default function ReactHookForm({ debug }: Props) {
                       <InputAdornment position="end">
                         <IconButton onClick={password.onToggle} edge="end">
                           <Iconify
-                            icon={password.value ? 'solar:eye-bold' : 'solar:eye-closed-bold'}
+                            icon={
+                              password.value
+                                ? 'solar:eye-bold'
+                                : 'solar:eye-closed-bold'
+                            }
                           />
                         </IconButton>
                       </InputAdornment>
@@ -266,8 +274,12 @@ export default function ReactHookForm({ debug }: Props) {
                 name="autocomplete"
                 label="Autocomplete"
                 options={OPTIONS}
-                getOptionLabel={(option: OptionType | string) => (option as OptionType).label}
-                isOptionEqualToValue={(option, value) => option.value === value.value}
+                getOptionLabel={(option: OptionType | string) =>
+                  (option as OptionType).label
+                }
+                isOptionEqualToValue={(option, value) =>
+                  option.value === value.value
+                }
                 renderOption={(props, option) => (
                   <li {...props} key={option.value}>
                     {option.label}
@@ -335,7 +347,9 @@ export default function ReactHookForm({ debug }: Props) {
                 name="singleUpload"
                 maxSize={3145728}
                 onDrop={handleDropSingleFile}
-                onDelete={() => setValue('singleUpload', null, { shouldValidate: true })}
+                onDelete={() =>
+                  setValue('singleUpload', null, { shouldValidate: true })
+                }
               />
             </Block>
 
@@ -349,11 +363,14 @@ export default function ReactHookForm({ debug }: Props) {
                 onRemove={(inputFile) =>
                   setValue(
                     'multiUpload',
-                    values.multiUpload && values.multiUpload?.filter((file) => file !== inputFile),
+                    values.multiUpload &&
+                      values.multiUpload?.filter((file) => file !== inputFile),
                     { shouldValidate: true }
                   )
                 }
-                onRemoveAll={() => setValue('multiUpload', [], { shouldValidate: true })}
+                onRemoveAll={() =>
+                  setValue('multiUpload', [], { shouldValidate: true })
+                }
                 onUpload={() => console.info('ON UPLOAD')}
               />
             </Block>

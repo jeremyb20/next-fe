@@ -5,7 +5,14 @@ import Box, { BoxProps } from '@mui/material/Box';
 // ----------------------------------------------------------------------
 
 export interface ScrollProgressProps extends BoxProps {
-  color?: 'inherit' | 'primary' | 'secondary' | 'info' | 'success' | 'warning' | 'error';
+  color?:
+    | 'inherit'
+    | 'primary'
+    | 'secondary'
+    | 'info'
+    | 'success'
+    | 'warning'
+    | 'error';
   size?: number;
   scrollYProgress: MotionValue<number>;
 }

@@ -31,12 +31,19 @@ type Props = {
   assignee?: IKanbanAssignee[];
 };
 
-export default function KanbanContactsDialog({ assignee = [], open, onClose }: Props) {
+export default function KanbanContactsDialog({
+  assignee = [],
+  open,
+  onClose,
+}: Props) {
   const [searchContact, setSearchContact] = useState('');
 
-  const handleSearchContacts = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchContact(event.target.value);
-  }, []);
+  const handleSearchContacts = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      setSearchContact(event.target.value);
+    },
+    []
+  );
 
   const dataFiltered = applyFilter({
     inputData: _contacts,
@@ -60,7 +67,10 @@ export default function KanbanContactsDialog({ assignee = [], open, onClose }: P
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
-                <Iconify icon="eva:search-fill" sx={{ color: 'text.disabled' }} />
+                <Iconify
+                  icon="eva:search-fill"
+                  sx={{ color: 'text.disabled' }}
+                />
               </InputAdornment>
             ),
           }}
@@ -78,7 +88,9 @@ export default function KanbanContactsDialog({ assignee = [], open, onClose }: P
             }}
           >
             {dataFiltered.map((contact) => {
-              const checked = assignee.map((person) => person.name).includes(contact.name);
+              const checked = assignee
+                .map((person) => person.name)
+                .includes(contact.name);
 
               return (
                 <ListItem
@@ -91,7 +103,9 @@ export default function KanbanContactsDialog({ assignee = [], open, onClose }: P
                       startIcon={
                         <Iconify
                           width={16}
-                          icon={checked ? 'eva:checkmark-fill' : 'mingcute:add-line'}
+                          icon={
+                            checked ? 'eva:checkmark-fill' : 'mingcute:add-line'
+                          }
                           sx={{ mr: -0.5 }}
                         />
                       }
@@ -126,7 +140,13 @@ export default function KanbanContactsDialog({ assignee = [], open, onClose }: P
 
 // ----------------------------------------------------------------------
 
-function applyFilter({ inputData, query }: { inputData: IKanbanAssignee[]; query: string }) {
+function applyFilter({
+  inputData,
+  query,
+}: {
+  inputData: IKanbanAssignee[];
+  query: string;
+}) {
   if (query) {
     inputData = inputData.filter(
       (contact) =>

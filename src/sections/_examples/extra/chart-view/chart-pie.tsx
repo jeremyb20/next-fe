@@ -41,6 +41,13 @@ export default function ChartPie({ series }: Props) {
   });
 
   return (
-    <Chart dir="ltr" type="pie" series={series} options={chartOptions} width={400} height="auto" />
+    <Chart
+      dir="ltr"
+      type="pie"
+      series={series}
+      options={chartOptions}
+      width={400}
+      height="auto"
+    />
   );
 }

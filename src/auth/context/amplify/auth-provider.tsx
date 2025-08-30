@@ -157,7 +157,12 @@ export function AuthProvider({ children }: Props) {
 
   // REGISTER
   const register = useCallback(
-    async (email: string, password: string, firstName: string, lastName: string) => {
+    async (
+      email: string,
+      password: string,
+      firstName: string,
+      lastName: string
+    ) => {
       await signUp({
         username: email,
         password,
@@ -202,13 +207,16 @@ export function AuthProvider({ children }: Props) {
   }, []);
 
   // NEW PASSWORD
-  const newPassword = useCallback(async (email: string, code: string, password: string) => {
-    await confirmResetPassword({
-      username: email,
-      confirmationCode: code,
-      newPassword: password,
-    });
-  }, []);
+  const newPassword = useCallback(
+    async (email: string, code: string, password: string) => {
+      await confirmResetPassword({
+        username: email,
+        confirmationCode: code,
+        newPassword: password,
+      });
+    },
+    []
+  );
 
   // ----------------------------------------------------------------------
 
@@ -246,5 +254,9 @@ export function AuthProvider({ children }: Props) {
     ]
   );
 
-  return <AuthContext.Provider value={memoizedValue}>{children}</AuthContext.Provider>;
+  return (
+    <AuthContext.Provider value={memoizedValue}>
+      {children}
+    </AuthContext.Provider>
+  );
 }

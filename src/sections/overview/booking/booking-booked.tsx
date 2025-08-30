@@ -19,7 +19,12 @@ interface Props extends CardProps {
   }[];
 }
 
-export default function BookingBooked({ title, subheader, data, ...other }: Props) {
+export default function BookingBooked({
+  title,
+  subheader,
+  data,
+  ...other
+}: Props) {
   return (
     <Card {...other}>
       <CardHeader title={title} subheader={subheader} />
@@ -34,7 +39,9 @@ export default function BookingBooked({ title, subheader, data, ...other }: Prop
               sx={{ mb: 1 }}
             >
               <Box sx={{ typography: 'overline' }}>{progress.status}</Box>
-              <Box sx={{ typography: 'subtitle1' }}>{fShortenNumber(progress.quantity)}</Box>
+              <Box sx={{ typography: 'subtitle1' }}>
+                {fShortenNumber(progress.quantity)}
+              </Box>
             </Stack>
 
             <LinearProgress

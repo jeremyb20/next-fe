@@ -67,9 +67,12 @@ function Searchbar() {
     [handleClose, router]
   );
 
-  const handleSearch = useCallback((event: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setSearchQuery(event.target.value);
-  }, []);
+  const handleSearch = useCallback(
+    (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+      setSearchQuery(event.target.value);
+    },
+    []
+  );
 
   const dataFiltered = applyFilter({
     inputData: getAllItems({ data: navData }),
@@ -112,7 +115,11 @@ function Searchbar() {
         <Iconify icon="eva:search-fill" />
       </IconButton>
 
-      {lgUp && <Label sx={{ px: 0.75, fontSize: 12, color: 'text.secondary' }}>⌘K</Label>}
+      {lgUp && (
+        <Label sx={{ px: 0.75, fontSize: 12, color: 'text.secondary' }}>
+          ⌘K
+        </Label>
+      )}
     </Stack>
   );
 
@@ -150,10 +157,18 @@ function Searchbar() {
             onChange={handleSearch}
             startAdornment={
               <InputAdornment position="start">
-                <Iconify icon="eva:search-fill" width={24} sx={{ color: 'text.disabled' }} />
+                <Iconify
+                  icon="eva:search-fill"
+                  width={24}
+                  sx={{ color: 'text.disabled' }}
+                />
               </InputAdornment>
             }
-            endAdornment={<Label sx={{ letterSpacing: 1, color: 'text.secondary' }}>esc</Label>}
+            endAdornment={
+              <Label sx={{ letterSpacing: 1, color: 'text.secondary' }}>
+                esc
+              </Label>
+            }
             inputProps={{
               sx: { typography: 'h6' },
             }}
@@ -161,7 +176,11 @@ function Searchbar() {
         </Box>
 
         <Scrollbar sx={{ p: 3, pt: 2, height: 400 }}>
-          {notFound ? <SearchNotFound query={searchQuery} sx={{ py: 10 }} /> : renderItems()}
+          {notFound ? (
+            <SearchNotFound query={searchQuery} sx={{ py: 10 }} />
+          ) : (
+            renderItems()
+          )}
         </Scrollbar>
       </Dialog>
     </>

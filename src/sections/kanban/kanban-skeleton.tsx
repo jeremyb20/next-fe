@@ -23,7 +23,9 @@ export function KanbanColumnSkeleton({ index, sx, ...other }: Props) {
     >
       <Stack spacing={2} sx={{ width: 280 }}>
         <Skeleton sx={{ paddingTop: '75%', borderRadius: 1.5 }} />
-        {[0].includes(Number(index)) && <Skeleton sx={{ paddingTop: '50%', borderRadius: 1.5 }} />}
+        {[0].includes(Number(index)) && (
+          <Skeleton sx={{ paddingTop: '50%', borderRadius: 1.5 }} />
+        )}
         {[0, 1].includes(Number(index)) && (
           <Skeleton sx={{ paddingTop: '25%', borderRadius: 1.5 }} />
         )}

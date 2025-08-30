@@ -20,7 +20,12 @@ interface Props extends CardProps {
   data: ItemProps[];
 }
 
-export default function EcommerceSalesOverview({ title, subheader, data, ...other }: Props) {
+export default function EcommerceSalesOverview({
+  title,
+  subheader,
+  data,
+  ...other
+}: Props) {
   return (
     <Card {...other}>
       <CardHeader title={title} subheader={subheader} />
@@ -48,7 +53,9 @@ function ProgressItem({ progress }: ProgressItemProps) {
           {progress.label}
         </Typography>
 
-        <Typography variant="subtitle2">{fCurrency(progress.totalAmount)}</Typography>
+        <Typography variant="subtitle2">
+          {fCurrency(progress.totalAmount)}
+        </Typography>
 
         <Typography variant="body2" sx={{ color: 'text.secondary' }}>
           &nbsp;({fPercent(progress.value)})

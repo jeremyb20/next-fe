@@ -28,9 +28,15 @@ export default function CheckoutView() {
         Checkout
       </Typography>
 
-      <Grid container justifyContent={checkout.completed ? 'center' : 'flex-start'}>
+      <Grid
+        container
+        justifyContent={checkout.completed ? 'center' : 'flex-start'}
+      >
         <Grid xs={12} md={8}>
-          <CheckoutSteps activeStep={checkout.activeStep} steps={PRODUCT_CHECKOUT_STEPS} />
+          <CheckoutSteps
+            activeStep={checkout.activeStep}
+            steps={PRODUCT_CHECKOUT_STEPS}
+          />
         </Grid>
       </Grid>
 

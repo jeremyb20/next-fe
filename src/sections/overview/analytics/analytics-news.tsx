@@ -27,7 +27,12 @@ interface Props extends CardProps {
   list: ItemProps[];
 }
 
-export default function AnalyticsNews({ title, subheader, list, ...other }: Props) {
+export default function AnalyticsNews({
+  title,
+  subheader,
+  list,
+  ...other
+}: Props) {
   return (
     <Card {...other}>
       <CardHeader title={title} subheader={subheader} sx={{ mb: 1 }} />
@@ -42,7 +47,13 @@ export default function AnalyticsNews({ title, subheader, list, ...other }: Prop
         <Button
           size="small"
           color="inherit"
-          endIcon={<Iconify icon="eva:arrow-ios-forward-fill" width={18} sx={{ ml: -0.5 }} />}
+          endIcon={
+            <Iconify
+              icon="eva:arrow-ios-forward-fill"
+              width={18}
+              sx={{ ml: -0.5 }}
+            />
+          }
         >
           View All
         </Button>
@@ -93,7 +104,9 @@ function NewsItem({ news }: NewsItemProps) {
         }}
       />
 
-      <Box sx={{ flexShrink: 0, color: 'text.disabled', typography: 'caption' }}>
+      <Box
+        sx={{ flexShrink: 0, color: 'text.disabled', typography: 'caption' }}
+      >
         {fToNow(postedAt)}
       </Box>
     </Stack>

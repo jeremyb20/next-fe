@@ -24,8 +24,8 @@ export default function FormDialog() {
 
         <DialogContent>
           <Typography sx={{ mb: 3 }}>
-            To subscribe to this website, please enter your email address here. We will send updates
-            occasionally.
+            To subscribe to this website, please enter your email address here.
+            We will send updates occasionally.
           </Typography>
 
           <TextField

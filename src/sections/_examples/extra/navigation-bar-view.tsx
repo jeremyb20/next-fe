@@ -299,9 +299,19 @@ type ControlsPanelProps = {
   onChangeConfig: (name: string, value: any) => void;
 };
 
-function ControlsPanel({ config, onChangeConfig, canReset, onReset }: ControlsPanelProps) {
+function ControlsPanel({
+  config,
+  onChangeConfig,
+  canReset,
+  onReset,
+}: ControlsPanelProps) {
   return (
-    <Stack component={Paper} spacing={3} variant="outlined" sx={{ p: 3, borderRadius: 2 }}>
+    <Stack
+      component={Paper}
+      spacing={3}
+      variant="outlined"
+      sx={{ p: 3, borderRadius: 2 }}
+    >
       <Stack direction="row" alignItems="center" sx={{ width: 1 }}>
         <Typography variant="h6" sx={{ flexGrow: 1 }}>
           ControlsPanel
@@ -463,7 +473,9 @@ function ControlsPanel({ config, onChangeConfig, canReset, onReset }: ControlsPa
         control={
           <Switch
             checked={config.hiddenSubheader}
-            onClick={() => onChangeConfig('hiddenSubheader', !config.hiddenSubheader)}
+            onClick={() =>
+              onChangeConfig('hiddenSubheader', !config.hiddenSubheader)
+            }
           />
         }
         label="Hidden Subheader"

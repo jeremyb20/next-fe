@@ -15,7 +15,12 @@ import { useBoolean } from 'src/hooks/use-boolean';
 import { isAfter, isBetween } from 'src/utils/format-time';
 
 import { countries } from 'src/assets/data';
-import { _tours, _tourGuides, TOUR_SORT_OPTIONS, TOUR_SERVICE_OPTIONS } from 'src/_mock';
+import {
+  _tours,
+  _tourGuides,
+  TOUR_SORT_OPTIONS,
+  TOUR_SERVICE_OPTIONS,
+} from 'src/_mock';
 
 import Iconify from 'src/components/iconify';
 import EmptyContent from 'src/components/empty-content';
@@ -49,10 +54,12 @@ export default function TourListView() {
 
   const [sortBy, setSortBy] = useState('latest');
 
-  const [search, setSearch] = useState<{ query: string; results: ITourItem[] }>({
-    query: '',
-    results: [],
-  });
+  const [search, setSearch] = useState<{ query: string; results: ITourItem[] }>(
+    {
+      query: '',
+      results: [],
+    }
+  );
 
   const [filters, setFilters] = useState(defaultFilters);
 
@@ -97,7 +104,8 @@ export default function TourListView() {
 
       if (inputValue) {
         const results = _tours.filter(
-          (tour) => tour.name.toLowerCase().indexOf(search.query.toLowerCase()) !== -1
+          (tour) =>
+            tour.name.toLowerCase().indexOf(search.query.toLowerCase()) !== -1
         );
 
         setSearch((prevState) => ({
@@ -142,7 +150,11 @@ export default function TourListView() {
           dateError={dateError}
         />
 
-        <TourSort sort={sortBy} onSort={handleSortBy} sortOptions={TOUR_SORT_OPTIONS} />
+        <TourSort
+          sort={sortBy}
+          onSort={handleSortBy}
+          sortOptions={TOUR_SORT_OPTIONS}
+        />
       </Stack>
     </Stack>
   );
@@ -236,7 +248,9 @@ const applyFilter = ({
 
   // FILTERS
   if (destination.length) {
-    inputData = inputData.filter((tour) => destination.includes(tour.destination));
+    inputData = inputData.filter((tour) =>
+      destination.includes(tour.destination)
+    );
   }
 
   if (tourGuideIds.length) {
@@ -246,7 +260,9 @@ const applyFilter = ({
   }
 
   if (services.length) {
-    inputData = inputData.filter((tour) => tour.services.some((item) => services.includes(item)));
+    inputData = inputData.filter((tour) =>
+      tour.services.some((item) => services.includes(item))
+    );
   }
 
   if (!dateError) {

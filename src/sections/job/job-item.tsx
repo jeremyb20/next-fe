@@ -32,13 +32,25 @@ type Props = {
 export default function JobItem({ job, onView, onEdit, onDelete }: Props) {
   const popover = usePopover();
 
-  const { id, title, company, createdAt, candidates, experience, employmentTypes, salary, role } =
-    job;
+  const {
+    id,
+    title,
+    company,
+    createdAt,
+    candidates,
+    experience,
+    employmentTypes,
+    salary,
+    role,
+  } = job;
 
   return (
     <>
       <Card>
-        <IconButton onClick={popover.onOpen} sx={{ position: 'absolute', top: 8, right: 8 }}>
+        <IconButton
+          onClick={popover.onOpen}
+          sx={{ position: 'absolute', top: 8, right: 8 }}
+        >
           <Iconify icon="eva:more-vertical-fill" />
         </IconButton>
 
@@ -53,7 +65,11 @@ export default function JobItem({ job, onView, onEdit, onDelete }: Props) {
           <ListItemText
             sx={{ mb: 1 }}
             primary={
-              <Link component={RouterLink} href={paths.dashboard.job.details(id)} color="inherit">
+              <Link
+                component={RouterLink}
+                href={paths.dashboard.job.details(id)}
+                color="inherit"
+              >
                 {title}
               </Link>
             }
@@ -82,23 +98,52 @@ export default function JobItem({ job, onView, onEdit, onDelete }: Props) {
 
         <Divider sx={{ borderStyle: 'dashed' }} />
 
-        <Box rowGap={1.5} display="grid" gridTemplateColumns="repeat(2, 1fr)" sx={{ p: 3 }}>
+        <Box
+          rowGap={1.5}
+          display="grid"
+          gridTemplateColumns="repeat(2, 1fr)"
+          sx={{ p: 3 }}
+        >
           {[
             {
               label: experience,
-              icon: <Iconify width={16} icon="carbon:skill-level-basic" sx={{ flexShrink: 0 }} />,
+              icon: (
+                <Iconify
+                  width={16}
+                  icon="carbon:skill-level-basic"
+                  sx={{ flexShrink: 0 }}
+                />
+              ),
             },
             {
               label: employmentTypes.join(', '),
-              icon: <Iconify width={16} icon="solar:clock-circle-bold" sx={{ flexShrink: 0 }} />,
+              icon: (
+                <Iconify
+                  width={16}
+                  icon="solar:clock-circle-bold"
+                  sx={{ flexShrink: 0 }}
+                />
+              ),
             },
             {
               label: salary.negotiable ? 'Negotiable' : fCurrency(salary.price),
-              icon: <Iconify width={16} icon="solar:wad-of-money-bold" sx={{ flexShrink: 0 }} />,
+              icon: (
+                <Iconify
+                  width={16}
+                  icon="solar:wad-of-money-bold"
+                  sx={{ flexShrink: 0 }}
+                />
+              ),
             },
             {
               label: role,
-              icon: <Iconify width={16} icon="solar:user-rounded-bold" sx={{ flexShrink: 0 }} />,
+              icon: (
+                <Iconify
+                  width={16}
+                  icon="solar:user-rounded-bold"
+                  sx={{ flexShrink: 0 }}
+                />
+              ),
             },
           ].map((item) => (
             <Stack

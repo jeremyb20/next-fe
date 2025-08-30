@@ -83,7 +83,9 @@ export default function LightboxView() {
             },
             { name: 'Lightbox' },
           ]}
-          moreLink={['https://www.npmjs.com/package/yet-another-react-lightbox']}
+          moreLink={[
+            'https://www.npmjs.com/package/yet-another-react-lightbox',
+          ]}
         />
       </ComponentHero>
 
@@ -124,7 +126,9 @@ export default function LightboxView() {
             </Grid>
 
             <Grid xs={12} md={3}>
-              <Paper sx={{ p: 3, bgcolor: 'background.neutral', borderRadius: 2 }}>
+              <Paper
+                sx={{ p: 3, bgcolor: 'background.neutral', borderRadius: 2 }}
+              >
                 <FormControl component="fieldset" variant="standard">
                   <Stack spacing={2}>
                     <FormLabel component="legend" sx={{ typography: 'body2' }}>

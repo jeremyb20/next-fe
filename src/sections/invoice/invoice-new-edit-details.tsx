@@ -32,11 +32,14 @@ export default function InvoiceNewEditDetails() {
 
   const values = watch();
 
-  const totalOnRow = values.items.map((item: IInvoiceItem) => item.quantity * item.price);
+  const totalOnRow = values.items.map(
+    (item: IInvoiceItem) => item.quantity * item.price
+  );
 
   const subTotal = sum(totalOnRow);
 
-  const totalAmount = subTotal - values.discount - values.shipping + values.taxes;
+  const totalAmount =
+    subTotal - values.discount - values.shipping + values.taxes;
 
   useEffect(() => {
     setValue('totalAmount', totalAmount);
@@ -70,33 +73,46 @@ export default function InvoiceNewEditDetails() {
     (index: number, option: string) => {
       setValue(
         `items[${index}].price`,
-        INVOICE_SERVICE_OPTIONS.find((service) => service.name === option)?.price
+        INVOICE_SERVICE_OPTIONS.find((service) => service.name === option)
+          ?.price
       );
       setValue(
         `items[${index}].total`,
-        values.items.map((item: IInvoiceItem) => item.quantity * item.price)[index]
+        values.items.map((item: IInvoiceItem) => item.quantity * item.price)[
+          index
+        ]
       );
     },
     [setValue, values.items]
   );
 
   const handleChangeQuantity = useCallback(
-    (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, index: number) => {
+    (
+      event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+      index: number
+    ) => {
       setValue(`items[${index}].quantity`, Number(event.target.value));
       setValue(
         `items[${index}].total`,
-        values.items.map((item: IInvoiceItem) => item.quantity * item.price)[index]
+        values.items.map((item: IInvoiceItem) => item.quantity * item.price)[
+          index
+        ]
       );
     },
     [setValue, values.items]
   );
 
   const handleChangePrice = useCallback(
-    (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, index: number) => {
+    (
+      event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+      index: number
+    ) => {
       setValue(`items[${index}].price`, Number(event.target.value));
       setValue(
         `items[${index}].total`,
-        values.items.map((item: IInvoiceItem) => item.quantity * item.price)[index]
+        values.items.map((item: IInvoiceItem) => item.quantity * item.price)[
+          index
+        ]
       );
     },
     [setValue, values.items]
@@ -110,7 +126,9 @@ export default function InvoiceNewEditDetails() {
     >
       <Stack direction="row">
         <Box sx={{ color: 'text.secondary' }}>Subtotal</Box>
-        <Box sx={{ width: 160, typography: 'subtitle2' }}>{fCurrency(subTotal) || '-'}</Box>
+        <Box sx={{ width: 160, typography: 'subtitle2' }}>
+          {fCurrency(subTotal) || '-'}
+        </Box>
       </Stack>
 
       <Stack direction="row">
@@ -139,7 +157,9 @@ export default function InvoiceNewEditDetails() {
 
       <Stack direction="row">
         <Box sx={{ color: 'text.secondary' }}>Taxes</Box>
-        <Box sx={{ width: 160 }}>{values.taxes ? fCurrency(values.taxes) : '-'}</Box>
+        <Box sx={{ width: 160 }}>
+          {values.taxes ? fCurrency(values.taxes) : '-'}
+        </Box>
       </Stack>
 
       <Stack direction="row" sx={{ typography: 'subtitle1' }}>
@@ -155,10 +175,17 @@ export default function InvoiceNewEditDetails() {
         Details:
       </Typography>
 
-      <Stack divider={<Divider flexItem sx={{ borderStyle: 'dashed' }} />} spacing={3}>
+      <Stack
+        divider={<Divider flexItem sx={{ borderStyle: 'dashed' }} />}
+        spacing={3}
+      >
         {fields.map((item, index) => (
           <Stack key={item.id} alignItems="flex-end" spacing={1.5}>
-            <Stack direction={{ xs: 'column', md: 'row' }} spacing={2} sx={{ width: 1 }}>
+            <Stack
+              direction={{ xs: 'column', md: 'row' }}
+              spacing={2}
+              sx={{ width: 1 }}
+            >
               <RHFTextField
                 size="small"
                 name={`items[${index}].title`}
@@ -224,7 +251,11 @@ export default function InvoiceNewEditDetails() {
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position="start">
-                      <Box sx={{ typography: 'subtitle2', color: 'text.disabled' }}>$</Box>
+                      <Box
+                        sx={{ typography: 'subtitle2', color: 'text.disabled' }}
+                      >
+                        $
+                      </Box>
                     </InputAdornment>
                   ),
                 }}
@@ -238,12 +269,20 @@ export default function InvoiceNewEditDetails() {
                 name={`items[${index}].total`}
                 label="Total"
                 placeholder="0.00"
-                value={values.items[index].total === 0 ? '' : values.items[index].total.toFixed(2)}
+                value={
+                  values.items[index].total === 0
+                    ? ''
+                    : values.items[index].total.toFixed(2)
+                }
                 onChange={(event) => handleChangePrice(event, index)}
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position="start">
-                      <Box sx={{ typography: 'subtitle2', color: 'text.disabled' }}>$</Box>
+                      <Box
+                        sx={{ typography: 'subtitle2', color: 'text.disabled' }}
+                      >
+                        $
+                      </Box>
                     </InputAdornment>
                   ),
                 }}

@@ -63,11 +63,13 @@ export default function ProductDetailsSummary({
     subDescription,
   } = product;
 
-  const existProduct = !!items?.length && items.map((item) => item.id).includes(id);
+  const existProduct =
+    !!items?.length && items.map((item) => item.id).includes(id);
 
   const isMaxQuantity =
     !!items?.length &&
-    items.filter((item) => item.id === id).map((item) => item.quantity)[0] >= available;
+    items.filter((item) => item.id === id).map((item) => item.quantity)[0] >=
+      available;
 
   const defaultValues = {
     id,
@@ -251,7 +253,11 @@ export default function ProductDetailsSummary({
           onDecrease={() => setValue('quantity', values.quantity - 1)}
         />
 
-        <Typography variant="caption" component="div" sx={{ textAlign: 'right' }}>
+        <Typography
+          variant="caption"
+          component="div"
+          sx={{ textAlign: 'right' }}
+        >
           Available: {available}
         </Typography>
       </Stack>
@@ -273,7 +279,13 @@ export default function ProductDetailsSummary({
         Add to Cart
       </Button>
 
-      <Button fullWidth size="large" type="submit" variant="contained" disabled={disabledActions}>
+      <Button
+        fullWidth
+        size="large"
+        type="submit"
+        variant="contained"
+        disabled={disabledActions}
+      >
         Buy Now
       </Button>
     </Stack>
@@ -294,7 +306,13 @@ export default function ProductDetailsSummary({
         typography: 'body2',
       }}
     >
-      <Rating size="small" value={totalRatings} precision={0.1} readOnly sx={{ mr: 1 }} />
+      <Rating
+        size="small"
+        value={totalRatings}
+        precision={0.1}
+        readOnly
+        sx={{ mr: 1 }}
+      />
       {`(${fShortenNumber(totalReviews)} reviews)`}
     </Stack>
   );

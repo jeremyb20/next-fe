@@ -24,7 +24,12 @@ type Props = {
   hrefItem: (id: string) => string;
 };
 
-export default function TourSearch({ query, results, onSearch, hrefItem }: Props) {
+export default function TourSearch({
+  query,
+  results,
+  onSearch,
+  hrefItem,
+}: Props) {
   const router = useRouter();
 
   const handleClick = (id: string) => {
@@ -75,7 +80,10 @@ export default function TourSearch({ query, results, onSearch, hrefItem }: Props
             ...params.InputProps,
             startAdornment: (
               <InputAdornment position="start">
-                <Iconify icon="eva:search-fill" sx={{ ml: 1, color: 'text.disabled' }} />
+                <Iconify
+                  icon="eva:search-fill"
+                  sx={{ ml: 1, color: 'text.disabled' }}
+                />
               </InputAdornment>
             ),
           }}
@@ -86,7 +94,12 @@ export default function TourSearch({ query, results, onSearch, hrefItem }: Props
         const parts = parse(tour.name, matches);
 
         return (
-          <Box component="li" {...props} onClick={() => handleClick(tour.id)} key={tour.id}>
+          <Box
+            component="li"
+            {...props}
+            onClick={() => handleClick(tour.id)}
+            key={tour.id}
+          >
             <Avatar
               key={tour.id}
               alt={tour.name}
@@ -109,7 +122,9 @@ export default function TourSearch({ query, results, onSearch, hrefItem }: Props
                   color={part.highlight ? 'primary' : 'textPrimary'}
                   sx={{
                     typography: 'body2',
-                    fontWeight: part.highlight ? 'fontWeightSemiBold' : 'fontWeightMedium',
+                    fontWeight: part.highlight
+                      ? 'fontWeightSemiBold'
+                      : 'fontWeightMedium',
                   }}
                 >
                   {part.text}

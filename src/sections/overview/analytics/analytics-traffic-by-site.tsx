@@ -21,14 +21,28 @@ interface Props extends CardProps {
   }[];
 }
 
-export default function AnalyticsTrafficBySite({ title, subheader, list, ...other }: Props) {
+export default function AnalyticsTrafficBySite({
+  title,
+  subheader,
+  list,
+  ...other
+}: Props) {
   return (
     <Card {...other}>
       <CardHeader title={title} subheader={subheader} />
 
-      <Box display="grid" gap={2} gridTemplateColumns="repeat(2, 1fr)" sx={{ p: 3 }}>
+      <Box
+        display="grid"
+        gap={2}
+        gridTemplateColumns="repeat(2, 1fr)"
+        sx={{ p: 3 }}
+      >
         {list.map((site) => (
-          <Paper key={site.label} variant="outlined" sx={{ py: 2.5, textAlign: 'center' }}>
+          <Paper
+            key={site.label}
+            variant="outlined"
+            sx={{ py: 2.5, textAlign: 'center' }}
+          >
             <Iconify
               icon={site.icon}
               color={

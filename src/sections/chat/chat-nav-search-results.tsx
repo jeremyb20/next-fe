@@ -14,7 +14,11 @@ type Props = {
   onClickResult: (contact: IChatParticipant) => void;
 };
 
-export default function ChatNavSearchResults({ query, results, onClickResult }: Props) {
+export default function ChatNavSearchResults({
+  query,
+  results,
+  onClickResult,
+}: Props) {
   const totalResults = results.length;
 
   const notFound = !totalResults && !!query;

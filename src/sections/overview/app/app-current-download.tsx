@@ -41,7 +41,12 @@ interface Props extends CardProps {
   };
 }
 
-export default function AppCurrentDownload({ title, subheader, chart, ...other }: Props) {
+export default function AppCurrentDownload({
+  title,
+  subheader,
+  chart,
+  ...other
+}: Props) {
   const theme = useTheme();
 
   const { colors, series, options } = chart;

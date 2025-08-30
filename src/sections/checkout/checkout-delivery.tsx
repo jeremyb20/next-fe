@@ -18,7 +18,11 @@ type Props = CardProps & {
   onApplyShipping: (shipping: number) => void;
 };
 
-export default function CheckoutDelivery({ options, onApplyShipping, ...other }: Props) {
+export default function CheckoutDelivery({
+  options,
+  onApplyShipping,
+  ...other
+}: Props) {
   const { control } = useFormContext();
 
   return (

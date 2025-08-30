@@ -21,9 +21,12 @@ export default function KanbanColumnAdd() {
 
   const openAddColumn = useBoolean();
 
-  const handleChangeName = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
-    setColumnName(event.target.value);
-  }, []);
+  const handleChangeName = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      setColumnName(event.target.value);
+    },
+    []
+  );
 
   const handleCreateColumn = useCallback(async () => {
     try {

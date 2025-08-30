@@ -21,7 +21,11 @@ interface Props extends DialogProps {
   onDownloadPDF: VoidFunction;
 }
 
-export default function CheckoutOrderComplete({ open, onReset, onDownloadPDF }: Props) {
+export default function CheckoutOrderComplete({
+  open,
+  onReset,
+  onDownloadPDF,
+}: Props) {
   const renderContent = (
     <Stack
       spacing={5}
@@ -44,7 +48,8 @@ export default function CheckoutOrderComplete({ open, onReset, onDownloadPDF }: 
         <br />
         <br />
         We will send you a notification within 5 days when it ships.
-        <br /> If you have any question or queries then fell to get in contact us. <br /> <br />
+        <br /> If you have any question or queries then fell to get in contact
+        us. <br /> <br />
         All the best,
       </Typography>
 

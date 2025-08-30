@@ -24,7 +24,13 @@ type Props = {
   onSelect: (card: IPaymentCard | null) => void;
 };
 
-export default function PaymentCardListDialog({ open, list, onClose, selected, onSelect }: Props) {
+export default function PaymentCardListDialog({
+  open,
+  list,
+  onClose,
+  selected,
+  onSelect,
+}: Props) {
   const [searchCard, setSearchCard] = useState('');
 
   const dataFiltered = applyFilter({
@@ -34,9 +40,12 @@ export default function PaymentCardListDialog({ open, list, onClose, selected, o
 
   const notFound = !dataFiltered.length && !!searchCard;
 
-  const handleSearchAddress = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchCard(event.target.value);
-  }, []);
+  const handleSearchAddress = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      setSearchCard(event.target.value);
+    },
+    []
+  );
 
   const handleSelectCard = useCallback(
     (card: IPaymentCard | null) => {
@@ -92,24 +101,38 @@ export default function PaymentCardListDialog({ open, list, onClose, selected, o
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
-                <Iconify icon="eva:search-fill" sx={{ color: 'text.disabled' }} />
+                <Iconify
+                  icon="eva:search-fill"
+                  sx={{ color: 'text.disabled' }}
+                />
               </InputAdornment>
             ),
           }}
         />
       </Stack>
 
-      {notFound ? <SearchNotFound query={searchCard} sx={{ px: 3, pt: 5, pb: 10 }} /> : renderList}
+      {notFound ? (
+        <SearchNotFound query={searchCard} sx={{ px: 3, pt: 5, pb: 10 }} />
+      ) : (
+        renderList
+      )}
     </Dialog>
   );
 }
 
 // ----------------------------------------------------------------------
 
-function applyFilter({ inputData, query }: { inputData: IPaymentCard[]; query: string }) {
+function applyFilter({
+  inputData,
+  query,
+}: {
+  inputData: IPaymentCard[];
+  query: string;
+}) {
   if (query) {
     return inputData.filter(
-      (card) => card.cardNumber.toLowerCase().indexOf(query.toLowerCase()) !== -1
+      (card) =>
+        card.cardNumber.toLowerCase().indexOf(query.toLowerCase()) !== -1
     );
   }
 

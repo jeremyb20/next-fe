@@ -73,7 +73,8 @@ export function switches(theme: Theme) {
   return {
     MuiSwitch: {
       styleOverrides: {
-        root: ({ ownerState }: { ownerState: SwitchProps }) => rootStyles(ownerState),
+        root: ({ ownerState }: { ownerState: SwitchProps }) =>
+          rootStyles(ownerState),
       },
     },
   };

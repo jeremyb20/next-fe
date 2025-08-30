@@ -58,7 +58,8 @@ export default function NavList({ data }: NavListProps) {
                     backgroundPosition: 'center',
                     bgcolor: 'background.neutral',
                     backgroundRepeat: 'no-repeat',
-                    backgroundImage: 'url(/assets/illustrations/illustration_dashboard.png)',
+                    backgroundImage:
+                      'url(/assets/illustrations/illustration_dashboard.png)',
                     '& .label': {
                       display: 'none',
                     },

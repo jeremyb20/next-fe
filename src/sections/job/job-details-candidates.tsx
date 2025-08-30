@@ -28,12 +28,22 @@ export default function JobDetailsCandidates({ candidates }: Props) {
       }}
     >
       {candidates.map((candidate) => (
-        <Stack component={Card} direction="row" spacing={2} key={candidate.id} sx={{ p: 3 }}>
+        <Stack
+          component={Card}
+          direction="row"
+          spacing={2}
+          key={candidate.id}
+          sx={{ p: 3 }}
+        >
           <IconButton sx={{ position: 'absolute', top: 8, right: 8 }}>
             <Iconify icon="eva:more-vertical-fill" />
           </IconButton>
 
-          <Avatar alt={candidate.name} src={candidate.avatarUrl} sx={{ width: 48, height: 48 }} />
+          <Avatar
+            alt={candidate.name}
+            src={candidate.avatarUrl}
+            sx={{ width: 48, height: 48 }}
+          />
 
           <Stack spacing={2}>
             <ListItemText
@@ -96,9 +106,11 @@ export default function JobDetailsCandidates({ candidates }: Props) {
                   color="secondary"
                   sx={{
                     borderRadius: 1,
-                    bgcolor: (theme) => alpha(theme.palette.secondary.main, 0.08),
+                    bgcolor: (theme) =>
+                      alpha(theme.palette.secondary.main, 0.08),
                     '&:hover': {
-                      bgcolor: (theme) => alpha(theme.palette.secondary.main, 0.16),
+                      bgcolor: (theme) =>
+                        alpha(theme.palette.secondary.main, 0.16),
                     },
                   }}
                 >

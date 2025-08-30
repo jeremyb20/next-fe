@@ -40,7 +40,12 @@ interface Props extends CardProps {
   };
 }
 
-export default function AnalyticsCurrentSubject({ title, subheader, chart, ...other }: Props) {
+export default function AnalyticsCurrentSubject({
+  title,
+  subheader,
+  chart,
+  ...other
+}: Props) {
   const theme = useTheme();
 
   const { series, colors, categories, options } = chart;

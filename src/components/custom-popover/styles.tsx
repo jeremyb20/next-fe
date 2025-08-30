@@ -6,7 +6,10 @@ import { MenuPopoverArrowValue } from './types';
 
 // ----------------------------------------------------------------------
 
-export const StyledArrow = styled('span')<{ arrow: MenuPopoverArrowValue }>(({ arrow, theme }) => {
+export const StyledArrow = styled('span')<{ arrow: MenuPopoverArrowValue }>(({
+  arrow,
+  theme,
+}) => {
   const SIZE = 14;
 
   const POSITION = -(SIZE / 2) + 0.5;
@@ -38,7 +41,9 @@ export const StyledArrow = styled('span')<{ arrow: MenuPopoverArrowValue }>(({ a
     borderBottomLeftRadius: SIZE / 4,
     clipPath: 'polygon(0% 0%, 100% 100%, 0% 100%)',
     border: `solid 1px ${alpha(
-      theme.palette.mode === 'light' ? theme.palette.grey[500] : theme.palette.common.black,
+      theme.palette.mode === 'light'
+        ? theme.palette.grey[500]
+        : theme.palette.common.black,
       0.12
     )}`,
     ...bgBlur({

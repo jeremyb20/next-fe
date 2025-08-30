@@ -55,8 +55,8 @@ export default function WalktourView() {
         disableBeacon: true,
         content: (
           <Typography sx={{ color: 'text.secondary' }}>
-            Aenean posuere, tortor sed cursus feugiat, nunc augue blandit nunc, eu sollicitudin urna
-            dolor sagittis lacus.
+            Aenean posuere, tortor sed cursus feugiat, nunc augue blandit nunc,
+            eu sollicitudin urna dolor sagittis lacus.
           </Typography>
         ),
       },
@@ -66,10 +66,15 @@ export default function WalktourView() {
         content: (
           <Stack spacing={3}>
             <Typography sx={{ color: 'text.secondary' }}>
-              Aenean posuere, tortor sed cursus feugiat, nunc augue blandit nunc, eu sollicitudin
-              urna dolor sagittis lacus.
+              Aenean posuere, tortor sed cursus feugiat, nunc augue blandit
+              nunc, eu sollicitudin urna dolor sagittis lacus.
             </Typography>
-            <Box component="img" alt="cover" src={_mock.image.cover(3)} sx={{ borderRadius: 2 }} />
+            <Box
+              component="img"
+              alt="cover"
+              src={_mock.image.cover(3)}
+              sx={{ borderRadius: 2 }}
+            />
           </Stack>
         ),
       },
@@ -79,7 +84,9 @@ export default function WalktourView() {
         placement: 'bottom',
         content: (
           <Stack spacing={3}>
-            <Typography sx={{ color: 'text.secondary' }}>Weekly magic on your inbox</Typography>
+            <Typography sx={{ color: 'text.secondary' }}>
+              Weekly magic on your inbox
+            </Typography>
             <TextField
               variant="filled"
               fullWidth
@@ -106,8 +113,8 @@ export default function WalktourView() {
         content: (
           <Stack spacing={3}>
             <Typography sx={{ color: 'text.secondary' }}>
-              Aenean posuere, tortor sed cursus feugiat, nunc augue blandit nunc, eu sollicitudin
-              urna dolor sagittis lacus.
+              Aenean posuere, tortor sed cursus feugiat, nunc augue blandit
+              nunc, eu sollicitudin urna dolor sagittis lacus.
             </Typography>
             <Stack
               component={Paper}
@@ -115,17 +122,33 @@ export default function WalktourView() {
               divider={<Divider sx={{ borderStyle: 'dashed' }} />}
             >
               {[
-                { label: 'Wi-Fi', icon: 'solar:home-wifi-bold-duotone', defaultChecked: true },
+                {
+                  label: 'Wi-Fi',
+                  icon: 'solar:home-wifi-bold-duotone',
+                  defaultChecked: true,
+                },
                 {
                   label: 'Bluetooth',
                   icon: 'solar:bluetooth-square-bold-duotone',
                   defaultChecked: true,
                 },
-                { label: 'Airbuds', icon: 'solar:airbuds-bold-duotone', defaultChecked: false },
-                { label: 'Alarm', icon: 'solar:alarm-bold-duotone', defaultChecked: false },
+                {
+                  label: 'Airbuds',
+                  icon: 'solar:airbuds-bold-duotone',
+                  defaultChecked: false,
+                },
+                {
+                  label: 'Alarm',
+                  icon: 'solar:alarm-bold-duotone',
+                  defaultChecked: false,
+                },
               ].map((option) => (
                 <ListItem key={option.label}>
-                  <Iconify width={26} icon={option.icon} sx={{ color: 'text.secondary', mr: 2 }} />
+                  <Iconify
+                    width={26}
+                    icon={option.icon}
+                    sx={{ color: 'text.secondary', mr: 2 }}
+                  />
                   <Box
                     component="span"
                     id={`switch-list-label-${option.label}`}
@@ -175,8 +198,8 @@ export default function WalktourView() {
         content: (
           <Stack spacing={3}>
             <Typography sx={{ color: 'text.disabled' }}>
-              Aenean posuere, tortor sed cursus feugiat, nunc augue blandit nunc, eu sollicitudin
-              urna dolor sagittis lacus.
+              Aenean posuere, tortor sed cursus feugiat, nunc augue blandit
+              nunc, eu sollicitudin urna dolor sagittis lacus.
             </Typography>
             <Box
               sx={{
@@ -290,7 +313,10 @@ export default function WalktourView() {
               percent={0.6}
               total={4876}
               chart={{
-                colors: [theme.palette.warning.light, theme.palette.warning.main],
+                colors: [
+                  theme.palette.warning.light,
+                  theme.palette.warning.main,
+                ],
                 series: [40, 70, 75, 70, 50, 28, 7, 64, 38, 27],
               }}
             />
@@ -362,7 +388,10 @@ export default function WalktourView() {
           </Grid>
 
           <Grid xs={12} md={6} lg={8}>
-            <EcommerceSalesOverview title="Sales Overview" data={_ecommerceSalesOverview} />
+            <EcommerceSalesOverview
+              title="Sales Overview"
+              data={_ecommerceSalesOverview}
+            />
           </Grid>
 
           <Grid xs={12} md={6} lg={4}>

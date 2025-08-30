@@ -48,7 +48,11 @@ export default function HomeMinimal() {
         }}
       >
         <m.div variants={varFade().inUp}>
-          <Typography component="div" variant="overline" sx={{ color: 'text.disabled' }}>
+          <Typography
+            component="div"
+            variant="overline"
+            sx={{ color: 'text.disabled' }}
+          >
             Minimal UI
           </Typography>
         </m.div>
@@ -99,7 +103,9 @@ export default function HomeMinimal() {
                 {card.title}
               </Typography>
 
-              <Typography sx={{ color: 'text.secondary' }}>{card.description}</Typography>
+              <Typography sx={{ color: 'text.secondary' }}>
+                {card.description}
+              </Typography>
             </Card>
           </m.div>
         ))}

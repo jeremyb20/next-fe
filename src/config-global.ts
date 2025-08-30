@@ -18,7 +18,8 @@ export const FIREBASE_API = {
 
 export const AMPLIFY_API = {
   userPoolId: process.env.NEXT_PUBLIC_AWS_AMPLIFY_USER_POOL_ID,
-  userPoolWebClientId: process.env.NEXT_PUBLIC_AWS_AMPLIFY_USER_POOL_WEB_CLIENT_ID,
+  userPoolWebClientId:
+    process.env.NEXT_PUBLIC_AWS_AMPLIFY_USER_POOL_WEB_CLIENT_ID,
   region: process.env.NEXT_PUBLIC_AWS_AMPLIFY_REGION,
 };
 

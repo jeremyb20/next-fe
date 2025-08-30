@@ -8,7 +8,10 @@ import Stack, { StackProps } from '@mui/material/Stack';
 
 import Iconify from 'src/components/iconify';
 
-import { IProductTableFilters, IProductTableFilterValue } from 'src/types/product';
+import {
+  IProductTableFilters,
+  IProductTableFilterValue,
+} from 'src/types/product';
 
 // ----------------------------------------------------------------------
 
@@ -57,11 +60,22 @@ export default function ProductTableFiltersResult({
         </Box>
       </Box>
 
-      <Stack flexGrow={1} spacing={1} direction="row" flexWrap="wrap" alignItems="center">
+      <Stack
+        flexGrow={1}
+        spacing={1}
+        direction="row"
+        flexWrap="wrap"
+        alignItems="center"
+      >
         {!!filters.stock.length && (
           <Block label="Stock:">
             {filters.stock.map((item) => (
-              <Chip key={item} label={item} size="small" onDelete={() => handleRemoveStock(item)} />
+              <Chip
+                key={item}
+                label={item}
+                size="small"
+                onDelete={() => handleRemoveStock(item)}
+              />
             ))}
           </Block>
         )}

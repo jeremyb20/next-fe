@@ -80,7 +80,11 @@ export default function SimpleTransferList() {
         {items.map((value: number) => {
           const labelId = `transfer-list-item-${value}-label`;
           return (
-            <ListItemButton key={value} role="listitem" onClick={handleToggle(value)}>
+            <ListItemButton
+              key={value}
+              role="listitem"
+              onClick={handleToggle(value)}
+            >
               <ListItemIcon>
                 <Checkbox
                   checked={checked.indexOf(value) !== -1}
@@ -98,7 +102,12 @@ export default function SimpleTransferList() {
   );
 
   return (
-    <Grid container justifyContent="center" alignItems="center" sx={{ width: 'auto', py: 3 }}>
+    <Grid
+      container
+      justifyContent="center"
+      alignItems="center"
+      sx={{ width: 'auto', py: 3 }}
+    >
       <Grid>{customList(left)}</Grid>
 
       <Grid container direction="column" alignItems="center" sx={{ p: 3 }}>

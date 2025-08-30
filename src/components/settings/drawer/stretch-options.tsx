@@ -27,7 +27,9 @@ export default function StretchOptions({ value, onChange }: Props) {
           color: (theme) => theme.palette.primary.main,
           boxShadow: (theme) =>
             `-24px 8px 24px -4px ${alpha(
-              theme.palette.mode === 'light' ? theme.palette.grey[500] : theme.palette.common.black,
+              theme.palette.mode === 'light'
+                ? theme.palette.grey[500]
+                : theme.palette.common.black,
               0.08
             )}`,
         }),
@@ -46,7 +48,9 @@ export default function StretchOptions({ value, onChange }: Props) {
         }}
       >
         <Iconify
-          icon={value ? 'eva:arrow-ios-back-fill' : 'eva:arrow-ios-forward-fill'}
+          icon={
+            value ? 'eva:arrow-ios-back-fill' : 'eva:arrow-ios-forward-fill'
+          }
           sx={{
             color: (theme) =>
               `linear-gradient(135deg, ${theme.palette.primary.light} 0%, ${theme.palette.primary.main} 100%)`,
@@ -56,7 +60,9 @@ export default function StretchOptions({ value, onChange }: Props) {
         <Box sx={{ flexGrow: 1, borderBottom: `dashed 1.5px currentcolor` }} />
 
         <Iconify
-          icon={value ? 'eva:arrow-ios-forward-fill' : 'eva:arrow-ios-back-fill'}
+          icon={
+            value ? 'eva:arrow-ios-forward-fill' : 'eva:arrow-ios-back-fill'
+          }
           sx={{
             color: (theme) =>
               `linear-gradient(135deg, ${theme.palette.primary.light} 0%, ${theme.palette.primary.main} 100%)`,

@@ -65,11 +65,19 @@ export default function BreadcrumbsView() {
             }}
           >
             <Breadcrumbs>
-              <Link color="inherit" href="#" sx={{ display: 'flex', alignItems: 'center' }}>
+              <Link
+                color="inherit"
+                href="#"
+                sx={{ display: 'flex', alignItems: 'center' }}
+              >
                 <Iconify icon="eva:home-fill" sx={{ mr: 0.5 }} />
                 Material-UI
               </Link>
-              <Link color="inherit" href="#" sx={{ display: 'flex', alignItems: 'center' }}>
+              <Link
+                color="inherit"
+                href="#"
+                sx={{ display: 'flex', alignItems: 'center' }}
+              >
                 <Iconify icon="eva:camera-fill" sx={{ mr: 0.5 }} />
                 Core
               </Link>
@@ -141,7 +149,10 @@ export default function BreadcrumbsView() {
                 { name: 'Link4', icon: <Iconify icon="eva:cube-outline" /> },
               ]}
               action={
-                <Button variant="contained" startIcon={<Iconify icon="mingcute:add-line" />}>
+                <Button
+                  variant="contained"
+                  startIcon={<Iconify icon="mingcute:add-line" />}
+                >
                   New Product
                 </Button>
               }

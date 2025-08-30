@@ -1,9 +1,19 @@
 import { memo, useRef } from 'react';
-import Map, { Layer, Source, MapRef, LngLatLike, MapLayerMouseEvent } from 'react-map-gl';
+import Map, {
+  Layer,
+  Source,
+  MapRef,
+  LngLatLike,
+  MapLayerMouseEvent,
+} from 'react-map-gl';
 
 import { MapBoxProps } from 'src/components/map';
 
-import { clusterLayer, clusterCountLayer, unclusteredPointLayer } from './layers';
+import {
+  clusterLayer,
+  clusterCountLayer,
+  unclusteredPointLayer,
+} from './layers';
 
 // ----------------------------------------------------------------------
 
@@ -17,19 +27,22 @@ function MapClusters({ ...other }: MapBoxProps) {
 
     const mapboxSource: any = mapRef.current?.getSource('earthquakes');
 
-    mapboxSource.getClusterExpansionZoom(clusterId, (error: any, zoom: number) => {
-      if (error) {
-        return;
-      }
+    mapboxSource.getClusterExpansionZoom(
+      clusterId,
+      (error: any, zoom: number) => {
+        if (error) {
+          return;
+        }
 
-      if (feature?.geometry.type === 'Point') {
-        mapRef.current?.easeTo({
-          center: feature?.geometry.coordinates as LngLatLike | undefined,
-          zoom: Number.isNaN(zoom) ? 3 : zoom,
-          duration: 500,
-        });
+        if (feature?.geometry.type === 'Point') {
+          mapRef.current?.easeTo({
+            center: feature?.geometry.coordinates as LngLatLike | undefined,
+            zoom: Number.isNaN(zoom) ? 3 : zoom,
+            duration: 500,
+          });
+        }
       }
-    });
+    );
   };
 
   return (

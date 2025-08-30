@@ -18,7 +18,9 @@ export default function useGetNavItem({ currentUserId, conversation }: Props) {
 
   const group = participantsInConversation.length > 1;
 
-  const displayName = participantsInConversation.map((participant) => participant.name).join(', ');
+  const displayName = participantsInConversation
+    .map((participant) => participant.name)
+    .join(', ');
 
   const hasOnlineInGroup = group
     ? participantsInConversation.map((item) => item.status).includes('online')
@@ -29,7 +31,8 @@ export default function useGetNavItem({ currentUserId, conversation }: Props) {
   if (lastMessage) {
     const sender = lastMessage.senderId === currentUserId ? 'You: ' : '';
 
-    const message = lastMessage.contentType === 'image' ? 'Sent a photo' : lastMessage.body;
+    const message =
+      lastMessage.contentType === 'image' ? 'Sent a photo' : lastMessage.body;
 
     displayText = `${sender}${message}`;
   }

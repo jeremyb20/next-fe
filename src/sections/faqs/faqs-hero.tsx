@@ -40,10 +40,19 @@ export default function FaqsHero() {
           }}
         >
           <div>
-            <TextAnimate text="How" sx={{ color: 'primary.main' }} variants={varFade().inRight} />
+            <TextAnimate
+              text="How"
+              sx={{ color: 'primary.main' }}
+              variants={varFade().inRight}
+            />
             <br />
 
-            <Stack spacing={2} display="inline-flex" direction="row" sx={{ color: 'common.white' }}>
+            <Stack
+              spacing={2}
+              display="inline-flex"
+              direction="row"
+              sx={{ color: 'common.white' }}
+            >
               <TextAnimate text="can" />
               <TextAnimate text="we" />
               <TextAnimate text="help" />
@@ -58,7 +67,10 @@ export default function FaqsHero() {
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
-                    <Iconify icon="eva:search-fill" sx={{ color: 'text.disabled' }} />
+                    <Iconify
+                      icon="eva:search-fill"
+                      sx={{ color: 'text.disabled' }}
+                    />
                   </InputAdornment>
                 ),
               }}

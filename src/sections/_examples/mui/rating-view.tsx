@@ -114,7 +114,9 @@ export default function RatingView() {
             <Rating
               name="customized-color"
               defaultValue={2}
-              getLabelText={(ratingValue) => `${ratingValue} Heart${ratingValue !== 1 ? 's' : ''}`}
+              getLabelText={(ratingValue) =>
+                `${ratingValue} Heart${ratingValue !== 1 ? 's' : ''}`
+              }
               precision={0.5}
               icon={<Iconify icon="solar:heart-bold" />}
               emptyIcon={<Iconify icon="solar:heart-bold" />}
@@ -150,13 +152,20 @@ export default function RatingView() {
                 setHover(newHover);
               }}
             />
-            {value !== null && <Box sx={{ ml: 2 }}>{labels[hover !== -1 ? hover : value]}</Box>}
+            {value !== null && (
+              <Box sx={{ ml: 2 }}>{labels[hover !== -1 ? hover : value]}</Box>
+            )}
           </ComponentBlock>
 
           <ComponentBlock title="Half ratings">
             <Rating name="half-rating" defaultValue={2.5} precision={0.5} />
 
-            <Rating name="half-rating-read" defaultValue={2.5} precision={0.5} readOnly />
+            <Rating
+              name="half-rating-read"
+              defaultValue={2.5}
+              precision={0.5}
+              readOnly
+            />
           </ComponentBlock>
 
           <ComponentBlock title="Sizes">

@@ -32,9 +32,12 @@ export default function TourDetailsView({ id }: Props) {
 
   const [currentTab, setCurrentTab] = useState('content');
 
-  const handleChangeTab = useCallback((event: React.SyntheticEvent, newValue: string) => {
-    setCurrentTab(newValue);
-  }, []);
+  const handleChangeTab = useCallback(
+    (event: React.SyntheticEvent, newValue: string) => {
+      setCurrentTab(newValue);
+    },
+    []
+  );
 
   const handleChangePublish = useCallback((newValue: string) => {
     setPublish(newValue);
@@ -80,7 +83,9 @@ export default function TourDetailsView({ id }: Props) {
 
       {currentTab === 'content' && <TourDetailsContent tour={currentTour} />}
 
-      {currentTab === 'bookers' && <TourDetailsBookers bookers={currentTour?.bookers} />}
+      {currentTab === 'bookers' && (
+        <TourDetailsBookers bookers={currentTour?.bookers} />
+      )}
     </Container>
   );
 }

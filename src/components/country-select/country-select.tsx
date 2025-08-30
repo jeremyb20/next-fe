@@ -109,7 +109,9 @@ export default function CountrySelect<
               {...getTagProps({ index })}
               key={country.label}
               label={country.label}
-              icon={<Iconify icon={`circle-flags:${country.code?.toLowerCase()}`} />}
+              icon={
+                <Iconify icon={`circle-flags:${country.code?.toLowerCase()}`} />
+              }
               size="small"
               variant="soft"
             />

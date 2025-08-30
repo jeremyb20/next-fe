@@ -23,7 +23,10 @@ export function RenderCellPrice({ params }: ParamsProps) {
 
 export function RenderCellPublish({ params }: ParamsProps) {
   return (
-    <Label variant="soft" color={(params.row.publish === 'published' && 'info') || 'default'}>
+    <Label
+      variant="soft"
+      color={(params.row.publish === 'published' && 'info') || 'default'}
+    >
       {params.row.publish}
     </Label>
   );
@@ -57,7 +60,8 @@ export function RenderCellStock({ params }: ParamsProps) {
         }
         sx={{ mb: 1, height: 6, maxWidth: 80 }}
       />
-      {!!params.row.available && params.row.available} {params.row.inventoryType}
+      {!!params.row.available && params.row.available}{' '}
+      {params.row.inventoryType}
     </Stack>
   );
 }
@@ -86,7 +90,10 @@ export function RenderCellProduct({ params }: ParamsProps) {
           </Link>
         }
         secondary={
-          <Box component="div" sx={{ typography: 'body2', color: 'text.disabled' }}>
+          <Box
+            component="div"
+            sx={{ typography: 'body2', color: 'text.disabled' }}
+          >
             {params.row.category}
           </Box>
         }

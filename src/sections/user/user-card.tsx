@@ -27,7 +27,15 @@ type Props = {
 export default function UserCard({ user }: Props) {
   const theme = useTheme();
 
-  const { name, coverUrl, role, totalFollowers, totalPosts, avatarUrl, totalFollowing } = user;
+  const {
+    name,
+    coverUrl,
+    role,
+    totalFollowers,
+    totalPosts,
+    avatarUrl,
+    totalFollowing,
+  } = user;
 
   return (
     <Card sx={{ textAlign: 'center' }}>
@@ -74,7 +82,12 @@ export default function UserCard({ user }: Props) {
         secondaryTypographyProps={{ component: 'span', mt: 0.5 }}
       />
 
-      <Stack direction="row" alignItems="center" justifyContent="center" sx={{ mb: 2.5 }}>
+      <Stack
+        direction="row"
+        alignItems="center"
+        justifyContent="center"
+        sx={{ mb: 2.5 }}
+      >
         {_socials.map((social) => (
           <IconButton
             key={social.name}
@@ -98,14 +111,22 @@ export default function UserCard({ user }: Props) {
         sx={{ py: 3, typography: 'subtitle1' }}
       >
         <div>
-          <Typography variant="caption" component="div" sx={{ mb: 0.5, color: 'text.secondary' }}>
+          <Typography
+            variant="caption"
+            component="div"
+            sx={{ mb: 0.5, color: 'text.secondary' }}
+          >
             Follower
           </Typography>
           {fShortenNumber(totalFollowers)}
         </div>
 
         <div>
-          <Typography variant="caption" component="div" sx={{ mb: 0.5, color: 'text.secondary' }}>
+          <Typography
+            variant="caption"
+            component="div"
+            sx={{ mb: 0.5, color: 'text.secondary' }}
+          >
             Following
           </Typography>
 
@@ -113,7 +134,11 @@ export default function UserCard({ user }: Props) {
         </div>
 
         <div>
-          <Typography variant="caption" component="div" sx={{ mb: 0.5, color: 'text.secondary' }}>
+          <Typography
+            variant="caption"
+            component="div"
+            sx={{ mb: 0.5, color: 'text.secondary' }}
+          >
             Total Post
           </Typography>
           {fShortenNumber(totalPosts)}

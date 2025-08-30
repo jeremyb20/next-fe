@@ -147,7 +147,11 @@ export default function AddressNewForm({ open, onClose, onCreate }: Props) {
             Cancel
           </Button>
 
-          <LoadingButton type="submit" variant="contained" loading={isSubmitting}>
+          <LoadingButton
+            type="submit"
+            variant="contained"
+            loading={isSubmitting}
+          >
             Deliver to this Address
           </LoadingButton>
         </DialogActions>

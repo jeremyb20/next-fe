@@ -54,7 +54,11 @@ export default function BankingInviteFriends({
           }),
         }}
       >
-        <Stack direction="row" alignItems="center" justifyContent="space-between">
+        <Stack
+          direction="row"
+          alignItems="center"
+          justifyContent="space-between"
+        >
           <Box sx={{ whiteSpace: 'pre-line', typography: 'h4' }}>{title}</Box>
           <Box sx={{ typography: 'h2' }}>{price}</Box>
         </Stack>
@@ -65,7 +69,12 @@ export default function BankingInviteFriends({
           fullWidth
           placeholder="Email"
           endAdornment={
-            <Button color="warning" variant="contained" size="small" sx={{ mr: 0.5 }}>
+            <Button
+              color="warning"
+              variant="contained"
+              size="small"
+              sx={{ mr: 0.5 }}
+            >
               Invite
             </Button>
           }

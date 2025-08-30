@@ -5,7 +5,11 @@ import InputBase from '@mui/material/InputBase';
 import Typography from '@mui/material/Typography';
 import { alpha, styled } from '@mui/material/styles';
 
-import { MapSettings, MapSettingKeys, StyledControlPanel } from 'src/components/map';
+import {
+  MapSettings,
+  MapSettingKeys,
+  StyledControlPanel,
+} from 'src/components/map';
 
 // ----------------------------------------------------------------------
 

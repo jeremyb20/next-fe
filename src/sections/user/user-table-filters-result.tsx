@@ -56,24 +56,43 @@ export default function UserTableFiltersResult({
         </Box>
       </Box>
 
-      <Stack flexGrow={1} spacing={1} direction="row" flexWrap="wrap" alignItems="center">
+      <Stack
+        flexGrow={1}
+        spacing={1}
+        direction="row"
+        flexWrap="wrap"
+        alignItems="center"
+      >
         {filters.status !== 'all' && (
           <Block label="Status:">
-            <Chip size="small" label={filters.status} onDelete={handleRemoveStatus} />
+            <Chip
+              size="small"
+              label={filters.status}
+              onDelete={handleRemoveStatus}
+            />
           </Block>
         )}
 
         {!!filters.role.length && (
           <Block label="Role:">
             {filters.role.map((item) => (
-              <Chip key={item} label={item} size="small" onDelete={() => handleRemoveRole(item)} />
+              <Chip
+                key={item}
+                label={item}
+                size="small"
+                onDelete={() => handleRemoveRole(item)}
+              />
             ))}
           </Block>
         )}
 
         {!!filters.name && (
           <Block label="Keyword:">
-            <Chip label={filters.name} size="small" onDelete={handleRemoveKeyword} />
+            <Chip
+              label={filters.name}
+              size="small"
+              onDelete={handleRemoveKeyword}
+            />
           </Block>
         )}
 

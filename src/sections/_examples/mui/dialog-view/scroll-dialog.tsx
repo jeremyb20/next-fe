@@ -37,7 +37,11 @@ export default function ScrollDialog() {
 
   return (
     <>
-      <Button variant="outlined" onClick={handleClickOpen('paper')} sx={{ mr: 2 }}>
+      <Button
+        variant="outlined"
+        onClick={handleClickOpen('paper')}
+        sx={{ mr: 2 }}
+      >
         scroll=paper
       </Button>
 

@@ -8,7 +8,10 @@ import { bgGradient } from 'src/theme/css';
 
 import Image from 'src/components/image';
 import Lightbox, { useLightBox } from 'src/components/lightbox';
-import Carousel, { useCarousel, CarouselArrowIndex } from 'src/components/carousel';
+import Carousel, {
+  useCarousel,
+  CarouselArrowIndex,
+} from 'src/components/carousel';
 
 import { IProductItem } from 'src/types/product';
 
@@ -16,49 +19,51 @@ import { IProductItem } from 'src/types/product';
 
 const THUMB_SIZE = 64;
 
-const StyledThumbnailsContainer = styled('div')<{ length: number }>(({ length, theme }) => ({
-  position: 'relative',
-  margin: theme.spacing(0, 'auto'),
-  '& .slick-slide': {
-    lineHeight: 0,
-  },
-
-  ...(length === 1 && {
-    maxWidth: THUMB_SIZE * 1 + 16,
-  }),
-
-  ...(length === 2 && {
-    maxWidth: THUMB_SIZE * 2 + 32,
-  }),
-
-  ...((length === 3 || length === 4) && {
-    maxWidth: THUMB_SIZE * 3 + 48,
-  }),
-
-  ...(length >= 5 && {
-    maxWidth: THUMB_SIZE * 6,
-  }),
-
-  ...(length > 3 && {
-    '&:before, &:after': {
-      ...bgGradient({
-        direction: 'to left',
-        startColor: `${alpha(theme.palette.background.default, 0)} 0%`,
-        endColor: `${theme.palette.background.default} 100%`,
-      }),
-      top: 0,
-      zIndex: 9,
-      content: "''",
-      height: '100%',
-      position: 'absolute',
-      width: (THUMB_SIZE * 2) / 3,
+const StyledThumbnailsContainer = styled('div')<{ length: number }>(
+  ({ length, theme }) => ({
+    position: 'relative',
+    margin: theme.spacing(0, 'auto'),
+    '& .slick-slide': {
+      lineHeight: 0,
     },
-    '&:after': {
-      right: 0,
-      transform: 'scaleX(-1)',
-    },
-  }),
-}));
+
+    ...(length === 1 && {
+      maxWidth: THUMB_SIZE * 1 + 16,
+    }),
+
+    ...(length === 2 && {
+      maxWidth: THUMB_SIZE * 2 + 32,
+    }),
+
+    ...((length === 3 || length === 4) && {
+      maxWidth: THUMB_SIZE * 3 + 48,
+    }),
+
+    ...(length >= 5 && {
+      maxWidth: THUMB_SIZE * 6,
+    }),
+
+    ...(length > 3 && {
+      '&:before, &:after': {
+        ...bgGradient({
+          direction: 'to left',
+          startColor: `${alpha(theme.palette.background.default, 0)} 0%`,
+          endColor: `${theme.palette.background.default} 100%`,
+        }),
+        top: 0,
+        zIndex: 9,
+        content: "''",
+        height: '100%',
+        position: 'absolute',
+        width: (THUMB_SIZE * 2) / 3,
+      },
+      '&:after': {
+        right: 0,
+        transform: 'scaleX(-1)',
+      },
+    }),
+  })
+);
 
 // ----------------------------------------------------------------------
 

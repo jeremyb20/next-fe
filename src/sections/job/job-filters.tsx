@@ -181,7 +181,9 @@ export default function JobFilters({
         getOptionLabel={(option) => option}
         value={filters.roles}
         onChange={(event, newValue) => handleFilterRoles(newValue)}
-        renderInput={(params) => <TextField placeholder="Select Roles" {...params} />}
+        renderInput={(params) => (
+          <TextField placeholder="Select Roles" {...params} />
+        )}
         renderOption={(props, option) => (
           <li {...props} key={option}>
             {option}
@@ -209,7 +211,9 @@ export default function JobFilters({
       </Typography>
 
       <CountrySelect
-        placeholder={filters.locations.length ? '+ Locations' : 'Select Locations'}
+        placeholder={
+          filters.locations.length ? '+ Locations' : 'Select Locations'
+        }
         fullWidth
         multiple
         value={filters.locations}

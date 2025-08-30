@@ -11,7 +11,13 @@ import { paths } from 'src/routes/paths';
 
 import { useMockedUser } from 'src/hooks/use-mocked-user';
 
-import { _userAbout, _userFeeds, _userFriends, _userGallery, _userFollowers } from 'src/_mock';
+import {
+  _userAbout,
+  _userFeeds,
+  _userFriends,
+  _userGallery,
+  _userFollowers,
+} from 'src/_mock';
 
 import Iconify from 'src/components/iconify';
 import { useSettingsContext } from 'src/components/settings';
@@ -59,13 +65,19 @@ export default function UserProfileView() {
 
   const [currentTab, setCurrentTab] = useState('profile');
 
-  const handleChangeTab = useCallback((event: React.SyntheticEvent, newValue: string) => {
-    setCurrentTab(newValue);
-  }, []);
+  const handleChangeTab = useCallback(
+    (event: React.SyntheticEvent, newValue: string) => {
+      setCurrentTab(newValue);
+    },
+    []
+  );
 
-  const handleSearchFriends = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchFriends(event.target.value);
-  }, []);
+  const handleSearchFriends = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      setSearchFriends(event.target.value);
+    },
+    []
+  );
 
   return (
     <Container maxWidth={settings.themeStretch ? false : 'lg'}>
@@ -113,14 +125,23 @@ export default function UserProfileView() {
           }}
         >
           {TABS.map((tab) => (
-            <Tab key={tab.value} value={tab.value} icon={tab.icon} label={tab.label} />
+            <Tab
+              key={tab.value}
+              value={tab.value}
+              icon={tab.icon}
+              label={tab.label}
+            />
           ))}
         </Tabs>
       </Card>
 
-      {currentTab === 'profile' && <ProfileHome info={_userAbout} posts={_userFeeds} />}
+      {currentTab === 'profile' && (
+        <ProfileHome info={_userAbout} posts={_userFeeds} />
+      )}
 
-      {currentTab === 'followers' && <ProfileFollowers followers={_userFollowers} />}
+      {currentTab === 'followers' && (
+        <ProfileFollowers followers={_userFollowers} />
+      )}
 
       {currentTab === 'friends' && (
         <ProfileFriends

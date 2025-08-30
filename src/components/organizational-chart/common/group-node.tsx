@@ -27,7 +27,9 @@ export default function GroupNode({ node, depth, length, sx }: Props) {
   const styles = (color: ColorSchema) => ({
     bgcolor: alpha(theme.palette[color].main, 0.08),
     border: `solid 1px ${alpha(theme.palette[color].main, 0.24)}`,
-    color: lightMode ? theme.palette[color].darker : theme.palette[color].lighter,
+    color: lightMode
+      ? theme.palette[color].darker
+      : theme.palette[color].lighter,
   });
 
   const isLabel = depth === 1;
@@ -41,7 +43,10 @@ export default function GroupNode({ node, depth, length, sx }: Props) {
   const isGrMarketing = node.group === 'marketing';
 
   return (
-    <Stack sx={{ position: 'relative', display: 'inline-flex' }} alignItems="center">
+    <Stack
+      sx={{ position: 'relative', display: 'inline-flex' }}
+      alignItems="center"
+    >
       {!isLabel && (
         <Avatar
           alt={node.name}
@@ -97,7 +102,11 @@ export default function GroupNode({ node, depth, length, sx }: Props) {
           {node.name}
           {isLabel && (
             <Label
-              color={(isGrDevelopment && 'info') || (isGrMarketing && 'warning') || 'primary'}
+              color={
+                (isGrDevelopment && 'info') ||
+                (isGrMarketing && 'warning') ||
+                'primary'
+              }
               sx={{ ml: 1 }}
             >
               {length}
@@ -106,7 +115,12 @@ export default function GroupNode({ node, depth, length, sx }: Props) {
         </Typography>
 
         {!isLabel && (
-          <Typography variant="caption" component="div" noWrap sx={{ color: 'text.secondary' }}>
+          <Typography
+            variant="caption"
+            component="div"
+            noWrap
+            sx={{ color: 'text.secondary' }}
+          >
             {node.role}
           </Typography>
         )}

@@ -64,7 +64,10 @@ export default function FaqsCategory() {
       <>
         <AppBar position="absolute">
           <Toolbar>
-            <Button startIcon={<Iconify icon="solar:list-bold" />} onClick={nav.onTrue}>
+            <Button
+              startIcon={<Iconify icon="solar:list-bold" />}
+              onClick={nav.onTrue}
+            >
               Categories
             </Button>
           </Toolbar>
@@ -72,7 +75,12 @@ export default function FaqsCategory() {
         </AppBar>
 
         <Drawer open={nav.value} onClose={nav.onFalse}>
-          <Box gap={1} display="grid" gridTemplateColumns="repeat(2, 1fr)" sx={{ p: 1 }}>
+          <Box
+            gap={1}
+            display="grid"
+            gridTemplateColumns="repeat(2, 1fr)"
+            sx={{ p: 1 }}
+          >
             {CATEGORIES.map((category) => (
               <CardMobile key={category.label} category={category} />
             ))}

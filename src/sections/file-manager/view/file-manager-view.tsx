@@ -76,7 +76,9 @@ export default function FileManagerView() {
   );
 
   const canReset =
-    !!filters.name || !!filters.type.length || (!!filters.startDate && !!filters.endDate);
+    !!filters.name ||
+    !!filters.type.length ||
+    (!!filters.startDate && !!filters.endDate);
 
   const notFound = (!dataFiltered.length && canReset) || !dataFiltered.length;
 
@@ -118,7 +120,9 @@ export default function FileManagerView() {
   );
 
   const handleDeleteItems = useCallback(() => {
-    const deleteRows = tableData.filter((row) => !table.selected.includes(row.id));
+    const deleteRows = tableData.filter(
+      (row) => !table.selected.includes(row.id)
+    );
 
     enqueueSnackbar('Delete success!');
 
@@ -128,7 +132,13 @@ export default function FileManagerView() {
       totalRowsInPage: dataInPage.length,
       totalRowsFiltered: dataFiltered.length,
     });
-  }, [dataFiltered.length, dataInPage.length, enqueueSnackbar, table, tableData]);
+  }, [
+    dataFiltered.length,
+    dataInPage.length,
+    enqueueSnackbar,
+    table,
+    tableData,
+  ]);
 
   const renderFilters = (
     <Stack
@@ -148,7 +158,12 @@ export default function FileManagerView() {
         typeOptions={FILE_TYPE_OPTIONS}
       />
 
-      <ToggleButtonGroup size="small" value={view} exclusive onChange={handleChangeView}>
+      <ToggleButtonGroup
+        size="small"
+        value={view}
+        exclusive
+        onChange={handleChangeView}
+      >
         <ToggleButton value="list">
           <Iconify icon="solar:list-bold" />
         </ToggleButton>
@@ -175,7 +190,11 @@ export default function FileManagerView() {
   return (
     <>
       <Container maxWidth={settings.themeStretch ? false : 'lg'}>
-        <Stack direction="row" alignItems="center" justifyContent="space-between">
+        <Stack
+          direction="row"
+          alignItems="center"
+          justifyContent="space-between"
+        >
           <Typography variant="h4">File Manager</Typography>
           <Button
             variant="contained"
@@ -227,7 +246,10 @@ export default function FileManagerView() {
         )}
       </Container>
 
-      <FileManagerNewFolderDialog open={upload.value} onClose={upload.onFalse} />
+      <FileManagerNewFolderDialog
+        open={upload.value}
+        onClose={upload.onFalse}
+      />
 
       <ConfirmDialog
         open={confirm.value}
@@ -235,7 +257,8 @@ export default function FileManagerView() {
         title="Delete"
         content={
           <>
-            Are you sure want to delete <strong> {table.selected.length} </strong> items?
+            Are you sure want to delete{' '}
+            <strong> {table.selected.length} </strong> items?
           </>
         }
         action={
@@ -287,12 +310,16 @@ function applyFilter({
   }
 
   if (type.length) {
-    inputData = inputData.filter((file) => type.includes(fileFormat(file.type)));
+    inputData = inputData.filter((file) =>
+      type.includes(fileFormat(file.type))
+    );
   }
 
   if (!dateError) {
     if (startDate && endDate) {
-      inputData = inputData.filter((file) => isBetween(file.createdAt, startDate, endDate));
+      inputData = inputData.filter((file) =>
+        isBetween(file.createdAt, startDate, endDate)
+      );
     }
   }
 

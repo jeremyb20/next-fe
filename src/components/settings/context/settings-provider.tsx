@@ -19,8 +19,14 @@ type SettingsProviderProps = {
   defaultSettings: SettingsValueProps;
 };
 
-export function SettingsProvider({ children, defaultSettings }: SettingsProviderProps) {
-  const { state, update, reset } = useLocalStorage(STORAGE_KEY, defaultSettings);
+export function SettingsProvider({
+  children,
+  defaultSettings,
+}: SettingsProviderProps) {
+  const { state, update, reset } = useLocalStorage(
+    STORAGE_KEY,
+    defaultSettings
+  );
 
   const [openDrawer, setOpenDrawer] = useState(false);
 
@@ -78,5 +84,9 @@ export function SettingsProvider({ children, defaultSettings }: SettingsProvider
     ]
   );
 
-  return <SettingsContext.Provider value={memoizedValue}>{children}</SettingsContext.Provider>;
+  return (
+    <SettingsContext.Provider value={memoizedValue}>
+      {children}
+    </SettingsContext.Provider>
+  );
 }

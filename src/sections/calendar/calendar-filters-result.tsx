@@ -53,7 +53,13 @@ export default function CalendarFiltersResult({
         </Box>
       </Box>
 
-      <Stack flexGrow={1} spacing={1} direction="row" flexWrap="wrap" alignItems="center">
+      <Stack
+        flexGrow={1}
+        spacing={1}
+        direction="row"
+        flexWrap="wrap"
+        alignItems="center"
+      >
         {!!filters.colors.length && (
           <Block label="Colors:">
             {filters.colors.map((item) => (
@@ -68,7 +74,8 @@ export default function CalendarFiltersResult({
                       height: 18,
                       bgcolor: item,
                       borderRadius: '50%',
-                      border: (theme) => `solid 1px ${alpha(theme.palette.common.white, 0.24)}`,
+                      border: (theme) =>
+                        `solid 1px ${alpha(theme.palette.common.white, 0.24)}`,
                     }}
                   />
                 }

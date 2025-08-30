@@ -31,7 +31,12 @@ interface Props extends CardProps {
   list: ItemProps[];
 }
 
-export default function BookingCustomerReviews({ title, subheader, list, ...other }: Props) {
+export default function BookingCustomerReviews({
+  title,
+  subheader,
+  list,
+  ...other
+}: Props) {
   const carousel = useCarousel({
     adaptiveHeight: true,
   });
@@ -43,7 +48,9 @@ export default function BookingCustomerReviews({ title, subheader, list, ...othe
       <CardHeader
         title={title}
         subheader={subheader}
-        action={<CarouselArrows onNext={carousel.onNext} onPrev={carousel.onPrev} />}
+        action={
+          <CarouselArrows onNext={carousel.onNext} onPrev={carousel.onPrev} />
+        }
       />
 
       <Carousel ref={carousel.carouselRef} {...carousel.carouselSettings}>

@@ -23,7 +23,9 @@ export default function ChatNavAccount() {
 
   const popover = usePopover();
 
-  const [status, setStatus] = useState<'online' | 'alway' | 'busy' | 'offline'>('online');
+  const [status, setStatus] = useState<'online' | 'alway' | 'busy' | 'offline'>(
+    'online'
+  );
 
   const handleChangeStatus = useCallback((event: SelectChangeEvent) => {
     setStatus(event.target.value as 'online' | 'alway' | 'busy' | 'offline');
@@ -31,7 +33,10 @@ export default function ChatNavAccount() {
 
   return (
     <>
-      <Badge variant={status} anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}>
+      <Badge
+        variant={status}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+      >
         <Avatar
           src={user?.photoURL}
           alt={user?.displayName}
@@ -42,7 +47,12 @@ export default function ChatNavAccount() {
         </Avatar>
       </Badge>
 
-      <CustomPopover open={popover.open} onClose={popover.onClose} arrow="top-left" sx={{ p: 0 }}>
+      <CustomPopover
+        open={popover.open}
+        onClose={popover.onClose}
+        arrow="top-left"
+        sx={{ p: 0 }}
+      >
         <Stack
           direction="row"
           alignItems="center"

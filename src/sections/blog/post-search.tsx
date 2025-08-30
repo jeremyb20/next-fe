@@ -25,7 +25,13 @@ type Props = {
   loading?: boolean;
 };
 
-export default function PostSearch({ query, results, onSearch, hrefItem, loading }: Props) {
+export default function PostSearch({
+  query,
+  results,
+  onSearch,
+  hrefItem,
+  loading,
+}: Props) {
   const router = useRouter();
 
   const handleClick = (title: string) => {
@@ -75,12 +81,17 @@ export default function PostSearch({ query, results, onSearch, hrefItem, loading
             ...params.InputProps,
             startAdornment: (
               <InputAdornment position="start">
-                <Iconify icon="eva:search-fill" sx={{ ml: 1, color: 'text.disabled' }} />
+                <Iconify
+                  icon="eva:search-fill"
+                  sx={{ ml: 1, color: 'text.disabled' }}
+                />
               </InputAdornment>
             ),
             endAdornment: (
               <>
-                {loading ? <Iconify icon="svg-spinners:8-dots-rotate" sx={{ mr: -3 }} /> : null}
+                {loading ? (
+                  <Iconify icon="svg-spinners:8-dots-rotate" sx={{ mr: -3 }} />
+                ) : null}
                 {params.InputProps.endAdornment}
               </>
             ),
@@ -107,7 +118,11 @@ export default function PostSearch({ query, results, onSearch, hrefItem, loading
               }}
             />
 
-            <Link key={inputValue} underline="none" onClick={() => handleClick(post.title)}>
+            <Link
+              key={inputValue}
+              underline="none"
+              onClick={() => handleClick(post.title)}
+            >
               {parts.map((part, index) => (
                 <Typography
                   key={index}
@@ -115,7 +130,9 @@ export default function PostSearch({ query, results, onSearch, hrefItem, loading
                   color={part.highlight ? 'primary' : 'textPrimary'}
                   sx={{
                     typography: 'body2',
-                    fontWeight: part.highlight ? 'fontWeightSemiBold' : 'fontWeightMedium',
+                    fontWeight: part.highlight
+                      ? 'fontWeightSemiBold'
+                      : 'fontWeightMedium',
                   }}
                 >
                   {part.text}

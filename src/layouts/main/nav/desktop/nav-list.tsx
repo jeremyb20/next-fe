@@ -82,7 +82,11 @@ export default function NavList({ data }: NavListProps) {
               }}
             >
               {data.children.map((list) => (
-                <NavSubList key={list.subheader} subheader={list.subheader} data={list.items} />
+                <NavSubList
+                  key={list.subheader}
+                  subheader={list.subheader}
+                  data={list.items}
+                />
               ))}
             </Paper>
           </Fade>

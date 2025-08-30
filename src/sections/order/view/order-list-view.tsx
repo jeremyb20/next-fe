@@ -41,7 +41,11 @@ import {
   TablePaginationCustom,
 } from 'src/components/table';
 
-import { IOrderItem, IOrderTableFilters, IOrderTableFilterValue } from 'src/types/order';
+import {
+  IOrderItem,
+  IOrderTableFilters,
+  IOrderTableFilterValue,
+} from 'src/types/order';
 
 import OrderTableRow from '../order-table-row';
 import OrderTableToolbar from '../order-table-toolbar';
@@ -49,7 +53,10 @@ import OrderTableFiltersResult from '../order-table-filters-result';
 
 // ----------------------------------------------------------------------
 
-const STATUS_OPTIONS = [{ value: 'all', label: 'All' }, ...ORDER_STATUS_OPTIONS];
+const STATUS_OPTIONS = [
+  { value: 'all', label: 'All' },
+  ...ORDER_STATUS_OPTIONS,
+];
 
 const TABLE_HEAD = [
   { id: 'orderNumber', label: 'Order', width: 116 },
@@ -102,7 +109,9 @@ export default function OrderListView() {
   const denseHeight = table.dense ? 56 : 56 + 20;
 
   const canReset =
-    !!filters.name || filters.status !== 'all' || (!!filters.startDate && !!filters.endDate);
+    !!filters.name ||
+    filters.status !== 'all' ||
+    (!!filters.startDate && !!filters.endDate);
 
   const notFound = (!dataFiltered.length && canReset) || !dataFiltered.length;
 
@@ -135,7 +144,9 @@ export default function OrderListView() {
   );
 
   const handleDeleteRows = useCallback(() => {
-    const deleteRows = tableData.filter((row) => !table.selected.includes(row.id));
+    const deleteRows = tableData.filter(
+      (row) => !table.selected.includes(row.id)
+    );
 
     enqueueSnackbar('Delete success!');
 
@@ -145,7 +156,13 @@ export default function OrderListView() {
       totalRowsInPage: dataInPage.length,
       totalRowsFiltered: dataFiltered.length,
     });
-  }, [dataFiltered.length, dataInPage.length, enqueueSnackbar, table, tableData]);
+  }, [
+    dataFiltered.length,
+    dataInPage.length,
+    enqueueSnackbar,
+    table,
+    tableData,
+  ]);
 
   const handleViewRow = useCallback(
     (id: string) => {
@@ -188,7 +205,8 @@ export default function OrderListView() {
             onChange={handleFilterStatus}
             sx={{
               px: 2.5,
-              boxShadow: (theme) => `inset 0 -2px 0 0 ${alpha(theme.palette.grey[500], 0.08)}`,
+              boxShadow: (theme) =>
+                `inset 0 -2px 0 0 ${alpha(theme.palette.grey[500], 0.08)}`,
             }}
           >
             {STATUS_OPTIONS.map((tab) => (
@@ -200,7 +218,9 @@ export default function OrderListView() {
                 icon={
                   <Label
                     variant={
-                      ((tab.value === 'all' || tab.value === filters.status) && 'filled') || 'soft'
+                      ((tab.value === 'all' || tab.value === filters.status) &&
+                        'filled') ||
+                      'soft'
                     }
                     color={
                       (tab.value === 'completed' && 'success') ||
@@ -209,8 +229,11 @@ export default function OrderListView() {
                       'default'
                     }
                   >
-                    {['completed', 'pending', 'cancelled', 'refunded'].includes(tab.value)
-                      ? tableData.filter((user) => user.status === tab.value).length
+                    {['completed', 'pending', 'cancelled', 'refunded'].includes(
+                      tab.value
+                    )
+                      ? tableData.filter((user) => user.status === tab.value)
+                          .length
                       : tableData.length}
                   </Label>
                 }
@@ -258,7 +281,10 @@ export default function OrderListView() {
             />
 
             <Scrollbar>
-              <Table size={table.dense ? 'small' : 'medium'} sx={{ minWidth: 960 }}>
+              <Table
+                size={table.dense ? 'small' : 'medium'}
+                sx={{ minWidth: 960 }}
+              >
                 <TableHeadCustom
                   order={table.order}
                   orderBy={table.orderBy}
@@ -293,7 +319,11 @@ export default function OrderListView() {
 
                   <TableEmptyRows
                     height={denseHeight}
-                    emptyRows={emptyRows(table.page, table.rowsPerPage, dataFiltered.length)}
+                    emptyRows={emptyRows(
+                      table.page,
+                      table.rowsPerPage,
+                      dataFiltered.length
+                    )}
                   />
 
                   <TableNoData notFound={notFound} />
@@ -321,7 +351,8 @@ export default function OrderListView() {
         title="Delete"
         content={
           <>
-            Are you sure want to delete <strong> {table.selected.length} </strong> items?
+            Are you sure want to delete{' '}
+            <strong> {table.selected.length} </strong> items?
           </>
         }
         action={
@@ -381,7 +412,9 @@ function applyFilter({
 
   if (!dateError) {
     if (startDate && endDate) {
-      inputData = inputData.filter((order) => isBetween(order.createdAt, startDate, endDate));
+      inputData = inputData.filter((order) =>
+        isBetween(order.createdAt, startDate, endDate)
+      );
     }
   }
 

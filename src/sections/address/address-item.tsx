@@ -34,7 +34,10 @@ export default function AddressItem({ address, action, sx, ...other }: Props) {
         <Stack direction="row" alignItems="center">
           <Typography variant="subtitle2">
             {name}
-            <Box component="span" sx={{ ml: 0.5, typography: 'body2', color: 'text.secondary' }}>
+            <Box
+              component="span"
+              sx={{ ml: 0.5, typography: 'body2', color: 'text.secondary' }}
+            >
               ({addressType})
             </Box>
           </Typography>

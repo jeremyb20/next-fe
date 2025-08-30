@@ -34,7 +34,14 @@ export default function ShadowsView() {
     ['dialog', theme.customShadows.dialog],
   ];
 
-  const colorShadows = ['primary', 'secondary', 'info', 'success', 'warning', 'error'] as const;
+  const colorShadows = [
+    'primary',
+    'secondary',
+    'info',
+    'success',
+    'warning',
+    'error',
+  ] as const;
 
   return (
     <>
@@ -55,13 +62,21 @@ export default function ShadowsView() {
         <Stack spacing={5}>
           <ComponentBlock title="System">
             {systemShadows.map((shadow, index) => (
-              <ShadowCard key={shadow} title={`z${index + 1}`} sx={{ boxShadow: shadow }} />
+              <ShadowCard
+                key={shadow}
+                title={`z${index + 1}`}
+                sx={{ boxShadow: shadow }}
+              />
             ))}
           </ComponentBlock>
 
           <ComponentBlock title="Customs">
             {customShadows.map((shadow) => (
-              <ShadowCard key={shadow[0]} title={shadow[0]} sx={{ boxShadow: shadow[1] }} />
+              <ShadowCard
+                key={shadow[0]}
+                title={shadow[0]}
+                sx={{ boxShadow: shadow[1] }}
+              />
             ))}
           </ComponentBlock>
 

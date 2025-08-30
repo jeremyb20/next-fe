@@ -10,7 +10,11 @@ type Props = {
   onGoStep: (index: number) => void;
 };
 
-export default function WalktourProgressBar({ totalSteps, currentStep, onGoStep }: Props) {
+export default function WalktourProgressBar({
+  totalSteps,
+  currentStep,
+  onGoStep,
+}: Props) {
   const theme = useTheme();
 
   const barStyles = {
@@ -51,7 +55,10 @@ export default function WalktourProgressBar({ totalSteps, currentStep, onGoStep 
               '&:hover': {
                 bgcolor: 'action.hover',
                 ...(currentStep >= stepIndex && {
-                  bgcolor: alpha(theme.palette.primary.main, theme.palette.action.hoverOpacity),
+                  bgcolor: alpha(
+                    theme.palette.primary.main,
+                    theme.palette.action.hoverOpacity
+                  ),
                 }),
               },
             }}

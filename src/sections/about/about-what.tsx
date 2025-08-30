@@ -48,7 +48,14 @@ export default function AboutWhat() {
     >
       <Grid container columnSpacing={{ md: 3 }} alignItems="flex-start">
         {mdUp && (
-          <Grid container xs={12} md={6} lg={7} alignItems="center" sx={{ pr: { md: 7 } }}>
+          <Grid
+            container
+            xs={12}
+            md={6}
+            lg={7}
+            alignItems="center"
+            sx={{ pr: { md: 7 } }}
+          >
             <Grid xs={6}>
               <m.div variants={varFade().inUp}>
                 <Image
@@ -83,21 +90,32 @@ export default function AboutWhat() {
           <m.div variants={varFade().inRight}>
             <Typography
               sx={{
-                color: theme.palette.mode === 'light' ? 'text.secondary' : 'common.white',
+                color:
+                  theme.palette.mode === 'light'
+                    ? 'text.secondary'
+                    : 'common.white',
               }}
             >
-              Our theme is the most advanced and user-friendly theme you will find on the market, we
-              have documentation and video to help set your site really easily, pre-installed demos
-              you can import in one click and everything from the theme options to page content can
-              be edited from the front-end. This is the theme you are looking for.
+              Our theme is the most advanced and user-friendly theme you will
+              find on the market, we have documentation and video to help set
+              your site really easily, pre-installed demos you can import in one
+              click and everything from the theme options to page content can be
+              edited from the front-end. This is the theme you are looking for.
             </Typography>
           </m.div>
 
           <Stack spacing={3} sx={{ my: 5 }}>
             {SKILLS.map((progress, index) => (
-              <Box component={m.div} key={progress.label} variants={varFade().inRight}>
+              <Box
+                component={m.div}
+                key={progress.label}
+                variants={varFade().inRight}
+              >
                 <Stack direction="row" alignItems="center" sx={{ mb: 1 }}>
-                  <Typography variant="subtitle2" sx={{ flexGrow: 1, textAlign: 'left' }}>
+                  <Typography
+                    variant="subtitle2"
+                    sx={{ flexGrow: 1, textAlign: 'left' }}
+                  >
                     {progress.label}
                   </Typography>
 
@@ -107,7 +125,11 @@ export default function AboutWhat() {
                 </Stack>
 
                 <LinearProgress
-                  color={(index === 0 && 'primary') || (index === 1 && 'warning') || 'error'}
+                  color={
+                    (index === 0 && 'primary') ||
+                    (index === 1 && 'warning') ||
+                    'error'
+                  }
                   variant="determinate"
                   value={progress.value}
                 />

@@ -11,7 +11,11 @@ import Typography from '@mui/material/Typography';
 
 // ----------------------------------------------------------------------
 
-const steps = ['Select campaign settings', 'Create an ad group', 'Create an ad'];
+const steps = [
+  'Select campaign settings',
+  'Create an ad group',
+  'Create an ad',
+];
 
 export default function HorizontalLinearStepper() {
   const [activeStep, setActiveStep] = useState(0);
@@ -64,7 +68,9 @@ export default function HorizontalLinearStepper() {
             optional?: React.ReactNode;
           } = {};
           if (isStepOptional(index)) {
-            labelProps.optional = <Typography variant="caption">Optional</Typography>;
+            labelProps.optional = (
+              <Typography variant="caption">Optional</Typography>
+            );
           }
           if (isStepSkipped(index)) {
             stepProps.completed = false;
@@ -86,7 +92,9 @@ export default function HorizontalLinearStepper() {
               bgcolor: (theme) => alpha(theme.palette.grey[500], 0.12),
             }}
           >
-            <Typography sx={{ my: 1 }}>All steps completed - you&apos;re finished</Typography>
+            <Typography sx={{ my: 1 }}>
+              All steps completed - you&apos;re finished
+            </Typography>
           </Paper>
 
           <Box sx={{ display: 'flex' }}>
@@ -107,7 +115,12 @@ export default function HorizontalLinearStepper() {
             <Typography sx={{ my: 1 }}> Step {activeStep + 1}</Typography>
           </Paper>
           <Box sx={{ display: 'flex' }}>
-            <Button color="inherit" disabled={activeStep === 0} onClick={handleBack} sx={{ mr: 1 }}>
+            <Button
+              color="inherit"
+              disabled={activeStep === 0}
+              onClick={handleBack}
+              sx={{ mr: 1 }}
+            >
               Back
             </Button>
             <Box sx={{ flexGrow: 1 }} />

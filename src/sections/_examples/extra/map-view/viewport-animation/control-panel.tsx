@@ -20,7 +20,10 @@ export type CityProps = {
 type Props = {
   data: CityProps[];
   selectedCity: string;
-  onSelectCity: (event: React.ChangeEvent<HTMLInputElement>, city: CityProps) => void;
+  onSelectCity: (
+    event: React.ChangeEvent<HTMLInputElement>,
+    city: CityProps
+  ) => void;
 };
 
 function ControlPanel({ data, selectedCity, onSelectCity }: Props) {

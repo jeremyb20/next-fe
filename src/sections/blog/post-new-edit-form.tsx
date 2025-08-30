@@ -149,7 +149,12 @@ export default function PostNewEditForm({ currentPost }: Props) {
           <Stack spacing={3} sx={{ p: 3 }}>
             <RHFTextField name="title" label="Post Title" />
 
-            <RHFTextField name="description" label="Description" multiline rows={3} />
+            <RHFTextField
+              name="description"
+              label="Description"
+              multiline
+              rows={3}
+            />
 
             <Stack spacing={1.5}>
               <Typography variant="subtitle2">Content</Typography>
@@ -254,7 +259,10 @@ export default function PostNewEditForm({ currentPost }: Props) {
               }
             />
 
-            <FormControlLabel control={<Switch defaultChecked />} label="Enable comments" />
+            <FormControlLabel
+              control={<Switch defaultChecked />}
+              label="Enable comments"
+            />
           </Stack>
         </Card>
       </Grid>
@@ -271,7 +279,12 @@ export default function PostNewEditForm({ currentPost }: Props) {
           sx={{ flexGrow: 1, pl: 3 }}
         />
 
-        <Button color="inherit" variant="outlined" size="large" onClick={preview.onTrue}>
+        <Button
+          color="inherit"
+          variant="outlined"
+          size="large"
+          onClick={preview.onTrue}
+        >
           Preview
         </Button>
 

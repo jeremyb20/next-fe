@@ -29,7 +29,11 @@ export default function ProductSort({ sort, onSort, sortOptions }: Props) {
         onClick={popover.onOpen}
         endIcon={
           <Iconify
-            icon={popover.open ? 'eva:arrow-ios-upward-fill' : 'eva:arrow-ios-downward-fill'}
+            icon={
+              popover.open
+                ? 'eva:arrow-ios-upward-fill'
+                : 'eva:arrow-ios-downward-fill'
+            }
           />
         }
         sx={{ fontWeight: 'fontWeightSemiBold' }}
@@ -40,7 +44,11 @@ export default function ProductSort({ sort, onSort, sortOptions }: Props) {
         </Box>
       </Button>
 
-      <CustomPopover open={popover.open} onClose={popover.onClose} sx={{ width: 140 }}>
+      <CustomPopover
+        open={popover.open}
+        onClose={popover.onClose}
+        sx={{ width: 140 }}
+      >
         {sortOptions.map((option) => (
           <MenuItem
             key={option.value}

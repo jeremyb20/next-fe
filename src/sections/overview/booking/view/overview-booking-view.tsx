@@ -4,7 +4,12 @@ import { useTheme } from '@mui/material/styles';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Unstable_Grid2';
 
-import { _bookings, _bookingNew, _bookingReview, _bookingsOverview } from 'src/_mock';
+import {
+  _bookings,
+  _bookingNew,
+  _bookingReview,
+  _bookingsOverview,
+} from 'src/_mock';
 import {
   BookingIllustration,
   CheckInIllustration,
@@ -44,11 +49,19 @@ export default function OverviewBookingView() {
         </Grid>
 
         <Grid xs={12} md={4}>
-          <BookingWidgetSummary title="Sold" total={311000} icon={<CheckInIllustration />} />
+          <BookingWidgetSummary
+            title="Sold"
+            total={311000}
+            icon={<CheckInIllustration />}
+          />
         </Grid>
 
         <Grid xs={12} md={4}>
-          <BookingWidgetSummary title="Canceled" total={124000} icon={<CheckoutIllustration />} />
+          <BookingWidgetSummary
+            title="Canceled"
+            total={124000}
+            icon={<CheckoutIllustration />}
+          />
         </Grid>
 
         <Grid container xs={12}>
@@ -93,8 +106,21 @@ export default function OverviewBookingView() {
                 title="Statistics"
                 subheader="(+43% Sold | +12% Canceled) than last year"
                 chart={{
-                  colors: [theme.palette.primary.main, theme.palette.error.light],
-                  categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'],
+                  colors: [
+                    theme.palette.primary.main,
+                    theme.palette.error.light,
+                  ],
+                  categories: [
+                    'Jan',
+                    'Feb',
+                    'Mar',
+                    'Apr',
+                    'May',
+                    'Jun',
+                    'Jul',
+                    'Aug',
+                    'Sep',
+                  ],
                   series: [
                     {
                       type: 'Week',
@@ -162,7 +188,11 @@ export default function OverviewBookingView() {
         </Grid>
 
         <Grid xs={12}>
-          <BookingNewest title="Newest Booking" subheader="12 Booking" list={_bookingNew} />
+          <BookingNewest
+            title="Newest Booking"
+            subheader="12 Booking"
+            list={_bookingNew}
+          />
         </Grid>
 
         <Grid xs={12}>

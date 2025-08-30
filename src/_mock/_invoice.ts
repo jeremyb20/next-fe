@@ -19,7 +19,8 @@ export const INVOICE_SERVICE_OPTIONS = [...Array(8)].map((_, index) => ({
 }));
 
 const ITEMS = [...Array(3)].map((__, index) => {
-  const total = INVOICE_SERVICE_OPTIONS[index].price * _mock.number.nativeS(index);
+  const total =
+    INVOICE_SERVICE_OPTIONS[index].price * _mock.number.nativeS(index);
 
   return {
     id: _mock.id(index),
@@ -39,12 +40,18 @@ export const _invoices = [...Array(20)].map((_, index) => {
 
   const shipping = _mock.number.price(index + 3);
 
-  const subTotal = ITEMS.reduce((accumulator, item) => accumulator + item.price * item.quantity, 0);
+  const subTotal = ITEMS.reduce(
+    (accumulator, item) => accumulator + item.price * item.quantity,
+    0
+  );
 
   const totalAmount = subTotal - shipping - discount + taxes;
 
   const status =
-    (index % 2 && 'paid') || (index % 3 && 'pending') || (index % 4 && 'overdue') || 'draft';
+    (index % 2 && 'paid') ||
+    (index % 3 && 'pending') ||
+    (index % 4 && 'overdue') ||
+    'draft';
 
   return {
     id: _mock.id(index),

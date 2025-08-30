@@ -11,7 +11,10 @@ import SvgColor from 'src/components/svg-color';
 // ----------------------------------------------------------------------
 
 const icon = (name: string) => (
-  <SvgColor src={`/assets/icons/navbar/${name}.svg`} sx={{ width: 1, height: 1 }} />
+  <SvgColor
+    src={`/assets/icons/navbar/${name}.svg`}
+    sx={{ width: 1, height: 1 }}
+  />
   // OR
   // <Iconify icon="fluent:mail-24-filled" />
   // https://icon-sets.iconify.design/solar/
@@ -292,7 +295,10 @@ export function useNavData() {
             path: '#label',
             icon: ICONS.label,
             info: (
-              <Label color="info" startIcon={<Iconify icon="solar:bell-bing-bold-duotone" />}>
+              <Label
+                color="info"
+                startIcon={<Iconify icon="solar:bell-bing-bold-duotone" />}
+              >
                 NEW
               </Label>
             ),

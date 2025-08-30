@@ -16,7 +16,11 @@ const options = {
 };
 
 export function useGetEvents() {
-  const { data, isLoading, error, isValidating } = useSWR(URL, fetcher, options);
+  const { data, isLoading, error, isValidating } = useSWR(
+    URL,
+    fetcher,
+    options
+  );
 
   const memoizedValue = useMemo(() => {
     const events = data?.events.map((event: ICalendarEvent) => ({
@@ -77,8 +81,9 @@ export async function updateEvent(eventData: Partial<ICalendarEvent>) {
   mutate(
     URL,
     (currentData: any) => {
-      const events: ICalendarEvent[] = currentData.events.map((event: ICalendarEvent) =>
-        event.id === eventData.id ? { ...event, ...eventData } : event
+      const events: ICalendarEvent[] = currentData.events.map(
+        (event: ICalendarEvent) =>
+          event.id === eventData.id ? { ...event, ...eventData } : event
       );
 
       return {

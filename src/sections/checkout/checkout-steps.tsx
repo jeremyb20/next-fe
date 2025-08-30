@@ -4,7 +4,9 @@ import Stack from '@mui/material/Stack';
 import { styled } from '@mui/material/styles';
 import Stepper, { StepperProps } from '@mui/material/Stepper';
 import StepLabel, { stepLabelClasses } from '@mui/material/StepLabel';
-import MuiStepConnector, { stepConnectorClasses } from '@mui/material/StepConnector';
+import MuiStepConnector, {
+  stepConnectorClasses,
+} from '@mui/material/StepConnector';
 
 import Iconify from 'src/components/iconify';
 
@@ -32,7 +34,12 @@ interface Props extends StepperProps {
   activeStep: number;
 }
 
-export default function CheckoutSteps({ steps, activeStep, sx, ...other }: Props) {
+export default function CheckoutSteps({
+  steps,
+  activeStep,
+  sx,
+  ...other
+}: Props) {
   return (
     <Stepper
       alternativeLabel

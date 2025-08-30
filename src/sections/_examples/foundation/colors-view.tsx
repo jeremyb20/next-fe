@@ -17,11 +17,28 @@ import ComponentHero from 'src/sections/_examples/component-hero';
 
 // ----------------------------------------------------------------------
 
-const PALETTE = ['primary', 'secondary', 'info', 'success', 'warning', 'error'] as const;
+const PALETTE = [
+  'primary',
+  'secondary',
+  'info',
+  'success',
+  'warning',
+  'error',
+] as const;
 
 const VARIATIONS = ['lighter', 'light', 'main', 'dark', 'darker'] as const;
 
-const GREY = ['100', '200', '300', '400', '500', '600', '700', '800', '900'] as const;
+const GREY = [
+  '100',
+  '200',
+  '300',
+  '400',
+  '500',
+  '600',
+  '700',
+  '800',
+  '900',
+] as const;
 
 // ----------------------------------------------------------------------
 
@@ -51,7 +68,10 @@ export default function ColorsView() {
             },
             { name: 'Color' },
           ]}
-          moreLink={['https://mui.com/customization/color', 'https://colors.eva.design']}
+          moreLink={[
+            'https://mui.com/customization/color',
+            'https://colors.eva.design',
+          ]}
         />
       </ComponentHero>
 
@@ -74,7 +94,10 @@ export default function ColorsView() {
                 boxShadow: theme.customShadows.card,
               }}
             >
-              <Typography variant="h5" sx={{ textTransform: 'capitalize', p: 2.5, pb: 0 }}>
+              <Typography
+                variant="h5"
+                sx={{ textTransform: 'capitalize', p: 2.5, pb: 0 }}
+              >
                 {color}
               </Typography>
 
@@ -98,7 +121,10 @@ export default function ColorsView() {
               boxShadow: theme.customShadows.card,
             }}
           >
-            <Typography variant="h5" sx={{ textTransform: 'capitalize', p: 2.5, pb: 0 }}>
+            <Typography
+              variant="h5"
+              sx={{ textTransform: 'capitalize', p: 2.5, pb: 0 }}
+            >
               Grey
             </Typography>
 

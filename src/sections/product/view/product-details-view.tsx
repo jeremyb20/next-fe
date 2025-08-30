@@ -74,9 +74,12 @@ export default function ProductDetailsView({ id }: Props) {
     setPublish(newValue);
   }, []);
 
-  const handleChangeTab = useCallback((event: React.SyntheticEvent, newValue: string) => {
-    setCurrentTab(newValue);
-  }, []);
+  const handleChangeTab = useCallback(
+    (event: React.SyntheticEvent, newValue: string) => {
+      setCurrentTab(newValue);
+    },
+    []
+  );
 
   const renderSkeleton = <ProductDetailsSkeleton />;
 
@@ -130,7 +133,11 @@ export default function ProductDetailsView({ id }: Props) {
       >
         {SUMMARY.map((item) => (
           <Box key={item.title} sx={{ textAlign: 'center', px: 5 }}>
-            <Iconify icon={item.icon} width={32} sx={{ color: 'primary.main' }} />
+            <Iconify
+              icon={item.icon}
+              width={32}
+              sx={{ color: 'primary.main' }}
+            />
 
             <Typography variant="subtitle1" sx={{ mb: 1, mt: 2 }}>
               {item.title}
@@ -149,7 +156,8 @@ export default function ProductDetailsView({ id }: Props) {
           onChange={handleChangeTab}
           sx={{
             px: 3,
-            boxShadow: (theme) => `inset 0 -2px 0 0 ${alpha(theme.palette.grey[500], 0.08)}`,
+            boxShadow: (theme) =>
+              `inset 0 -2px 0 0 ${alpha(theme.palette.grey[500], 0.08)}`,
           }}
         >
           {[

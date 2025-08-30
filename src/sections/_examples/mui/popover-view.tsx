@@ -16,7 +16,10 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import { paths } from 'src/routes/paths';
 
 import CustomBreadcrumbs from 'src/components/custom-breadcrumbs';
-import CustomPopover, { usePopover, MenuPopoverArrowValue } from 'src/components/custom-popover';
+import CustomPopover, {
+  usePopover,
+  MenuPopoverArrowValue,
+} from 'src/components/custom-popover';
 
 import ComponentHero from 'src/sections/_examples/component-hero';
 
@@ -33,9 +36,12 @@ export default function PopoverView() {
 
   const customizedPopover = usePopover();
 
-  const handleChangeArrow = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
-    setArrow(event.target.value as MenuPopoverArrowValue);
-  }, []);
+  const handleChangeArrow = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      setArrow(event.target.value as MenuPopoverArrowValue);
+    },
+    []
+  );
 
   return (
     <>
@@ -85,7 +91,8 @@ export default function PopoverView() {
                   Etiam feugiat lorem non metus
                 </Typography>
                 <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                  Fusce vulputate eleifend sapien. Curabitur at lacus ac velit ornare lobortis.
+                  Fusce vulputate eleifend sapien. Curabitur at lacus ac velit
+                  ornare lobortis.
                 </Typography>
               </Box>
             </Popover>
@@ -123,7 +130,8 @@ export default function PopoverView() {
                   Etiam feugiat lorem non metus
                 </Typography>
                 <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                  Fusce vulputate eleifend sapien. Curabitur at lacus ac velit ornare lobortis.
+                  Fusce vulputate eleifend sapien. Curabitur at lacus ac velit
+                  ornare lobortis.
                 </Typography>
               </Box>
             </Popover>
@@ -131,7 +139,11 @@ export default function PopoverView() {
         </Box>
 
         <ComponentBlock title="Customized">
-          <Button variant="contained" onClick={customizedPopover.onOpen} sx={{ mr: 5 }}>
+          <Button
+            variant="contained"
+            onClick={customizedPopover.onOpen}
+            sx={{ mr: 5 }}
+          >
             Open Customized
           </Button>
 
@@ -172,7 +184,8 @@ export default function PopoverView() {
                 Etiam feugiat lorem non metus
               </Typography>
               <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                Fusce vulputate eleifend sapien. Curabitur at lacus ac velit ornare lobortis.
+                Fusce vulputate eleifend sapien. Curabitur at lacus ac velit
+                ornare lobortis.
               </Typography>
             </Box>
           </CustomPopover>

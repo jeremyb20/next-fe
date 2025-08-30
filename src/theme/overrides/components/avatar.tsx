@@ -1,10 +1,21 @@
 import { AvatarProps } from '@mui/material/Avatar';
 import { alpha, Theme } from '@mui/material/styles';
-import { AvatarGroupProps, avatarGroupClasses } from '@mui/material/AvatarGroup';
+import {
+  AvatarGroupProps,
+  avatarGroupClasses,
+} from '@mui/material/AvatarGroup';
 
 // ----------------------------------------------------------------------
 
-const COLORS = ['default', 'primary', 'secondary', 'info', 'success', 'warning', 'error'] as const;
+const COLORS = [
+  'default',
+  'primary',
+  'secondary',
+  'info',
+  'success',
+  'warning',
+  'error',
+] as const;
 
 const colorByName = (name: string) => {
   const charAt = name.charAt(0).toLowerCase();

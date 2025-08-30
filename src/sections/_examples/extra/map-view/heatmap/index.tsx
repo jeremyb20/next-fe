@@ -37,7 +37,8 @@ function MapHeatmap({ ...other }: MapBoxProps) {
   }, []);
 
   const data: any = useMemo(
-    () => (allDays ? earthquakes : filterFeaturesByDay(earthquakes, selectedTime)),
+    () =>
+      allDays ? earthquakes : filterFeaturesByDay(earthquakes, selectedTime),
     [earthquakes, allDays, selectedTime]
   );
 

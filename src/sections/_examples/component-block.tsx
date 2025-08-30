@@ -11,7 +11,12 @@ type BlockProps = StackProps & {
   sx?: SxProps<Theme>;
 };
 
-export default function ComponentBlock({ title, sx, children, ...other }: BlockProps) {
+export default function ComponentBlock({
+  title,
+  sx,
+  children,
+  ...other
+}: BlockProps) {
   return (
     <Paper
       variant="outlined"

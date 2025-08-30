@@ -76,7 +76,9 @@ export default function MailCompose({ onCloseCompose }: Props) {
           </Typography>
 
           <IconButton onClick={fullScreen.onToggle}>
-            <Iconify icon={fullScreen ? 'eva:collapse-fill' : 'eva:expand-fill'} />
+            <Iconify
+              icon={fullScreen ? 'eva:collapse-fill' : 'eva:expand-fill'}
+            />
           </IconButton>
 
           <IconButton onClick={onCloseCompose}>
@@ -87,7 +89,11 @@ export default function MailCompose({ onCloseCompose }: Props) {
         <InputBase
           placeholder="To"
           endAdornment={
-            <Stack direction="row" spacing={0.5} sx={{ typography: 'subtitle2' }}>
+            <Stack
+              direction="row"
+              spacing={0.5}
+              sx={{ typography: 'subtitle2' }}
+            >
               <Box
                 sx={{
                   cursor: 'pointer',
@@ -109,7 +115,8 @@ export default function MailCompose({ onCloseCompose }: Props) {
           sx={{
             px: 2,
             height: 48,
-            borderBottom: (theme) => `solid 1px ${alpha(theme.palette.grey[500], 0.08)}`,
+            borderBottom: (theme) =>
+              `solid 1px ${alpha(theme.palette.grey[500], 0.08)}`,
           }}
         />
 
@@ -118,7 +125,8 @@ export default function MailCompose({ onCloseCompose }: Props) {
           sx={{
             px: 2,
             height: 48,
-            borderBottom: (theme) => `solid 1px ${alpha(theme.palette.grey[500], 0.08)}`,
+            borderBottom: (theme) =>
+              `solid 1px ${alpha(theme.palette.grey[500], 0.08)}`,
           }}
         />
 

@@ -156,7 +156,10 @@ export default function OverviewEcommerceView() {
         </Grid>
 
         <Grid xs={12} md={6} lg={8}>
-          <EcommerceSalesOverview title="Sales Overview" data={_ecommerceSalesOverview} />
+          <EcommerceSalesOverview
+            title="Sales Overview"
+            data={_ecommerceSalesOverview}
+          />
         </Grid>
 
         <Grid xs={12} md={6} lg={4}>
@@ -182,7 +185,10 @@ export default function OverviewEcommerceView() {
         </Grid>
 
         <Grid xs={12} md={6} lg={4}>
-          <EcommerceLatestProducts title="Latest Products" list={_ecommerceLatestProducts} />
+          <EcommerceLatestProducts
+            title="Latest Products"
+            list={_ecommerceLatestProducts}
+          />
         </Grid>
       </Grid>
     </Container>

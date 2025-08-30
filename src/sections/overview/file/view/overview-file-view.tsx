@@ -36,7 +36,20 @@ const GB = 1000000000 * 24;
 
 const TIME_LABELS = {
   week: ['Mon', 'Tue', 'Web', 'Thu', 'Fri', 'Sat', 'Sun'],
-  month: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+  month: [
+    'Jan',
+    'Feb',
+    'Mar',
+    'Apr',
+    'May',
+    'Jun',
+    'Jul',
+    'Aug',
+    'Sep',
+    'Oct',
+    'Nov',
+    'Dec',
+  ],
   year: ['2018', '2019', '2020', '2021', '2022'],
 };
 
@@ -57,9 +70,12 @@ export default function OverviewFileView() {
 
   const upload = useBoolean();
 
-  const handleChangeFolderName = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
-    setFolderName(event.target.value);
-  }, []);
+  const handleChangeFolderName = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      setFolderName(event.target.value);
+    },
+    []
+  );
 
   const handleCreateNewFolder = useCallback(() => {
     newFolder.onFalse();
@@ -103,7 +119,9 @@ export default function OverviewFileView() {
           name: 'Documents',
           usedStorage: GB / 5,
           filesCount: 223,
-          icon: <Box component="img" src="/assets/icons/files/ic_document.svg" />,
+          icon: (
+            <Box component="img" src="/assets/icons/files/ic_document.svg" />
+          ),
         },
         {
           name: 'Other',
@@ -251,7 +269,11 @@ export default function OverviewFileView() {
             <UploadBox
               onDrop={handleDrop}
               placeholder={
-                <Stack spacing={0.5} alignItems="center" sx={{ color: 'text.disabled' }}>
+                <Stack
+                  spacing={0.5}
+                  alignItems="center"
+                  sx={{ color: 'text.disabled' }}
+                >
                   <Iconify icon="eva:cloud-upload-fill" width={40} />
                   <Typography variant="body2">Upload file</Typography>
                 </Stack>
@@ -265,14 +287,19 @@ export default function OverviewFileView() {
               }}
             />
 
-            <Box sx={{ display: { xs: 'none', sm: 'block' } }}>{renderStorageOverview}</Box>
+            <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
+              {renderStorageOverview}
+            </Box>
 
             <FileUpgrade sx={{ mt: 3 }} />
           </Grid>
         </Grid>
       </Container>
 
-      <FileManagerNewFolderDialog open={upload.value} onClose={upload.onFalse} />
+      <FileManagerNewFolderDialog
+        open={upload.value}
+        onClose={upload.onFalse}
+      />
 
       <FileManagerNewFolderDialog
         open={newFolder.value}

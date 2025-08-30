@@ -46,7 +46,12 @@ export default function CarouselBasic4({ data }: Props) {
 
   return (
     <Card>
-      <CarouselArrows filled shape="rounded" onNext={carousel.onNext} onPrev={carousel.onPrev}>
+      <CarouselArrows
+        filled
+        shape="rounded"
+        onNext={carousel.onNext}
+        onPrev={carousel.onPrev}
+      >
         <Carousel ref={carousel.carouselRef} {...carousel.carouselSettings}>
           {data.map((item) => (
             <CarouselItem key={item.id} item={item} />
@@ -82,7 +87,10 @@ function CarouselItem({ item }: { item: CarouselItemProps }) {
             color: 'common.white',
             '&:hover': {
               bgcolor: (theme) =>
-                alpha(theme.palette.common.white, theme.palette.action.hoverOpacity),
+                alpha(
+                  theme.palette.common.white,
+                  theme.palette.action.hoverOpacity
+                ),
             },
           }}
         >

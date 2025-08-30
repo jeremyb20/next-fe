@@ -96,7 +96,8 @@ export default function JobListView() {
 
       if (inputValue) {
         const results = _jobs.filter(
-          (job) => job.title.toLowerCase().indexOf(search.query.toLowerCase()) !== -1
+          (job) =>
+            job.title.toLowerCase().indexOf(search.query.toLowerCase()) !== -1
         );
 
         setSearch((prevState) => ({
@@ -137,11 +138,20 @@ export default function JobListView() {
           locationOptions={countries.map((option) => option.label)}
           roleOptions={_roles}
           benefitOptions={JOB_BENEFIT_OPTIONS.map((option) => option.label)}
-          experienceOptions={['all', ...JOB_EXPERIENCE_OPTIONS.map((option) => option.label)]}
-          employmentTypeOptions={JOB_EMPLOYMENT_TYPE_OPTIONS.map((option) => option.label)}
+          experienceOptions={[
+            'all',
+            ...JOB_EXPERIENCE_OPTIONS.map((option) => option.label),
+          ]}
+          employmentTypeOptions={JOB_EMPLOYMENT_TYPE_OPTIONS.map(
+            (option) => option.label
+          )}
         />
 
-        <JobSort sort={sortBy} onSort={handleSortBy} sortOptions={JOB_SORT_OPTIONS} />
+        <JobSort
+          sort={sortBy}
+          onSort={handleSortBy}
+          sortOptions={JOB_SORT_OPTIONS}
+        />
       </Stack>
     </Stack>
   );
@@ -245,11 +255,15 @@ const applyFilter = ({
   }
 
   if (locations.length) {
-    inputData = inputData.filter((job) => job.locations.some((item) => locations.includes(item)));
+    inputData = inputData.filter((job) =>
+      job.locations.some((item) => locations.includes(item))
+    );
   }
 
   if (benefits.length) {
-    inputData = inputData.filter((job) => job.benefits.some((item) => benefits.includes(item)));
+    inputData = inputData.filter((job) =>
+      job.benefits.some((item) => benefits.includes(item))
+    );
   }
 
   return inputData;

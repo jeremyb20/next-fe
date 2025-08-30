@@ -20,11 +20,18 @@ type Props = {
 function ControlPanel({ themes, selectTheme, onChangeTheme }: Props) {
   return (
     <StyledControlPanel>
-      <Typography gutterBottom variant="subtitle2" sx={{ color: 'common.white' }}>
+      <Typography
+        gutterBottom
+        variant="subtitle2"
+        sx={{ color: 'common.white' }}
+      >
         Select Theme:
       </Typography>
 
-      <RadioGroup value={selectTheme} onChange={(event, newValue) => onChangeTheme(newValue)}>
+      <RadioGroup
+        value={selectTheme}
+        onChange={(event, newValue) => onChangeTheme(newValue)}
+      >
         {Object.keys(themes).map((item) => (
           <FormControlLabel
             key={item}

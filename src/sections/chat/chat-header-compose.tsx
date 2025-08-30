@@ -22,7 +22,10 @@ type Props = {
   onAddRecipients: (selected: IChatParticipant[]) => void;
 };
 
-export default function ChatHeaderCompose({ contacts, onAddRecipients }: Props) {
+export default function ChatHeaderCompose({
+  contacts,
+  onAddRecipients,
+}: Props) {
   const [searchRecipients, setSearchRecipients] = useState('');
 
   const handleAddRecipients = useCallback(
@@ -52,7 +55,9 @@ export default function ChatHeaderCompose({ contacts, onAddRecipients }: Props) 
         options={contacts}
         getOptionLabel={(recipient) => recipient.name}
         isOptionEqualToValue={(option, value) => option.id === value.id}
-        renderInput={(params) => <TextField {...params} placeholder="+ Recipients" />}
+        renderInput={(params) => (
+          <TextField {...params} placeholder="+ Recipients" />
+        )}
         renderOption={(props, recipient, { selected }) => (
           <li {...props} key={recipient.id}>
             <Box
@@ -66,7 +71,11 @@ export default function ChatHeaderCompose({ contacts, onAddRecipients }: Props) 
                 position: 'relative',
               }}
             >
-              <Avatar alt={recipient.name} src={recipient.avatarUrl} sx={{ width: 1, height: 1 }} />
+              <Avatar
+                alt={recipient.name}
+                src={recipient.avatarUrl}
+                sx={{ width: 1, height: 1 }}
+              />
               <Stack
                 alignItems="center"
                 justifyContent="center"

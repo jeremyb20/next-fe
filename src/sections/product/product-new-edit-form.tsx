@@ -159,7 +159,8 @@ export default function ProductNewEditForm({ currentProduct }: Props) {
 
   const handleRemoveFile = useCallback(
     (inputFile: File | string) => {
-      const filtered = values.images && values.images?.filter((file) => file !== inputFile);
+      const filtered =
+        values.images && values.images?.filter((file) => file !== inputFile);
       setValue('images', filtered);
     },
     [setValue, values.images]
@@ -169,9 +170,12 @@ export default function ProductNewEditForm({ currentProduct }: Props) {
     setValue('images', []);
   }, [setValue]);
 
-  const handleChangeIncludeTaxes = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
-    setIncludeTaxes(event.target.checked);
-  }, []);
+  const handleChangeIncludeTaxes = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      setIncludeTaxes(event.target.checked);
+    },
+    []
+  );
 
   const renderDetails = (
     <>
@@ -193,7 +197,12 @@ export default function ProductNewEditForm({ currentProduct }: Props) {
           <Stack spacing={3} sx={{ p: 3 }}>
             <RHFTextField name="name" label="Product Name" />
 
-            <RHFTextField name="subDescription" label="Sub Description" multiline rows={4} />
+            <RHFTextField
+              name="subDescription"
+              label="Sub Description"
+              multiline
+              rows={4}
+            />
 
             <Stack spacing={1.5}>
               <Typography variant="subtitle2">Content</Typography>
@@ -258,7 +267,12 @@ export default function ProductNewEditForm({ currentProduct }: Props) {
                 InputLabelProps={{ shrink: true }}
               />
 
-              <RHFSelect native name="category" label="Category" InputLabelProps={{ shrink: true }}>
+              <RHFSelect
+                native
+                name="category"
+                label="Category"
+                InputLabelProps={{ shrink: true }}
+              >
                 {PRODUCT_CATEGORY_GROUP_OPTIONS.map((category) => (
                   <optgroup key={category.group} label={category.group}>
                     {category.classify.map((classify) => (
@@ -277,7 +291,12 @@ export default function ProductNewEditForm({ currentProduct }: Props) {
                 options={PRODUCT_COLOR_NAME_OPTIONS}
               />
 
-              <RHFMultiSelect checkbox name="sizes" label="Sizes" options={PRODUCT_SIZE_OPTIONS} />
+              <RHFMultiSelect
+                checkbox
+                name="sizes"
+                label="Sizes"
+                options={PRODUCT_SIZE_OPTIONS}
+              />
             </Box>
 
             <RHFAutocomplete
@@ -309,7 +328,12 @@ export default function ProductNewEditForm({ currentProduct }: Props) {
 
             <Stack spacing={1}>
               <Typography variant="subtitle2">Gender</Typography>
-              <RHFMultiCheckbox row name="gender" spacing={2} options={PRODUCT_GENDER_OPTIONS} />
+              <RHFMultiCheckbox
+                row
+                name="gender"
+                spacing={2}
+                options={PRODUCT_GENDER_OPTIONS}
+              />
             </Stack>
 
             <Divider sx={{ borderStyle: 'dashed' }} />
@@ -392,7 +416,12 @@ export default function ProductNewEditForm({ currentProduct }: Props) {
             />
 
             <FormControlLabel
-              control={<Switch checked={includeTaxes} onChange={handleChangeIncludeTaxes} />}
+              control={
+                <Switch
+                  checked={includeTaxes}
+                  onChange={handleChangeIncludeTaxes}
+                />
+              }
               label="Price includes taxes"
             />
 
@@ -430,7 +459,12 @@ export default function ProductNewEditForm({ currentProduct }: Props) {
           sx={{ flexGrow: 1, pl: 3 }}
         />
 
-        <LoadingButton type="submit" variant="contained" size="large" loading={isSubmitting}>
+        <LoadingButton
+          type="submit"
+          variant="contained"
+          size="large"
+          loading={isSubmitting}
+        >
           {!currentProduct ? 'Create Product' : 'Save Changes'}
         </LoadingButton>
       </Grid>

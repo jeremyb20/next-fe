@@ -81,7 +81,9 @@ function parseValue(values: FieldValues, value: string) {
     return JSON.stringify(values.singleUpload && fileData(values.singleUpload));
   }
   if (value === 'multiUpload') {
-    return JSON.stringify(values.multiUpload.map((file: File) => fileData(file)));
+    return JSON.stringify(
+      values.multiUpload.map((file: File) => fileData(file))
+    );
   }
   return JSON.stringify(values[value]) || '---';
 }

@@ -42,7 +42,11 @@ export default function CheckoutSummary({
         title="Order Summary"
         action={
           onEdit && (
-            <Button size="small" onClick={onEdit} startIcon={<Iconify icon="solar:pen-bold" />}>
+            <Button
+              size="small"
+              onClick={onEdit}
+              startIcon={<Iconify icon="solar:pen-bold" />}
+            >
               Edit
             </Button>
           )
@@ -62,7 +66,9 @@ export default function CheckoutSummary({
             <Typography variant="body2" sx={{ color: 'text.secondary' }}>
               Discount
             </Typography>
-            <Typography variant="subtitle2">{discount ? fCurrency(-discount) : '-'}</Typography>
+            <Typography variant="subtitle2">
+              {discount ? fCurrency(-discount) : '-'}
+            </Typography>
           </Stack>
 
           <Stack direction="row" justifyContent="space-between">
@@ -96,7 +102,11 @@ export default function CheckoutSummary({
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">
-                    <Button color="primary" onClick={() => onApplyDiscount(5)} sx={{ mr: -0.5 }}>
+                    <Button
+                      color="primary"
+                      onClick={() => onApplyDiscount(5)}
+                      sx={{ mr: -0.5 }}
+                    >
                       Apply
                     </Button>
                   </InputAdornment>

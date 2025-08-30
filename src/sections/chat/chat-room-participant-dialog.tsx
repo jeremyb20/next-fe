@@ -18,10 +18,17 @@ type Props = {
   participant: IChatParticipant;
 };
 
-export default function ChatRoomParticipantDialog({ participant, open, onClose }: Props) {
+export default function ChatRoomParticipantDialog({
+  participant,
+  open,
+  onClose,
+}: Props) {
   return (
     <Dialog fullWidth maxWidth="xs" open={open} onClose={onClose}>
-      <IconButton onClick={onClose} sx={{ position: 'absolute', right: 8, top: 8 }}>
+      <IconButton
+        onClick={onClose}
+        sx={{ position: 'absolute', right: 8, top: 8 }}
+      >
         <Iconify icon="mingcute:close-line" />
       </IconButton>
 
@@ -39,7 +46,10 @@ export default function ChatRoomParticipantDialog({ participant, open, onClose }
 
           <Typography variant="subtitle1">{participant.name}</Typography>
 
-          <Stack direction="row" sx={{ typography: 'caption', color: 'text.disabled' }}>
+          <Stack
+            direction="row"
+            sx={{ typography: 'caption', color: 'text.disabled' }}
+          >
             <Iconify
               icon="mingcute:location-fill"
               width={16}

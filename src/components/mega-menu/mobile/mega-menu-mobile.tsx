@@ -5,7 +5,11 @@ import { NavProps } from '../types';
 
 // ----------------------------------------------------------------------
 
-export default function MegaMenuMobile({ data, slotProps, ...other }: NavProps) {
+export default function MegaMenuMobile({
+  data,
+  slotProps,
+  ...other
+}: NavProps) {
   return (
     <Stack component="nav" id="mega-menu-mobile" {...other}>
       {data.map((list) => (

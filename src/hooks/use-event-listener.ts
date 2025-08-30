@@ -2,7 +2,8 @@ import { useRef, RefObject, useEffect, useLayoutEffect } from 'react';
 
 // ----------------------------------------------------------------------
 
-const useIsomorphicLayoutEffect = typeof window !== 'undefined' ? useLayoutEffect : useEffect;
+const useIsomorphicLayoutEffect =
+  typeof window !== 'undefined' ? useLayoutEffect : useEffect;
 
 // Window Event based useEventListener interface
 export function useEventListener<K extends keyof WindowEventMap>(
@@ -37,7 +38,9 @@ export function useEventListener<
   T extends HTMLElement | void = void,
 >(
   eventName: KW | KH,
-  handler: (event: WindowEventMap[KW] | HTMLElementEventMap[KH] | Event) => void,
+  handler: (
+    event: WindowEventMap[KW] | HTMLElementEventMap[KH] | Event
+  ) => void,
   element?: RefObject<T>,
   options?: boolean | AddEventListenerOptions
 ) {
@@ -56,7 +59,8 @@ export function useEventListener<
     }
 
     // Create event listener that calls handler function stored in ref
-    const eventListener: typeof handler = (event) => savedHandler.current(event);
+    const eventListener: typeof handler = (event) =>
+      savedHandler.current(event);
 
     targetElement.addEventListener(eventName, eventListener, options);
 

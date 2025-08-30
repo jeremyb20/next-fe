@@ -119,8 +119,17 @@ export default function BookingTotalIncomes({
         </div>
 
         <div>
-          <Stack spacing={0.5} direction="row" alignItems="center" justifyContent="flex-end">
-            <Iconify icon={percent >= 0 ? 'eva:trending-up-fill' : 'eva:trending-down-fill'} />
+          <Stack
+            spacing={0.5}
+            direction="row"
+            alignItems="center"
+            justifyContent="flex-end"
+          >
+            <Iconify
+              icon={
+                percent >= 0 ? 'eva:trending-up-fill' : 'eva:trending-down-fill'
+              }
+            />
 
             <Box sx={{ typography: 'subtitle2' }}>
               {percent > 0 && '+'}
@@ -128,7 +137,9 @@ export default function BookingTotalIncomes({
             </Box>
           </Stack>
 
-          <Box sx={{ mt: 0.5, opacity: 0.8, typography: 'body2' }}>than last month </Box>
+          <Box sx={{ mt: 0.5, opacity: 0.8, typography: 'body2' }}>
+            than last month{' '}
+          </Box>
         </div>
       </Stack>
 

@@ -13,7 +13,10 @@ export default function StyledLightbox() {
           '--yarl__thumbnails_thumbnail_padding': 0,
           '--yarl__thumbnails_thumbnail_border': 'transparent',
           '--yarl__color_backdrop': alpha(theme.palette.grey[900], 0.9),
-          '--yarl__slide_captions_container_background': alpha(theme.palette.grey[900], 0.48),
+          '--yarl__slide_captions_container_background': alpha(
+            theme.palette.grey[900],
+            0.48
+          ),
         },
         // Caption
         '.yarl__slide_title': {

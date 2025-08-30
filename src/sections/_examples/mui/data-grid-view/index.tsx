@@ -23,7 +23,10 @@ import DataGridCustom from './data-grid-custom';
 
 const _dataGrid = [...Array(20)].map((_, index) => {
   const status =
-    (index % 2 && 'online') || (index % 3 && 'alway') || (index % 4 && 'busy') || 'offline';
+    (index % 2 && 'online') ||
+    (index % 3 && 'alway') ||
+    (index % 4 && 'busy') ||
+    'offline';
 
   return {
     id: _mock.id(index),
@@ -60,11 +63,15 @@ export default function DataGridView() {
         />
 
         <Typography variant="body2" sx={{ my: 3 }}>
-          This component includes 2 <strong>Free</strong> and <strong>Paid</strong> versions from
-          MUI.
+          This component includes 2 <strong>Free</strong> and{' '}
+          <strong>Paid</strong> versions from MUI.
           <br />
           Paid version will have more features. Please read more{' '}
-          <Link href="https://mui.com/x/react-data-grid/" target="_blank" rel="noopener">
+          <Link
+            href="https://mui.com/x/react-data-grid/"
+            target="_blank"
+            rel="noopener"
+          >
             here
           </Link>
         </Typography>

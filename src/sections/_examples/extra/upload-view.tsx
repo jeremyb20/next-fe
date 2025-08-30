@@ -71,7 +71,9 @@ export default function UploadView() {
   );
 
   const handleRemoveFile = (inputFile: File | string) => {
-    const filesFiltered = files.filter((fileFiltered) => fileFiltered !== inputFile);
+    const filesFiltered = files.filter(
+      (fileFiltered) => fileFiltered !== inputFile
+    );
     setFiles(filesFiltered);
   };
 
@@ -102,7 +104,12 @@ export default function UploadView() {
               title="Upload Multi File"
               action={
                 <FormControlLabel
-                  control={<Switch checked={preview.value} onClick={preview.onToggle} />}
+                  control={
+                    <Switch
+                      checked={preview.value}
+                      onClick={preview.onToggle}
+                    />
+                  }
                   label="Show Thumbnail"
                 />
               }
@@ -123,7 +130,11 @@ export default function UploadView() {
           <Card>
             <CardHeader title="Upload Single File" />
             <CardContent>
-              <Upload file={file} onDrop={handleDropSingleFile} onDelete={() => setFile(null)} />
+              <Upload
+                file={file}
+                onDrop={handleDropSingleFile}
+                onDelete={() => setFile(null)}
+              />
             </CardContent>
           </Card>
 

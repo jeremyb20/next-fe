@@ -75,7 +75,10 @@ export default function FileManagerNewFolderDialog({
 
   return (
     <Dialog fullWidth maxWidth="sm" open={open} onClose={onClose} {...other}>
-      <DialogTitle sx={{ p: (theme) => theme.spacing(3, 3, 2, 3) }}> {title} </DialogTitle>
+      <DialogTitle sx={{ p: (theme) => theme.spacing(3, 3, 2, 3) }}>
+        {' '}
+        {title}{' '}
+      </DialogTitle>
 
       <DialogContent dividers sx={{ pt: 1, pb: 0, border: 'none' }}>
         {(onCreate || onUpdate) && (
@@ -88,7 +91,12 @@ export default function FileManagerNewFolderDialog({
           />
         )}
 
-        <Upload multiple files={files} onDrop={handleDrop} onRemove={handleRemoveFile} />
+        <Upload
+          multiple
+          files={files}
+          onDrop={handleDrop}
+          onRemove={handleRemoveFile}
+        />
       </DialogContent>
 
       <DialogActions>
@@ -101,7 +109,11 @@ export default function FileManagerNewFolderDialog({
         </Button>
 
         {!!files.length && (
-          <Button variant="outlined" color="inherit" onClick={handleRemoveAllFiles}>
+          <Button
+            variant="outlined"
+            color="inherit"
+            onClick={handleRemoveAllFiles}
+          >
             Remove all
           </Button>
         )}

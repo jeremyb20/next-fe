@@ -16,7 +16,10 @@ import { formHelperTextClasses } from '@mui/material/FormHelperText';
 import Iconify from 'src/components/iconify';
 import CustomPopover, { usePopover } from 'src/components/custom-popover';
 
-import { IInvoiceTableFilters, IInvoiceTableFilterValue } from 'src/types/invoice';
+import {
+  IInvoiceTableFilters,
+  IInvoiceTableFilterValue,
+} from 'src/types/invoice';
 
 // ----------------------------------------------------------------------
 
@@ -48,7 +51,9 @@ export default function InvoiceTableToolbar({
     (event: SelectChangeEvent<string[]>) => {
       onFilters(
         'service',
-        typeof event.target.value === 'string' ? event.target.value.split(',') : event.target.value
+        typeof event.target.value === 'string'
+          ? event.target.value.split(',')
+          : event.target.value
       );
     },
     [onFilters]
@@ -95,12 +100,18 @@ export default function InvoiceTableToolbar({
             value={filters.service}
             onChange={handleFilterService}
             input={<OutlinedInput label="Service" />}
-            renderValue={(selected) => selected.map((value) => value).join(', ')}
+            renderValue={(selected) =>
+              selected.map((value) => value).join(', ')
+            }
             sx={{ textTransform: 'capitalize' }}
           >
             {serviceOptions.map((option) => (
               <MenuItem key={option} value={option}>
-                <Checkbox disableRipple size="small" checked={filters.service.includes(option)} />
+                <Checkbox
+                  disableRipple
+                  size="small"
+                  checked={filters.service.includes(option)}
+                />
                 {option}
               </MenuItem>
             ))}
@@ -137,7 +148,13 @@ export default function InvoiceTableToolbar({
           }}
         />
 
-        <Stack direction="row" alignItems="center" spacing={2} flexGrow={1} sx={{ width: 1 }}>
+        <Stack
+          direction="row"
+          alignItems="center"
+          spacing={2}
+          flexGrow={1}
+          sx={{ width: 1 }}
+        >
           <TextField
             fullWidth
             value={filters.name}
@@ -146,7 +163,10 @@ export default function InvoiceTableToolbar({
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
-                  <Iconify icon="eva:search-fill" sx={{ color: 'text.disabled' }} />
+                  <Iconify
+                    icon="eva:search-fill"
+                    sx={{ color: 'text.disabled' }}
+                  />
                 </InputAdornment>
               ),
             }}

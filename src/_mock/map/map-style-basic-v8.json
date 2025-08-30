@@ -49,7 +49,11 @@
       "type": "line",
       "source": "mapbox",
       "source-layer": "waterway",
-      "filter": ["all", ["==", "$type", "LineString"], ["in", "class", "river", "canal"]],
+      "filter": [
+        "all",
+        ["==", "$type", "LineString"],
+        ["in", "class", "river", "canal"]
+      ],
       "paint": {
         "line-color": "#a0cfdf",
         "line-width": {
@@ -135,7 +139,15 @@
         ["==", "$type", "LineString"],
         [
           "all",
-          ["in", "class", "motorway", "primary", "secondary", "tertiary", "trunk"],
+          [
+            "in",
+            "class",
+            "motorway",
+            "primary",
+            "secondary",
+            "tertiary",
+            "trunk"
+          ],
           ["==", "structure", "tunnel"]
         ]
       ],
@@ -207,7 +219,15 @@
         ["==", "$type", "LineString"],
         [
           "all",
-          ["in", "class", "motorway", "primary", "secondary", "tertiary", "trunk"],
+          [
+            "in",
+            "class",
+            "motorway",
+            "primary",
+            "secondary",
+            "tertiary",
+            "trunk"
+          ],
           ["in", "structure", "none", "ford"]
         ]
       ],
@@ -285,7 +305,15 @@
         ["==", "$type", "LineString"],
         [
           "all",
-          ["in", "class", "motorway", "primary", "secondary", "tertiary", "trunk"],
+          [
+            "in",
+            "class",
+            "motorway",
+            "primary",
+            "secondary",
+            "tertiary",
+            "trunk"
+          ],
           ["==", "structure", "bridge"]
         ]
       ],
@@ -363,7 +391,15 @@
         ["==", "$type", "LineString"],
         [
           "all",
-          ["in", "class", "motorway", "primary", "secondary", "tertiary", "trunk"],
+          [
+            "in",
+            "class",
+            "motorway",
+            "primary",
+            "secondary",
+            "tertiary",
+            "trunk"
+          ],
           ["==", "structure", "bridge"]
         ]
       ],
@@ -485,7 +521,16 @@
       "filter": [
         "all",
         ["==", "$type", "Point"],
-        ["in", "type", "town", "village", "hamlet", "suburb", "neighbourhood", "island"]
+        [
+          "in",
+          "type",
+          "town",
+          "village",
+          "hamlet",
+          "suburb",
+          "neighbourhood",
+          "island"
+        ]
       ],
       "type": "symbol",
       "source": "mapbox",

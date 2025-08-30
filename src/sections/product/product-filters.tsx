@@ -200,8 +200,16 @@ export default function ProductFilters({
       </Typography>
 
       <Stack direction="row" spacing={5} sx={{ my: 2 }}>
-        <InputRange type="min" value={filters.priceRange} onFilters={onFilters} />
-        <InputRange type="max" value={filters.priceRange} onFilters={onFilters} />
+        <InputRange
+          type="min"
+          value={filters.priceRange}
+          onFilters={onFilters}
+        />
+        <InputRange
+          type="max"
+          value={filters.priceRange}
+          onFilters={onFilters}
+        />
       </Stack>
 
       <Slider
@@ -326,7 +334,12 @@ function InputRange({ type, value, onFilters }: InputRangeProps) {
   }, [max, min, onFilters]);
 
   return (
-    <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ width: 1 }}>
+    <Stack
+      direction="row"
+      alignItems="center"
+      justifyContent="space-between"
+      sx={{ width: 1 }}
+    >
       <Typography
         variant="caption"
         sx={{

@@ -7,7 +7,11 @@ import { alpha } from '@mui/material/styles';
 import { CardProps } from '@mui/material/Card';
 import Typography from '@mui/material/Typography';
 
-import { PlanFreeIcon, PlanStarterIcon, PlanPremiumIcon } from 'src/assets/icons';
+import {
+  PlanFreeIcon,
+  PlanStarterIcon,
+  PlanPremiumIcon,
+} from 'src/assets/icons';
 
 import Label from 'src/components/label';
 import Iconify from 'src/components/iconify';
@@ -123,7 +127,9 @@ export default function PricingCard({ card, sx, ...other }: Props) {
           boxShadow: (theme) => ({
             xs: theme.customShadows.card,
             md: `-40px 40px 80px 0px ${alpha(
-              theme.palette.mode === 'light' ? theme.palette.grey[500] : theme.palette.common.black,
+              theme.palette.mode === 'light'
+                ? theme.palette.grey[500]
+                : theme.palette.common.black,
               0.16
             )}`,
           }),

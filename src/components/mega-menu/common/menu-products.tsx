@@ -7,7 +7,11 @@ import { RouterLink } from 'src/routes/components';
 import Image from '../../image';
 import { NavProducts } from '../types';
 import TextMaxLine from '../../text-max-line';
-import Carousel, { useCarousel, CarouselDots, CarouselArrows } from '../../carousel';
+import Carousel, {
+  useCarousel,
+  CarouselDots,
+  CarouselArrows,
+} from '../../carousel';
 
 // ----------------------------------------------------------------------
 
@@ -17,7 +21,11 @@ type Props = {
   sx?: SxProps<Theme>;
 };
 
-export default function MenuProducts({ products, displayProduct = 8, sx }: Props) {
+export default function MenuProducts({
+  products,
+  displayProduct = 8,
+  sx,
+}: Props) {
   const theme = useTheme();
 
   const carousel = useCarousel({
@@ -68,7 +76,10 @@ export default function MenuProducts({ products, displayProduct = 8, sx }: Props
                 sx={{ borderRadius: 1, mb: 1 }}
               />
 
-              <TextMaxLine variant="caption" sx={{ fontWeight: 'fontWeightSemiBold' }}>
+              <TextMaxLine
+                variant="caption"
+                sx={{ fontWeight: 'fontWeightSemiBold' }}
+              >
                 {product.name}
               </TextMaxLine>
             </Link>

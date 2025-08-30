@@ -17,7 +17,15 @@ import ComponentBlock from '../component-block';
 
 // ----------------------------------------------------------------------
 
-const COLORS = ['default', 'primary', 'secondary', 'info', 'success', 'warning', 'error'] as const;
+const COLORS = [
+  'default',
+  'primary',
+  'secondary',
+  'info',
+  'success',
+  'warning',
+  'error',
+] as const;
 
 const STATUS = ['alway', 'online', 'busy', 'offline'] as const;
 
@@ -99,7 +107,12 @@ export default function BadgeView() {
               />
             </Badge>
 
-            <Badge color="info" overlap="circular" badgeContent=" " variant="dot">
+            <Badge
+              color="info"
+              overlap="circular"
+              badgeContent=" "
+              variant="dot"
+            >
               <Box
                 sx={{
                   width: 40,

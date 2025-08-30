@@ -9,7 +9,11 @@ import { NavSubListProps } from '../types';
 
 // ----------------------------------------------------------------------
 
-export default function NavSubList({ data, slotProps, ...other }: NavSubListProps) {
+export default function NavSubList({
+  data,
+  slotProps,
+  ...other
+}: NavSubListProps) {
   const pathname = usePathname();
 
   return (
@@ -23,7 +27,8 @@ export default function NavSubList({ data, slotProps, ...other }: NavSubListProp
           )}
 
           {list.items.map((link) => {
-            const active = pathname === link.path || pathname === `${link.path}/`;
+            const active =
+              pathname === link.path || pathname === `${link.path}/`;
 
             return (
               <Link

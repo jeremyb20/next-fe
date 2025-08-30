@@ -68,7 +68,13 @@ export default function KanbanDetailsToolbar({
         <Button
           size="small"
           variant="soft"
-          endIcon={<Iconify icon="eva:arrow-ios-downward-fill" width={16} sx={{ ml: -0.5 }} />}
+          endIcon={
+            <Iconify
+              icon="eva:arrow-ios-downward-fill"
+              width={16}
+              sx={{ ml: -0.5 }}
+            />
+          }
           onClick={popover.onOpen}
         >
           {status}

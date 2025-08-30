@@ -34,7 +34,11 @@ export default function FileManagerGridView({
   onDeleteItem,
   onOpenConfirm,
 }: Props) {
-  const { selected, onSelectRow: onSelectItem, onSelectAllRows: onSelectAllItems } = table;
+  const {
+    selected,
+    onSelectRow: onSelectItem,
+    onSelectAllRows: onSelectAllItems,
+  } = table;
 
   const containerRef = useRef(null);
 
@@ -52,20 +56,28 @@ export default function FileManagerGridView({
 
   const folders = useBoolean();
 
-  const handleChangeInvite = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
-    setInviteEmail(event.target.value);
-  }, []);
+  const handleChangeInvite = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      setInviteEmail(event.target.value);
+    },
+    []
+  );
 
-  const handleChangeFolderName = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
-    setFolderName(event.target.value);
-  }, []);
+  const handleChangeFolderName = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      setFolderName(event.target.value);
+    },
+    []
+  );
 
   return (
     <>
       <Box ref={containerRef}>
         <FileManagerPanel
           title="Folders"
-          subTitle={`${dataFiltered.filter((item) => item.type === 'folder').length} folders`}
+          subTitle={`${
+            dataFiltered.filter((item) => item.type === 'folder').length
+          } folders`}
           onOpen={newFolder.onTrue}
           collapse={folders.value}
           onCollapse={folders.onToggle}
@@ -101,7 +113,9 @@ export default function FileManagerGridView({
 
         <FileManagerPanel
           title="Files"
-          subTitle={`${dataFiltered.filter((item) => item.type !== 'folder').length} files`}
+          subTitle={`${
+            dataFiltered.filter((item) => item.type !== 'folder').length
+          } files`}
           onOpen={upload.onTrue}
           collapse={files.value}
           onCollapse={files.onToggle}
@@ -182,7 +196,10 @@ export default function FileManagerGridView({
         }}
       />
 
-      <FileManagerNewFolderDialog open={upload.value} onClose={upload.onFalse} />
+      <FileManagerNewFolderDialog
+        open={upload.value}
+        onClose={upload.onFalse}
+      />
 
       <FileManagerNewFolderDialog
         open={newFolder.value}

@@ -46,7 +46,10 @@ export function dataGrid(theme: Theme) {
           borderBottom: `1px dashed`,
           '&--editing': {
             boxShadow: 'none !important',
-            backgroundColor: `${alpha(theme.palette.primary.main, 0.08)} !important`,
+            backgroundColor: `${alpha(
+              theme.palette.primary.main,
+              0.08
+            )} !important`,
           },
         },
         // Toolbar

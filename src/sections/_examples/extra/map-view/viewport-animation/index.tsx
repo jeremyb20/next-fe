@@ -41,7 +41,11 @@ function MapViewportAnimation({ data, ...other }: Props) {
     >
       <MapControl />
 
-      <ControlPanel data={data} selectedCity={selectedCity} onSelectCity={onSelectCity} />
+      <ControlPanel
+        data={data}
+        selectedCity={selectedCity}
+        onSelectCity={onSelectCity}
+      />
     </Map>
   );
 }

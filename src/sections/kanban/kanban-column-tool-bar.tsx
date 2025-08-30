@@ -45,9 +45,12 @@ export default function KanbanColumnToolBar({
     }
   }, [popover.open]);
 
-  const handleChangeName = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
-    setName(event.target.value);
-  }, []);
+  const handleChangeName = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      setName(event.target.value);
+    },
+    []
+  );
 
   const handleKeyUpUpdateColumn = useCallback(
     (event: React.KeyboardEvent<HTMLInputElement>) => {
@@ -78,7 +81,10 @@ export default function KanbanColumnToolBar({
           onKeyUp={handleKeyUpUpdateColumn}
         />
 
-        <IconButton color={popover.open ? 'inherit' : 'default'} onClick={popover.onOpen}>
+        <IconButton
+          color={popover.open ? 'inherit' : 'default'}
+          onClick={popover.onOpen}
+        >
           <Iconify icon="eva:more-horizontal-fill" />
         </IconButton>
       </Stack>
@@ -126,7 +132,8 @@ export default function KanbanColumnToolBar({
           <>
             Are you sure want to delete column?
             <Box sx={{ typography: 'caption', color: 'error.main', mt: 2 }}>
-              <strong> NOTE: </strong> All tasks related to this category will also be deleted.
+              <strong> NOTE: </strong> All tasks related to this category will
+              also be deleted.
             </Box>
           </>
         }

@@ -136,7 +136,11 @@ export default function PostDetailsHomeView({ title }: Props) {
 
               <AvatarGroup>
                 {post.favoritePerson.map((person) => (
-                  <Avatar key={person.name} alt={person.name} src={person.avatarUrl} />
+                  <Avatar
+                    key={person.name}
+                    alt={person.name}
+                    src={person.avatarUrl}
+                  />
                 ))}
               </AvatarGroup>
             </Stack>
@@ -182,7 +186,9 @@ export default function PostDetailsHomeView({ title }: Props) {
 
       {post && renderPost}
 
-      <Container sx={{ pb: 15 }}>{!!latestPosts.length && renderLatestPosts}</Container>
+      <Container sx={{ pb: 15 }}>
+        {!!latestPosts.length && renderLatestPosts}
+      </Container>
     </>
   );
 }

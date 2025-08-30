@@ -25,16 +25,22 @@ export default function MaxWidthDialog() {
 
   const [maxWidth, setMaxWidth] = useState<DialogProps['maxWidth']>('sm');
 
-  const handleMaxWidthChange = useCallback((event: SelectChangeEvent<typeof maxWidth>) => {
-    setMaxWidth(
-      // @ts-expect-error autofill of arbitrary value is not handled.
-      event.target.value
-    );
-  }, []);
+  const handleMaxWidthChange = useCallback(
+    (event: SelectChangeEvent<typeof maxWidth>) => {
+      setMaxWidth(
+        // @ts-expect-error autofill of arbitrary value is not handled.
+        event.target.value
+      );
+    },
+    []
+  );
 
-  const handleFullWidthChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
-    setFullWidth(event.target.checked);
-  }, []);
+  const handleFullWidthChange = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      setFullWidth(event.target.checked);
+    },
+    []
+  );
 
   return (
     <>
@@ -87,7 +93,9 @@ export default function MaxWidthDialog() {
             </FormControl>
 
             <FormControlLabel
-              control={<Switch checked={fullWidth} onChange={handleFullWidthChange} />}
+              control={
+                <Switch checked={fullWidth} onChange={handleFullWidthChange} />
+              }
               label="Full width"
               sx={{ mt: 1 }}
             />

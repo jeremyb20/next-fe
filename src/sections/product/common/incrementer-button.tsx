@@ -18,7 +18,18 @@ interface Props extends StackProps {
 }
 
 const IncrementerButton = forwardRef<HTMLDivElement, Props>(
-  ({ quantity, onIncrease, onDecrease, disabledIncrease, disabledDecrease, sx, ...other }, ref) => (
+  (
+    {
+      quantity,
+      onIncrease,
+      onDecrease,
+      disabledIncrease,
+      disabledDecrease,
+      sx,
+      ...other
+    },
+    ref
+  ) => (
     <Stack
       ref={ref}
       flexShrink={0}

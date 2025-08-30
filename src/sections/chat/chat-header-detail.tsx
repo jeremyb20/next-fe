@@ -33,7 +33,11 @@ export default function ChatHeaderDetail({ participants }: Props) {
       }}
     >
       {participants.map((participant) => (
-        <Avatar key={participant.id} alt={participant.name} src={participant.avatarUrl} />
+        <Avatar
+          key={participant.id}
+          alt={participant.name}
+          src={participant.avatarUrl}
+        />
       ))}
     </AvatarGroup>
   );
@@ -44,7 +48,10 @@ export default function ChatHeaderDetail({ participants }: Props) {
         variant={singleParticipant.status}
         anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
       >
-        <Avatar src={singleParticipant.avatarUrl} alt={singleParticipant.name} />
+        <Avatar
+          src={singleParticipant.avatarUrl}
+          alt={singleParticipant.name}
+        />
       </Badge>
 
       <ListItemText

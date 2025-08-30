@@ -9,7 +9,10 @@ import Stack, { StackProps } from '@mui/material/Stack';
 import Iconify from 'src/components/iconify';
 import { shortDateLabel } from 'src/components/custom-date-range-picker';
 
-import { IInvoiceTableFilters, IInvoiceTableFilterValue } from 'src/types/invoice';
+import {
+  IInvoiceTableFilters,
+  IInvoiceTableFilterValue,
+} from 'src/types/invoice';
 
 // ----------------------------------------------------------------------
 
@@ -64,7 +67,13 @@ export default function InvoiceTableFiltersResult({
         </Box>
       </Box>
 
-      <Stack flexGrow={1} spacing={1} direction="row" flexWrap="wrap" alignItems="center">
+      <Stack
+        flexGrow={1}
+        spacing={1}
+        direction="row"
+        flexWrap="wrap"
+        alignItems="center"
+      >
         {!!filters.service.length && (
           <Block label="Service:">
             {filters.service.map((item) => (
@@ -80,7 +89,11 @@ export default function InvoiceTableFiltersResult({
 
         {filters.status !== 'all' && (
           <Block label="Status:">
-            <Chip size="small" label={filters.status} onDelete={handleRemoveStatus} />
+            <Chip
+              size="small"
+              label={filters.status}
+              onDelete={handleRemoveStatus}
+            />
           </Block>
         )}
 
@@ -92,7 +105,11 @@ export default function InvoiceTableFiltersResult({
 
         {!!filters.name && (
           <Block label="Keyword:">
-            <Chip label={filters.name} size="small" onDelete={handleRemoveKeyword} />
+            <Chip
+              label={filters.name}
+              size="small"
+              onDelete={handleRemoveKeyword}
+            />
           </Block>
         )}
 

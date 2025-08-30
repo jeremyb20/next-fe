@@ -18,7 +18,11 @@ type Props = {
   onAddTask: (task: IKanbanTask) => void;
 };
 
-export default function KanbanTaskAdd({ status, onAddTask, onCloseAddTask }: Props) {
+export default function KanbanTaskAdd({
+  status,
+  onAddTask,
+  onCloseAddTask,
+}: Props) {
   const [name, setName] = useState('');
 
   const defaultTask: IKanbanTask = useMemo(
@@ -60,9 +64,12 @@ export default function KanbanTaskAdd({ status, onAddTask, onCloseAddTask }: Pro
     }
   }, [defaultTask, name, onAddTask, onCloseAddTask]);
 
-  const handleChangeName = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
-    setName(event.target.value);
-  }, []);
+  const handleChangeName = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      setName(event.target.value);
+    },
+    []
+  );
 
   return (
     <ClickAwayListener onClickAway={handleClickAddTask}>

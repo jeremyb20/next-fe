@@ -139,7 +139,8 @@ export default function TourNewEditForm({ currentTour }: Props) {
 
   const handleRemoveFile = useCallback(
     (inputFile: File | string) => {
-      const filtered = values.images && values.images?.filter((file) => file !== inputFile);
+      const filtered =
+        values.images && values.images?.filter((file) => file !== inputFile);
       setValue('images', filtered);
     },
     [setValue, values.images]
@@ -169,7 +170,10 @@ export default function TourNewEditForm({ currentTour }: Props) {
           <Stack spacing={3} sx={{ p: 3 }}>
             <Stack spacing={1.5}>
               <Typography variant="subtitle2">Name</Typography>
-              <RHFTextField name="name" placeholder="Ex: Adventure Seekers Expedition..." />
+              <RHFTextField
+                name="name"
+                placeholder="Ex: Adventure Seekers Expedition..."
+              />
             </Stack>
 
             <Stack spacing={1.5}>
@@ -247,7 +251,12 @@ export default function TourNewEditForm({ currentTour }: Props) {
                       size="small"
                       variant="soft"
                       label={tourGuide.name}
-                      avatar={<Avatar alt={tourGuide.name} src={tourGuide.avatarUrl} />}
+                      avatar={
+                        <Avatar
+                          alt={tourGuide.name}
+                          src={tourGuide.avatarUrl}
+                        />
+                      }
                     />
                   ))
                 }
@@ -296,7 +305,10 @@ export default function TourNewEditForm({ currentTour }: Props) {
 
             <Stack spacing={1.5}>
               <Typography variant="subtitle2">Duration</Typography>
-              <RHFTextField name="durations" placeholder="Ex: 2 days, 4 days 3 nights..." />
+              <RHFTextField
+                name="durations"
+                placeholder="Ex: 2 days, 4 days 3 nights..."
+              />
             </Stack>
 
             <Stack spacing={1.5}>

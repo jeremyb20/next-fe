@@ -132,7 +132,12 @@ export default function TourDetailsContent({ tour }: Props) {
       </Stack>
 
       <Stack spacing={3} direction="row" flexWrap="wrap" alignItems="center">
-        <Stack direction="row" alignItems="center" spacing={0.5} sx={{ typography: 'body2' }}>
+        <Stack
+          direction="row"
+          alignItems="center"
+          spacing={0.5}
+          sx={{ typography: 'body2' }}
+        >
           <Iconify icon="eva:star-fill" sx={{ color: 'warning.main' }} />
           <Box component="span" sx={{ typography: 'subtitle2' }}>
             {ratingNumber}
@@ -140,14 +145,27 @@ export default function TourDetailsContent({ tour }: Props) {
           <Link sx={{ color: 'text.secondary' }}>(234 reviews)</Link>
         </Stack>
 
-        <Stack direction="row" alignItems="center" spacing={0.5} sx={{ typography: 'body2' }}>
+        <Stack
+          direction="row"
+          alignItems="center"
+          spacing={0.5}
+          sx={{ typography: 'body2' }}
+        >
           <Iconify icon="mingcute:location-fill" sx={{ color: 'error.main' }} />
           {destination}
         </Stack>
 
-        <Stack direction="row" alignItems="center" spacing={0.5} sx={{ typography: 'subtitle2' }}>
+        <Stack
+          direction="row"
+          alignItems="center"
+          spacing={0.5}
+          sx={{ typography: 'subtitle2' }}
+        >
           <Iconify icon="solar:flag-bold" sx={{ color: 'info.main' }} />
-          <Box component="span" sx={{ typography: 'body2', color: 'text.secondary' }}>
+          <Box
+            component="span"
+            sx={{ typography: 'body2', color: 'text.secondary' }}
+          >
             Guide by
           </Box>
           {tourGuides.map((tourGuide) => tourGuide.name).join(', ')}
@@ -173,7 +191,9 @@ export default function TourDetailsContent({ tour }: Props) {
         },
         {
           label: 'Contact name',
-          value: tourGuides.map((tourGuide) => tourGuide.phoneNumber).join(', '),
+          value: tourGuides
+            .map((tourGuide) => tourGuide.phoneNumber)
+            .join(', '),
           icon: <Iconify icon="solar:user-rounded-bold" />,
         },
         {

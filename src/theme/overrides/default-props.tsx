@@ -261,36 +261,67 @@ export function defaultProps(theme: Theme) {
               sx={{ color: 'text.disabled' }}
             />
           ),
-          columnMenuIcon: () => <Iconify width={20} icon="mingcute:more-1-fill" />,
+          columnMenuIcon: () => (
+            <Iconify width={20} icon="mingcute:more-1-fill" />
+          ),
           columnMenuSortAscendingIcon: () => (
             <Iconify width={20} icon="solar:alt-arrow-up-bold-duotone" />
           ),
           columnMenuSortDescendingIcon: () => (
             <Iconify width={20} icon="solar:alt-arrow-down-bold-duotone" />
           ),
-          columnMenuFilterIcon: () => <Iconify width={20} icon="solar:filter-bold" />,
-          columnMenuHideIcon: () => <Iconify width={20} icon="solar:eye-closed-bold" />,
-          columnMenuManageColumnsIcon: () => <Iconify width={20} icon="solar:eye-bold" />,
-          columnSelectorIcon: () => <Iconify width={20} icon="solar:eye-bold" />,
+          columnMenuFilterIcon: () => (
+            <Iconify width={20} icon="solar:filter-bold" />
+          ),
+          columnMenuHideIcon: () => (
+            <Iconify width={20} icon="solar:eye-closed-bold" />
+          ),
+          columnMenuManageColumnsIcon: () => (
+            <Iconify width={20} icon="solar:eye-bold" />
+          ),
+          columnSelectorIcon: () => (
+            <Iconify width={20} icon="solar:eye-bold" />
+          ),
           // filter
-          filterPanelDeleteIcon: () => <Iconify width={20} icon="eva:close-fill" />,
-          openFilterButtonIcon: () => <Iconify width={20} icon="solar:filter-bold" />,
+          filterPanelDeleteIcon: () => (
+            <Iconify width={20} icon="eva:close-fill" />
+          ),
+          openFilterButtonIcon: () => (
+            <Iconify width={20} icon="solar:filter-bold" />
+          ),
           columnFilteredIcon: () => (
-            <Iconify width={16} icon="solar:filter-bold" sx={{ color: 'text.primary' }} />
+            <Iconify
+              width={16}
+              icon="solar:filter-bold"
+              sx={{ color: 'text.primary' }}
+            />
           ),
           // density
           densityCompactIcon: () => (
-            <Iconify width={20} icon="material-symbols:table-rows-narrow-rounded" />
+            <Iconify
+              width={20}
+              icon="material-symbols:table-rows-narrow-rounded"
+            />
           ),
-          densityStandardIcon: () => <Iconify width={20} icon="mingcute:rows-4-fill" />,
-          densityComfortableIcon: () => <Iconify width={20} icon="mingcute:rows-2-fill" />,
+          densityStandardIcon: () => (
+            <Iconify width={20} icon="mingcute:rows-4-fill" />
+          ),
+          densityComfortableIcon: () => (
+            <Iconify width={20} icon="mingcute:rows-2-fill" />
+          ),
           // export
           exportIcon: () => <Iconify width={20} icon="solar:export-bold" />,
           // quick filter
           quickFilterIcon: () => (
-            <Iconify width={24} icon="eva:search-fill" sx={{ color: 'text.secondary' }} />
+            <Iconify
+              width={24}
+              icon="eva:search-fill"
+              sx={{ color: 'text.secondary' }}
+            />
           ),
-          quickFilterClearIcon: () => <Iconify width={20} icon="eva:close-fill" />,
+          quickFilterClearIcon: () => (
+            <Iconify width={20} icon="eva:close-fill" />
+          ),
         },
         slotProps: {
           basePopper: {

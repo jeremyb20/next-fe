@@ -25,7 +25,13 @@ type Props = {
   loading?: boolean;
 };
 
-export default function ProductSearch({ query, results, onSearch, hrefItem, loading }: Props) {
+export default function ProductSearch({
+  query,
+  results,
+  onSearch,
+  hrefItem,
+  loading,
+}: Props) {
   const router = useRouter();
 
   const handleClick = (id: string) => {
@@ -35,7 +41,9 @@ export default function ProductSearch({ query, results, onSearch, hrefItem, load
   const handleKeyUp = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (query) {
       if (event.key === 'Enter') {
-        const selectItem = results.filter((product) => product.name === query)[0];
+        const selectItem = results.filter(
+          (product) => product.name === query
+        )[0];
 
         handleClick(selectItem.id);
       }
@@ -77,12 +85,17 @@ export default function ProductSearch({ query, results, onSearch, hrefItem, load
             ...params.InputProps,
             startAdornment: (
               <InputAdornment position="start">
-                <Iconify icon="eva:search-fill" sx={{ ml: 1, color: 'text.disabled' }} />
+                <Iconify
+                  icon="eva:search-fill"
+                  sx={{ ml: 1, color: 'text.disabled' }}
+                />
               </InputAdornment>
             ),
             endAdornment: (
               <>
-                {loading ? <Iconify icon="svg-spinners:8-dots-rotate" sx={{ mr: -3 }} /> : null}
+                {loading ? (
+                  <Iconify icon="svg-spinners:8-dots-rotate" sx={{ mr: -3 }} />
+                ) : null}
                 {params.InputProps.endAdornment}
               </>
             ),
@@ -94,7 +107,12 @@ export default function ProductSearch({ query, results, onSearch, hrefItem, load
         const parts = parse(product.name, matches);
 
         return (
-          <Box component="li" {...props} onClick={() => handleClick(product.id)} key={product.id}>
+          <Box
+            component="li"
+            {...props}
+            onClick={() => handleClick(product.id)}
+            key={product.id}
+          >
             <Avatar
               key={product.id}
               alt={product.name}
@@ -117,7 +135,9 @@ export default function ProductSearch({ query, results, onSearch, hrefItem, load
                   color={part.highlight ? 'primary' : 'textPrimary'}
                   sx={{
                     typography: 'body2',
-                    fontWeight: part.highlight ? 'fontWeightSemiBold' : 'fontWeightMedium',
+                    fontWeight: part.highlight
+                      ? 'fontWeightSemiBold'
+                      : 'fontWeightMedium',
                   }}
                 >
                   {part.text}

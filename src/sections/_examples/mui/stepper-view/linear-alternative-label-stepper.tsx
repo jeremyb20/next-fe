@@ -11,7 +11,11 @@ import Typography from '@mui/material/Typography';
 
 // ----------------------------------------------------------------------
 
-const steps = ['Select campaign settings', 'Create an ad group', 'Create an ad'];
+const steps = [
+  'Select campaign settings',
+  'Create an ad group',
+  'Create an ad',
+];
 
 export default function LinearAlternativeLabel() {
   const [activeStep, setActiveStep] = useState(0);
@@ -84,7 +88,9 @@ export default function LinearAlternativeLabel() {
               bgcolor: (theme) => alpha(theme.palette.grey[500], 0.12),
             }}
           >
-            <Typography sx={{ my: 1 }}>All steps completed - you&apos;re finished</Typography>
+            <Typography sx={{ my: 1 }}>
+              All steps completed - you&apos;re finished
+            </Typography>
           </Paper>
 
           <Box sx={{ display: 'flex' }}>
@@ -105,7 +111,12 @@ export default function LinearAlternativeLabel() {
             <Typography sx={{ my: 1 }}> Step {activeStep + 1}</Typography>
           </Paper>
           <Box sx={{ display: 'flex' }}>
-            <Button color="inherit" disabled={activeStep === 0} onClick={handleBack} sx={{ mr: 1 }}>
+            <Button
+              color="inherit"
+              disabled={activeStep === 0}
+              onClick={handleBack}
+              sx={{ mr: 1 }}
+            >
               Back
             </Button>
             <Box sx={{ flexGrow: 1 }} />

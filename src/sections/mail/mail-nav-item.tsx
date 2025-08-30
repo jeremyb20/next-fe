@@ -30,7 +30,12 @@ type Props = {
   onClickNavItem: VoidFunction;
 };
 
-export default function MailNavItem({ selected, label, onClickNavItem, ...other }: Props) {
+export default function MailNavItem({
+  selected,
+  label,
+  onClickNavItem,
+  ...other
+}: Props) {
   const { unreadCount, color, name } = label;
 
   const labelIcon = (LABEL_ICONS as Record<string, IconifyProps>)[label.id];
@@ -69,7 +74,9 @@ export default function MailNavItem({ selected, label, onClickNavItem, ...other 
         }}
       />
 
-      {!!unreadCount && <Typography variant="caption">{unreadCount}</Typography>}
+      {!!unreadCount && (
+        <Typography variant="caption">{unreadCount}</Typography>
+      )}
     </ListItemButton>
   );
 }

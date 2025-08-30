@@ -26,11 +26,16 @@ type NotificationItemProps = {
   };
 };
 
-export default function NotificationItem({ notification }: NotificationItemProps) {
+export default function NotificationItem({
+  notification,
+}: NotificationItemProps) {
   const renderAvatar = (
     <ListItemAvatar>
       {notification.avatarUrl ? (
-        <Avatar src={notification.avatarUrl} sx={{ bgcolor: 'background.neutral' }} />
+        <Avatar
+          src={notification.avatarUrl}
+          sx={{ bgcolor: 'background.neutral' }}
+        />
       ) : (
         <Stack
           alignItems="center"
@@ -149,11 +154,21 @@ export default function NotificationItem({ notification }: NotificationItemProps
         sx={{ width: 40, height: 40 }}
       />
 
-      <Stack spacing={1} direction={{ xs: 'column', sm: 'row' }} flexGrow={1} sx={{ minWidth: 0 }}>
+      <Stack
+        spacing={1}
+        direction={{ xs: 'column', sm: 'row' }}
+        flexGrow={1}
+        sx={{ minWidth: 0 }}
+      >
         <ListItemText
           disableTypography
           primary={
-            <Typography variant="subtitle2" component="div" sx={{ color: 'text.secondary' }} noWrap>
+            <Typography
+              variant="subtitle2"
+              component="div"
+              sx={{ color: 'text.secondary' }}
+              noWrap
+            >
               design-suriname-2015.mp3
             </Typography>
           }

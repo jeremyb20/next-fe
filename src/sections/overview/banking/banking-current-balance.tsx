@@ -146,8 +146,16 @@ function CardItem({ card }: CardItemProps) {
               {currency.value ? '********' : fCurrency(balance)}
             </Typography>
 
-            <IconButton color="inherit" onClick={currency.onToggle} sx={{ opacity: 0.48 }}>
-              <Iconify icon={currency.value ? 'solar:eye-bold' : 'solar:eye-closed-bold'} />
+            <IconButton
+              color="inherit"
+              onClick={currency.onToggle}
+              sx={{ opacity: 0.48 }}
+            >
+              <Iconify
+                icon={
+                  currency.value ? 'solar:eye-bold' : 'solar:eye-closed-bold'
+                }
+              />
             </IconButton>
           </Stack>
         </div>
@@ -167,7 +175,9 @@ function CardItem({ card }: CardItemProps) {
               mr: 1,
             }}
           >
-            {cardType === 'mastercard' && <Iconify width={24} icon="logos:mastercard" />}
+            {cardType === 'mastercard' && (
+              <Iconify width={24} icon="logos:mastercard" />
+            )}
             {cardType === 'visa' && <Iconify width={24} icon="logos:visa" />}
           </Box>
           {cardNumber}
@@ -175,17 +185,29 @@ function CardItem({ card }: CardItemProps) {
 
         <Stack direction="row" spacing={5}>
           <Stack spacing={1}>
-            <Typography sx={{ typography: 'caption', opacity: 0.48 }}>Card Holder</Typography>
-            <Typography sx={{ typography: 'subtitle1' }}>{cardHolder}</Typography>
+            <Typography sx={{ typography: 'caption', opacity: 0.48 }}>
+              Card Holder
+            </Typography>
+            <Typography sx={{ typography: 'subtitle1' }}>
+              {cardHolder}
+            </Typography>
           </Stack>
           <Stack spacing={1}>
-            <Typography sx={{ typography: 'caption', opacity: 0.48 }}>Valid Dates</Typography>
-            <Typography sx={{ typography: 'subtitle1' }}>{cardValid}</Typography>
+            <Typography sx={{ typography: 'caption', opacity: 0.48 }}>
+              Valid Dates
+            </Typography>
+            <Typography sx={{ typography: 'subtitle1' }}>
+              {cardValid}
+            </Typography>
           </Stack>
         </Stack>
       </Stack>
 
-      <CustomPopover open={popover.open} onClose={popover.onClose} sx={{ width: 140 }}>
+      <CustomPopover
+        open={popover.open}
+        onClose={popover.onClose}
+        sx={{ width: 140 }}
+      >
         <MenuItem onClick={handleDelete} sx={{ color: 'error.main' }}>
           <Iconify icon="solar:trash-bin-trash-bold" />
           Delete

@@ -115,7 +115,11 @@ export default function TooltipView() {
               <Button color="inherit">Grow</Button>
             </Tooltip>
 
-            <Tooltip TransitionComponent={Fade} TransitionProps={{ timeout: 600 }} title="Add">
+            <Tooltip
+              TransitionComponent={Fade}
+              TransitionProps={{ timeout: 600 }}
+              title="Add"
+            >
               <Button color="inherit">Fade</Button>
             </Tooltip>
 

@@ -31,7 +31,9 @@ export default function JobFiltersResult({
   ...other
 }: Props) {
   const handleRemoveEmploymentTypes = (inputValue: string) => {
-    const newValue = filters.employmentTypes.filter((item) => item !== inputValue);
+    const newValue = filters.employmentTypes.filter(
+      (item) => item !== inputValue
+    );
     onFilters('employmentTypes', newValue);
   };
 
@@ -63,7 +65,13 @@ export default function JobFiltersResult({
         </Box>
       </Box>
 
-      <Stack flexGrow={1} spacing={1} direction="row" flexWrap="wrap" alignItems="center">
+      <Stack
+        flexGrow={1}
+        spacing={1}
+        direction="row"
+        flexWrap="wrap"
+        alignItems="center"
+      >
         {!!filters.employmentTypes.length && (
           <Block label="Employment Types:">
             {filters.employmentTypes.map((item) => (
@@ -79,14 +87,23 @@ export default function JobFiltersResult({
 
         {filters.experience !== 'all' && (
           <Block label="Experience:">
-            <Chip size="small" label={filters.experience} onDelete={handleRemoveExperience} />
+            <Chip
+              size="small"
+              label={filters.experience}
+              onDelete={handleRemoveExperience}
+            />
           </Block>
         )}
 
         {!!filters.roles.length && (
           <Block label="Roles:">
             {filters.roles.map((item) => (
-              <Chip key={item} label={item} size="small" onDelete={() => handleRemoveRoles(item)} />
+              <Chip
+                key={item}
+                label={item}
+                size="small"
+                onDelete={() => handleRemoveRoles(item)}
+              />
             ))}
           </Block>
         )}

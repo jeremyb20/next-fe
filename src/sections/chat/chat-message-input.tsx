@@ -87,9 +87,12 @@ export default function ChatMessageInput({
     }
   }, []);
 
-  const handleChangeMessage = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
-    setMessage(event.target.value);
-  }, []);
+  const handleChangeMessage = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      setMessage(event.target.value);
+    },
+    []
+  );
 
   const handleSendMessage = useCallback(
     async (event: React.KeyboardEvent<HTMLInputElement>) => {
@@ -112,7 +115,14 @@ export default function ChatMessageInput({
         console.error(error);
       }
     },
-    [conversationData, message, messageData, onAddRecipients, router, selectedConversationId]
+    [
+      conversationData,
+      message,
+      messageData,
+      onAddRecipients,
+      router,
+      selectedConversationId,
+    ]
   );
 
   return (

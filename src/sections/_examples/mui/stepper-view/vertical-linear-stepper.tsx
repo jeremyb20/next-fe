@@ -21,7 +21,8 @@ const steps = [
   },
   {
     label: 'Create an ad group',
-    description: 'An ad group contains one or more ads which target a shared set of keywords.',
+    description:
+      'An ad group contains one or more ads which target a shared set of keywords.',
   },
   {
     label: 'Create an ad',
@@ -53,7 +54,11 @@ export default function VerticalLinearStepper() {
         {steps.map((step, index) => (
           <Step key={step.label}>
             <StepLabel
-              optional={index === 2 ? <Typography variant="caption">Last step</Typography> : null}
+              optional={
+                index === 2 ? (
+                  <Typography variant="caption">Last step</Typography>
+                ) : null
+              }
             >
               {step.label}
             </StepLabel>
@@ -80,7 +85,9 @@ export default function VerticalLinearStepper() {
             bgcolor: (theme) => alpha(theme.palette.grey[500], 0.12),
           }}
         >
-          <Typography sx={{ mb: 2 }}>All steps completed - you&apos;re finished</Typography>
+          <Typography sx={{ mb: 2 }}>
+            All steps completed - you&apos;re finished
+          </Typography>
           <Button onClick={handleReset}>Reset</Button>
         </Paper>
       )}

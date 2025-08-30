@@ -24,7 +24,11 @@ export default function ChatRoomSingle({ participant }: Props) {
 
   const renderInfo = (
     <Stack alignItems="center" sx={{ py: 5 }}>
-      <Avatar alt={name} src={avatarUrl} sx={{ width: 96, height: 96, mb: 2 }} />
+      <Avatar
+        alt={name}
+        src={avatarUrl}
+        sx={{ width: 96, height: 96, mb: 2 }}
+      />
       <Typography variant="subtitle1">{name}</Typography>
       <Typography variant="body2" sx={{ color: 'text.secondary', mt: 0.5 }}>
         {role}
@@ -51,7 +55,11 @@ export default function ChatRoomSingle({ participant }: Props) {
       </Box>
       <Iconify
         width={16}
-        icon={collapse.value ? 'eva:arrow-ios-downward-fill' : 'eva:arrow-ios-forward-fill'}
+        icon={
+          collapse.value
+            ? 'eva:arrow-ios-downward-fill'
+            : 'eva:arrow-ios-forward-fill'
+        }
       />
     </ListItemButton>
   );

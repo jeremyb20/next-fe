@@ -29,7 +29,12 @@ function OrderCompleteIllustration({ ...other }: BoxProps) {
     >
       <BackgroundShape />
 
-      <image href="/assets/illustrations/characters/character_10.png" height="300" x="300" y="30" />
+      <image
+        href="/assets/illustrations/characters/character_10.png"
+        height="300"
+        x="300"
+        y="30"
+      />
 
       <path
         fill="#DFE3E8"

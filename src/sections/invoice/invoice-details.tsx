@@ -46,9 +46,12 @@ type Props = {
 export default function InvoiceDetails({ invoice }: Props) {
   const [currentStatus, setCurrentStatus] = useState(invoice.status);
 
-  const handleChangeStatus = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
-    setCurrentStatus(event.target.value);
-  }, []);
+  const handleChangeStatus = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      setCurrentStatus(event.target.value);
+    },
+    []
+  );
 
   const renderTotal = (
     <>
@@ -67,7 +70,10 @@ export default function InvoiceDetails({ invoice }: Props) {
       <StyledTableRow>
         <TableCell colSpan={3} />
         <TableCell sx={{ color: 'text.secondary' }}>Shipping</TableCell>
-        <TableCell width={120} sx={{ color: 'error.main', typography: 'body2' }}>
+        <TableCell
+          width={120}
+          sx={{ color: 'error.main', typography: 'body2' }}
+        >
           {fCurrency(-invoice.shipping)}
         </TableCell>
       </StyledTableRow>
@@ -75,7 +81,10 @@ export default function InvoiceDetails({ invoice }: Props) {
       <StyledTableRow>
         <TableCell colSpan={3} />
         <TableCell sx={{ color: 'text.secondary' }}>Discount</TableCell>
-        <TableCell width={120} sx={{ color: 'error.main', typography: 'body2' }}>
+        <TableCell
+          width={120}
+          sx={{ color: 'error.main', typography: 'body2' }}
+        >
           {fCurrency(-invoice.discount)}
         </TableCell>
       </StyledTableRow>
@@ -102,7 +111,8 @@ export default function InvoiceDetails({ invoice }: Props) {
         <Typography variant="subtitle2">NOTES</Typography>
 
         <Typography variant="body2">
-          We appreciate your business. Should you need us to add VAT or extra notes let us know!
+          We appreciate your business. Should you need us to add VAT or extra
+          notes let us know!
         </Typography>
       </Grid>
 
@@ -122,7 +132,9 @@ export default function InvoiceDetails({ invoice }: Props) {
             <TableRow>
               <TableCell width={40}>#</TableCell>
 
-              <TableCell sx={{ typography: 'subtitle2' }}>Description</TableCell>
+              <TableCell sx={{ typography: 'subtitle2' }}>
+                Description
+              </TableCell>
 
               <TableCell>Qty</TableCell>
 
@@ -141,7 +153,11 @@ export default function InvoiceDetails({ invoice }: Props) {
                   <Box sx={{ maxWidth: 560 }}>
                     <Typography variant="subtitle2">{row.title}</Typography>
 
-                    <Typography variant="body2" sx={{ color: 'text.secondary' }} noWrap>
+                    <Typography
+                      variant="body2"
+                      sx={{ color: 'text.secondary' }}
+                      noWrap
+                    >
                       {row.description}
                     </Typography>
                   </Box>
@@ -151,7 +167,9 @@ export default function InvoiceDetails({ invoice }: Props) {
 
                 <TableCell align="right">{fCurrency(row.price)}</TableCell>
 
-                <TableCell align="right">{fCurrency(row.price * row.quantity)}</TableCell>
+                <TableCell align="right">
+                  {fCurrency(row.price * row.quantity)}
+                </TableCell>
               </TableRow>
             ))}
 

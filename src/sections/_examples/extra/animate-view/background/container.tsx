@@ -13,7 +13,10 @@ type ContainerViewProps = {
   selectVariant: string;
 };
 
-export default function ContainerView({ selectVariant, ...other }: ContainerViewProps) {
+export default function ContainerView({
+  selectVariant,
+  ...other
+}: ContainerViewProps) {
   const isKenburns = selectVariant.includes('kenburns');
 
   return (
@@ -34,7 +37,11 @@ export default function ContainerView({ selectVariant, ...other }: ContainerView
           sx={{ width: 1, height: 1, objectFit: 'cover' }}
         />
       ) : (
-        <Box component={m.div} {...getVariant(selectVariant)} sx={{ height: 1, width: 1 }} />
+        <Box
+          component={m.div}
+          {...getVariant(selectVariant)}
+          sx={{ height: 1, width: 1 }}
+        />
       )}
     </Paper>
   );

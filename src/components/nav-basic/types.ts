@@ -25,7 +25,9 @@ export type NavItemBaseProps = {
   children?: any;
 };
 
-export type NavItemProps = ListItemButtonProps & NavItemBaseProps & NavItemStateProps;
+export type NavItemProps = ListItemButtonProps &
+  NavItemBaseProps &
+  NavItemStateProps;
 
 export type NavListProps = {
   data: NavItemBaseProps;

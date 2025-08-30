@@ -18,7 +18,17 @@ import ComponentHero from 'src/sections/_examples/component-hero';
 
 // ----------------------------------------------------------------------
 
-const RATIO = ['4/3', '3/4', '6/4', '4/6', '16/9', '9/16', '21/9', '9/21', '1/1'] as const;
+const RATIO = [
+  '4/3',
+  '3/4',
+  '6/4',
+  '4/6',
+  '16/9',
+  '9/16',
+  '21/9',
+  '9/21',
+  '1/1',
+] as const;
 
 const IMAGES = RATIO.map((ratio, index) => ({
   ratio,
@@ -56,7 +66,12 @@ export default function ImageView() {
               sx={{ p: 3 }}
             >
               {IMAGES.map((img) => (
-                <Image key={img.ratio} alt={img.ratio} src={img.url} sx={{ borderRadius: 2 }} />
+                <Image
+                  key={img.ratio}
+                  alt={img.ratio}
+                  src={img.url}
+                  sx={{ borderRadius: 2 }}
+                />
               ))}
             </Box>
           </Card>
@@ -75,11 +90,19 @@ export default function ImageView() {
             >
               {IMAGES.map((img) => (
                 <Stack key={img.ratio} spacing={1}>
-                  <Typography variant="overline" sx={{ color: 'text.secondary' }}>
+                  <Typography
+                    variant="overline"
+                    sx={{ color: 'text.secondary' }}
+                  >
                     {img.ratio}
                   </Typography>
 
-                  <Image alt={img.ratio} src={img.url} ratio={img.ratio} sx={{ borderRadius: 2 }} />
+                  <Image
+                    alt={img.ratio}
+                    src={img.url}
+                    ratio={img.ratio}
+                    sx={{ borderRadius: 2 }}
+                  />
                 </Stack>
               ))}
             </Box>

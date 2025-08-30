@@ -19,7 +19,15 @@ import ComponentBlock from '../component-block';
 
 // ----------------------------------------------------------------------
 
-const COLORS = ['default', 'primary', 'secondary', 'info', 'success', 'warning', 'error'] as const;
+const COLORS = [
+  'default',
+  'primary',
+  'secondary',
+  'info',
+  'success',
+  'warning',
+  'error',
+] as const;
 
 const PLACEMENTS = ['top', 'start', 'bottom', 'end'] as const;
 
@@ -62,8 +70,16 @@ export default function RadioButtonView() {
 
           <ComponentBlock title="Sizes">
             <RadioGroup row defaultValue="g">
-              <FormControlLabel value="g" control={<Radio size="medium" />} label="Normal" />
-              <FormControlLabel value="p" control={<Radio size="small" />} label="Small" />
+              <FormControlLabel
+                value="g"
+                control={<Radio size="medium" />}
+                label="Normal"
+              />
+              <FormControlLabel
+                value="p"
+                control={<Radio size="small" />}
+                label="Small"
+              />
             </RadioGroup>
           </ComponentBlock>
 

@@ -34,7 +34,10 @@ function MapDraggableMarkers({ ...other }: MapBoxProps) {
 
   return (
     <>
-      <Map initialViewState={{ latitude: 40, longitude: -100, zoom: 3.5 }} {...other}>
+      <Map
+        initialViewState={{ latitude: 40, longitude: -100, zoom: 3.5 }}
+        {...other}
+      >
         <MapControl />
 
         <MapMarker

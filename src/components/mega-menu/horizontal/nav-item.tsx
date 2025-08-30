@@ -13,7 +13,10 @@ import { NavItemProps, NavItemStateProps } from '../types';
 // ----------------------------------------------------------------------
 
 const NavItem = forwardRef<HTMLDivElement, NavItemProps>(
-  ({ title, path, icon, open, active, hasChild, externalLink, ...other }, ref) => {
+  (
+    { title, path, icon, open, active, hasChild, externalLink, ...other },
+    ref
+  ) => {
     const renderContent = (
       <StyledNavItem
         disableRipple
@@ -35,13 +38,25 @@ const NavItem = forwardRef<HTMLDivElement, NavItemProps>(
           </Box>
         )}
 
-        {hasChild && <Iconify width={16} className="arrow" icon="eva:arrow-ios-downward-fill" />}
+        {hasChild && (
+          <Iconify
+            width={16}
+            className="arrow"
+            icon="eva:arrow-ios-downward-fill"
+          />
+        )}
       </StyledNavItem>
     );
 
     if (externalLink)
       return (
-        <Link href={path} target="_blank" rel="noopener" underline="none" color="inherit">
+        <Link
+          href={path}
+          target="_blank"
+          rel="noopener"
+          underline="none"
+          color="inherit"
+        >
           {renderContent}
         </Link>
       );

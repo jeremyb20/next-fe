@@ -19,7 +19,11 @@ export default function HomeDarkMode() {
   const renderDescription = (
     <Stack alignItems="center" spacing={3}>
       <m.div variants={varFade().inUp}>
-        <Typography component="div" variant="overline" sx={{ color: 'primary.main' }}>
+        <Typography
+          component="div"
+          variant="overline"
+          sx={{ color: 'primary.main' }}
+        >
           Easy switch between styles.
         </Typography>
       </m.div>
@@ -40,7 +44,10 @@ export default function HomeDarkMode() {
         <Switch
           checked={settings.themeMode === 'dark'}
           onClick={() =>
-            settings.onUpdate('themeMode', settings.themeMode === 'light' ? 'dark' : 'light')
+            settings.onUpdate(
+              'themeMode',
+              settings.themeMode === 'light' ? 'dark' : 'light'
+            )
           }
         />
       </m.div>
@@ -55,7 +62,8 @@ export default function HomeDarkMode() {
         sx={{
           borderRadius: 2,
           my: { xs: 5, md: 10 },
-          boxShadow: (theme) => `-40px 40px 80px ${alpha(theme.palette.common.black, 0.24)}`,
+          boxShadow: (theme) =>
+            `-40px 40px 80px ${alpha(theme.palette.common.black, 0.24)}`,
         }}
       />
     </m.div>

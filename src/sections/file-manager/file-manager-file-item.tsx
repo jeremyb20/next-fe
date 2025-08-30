@@ -66,9 +66,12 @@ export default function FileManagerFileItem({
 
   const popover = usePopover();
 
-  const handleChangeInvite = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
-    setInviteEmail(event.target.value);
-  }, []);
+  const handleChangeInvite = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      setInviteEmail(event.target.value);
+    },
+    []
+  );
 
   const handleCopy = useCallback(() => {
     enqueueSnackbar('Copied!');
@@ -90,7 +93,11 @@ export default function FileManagerFileItem({
     );
 
   const renderAction = (
-    <Stack direction="row" alignItems="center" sx={{ top: 8, right: 8, position: 'absolute' }}>
+    <Stack
+      direction="row"
+      alignItems="center"
+      sx={{ top: 8, right: 8, position: 'absolute' }}
+    >
       <Checkbox
         color="warning"
         icon={<Iconify icon="eva:star-outline" />}
@@ -99,7 +106,10 @@ export default function FileManagerFileItem({
         onChange={favorite.onToggle}
       />
 
-      <IconButton color={popover.open ? 'inherit' : 'default'} onClick={popover.onOpen}>
+      <IconButton
+        color={popover.open ? 'inherit' : 'default'}
+        onClick={popover.onOpen}
+      >
         <Iconify icon="eva:more-vertical-fill" />
       </IconButton>
     </Stack>

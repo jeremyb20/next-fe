@@ -15,7 +15,10 @@ type Props = {
   participants: IChatParticipant[];
 };
 
-export default function ChatMessageList({ messages = [], participants }: Props) {
+export default function ChatMessageList({
+  messages = [],
+  participants,
+}: Props) {
   const { messagesEndRef } = useMessagesScroll(messages);
 
   const slides = messages

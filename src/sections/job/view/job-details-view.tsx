@@ -32,9 +32,12 @@ export default function JobDetailsView({ id }: Props) {
 
   const [currentTab, setCurrentTab] = useState('content');
 
-  const handleChangeTab = useCallback((event: React.SyntheticEvent, newValue: string) => {
-    setCurrentTab(newValue);
-  }, []);
+  const handleChangeTab = useCallback(
+    (event: React.SyntheticEvent, newValue: string) => {
+      setCurrentTab(newValue);
+    },
+    []
+  );
 
   const handleChangePublish = useCallback((newValue: string) => {
     setPublish(newValue);
@@ -80,7 +83,9 @@ export default function JobDetailsView({ id }: Props) {
 
       {currentTab === 'content' && <JobDetailsContent job={currentJob} />}
 
-      {currentTab === 'candidates' && <JobDetailsCandidates candidates={currentJob?.candidates} />}
+      {currentTab === 'candidates' && (
+        <JobDetailsCandidates candidates={currentJob?.candidates} />
+      )}
     </Container>
   );
 }

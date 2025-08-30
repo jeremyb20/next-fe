@@ -6,7 +6,9 @@ import Dialog from '@mui/material/Dialog';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import InputAdornment from '@mui/material/InputAdornment';
-import ListItemButton, { listItemButtonClasses } from '@mui/material/ListItemButton';
+import ListItemButton, {
+  listItemButtonClasses,
+} from '@mui/material/ListItemButton';
 
 import Label from 'src/components/label';
 import Iconify from 'src/components/iconify';
@@ -48,9 +50,12 @@ export default function AddressListDialog({
 
   const notFound = !dataFiltered.length && !!searchAddress;
 
-  const handleSearchAddress = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchAddress(event.target.value);
-  }, []);
+  const handleSearchAddress = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      setSearchAddress(event.target.value);
+    },
+    []
+  );
 
   const handleSelectAddress = useCallback(
     (address: IAddressItem | null) => {
@@ -98,7 +103,9 @@ export default function AddressListDialog({
           </Stack>
 
           {address.company && (
-            <Box sx={{ color: 'primary.main', typography: 'caption' }}>{address.company}</Box>
+            <Box sx={{ color: 'primary.main', typography: 'caption' }}>
+              {address.company}
+            </Box>
           )}
 
           <Typography variant="body2" sx={{ color: 'text.secondary' }}>
@@ -136,7 +143,10 @@ export default function AddressListDialog({
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
-                <Iconify icon="eva:search-fill" sx={{ color: 'text.disabled' }} />
+                <Iconify
+                  icon="eva:search-fill"
+                  sx={{ color: 'text.disabled' }}
+                />
               </InputAdornment>
             ),
           }}
@@ -154,7 +164,13 @@ export default function AddressListDialog({
 
 // ----------------------------------------------------------------------
 
-function applyFilter({ inputData, query }: { inputData: IAddressItem[]; query: string }) {
+function applyFilter({
+  inputData,
+  query,
+}: {
+  inputData: IAddressItem[];
+  query: string;
+}) {
   if (query) {
     return inputData.filter(
       (address) =>

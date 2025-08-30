@@ -128,7 +128,11 @@ export default function TourFilters({
         Durations
       </Typography>
       <Stack spacing={2.5}>
-        <DatePicker label="Start date" value={filters.startDate} onChange={handleFilterStartDate} />
+        <DatePicker
+          label="Start date"
+          value={filters.startDate}
+          onChange={handleFilterStartDate}
+        />
 
         <DatePicker
           label="End date"
@@ -152,7 +156,9 @@ export default function TourFilters({
       </Typography>
 
       <CountrySelect
-        placeholder={filters.destination.length ? '+ Destination' : 'Select Destination'}
+        placeholder={
+          filters.destination.length ? '+ Destination' : 'Select Destination'
+        }
         fullWidth
         multiple
         value={filters.destination}
@@ -176,7 +182,9 @@ export default function TourFilters({
         value={filters.tourGuides}
         onChange={(event, newValue) => handleFilterTourGuide(newValue)}
         getOptionLabel={(option) => option.name}
-        renderInput={(params) => <TextField placeholder="Select Tour Guides" {...params} />}
+        renderInput={(params) => (
+          <TextField placeholder="Select Tour Guides" {...params} />
+        )}
         renderOption={(props, tourGuide) => (
           <li {...props} key={tourGuide.id}>
             <Avatar

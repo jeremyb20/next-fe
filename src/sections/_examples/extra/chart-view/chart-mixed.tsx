@@ -56,6 +56,13 @@ export default function ChartMixed({ series }: Props) {
   });
 
   return (
-    <Chart dir="ltr" type="line" series={series} options={chartOptions} width="100%" height={320} />
+    <Chart
+      dir="ltr"
+      type="line"
+      series={series}
+      options={chartOptions}
+      width="100%"
+      height={320}
+    />
   );
 }

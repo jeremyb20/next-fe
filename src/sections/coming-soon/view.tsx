@@ -20,7 +20,9 @@ import Iconify from 'src/components/iconify';
 // ----------------------------------------------------------------------
 
 export default function ComingSoonView() {
-  const { days, hours, minutes, seconds } = useCountdownDate(new Date('07/07/2024 21:30'));
+  const { days, hours, minutes, seconds } = useCountdownDate(
+    new Date('07/07/2024 21:30')
+  );
 
   return (
     <>
@@ -69,7 +71,8 @@ export default function ComingSoonView() {
                   duration: theme.transitions.duration.shorter,
                 }),
               [`& .${outlinedInputClasses.notchedOutline}`]: {
-                border: (theme) => `solid 1px ${alpha(theme.palette.grey[500], 0.32)}`,
+                border: (theme) =>
+                  `solid 1px ${alpha(theme.palette.grey[500], 0.32)}`,
               },
             },
           },
@@ -77,7 +80,12 @@ export default function ComingSoonView() {
         sx={{ my: 5 }}
       />
 
-      <Stack spacing={1} alignItems="center" justifyContent="center" direction="row">
+      <Stack
+        spacing={1}
+        alignItems="center"
+        justifyContent="center"
+        direction="row"
+      >
         {_socials.map((social) => (
           <IconButton
             key={social.name}

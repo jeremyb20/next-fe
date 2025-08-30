@@ -17,7 +17,15 @@ import ComponentBlock from '../component-block';
 
 // ----------------------------------------------------------------------
 
-const COLORS = ['standard', 'primary', 'secondary', 'info', 'success', 'warning', 'error'] as const;
+const COLORS = [
+  'standard',
+  'primary',
+  'secondary',
+  'info',
+  'success',
+  'warning',
+  'error',
+] as const;
 
 const SIZES = ['small', 'medium', 'large'] as const;
 
@@ -65,7 +73,12 @@ export default function PaginationView() {
             <Pagination shape="circular" count={10} variant="text" />
             <Pagination shape="circular" count={10} variant="text" disabled />
             <Pagination shape="circular" count={10} variant="outlined" />
-            <Pagination shape="circular" count={10} variant="outlined" disabled />
+            <Pagination
+              shape="circular"
+              count={10}
+              variant="outlined"
+              disabled
+            />
             <Pagination shape="circular" count={10} variant="soft" />
             <Pagination shape="circular" count={10} variant="soft" disabled />
           </ComponentBlock>
@@ -74,7 +87,12 @@ export default function PaginationView() {
             <Pagination shape="rounded" count={10} variant="text" />
             <Pagination shape="rounded" count={10} variant="text" disabled />
             <Pagination shape="rounded" count={10} variant="outlined" />
-            <Pagination shape="rounded" count={10} variant="outlined" disabled />
+            <Pagination
+              shape="rounded"
+              count={10}
+              variant="outlined"
+              disabled
+            />
             <Pagination shape="rounded" count={10} variant="soft" />
             <Pagination shape="rounded" count={10} variant="soft" disabled />
           </ComponentBlock>
@@ -85,7 +103,12 @@ export default function PaginationView() {
             ))}
 
             {COLORS.map((color) => (
-              <Pagination key={color} color={color} count={10} variant="outlined" />
+              <Pagination
+                key={color}
+                color={color}
+                count={10}
+                variant="outlined"
+              />
             ))}
 
             {COLORS.map((color) => (
@@ -107,7 +130,12 @@ export default function PaginationView() {
           <ComponentBlock title="Ranges">
             <Pagination count={11} defaultPage={6} siblingCount={0} />
             <Pagination count={11} defaultPage={6} />
-            <Pagination count={11} defaultPage={6} siblingCount={0} boundaryCount={2} />
+            <Pagination
+              count={11}
+              defaultPage={6}
+              siblingCount={0}
+              boundaryCount={2}
+            />
             <Pagination count={11} defaultPage={6} boundaryCount={2} />
           </ComponentBlock>
 

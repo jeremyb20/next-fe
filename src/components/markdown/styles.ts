@@ -79,7 +79,9 @@ const StyledMarkdown = styled('div')(({ theme }) => {
       padding: theme.spacing(2),
       color: theme.palette.common.white,
       borderRadius: theme.shape.borderRadius,
-      backgroundColor: lightMode ? theme.palette.grey[900] : alpha(theme.palette.grey[500], 0.16),
+      backgroundColor: lightMode
+        ? theme.palette.grey[900]
+        : alpha(theme.palette.grey[500], 0.16),
     },
     '& code': {
       fontSize: 14,

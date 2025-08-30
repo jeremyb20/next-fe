@@ -16,7 +16,11 @@ const options = {
 };
 
 export function useGetBoard() {
-  const { data, isLoading, error, isValidating } = useSWR(URL, fetcher, options);
+  const { data, isLoading, error, isValidating } = useSWR(
+    URL,
+    fetcher,
+    options
+  );
 
   const memoizedValue = useMemo(
     () => ({

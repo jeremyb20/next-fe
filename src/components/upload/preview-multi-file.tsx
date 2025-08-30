@@ -14,7 +14,12 @@ import FileThumbnail, { fileData } from '../file-thumbnail';
 
 // ----------------------------------------------------------------------
 
-export default function MultiFilePreview({ thumbnail, files, onRemove, sx }: UploadProps) {
+export default function MultiFilePreview({
+  thumbnail,
+  files,
+  onRemove,
+  sx,
+}: UploadProps) {
   return (
     <AnimatePresence initial={false}>
       {files?.map((file) => {
@@ -38,7 +43,8 @@ export default function MultiFilePreview({ thumbnail, files, onRemove, sx }: Upl
                 borderRadius: 1.25,
                 overflow: 'hidden',
                 position: 'relative',
-                border: (theme) => `solid 1px ${alpha(theme.palette.grey[500], 0.16)}`,
+                border: (theme) =>
+                  `solid 1px ${alpha(theme.palette.grey[500], 0.16)}`,
                 ...sx,
               }}
             >
@@ -86,7 +92,8 @@ export default function MultiFilePreview({ thumbnail, files, onRemove, sx }: Upl
               py: 1,
               px: 1.5,
               borderRadius: 1,
-              border: (theme) => `solid 1px ${alpha(theme.palette.grey[500], 0.16)}`,
+              border: (theme) =>
+                `solid 1px ${alpha(theme.palette.grey[500], 0.16)}`,
               ...sx,
             }}
           >

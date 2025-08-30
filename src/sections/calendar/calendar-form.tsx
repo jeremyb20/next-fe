@@ -20,7 +20,10 @@ import { createEvent, updateEvent, deleteEvent } from 'src/api/calendar';
 import Iconify from 'src/components/iconify';
 import { useSnackbar } from 'src/components/snackbar';
 import { ColorPicker } from 'src/components/color-utils';
-import FormProvider, { RHFSwitch, RHFTextField } from 'src/components/hook-form';
+import FormProvider, {
+  RHFSwitch,
+  RHFTextField,
+} from 'src/components/hook-form';
 
 import { ICalendarDate, ICalendarEvent } from 'src/types/calendar';
 
@@ -32,12 +35,19 @@ type Props = {
   currentEvent?: ICalendarEvent;
 };
 
-export default function CalendarForm({ currentEvent, colorOptions, onClose }: Props) {
+export default function CalendarForm({
+  currentEvent,
+  colorOptions,
+  onClose,
+}: Props) {
   const { enqueueSnackbar } = useSnackbar();
 
   const EventSchema = Yup.object().shape({
     title: Yup.string().max(255).required('Title is required'),
-    description: Yup.string().max(5000, 'Description must be at most 5000 characters'),
+    description: Yup.string().max(
+      5000,
+      'Description must be at most 5000 characters'
+    ),
     // not required
     color: Yup.string(),
     allDay: Yup.boolean(),
@@ -105,7 +115,12 @@ export default function CalendarForm({ currentEvent, colorOptions, onClose }: Pr
       <Stack spacing={3} sx={{ px: 3 }}>
         <RHFTextField name="title" label="Title" />
 
-        <RHFTextField name="description" label="Description" multiline rows={3} />
+        <RHFTextField
+          name="description"
+          label="Description"
+          multiline
+          rows={3}
+        />
 
         <RHFSwitch name="allDay" label="All day" />
 
@@ -150,7 +165,8 @@ export default function CalendarForm({ currentEvent, colorOptions, onClose }: Pr
                 textField: {
                   fullWidth: true,
                   error: dateError,
-                  helperText: dateError && 'End date must be later than start date',
+                  helperText:
+                    dateError && 'End date must be later than start date',
                 },
               }}
             />

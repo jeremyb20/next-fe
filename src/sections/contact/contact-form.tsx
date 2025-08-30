@@ -33,7 +33,12 @@ export default function ContactForm() {
         </m.div>
 
         <m.div variants={varFade().inUp}>
-          <TextField fullWidth label="Enter your message here." multiline rows={4} />
+          <TextField
+            fullWidth
+            label="Enter your message here."
+            multiline
+            rows={4}
+          />
         </m.div>
       </Stack>
 

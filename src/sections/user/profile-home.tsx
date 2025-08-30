@@ -44,18 +44,30 @@ export default function ProfileHome({ info, posts }: Props) {
     <Card sx={{ py: 3, textAlign: 'center', typography: 'h4' }}>
       <Stack
         direction="row"
-        divider={<Divider orientation="vertical" flexItem sx={{ borderStyle: 'dashed' }} />}
+        divider={
+          <Divider
+            orientation="vertical"
+            flexItem
+            sx={{ borderStyle: 'dashed' }}
+          />
+        }
       >
         <Stack width={1}>
           {fNumber(info.totalFollowers)}
-          <Box component="span" sx={{ color: 'text.secondary', typography: 'body2' }}>
+          <Box
+            component="span"
+            sx={{ color: 'text.secondary', typography: 'body2' }}
+          >
             Follower
           </Box>
         </Stack>
 
         <Stack width={1}>
           {fNumber(info.totalFollowing)}
-          <Box component="span" sx={{ color: 'text.secondary', typography: 'body2' }}>
+          <Box
+            component="span"
+            sx={{ color: 'text.secondary', typography: 'body2' }}
+          >
             Following
           </Box>
         </Stack>
@@ -127,14 +139,32 @@ export default function ProfileHome({ info, posts }: Props) {
       />
 
       <Stack direction="row" alignItems="center" justifyContent="space-between">
-        <Stack direction="row" spacing={1} alignItems="center" sx={{ color: 'text.secondary' }}>
-          <Fab size="small" color="inherit" variant="softExtended" onClick={handleAttach}>
-            <Iconify icon="solar:gallery-wide-bold" width={24} sx={{ color: 'success.main' }} />
+        <Stack
+          direction="row"
+          spacing={1}
+          alignItems="center"
+          sx={{ color: 'text.secondary' }}
+        >
+          <Fab
+            size="small"
+            color="inherit"
+            variant="softExtended"
+            onClick={handleAttach}
+          >
+            <Iconify
+              icon="solar:gallery-wide-bold"
+              width={24}
+              sx={{ color: 'success.main' }}
+            />
             Image/Video
           </Fab>
 
           <Fab size="small" color="inherit" variant="softExtended">
-            <Iconify icon="solar:videocamera-record-bold" width={24} sx={{ color: 'error.main' }} />
+            <Iconify
+              icon="solar:videocamera-record-bold"
+              width={24}
+              sx={{ color: 'error.main' }}
+            />
             Streaming
           </Fab>
         </Stack>

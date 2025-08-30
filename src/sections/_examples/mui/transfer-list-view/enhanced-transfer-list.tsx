@@ -52,7 +52,8 @@ export default function EnhancedTransferList() {
     setChecked(newChecked);
   };
 
-  const numberOfChecked = (items: number[]) => intersection(checked, items).length;
+  const numberOfChecked = (items: number[]) =>
+    intersection(checked, items).length;
 
   const handleToggleAll = (items: number[]) => () => {
     if (numberOfChecked(items) === items.length) {
@@ -80,8 +81,13 @@ export default function EnhancedTransferList() {
         avatar={
           <Checkbox
             onClick={handleToggleAll(items)}
-            checked={numberOfChecked(items) === items.length && items.length !== 0}
-            indeterminate={numberOfChecked(items) !== items.length && numberOfChecked(items) !== 0}
+            checked={
+              numberOfChecked(items) === items.length && items.length !== 0
+            }
+            indeterminate={
+              numberOfChecked(items) !== items.length &&
+              numberOfChecked(items) !== 0
+            }
             disabled={items.length === 0}
             inputProps={{ 'aria-label': 'all items selected' }}
           />
@@ -106,7 +112,11 @@ export default function EnhancedTransferList() {
         {items.map((value: number) => {
           const labelId = `transfer-list-all-item-${value}-label`;
           return (
-            <ListItemButton key={value} role="listitem" onClick={handleToggle(value)}>
+            <ListItemButton
+              key={value}
+              role="listitem"
+              onClick={handleToggle(value)}
+            >
               <ListItemIcon>
                 <Checkbox
                   disableRipple
@@ -124,7 +134,12 @@ export default function EnhancedTransferList() {
   );
 
   return (
-    <Grid container justifyContent="center" alignItems="center" sx={{ width: 'auto', p: 3 }}>
+    <Grid
+      container
+      justifyContent="center"
+      alignItems="center"
+      sx={{ width: 'auto', p: 3 }}
+    >
       <Grid>{customList('Choices', left)}</Grid>
 
       <Grid container direction="column" alignItems="center" sx={{ p: 3 }}>

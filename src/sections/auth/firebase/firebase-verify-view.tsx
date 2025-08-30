@@ -28,7 +28,10 @@ export default function FirebaseVerifyView() {
         Please check your email!
       </Typography>
 
-      <Stack spacing={1} sx={{ color: 'text.secondary', typography: 'body2', mb: 5 }}>
+      <Stack
+        spacing={1}
+        sx={{ color: 'text.secondary', typography: 'body2', mb: 5 }}
+      >
         <Box component="span"> We have sent a confirmation link to</Box>
         <Box component="strong" sx={{ color: 'text.primary' }}>
           {email}

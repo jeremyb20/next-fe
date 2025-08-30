@@ -1,5 +1,10 @@
 import { memo, useMemo, useState, useCallback } from 'react';
-import Map, { Layer, Source, FillLayer, MapLayerMouseEvent } from 'react-map-gl';
+import Map, {
+  Layer,
+  Source,
+  FillLayer,
+  MapLayerMouseEvent,
+} from 'react-map-gl';
 
 import { useTheme } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
@@ -52,7 +57,10 @@ function MapHighlightByFilter({ ...other }: MapBoxProps) {
 
   const selectedCounty = (hoverInfo && hoverInfo.countyName) || '';
 
-  const filter: any = useMemo(() => ['in', 'COUNTY', selectedCounty], [selectedCounty]);
+  const filter: any = useMemo(
+    () => ['in', 'COUNTY', selectedCounty],
+    [selectedCounty]
+  );
 
   return (
     <Map
@@ -74,7 +82,11 @@ function MapHighlightByFilter({ ...other }: MapBoxProps) {
       </Source>
 
       {selectedCounty && hoverInfo && (
-        <MapPopup longitude={hoverInfo.longitude} latitude={hoverInfo.latitude} closeButton={false}>
+        <MapPopup
+          longitude={hoverInfo.longitude}
+          latitude={hoverInfo.latitude}
+          closeButton={false}
+        >
           <Typography variant="body2" sx={{ color: 'common.white' }}>
             {selectedCounty}
           </Typography>

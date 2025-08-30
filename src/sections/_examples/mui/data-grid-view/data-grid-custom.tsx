@@ -46,7 +46,12 @@ const baseColumns: GridColDef[] = [
     minWidth: 160,
     hideable: false,
     renderCell: (params) => (
-      <Stack spacing={2} direction="row" alignItems="center" sx={{ minWidth: 0 }}>
+      <Stack
+        spacing={2}
+        direction="row"
+        alignItems="center"
+        sx={{ minWidth: 0 }}
+      >
         <Avatar alt={params.row.name} sx={{ width: 36, height: 36 }}>
           {params.row.name.charAt(0).toUpperCase()}
         </Avatar>
@@ -78,7 +83,10 @@ const baseColumns: GridColDef[] = [
     renderCell: (params) => (
       <Stack sx={{ textAlign: 'right' }}>
         <Box component="span">{fDate(params.row.lastLogin)}</Box>
-        <Box component="span" sx={{ color: 'text.secondary', typography: 'caption' }}>
+        <Box
+          component="span"
+          sx={{ color: 'text.secondary', typography: 'caption' }}
+        >
           {fTime(params.row.lastLogin)}
         </Box>
       </Stack>
@@ -124,7 +132,10 @@ const baseColumns: GridColDef[] = [
     width: 80,
     renderCell: (params) =>
       params.row.isAdmin ? (
-        <Iconify icon="eva:checkmark-circle-2-fill" sx={{ color: 'primary.main' }} />
+        <Iconify
+          icon="eva:checkmark-circle-2-fill"
+          sx={{ color: 'primary.main' }}
+        />
       ) : (
         '-'
       ),
@@ -137,13 +148,20 @@ const baseColumns: GridColDef[] = [
     headerAlign: 'center',
     width: 160,
     renderCell: (params) => (
-      <Stack spacing={1} direction="row" alignItems="center" sx={{ px: 1, width: 1, height: 1 }}>
+      <Stack
+        spacing={1}
+        direction="row"
+        alignItems="center"
+        sx={{ px: 1, width: 1, height: 1 }}
+      >
         <LinearProgress
           value={params.row.performance}
           variant="determinate"
           color={
             (params.row.performance < 30 && 'error') ||
-            (params.row.performance > 30 && params.row.performance < 70 && 'warning') ||
+            (params.row.performance > 30 &&
+              params.row.performance < 70 &&
+              'warning') ||
             'primary'
           }
           sx={{ width: 1, height: 6 }}
@@ -236,7 +254,9 @@ export default function DataGridCustom({ data: rows }: Props) {
       .filter((column) => !HIDE_COLUMNS_TOGGLABLE.includes(column.field))
       .map((column) => column.field);
 
-  const selected = rows.filter((row) => selectedRows.includes(row.id)).map((_row) => _row.id);
+  const selected = rows
+    .filter((row) => selectedRows.includes(row.id))
+    .map((_row) => _row.id);
 
   console.info('SELECTED ROWS', selected);
 
@@ -250,7 +270,9 @@ export default function DataGridCustom({ data: rows }: Props) {
         setSelectedRows(newSelectionModel);
       }}
       columnVisibilityModel={columnVisibilityModel}
-      onColumnVisibilityModelChange={(newModel) => setColumnVisibilityModel(newModel)}
+      onColumnVisibilityModelChange={(newModel) =>
+        setColumnVisibilityModel(newModel)
+      }
       slots={{
         toolbar: CustomToolbar,
         noRowsOverlay: () => <EmptyContent title="No Data" />,
@@ -285,12 +307,18 @@ function CustomToolbar() {
 
 // ----------------------------------------------------------------------
 
-function RatingInputValue({ item, applyValue, focusElementRef }: GridFilterInputValueProps) {
+function RatingInputValue({
+  item,
+  applyValue,
+  focusElementRef,
+}: GridFilterInputValueProps) {
   const ratingRef: React.Ref<any> = useRef(null);
 
   useImperativeHandle(focusElementRef, () => ({
     focus: () => {
-      ratingRef.current.querySelector(`input[value="${Number(item.value) || ''}"]`).focus();
+      ratingRef.current
+        .querySelector(`input[value="${Number(item.value) || ''}"]`)
+        .focus();
     },
   }));
 
@@ -319,7 +347,8 @@ const ratingOnlyOperators: GridFilterOperator[] = [
         return null;
       }
 
-      return (params): boolean => Number(params.value) >= Number(filterItem.value);
+      return (params): boolean =>
+        Number(params.value) >= Number(filterItem.value);
     },
     InputComponent: RatingInputValue,
     InputComponentProps: { type: 'number' },

@@ -44,21 +44,28 @@ export default function Textfield({ variant }: Props) {
     showPassword: false,
   });
 
-  const handleChangeCurrency = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
-    setCurrency(event.target.value);
-  }, []);
+  const handleChangeCurrency = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      setCurrency(event.target.value);
+    },
+    []
+  );
 
-  const handleChange = (prop: keyof State) => (event: React.ChangeEvent<HTMLInputElement>) => {
-    setValues({ ...values, [prop]: event.target.value });
-  };
+  const handleChange =
+    (prop: keyof State) => (event: React.ChangeEvent<HTMLInputElement>) => {
+      setValues({ ...values, [prop]: event.target.value });
+    };
 
   const handleShowPassword = useCallback(() => {
     setValues({ ...values, showPassword: !values.showPassword });
   }, [values]);
 
-  const handleMouseDownPassword = useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault();
-  }, []);
+  const handleMouseDownPassword = useCallback(
+    (event: React.MouseEvent<HTMLButtonElement>) => {
+      event.preventDefault();
+    },
+    []
+  );
 
   return (
     <Masonry columns={{ xs: 1, md: 2 }} spacing={3}>
@@ -124,7 +131,9 @@ export default function Textfield({ variant }: Props) {
           fullWidth
           label="With normal TextField"
           InputProps={{
-            startAdornment: <InputAdornment position="start">Kg</InputAdornment>,
+            startAdornment: (
+              <InputAdornment position="start">Kg</InputAdornment>
+            ),
           }}
         />
 
@@ -212,9 +221,20 @@ export default function Textfield({ variant }: Props) {
       </ComponentBlock>
 
       <ComponentBlock title="Sizes">
-        <TextField variant={variant} fullWidth label="Size" size="small" defaultValue="Small" />
+        <TextField
+          variant={variant}
+          fullWidth
+          label="Size"
+          size="small"
+          defaultValue="Small"
+        />
 
-        <TextField variant={variant} fullWidth label="Size" defaultValue="Normal" />
+        <TextField
+          variant={variant}
+          fullWidth
+          label="Size"
+          defaultValue="Normal"
+        />
       </ComponentBlock>
 
       <ComponentBlock title="Select">

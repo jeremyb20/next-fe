@@ -15,7 +15,14 @@ interface Props extends CardProps {
   icon: string;
 }
 
-export default function FileWidget({ title, value, total, icon, sx, ...other }: Props) {
+export default function FileWidget({
+  title,
+  value,
+  total,
+  icon,
+  sx,
+  ...other
+}: Props) {
   return (
     <Card sx={{ p: 3, ...sx }} {...other}>
       <Box component="img" src={icon} sx={{ width: 48, height: 48 }} />

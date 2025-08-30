@@ -28,8 +28,18 @@ type Props = {
 export default function ProductItem({ product }: Props) {
   const { onAddToCart } = useCheckoutContext();
 
-  const { id, name, coverUrl, price, colors, available, sizes, priceSale, newLabel, saleLabel } =
-    product;
+  const {
+    id,
+    name,
+    coverUrl,
+    price,
+    colors,
+    available,
+    sizes,
+    priceSale,
+    newLabel,
+    saleLabel,
+  } = product;
 
   const linkTo = paths.product.details(id);
 
@@ -115,7 +125,13 @@ export default function ProductItem({ product }: Props) {
 
   const renderContent = (
     <Stack spacing={2.5} sx={{ p: 3, pt: 2 }}>
-      <Link component={RouterLink} href={linkTo} color="inherit" variant="subtitle2" noWrap>
+      <Link
+        component={RouterLink}
+        href={linkTo}
+        color="inherit"
+        variant="subtitle2"
+        noWrap
+      >
         {name}
       </Link>
 
@@ -124,7 +140,10 @@ export default function ProductItem({ product }: Props) {
 
         <Stack direction="row" spacing={0.5} sx={{ typography: 'subtitle1' }}>
           {priceSale && (
-            <Box component="span" sx={{ color: 'text.disabled', textDecoration: 'line-through' }}>
+            <Box
+              component="span"
+              sx={{ color: 'text.disabled', textDecoration: 'line-through' }}
+            >
               {fCurrency(priceSale)}
             </Box>
           )}

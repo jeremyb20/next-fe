@@ -63,7 +63,13 @@ const variantKey = [
   },
   {
     type: 'bounce',
-    values: ['bounceIn', 'bounceInUp', 'bounceInDown', 'bounceInLeft', 'bounceInRight'],
+    values: [
+      'bounceIn',
+      'bounceInUp',
+      'bounceInDown',
+      'bounceInLeft',
+      'bounceInRight',
+    ],
   },
   {
     type: 'flip',

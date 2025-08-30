@@ -56,7 +56,11 @@ export default function ChatRoomGroup({ participants }: Props) {
       </Box>
       <Iconify
         width={16}
-        icon={collapse.value ? 'eva:arrow-ios-downward-fill' : 'eva:arrow-ios-forward-fill'}
+        icon={
+          collapse.value
+            ? 'eva:arrow-ios-downward-fill'
+            : 'eva:arrow-ios-forward-fill'
+        }
       />
     </ListItemButton>
   );
@@ -64,7 +68,10 @@ export default function ChatRoomGroup({ participants }: Props) {
   const renderContent = (
     <Scrollbar sx={{ height: 56 * 4 }}>
       {participants.map((participant) => (
-        <ListItemButton key={participant.id} onClick={() => handleOpen(participant)}>
+        <ListItemButton
+          key={participant.id}
+          onClick={() => handleOpen(participant)}
+        >
           <Badge
             variant={participant.status}
             anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
@@ -100,7 +107,11 @@ export default function ChatRoomGroup({ participants }: Props) {
       </div>
 
       {selected && (
-        <ChatRoomParticipantDialog participant={selected} open={!!selected} onClose={handleClose} />
+        <ChatRoomParticipantDialog
+          participant={selected}
+          open={!!selected}
+          onClose={handleClose}
+        />
       )}
     </>
   );

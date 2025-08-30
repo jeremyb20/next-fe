@@ -18,7 +18,15 @@ type Props = {
 };
 
 export default function ProductReviewItem({ review }: Props) {
-  const { name, rating, comment, postedAt, avatarUrl, attachments, isPurchased } = review;
+  const {
+    name,
+    rating,
+    comment,
+    postedAt,
+    avatarUrl,
+    attachments,
+    isPurchased,
+  } = review;
 
   const renderInfo = (
     <Stack
@@ -93,12 +101,20 @@ export default function ProductReviewItem({ review }: Props) {
       )}
 
       <Stack direction="row" spacing={2} sx={{ pt: 1.5 }}>
-        <Stack direction="row" alignItems="center" sx={{ typography: 'caption' }}>
+        <Stack
+          direction="row"
+          alignItems="center"
+          sx={{ typography: 'caption' }}
+        >
           <Iconify icon="solar:like-outline" width={16} sx={{ mr: 0.5 }} />
           123
         </Stack>
 
-        <Stack direction="row" alignItems="center" sx={{ typography: 'caption' }}>
+        <Stack
+          direction="row"
+          alignItems="center"
+          sx={{ typography: 'caption' }}
+        >
           <Iconify icon="solar:dislike-outline" width={16} sx={{ mr: 0.5 }} />
           34
         </Stack>

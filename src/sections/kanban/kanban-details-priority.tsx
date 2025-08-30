@@ -11,7 +11,10 @@ type Props = {
   onChangePriority: (newValue: string) => void;
 };
 
-export default function KanbanDetailsPriority({ priority, onChangePriority }: Props) {
+export default function KanbanDetailsPriority({
+  priority,
+  onChangePriority,
+}: Props) {
   return (
     <Stack direction="row" flexWrap="wrap" spacing={1}>
       {['low', 'medium', 'hight'].map((option) => (
@@ -27,16 +30,20 @@ export default function KanbanDetailsPriority({ priority, onChangePriority }: Pr
             lineHeight: '20px',
             textTransform: 'capitalize',
             fontWeight: 'fontWeightBold',
-            boxShadow: (theme) => `inset 0 0 0 1px ${alpha(theme.palette.grey[500], 0.24)}`,
+            boxShadow: (theme) =>
+              `inset 0 0 0 1px ${alpha(theme.palette.grey[500], 0.24)}`,
             ...(option === priority && {
-              boxShadow: (theme) => `inset 0 0 0 2px ${theme.palette.text.primary}`,
+              boxShadow: (theme) =>
+                `inset 0 0 0 2px ${theme.palette.text.primary}`,
             }),
           }}
         >
           <Iconify
             icon={
-              (option === 'low' && 'solar:double-alt-arrow-down-bold-duotone') ||
-              (option === 'medium' && 'solar:double-alt-arrow-right-bold-duotone') ||
+              (option === 'low' &&
+                'solar:double-alt-arrow-down-bold-duotone') ||
+              (option === 'medium' &&
+                'solar:double-alt-arrow-right-bold-duotone') ||
               'solar:double-alt-arrow-up-bold-duotone'
             }
             sx={{

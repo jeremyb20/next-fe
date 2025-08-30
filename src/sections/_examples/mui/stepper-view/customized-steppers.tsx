@@ -9,7 +9,9 @@ import StepLabel from '@mui/material/StepLabel';
 import Typography from '@mui/material/Typography';
 import { alpha, styled } from '@mui/material/styles';
 import { StepIconProps } from '@mui/material/StepIcon';
-import StepConnector, { stepConnectorClasses } from '@mui/material/StepConnector';
+import StepConnector, {
+  stepConnectorClasses,
+} from '@mui/material/StepConnector';
 
 import { bgGradient } from 'src/theme/css';
 
@@ -17,7 +19,11 @@ import Iconify from 'src/components/iconify';
 
 // ----------------------------------------------------------------------
 
-const STEPS = ['Select campaign settings', 'Create an ad group', 'Create an ad'];
+const STEPS = [
+  'Select campaign settings',
+  'Create an ad group',
+  'Create an ad',
+];
 
 const QontoConnector = styled(StepConnector)(({ theme }) => ({
   [`&.${stepConnectorClasses.alternativeLabel}`]: {
@@ -124,7 +130,9 @@ const ColorlibStepIconRoot = styled('div')<{
   justifyContent: 'center',
   color: theme.palette.text.disabled,
   backgroundColor:
-    theme.palette.mode === 'light' ? theme.palette.grey[300] : theme.palette.grey[700],
+    theme.palette.mode === 'light'
+      ? theme.palette.grey[300]
+      : theme.palette.grey[700],
   ...(ownerState.active && {
     boxShadow: '0 4px 10px 0 rgba(0,0,0,.25)',
     color: theme.palette.common.white,
@@ -152,7 +160,10 @@ function ColorlibStepIcon(props: StepIconProps) {
   };
 
   return (
-    <ColorlibStepIconRoot ownerState={{ completed, active }} className={className}>
+    <ColorlibStepIconRoot
+      ownerState={{ completed, active }}
+      className={className}
+    >
       {icons[String(icon)]}
     </ColorlibStepIconRoot>
   );
@@ -188,7 +199,11 @@ export default function CustomizedSteppers() {
 
   return (
     <>
-      <Stepper alternativeLabel activeStep={activeStep} connector={<QontoConnector />}>
+      <Stepper
+        alternativeLabel
+        activeStep={activeStep}
+        connector={<QontoConnector />}
+      >
         {STEPS.map((label) => (
           <Step key={label}>
             <StepLabel StepIconComponent={QontoStepIcon}>{label}</StepLabel>
@@ -198,7 +213,11 @@ export default function CustomizedSteppers() {
 
       <Box sx={{ mb: 5 }} />
 
-      <Stepper alternativeLabel activeStep={activeStep} connector={<ColorlibConnector />}>
+      <Stepper
+        alternativeLabel
+        activeStep={activeStep}
+        connector={<ColorlibConnector />}
+      >
         {STEPS.map((label) => (
           <Step key={label}>
             <StepLabel StepIconComponent={ColorlibStepIcon}>{label}</StepLabel>
@@ -216,7 +235,9 @@ export default function CustomizedSteppers() {
               bgcolor: (theme) => alpha(theme.palette.grey[500], 0.12),
             }}
           >
-            <Typography sx={{ my: 1 }}>All steps completed - you&apos;re finished</Typography>
+            <Typography sx={{ my: 1 }}>
+              All steps completed - you&apos;re finished
+            </Typography>
           </Paper>
 
           <Button color="inherit" onClick={handleReset} sx={{ mr: 1 }}>
@@ -237,7 +258,11 @@ export default function CustomizedSteppers() {
           </Paper>
 
           <Box sx={{ textAlign: 'right' }}>
-            <Button disabled={activeStep === 0} onClick={handleBack} sx={{ mr: 1 }}>
+            <Button
+              disabled={activeStep === 0}
+              onClick={handleBack}
+              sx={{ mr: 1 }}
+            >
               Back
             </Button>
             <Button variant="contained" onClick={handleNext} sx={{ mr: 1 }}>

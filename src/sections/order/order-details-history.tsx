@@ -81,7 +81,9 @@ export default function OrderDetailsHistory({ history }: Props) {
             <TimelineContent>
               <Typography variant="subtitle2">{item.title}</Typography>
 
-              <Box sx={{ color: 'text.disabled', typography: 'caption', mt: 0.5 }}>
+              <Box
+                sx={{ color: 'text.disabled', typography: 'caption', mt: 0.5 }}
+              >
                 {fDateTime(item.time)}
               </Box>
             </TimelineContent>

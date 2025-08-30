@@ -72,7 +72,11 @@ function CollapsibleTableRow({ row }: CollapsibleTableRowProps) {
             onClick={collapsible.onToggle}
           >
             <Iconify
-              icon={collapsible.value ? 'eva:arrow-ios-upward-fill' : 'eva:arrow-ios-downward-fill'}
+              icon={
+                collapsible.value
+                  ? 'eva:arrow-ios-upward-fill'
+                  : 'eva:arrow-ios-downward-fill'
+              }
             />
           </IconButton>
         </TableCell>

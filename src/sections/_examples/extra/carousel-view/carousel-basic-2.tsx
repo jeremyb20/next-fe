@@ -4,7 +4,10 @@ import Typography from '@mui/material/Typography';
 import CardContent from '@mui/material/CardContent';
 
 import Image from 'src/components/image';
-import Carousel, { useCarousel, CarouselArrowIndex } from 'src/components/carousel';
+import Carousel, {
+  useCarousel,
+  CarouselArrowIndex,
+} from 'src/components/carousel';
 
 // ----------------------------------------------------------------------
 
@@ -36,7 +39,11 @@ export default function CarouselBasic2({ data }: Props) {
                 {item.title}
               </Typography>
 
-              <Typography variant="body2" sx={{ color: 'text.secondary' }} noWrap>
+              <Typography
+                variant="body2"
+                sx={{ color: 'text.secondary' }}
+                noWrap
+              >
                 {item.description}
               </Typography>
             </CardContent>

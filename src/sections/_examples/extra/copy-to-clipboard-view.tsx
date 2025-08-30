@@ -54,16 +54,22 @@ export default function CopyToClipboardView() {
     doubleClick: () => onCopy(textOnClick),
   });
 
-  const handleChange = useCallback((event: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setValue(event.target.value);
-  }, []);
+  const handleChange = useCallback(
+    (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+      setValue(event.target.value);
+    },
+    []
+  );
 
   return (
     <>
       <ComponentHero>
         <CustomBreadcrumbs
           heading="Copy To Clipboard"
-          links={[{ name: 'Components', href: paths.components }, { name: 'Copy To Clipboard' }]}
+          links={[
+            { name: 'Components', href: paths.components },
+            { name: 'Copy To Clipboard' },
+          ]}
         />
       </ComponentHero>
 

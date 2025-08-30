@@ -45,7 +45,8 @@ const PAYMENT_OPTIONS: ICheckoutPaymentOption[] = [
   {
     value: 'paypal',
     label: 'Pay with Paypal',
-    description: 'You will be redirected to PayPal website to complete your purchase securely.',
+    description:
+      'You will be redirected to PayPal website to complete your purchase securely.',
   },
   {
     value: 'credit',
@@ -101,7 +102,10 @@ export default function CheckoutPayment() {
     <FormProvider methods={methods} onSubmit={onSubmit}>
       <Grid container spacing={3}>
         <Grid xs={12} md={8}>
-          <CheckoutDelivery onApplyShipping={checkout.onApplyShipping} options={DELIVERY_OPTIONS} />
+          <CheckoutDelivery
+            onApplyShipping={checkout.onApplyShipping}
+            options={DELIVERY_OPTIONS}
+          />
 
           <CheckoutPaymentMethods
             cardOptions={CARDS_OPTIONS}
@@ -120,7 +124,10 @@ export default function CheckoutPayment() {
         </Grid>
 
         <Grid xs={12} md={4}>
-          <CheckoutBillingInfo billing={checkout.billing} onBackStep={checkout.onBackStep} />
+          <CheckoutBillingInfo
+            billing={checkout.billing}
+            onBackStep={checkout.onBackStep}
+          />
 
           <CheckoutSummary
             total={checkout.total}

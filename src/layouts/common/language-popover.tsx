@@ -43,17 +43,27 @@ export default function LanguagePopover() {
           }),
         }}
       >
-        <Iconify icon={currentLang.icon} sx={{ borderRadius: 0.65, width: 28 }} />
+        <Iconify
+          icon={currentLang.icon}
+          sx={{ borderRadius: 0.65, width: 28 }}
+        />
       </IconButton>
 
-      <CustomPopover open={popover.open} onClose={popover.onClose} sx={{ width: 160 }}>
+      <CustomPopover
+        open={popover.open}
+        onClose={popover.onClose}
+        sx={{ width: 160 }}
+      >
         {allLangs.map((option) => (
           <MenuItem
             key={option.value}
             selected={option.value === currentLang.value}
             onClick={() => handleChangeLang(option.value)}
           >
-            <Iconify icon={option.icon} sx={{ borderRadius: 0.65, width: 28 }} />
+            <Iconify
+              icon={option.icon}
+              sx={{ borderRadius: 0.65, width: 28 }}
+            />
 
             {option.label}
           </MenuItem>

@@ -176,7 +176,12 @@ export function AuthProvider({ children }: Props) {
 
   // REGISTER
   const register = useCallback(
-    async (email: string, password: string, firstName: string, lastName: string) => {
+    async (
+      email: string,
+      password: string,
+      firstName: string,
+      lastName: string
+    ) => {
       const { error } = await supabase.auth.signUp({
         email,
         password,
@@ -256,8 +261,20 @@ export function AuthProvider({ children }: Props) {
       forgotPassword,
       updatePassword,
     }),
-    [forgotPassword, login, logout, updatePassword, register, state.user, status]
+    [
+      forgotPassword,
+      login,
+      logout,
+      updatePassword,
+      register,
+      state.user,
+      status,
+    ]
   );
 
-  return <AuthContext.Provider value={memoizedValue}>{children}</AuthContext.Provider>;
+  return (
+    <AuthContext.Provider value={memoizedValue}>
+      {children}
+    </AuthContext.Provider>
+  );
 }

@@ -68,13 +68,19 @@ export default function FileManagerFolderItem({
 
   const favorite = useBoolean(folder.isFavorited);
 
-  const handleChangeInvite = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
-    setInviteEmail(event.target.value);
-  }, []);
+  const handleChangeInvite = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      setInviteEmail(event.target.value);
+    },
+    []
+  );
 
-  const handleChangeFolderName = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
-    setFolderName(event.target.value);
-  }, []);
+  const handleChangeFolderName = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      setFolderName(event.target.value);
+    },
+    []
+  );
 
   const handleCopy = useCallback(() => {
     enqueueSnackbar('Copied!');
@@ -99,7 +105,10 @@ export default function FileManagerFolderItem({
         onChange={favorite.onToggle}
       />
 
-      <IconButton color={popover.open ? 'inherit' : 'default'} onClick={popover.onOpen}>
+      <IconButton
+        color={popover.open ? 'inherit' : 'default'}
+        onClick={popover.onOpen}
+      >
         <Iconify icon="eva:more-vertical-fill" />
       </IconButton>
     </Stack>
@@ -116,7 +125,11 @@ export default function FileManagerFolderItem({
         sx={{ p: 0.75 }}
       />
     ) : (
-      <Box component="img" src="/assets/icons/files/ic_folder.svg" sx={{ width: 36, height: 36 }} />
+      <Box
+        component="img"
+        src="/assets/icons/files/ic_folder.svg"
+        sx={{ width: 36, height: 36 }}
+      />
     );
 
   const renderText = (

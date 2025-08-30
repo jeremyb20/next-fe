@@ -61,7 +61,8 @@ export default function TourItem({ tour, onView, onEdit, onDelete }: Props) {
         bgcolor: 'warning.lighter',
       }}
     >
-      <Iconify icon="eva:star-fill" sx={{ color: 'warning.main', mr: 0.25 }} /> {ratingNumber}
+      <Iconify icon="eva:star-fill" sx={{ color: 'warning.main', mr: 0.25 }} />{' '}
+      {ratingNumber}
     </Stack>
   );
 
@@ -82,7 +83,10 @@ export default function TourItem({ tour, onView, onEdit, onDelete }: Props) {
       }}
     >
       {!!priceSale && (
-        <Box component="span" sx={{ color: 'grey.500', mr: 0.25, textDecoration: 'line-through' }}>
+        <Box
+          component="span"
+          sx={{ color: 'grey.500', mr: 0.25, textDecoration: 'line-through' }}
+        >
           {fCurrency(priceSale)}
         </Box>
       )}
@@ -101,11 +105,25 @@ export default function TourItem({ tour, onView, onEdit, onDelete }: Props) {
       <Stack flexGrow={1} sx={{ position: 'relative' }}>
         {renderPrice}
         {renderRating}
-        <Image alt={images[0]} src={images[0]} sx={{ borderRadius: 1, height: 164, width: 1 }} />
+        <Image
+          alt={images[0]}
+          src={images[0]}
+          sx={{ borderRadius: 1, height: 164, width: 1 }}
+        />
       </Stack>
       <Stack spacing={0.5}>
-        <Image alt={images[1]} src={images[1]} ratio="1/1" sx={{ borderRadius: 1, width: 80 }} />
-        <Image alt={images[2]} src={images[2]} ratio="1/1" sx={{ borderRadius: 1, width: 80 }} />
+        <Image
+          alt={images[1]}
+          src={images[1]}
+          ratio="1/1"
+          sx={{ borderRadius: 1, width: 80 }}
+        />
+        <Image
+          alt={images[2]}
+          src={images[2]}
+          ratio="1/1"
+          sx={{ borderRadius: 1, width: 80 }}
+        />
       </Stack>
     </Stack>
   );
@@ -117,7 +135,11 @@ export default function TourItem({ tour, onView, onEdit, onDelete }: Props) {
       }}
       primary={`Posted date: ${fDateTime(createdAt)}`}
       secondary={
-        <Link component={RouterLink} href={paths.dashboard.tour.details(id)} color="inherit">
+        <Link
+          component={RouterLink}
+          href={paths.dashboard.tour.details(id)}
+          color="inherit"
+        >
           {name}
         </Link>
       }
@@ -143,22 +165,40 @@ export default function TourItem({ tour, onView, onEdit, onDelete }: Props) {
         p: (theme) => theme.spacing(0, 2.5, 2.5, 2.5),
       }}
     >
-      <IconButton onClick={popover.onOpen} sx={{ position: 'absolute', bottom: 20, right: 8 }}>
+      <IconButton
+        onClick={popover.onOpen}
+        sx={{ position: 'absolute', bottom: 20, right: 8 }}
+      >
         <Iconify icon="eva:more-vertical-fill" />
       </IconButton>
 
       {[
         {
           label: destination,
-          icon: <Iconify icon="mingcute:location-fill" sx={{ color: 'error.main' }} />,
+          icon: (
+            <Iconify
+              icon="mingcute:location-fill"
+              sx={{ color: 'error.main' }}
+            />
+          ),
         },
         {
           label: shortLabel,
-          icon: <Iconify icon="solar:clock-circle-bold" sx={{ color: 'info.main' }} />,
+          icon: (
+            <Iconify
+              icon="solar:clock-circle-bold"
+              sx={{ color: 'info.main' }}
+            />
+          ),
         },
         {
           label: `${bookers.length} Booked`,
-          icon: <Iconify icon="solar:users-group-rounded-bold" sx={{ color: 'primary.main' }} />,
+          icon: (
+            <Iconify
+              icon="solar:users-group-rounded-bold"
+              sx={{ color: 'primary.main' }}
+            />
+          ),
         },
       ].map((item) => (
         <Stack

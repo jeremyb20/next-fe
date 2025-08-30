@@ -12,7 +12,11 @@ import { useRouter, useSearchParams } from 'src/routes/hooks';
 
 import { useMockedUser } from 'src/hooks/use-mocked-user';
 
-import { useGetContacts, useGetConversation, useGetConversations } from 'src/api/chat';
+import {
+  useGetContacts,
+  useGetConversation,
+  useGetConversations,
+} from 'src/api/chat';
 
 import { useSettingsContext } from 'src/components/settings';
 
@@ -44,7 +48,9 @@ export default function ChatView() {
 
   const { conversations, conversationsLoading } = useGetConversations();
 
-  const { conversation, conversationError } = useGetConversation(`${selectedConversationId}`);
+  const { conversation, conversationError } = useGetConversation(
+    `${selectedConversationId}`
+  );
 
   const participants: IChatParticipant[] = conversation
     ? conversation.participants.filter(
@@ -74,7 +80,10 @@ export default function ChatView() {
       {selectedConversationId ? (
         <>{details && <ChatHeaderDetail participants={participants} />}</>
       ) : (
-        <ChatHeaderCompose contacts={contacts} onAddRecipients={handleAddRecipients} />
+        <ChatHeaderCompose
+          contacts={contacts}
+          onAddRecipients={handleAddRecipients}
+        />
       )}
     </Stack>
   );
@@ -96,7 +105,10 @@ export default function ChatView() {
         overflow: 'hidden',
       }}
     >
-      <ChatMessageList messages={conversation?.messages} participants={participants} />
+      <ChatMessageList
+        messages={conversation?.messages}
+        participants={participants}
+      />
 
       <ChatMessageInput
         recipients={recipients}
@@ -142,7 +154,12 @@ export default function ChatView() {
           >
             {renderMessages}
 
-            {details && <ChatRoom conversation={conversation} participants={participants} />}
+            {details && (
+              <ChatRoom
+                conversation={conversation}
+                participants={participants}
+              />
+            )}
           </Stack>
         </Stack>
       </Stack>

@@ -27,7 +27,12 @@ interface Props extends CardProps {
   list: ItemProps[];
 }
 
-export default function AppTopAuthors({ title, subheader, list, ...other }: Props) {
+export default function AppTopAuthors({
+  title,
+  subheader,
+  list,
+  ...other
+}: Props) {
   return (
     <Card {...other}>
       <CardHeader title={title} subheader={subheader} />

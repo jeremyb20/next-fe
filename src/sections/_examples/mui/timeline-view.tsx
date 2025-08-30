@@ -29,7 +29,15 @@ type TimelineType = {
   title: string;
   des: string;
   time: string;
-  color?: 'primary' | 'info' | 'success' | 'warning' | 'error' | 'inherit' | 'grey' | 'secondary';
+  color?:
+    | 'primary'
+    | 'info'
+    | 'success'
+    | 'warning'
+    | 'error'
+    | 'inherit'
+    | 'grey'
+    | 'secondary';
   icon: React.ReactElement;
 };
 
@@ -191,7 +199,9 @@ export default function TimelineView() {
               {TIMELINES.map((item) => (
                 <TimelineItem key={item.key}>
                   <TimelineOppositeContent>
-                    <Typography sx={{ color: 'text.secondary' }}>{item.time}</Typography>
+                    <Typography sx={{ color: 'text.secondary' }}>
+                      {item.time}
+                    </Typography>
                   </TimelineOppositeContent>
                   <TimelineSeparator>
                     <TimelineDot color={item.color} />
@@ -227,7 +237,10 @@ export default function TimelineView() {
                     }}
                   >
                     <Typography variant="subtitle2">{item.title}</Typography>
-                    <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+                    <Typography
+                      variant="body2"
+                      sx={{ color: 'text.secondary' }}
+                    >
                       {item.des}
                     </Typography>
                   </Paper>

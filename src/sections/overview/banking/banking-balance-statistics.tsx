@@ -30,7 +30,12 @@ interface Props extends CardProps {
   };
 }
 
-export default function BankingBalanceStatistics({ title, subheader, chart, ...other }: Props) {
+export default function BankingBalanceStatistics({
+  title,
+  subheader,
+  chart,
+  ...other
+}: Props) {
   const { categories, colors, series, options } = chart;
 
   const popover = usePopover();
@@ -85,7 +90,11 @@ export default function BankingBalanceStatistics({ title, subheader, chart, ...o
 
               <Iconify
                 width={16}
-                icon={popover.open ? 'eva:arrow-ios-upward-fill' : 'eva:arrow-ios-downward-fill'}
+                icon={
+                  popover.open
+                    ? 'eva:arrow-ios-upward-fill'
+                    : 'eva:arrow-ios-downward-fill'
+                }
                 sx={{ ml: 0.5 }}
               />
             </ButtonBase>
@@ -108,7 +117,11 @@ export default function BankingBalanceStatistics({ title, subheader, chart, ...o
         ))}
       </Card>
 
-      <CustomPopover open={popover.open} onClose={popover.onClose} sx={{ width: 140 }}>
+      <CustomPopover
+        open={popover.open}
+        onClose={popover.onClose}
+        sx={{ width: 140 }}
+      >
         {series.map((option) => (
           <MenuItem
             key={option.type}

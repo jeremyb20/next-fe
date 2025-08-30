@@ -13,7 +13,9 @@ import Label from 'src/components/label';
 import Iconify from 'src/components/iconify';
 import FileThumbnail from 'src/components/file-thumbnail';
 import CustomPopover, { usePopover } from 'src/components/custom-popover';
-import CustomDateRangePicker, { shortDateLabel } from 'src/components/custom-date-range-picker';
+import CustomDateRangePicker, {
+  shortDateLabel,
+} from 'src/components/custom-date-range-picker';
 
 import { IFileFilters, IFileFilterValue } from 'src/types/file';
 
@@ -44,7 +46,9 @@ export default function FileManagerFilters({
 }: Props) {
   const popover = usePopover();
 
-  const renderLabel = filters.type.length ? filters.type.slice(0, 2).join(',') : 'All type';
+  const renderLabel = filters.type.length
+    ? filters.type.slice(0, 2).join(',')
+    : 'All type';
 
   const handleFilterName = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -107,7 +111,11 @@ export default function FileManagerFilters({
         onClick={popover.onOpen}
         endIcon={
           <Iconify
-            icon={popover.open ? 'eva:arrow-ios-upward-fill' : 'eva:arrow-ios-downward-fill'}
+            icon={
+              popover.open
+                ? 'eva:arrow-ios-upward-fill'
+                : 'eva:arrow-ios-downward-fill'
+            }
             sx={{ ml: -0.5 }}
           />
         }
@@ -120,7 +128,11 @@ export default function FileManagerFilters({
         )}
       </Button>
 
-      <CustomPopover open={popover.open} onClose={popover.onClose} sx={{ p: 2.5 }}>
+      <CustomPopover
+        open={popover.open}
+        onClose={popover.onClose}
+        sx={{ p: 2.5 }}
+      >
         <Stack spacing={2.5}>
           <Box
             gap={1}
@@ -141,7 +153,8 @@ export default function FileManagerFilters({
                     p: 1,
                     borderRadius: 1,
                     cursor: 'pointer',
-                    border: (theme) => `solid 1px ${alpha(theme.palette.grey[500], 0.08)}`,
+                    border: (theme) =>
+                      `solid 1px ${alpha(theme.palette.grey[500], 0.08)}`,
                     ...(selected && {
                       bgcolor: 'action.selected',
                     }),
@@ -149,15 +162,26 @@ export default function FileManagerFilters({
                 >
                   <Stack spacing={1} direction="row" alignItems="center">
                     <FileThumbnail file={type} />
-                    <Typography variant={selected ? 'subtitle2' : 'body2'}>{type}</Typography>
+                    <Typography variant={selected ? 'subtitle2' : 'body2'}>
+                      {type}
+                    </Typography>
                   </Stack>
                 </CardActionArea>
               );
             })}
           </Box>
 
-          <Stack spacing={1.5} direction="row" alignItems="center" justifyContent="flex-end">
-            <Button variant="outlined" color="inherit" onClick={handleResetType}>
+          <Stack
+            spacing={1.5}
+            direction="row"
+            alignItems="center"
+            justifyContent="flex-end"
+          >
+            <Button
+              variant="outlined"
+              color="inherit"
+              onClick={handleResetType}
+            >
               Clear
             </Button>
 
@@ -177,7 +201,11 @@ export default function FileManagerFilters({
         onClick={onOpenDateRange}
         endIcon={
           <Iconify
-            icon={openDateRange ? 'eva:arrow-ios-upward-fill' : 'eva:arrow-ios-downward-fill'}
+            icon={
+              openDateRange
+                ? 'eva:arrow-ios-upward-fill'
+                : 'eva:arrow-ios-downward-fill'
+            }
             sx={{ ml: -0.5 }}
           />
         }
@@ -210,7 +238,13 @@ export default function FileManagerFilters({
     >
       {renderFilterName}
 
-      <Stack spacing={1} direction="row" alignItems="center" justifyContent="flex-end" flexGrow={1}>
+      <Stack
+        spacing={1}
+        direction="row"
+        alignItems="center"
+        justifyContent="flex-end"
+        flexGrow={1}
+      >
         {renderFilterDate}
 
         {renderFilterType}

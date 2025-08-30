@@ -47,7 +47,8 @@ export function RHFSelect({
               PaperProps: {
                 sx: {
                   ...(!native && {
-                    maxHeight: typeof maxHeight === 'number' ? maxHeight : 'unset',
+                    maxHeight:
+                      typeof maxHeight === 'number' ? maxHeight : 'unset',
                   }),
                   ...PaperPropsSx,
                 },
@@ -94,7 +95,9 @@ export function RHFMultiSelect({
   const { control } = useFormContext();
 
   const renderValues = (selectedIds: string[]) => {
-    const selectedItems = options.filter((item) => selectedIds.includes(item.value));
+    const selectedItems = options.filter((item) =>
+      selectedIds.includes(item.value)
+    );
 
     if (!selectedItems.length && placeholder) {
       return <Box sx={{ color: 'text.disabled' }}>{placeholder}</Box>;
@@ -135,7 +138,9 @@ export function RHFMultiSelect({
 
               return (
                 <MenuItem key={option.value} value={option.value}>
-                  {checkbox && <Checkbox size="small" disableRipple checked={selected} />}
+                  {checkbox && (
+                    <Checkbox size="small" disableRipple checked={selected} />
+                  )}
 
                   {option.label}
                 </MenuItem>
@@ -144,7 +149,9 @@ export function RHFMultiSelect({
           </Select>
 
           {(!!error || helperText) && (
-            <FormHelperText error={!!error}>{error ? error?.message : helperText}</FormHelperText>
+            <FormHelperText error={!!error}>
+              {error ? error?.message : helperText}
+            </FormHelperText>
           )}
         </FormControl>
       )}

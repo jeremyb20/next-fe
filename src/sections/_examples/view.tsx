@@ -31,7 +31,8 @@ export default function ComponentsView() {
 
           <m.div variants={varFade().inUp}>
             <Typography sx={{ color: 'text.secondary', mt: 3 }}>
-              With huge resource pack making deployment easy and expanding more effectively
+              With huge resource pack making deployment easy and expanding more
+              effectively
             </Typography>
           </m.div>
         </MotionContainer>
@@ -62,7 +63,11 @@ export default function ComponentsView() {
 
             <Typography variant="body2" sx={{ color: 'text.secondary' }}>
               Components from{' '}
-              <Link href="https://mui.com/components/" target="_blank" rel="noopener">
+              <Link
+                href="https://mui.com/components/"
+                target="_blank"
+                rel="noopener"
+              >
                 Material UI
               </Link>
               .
@@ -70,8 +75,8 @@ export default function ComponentsView() {
 
             <Typography variant="caption" sx={{ color: 'text.secondary' }}>
               <i>
-                Some advanced components from MUI X will not be included. So you need to purchase a
-                separate
+                Some advanced components from MUI X will not be included. So you
+                need to purchase a separate
                 <Link
                   href="https://mui.com/pricing/"
                   target="_blank"
@@ -99,7 +104,8 @@ export default function ComponentsView() {
             <Typography variant="h5">Extra Components</Typography>
 
             <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-              Some custom components / use 3rd party dependencies (chart, map, editor…).
+              Some custom components / use 3rd party dependencies (chart, map,
+              editor…).
             </Typography>
           </Stack>
 

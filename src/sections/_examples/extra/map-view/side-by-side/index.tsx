@@ -38,7 +38,10 @@ function MapSideBySide({ ...other }: MapBoxProps) {
 
   const onRightMoveStart = useCallback(() => setActiveMap('right'), []);
 
-  const onMove = useCallback((event: ViewStateChangeEvent) => setViewState(event.viewState), []);
+  const onMove = useCallback(
+    (event: ViewStateChangeEvent) => setViewState(event.viewState),
+    []
+  );
 
   const width = typeof window === 'undefined' ? 100 : window.innerWidth;
 
@@ -62,7 +65,10 @@ function MapSideBySide({ ...other }: MapBoxProps) {
     [width, mode]
   );
 
-  const handleChangeMode = (event: React.MouseEvent<HTMLElement>, newMode: ModeProps | null) => {
+  const handleChangeMode = (
+    event: React.MouseEvent<HTMLElement>,
+    newMode: ModeProps | null
+  ) => {
     if (newMode !== null) {
       setMode(newMode);
     }

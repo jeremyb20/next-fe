@@ -25,7 +25,12 @@ interface Props extends CardProps {
   list: ItemProps[];
 }
 
-export default function AnalyticsTasks({ title, subheader, list, ...other }: Props) {
+export default function AnalyticsTasks({
+  title,
+  subheader,
+  list,
+  ...other
+}: Props) {
   const [selected, setSelected] = useState(['2']);
 
   const handleClickComplete = (taskId: string) => {
@@ -104,12 +109,19 @@ function TaskItem({ task, checked, onChange }: TaskItemProps) {
           sx={{ flexGrow: 1, m: 0 }}
         />
 
-        <IconButton color={popover.open ? 'inherit' : 'default'} onClick={popover.onOpen}>
+        <IconButton
+          color={popover.open ? 'inherit' : 'default'}
+          onClick={popover.onOpen}
+        >
           <Iconify icon="eva:more-vertical-fill" />
         </IconButton>
       </Stack>
 
-      <CustomPopover open={popover.open} onClose={popover.onClose} arrow="right-top">
+      <CustomPopover
+        open={popover.open}
+        onClose={popover.onClose}
+        arrow="right-top"
+      >
         <MenuItem onClick={handleMarkComplete}>
           <Iconify icon="eva:checkmark-circle-2-fill" />
           Mark Complete

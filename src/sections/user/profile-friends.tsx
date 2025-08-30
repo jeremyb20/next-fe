@@ -26,7 +26,11 @@ type Props = {
   onSearchFriends: (event: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
-export default function ProfileFriends({ friends, searchFriends, onSearchFriends }: Props) {
+export default function ProfileFriends({
+  friends,
+  searchFriends,
+  onSearchFriends,
+}: Props) {
   const dataFiltered = applyFilter({
     inputData: friends,
     query: searchFriends,
@@ -51,7 +55,10 @@ export default function ProfileFriends({ friends, searchFriends, onSearchFriends
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
-                <Iconify icon="eva:search-fill" sx={{ color: 'text.disabled' }} />
+                <Iconify
+                  icon="eva:search-fill"
+                  sx={{ color: 'text.disabled' }}
+                />
               </InputAdornment>
             ),
           }}
@@ -112,13 +119,20 @@ function FriendCard({ friend }: FriendCardProps) {
           flexDirection: 'column',
         }}
       >
-        <Avatar alt={name} src={avatarUrl} sx={{ width: 64, height: 64, mb: 3 }} />
+        <Avatar
+          alt={name}
+          src={avatarUrl}
+          sx={{ width: 64, height: 64, mb: 3 }}
+        />
 
         <Link variant="subtitle1" color="text.primary">
           {name}
         </Link>
 
-        <Typography variant="body2" sx={{ color: 'text.secondary', mb: 1, mt: 0.5 }}>
+        <Typography
+          variant="body2"
+          sx={{ color: 'text.secondary', mb: 1, mt: 0.5 }}
+        >
           {role}
         </Typography>
 
@@ -169,7 +183,13 @@ function FriendCard({ friend }: FriendCardProps) {
 
 // ----------------------------------------------------------------------
 
-function applyFilter({ inputData, query }: { inputData: IUserProfileFriend[]; query: string }) {
+function applyFilter({
+  inputData,
+  query,
+}: {
+  inputData: IUserProfileFriend[];
+  query: string;
+}) {
   if (query) {
     return inputData.filter(
       (friend) => friend.name.toLowerCase().indexOf(query.toLowerCase()) !== -1

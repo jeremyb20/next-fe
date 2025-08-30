@@ -22,7 +22,15 @@ import ComponentBlock from '../component-block';
 
 // ----------------------------------------------------------------------
 
-const COLORS = ['default', 'primary', 'secondary', 'info', 'success', 'warning', 'error'] as const;
+const COLORS = [
+  'default',
+  'primary',
+  'secondary',
+  'info',
+  'success',
+  'warning',
+  'error',
+] as const;
 
 const SIZES = [24, 32, 40, 56];
 
@@ -121,7 +129,10 @@ export default function AvatarView() {
               ))}
 
               <Tooltip title="compact">
-                <Badge variant="online" anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}>
+                <Badge
+                  variant="online"
+                  anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+                >
                   <AvatarGroup variant="compact" sx={{ width: 48, height: 48 }}>
                     {COLORS.slice(0, 2).map((color, index) => (
                       <Avatar
@@ -162,7 +173,10 @@ export default function AvatarView() {
                 variant={status}
                 anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
               >
-                <Avatar alt={_mock.fullName(index + 1)} src={_mock.image.avatar(index + 1)} />
+                <Avatar
+                  alt={_mock.fullName(index + 1)}
+                  src={_mock.image.avatar(index + 1)}
+                />
               </Badge>
             ))}
           </ComponentBlock>

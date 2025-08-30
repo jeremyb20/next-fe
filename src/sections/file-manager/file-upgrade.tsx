@@ -46,7 +46,10 @@ export default function FileUpgrade({ sx, ...other }: StackProps) {
         Upgrade Plan
       </Button>
 
-      <Typography variant="caption" sx={{ color: 'primary.dark', textAlign: 'center' }}>
+      <Typography
+        variant="caption"
+        sx={{ color: 'primary.dark', textAlign: 'center' }}
+      >
         Upgrade your plan and get more space
       </Typography>
     </Stack>

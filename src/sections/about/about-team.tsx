@@ -39,7 +39,10 @@ export default function AboutTeam() {
   });
 
   return (
-    <Container component={MotionViewport} sx={{ textAlign: 'center', py: { xs: 10, md: 15 } }}>
+    <Container
+      component={MotionViewport}
+      sx={{ textAlign: 'center', py: { xs: 10, md: 15 } }}
+    >
       <m.div variants={varFade().inDown}>
         <Typography variant="overline" sx={{ color: 'text.disabled' }}>
           Dream team
@@ -60,8 +63,8 @@ export default function AboutTeam() {
             color: 'text.secondary',
           }}
         >
-          Minimal will provide you support if you have any problems, our support team will reply
-          within a day and we also have detailed documentation.
+          Minimal will provide you support if you have any problems, our support
+          team will reply within a day and we also have detailed documentation.
         </Typography>
       </m.div>
 
@@ -138,10 +141,20 @@ function MemberCard({ member }: MemberCardProps) {
       </Typography>
 
       <Box sx={{ px: 1 }}>
-        <Image alt={name} src={avatarUrl} ratio="1/1" sx={{ borderRadius: 2 }} />
+        <Image
+          alt={name}
+          src={avatarUrl}
+          ratio="1/1"
+          sx={{ borderRadius: 2 }}
+        />
       </Box>
 
-      <Stack direction="row" alignItems="center" justifyContent="center" sx={{ p: 2 }}>
+      <Stack
+        direction="row"
+        alignItems="center"
+        justifyContent="center"
+        sx={{ p: 2 }}
+      >
         {_socials.map((social) => (
           <IconButton
             key={social.name}

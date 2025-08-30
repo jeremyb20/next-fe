@@ -58,13 +58,19 @@ export default function HomeHugePackElements() {
 
   const [currentTab, setCurrentTab] = useState('Angular');
 
-  const handleChangeTab = useCallback((event: React.SyntheticEvent, newValue: string) => {
-    setCurrentTab(newValue);
-  }, []);
+  const handleChangeTab = useCallback(
+    (event: React.SyntheticEvent, newValue: string) => {
+      setCurrentTab(newValue);
+    },
+    []
+  );
 
-  const handleChangeSelect = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
-    setSelect(event.target.value);
-  }, []);
+  const handleChangeSelect = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      setSelect(event.target.value);
+    },
+    []
+  );
 
   const viewAllBtn = (
     <m.div variants={varFade().inUp}>
@@ -75,7 +81,13 @@ export default function HomeHugePackElements() {
         target="_blank"
         rel="noopener"
         href={paths.components}
-        endIcon={<Iconify icon="eva:arrow-ios-forward-fill" width={18} sx={{ ml: -0.5 }} />}
+        endIcon={
+          <Iconify
+            icon="eva:arrow-ios-forward-fill"
+            width={18}
+            sx={{ ml: -0.5 }}
+          />
+        }
       >
         View All Components
       </Button>
@@ -91,7 +103,11 @@ export default function HomeHugePackElements() {
       }}
     >
       <m.div variants={varFade().inUp}>
-        <Typography component="div" variant="overline" sx={{ color: 'text.disabled' }}>
+        <Typography
+          component="div"
+          variant="overline"
+          sx={{ color: 'text.disabled' }}
+        >
           Interface Starter Kit
         </Typography>
       </m.div>
@@ -110,8 +126,8 @@ export default function HomeHugePackElements() {
             color: 'text.secondary',
           }}
         >
-          We collected most popular elements. Menu, sliders, buttons, inputs etc. are all here. Just
-          dive in!
+          We collected most popular elements. Menu, sliders, buttons, inputs
+          etc. are all here. Just dive in!
         </Typography>
       </m.div>
 
@@ -186,7 +202,8 @@ export default function HomeHugePackElements() {
             value={currentTab}
             onChange={handleChangeTab}
             sx={{
-              boxShadow: (theme) => `inset 0 -2px 0 0 ${alpha(theme.palette.grey[500], 0.08)}`,
+              boxShadow: (theme) =>
+                `inset 0 -2px 0 0 ${alpha(theme.palette.grey[500], 0.08)}`,
             }}
           >
             {['Angular', 'React', 'Vue'].map((tab) => (
@@ -208,7 +225,10 @@ export default function HomeHugePackElements() {
             color="secondary"
             value={app}
             exclusive
-            onChange={(event: React.MouseEvent<HTMLElement>, newValue: string | null) => {
+            onChange={(
+              event: React.MouseEvent<HTMLElement>,
+              newValue: string | null
+            ) => {
               if (newValue !== null) {
                 setApp(newValue);
               }
@@ -216,8 +236,15 @@ export default function HomeHugePackElements() {
             aria-label="app"
           >
             {['chat', 'mail', 'bell'].map((item) => (
-              <ToggleButton key={item} value={item} aria-label={item} disabled={item === 'bell'}>
-                {item === 'chat' && <Iconify icon="solar:chat-round-dots-bold" />}
+              <ToggleButton
+                key={item}
+                value={item}
+                aria-label={item}
+                disabled={item === 'bell'}
+              >
+                {item === 'chat' && (
+                  <Iconify icon="solar:chat-round-dots-bold" />
+                )}
                 {item === 'mail' && <Iconify icon="fluent:mail-24-filled" />}
                 {item === 'bell' && <Iconify icon="solar:bell-bing-bold" />}
               </ToggleButton>
@@ -230,7 +257,9 @@ export default function HomeHugePackElements() {
             color="error"
             variant="soft"
             onDelete={() => {}}
-            avatar={<Avatar alt={_mock.fullName(2)} src={_mock.image.avatar(2)} />}
+            avatar={
+              <Avatar alt={_mock.fullName(2)} src={_mock.image.avatar(2)} />
+            }
             label="Chip"
           />
         </m.div>
@@ -246,7 +275,10 @@ export default function HomeHugePackElements() {
         sx={{ width: 1 }}
       >
         <m.div variants={varFade().in}>
-          <Badge variant="online" anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}>
+          <Badge
+            variant="online"
+            anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+          >
             <Avatar src={_mock.image.avatar(19)} alt={_mock.fullName(19)} />
           </Badge>
         </m.div>
@@ -269,7 +301,10 @@ export default function HomeHugePackElements() {
         </m.div>
 
         <m.div variants={varFade().in}>
-          <Label variant="filled" startIcon={<Iconify icon="fluent:mail-24-filled" />}>
+          <Label
+            variant="filled"
+            startIcon={<Iconify icon="fluent:mail-24-filled" />}
+          >
             Label
           </Label>
         </m.div>
@@ -315,7 +350,11 @@ export default function HomeHugePackElements() {
             sx={{ width: 1 }}
           >
             <m.div variants={varFade().in}>
-              <FormControlLabel control={<Switch defaultChecked />} label="Switch" sx={{ m: 0 }} />
+              <FormControlLabel
+                control={<Switch defaultChecked />}
+                label="Switch"
+                sx={{ m: 0 }}
+              />
             </m.div>
 
             <m.div variants={varFade().in}>
@@ -344,7 +383,12 @@ export default function HomeHugePackElements() {
           </Stack>
 
           {/* Row 6 */}
-          <Stack spacing={3} direction="row" justifyContent="center" sx={{ width: 1 }}>
+          <Stack
+            spacing={3}
+            direction="row"
+            justifyContent="center"
+            sx={{ width: 1 }}
+          >
             <m.div variants={varFade().in}>
               <Paper
                 sx={{
@@ -389,8 +433,12 @@ export default function HomeHugePackElements() {
                   />
                 </Box>
 
-                <Typography variant="body2" sx={{ color: 'text.secondary', pt: 2, px: 2 }}>
-                  Phasellus dolor. Fusce egestas elit eget lorem. Quisque id odio.
+                <Typography
+                  variant="body2"
+                  sx={{ color: 'text.secondary', pt: 2, px: 2 }}
+                >
+                  Phasellus dolor. Fusce egestas elit eget lorem. Quisque id
+                  odio.
                 </Typography>
 
                 <Stack direction="row" sx={{ px: 2, py: 1 }}>
@@ -428,11 +476,13 @@ export default function HomeHugePackElements() {
                   value={select}
                   onChange={handleChangeSelect}
                 >
-                  {['Option 1', 'Option 2', 'Option 3', 'Option 4'].map((option) => (
-                    <MenuItem key={option} value={option}>
-                      {option}
-                    </MenuItem>
-                  ))}
+                  {['Option 1', 'Option 2', 'Option 3', 'Option 4'].map(
+                    (option) => (
+                      <MenuItem key={option} value={option}>
+                        {option}
+                      </MenuItem>
+                    )
+                  )}
                 </TextField>
               </m.div>
 
@@ -453,7 +503,11 @@ export default function HomeHugePackElements() {
         py: { xs: 10, md: 15 },
       }}
     >
-      <Grid container direction={{ xs: 'column', md: 'row-reverse' }} spacing={5}>
+      <Grid
+        container
+        direction={{ xs: 'column', md: 'row-reverse' }}
+        spacing={5}
+      >
         <Grid xs={12} md={5}>
           {renderDescription}
         </Grid>

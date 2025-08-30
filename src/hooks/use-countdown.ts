@@ -36,9 +36,13 @@ export function useCountdownDate(date: Date): ReturnDateType {
       (distanceToNow % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
     )}`.slice(-2);
 
-    const getMinutes = `0${Math.floor((distanceToNow % (1000 * 60 * 60)) / (1000 * 60))}`.slice(-2);
+    const getMinutes = `0${Math.floor(
+      (distanceToNow % (1000 * 60 * 60)) / (1000 * 60)
+    )}`.slice(-2);
 
-    const getSeconds = `0${Math.floor((distanceToNow % (1000 * 60)) / 1000)}`.slice(-2);
+    const getSeconds = `0${Math.floor(
+      (distanceToNow % (1000 * 60)) / 1000
+    )}`.slice(-2);
 
     setCountdown({
       days: getDays.toString() || '000',

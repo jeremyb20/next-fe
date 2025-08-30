@@ -14,7 +14,10 @@ import { useBoolean } from 'src/hooks/use-boolean';
 
 import Iconify from 'src/components/iconify';
 
-import { ICheckoutCardOption, ICheckoutPaymentOption } from 'src/types/checkout';
+import {
+  ICheckoutCardOption,
+  ICheckoutPaymentOption,
+} from 'src/types/checkout';
 
 import PaymentNewCardDialog from '../payment/payment-new-card-dialog';
 
@@ -25,7 +28,11 @@ interface Props extends CardProps {
   cardOptions: ICheckoutCardOption[];
 }
 
-export default function CheckoutPaymentMethods({ options, cardOptions, ...other }: Props) {
+export default function CheckoutPaymentMethods({
+  options,
+  cardOptions,
+  ...other
+}: Props) {
   const { control } = useFormContext();
 
   const newCard = useBoolean();
@@ -47,7 +54,9 @@ export default function CheckoutPaymentMethods({ options, cardOptions, ...other 
                   onOpen={newCard.onTrue}
                   cardOptions={cardOptions}
                   selected={field.value === option.value}
-                  isCredit={option.value === 'credit' && field.value === 'credit'}
+                  isCredit={
+                    option.value === 'credit' && field.value === 'credit'
+                  }
                   onClick={() => {
                     field.onChange(option.value);
                   }}
@@ -117,7 +126,9 @@ function OptionItem({
                 </>
               )}
               {value === 'paypal' && <Iconify icon="logos:paypal" width={24} />}
-              {value === 'cash' && <Iconify icon="solar:wad-of-money-bold" width={32} />}
+              {value === 'cash' && (
+                <Iconify icon="solar:wad-of-money-bold" width={32} />
+              )}
             </Stack>
           </Stack>
         }
@@ -134,7 +145,12 @@ function OptionItem({
             pt: 2.5,
           }}
         >
-          <TextField select fullWidth label="Cards" SelectProps={{ native: true }}>
+          <TextField
+            select
+            fullWidth
+            label="Cards"
+            SelectProps={{ native: true }}
+          >
             {cardOptions.map((card) => (
               <option key={card.value} value={card.value}>
                 {card.label}

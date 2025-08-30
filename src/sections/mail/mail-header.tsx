@@ -14,7 +14,13 @@ type Props = StackProps & {
 
 export default function MailHeader({ onOpenNav, onOpenMail, ...other }: Props) {
   return (
-    <Stack spacing={2} direction="row" alignItems="center" sx={{ py: 1 }} {...other}>
+    <Stack
+      spacing={2}
+      direction="row"
+      alignItems="center"
+      sx={{ py: 1 }}
+      {...other}
+    >
       <Stack direction="row" alignItems="center">
         <IconButton onClick={onOpenNav}>
           <Iconify icon="fluent:mail-24-filled" />

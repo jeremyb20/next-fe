@@ -5,7 +5,12 @@ import { NavProps } from '../types';
 
 // ----------------------------------------------------------------------
 
-export default function MegaMenuDesktopVertical({ data, sx, slotProps, ...other }: NavProps) {
+export default function MegaMenuDesktopVertical({
+  data,
+  sx,
+  slotProps,
+  ...other
+}: NavProps) {
   return (
     <Stack
       component="nav"

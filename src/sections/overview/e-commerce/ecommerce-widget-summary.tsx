@@ -100,7 +100,10 @@ export default function EcommerceWidgetSummary({
 
         {fPercent(percent)}
 
-        <Box component="span" sx={{ color: 'text.secondary', typography: 'body2' }}>
+        <Box
+          component="span"
+          sx={{ color: 'text.secondary', typography: 'body2' }}
+        >
           {' than last week'}
         </Box>
       </Typography>
@@ -108,7 +111,10 @@ export default function EcommerceWidgetSummary({
   );
 
   return (
-    <Card sx={{ display: 'flex', alignItems: 'center', p: 3, ...sx }} {...other}>
+    <Card
+      sx={{ display: 'flex', alignItems: 'center', p: 3, ...sx }}
+      {...other}
+    >
       <Box sx={{ flexGrow: 1 }}>
         <Typography variant="subtitle2" sx={{ mb: 2 }}>
           {title}

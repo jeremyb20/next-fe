@@ -18,7 +18,13 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 
 import { paths } from 'src/routes/paths';
 
-import { fData, fNumber, fPercent, fCurrency, fShortenNumber } from 'src/utils/format-number';
+import {
+  fData,
+  fNumber,
+  fPercent,
+  fCurrency,
+  fShortenNumber,
+} from 'src/utils/format-number';
 
 import { useLocales, useTranslate } from 'src/locales';
 
@@ -106,15 +112,23 @@ export default function MultiLanguageView() {
                 <CardHeader title="Flexible" />
 
                 <CardContent component={Stack} spacing={3}>
-                  <Stack direction="row" alignItems="center" sx={{ typography: 'h3' }}>
-                    <Iconify icon={currentLang.icon} width={32} sx={{ mr: 1, borderRadius: 1 }} />
+                  <Stack
+                    direction="row"
+                    alignItems="center"
+                    sx={{ typography: 'h3' }}
+                  >
+                    <Iconify
+                      icon={currentLang.icon}
+                      width={32}
+                      sx={{ mr: 1, borderRadius: 1 }}
+                    />
                     {mounted && t('demo.title')}
                   </Stack>
 
                   <Typography>
-                    Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos
-                    hymenaeos. Praesent ac massa at ligula laoreet iaculis. Vivamus in erat ut urna
-                    cursus vestibulum.
+                    Class aptent taciti sociosqu ad litora torquent per conubia
+                    nostra, per inceptos hymenaeos. Praesent ac massa at ligula
+                    laoreet iaculis. Vivamus in erat ut urna cursus vestibulum.
                   </Typography>
                 </CardContent>
               </Card>
@@ -132,7 +146,9 @@ export default function MultiLanguageView() {
                     border: (theme) => `dashed 1px ${theme.palette.divider}`,
                   }}
                 >
-                  <Box sx={{ typography: 'subtitle2' }}>Supports other components including:</Box>
+                  <Box sx={{ typography: 'subtitle2' }}>
+                    Supports other components including:
+                  </Box>
                   <Box component="ul" sx={{ pl: 3 }}>
                     <Box component="li"> Data Grid</Box>
                     <Box component="li"> Date Pickers</Box>
@@ -166,7 +182,9 @@ export default function MultiLanguageView() {
                 >
                   <Stack spacing={0.5}>
                     <Box sx={{ typography: 'subtitle2' }}>Currency</Box>
-                    {[2217.01, 247598.18, 677606.08, 4734447.51, 8471442.09].map((numb) => (
+                    {[
+                      2217.01, 247598.18, 677606.08, 4734447.51, 8471442.09,
+                    ].map((numb) => (
                       <Box key={numb}>
                         <Box component="span" sx={{ color: 'text.primary' }}>
                           {numb}
@@ -194,29 +212,17 @@ export default function MultiLanguageView() {
 
                   <Stack spacing={0.5}>
                     <Box sx={{ typography: 'subtitle2' }}>Shorten</Box>
-                    {[719, 719.63, 3683.72, 5583407.51, 3345583407.51].map((numb) => (
-                      <Box key={numb}>
-                        <Box component="span" sx={{ color: 'text.primary' }}>
-                          {numb}
-                        </Box>
-                        <Box component="span" sx={{ color: 'text.secondary' }}>
-                          {' => '} {fShortenNumber(numb)}
-                        </Box>
-                      </Box>
-                    ))}
-                  </Stack>
-
-                  <Stack spacing={0.5}>
-                    <Box sx={{ typography: 'subtitle2' }}>Data</Box>
-
-                    {[356, 356.56, 3826.63, 7536340.92, 5679332343.62, 75344386390.46].map(
+                    {[719, 719.63, 3683.72, 5583407.51, 3345583407.51].map(
                       (numb) => (
                         <Box key={numb}>
                           <Box component="span" sx={{ color: 'text.primary' }}>
                             {numb}
                           </Box>
-                          <Box component="span" sx={{ color: 'text.secondary' }}>
-                            {' => '} {fData(numb)}
+                          <Box
+                            component="span"
+                            sx={{ color: 'text.secondary' }}
+                          >
+                            {' => '} {fShortenNumber(numb)}
                           </Box>
                         </Box>
                       )
@@ -224,18 +230,41 @@ export default function MultiLanguageView() {
                   </Stack>
 
                   <Stack spacing={0.5}>
-                    <Box sx={{ typography: 'subtitle2' }}>Number</Box>
+                    <Box sx={{ typography: 'subtitle2' }}>Data</Box>
 
-                    {[451, 451.82, 1081.62, 27921.9, 600668.81, 7587054.86].map((numb) => (
+                    {[
+                      356, 356.56, 3826.63, 7536340.92, 5679332343.62,
+                      75344386390.46,
+                    ].map((numb) => (
                       <Box key={numb}>
                         <Box component="span" sx={{ color: 'text.primary' }}>
                           {numb}
                         </Box>
                         <Box component="span" sx={{ color: 'text.secondary' }}>
-                          {' => '} {fNumber(numb)}
+                          {' => '} {fData(numb)}
                         </Box>
                       </Box>
                     ))}
+                  </Stack>
+
+                  <Stack spacing={0.5}>
+                    <Box sx={{ typography: 'subtitle2' }}>Number</Box>
+
+                    {[451, 451.82, 1081.62, 27921.9, 600668.81, 7587054.86].map(
+                      (numb) => (
+                        <Box key={numb}>
+                          <Box component="span" sx={{ color: 'text.primary' }}>
+                            {numb}
+                          </Box>
+                          <Box
+                            component="span"
+                            sx={{ color: 'text.secondary' }}
+                          >
+                            {' => '} {fNumber(numb)}
+                          </Box>
+                        </Box>
+                      )
+                    )}
                   </Stack>
                 </CardContent>
               </Card>

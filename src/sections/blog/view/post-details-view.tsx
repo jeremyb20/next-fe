@@ -138,7 +138,11 @@ export default function PostDetailsView({ title }: Props) {
               }}
             >
               {post.favoritePerson.map((person) => (
-                <Avatar key={person.name} alt={person.name} src={person.avatarUrl} />
+                <Avatar
+                  key={person.name}
+                  alt={person.name}
+                  src={person.avatarUrl}
+                />
               ))}
             </AvatarGroup>
           </Stack>

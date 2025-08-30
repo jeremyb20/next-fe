@@ -68,7 +68,9 @@ export default function JobNewEditForm({ currentJob }: Props) {
     workingSchedule: Yup.array().min(1, 'Choose at least one option'),
     benefits: Yup.array().min(1, 'Choose at least one option'),
     locations: Yup.array().min(1, 'Choose at least one option'),
-    expiredDate: Yup.mixed<any>().nullable().required('Expired date is required'),
+    expiredDate: Yup.mixed<any>()
+      .nullable()
+      .required('Expired date is required'),
     salary: Yup.object().shape({
       type: Yup.string(),
       price: Yup.number().min(1, 'Price is required'),
@@ -148,7 +150,10 @@ export default function JobNewEditForm({ currentJob }: Props) {
           <Stack spacing={3} sx={{ p: 3 }}>
             <Stack spacing={1.5}>
               <Typography variant="subtitle2">Title</Typography>
-              <RHFTextField name="title" placeholder="Ex: Software Engineer..." />
+              <RHFTextField
+                name="title"
+                placeholder="Ex: Software Engineer..."
+              />
             </Stack>
 
             <Stack spacing={1.5}>
@@ -191,7 +196,12 @@ export default function JobNewEditForm({ currentJob }: Props) {
 
             <Stack spacing={1}>
               <Typography variant="subtitle2">Experience</Typography>
-              <RHFRadioGroup row spacing={4} name="experience" options={JOB_EXPERIENCE_OPTIONS} />
+              <RHFRadioGroup
+                row
+                spacing={4}
+                name="experience"
+                options={JOB_EXPERIENCE_OPTIONS}
+              />
             </Stack>
 
             <Stack spacing={1.5}>
@@ -307,15 +317,31 @@ export default function JobNewEditForm({ currentJob }: Props) {
                 name="salary.type"
                 control={control}
                 render={({ field }) => (
-                  <Box gap={2} display="grid" gridTemplateColumns="repeat(2, 1fr)">
+                  <Box
+                    gap={2}
+                    display="grid"
+                    gridTemplateColumns="repeat(2, 1fr)"
+                  >
                     {[
                       {
                         label: 'Hourly',
-                        icon: <Iconify icon="solar:clock-circle-bold" width={32} sx={{ mb: 2 }} />,
+                        icon: (
+                          <Iconify
+                            icon="solar:clock-circle-bold"
+                            width={32}
+                            sx={{ mb: 2 }}
+                          />
+                        ),
                       },
                       {
                         label: 'Custom',
-                        icon: <Iconify icon="solar:wad-of-money-bold" width={32} sx={{ mb: 2 }} />,
+                        icon: (
+                          <Iconify
+                            icon="solar:wad-of-money-bold"
+                            width={32}
+                            sx={{ mb: 2 }}
+                          />
+                        ),
                       },
                     ].map((item) => (
                       <Paper
@@ -349,12 +375,19 @@ export default function JobNewEditForm({ currentJob }: Props) {
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position="start">
-                      <Box sx={{ typography: 'subtitle2', color: 'text.disabled' }}>$</Box>
+                      <Box
+                        sx={{ typography: 'subtitle2', color: 'text.disabled' }}
+                      >
+                        $
+                      </Box>
                     </InputAdornment>
                   ),
                 }}
               />
-              <RHFSwitch name="salary.negotiable" label="Salary is negotiable" />
+              <RHFSwitch
+                name="salary.negotiable"
+                label="Salary is negotiable"
+              />
             </Stack>
 
             <Stack spacing={1}>

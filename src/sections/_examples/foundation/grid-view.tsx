@@ -28,7 +28,8 @@ const StyledBlockContainer = styled(Paper)(({ theme }) => ({
   padding: theme.spacing(5),
   border: `solid 1px ${theme.palette.divider}`,
   borderRadius: theme.shape.borderRadius * 1.5,
-  backgroundColor: theme.palette.grey[theme.palette.mode === 'light' ? 100 : 800],
+  backgroundColor:
+    theme.palette.grey[theme.palette.mode === 'light' ? 100 : 800],
 }));
 
 // ----------------------------------------------------------------------

@@ -17,7 +17,15 @@ import ComponentBlock from '../component-block';
 
 // ----------------------------------------------------------------------
 
-const COLORS = ['default', 'primary', 'secondary', 'info', 'success', 'warning', 'error'] as const;
+const COLORS = [
+  'default',
+  'primary',
+  'secondary',
+  'info',
+  'success',
+  'warning',
+  'error',
+] as const;
 
 const PLACEMENTS = ['top', 'start', 'bottom', 'end'] as const;
 
@@ -52,7 +60,10 @@ export default function SwitchView() {
 
           <ComponentBlock title="Sizes">
             <FormGroup row>
-              <FormControlLabel control={<Switch size="small" />} label="Small" />
+              <FormControlLabel
+                control={<Switch size="small" />}
+                label="Small"
+              />
               <FormControlLabel control={<Switch />} label="Normal" />
             </FormGroup>
           </ComponentBlock>
@@ -84,7 +95,11 @@ export default function SwitchView() {
                   />
                 ))}
 
-                <FormControlLabel disabled control={<Switch color="error" />} label="Disabled" />
+                <FormControlLabel
+                  disabled
+                  control={<Switch color="error" />}
+                  label="Disabled"
+                />
               </FormGroup>
             </FormControl>
           </ComponentBlock>

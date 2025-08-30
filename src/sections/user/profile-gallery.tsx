@@ -44,8 +44,14 @@ export default function ProfileGallery({ gallery }: Props) {
         }}
       >
         {gallery.map((image) => (
-          <Card key={image.id} sx={{ cursor: 'pointer', color: 'common.white' }}>
-            <IconButton color="inherit" sx={{ position: 'absolute', top: 8, right: 8, zIndex: 9 }}>
+          <Card
+            key={image.id}
+            sx={{ cursor: 'pointer', color: 'common.white' }}
+          >
+            <IconButton
+              color="inherit"
+              sx={{ position: 'absolute', top: 8, right: 8, zIndex: 9 }}
+            >
               <Iconify icon="eva:more-vertical-fill" />
             </IconButton>
 
@@ -78,9 +84,10 @@ export default function ProfileGallery({ gallery }: Props) {
               ratio="1/1"
               src={image.imageUrl}
               onClick={() => lightbox.onOpen(image.imageUrl)}
-              overlay={`linear-gradient(to bottom, ${alpha(theme.palette.grey[900], 0)} 0%, ${
-                theme.palette.grey[900]
-              } 75%)`}
+              overlay={`linear-gradient(to bottom, ${alpha(
+                theme.palette.grey[900],
+                0
+              )} 0%, ${theme.palette.grey[900]} 75%)`}
             />
           </Card>
         ))}

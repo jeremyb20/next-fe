@@ -30,7 +30,10 @@ export default function AboutTestimonials() {
   const mdUp = useResponsive('up', 'md');
 
   const renderLink = (
-    <Button color="primary" endIcon={<Iconify icon="eva:arrow-ios-forward-fill" />}>
+    <Button
+      color="primary"
+      endIcon={<Iconify icon="eva:arrow-ios-forward-fill" />}
+    >
       Read more testimonials
     </Button>
   );
@@ -43,7 +46,10 @@ export default function AboutTestimonials() {
       }}
     >
       <m.div variants={varFade().inUp}>
-        <Typography variant="overline" sx={{ color: 'common.white', opacity: 0.48 }}>
+        <Typography
+          variant="overline"
+          sx={{ color: 'common.white', opacity: 0.48 }}
+        >
           Testimonials
         </Typography>
       </m.div>
@@ -57,9 +63,10 @@ export default function AboutTestimonials() {
 
       <m.div variants={varFade().inUp}>
         <Typography sx={{ color: 'common.white' }}>
-          Our goal is to create a product and service that you’re satisfied with and use it every
-          day. This is why we’re constantly working on our services to make it better every day and
-          really listen to what our users has to say.
+          Our goal is to create a product and service that you’re satisfied with
+          and use it every day. This is why we’re constantly working on our
+          services to make it better every day and really listen to what our
+          users has to say.
         </Typography>
       </m.div>
 
@@ -107,7 +114,10 @@ export default function AboutTestimonials() {
         py: { xs: 10, md: 0 },
       }}
     >
-      <Container component={MotionViewport} sx={{ position: 'relative', height: 1 }}>
+      <Container
+        component={MotionViewport}
+        sx={{ position: 'relative', height: 1 }}
+      >
         <Grid
           container
           spacing={3}
@@ -178,7 +188,11 @@ function TestimonialCard({ testimonial, sx, ...other }: TestimonialCardProps) {
       }}
       {...other}
     >
-      <Iconify icon="mingcute:quote-left-fill" width={40} sx={{ opacity: 0.48 }} />
+      <Iconify
+        icon="mingcute:quote-left-fill"
+        width={40}
+        sx={{ opacity: 0.48 }}
+      />
 
       <Typography variant="body2">{content}</Typography>
 

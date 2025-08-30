@@ -5,7 +5,12 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 
 import Image from 'src/components/image';
-import { MapPopup, MapMarker, MapControl, MapBoxProps } from 'src/components/map';
+import {
+  MapPopup,
+  MapMarker,
+  MapControl,
+  MapBoxProps,
+} from 'src/components/map';
 
 // ----------------------------------------------------------------------
 

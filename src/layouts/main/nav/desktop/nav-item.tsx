@@ -16,7 +16,10 @@ import { NavItemProps, NavItemStateProps } from '../types';
 // ----------------------------------------------------------------------
 
 export const NavItem = forwardRef<HTMLDivElement, NavItemProps>(
-  ({ title, path, open, active, hasChild, externalLink, subItem, ...other }, ref) => {
+  (
+    { title, path, open, active, hasChild, externalLink, subItem, ...other },
+    ref
+  ) => {
     const renderContent = (
       <StyledNavItem
         disableRipple
@@ -29,7 +32,13 @@ export const NavItem = forwardRef<HTMLDivElement, NavItemProps>(
       >
         {title}
 
-        {hasChild && <Iconify width={16} icon="eva:arrow-ios-downward-fill" sx={{ ml: 1 }} />}
+        {hasChild && (
+          <Iconify
+            width={16}
+            icon="eva:arrow-ios-downward-fill"
+            sx={{ ml: 1 }}
+          />
+        )}
       </StyledNavItem>
     );
 
@@ -39,7 +48,13 @@ export const NavItem = forwardRef<HTMLDivElement, NavItemProps>(
 
     if (externalLink) {
       return (
-        <Link href={path} target="_blank" rel="noopener" color="inherit" underline="none">
+        <Link
+          href={path}
+          target="_blank"
+          rel="noopener"
+          color="inherit"
+          underline="none"
+        >
           {renderContent}
         </Link>
       );
@@ -140,9 +155,18 @@ type NavItemDashboardProps = LinkProps & {
   path: string;
 };
 
-export function NavItemDashboard({ path, sx, ...other }: NavItemDashboardProps) {
+export function NavItemDashboard({
+  path,
+  sx,
+  ...other
+}: NavItemDashboardProps) {
   return (
-    <Link component={RouterLink} href={path} sx={{ width: 1, height: 1 }} {...other}>
+    <Link
+      component={RouterLink}
+      href={path}
+      sx={{ width: 1, height: 1 }}
+      {...other}
+    >
       <CardActionArea
         sx={{
           height: 1,

@@ -110,7 +110,9 @@ export function fData(inputValue: InputValue) {
 
   const index = Math.floor(Math.log(number) / Math.log(baseValue));
 
-  const fm = `${parseFloat((number / baseValue ** index).toFixed(decimal))} ${units[index]}`;
+  const fm = `${parseFloat((number / baseValue ** index).toFixed(decimal))} ${
+    units[index]
+  }`;
 
   return fm;
 }

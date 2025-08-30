@@ -56,7 +56,11 @@ export default function FileManagerInvitedItem({ person }: Props) {
           endIcon={
             <Iconify
               width={20}
-              icon={popover.open ? 'eva:arrow-ios-upward-fill' : 'eva:arrow-ios-downward-fill'}
+              icon={
+                popover.open
+                  ? 'eva:arrow-ios-upward-fill'
+                  : 'eva:arrow-ios-downward-fill'
+              }
               sx={{ ml: -1 }}
             />
           }
@@ -72,7 +76,11 @@ export default function FileManagerInvitedItem({ person }: Props) {
         </Button>
       </ListItem>
 
-      <CustomPopover open={popover.open} onClose={popover.onClose} sx={{ width: 160 }}>
+      <CustomPopover
+        open={popover.open}
+        onClose={popover.onClose}
+        sx={{ width: 160 }}
+      >
         <>
           <MenuItem
             selected={permission === 'view'}

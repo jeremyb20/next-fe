@@ -53,7 +53,9 @@ export default function FileManagerPanel({
           </IconButton>
         </Stack>
 
-        <Box sx={{ typography: 'body2', color: 'text.disabled', mt: 0.5 }}>{subTitle}</Box>
+        <Box sx={{ typography: 'body2', color: 'text.disabled', mt: 0.5 }}>
+          {subTitle}
+        </Box>
       </Stack>
 
       {link && (
@@ -62,7 +64,13 @@ export default function FileManagerPanel({
           component={RouterLink}
           size="small"
           color="inherit"
-          endIcon={<Iconify icon="eva:arrow-ios-forward-fill" width={18} sx={{ ml: -0.5 }} />}
+          endIcon={
+            <Iconify
+              icon="eva:arrow-ios-forward-fill"
+              width={18}
+              sx={{ ml: -0.5 }}
+            />
+          }
         >
           View All
         </Button>
@@ -70,7 +78,13 @@ export default function FileManagerPanel({
 
       {onCollapse && (
         <IconButton onClick={onCollapse}>
-          <Iconify icon={collapse ? 'eva:arrow-ios-downward-fill' : 'eva:arrow-ios-upward-fill'} />
+          <Iconify
+            icon={
+              collapse
+                ? 'eva:arrow-ios-downward-fill'
+                : 'eva:arrow-ios-upward-fill'
+            }
+          />
         </IconButton>
       )}
     </Stack>

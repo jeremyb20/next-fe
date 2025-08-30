@@ -21,7 +21,12 @@ import { IPostHero } from 'src/types/blog';
 
 // ----------------------------------------------------------------------
 
-export default function PostDetailsHero({ title, author, coverUrl, createdAt }: IPostHero) {
+export default function PostDetailsHero({
+  title,
+  author,
+  coverUrl,
+  createdAt,
+}: IPostHero) {
   const theme = useTheme();
 
   const smUp = useResponsive('up', 'sm');
@@ -103,7 +108,9 @@ export default function PostDetailsHero({ title, author, coverUrl, createdAt }: 
             {_socials.map((action) => (
               <SpeedDialAction
                 key={action.name}
-                icon={<Iconify icon={action.icon} sx={{ color: action.color }} />}
+                icon={
+                  <Iconify icon={action.icon} sx={{ color: action.color }} />
+                }
                 tooltipTitle={action.name}
                 tooltipPlacement="top"
                 FabProps={{ color: 'default' }}

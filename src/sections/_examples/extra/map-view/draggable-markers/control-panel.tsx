@@ -36,7 +36,11 @@ function ControlPanel({ events = {} }: Props) {
                 {`${round5(lngLat.lng)}, ${round5(lngLat.lat)}`}
               </Typography>
             ) : (
-              <Typography variant="body2" component="em" sx={{ color: 'error.main' }}>
+              <Typography
+                variant="body2"
+                component="em"
+                sx={{ color: 'error.main' }}
+              >
                 null
               </Typography>
             )}

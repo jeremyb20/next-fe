@@ -23,7 +23,12 @@ type Props = {
   hrefItem: (id: string) => string;
 };
 
-export default function JobSearch({ query, results, onSearch, hrefItem }: Props) {
+export default function JobSearch({
+  query,
+  results,
+  onSearch,
+  hrefItem,
+}: Props) {
   const router = useRouter();
 
   const handleClick = (id: string) => {
@@ -59,7 +64,10 @@ export default function JobSearch({ query, results, onSearch, hrefItem }: Props)
             ...params.InputProps,
             startAdornment: (
               <InputAdornment position="start">
-                <Iconify icon="eva:search-fill" sx={{ ml: 1, color: 'text.disabled' }} />
+                <Iconify
+                  icon="eva:search-fill"
+                  sx={{ ml: 1, color: 'text.disabled' }}
+                />
               </InputAdornment>
             ),
           }}
@@ -70,7 +78,12 @@ export default function JobSearch({ query, results, onSearch, hrefItem }: Props)
         const parts = parse(job.title, matches);
 
         return (
-          <Box component="li" {...props} onClick={() => handleClick(job.id)} key={job.id}>
+          <Box
+            component="li"
+            {...props}
+            onClick={() => handleClick(job.id)}
+            key={job.id}
+          >
             <div>
               {parts.map((part, index) => (
                 <Typography
@@ -79,7 +92,9 @@ export default function JobSearch({ query, results, onSearch, hrefItem }: Props)
                   color={part.highlight ? 'primary' : 'textPrimary'}
                   sx={{
                     typography: 'body2',
-                    fontWeight: part.highlight ? 'fontWeightSemiBold' : 'fontWeightMedium',
+                    fontWeight: part.highlight
+                      ? 'fontWeightSemiBold'
+                      : 'fontWeightMedium',
                   }}
                 >
                   {part.text}

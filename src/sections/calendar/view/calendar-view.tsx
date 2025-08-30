@@ -28,7 +28,11 @@ import { updateEvent, useGetEvents } from 'src/api/calendar';
 import Iconify from 'src/components/iconify';
 import { useSettingsContext } from 'src/components/settings';
 
-import { ICalendarEvent, ICalendarFilters, ICalendarFilterValue } from 'src/types/calendar';
+import {
+  ICalendarEvent,
+  ICalendarFilters,
+  ICalendarFilterValue,
+} from 'src/types/calendar';
 
 import { StyledCalendar } from '../styles';
 import CalendarForm from '../calendar-form';
@@ -94,18 +98,22 @@ export default function CalendarView() {
     onInitialView();
   }, [onInitialView]);
 
-  const handleFilters = useCallback((name: string, value: ICalendarFilterValue) => {
-    setFilters((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
-  }, []);
+  const handleFilters = useCallback(
+    (name: string, value: ICalendarFilterValue) => {
+      setFilters((prevState) => ({
+        ...prevState,
+        [name]: value,
+      }));
+    },
+    []
+  );
 
   const handleResetFilters = useCallback(() => {
     setFilters(defaultFilters);
   }, []);
 
-  const canReset = !!filters.colors.length || (!!filters.startDate && !!filters.endDate);
+  const canReset =
+    !!filters.colors.length || (!!filters.startDate && !!filters.endDate);
 
   const dataFiltered = applyFilter({
     inputData: events,
@@ -257,12 +265,16 @@ function applyFilter({
   inputData = stabilizedThis.map((el) => el[0]);
 
   if (colors.length) {
-    inputData = inputData.filter((event) => colors.includes(event.color as string));
+    inputData = inputData.filter((event) =>
+      colors.includes(event.color as string)
+    );
   }
 
   if (!dateError) {
     if (startDate && endDate) {
-      inputData = inputData.filter((event) => isBetween(event.start, startDate, endDate));
+      inputData = inputData.filter((event) =>
+        isBetween(event.start, startDate, endDate)
+      );
     }
   }
 

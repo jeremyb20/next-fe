@@ -74,7 +74,9 @@ export default function CalendarToolbar({
             color="inherit"
             onClick={popover.onOpen}
             startIcon={<Iconify icon={selectedItem.icon} />}
-            endIcon={<Iconify icon="eva:arrow-ios-downward-fill" sx={{ ml: -0.5 }} />}
+            endIcon={
+              <Iconify icon="eva:arrow-ios-downward-fill" sx={{ ml: -0.5 }} />
+            }
           >
             {selectedItem.label}
           </Button>
@@ -93,7 +95,12 @@ export default function CalendarToolbar({
         </Stack>
 
         <Stack direction="row" alignItems="center" spacing={1}>
-          <Button size="small" color="error" variant="contained" onClick={onToday}>
+          <Button
+            size="small"
+            color="error"
+            variant="contained"
+            onClick={onToday}
+          >
             Today
           </Button>
 

@@ -88,32 +88,58 @@ export default function TypographyView() {
           <Grid xs={12} md={9}>
             <Stack spacing={3}>
               {['primary', 'secondary', 'disabled'].map((color) => (
-                <Paper key={color} variant="outlined" sx={{ p: 3, borderRadius: 1 }}>
-                  <Typography gutterBottom variant="subtitle1" sx={{ color: `text.${color}` }}>
+                <Paper
+                  key={color}
+                  variant="outlined"
+                  sx={{ p: 3, borderRadius: 1 }}
+                >
+                  <Typography
+                    gutterBottom
+                    variant="subtitle1"
+                    sx={{ color: `text.${color}` }}
+                  >
                     text {color}
                   </Typography>
 
-                  <Typography gutterBottom variant="body2" sx={{ color: `text.${color}` }}>
-                    Cras ultricies mi eu turpis hendrerit fringilla. Fusce vel dui. Pellentesque
-                    auctor neque nec urna. Sed cursus turpis vitae tortor. Curabitur suscipit
-                    suscipit tellus.
+                  <Typography
+                    gutterBottom
+                    variant="body2"
+                    sx={{ color: `text.${color}` }}
+                  >
+                    Cras ultricies mi eu turpis hendrerit fringilla. Fusce vel
+                    dui. Pellentesque auctor neque nec urna. Sed cursus turpis
+                    vitae tortor. Curabitur suscipit suscipit tellus.
                   </Typography>
                 </Paper>
               ))}
 
-              {['primary', 'secondary', 'info', 'warning', 'error'].map((color) => (
-                <Paper key={color} variant="outlined" sx={{ p: 3, borderRadius: 1 }}>
-                  <Typography gutterBottom variant="subtitle1" sx={{ color: `${color}.main` }}>
-                    {color}
-                  </Typography>
+              {['primary', 'secondary', 'info', 'warning', 'error'].map(
+                (color) => (
+                  <Paper
+                    key={color}
+                    variant="outlined"
+                    sx={{ p: 3, borderRadius: 1 }}
+                  >
+                    <Typography
+                      gutterBottom
+                      variant="subtitle1"
+                      sx={{ color: `${color}.main` }}
+                    >
+                      {color}
+                    </Typography>
 
-                  <Typography gutterBottom variant="body2" sx={{ color: `${color}.main` }}>
-                    Cras ultricies mi eu turpis hendrerit fringilla. Fusce vel dui. Pellentesque
-                    auctor neque nec urna. Sed cursus turpis vitae tortor. Curabitur suscipit
-                    suscipit tellus.
-                  </Typography>
-                </Paper>
-              ))}
+                    <Typography
+                      gutterBottom
+                      variant="body2"
+                      sx={{ color: `${color}.main` }}
+                    >
+                      Cras ultricies mi eu turpis hendrerit fringilla. Fusce vel
+                      dui. Pellentesque auctor neque nec urna. Sed cursus turpis
+                      vitae tortor. Curabitur suscipit suscipit tellus.
+                    </Typography>
+                  </Paper>
+                )
+              )}
             </Stack>
           </Grid>
         </Grid>
@@ -134,7 +160,12 @@ type BlockVariantProps = {
 function BlockVariant({ font }: BlockVariantProps) {
   const { variant, label } = font;
 
-  const { fontSize, lineHeight, fontWeight, letterSpacing = 0 } = useTypography(variant);
+  const {
+    fontSize,
+    lineHeight,
+    fontWeight,
+    letterSpacing = 0,
+  } = useTypography(variant);
 
   return (
     <Paper variant="outlined" sx={{ p: 3, borderRadius: 1 }}>

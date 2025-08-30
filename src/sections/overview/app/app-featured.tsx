@@ -8,7 +8,11 @@ import { alpha, useTheme } from '@mui/material/styles';
 
 import Image from 'src/components/image';
 import { varFade, MotionContainer } from 'src/components/animate';
-import Carousel, { useCarousel, CarouselDots, CarouselArrows } from 'src/components/carousel';
+import Carousel, {
+  useCarousel,
+  CarouselDots,
+  CarouselArrows,
+} from 'src/components/carousel';
 
 // ----------------------------------------------------------------------
 
@@ -41,7 +45,11 @@ export default function AppFeatured({ list, ...other }: Props) {
     <Card {...other}>
       <Carousel ref={carousel.carouselRef} {...carousel.carouselSettings}>
         {list.map((app, index) => (
-          <CarouselItem key={app.id} item={app} active={index === carousel.currentIndex} />
+          <CarouselItem
+            key={app.id}
+            item={app}
+            active={index === carousel.currentIndex}
+          />
         ))}
       </Carousel>
 
@@ -70,9 +78,10 @@ function CarouselItem({ item, active }: CarouselItemProps) {
     <Image
       alt={title}
       src={coverUrl}
-      overlay={`linear-gradient(to bottom, ${alpha(theme.palette.grey[900], 0)} 0%, ${
-        theme.palette.grey[900]
-      } 75%)`}
+      overlay={`linear-gradient(to bottom, ${alpha(
+        theme.palette.grey[900],
+        0
+      )} 0%, ${theme.palette.grey[900]} 75%)`}
       sx={{
         width: 1,
         height: {

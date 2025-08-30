@@ -13,7 +13,21 @@ import { NavItemProps, NavItemStateProps } from '../types';
 // ----------------------------------------------------------------------
 
 const NavItem = forwardRef<HTMLDivElement, NavItemProps>(
-  ({ title, path, icon, caption, depth, open, active, hasChild, externalLink, ...other }, ref) => {
+  (
+    {
+      title,
+      path,
+      icon,
+      caption,
+      depth,
+      open,
+      active,
+      hasChild,
+      externalLink,
+      ...other
+    },
+    ref
+  ) => {
     const renderContent = (
       <StyledNavItem
         ref={ref}
@@ -47,7 +61,11 @@ const NavItem = forwardRef<HTMLDivElement, NavItemProps>(
           <Iconify
             width={16}
             className="arrow"
-            icon={open ? 'eva:arrow-ios-downward-fill' : 'eva:arrow-ios-forward-fill'}
+            icon={
+              open
+                ? 'eva:arrow-ios-downward-fill'
+                : 'eva:arrow-ios-forward-fill'
+            }
           />
         )}
       </StyledNavItem>
@@ -59,7 +77,13 @@ const NavItem = forwardRef<HTMLDivElement, NavItemProps>(
 
     if (externalLink)
       return (
-        <Link href={path} target="_blank" rel="noopener" color="inherit" underline="none">
+        <Link
+          href={path}
+          target="_blank"
+          rel="noopener"
+          color="inherit"
+          underline="none"
+        >
           {renderContent}
         </Link>
       );

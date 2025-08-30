@@ -75,7 +75,12 @@ export default function MegaMenuView() {
       </Card>
 
       <div>
-        <Box component="img" alt="any photo" src={_mock.image.cover(2)} sx={{ borderRadius: 1 }} />
+        <Box
+          component="img"
+          alt="any photo"
+          src={_mock.image.cover(2)}
+          sx={{ borderRadius: 1 }}
+        />
       </div>
     </Stack>
   );
@@ -142,7 +147,9 @@ const NAV_ITEMS = [
   {
     title: 'Item 1',
     path: '#',
-    icon: <Iconify icon="carbon:accessibility-alt" sx={{ width: 1, height: 1 }} />,
+    icon: (
+      <Iconify icon="carbon:accessibility-alt" sx={{ width: 1, height: 1 }} />
+    ),
     products: [...Array(10)].map((_, index) => ({
       name: _mock.productName(index),
       coverUrl: _mock.image.product(index),

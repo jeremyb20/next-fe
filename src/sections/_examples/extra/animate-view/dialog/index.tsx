@@ -15,9 +15,12 @@ export default function DialogView() {
 
   const [selectVariant, setSelectVariant] = useState('slideInUp');
 
-  const handleChangeVariant = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
-    setSelectVariant(event.target.value);
-  }, []);
+  const handleChangeVariant = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      setSelectVariant(event.target.value);
+    },
+    []
+  );
 
   return (
     <Card sx={{ p: 3 }}>
@@ -59,7 +62,13 @@ const variantKey = [
   },
   {
     type: 'bounce',
-    values: ['bounceIn', 'bounceInUp', 'bounceInDown', 'bounceInLeft', 'bounceInRight'],
+    values: [
+      'bounceIn',
+      'bounceInUp',
+      'bounceInDown',
+      'bounceInLeft',
+      'bounceInRight',
+    ],
   },
   {
     type: 'flip',

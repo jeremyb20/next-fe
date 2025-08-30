@@ -12,7 +12,10 @@ import { bgGradient } from 'src/theme/css';
 
 import Image from 'src/components/image';
 import { varFade, MotionContainer } from 'src/components/animate';
-import Carousel, { useCarousel, CarouselArrowIndex } from 'src/components/carousel';
+import Carousel, {
+  useCarousel,
+  CarouselArrowIndex,
+} from 'src/components/carousel';
 
 // ----------------------------------------------------------------------
 
@@ -35,7 +38,11 @@ export default function CarouselAnimation({ data }: Props) {
     <Card>
       <Carousel ref={carousel.carouselRef} {...carousel.carouselSettings}>
         {data.map((item, index) => (
-          <CarouselItem key={item.id} item={item} active={index === carousel.currentIndex} />
+          <CarouselItem
+            key={item.id}
+            item={item}
+            active={index === carousel.currentIndex}
+          />
         ))}
       </Carousel>
 
@@ -65,7 +72,8 @@ function CarouselItem({ item, active }: CarouselItemProps) {
 
   const { coverUrl, title } = item;
 
-  const variants = theme.direction === 'rtl' ? varFade().inLeft : varFade().inRight;
+  const variants =
+    theme.direction === 'rtl' ? varFade().inLeft : varFade().inRight;
 
   return (
     <Paper sx={{ position: 'relative' }}>

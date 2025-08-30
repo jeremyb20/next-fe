@@ -7,7 +7,11 @@ import Container from '@mui/material/Container';
 import { paths } from 'src/routes/paths';
 
 import CustomBreadcrumbs from 'src/components/custom-breadcrumbs';
-import { useSnackbar, VariantType, SnackbarOrigin } from 'src/components/snackbar';
+import {
+  useSnackbar,
+  VariantType,
+  SnackbarOrigin,
+} from 'src/components/snackbar';
 
 import ComponentHero from 'src/sections/_examples/component-hero';
 
@@ -34,7 +38,11 @@ export default function SnackbarView() {
             Alert
           </Button>
 
-          <Button size="small" color="inherit" onClick={() => closeSnackbar(key)}>
+          <Button
+            size="small"
+            color="inherit"
+            onClick={() => closeSnackbar(key)}
+          >
             Dismiss
           </Button>
         </>
@@ -119,19 +127,39 @@ export default function SnackbarView() {
           </ComponentBlock>
 
           <ComponentBlock title="With Action">
-            <Button variant="contained" color="inherit" onClick={() => onSnackbarAction('default')}>
+            <Button
+              variant="contained"
+              color="inherit"
+              onClick={() => onSnackbarAction('default')}
+            >
               Default
             </Button>
-            <Button variant="contained" color="info" onClick={() => onSnackbarAction('info')}>
+            <Button
+              variant="contained"
+              color="info"
+              onClick={() => onSnackbarAction('info')}
+            >
               Info
             </Button>
-            <Button variant="contained" color="success" onClick={() => onSnackbarAction('success')}>
+            <Button
+              variant="contained"
+              color="success"
+              onClick={() => onSnackbarAction('success')}
+            >
               Success
             </Button>
-            <Button variant="contained" color="warning" onClick={() => onSnackbarAction('warning')}>
+            <Button
+              variant="contained"
+              color="warning"
+              onClick={() => onSnackbarAction('warning')}
+            >
               Warning
             </Button>
-            <Button variant="contained" color="error" onClick={() => onSnackbarAction('error')}>
+            <Button
+              variant="contained"
+              color="error"
+              onClick={() => onSnackbarAction('error')}
+            >
               Error
             </Button>
           </ComponentBlock>
@@ -161,7 +189,11 @@ export default function SnackbarView() {
             >
               Top Center
             </Button>
-            <Button variant="text" color="inherit" onClick={() => onSnackbarAction('default')}>
+            <Button
+              variant="text"
+              color="inherit"
+              onClick={() => onSnackbarAction('default')}
+            >
               Top Right
             </Button>
             <Button

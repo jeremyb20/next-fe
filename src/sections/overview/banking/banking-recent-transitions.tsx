@@ -76,7 +76,13 @@ export default function BankingRecentTransitions({
         <Button
           size="small"
           color="inherit"
-          endIcon={<Iconify icon="eva:arrow-ios-forward-fill" width={18} sx={{ ml: -0.5 }} />}
+          endIcon={
+            <Iconify
+              icon="eva:arrow-ios-forward-fill"
+              width={18}
+              sx={{ ml: -0.5 }}
+            />
+          }
         >
           View All
         </Button>
@@ -91,7 +97,9 @@ type BankingRecentTransitionsRowProps = {
   row: RowProps;
 };
 
-function BankingRecentTransitionsRow({ row }: BankingRecentTransitionsRowProps) {
+function BankingRecentTransitionsRow({
+  row,
+}: BankingRecentTransitionsRowProps) {
   const theme = useTheme();
 
   const lightMode = theme.palette.mode === 'light';
@@ -150,8 +158,12 @@ function BankingRecentTransitionsRow({ row }: BankingRecentTransitionsRowProps) 
             bgcolor: 'background.neutral',
           }}
         >
-          {row.category === 'Books' && <Iconify icon="eva:book-fill" width={24} />}
-          {row.category === 'Beauty & Health' && <Iconify icon="solar:heart-bold" width={24} />}
+          {row.category === 'Books' && (
+            <Iconify icon="eva:book-fill" width={24} />
+          )}
+          {row.category === 'Beauty & Health' && (
+            <Iconify icon="solar:heart-bold" width={24} />
+          )}
         </Avatar>
       </Badge>
     </Box>
@@ -194,7 +206,10 @@ function BankingRecentTransitionsRow({ row }: BankingRecentTransitionsRowProps) 
         </TableCell>
 
         <TableCell align="right" sx={{ pr: 1 }}>
-          <IconButton color={popover.open ? 'inherit' : 'default'} onClick={popover.onOpen}>
+          <IconButton
+            color={popover.open ? 'inherit' : 'default'}
+            onClick={popover.onOpen}
+          >
             <Iconify icon="eva:more-vertical-fill" />
           </IconButton>
         </TableCell>

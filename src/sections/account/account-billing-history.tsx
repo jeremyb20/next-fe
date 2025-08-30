@@ -65,7 +65,11 @@ export default function AccountBillingHistory({ invoices }: Props) {
           color="inherit"
           startIcon={
             <Iconify
-              icon={showMore.value ? 'eva:arrow-ios-upward-fill' : 'eva:arrow-ios-downward-fill'}
+              icon={
+                showMore.value
+                  ? 'eva:arrow-ios-upward-fill'
+                  : 'eva:arrow-ios-downward-fill'
+              }
             />
           }
           onClick={showMore.onToggle}

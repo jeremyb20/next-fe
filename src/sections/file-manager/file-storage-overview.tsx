@@ -27,10 +27,19 @@ interface Props extends CardProps {
   };
 }
 
-export default function FileStorageOverview({ data, total, chart, ...other }: Props) {
+export default function FileStorageOverview({
+  data,
+  total,
+  chart,
+  ...other
+}: Props) {
   const theme = useTheme();
 
-  const { colors = [theme.palette.info.main, theme.palette.info.dark], series, options } = chart;
+  const {
+    colors = [theme.palette.info.main, theme.palette.info.dark],
+    series,
+    options,
+  } = chart;
 
   const chartOptions = useChart({
     chart: {
@@ -96,7 +105,12 @@ export default function FileStorageOverview({ data, total, chart, ...other }: Pr
 
       <Stack spacing={3} sx={{ px: 3, pb: 5 }}>
         {data.map((category) => (
-          <Stack key={category.name} spacing={2} direction="row" alignItems="center">
+          <Stack
+            key={category.name}
+            spacing={2}
+            direction="row"
+            alignItems="center"
+          >
             <Box sx={{ width: 40, height: 40 }}>{category.icon}</Box>
 
             <ListItemText
@@ -110,7 +124,10 @@ export default function FileStorageOverview({ data, total, chart, ...other }: Pr
               }}
             />
 
-            <Box sx={{ typography: 'subtitle2' }}> {fData(category.usedStorage)} </Box>
+            <Box sx={{ typography: 'subtitle2' }}>
+              {' '}
+              {fData(category.usedStorage)}{' '}
+            </Box>
           </Stack>
         ))}
       </Stack>

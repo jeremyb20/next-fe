@@ -26,7 +26,12 @@ interface Props extends CardProps {
   };
 }
 
-export default function BankingExpensesCategories({ title, subheader, chart, ...other }: Props) {
+export default function BankingExpensesCategories({
+  title,
+  subheader,
+  chart,
+  ...other
+}: Props) {
   const theme = useTheme();
 
   const smUp = useResponsive('up', 'sm');
@@ -103,15 +108,23 @@ export default function BankingExpensesCategories({ title, subheader, chart, ...
         gridTemplateColumns="repeat(2, 1fr)"
         sx={{ textAlign: 'center', typography: 'h4' }}
       >
-        <Stack sx={{ py: 2, borderRight: `dashed 1px ${theme.palette.divider}` }}>
-          <Box component="span" sx={{ mb: 1, typography: 'body2', color: 'text.secondary' }}>
+        <Stack
+          sx={{ py: 2, borderRight: `dashed 1px ${theme.palette.divider}` }}
+        >
+          <Box
+            component="span"
+            sx={{ mb: 1, typography: 'body2', color: 'text.secondary' }}
+          >
             Categories
           </Box>
           9
         </Stack>
 
         <Stack sx={{ py: 2 }}>
-          <Box component="span" sx={{ mb: 1, typography: 'body2', color: 'text.secondary' }}>
+          <Box
+            component="span"
+            sx={{ mb: 1, typography: 'body2', color: 'text.secondary' }}
+          >
             Categories
           </Box>
           $18,765

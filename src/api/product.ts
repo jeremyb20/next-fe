@@ -29,7 +29,9 @@ export function useGetProducts() {
 // ----------------------------------------------------------------------
 
 export function useGetProduct(productId: string) {
-  const URL = productId ? [endpoints.product.details, { params: { productId } }] : '';
+  const URL = productId
+    ? [endpoints.product.details, { params: { productId } }]
+    : '';
 
   const { data, isLoading, error, isValidating } = useSWR(URL, fetcher);
 

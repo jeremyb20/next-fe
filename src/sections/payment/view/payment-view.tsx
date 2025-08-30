@@ -28,7 +28,11 @@ export default function PaymentView() {
         Professional plan is right for you.
       </Typography>
 
-      <Grid container rowSpacing={{ xs: 5, md: 0 }} columnSpacing={{ xs: 0, md: 5 }}>
+      <Grid
+        container
+        rowSpacing={{ xs: 5, md: 0 }}
+        columnSpacing={{ xs: 0, md: 5 }}
+      >
         <Grid xs={12} md={8}>
           <Box
             gap={5}

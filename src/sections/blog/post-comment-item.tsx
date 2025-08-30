@@ -44,7 +44,11 @@ export default function PostCommentItem({
         }),
       }}
     >
-      <Avatar alt={name} src={avatarUrl} sx={{ mr: 2, width: 48, height: 48 }} />
+      <Avatar
+        alt={name}
+        src={avatarUrl}
+        sx={{ mr: 2, width: 48, height: 48 }}
+      />
 
       <Stack
         flexGrow={1}

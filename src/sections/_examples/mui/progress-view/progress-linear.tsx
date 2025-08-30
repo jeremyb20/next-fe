@@ -6,7 +6,15 @@ import ComponentBlock from '../../component-block';
 
 // ----------------------------------------------------------------------
 
-const COLORS = ['inherit', 'primary', 'secondary', 'info', 'success', 'warning', 'error'] as const;
+const COLORS = [
+  'inherit',
+  'primary',
+  'secondary',
+  'info',
+  'success',
+  'warning',
+  'error',
+] as const;
 
 // ----------------------------------------------------------------------
 
@@ -17,7 +25,11 @@ type LinearProps = {
 
 export default function ProgressLinear({ progress, buffer }: LinearProps) {
   const renderLabel = (text: string) => (
-    <Typography variant="overline" component="div" sx={{ color: 'text.secondary', mb: 1 }}>
+    <Typography
+      variant="overline"
+      component="div"
+      sx={{ color: 'text.secondary', mb: 1 }}
+    >
       {text}
     </Typography>
   );
@@ -28,7 +40,11 @@ export default function ProgressLinear({ progress, buffer }: LinearProps) {
         {renderLabel('Indeterminate')}
         <ComponentBlock sx={{ bgcolor: 'background.paper', borderRadius: 1.5 }}>
           {COLORS.map((color) => (
-            <LinearProgress key={color} color={color} sx={{ mb: 2, width: 1 }} />
+            <LinearProgress
+              key={color}
+              color={color}
+              sx={{ mb: 2, width: 1 }}
+            />
           ))}
         </ComponentBlock>
       </div>

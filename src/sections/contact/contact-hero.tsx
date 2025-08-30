@@ -61,10 +61,19 @@ export default function ContactHero() {
             textAlign: { xs: 'center', md: 'unset' },
           }}
         >
-          <TextAnimate text="Where" sx={{ color: 'primary.main' }} variants={varFade().inRight} />
+          <TextAnimate
+            text="Where"
+            sx={{ color: 'primary.main' }}
+            variants={varFade().inRight}
+          />
           <br />
 
-          <Stack spacing={2} display="inline-flex" direction="row" sx={{ color: 'common.white' }}>
+          <Stack
+            spacing={2}
+            display="inline-flex"
+            direction="row"
+            sx={{ color: 'common.white' }}
+          >
             <TextAnimate text="to" />
             <TextAnimate text="find" />
             <TextAnimate text="us?" />

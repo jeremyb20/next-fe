@@ -1,5 +1,13 @@
 import { useMemo } from 'react';
-import { Page, View, Text, Font, Image, Document, StyleSheet } from '@react-pdf/renderer';
+import {
+  Page,
+  View,
+  Text,
+  Font,
+  Image,
+  Document,
+  StyleSheet,
+} from '@react-pdf/renderer';
 
 import { fDate } from 'src/utils/format-time';
 import { fCurrency } from 'src/utils/format-number';
@@ -10,7 +18,10 @@ import { IInvoice } from 'src/types/invoice';
 
 Font.register({
   family: 'Roboto',
-  fonts: [{ src: '/fonts/Roboto-Regular.ttf' }, { src: '/fonts/Roboto-Bold.ttf' }],
+  fonts: [
+    { src: '/fonts/Roboto-Regular.ttf' },
+    { src: '/fonts/Roboto-Bold.ttf' },
+  ],
 });
 
 const useStyles = () =>
@@ -111,7 +122,10 @@ export default function InvoicePDF({ invoice, currentStatus }: Props) {
     <Document>
       <Page size="A4" style={styles.page}>
         <View style={[styles.gridContainer, styles.mb40]}>
-          <Image source="/logo/logo_single.png" style={{ width: 48, height: 48 }} />
+          <Image
+            source="/logo/logo_single.png"
+            style={{ width: 48, height: 48 }}
+          />
 
           <View style={{ alignItems: 'flex-end', flexDirection: 'column' }}>
             <Text style={styles.h3}>{currentStatus}</Text>
@@ -265,7 +279,8 @@ export default function InvoicePDF({ invoice, currentStatus }: Props) {
           <View style={styles.col8}>
             <Text style={styles.subtitle2}>NOTES</Text>
             <Text>
-              We appreciate your business. Should you need us to add VAT or extra notes let us know!
+              We appreciate your business. Should you need us to add VAT or
+              extra notes let us know!
             </Text>
           </View>
           <View style={[styles.col4, styles.alignRight]}>

@@ -42,7 +42,12 @@ export default function AlertView() {
         <Masonry columns={{ xs: 1, sm: 2 }} spacing={3}>
           <ComponentBlock title="Standard">
             {COLORS.map((color) => (
-              <Alert key={color} severity={color} onClose={() => {}} sx={{ width: 1 }}>
+              <Alert
+                key={color}
+                severity={color}
+                onClose={() => {}}
+                sx={{ width: 1 }}
+              >
                 This is an {color} alert — check it out!
               </Alert>
             ))}
@@ -78,8 +83,16 @@ export default function AlertView() {
 
           <ComponentBlock title="Description">
             {COLORS.map((color) => (
-              <Alert key={color} severity={color} onClose={() => {}} sx={{ width: 1 }}>
-                <AlertTitle sx={{ textTransform: 'capitalize' }}> {color} </AlertTitle>
+              <Alert
+                key={color}
+                severity={color}
+                onClose={() => {}}
+                sx={{ width: 1 }}
+              >
+                <AlertTitle sx={{ textTransform: 'capitalize' }}>
+                  {' '}
+                  {color}{' '}
+                </AlertTitle>
                 This is an {color} alert — <strong>check it out!</strong>
               </Alert>
             ))}
@@ -110,7 +123,8 @@ export default function AlertView() {
                     variant="outlined"
                     sx={{
                       mr: 1,
-                      border: (theme) => `1px solid ${alpha(theme.palette.common.white, 0.48)}`,
+                      border: (theme) =>
+                        `1px solid ${alpha(theme.palette.common.white, 0.48)}`,
                     }}
                   >
                     Undo

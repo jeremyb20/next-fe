@@ -9,7 +9,13 @@ import Grid from '@mui/material/Unstable_Grid2';
 import { useMockedUser } from 'src/hooks/use-mocked-user';
 
 import { SeoIllustration } from 'src/assets/illustrations';
-import { _appAuthors, _appRelated, _appFeatured, _appInvoices, _appInstalled } from 'src/_mock';
+import {
+  _appAuthors,
+  _appRelated,
+  _appFeatured,
+  _appInvoices,
+  _appInstalled,
+} from 'src/_mock';
 
 import { useSettingsContext } from 'src/components/settings';
 
@@ -23,12 +29,14 @@ import AppAreaInstalled from '../app-area-installed';
 import AppWidgetSummary from '../app-widget-summary';
 import AppCurrentDownload from '../app-current-download';
 import AppTopInstalledCountries from '../app-top-installed-countries';
+import { useAuthContext } from 'src/auth/hooks';
 
 // ----------------------------------------------------------------------
 
 export default function OverviewAppView() {
   const { user } = useMockedUser();
-
+  const { user: usuario } = useAuthContext();
+  console.log(usuario, 'usuario');
   const theme = useTheme();
 
   const settings = useSettingsContext();
@@ -172,7 +180,10 @@ export default function OverviewAppView() {
         </Grid>
 
         <Grid xs={12} md={6} lg={4}>
-          <AppTopInstalledCountries title="Top Installed Countries" list={_appInstalled} />
+          <AppTopInstalledCountries
+            title="Top Installed Countries"
+            list={_appInstalled}
+          />
         </Grid>
 
         <Grid xs={12} md={6} lg={4}>

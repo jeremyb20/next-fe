@@ -94,7 +94,11 @@ export default function MapView() {
             <CardHeader title="Markers & Popups" />
             <CardContent>
               <StyledMapContainer>
-                <MapMarkersPopups {...baseSettings} data={COUNTRIES} mapStyle={THEMES.light} />
+                <MapMarkersPopups
+                  {...baseSettings}
+                  data={COUNTRIES}
+                  mapStyle={THEMES.light}
+                />
               </StyledMapContainer>
             </CardContent>
           </Card>
@@ -103,7 +107,10 @@ export default function MapView() {
             <CardHeader title="Draggable Markers" />
             <CardContent>
               <StyledMapContainer>
-                <MapDraggableMarkers {...baseSettings} mapStyle={THEMES.light} />
+                <MapDraggableMarkers
+                  {...baseSettings}
+                  mapStyle={THEMES.light}
+                />
               </StyledMapContainer>
             </CardContent>
           </Card>
@@ -112,7 +119,10 @@ export default function MapView() {
             <CardHeader title="Geojson Animation" />
             <CardContent>
               <StyledMapContainer>
-                <MapGeoJSONAnimation {...baseSettings} mapStyle={THEMES.satelliteStreets} />
+                <MapGeoJSONAnimation
+                  {...baseSettings}
+                  mapStyle={THEMES.satelliteStreets}
+                />
               </StyledMapContainer>
             </CardContent>
           </Card>
@@ -152,7 +162,10 @@ export default function MapView() {
             <CardHeader title="Highlight By Filter" />
             <CardContent>
               <StyledMapContainer>
-                <MapHighlightByFilter {...baseSettings} mapStyle={THEMES.light} />
+                <MapHighlightByFilter
+                  {...baseSettings}
+                  mapStyle={THEMES.light}
+                />
               </StyledMapContainer>
             </CardContent>
           </Card>

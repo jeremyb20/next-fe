@@ -65,7 +65,11 @@ export default function PaymentSummary({ sx, ...other }: BoxProps) {
 
         <Divider sx={{ borderStyle: 'dashed' }} />
 
-        <Stack direction="row" alignItems="center" justifyContent="space-between">
+        <Stack
+          direction="row"
+          alignItems="center"
+          justifyContent="space-between"
+        >
           <Typography variant="subtitle1">Total Billed</Typography>
 
           <Typography variant="subtitle1">$9.99*</Typography>
@@ -74,7 +78,11 @@ export default function PaymentSummary({ sx, ...other }: BoxProps) {
         <Divider sx={{ borderStyle: 'dashed' }} />
       </Stack>
 
-      <Typography component="div" variant="caption" sx={{ color: 'text.secondary', mt: 1 }}>
+      <Typography
+        component="div"
+        variant="caption"
+        sx={{ color: 'text.secondary', mt: 1 }}
+      >
         * Plus applicable taxes
       </Typography>
 
@@ -84,11 +92,19 @@ export default function PaymentSummary({ sx, ...other }: BoxProps) {
 
       <Stack alignItems="center" spacing={1}>
         <Stack direction="row" alignItems="center" spacing={1}>
-          <Iconify icon="solar:shield-check-bold" sx={{ color: 'success.main' }} />
-          <Typography variant="subtitle2">Secure credit card payment</Typography>
+          <Iconify
+            icon="solar:shield-check-bold"
+            sx={{ color: 'success.main' }}
+          />
+          <Typography variant="subtitle2">
+            Secure credit card payment
+          </Typography>
         </Stack>
 
-        <Typography variant="caption" sx={{ color: 'text.disabled', textAlign: 'center' }}>
+        <Typography
+          variant="caption"
+          sx={{ color: 'text.disabled', textAlign: 'center' }}
+        >
           This is a secure 128-bit SSL encrypted payment
         </Typography>
       </Stack>

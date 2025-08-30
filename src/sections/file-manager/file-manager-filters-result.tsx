@@ -62,11 +62,22 @@ export default function FileManagerFiltersResult({
         </Box>
       </Box>
 
-      <Stack flexGrow={1} spacing={1} direction="row" flexWrap="wrap" alignItems="center">
+      <Stack
+        flexGrow={1}
+        spacing={1}
+        direction="row"
+        flexWrap="wrap"
+        alignItems="center"
+      >
         {!!filters.type.length && (
           <Block label="Types:">
             {filters.type.map((item) => (
-              <Chip key={item} label={item} size="small" onDelete={() => handleRemoveTypes(item)} />
+              <Chip
+                key={item}
+                label={item}
+                size="small"
+                onDelete={() => handleRemoveTypes(item)}
+              />
             ))}
           </Block>
         )}
@@ -79,7 +90,11 @@ export default function FileManagerFiltersResult({
 
         {!!filters.name && (
           <Block label="Keyword:">
-            <Chip label={filters.name} size="small" onDelete={handleRemoveKeyword} />
+            <Chip
+              label={filters.name}
+              size="small"
+              onDelete={handleRemoveKeyword}
+            />
           </Block>
         )}
 

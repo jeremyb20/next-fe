@@ -41,7 +41,9 @@ export default function ProductFiltersResult({
   };
 
   const handleRemoveColor = (inputValue: string | string[]) => {
-    const newValue = filters.colors.filter((item: string) => item !== inputValue);
+    const newValue = filters.colors.filter(
+      (item: string) => item !== inputValue
+    );
     onFilters('colors', newValue);
   };
 
@@ -62,7 +64,13 @@ export default function ProductFiltersResult({
         </Box>
       </Box>
 
-      <Stack flexGrow={1} spacing={1} direction="row" flexWrap="wrap" alignItems="center">
+      <Stack
+        flexGrow={1}
+        spacing={1}
+        direction="row"
+        flexWrap="wrap"
+        alignItems="center"
+      >
         {!!filters.gender.length && (
           <Block label="Gender:">
             {filters.gender.map((item) => (
@@ -78,7 +86,11 @@ export default function ProductFiltersResult({
 
         {filters.category !== 'all' && (
           <Block label="Category:">
-            <Chip size="small" label={filters.category} onDelete={handleRemoveCategory} />
+            <Chip
+              size="small"
+              label={filters.category}
+              onDelete={handleRemoveCategory}
+            />
           </Block>
         )}
 
@@ -96,7 +108,8 @@ export default function ProductFiltersResult({
                       height: 18,
                       bgcolor: item,
                       borderRadius: '50%',
-                      border: (theme) => `solid 1px ${alpha(theme.palette.common.white, 0.24)}`,
+                      border: (theme) =>
+                        `solid 1px ${alpha(theme.palette.common.white, 0.24)}`,
                     }}
                   />
                 }
@@ -118,7 +131,11 @@ export default function ProductFiltersResult({
 
         {!!filters.rating && (
           <Block label="Rating:">
-            <Chip size="small" label={filters.rating} onDelete={handleRemoveRating} />
+            <Chip
+              size="small"
+              label={filters.rating}
+              onDelete={handleRemoveRating}
+            />
           </Block>
         )}
 

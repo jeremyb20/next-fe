@@ -90,7 +90,11 @@ export default function SliderView() {
           <ComponentBlock title="Volume">
             <Stack direction="row" alignItems="center" spacing={1} width={1}>
               <Iconify icon="eva:volume-mute-fill" width={24} />
-              <Slider value={value} onChange={handleChange} aria-labelledby="continuous-slider" />
+              <Slider
+                value={value}
+                onChange={handleChange}
+                aria-labelledby="continuous-slider"
+              />
               <Iconify icon="eva:volume-up-fill" width={24} />
             </Stack>
           </ComponentBlock>
@@ -191,7 +195,9 @@ export default function SliderView() {
               <Typography variant="subtitle2" gutterBottom>
                 Min: {valuePrice(price[0])}
               </Typography>
-              <Typography variant="subtitle2">Max: {valuePrice(price[1])}</Typography>
+              <Typography variant="subtitle2">
+                Max: {valuePrice(price[1])}
+              </Typography>
             </Box>
           </ComponentBlock>
         </Masonry>

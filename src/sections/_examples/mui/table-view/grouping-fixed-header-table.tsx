@@ -10,7 +10,12 @@ import { useTable, TablePaginationCustom } from 'src/components/table';
 
 // ----------------------------------------------------------------------
 
-function createData(name: string, code: string, population: number, size: number) {
+function createData(
+  name: string,
+  code: string,
+  population: number,
+  size: number
+) {
   const density = population / size;
   return { name, code, population, size, density };
 }
@@ -120,7 +125,9 @@ export default function GroupingFixedHeaderTable() {
                     const value = row[column.id];
                     return (
                       <TableCell key={column.id} align={column.align}>
-                        {column.format && typeof value === 'number' ? column.format(value) : value}
+                        {column.format && typeof value === 'number'
+                          ? column.format(value)
+                          : value}
                       </TableCell>
                     );
                   })}

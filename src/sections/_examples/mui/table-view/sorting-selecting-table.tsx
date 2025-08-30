@@ -33,7 +33,13 @@ type RowDataType = {
   protein: number;
 };
 
-function createData(name: string, calories: number, fat: number, carbs: number, protein: number) {
+function createData(
+  name: string,
+  calories: number,
+  fat: number,
+  carbs: number,
+  protein: number
+) {
   return { name, calories, fat, carbs, protein };
 }
 
@@ -82,7 +88,12 @@ export default function SortingSelectingTable() {
 
   return (
     <div>
-      <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ p: 3 }}>
+      <Stack
+        direction="row"
+        alignItems="center"
+        justifyContent="space-between"
+        sx={{ p: 3 }}
+      >
         <Typography variant="h6">Sorting & Selecting</Typography>
 
         <Tooltip title="Filter list">
@@ -155,7 +166,11 @@ export default function SortingSelectingTable() {
 
               <TableEmptyRows
                 height={denseHeight}
-                emptyRows={emptyRows(table.page, table.rowsPerPage, tableData.length)}
+                emptyRows={emptyRows(
+                  table.page,
+                  table.rowsPerPage,
+                  tableData.length
+                )}
               />
             </TableBody>
           </Table>

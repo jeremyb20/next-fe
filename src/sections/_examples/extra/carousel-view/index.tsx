@@ -102,7 +102,10 @@ export default function CarouselView() {
           </Card>
 
           <Card>
-            <CardHeader title="Carousel Center Mode" subheader="Customs shape & icon button" />
+            <CardHeader
+              title="Carousel Center Mode"
+              subheader="Customs shape & icon button"
+            />
             <CardContent>
               <CarouselCenterMode data={_carouselsExample.slice(8, 16)} />
             </CardContent>

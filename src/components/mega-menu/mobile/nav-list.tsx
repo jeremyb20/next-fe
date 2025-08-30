@@ -113,7 +113,11 @@ function NavSubList({ data, slotProps, title, onCloseMenu }: NavSubListProps) {
           <Iconify icon="eva:arrow-ios-back-fill" width={16} />
         </IconButton>
 
-        <Typography noWrap variant="subtitle1" sx={{ textTransform: 'capitalize' }}>
+        <Typography
+          noWrap
+          variant="subtitle1"
+          sx={{ textTransform: 'capitalize' }}
+        >
           {title}
         </Typography>
       </Stack>
@@ -142,7 +146,8 @@ function NavSubList({ data, slotProps, title, onCloseMenu }: NavSubListProps) {
             )}
 
             {list.items.map((link) => {
-              const active = pathname === link.path || pathname === `${link.path}/`;
+              const active =
+                pathname === link.path || pathname === `${link.path}/`;
 
               return (
                 <ListItemButton
@@ -155,7 +160,10 @@ function NavSubList({ data, slotProps, title, onCloseMenu }: NavSubListProps) {
                     fontSize: 13,
                     ...(active && {
                       fontWeight: 'fontWeightSemiBold',
-                      color: theme.palette.mode === 'light' ? 'primary.main' : 'primary.light',
+                      color:
+                        theme.palette.mode === 'light'
+                          ? 'primary.main'
+                          : 'primary.light',
                       bgcolor: alpha(theme.palette.primary.main, 0.08),
                       '&:hover': {
                         bgcolor: alpha(theme.palette.primary.main, 0.16),
@@ -178,7 +186,12 @@ function NavSubList({ data, slotProps, title, onCloseMenu }: NavSubListProps) {
                     }}
                   >
                     <Box
-                      sx={{ width: 4, height: 4, borderRadius: '50%', bgcolor: 'currentColor' }}
+                      sx={{
+                        width: 4,
+                        height: 4,
+                        borderRadius: '50%',
+                        bgcolor: 'currentColor',
+                      }}
                     />
                   </Box>
 

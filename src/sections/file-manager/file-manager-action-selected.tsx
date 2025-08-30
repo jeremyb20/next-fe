@@ -61,7 +61,8 @@ export default function FileManagerActionSelected({
             variant="subtitle2"
             sx={{
               mr: 2,
-              color: (theme) => (theme.palette.mode === 'light' ? 'common.white' : 'grey.800'),
+              color: (theme) =>
+                theme.palette.mode === 'light' ? 'common.white' : 'grey.800',
             }}
           >
             {selected.length} Items selected

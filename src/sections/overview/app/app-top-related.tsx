@@ -30,7 +30,12 @@ interface Props extends CardProps {
   list: ItemProps[];
 }
 
-export default function AppTopRelated({ title, subheader, list, ...other }: Props) {
+export default function AppTopRelated({
+  title,
+  subheader,
+  list,
+  ...other
+}: Props) {
   return (
     <Card {...other}>
       <CardHeader title={title} subheader={subheader} />
@@ -73,10 +78,16 @@ function ApplicationItem({ app }: ApplicationItemProps) {
           {name}
         </Typography>
 
-        <Stack direction="row" alignItems="center" sx={{ mt: 0.5, color: 'text.secondary' }}>
+        <Stack
+          direction="row"
+          alignItems="center"
+          sx={{ mt: 0.5, color: 'text.secondary' }}
+        >
           <Iconify
             width={14}
-            icon={system === 'Mac' ? 'mingcute:apple-fill' : 'mingcute:windows-fill'}
+            icon={
+              system === 'Mac' ? 'mingcute:apple-fill' : 'mingcute:windows-fill'
+            }
           />
 
           <Typography variant="caption" sx={{ ml: 0.5, mr: 1 }}>
@@ -90,7 +101,13 @@ function ApplicationItem({ app }: ApplicationItemProps) {
       </Box>
 
       <Stack alignItems="flex-end">
-        <Rating readOnly size="small" precision={0.5} name="reviews" value={ratingNumber} />
+        <Rating
+          readOnly
+          size="small"
+          precision={0.5}
+          name="reviews"
+          value={ratingNumber}
+        />
         <Typography variant="caption" sx={{ mt: 0.5, color: 'text.secondary' }}>
           {fShortenNumber(totalReviews)} reviews
         </Typography>

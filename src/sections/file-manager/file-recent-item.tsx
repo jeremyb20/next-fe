@@ -35,7 +35,12 @@ interface Props extends StackProps {
   onDelete: VoidFunction;
 }
 
-export default function FileRecentItem({ file, onDelete, sx, ...other }: Props) {
+export default function FileRecentItem({
+  file,
+  onDelete,
+  sx,
+  ...other
+}: Props) {
   const { enqueueSnackbar } = useSnackbar();
 
   const { copy } = useCopyToClipboard();
@@ -52,9 +57,12 @@ export default function FileRecentItem({ file, onDelete, sx, ...other }: Props) 
 
   const favorite = useBoolean(file.isFavorited);
 
-  const handleChangeInvite = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
-    setInviteEmail(event.target.value);
-  }, []);
+  const handleChangeInvite = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      setInviteEmail(event.target.value);
+    },
+    []
+  );
 
   const handleCopy = useCallback(() => {
     enqueueSnackbar('Copied!');
@@ -81,7 +89,10 @@ export default function FileRecentItem({ file, onDelete, sx, ...other }: Props) 
         onChange={favorite.onToggle}
       />
 
-      <IconButton color={popover.open ? 'inherit' : 'default'} onClick={popover.onOpen}>
+      <IconButton
+        color={popover.open ? 'inherit' : 'default'}
+        onClick={popover.onOpen}
+      >
         <Iconify icon="eva:more-vertical-fill" />
       </IconButton>
     </Box>

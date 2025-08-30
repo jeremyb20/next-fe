@@ -10,7 +10,12 @@ import { IUserProfileCover } from 'src/types/user';
 
 // ----------------------------------------------------------------------
 
-export default function ProfileCover({ name, avatarUrl, role, coverUrl }: IUserProfileCover) {
+export default function ProfileCover({
+  name,
+  avatarUrl,
+  role,
+  coverUrl,
+}: IUserProfileCover) {
   const theme = useTheme();
 
   return (

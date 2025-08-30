@@ -56,18 +56,33 @@ export default function PostItemHorizontal({ post }: Props) {
             p: (theme) => theme.spacing(3, 3, 2, 3),
           }}
         >
-          <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ mb: 2 }}>
-            <Label variant="soft" color={(publish === 'published' && 'info') || 'default'}>
+          <Stack
+            direction="row"
+            alignItems="center"
+            justifyContent="space-between"
+            sx={{ mb: 2 }}
+          >
+            <Label
+              variant="soft"
+              color={(publish === 'published' && 'info') || 'default'}
+            >
               {publish}
             </Label>
 
-            <Box component="span" sx={{ typography: 'caption', color: 'text.disabled' }}>
+            <Box
+              component="span"
+              sx={{ typography: 'caption', color: 'text.disabled' }}
+            >
               {fDate(createdAt)}
             </Box>
           </Stack>
 
           <Stack spacing={1} flexGrow={1}>
-            <Link color="inherit" component={RouterLink} href={paths.dashboard.post.details(title)}>
+            <Link
+              color="inherit"
+              component={RouterLink}
+              href={paths.dashboard.post.details(title)}
+            >
               <TextMaxLine variant="subtitle2" line={2}>
                 {title}
               </TextMaxLine>
@@ -79,7 +94,10 @@ export default function PostItemHorizontal({ post }: Props) {
           </Stack>
 
           <Stack direction="row" alignItems="center">
-            <IconButton color={popover.open ? 'inherit' : 'default'} onClick={popover.onOpen}>
+            <IconButton
+              color={popover.open ? 'inherit' : 'default'}
+              onClick={popover.onOpen}
+            >
               <Iconify icon="eva:more-horizontal-fill" />
             </IconButton>
 
@@ -95,7 +113,11 @@ export default function PostItemHorizontal({ post }: Props) {
               }}
             >
               <Stack direction="row" alignItems="center">
-                <Iconify icon="eva:message-circle-fill" width={16} sx={{ mr: 0.5 }} />
+                <Iconify
+                  icon="eva:message-circle-fill"
+                  width={16}
+                  sx={{ mr: 0.5 }}
+                />
                 {fShortenNumber(totalComments)}
               </Stack>
 
@@ -127,7 +149,11 @@ export default function PostItemHorizontal({ post }: Props) {
               src={author.avatarUrl}
               sx={{ position: 'absolute', top: 16, right: 16, zIndex: 9 }}
             />
-            <Image alt={title} src={coverUrl} sx={{ height: 1, borderRadius: 1.5 }} />
+            <Image
+              alt={title}
+              src={coverUrl}
+              sx={{ height: 1, borderRadius: 1.5 }}
+            />
           </Box>
         )}
       </Stack>

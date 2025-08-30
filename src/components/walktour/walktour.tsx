@@ -95,8 +95,12 @@ export default function Walktour({ locale, ...other }: WalktourProps) {
         buttonNext: {
           ...btnStyles,
           marginLeft: theme.spacing(1.25),
-          color: lightMode ? theme.palette.common.white : theme.palette.grey[800],
-          backgroundColor: lightMode ? theme.palette.grey[800] : theme.palette.common.white,
+          color: lightMode
+            ? theme.palette.common.white
+            : theme.palette.grey[800],
+          backgroundColor: lightMode
+            ? theme.palette.grey[800]
+            : theme.palette.common.white,
         },
         buttonBack: {
           ...btnStyles,

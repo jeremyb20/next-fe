@@ -22,7 +22,11 @@ function NavSectionHorizontal({ data, slotProps, sx, ...other }: NavProps) {
       {...other}
     >
       {data.map((group, index) => (
-        <Group key={group.subheader || index} items={group.items} slotProps={slotProps} />
+        <Group
+          key={group.subheader || index}
+          items={group.items}
+          slotProps={slotProps}
+        />
       ))}
     </Stack>
   );

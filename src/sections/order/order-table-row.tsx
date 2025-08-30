@@ -40,7 +40,15 @@ export default function OrderTableRow({
   onSelectRow,
   onDeleteRow,
 }: Props) {
-  const { items, status, orderNumber, createdAt, customer, totalQuantity, subTotal } = row;
+  const {
+    items,
+    status,
+    orderNumber,
+    createdAt,
+    customer,
+    totalQuantity,
+    subTotal,
+  } = row;
 
   const confirm = useBoolean();
 
@@ -126,7 +134,10 @@ export default function OrderTableRow({
           <Iconify icon="eva:arrow-ios-downward-fill" />
         </IconButton>
 
-        <IconButton color={popover.open ? 'inherit' : 'default'} onClick={popover.onOpen}>
+        <IconButton
+          color={popover.open ? 'inherit' : 'default'}
+          onClick={popover.onOpen}
+        >
           <Iconify icon="eva:more-vertical-fill" />
         </IconButton>
       </TableCell>
@@ -151,7 +162,8 @@ export default function OrderTableRow({
                 sx={{
                   p: (theme) => theme.spacing(1.5, 2, 1.5, 1.5),
                   '&:not(:last-of-type)': {
-                    borderBottom: (theme) => `solid 2px ${theme.palette.background.neutral}`,
+                    borderBottom: (theme) =>
+                      `solid 2px ${theme.palette.background.neutral}`,
                   },
                 }}
               >
@@ -176,7 +188,9 @@ export default function OrderTableRow({
 
                 <Box>x{item.quantity}</Box>
 
-                <Box sx={{ width: 110, textAlign: 'right' }}>{fCurrency(item.price)}</Box>
+                <Box sx={{ width: 110, textAlign: 'right' }}>
+                  {fCurrency(item.price)}
+                </Box>
               </Stack>
             ))}
           </Stack>

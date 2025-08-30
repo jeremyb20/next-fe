@@ -56,24 +56,38 @@ export default function MenuView() {
 
   const [isOpenList, setOpenList] = useState<null | HTMLElement>(null);
 
-  const [isOpenMaxHeight, setOpenMaxHeight] = useState<null | HTMLElement>(null);
+  const [isOpenMaxHeight, setOpenMaxHeight] = useState<null | HTMLElement>(
+    null
+  );
 
-  const handleClick = useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
-    setOpenMaxHeight(event.currentTarget);
-  }, []);
+  const handleClick = useCallback(
+    (event: React.MouseEvent<HTMLButtonElement>) => {
+      setOpenMaxHeight(event.currentTarget);
+    },
+    []
+  );
 
-  const handleClickListItem = useCallback((event: React.MouseEvent<HTMLElement>) => {
-    setOpenList(event.currentTarget);
-  }, []);
+  const handleClickListItem = useCallback(
+    (event: React.MouseEvent<HTMLElement>) => {
+      setOpenList(event.currentTarget);
+    },
+    []
+  );
 
-  const handleMenuItemClick = useCallback((event: React.MouseEvent<HTMLElement>, index: number) => {
-    setSelectedIndex(index);
-    setOpenList(null);
-  }, []);
+  const handleMenuItemClick = useCallback(
+    (event: React.MouseEvent<HTMLElement>, index: number) => {
+      setSelectedIndex(index);
+      setOpenList(null);
+    },
+    []
+  );
 
-  const handleOpen = useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
-    setOpen(event.currentTarget);
-  }, []);
+  const handleOpen = useCallback(
+    (event: React.MouseEvent<HTMLButtonElement>) => {
+      setOpen(event.currentTarget);
+    },
+    []
+  );
 
   const handleClose = useCallback(() => {
     setOpen(null);
@@ -112,9 +126,18 @@ export default function MenuView() {
             <Button variant="outlined" onClick={handleOpen}>
               Open Menu
             </Button>
-            <Menu id="simple-menu" anchorEl={isOpen} onClose={handleClose} open={Boolean(isOpen)}>
+            <Menu
+              id="simple-menu"
+              anchorEl={isOpen}
+              onClose={handleClose}
+              open={Boolean(isOpen)}
+            >
               {['Profile', 'My account', 'Logout'].map((option) => (
-                <MenuItem key={option} selected={option === 'Profile'} onClick={handleClose}>
+                <MenuItem
+                  key={option}
+                  selected={option === 'Profile'}
+                  onClick={handleClose}
+                >
                   {option}
                 </MenuItem>
               ))}
@@ -129,7 +152,10 @@ export default function MenuView() {
                 aria-label="when device is locked"
                 onClick={handleClickListItem}
               >
-                <ListItemText primary="When device is locked" secondary={OPTIONS[selectedIndex]} />
+                <ListItemText
+                  primary="When device is locked"
+                  secondary={OPTIONS[selectedIndex]}
+                />
               </ListItemButton>
             </List>
 
@@ -177,7 +203,11 @@ export default function MenuView() {
               }}
             >
               {OPTIONS_MAXHEIGHT.map((option) => (
-                <MenuItem key={option} selected={option === 'Pyxis'} onClick={handleMaxHeightClose}>
+                <MenuItem
+                  key={option}
+                  selected={option === 'Pyxis'}
+                  onClick={handleMaxHeightClose}
+                >
                   {option}
                 </MenuItem>
               ))}

@@ -133,7 +133,11 @@ export default function KanbanColumn({ column, tasks, index }: Props) {
         color="inherit"
         startIcon={
           <Iconify
-            icon={openAddTask.value ? 'solar:close-circle-broken' : 'mingcute:add-line'}
+            icon={
+              openAddTask.value
+                ? 'solar:close-circle-broken'
+                : 'mingcute:add-line'
+            }
             width={18}
             sx={{ mr: -0.5 }}
           />

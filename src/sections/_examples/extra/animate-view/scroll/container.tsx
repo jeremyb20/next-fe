@@ -16,7 +16,10 @@ type ContainerViewProps = {
   selectVariant: string;
 };
 
-export default function ContainerView({ selectVariant, ...other }: ContainerViewProps) {
+export default function ContainerView({
+  selectVariant,
+  ...other
+}: ContainerViewProps) {
   const scrollRef = useRef(null);
 
   return (

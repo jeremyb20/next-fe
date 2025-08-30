@@ -50,7 +50,10 @@ export default function InvoiceNewEditAddress() {
       >
         <Stack sx={{ width: 1 }}>
           <Stack direction="row" alignItems="center" sx={{ mb: 1 }}>
-            <Typography variant="h6" sx={{ color: 'text.disabled', flexGrow: 1 }}>
+            <Typography
+              variant="h6"
+              sx={{ color: 'text.disabled', flexGrow: 1 }}
+            >
               From:
             </Typography>
 
@@ -68,12 +71,17 @@ export default function InvoiceNewEditAddress() {
 
         <Stack sx={{ width: 1 }}>
           <Stack direction="row" alignItems="center" sx={{ mb: 1 }}>
-            <Typography variant="h6" sx={{ color: 'text.disabled', flexGrow: 1 }}>
+            <Typography
+              variant="h6"
+              sx={{ color: 'text.disabled', flexGrow: 1 }}
+            >
               To:
             </Typography>
 
             <IconButton onClick={to.onTrue}>
-              <Iconify icon={invoiceTo ? 'solar:pen-bold' : 'mingcute:add-line'} />
+              <Iconify
+                icon={invoiceTo ? 'solar:pen-bold' : 'mingcute:add-line'}
+              />
             </IconButton>
           </Stack>
 

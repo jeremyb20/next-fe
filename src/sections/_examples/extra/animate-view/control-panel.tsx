@@ -27,10 +27,17 @@ export default function ControlPanel({
   return (
     <Paper variant="outlined" sx={{ height: 480, ...sx }}>
       <Scrollbar>
-        <RadioGroup value={selectVariant} onChange={onChangeVariant} sx={{ px: 1, py: 1 }}>
+        <RadioGroup
+          value={selectVariant}
+          onChange={onChangeVariant}
+          sx={{ px: 1, py: 1 }}
+        >
           {variantKey.map((variant) => (
             <Box key={variant.type} sx={{ my: 1.5 }}>
-              <Typography variant="overline" sx={{ px: 1, mb: 1, display: 'block' }}>
+              <Typography
+                variant="overline"
+                sx={{ px: 1, mb: 1, display: 'block' }}
+              >
                 {variant.type}
               </Typography>
               {variant.values.map((value) => (

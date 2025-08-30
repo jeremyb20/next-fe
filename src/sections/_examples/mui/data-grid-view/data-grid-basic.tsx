@@ -89,5 +89,13 @@ type Props = {
 };
 
 export default function DataGridBasic({ data }: Props) {
-  return <DataGrid columns={columns} rows={data} checkboxSelection disableRowSelectionOnClick />;
+  return (
+    <DataGrid
+      columns={columns}
+      rows={data}
+      checkboxSelection
+      disableRowSelectionOnClick
+      key="data-grid-basic"
+    />
+  );
 }

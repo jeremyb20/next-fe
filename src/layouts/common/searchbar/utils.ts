@@ -11,7 +11,9 @@ type ItemProps = {
 };
 
 export function getAllItems({ data }: NavProps) {
-  const reduceItems = data.map((list) => handleLoop(list.items, list.subheader)).flat();
+  const reduceItems = data
+    .map((list) => handleLoop(list.items, list.subheader))
+    .flat();
 
   const items = flattenArray(reduceItems).map((option) => {
     const group = splitPath(reduceItems, option.path);

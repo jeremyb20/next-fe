@@ -20,7 +20,11 @@ export default function Chips({ variant = 'filled' }: Props) {
   };
 
   const renderLabel = (text: string) => (
-    <Typography variant="overline" component="div" sx={{ color: 'text.secondary', mb: 1 }}>
+    <Typography
+      variant="overline"
+      component="div"
+      sx={{ color: 'text.secondary', mb: 1 }}
+    >
       {text}
     </Typography>
   );
@@ -43,7 +47,12 @@ export default function Chips({ variant = 'filled' }: Props) {
           onDelete={handleDelete}
         />
 
-        <Chip variant={variant} clickable label="Default clickable" avatar={<Avatar>M</Avatar>} />
+        <Chip
+          variant={variant}
+          clickable
+          label="Default clickable"
+          avatar={<Avatar>M</Avatar>}
+        />
 
         <Chip
           variant={variant}

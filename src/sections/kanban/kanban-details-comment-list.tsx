@@ -37,8 +37,15 @@ export default function KanbanDetailsCommentList({ comments }: Props) {
           <Stack key={comment.id} direction="row" spacing={2}>
             <Avatar src={comment.avatarUrl} />
 
-            <Stack spacing={comment.messageType === 'image' ? 1 : 0.5} flexGrow={1}>
-              <Stack direction="row" alignItems="center" justifyContent="space-between">
+            <Stack
+              spacing={comment.messageType === 'image' ? 1 : 0.5}
+              flexGrow={1}
+            >
+              <Stack
+                direction="row"
+                alignItems="center"
+                justifyContent="space-between"
+              >
                 <Typography variant="subtitle2"> {comment.name}</Typography>
                 <Typography variant="caption" sx={{ color: 'text.disabled' }}>
                   {fToNow(comment.createdAt)}
@@ -53,7 +60,8 @@ export default function KanbanDetailsCommentList({ comments }: Props) {
                   sx={{
                     borderRadius: 1.5,
                     cursor: 'pointer',
-                    transition: (theme) => theme.transitions.create(['opacity']),
+                    transition: (theme) =>
+                      theme.transitions.create(['opacity']),
                     '&:hover': {
                       opacity: 0.8,
                     },

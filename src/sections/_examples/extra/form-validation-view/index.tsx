@@ -31,13 +31,23 @@ export default function FormValidationView() {
       <ComponentHero>
         <CustomBreadcrumbs
           heading="Form Validation"
-          links={[{ name: 'Components', href: paths.components }, { name: 'Form Validation' }]}
-          moreLink={['https://react-hook-form.com/', 'https://github.com/jquense/yup']}
+          links={[
+            { name: 'Components', href: paths.components },
+            { name: 'Form Validation' },
+          ]}
+          moreLink={[
+            'https://react-hook-form.com/',
+            'https://github.com/jquense/yup',
+          ]}
         />
       </ComponentHero>
 
       <Container sx={{ my: 10 }}>
-        <Stack direction="row" alignItems="center" justifyContent="space-between">
+        <Stack
+          direction="row"
+          alignItems="center"
+          justifyContent="space-between"
+        >
           <Typography variant="h4"> React Hook Form + Yup </Typography>
           <FormControlLabel
             control={<Switch checked={debug} onChange={handleChangeDebug} />}

@@ -82,14 +82,23 @@ function FollowerItem({ follower, selected, onSelected }: FollowerItemProps) {
         p: (theme) => theme.spacing(3, 2, 3, 3),
       }}
     >
-      <Avatar alt={name} src={avatarUrl} sx={{ width: 48, height: 48, mr: 2 }} />
+      <Avatar
+        alt={name}
+        src={avatarUrl}
+        sx={{ width: 48, height: 48, mr: 2 }}
+      />
 
       <ListItemText
         primary={name}
         secondary={
           <>
-            <Iconify icon="mingcute:location-fill" width={16} sx={{ flexShrink: 0, mr: 0.5 }} />
-            {country} country country country country country country country country country
+            <Iconify
+              icon="mingcute:location-fill"
+              width={16}
+              sx={{ flexShrink: 0, mr: 0.5 }}
+            />
+            {country} country country country country country country country
+            country country
           </>
         }
         primaryTypographyProps={{
@@ -112,7 +121,9 @@ function FollowerItem({ follower, selected, onSelected }: FollowerItemProps) {
         variant={selected ? 'text' : 'outlined'}
         color={selected ? 'success' : 'inherit'}
         startIcon={
-          selected ? <Iconify width={18} icon="eva:checkmark-fill" sx={{ mr: -0.75 }} /> : null
+          selected ? (
+            <Iconify width={18} icon="eva:checkmark-fill" sx={{ mr: -0.75 }} />
+          ) : null
         }
         onClick={onSelected}
         sx={{ flexShrink: 0, ml: 1.5 }}

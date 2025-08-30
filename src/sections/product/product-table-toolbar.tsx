@@ -10,7 +10,10 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 import Iconify from 'src/components/iconify';
 import CustomPopover, { usePopover } from 'src/components/custom-popover';
 
-import { IProductTableFilters, IProductTableFilterValue } from 'src/types/product';
+import {
+  IProductTableFilters,
+  IProductTableFilterValue,
+} from 'src/types/product';
 
 // ----------------------------------------------------------------------
 
@@ -41,19 +44,25 @@ export default function ProductTableToolbar({
 
   const [publish, setPublish] = useState<string[]>(filters.publish);
 
-  const handleChangeStock = useCallback((event: SelectChangeEvent<string[]>) => {
-    const {
-      target: { value },
-    } = event;
-    setStock(typeof value === 'string' ? value.split(',') : value);
-  }, []);
+  const handleChangeStock = useCallback(
+    (event: SelectChangeEvent<string[]>) => {
+      const {
+        target: { value },
+      } = event;
+      setStock(typeof value === 'string' ? value.split(',') : value);
+    },
+    []
+  );
 
-  const handleChangePublish = useCallback((event: SelectChangeEvent<string[]>) => {
-    const {
-      target: { value },
-    } = event;
-    setPublish(typeof value === 'string' ? value.split(',') : value);
-  }, []);
+  const handleChangePublish = useCallback(
+    (event: SelectChangeEvent<string[]>) => {
+      const {
+        target: { value },
+      } = event;
+      setPublish(typeof value === 'string' ? value.split(',') : value);
+    },
+    []
+  );
 
   const handleCloseStock = useCallback(() => {
     onFilters('stock', stock);
@@ -84,7 +93,11 @@ export default function ProductTableToolbar({
         >
           {stockOptions.map((option) => (
             <MenuItem key={option.value} value={option.value}>
-              <Checkbox disableRipple size="small" checked={stock.includes(option.value)} />
+              <Checkbox
+                disableRipple
+                size="small"
+                checked={stock.includes(option.value)}
+              />
               {option.label}
             </MenuItem>
           ))}
@@ -110,7 +123,11 @@ export default function ProductTableToolbar({
         >
           {publishOptions.map((option) => (
             <MenuItem key={option.value} value={option.value}>
-              <Checkbox disableRipple size="small" checked={publish.includes(option.value)} />
+              <Checkbox
+                disableRipple
+                size="small"
+                checked={publish.includes(option.value)}
+              />
               {option.label}
             </MenuItem>
           ))}

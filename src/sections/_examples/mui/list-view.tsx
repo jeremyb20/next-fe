@@ -17,7 +17,9 @@ import ListItemText from '@mui/material/ListItemText';
 import ListSubheader from '@mui/material/ListSubheader';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 import ListItemSecondaryAction from '@mui/material/ListItemSecondaryAction';
-import ListItemButton, { ListItemButtonProps } from '@mui/material/ListItemButton';
+import ListItemButton, {
+  ListItemButtonProps,
+} from '@mui/material/ListItemButton';
 
 import { paths } from 'src/routes/paths';
 
@@ -253,7 +255,12 @@ export default function ListView() {
                 {[0, 1, 2, 3].map((value) => {
                   const labelId = `checkbox-list-label-${value}`;
                   return (
-                    <ListItemButton key={value} role={undefined} dense onClick={handleCheck(value)}>
+                    <ListItemButton
+                      key={value}
+                      role={undefined}
+                      dense
+                      onClick={handleCheck(value)}
+                    >
                       <ListItemIcon>
                         <Checkbox
                           edge="start"
@@ -264,11 +271,17 @@ export default function ListView() {
                         />
                       </ListItemIcon>
 
-                      <ListItemText id={labelId} primary={`Line item ${value + 1}`} />
+                      <ListItemText
+                        id={labelId}
+                        primary={`Line item ${value + 1}`}
+                      />
 
                       <ListItemSecondaryAction>
                         <IconButton edge="end">
-                          <Iconify icon="solar:chat-round-dots-bold" width={24} />
+                          <Iconify
+                            icon="solar:chat-round-dots-bold"
+                            width={24}
+                          />
                         </IconButton>
                       </ListItemSecondaryAction>
                     </ListItemButton>
@@ -301,7 +314,10 @@ export default function ListView() {
                   <ListItemIcon>
                     <Iconify icon="ic:baseline-bluetooth" width={24} />
                   </ListItemIcon>
-                  <ListItemText id="switch-list-label-bluetooth" primary="Bluetooth" />
+                  <ListItemText
+                    id="switch-list-label-bluetooth"
+                    primary="Bluetooth"
+                  />
                   <ListItemSecondaryAction>
                     <Switch
                       edge="end"

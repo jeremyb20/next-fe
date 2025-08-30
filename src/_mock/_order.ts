@@ -25,11 +25,20 @@ export const _orders = [...Array(20)].map((_, index) => {
 
   const taxes = 10;
 
-  const items = (index % 2 && ITEMS.slice(0, 1)) || (index % 3 && ITEMS.slice(1, 3)) || ITEMS;
+  const items =
+    (index % 2 && ITEMS.slice(0, 1)) ||
+    (index % 3 && ITEMS.slice(1, 3)) ||
+    ITEMS;
 
-  const totalQuantity = items.reduce((accumulator, item) => accumulator + item.quantity, 0);
+  const totalQuantity = items.reduce(
+    (accumulator, item) => accumulator + item.quantity,
+    0
+  );
 
-  const subTotal = items.reduce((accumulator, item) => accumulator + item.price * item.quantity, 0);
+  const subTotal = items.reduce(
+    (accumulator, item) => accumulator + item.price * item.quantity,
+    0
+  );
 
   const totalAmount = subTotal - shipping - discount + taxes;
 

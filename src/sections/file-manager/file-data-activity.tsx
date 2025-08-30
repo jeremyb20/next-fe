@@ -34,7 +34,12 @@ interface Props extends CardProps {
   };
 }
 
-export default function FileDataActivity({ title, subheader, chart, ...other }: Props) {
+export default function FileDataActivity({
+  title,
+  subheader,
+  chart,
+  ...other
+}: Props) {
   const { labels, colors, series, options } = chart;
 
   const popover = usePopover();
@@ -62,7 +67,8 @@ export default function FileDataActivity({ title, subheader, chart, ...other }: 
     },
     plotOptions: {
       bar: {
-        borderRadius: (seriesData === 'Week' && 8) || (seriesData === 'Month' && 6) || 10,
+        borderRadius:
+          (seriesData === 'Week' && 8) || (seriesData === 'Month' && 6) || 10,
         columnWidth: '20%',
       },
     },
@@ -99,7 +105,11 @@ export default function FileDataActivity({ title, subheader, chart, ...other }: 
 
               <Iconify
                 width={16}
-                icon={popover.open ? 'eva:arrow-ios-upward-fill' : 'eva:arrow-ios-downward-fill'}
+                icon={
+                  popover.open
+                    ? 'eva:arrow-ios-upward-fill'
+                    : 'eva:arrow-ios-downward-fill'
+                }
                 sx={{ ml: 0.5 }}
               />
             </ButtonBase>
@@ -122,7 +132,11 @@ export default function FileDataActivity({ title, subheader, chart, ...other }: 
         ))}
       </Card>
 
-      <CustomPopover open={popover.open} onClose={popover.onClose} sx={{ width: 140 }}>
+      <CustomPopover
+        open={popover.open}
+        onClose={popover.onClose}
+        sx={{ width: 140 }}
+      >
         {series.map((option) => (
           <MenuItem
             key={option.type}

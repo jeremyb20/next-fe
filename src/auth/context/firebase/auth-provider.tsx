@@ -1,7 +1,13 @@
 'use client';
 
 import { useMemo, useEffect, useReducer, useCallback } from 'react';
-import { doc, getDoc, setDoc, collection, getFirestore } from 'firebase/firestore';
+import {
+  doc,
+  getDoc,
+  setDoc,
+  collection,
+  getFirestore,
+} from 'firebase/firestore';
 import {
   signOut,
   getAuth,
@@ -194,8 +200,17 @@ export function AuthProvider({ children }: Props) {
 
   // REGISTER
   const register = useCallback(
-    async (email: string, password: string, firstName: string, lastName: string) => {
-      const newUser = await createUserWithEmailAndPassword(AUTH, email, password);
+    async (
+      email: string,
+      password: string,
+      firstName: string,
+      lastName: string
+    ) => {
+      const newUser = await createUserWithEmailAndPassword(
+        AUTH,
+        email,
+        password
+      );
 
       /*
        * (1) If skip emailVerified
@@ -230,7 +245,9 @@ export function AuthProvider({ children }: Props) {
    * (1) If skip emailVerified
    * const checkAuthenticated = state.user?.emailVerified ? 'authenticated' : 'unauthenticated';
    */
-  const checkAuthenticated = state.user?.emailVerified ? 'authenticated' : 'unauthenticated';
+  const checkAuthenticated = state.user?.emailVerified
+    ? 'authenticated'
+    : 'unauthenticated';
 
   const status = state.loading ? 'loading' : checkAuthenticated;
 
@@ -264,5 +281,9 @@ export function AuthProvider({ children }: Props) {
     ]
   );
 
-  return <AuthContext.Provider value={memoizedValue}>{children}</AuthContext.Provider>;
+  return (
+    <AuthContext.Provider value={memoizedValue}>
+      {children}
+    </AuthContext.Provider>
+  );
 }

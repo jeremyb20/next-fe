@@ -100,8 +100,12 @@ export default function JobDetailsToolbar({
               onChangePublish(option.value);
             }}
           >
-            {option.value === 'published' && <Iconify icon="eva:cloud-upload-fill" />}
-            {option.value === 'draft' && <Iconify icon="solar:file-text-bold" />}
+            {option.value === 'published' && (
+              <Iconify icon="eva:cloud-upload-fill" />
+            )}
+            {option.value === 'draft' && (
+              <Iconify icon="solar:file-text-bold" />
+            )}
             {option.label}
           </MenuItem>
         ))}

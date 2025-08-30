@@ -1,4 +1,7 @@
-import InputBase, { InputBaseProps, inputBaseClasses } from '@mui/material/InputBase';
+import InputBase, {
+  InputBaseProps,
+  inputBaseClasses,
+} from '@mui/material/InputBase';
 
 // ----------------------------------------------------------------------
 
@@ -13,7 +16,8 @@ export default function KanbanInputName({ sx, ...other }: InputBaseProps) {
           borderWidth: 2,
           borderStyle: 'solid',
           borderColor: 'transparent',
-          transition: (theme) => theme.transitions.create(['padding-left', 'border-color']),
+          transition: (theme) =>
+            theme.transitions.create(['padding-left', 'border-color']),
           [`&.${inputBaseClasses.focused}`]: {
             pl: 1.5,
             borderColor: 'text.primary',

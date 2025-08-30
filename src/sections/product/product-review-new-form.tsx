@@ -27,7 +27,9 @@ export default function ProductReviewNewForm({ onClose, ...other }: Props) {
     rating: Yup.number().min(1, 'Rating must be greater than or equal to 1'),
     review: Yup.string().required('Review is required'),
     name: Yup.string().required('Name is required'),
-    email: Yup.string().required('Email is required').email('Email must be a valid email address'),
+    email: Yup.string()
+      .required('Email is required')
+      .email('Email must be a valid email address'),
   });
 
   const defaultValues = {
@@ -71,8 +73,15 @@ export default function ProductReviewNewForm({ onClose, ...other }: Props) {
         <DialogTitle> Add Review </DialogTitle>
 
         <DialogContent>
-          <Stack direction="row" flexWrap="wrap" alignItems="center" spacing={1.5}>
-            <Typography variant="body2">Your review about this product:</Typography>
+          <Stack
+            direction="row"
+            flexWrap="wrap"
+            alignItems="center"
+            spacing={1.5}
+          >
+            <Typography variant="body2">
+              Your review about this product:
+            </Typography>
 
             <Controller
               name="rating"
@@ -90,9 +99,17 @@ export default function ProductReviewNewForm({ onClose, ...other }: Props) {
             />
           </Stack>
 
-          {!!errors.rating && <FormHelperText error> {errors.rating?.message}</FormHelperText>}
+          {!!errors.rating && (
+            <FormHelperText error> {errors.rating?.message}</FormHelperText>
+          )}
 
-          <RHFTextField name="review" label="Review *" multiline rows={3} sx={{ mt: 3 }} />
+          <RHFTextField
+            name="review"
+            label="Review *"
+            multiline
+            rows={3}
+            sx={{ mt: 3 }}
+          />
 
           <RHFTextField name="name" label="Name *" sx={{ mt: 3 }} />
 
@@ -104,7 +121,11 @@ export default function ProductReviewNewForm({ onClose, ...other }: Props) {
             Cancel
           </Button>
 
-          <LoadingButton type="submit" variant="contained" loading={isSubmitting}>
+          <LoadingButton
+            type="submit"
+            variant="contained"
+            loading={isSubmitting}
+          >
             Post
           </LoadingButton>
         </DialogActions>

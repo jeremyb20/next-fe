@@ -16,7 +16,15 @@ export default function PostCommentList({ comments }: Props) {
     <>
       <>
         {comments.map((comment) => {
-          const { id, replyComment, name, users, message, avatarUrl, postedAt } = comment;
+          const {
+            id,
+            replyComment,
+            name,
+            users,
+            message,
+            avatarUrl,
+            postedAt,
+          } = comment;
 
           const hasReply = !!replyComment.length;
 
@@ -30,7 +38,9 @@ export default function PostCommentList({ comments }: Props) {
               />
               {hasReply &&
                 replyComment.map((reply) => {
-                  const userReply = users.find((user) => user.id === reply.userId);
+                  const userReply = users.find(
+                    (user) => user.id === reply.userId
+                  );
 
                   return (
                     <PostCommentItem

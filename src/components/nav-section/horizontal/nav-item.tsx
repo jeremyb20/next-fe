@@ -73,7 +73,11 @@ const NavItem = forwardRef<HTMLDivElement, NavItemProps>(
           <Iconify
             width={16}
             className="arrow"
-            icon={subItem ? 'eva:arrow-ios-forward-fill' : 'eva:arrow-ios-downward-fill'}
+            icon={
+              subItem
+                ? 'eva:arrow-ios-forward-fill'
+                : 'eva:arrow-ios-downward-fill'
+            }
           />
         )}
       </StyledNavItem>

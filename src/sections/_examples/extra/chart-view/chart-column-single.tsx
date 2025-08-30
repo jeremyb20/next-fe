@@ -20,7 +20,17 @@ export default function ChartColumnSingle({ series }: Props) {
       show: false,
     },
     xaxis: {
-      categories: ['Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct'],
+      categories: [
+        'Feb',
+        'Mar',
+        'Apr',
+        'May',
+        'Jun',
+        'Jul',
+        'Aug',
+        'Sep',
+        'Oct',
+      ],
     },
     tooltip: {
       y: {
@@ -30,6 +40,13 @@ export default function ChartColumnSingle({ series }: Props) {
   });
 
   return (
-    <Chart dir="ltr" type="bar" series={series} options={chartOptions} width="100%" height={320} />
+    <Chart
+      dir="ltr"
+      type="bar"
+      series={series}
+      options={chartOptions}
+      width="100%"
+      height={320}
+    />
   );
 }

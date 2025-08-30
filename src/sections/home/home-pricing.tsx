@@ -27,14 +27,21 @@ export default function HomePricing() {
 
   const [currentTab, setCurrentTab] = useState('Standard');
 
-  const handleChangeTab = useCallback((event: React.SyntheticEvent, newValue: string) => {
-    setCurrentTab(newValue);
-  }, []);
+  const handleChangeTab = useCallback(
+    (event: React.SyntheticEvent, newValue: string) => {
+      setCurrentTab(newValue);
+    },
+    []
+  );
 
   const renderDescription = (
     <Stack spacing={3} sx={{ mb: 10, textAlign: 'center' }}>
       <m.div variants={varFade().inUp}>
-        <Typography component="div" variant="overline" sx={{ mb: 2, color: 'text.disabled' }}>
+        <Typography
+          component="div"
+          variant="overline"
+          sx={{ mb: 2, color: 'text.disabled' }}
+        >
           pricing plans
         </Typography>
       </m.div>
@@ -75,7 +82,11 @@ export default function HomePricing() {
           <Stack alignItems="center" sx={{ mb: 5 }}>
             <Tabs value={currentTab} onChange={handleChangeTab}>
               {_homePlans.map((tab) => (
-                <Tab key={tab.license} value={tab.license} label={tab.license} />
+                <Tab
+                  key={tab.license}
+                  value={tab.license}
+                  label={tab.license}
+                />
               ))}
             </Tabs>
           </Stack>
@@ -93,7 +104,8 @@ export default function HomePricing() {
                     key={tab.license}
                     plan={tab}
                     sx={{
-                      borderLeft: (theme) => `dashed 1px ${theme.palette.divider}`,
+                      borderLeft: (theme) =>
+                        `dashed 1px ${theme.palette.divider}`,
                     }}
                   />
                 )
@@ -186,7 +198,11 @@ function PlanCard({ plan, sx, ...other }: PlanCardProps) {
       {...other}
     >
       <Stack spacing={2}>
-        <Typography variant="overline" component="div" sx={{ color: 'text.disabled' }}>
+        <Typography
+          variant="overline"
+          component="div"
+          sx={{ color: 'text.disabled' }}
+        >
           License
         </Typography>
 
@@ -209,11 +225,22 @@ function PlanCard({ plan, sx, ...other }: PlanCardProps) {
       </Stack>
 
       {standardLicense ? (
-        <Box component="img" alt={icons[1]} src={icons[1]} sx={{ width: 20, height: 20 }} />
+        <Box
+          component="img"
+          alt={icons[1]}
+          src={icons[1]}
+          sx={{ width: 20, height: 20 }}
+        />
       ) : (
         <Stack direction="row" spacing={2}>
           {icons.map((icon) => (
-            <Box component="img" key={icon} alt={icon} src={icon} sx={{ width: 20, height: 20 }} />
+            <Box
+              component="img"
+              key={icon}
+              alt={icon}
+              src={icon}
+              sx={{ width: 20, height: 20 }}
+            />
           ))}
         </Stack>
       )}
@@ -245,7 +272,10 @@ function PlanCard({ plan, sx, ...other }: PlanCardProps) {
               }}
               key={option}
             >
-              <Iconify icon={disabled ? 'mingcute:close-line' : 'eva:checkmark-fill'} width={16} />
+              <Iconify
+                icon={disabled ? 'mingcute:close-line' : 'eva:checkmark-fill'}
+                width={16}
+              />
               <Typography variant="body2">{option}</Typography>
             </Stack>
           );

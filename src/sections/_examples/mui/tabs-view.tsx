@@ -67,13 +67,19 @@ export default function TabsView() {
 
   const [scrollableTab, setScrollableTab] = useState('one');
 
-  const handleChangeTab = useCallback((event: React.SyntheticEvent, newValue: string) => {
-    setCurrentTab(newValue);
-  }, []);
+  const handleChangeTab = useCallback(
+    (event: React.SyntheticEvent, newValue: string) => {
+      setCurrentTab(newValue);
+    },
+    []
+  );
 
-  const handleChangeScrollableTab = useCallback((event: React.SyntheticEvent, newValue: string) => {
-    setScrollableTab(newValue);
-  }, []);
+  const handleChangeScrollableTab = useCallback(
+    (event: React.SyntheticEvent, newValue: string) => {
+      setScrollableTab(newValue);
+    },
+    []
+  );
 
   return (
     <>

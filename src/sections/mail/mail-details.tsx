@@ -53,7 +53,12 @@ export default function MailDetails({ mail, renderLabel }: Props) {
   }
 
   const renderHead = (
-    <Stack direction="row" alignItems="center" flexShrink={0} sx={{ height: 56, pl: 2, pr: 1 }}>
+    <Stack
+      direction="row"
+      alignItems="center"
+      flexShrink={0}
+      sx={{ height: 56, pl: 2, pr: 1 }}
+    >
       <Stack direction="row" spacing={1} flexGrow={1}>
         {mail.labelIds.map((labelId) => {
           const label = renderLabel(labelId);
@@ -86,7 +91,9 @@ export default function MailDetails({ mail, renderLabel }: Props) {
         <Checkbox
           color="warning"
           icon={<Iconify icon="material-symbols:label-important-rounded" />}
-          checkedIcon={<Iconify icon="material-symbols:label-important-rounded" />}
+          checkedIcon={
+            <Iconify icon="material-symbols:label-important-rounded" />
+          }
           checked={mail.isImportant}
         />
 
@@ -164,7 +171,10 @@ export default function MailDetails({ mail, renderLabel }: Props) {
         primary={
           <>
             {mail.from.name}
-            <Box component="span" sx={{ typography: 'body2', color: 'text.disabled' }}>
+            <Box
+              component="span"
+              sx={{ typography: 'body2', color: 'text.disabled' }}
+            >
               {` <${mail.from.email}>`}
             </Box>
           </>
@@ -211,14 +221,18 @@ export default function MailDetails({ mail, renderLabel }: Props) {
           {mail.attachments.length} attachments
           <Iconify
             icon={
-              showAttachments.value ? 'eva:arrow-ios-upward-fill' : 'eva:arrow-ios-downward-fill'
+              showAttachments.value
+                ? 'eva:arrow-ios-upward-fill'
+                : 'eva:arrow-ios-downward-fill'
             }
             width={16}
             sx={{ ml: 0.5 }}
           />
         </ButtonBase>
 
-        <Button startIcon={<Iconify icon="eva:cloud-download-fill" />}>Download</Button>
+        <Button startIcon={<Iconify icon="eva:cloud-download-fill" />}>
+          Download
+        </Button>
       </Stack>
 
       <Collapse in={showAttachments.value} unmountOnExit timeout="auto">
@@ -325,7 +339,9 @@ export default function MailDetails({ mail, renderLabel }: Props) {
 
       {renderSender}
 
-      {!!mail.attachments.length && <Stack sx={{ px: 2 }}> {renderAttachments} </Stack>}
+      {!!mail.attachments.length && (
+        <Stack sx={{ px: 2 }}> {renderAttachments} </Stack>
+      )}
 
       {renderContent}
 
