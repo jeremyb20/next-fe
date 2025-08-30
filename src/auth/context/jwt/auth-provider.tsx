@@ -1,12 +1,12 @@
-"use client";
+'use client';
 
-import { useMemo, useEffect, useReducer, useCallback, useRef } from "react";
+import { useRef, useMemo, useEffect, useReducer, useCallback } from 'react';
 
-import axios, { endpoints } from "src/utils/axios";
+import axios, { endpoints } from 'src/utils/axios';
 
-import { AuthContext } from "./auth-context";
-import { setSession, isValidToken } from "./utils";
-import { AuthUserType, ActionMapType, AuthStateType } from "../../types";
+import { AuthContext } from './auth-context';
+import { setSession, isValidToken } from './utils';
+import { AuthUserType, ActionMapType, AuthStateType } from '../../types';
 
 // ----------------------------------------------------------------------
 /**
@@ -17,10 +17,10 @@ import { AuthUserType, ActionMapType, AuthStateType } from "../../types";
 // ----------------------------------------------------------------------
 
 enum Types {
-  INITIAL = "INITIAL",
-  LOGIN = "LOGIN",
-  REGISTER = "REGISTER",
-  LOGOUT = "LOGOUT",
+  INITIAL = 'INITIAL',
+  LOGIN = 'LOGIN',
+  REGISTER = 'REGISTER',
+  LOGOUT = 'LOGOUT',
 }
 
 type Payload = {
@@ -75,7 +75,7 @@ const reducer = (state: AuthStateType, action: ActionsType) => {
 
 // ----------------------------------------------------------------------
 
-const STORAGE_KEY = "accessToken";
+const STORAGE_KEY = 'accessToken';
 
 type Props = {
   children: React.ReactNode;
@@ -194,17 +194,17 @@ export function AuthProvider({ children }: Props) {
 
   // ----------------------------------------------------------------------
 
-  const checkAuthenticated = state.user ? "authenticated" : "unauthenticated";
+  const checkAuthenticated = state.user ? 'authenticated' : 'unauthenticated';
 
-  const status = state.loading ? "loading" : checkAuthenticated;
+  const status = state.loading ? 'loading' : checkAuthenticated;
 
   const memoizedValue = useMemo(
     () => ({
       user: state.user,
-      method: "jwt",
-      loading: status === "loading",
-      authenticated: status === "authenticated",
-      unauthenticated: status === "unauthenticated",
+      method: 'jwt',
+      loading: status === 'loading',
+      authenticated: status === 'authenticated',
+      unauthenticated: status === 'unauthenticated',
       //
       login,
       register,
