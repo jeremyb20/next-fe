@@ -1,12 +1,12 @@
-import { paramCase } from 'src/utils/change-case';
-import axios, { endpoints } from 'src/utils/axios';
+import { paramCase } from "src/utils/change-case";
+import axios, { endpoints } from "src/utils/axios";
 
-import { PostDetailsHomeView } from 'src/sections/blog/view';
+import { PostDetailsHomeView } from "src/sections/blog/view";
 
 // ----------------------------------------------------------------------
 
 export const metadata = {
-  title: 'Post: Details',
+  title: "Post: Details",
 };
 
 type Props = {
@@ -18,13 +18,14 @@ type Props = {
 export default function PostDetailsHomePage({ params }: Props) {
   const { title } = params;
 
-  return <PostDetailsHomeView title={title} />;
+  //  return <PostDetailsHomeView title={title} />;
+  return <></>;
 }
 
-export async function generateStaticParams() {
-  const res = await axios.get(endpoints.post.list);
+// export async function generateStaticParams() {
+//   const res = await axios.get(endpoints.post.list);
 
-  return res.data.posts.map((post: { title: string }) => ({
-    title: paramCase(post.title),
-  }));
-}
+//   return res.data.posts.map((post: { title: string }) => ({
+//     title: paramCase(post.title),
+//   }));
+// }

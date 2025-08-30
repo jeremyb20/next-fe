@@ -1,11 +1,11 @@
-import { _tours } from 'src/_mock/_tour';
+import { _tours } from "src/_mock/_tour";
 
-import { TourEditView } from 'src/sections/tour/view';
+import { TourEditView } from "src/sections/tour/view";
 
 // ----------------------------------------------------------------------
 
 export const metadata = {
-  title: 'Dashboard: Tour Edit',
+  title: "Dashboard: Tour Edit",
 };
 
 type Props = {
@@ -17,11 +17,12 @@ type Props = {
 export default function TourEditPage({ params }: Props) {
   const { id } = params;
 
-  return <TourEditView id={id} />;
+  // return <TourEditView id={id} />;
+  return <></>;
 }
 
-export async function generateStaticParams() {
-  return _tours.map((tour) => ({
-    id: tour.id,
-  }));
-}
+// export async function generateStaticParams() {
+//   return _tours.map((tour) => ({
+//     id: tour.id,
+//   }));
+// }

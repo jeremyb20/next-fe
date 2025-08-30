@@ -1,12 +1,12 @@
-'use client';
+"use client";
 
-import { useMemo, useEffect, useReducer, useCallback } from 'react';
+import { useMemo, useEffect, useReducer, useCallback, useRef } from "react";
 
-import axios, { endpoints } from 'src/utils/axios';
+import axios, { endpoints } from "src/utils/axios";
 
-import { AuthContext } from './auth-context';
-import { setSession, isValidToken } from './utils';
-import { AuthUserType, ActionMapType, AuthStateType } from '../../types';
+import { AuthContext } from "./auth-context";
+import { setSession, isValidToken } from "./utils";
+import { AuthUserType, ActionMapType, AuthStateType } from "../../types";
 
 // ----------------------------------------------------------------------
 /**
@@ -17,10 +17,10 @@ import { AuthUserType, ActionMapType, AuthStateType } from '../../types';
 // ----------------------------------------------------------------------
 
 enum Types {
-  INITIAL = 'INITIAL',
-  LOGIN = 'LOGIN',
-  REGISTER = 'REGISTER',
-  LOGOUT = 'LOGOUT',
+  INITIAL = "INITIAL",
+  LOGIN = "LOGIN",
+  REGISTER = "REGISTER",
+  LOGOUT = "LOGOUT",
 }
 
 type Payload = {
@@ -75,7 +75,7 @@ const reducer = (state: AuthStateType, action: ActionsType) => {
 
 // ----------------------------------------------------------------------
 
-const STORAGE_KEY = 'accessToken';
+const STORAGE_KEY = "accessToken";
 
 type Props = {
   children: React.ReactNode;
@@ -83,18 +83,18 @@ type Props = {
 
 export function AuthProvider({ children }: Props) {
   const [state, dispatch] = useReducer(reducer, initialState);
-
+  const initializedRef = useRef(false);
   const initialize = useCallback(async () => {
+    if (initializedRef.current) return;
+    initializedRef.current = true;
     try {
       const accessToken = sessionStorage.getItem(STORAGE_KEY);
-
       if (accessToken && isValidToken(accessToken)) {
         setSession(accessToken);
 
         const res = await axios.get(endpoints.auth.me);
 
-        const { user } = res.data;
-
+        const { payload: user } = res.data;
         dispatch({
           type: Types.INITIAL,
           payload: {
@@ -135,11 +135,10 @@ export function AuthProvider({ children }: Props) {
     };
 
     const res = await axios.post(endpoints.auth.login, data);
-
-    const { accessToken, user } = res.data;
+    console.log(res);
+    const { token: accessToken, payload: user } = res.data;
 
     setSession(accessToken);
-
     dispatch({
       type: Types.LOGIN,
       payload: {
@@ -153,7 +152,12 @@ export function AuthProvider({ children }: Props) {
 
   // REGISTER
   const register = useCallback(
-    async (email: string, password: string, firstName: string, lastName: string) => {
+    async (
+      email: string,
+      password: string,
+      firstName: string,
+      lastName: string
+    ) => {
       const data = {
         email,
         password,
@@ -190,17 +194,17 @@ export function AuthProvider({ children }: Props) {
 
   // ----------------------------------------------------------------------
 
-  const checkAuthenticated = state.user ? 'authenticated' : 'unauthenticated';
+  const checkAuthenticated = state.user ? "authenticated" : "unauthenticated";
 
-  const status = state.loading ? 'loading' : checkAuthenticated;
+  const status = state.loading ? "loading" : checkAuthenticated;
 
   const memoizedValue = useMemo(
     () => ({
       user: state.user,
-      method: 'jwt',
-      loading: status === 'loading',
-      authenticated: status === 'authenticated',
-      unauthenticated: status === 'unauthenticated',
+      method: "jwt",
+      loading: status === "loading",
+      authenticated: status === "authenticated",
+      unauthenticated: status === "unauthenticated",
       //
       login,
       register,
@@ -209,5 +213,9 @@ export function AuthProvider({ children }: Props) {
     [login, logout, register, state.user, status]
   );
 
-  return <AuthContext.Provider value={memoizedValue}>{children}</AuthContext.Provider>;
+  return (
+    <AuthContext.Provider value={memoizedValue}>
+      {children}
+    </AuthContext.Provider>
+  );
 }

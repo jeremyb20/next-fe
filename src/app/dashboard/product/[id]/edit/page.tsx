@@ -1,11 +1,11 @@
-import axios, { endpoints } from 'src/utils/axios';
+import axios, { endpoints } from "src/utils/axios";
 
-import { ProductEditView } from 'src/sections/product/view';
+import { ProductEditView } from "src/sections/product/view";
 
 // ----------------------------------------------------------------------
 
 export const metadata = {
-  title: 'Dashboard: Product Edit',
+  title: "Dashboard: Product Edit",
 };
 
 type Props = {
@@ -17,13 +17,14 @@ type Props = {
 export default function ProductEditPage({ params }: Props) {
   const { id } = params;
 
-  return <ProductEditView id={id} />;
+  // return <ProductEditView id={id} />;
+  return <></>;
 }
 
-export async function generateStaticParams() {
-  const res = await axios.get(endpoints.product.list);
+// export async function generateStaticParams() {
+//   const res = await axios.get(endpoints.product.list);
 
-  return res.data.products.map((product: { id: string }) => ({
-    id: product.id,
-  }));
-}
+//   return res.data.products.map((product: { id: string }) => ({
+//     id: product.id,
+//   }));
+// }

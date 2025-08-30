@@ -1,11 +1,11 @@
-import { _jobs } from 'src/_mock/_job';
+import { _jobs } from "src/_mock/_job";
 
-import { JobEditView } from 'src/sections/job/view';
+import { JobEditView } from "src/sections/job/view";
 
 // ----------------------------------------------------------------------
 
 export const metadata = {
-  title: 'Dashboard: Job Edit',
+  title: "Dashboard: Job Edit",
 };
 
 type Props = {
@@ -17,11 +17,12 @@ type Props = {
 export default function JobEditPage({ params }: Props) {
   const { id } = params;
 
-  return <JobEditView id={id} />;
+  // return <JobEditView id={id} />;
+  return <></>;
 }
 
-export async function generateStaticParams() {
-  return _jobs.map((job) => ({
-    id: job.id,
-  }));
-}
+// export async function generateStaticParams() {
+//   return _jobs.map((job) => ({
+//     id: job.id,
+//   }));
+// }
