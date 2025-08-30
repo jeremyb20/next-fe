@@ -1,6 +1,6 @@
-import { _jobs } from 'src/_mock/_job';
+// import { _jobs } from 'src/_mock/_job';
 
-import { JobDetailsView } from 'src/sections/job/view';
+// import { JobDetailsView } from 'src/sections/job/view';
 
 // ----------------------------------------------------------------------
 
@@ -15,10 +15,10 @@ type Props = {
 };
 
 export default function JobDetailsPage({ params }: Props) {
-  const { id } = params;
+  // const { id } = params;
 
   // return <JobDetailsView id={id} />;
-  return <></>;
+  return <>JobDetailsView</>;
 }
 
 // export async function generateStaticParams() {

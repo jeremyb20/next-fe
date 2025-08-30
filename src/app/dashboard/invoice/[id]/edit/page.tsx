@@ -1,6 +1,6 @@
-import { _invoices } from 'src/_mock/_invoice';
+// import { _invoices } from 'src/_mock/_invoice';
 
-import { InvoiceEditView } from 'src/sections/invoice/view';
+// import { InvoiceEditView } from 'src/sections/invoice/view';
 
 // ----------------------------------------------------------------------
 
@@ -15,10 +15,10 @@ type Props = {
 };
 
 export default function InvoiceEditPage({ params }: Props) {
-  const { id } = params;
+  // const { id } = params;
 
   // return <InvoiceEditView id={id} />;
-  return <></>;
+  return <>InvoiceEditView</>;
 }
 
 // export async function generateStaticParams() {

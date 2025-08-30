@@ -1,8 +1,8 @@
 import { Metadata } from 'next';
 
-import { _orders } from 'src/_mock/_order';
+// import { _orders } from 'src/_mock/_order';
 
-import { OrderDetailsView } from 'src/sections/order/view';
+// import { OrderDetailsView } from 'src/sections/order/view';
 
 // ----------------------------------------------------------------------
 
@@ -25,10 +25,10 @@ type Props = {
 };
 
 export default function OrderDetailsPage({ params }: Props) {
-  const { id } = params;
+  // const { id } = params;
 
   // return <OrderDetailsView id={id} />;
-  return <></>;
+  return <>OrderDetailsView</>;
 }
 
 // export async function generateStaticParams() {

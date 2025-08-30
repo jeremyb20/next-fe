@@ -1,7 +1,7 @@
-import { paramCase } from 'src/utils/change-case';
-import axios, { endpoints } from 'src/utils/axios';
+// import { paramCase } from 'src/utils/change-case';
+// import axios, { endpoints } from 'src/utils/axios';
 
-import { PostDetailsHomeView } from 'src/sections/blog/view';
+// import { PostDetailsHomeView } from 'src/sections/blog/view';
 
 // ----------------------------------------------------------------------
 
@@ -16,10 +16,10 @@ type Props = {
 };
 
 export default function PostDetailsHomePage({ params }: Props) {
-  const { title } = params;
+  // const { title } = params;
 
   //  return <PostDetailsHomeView title={title} />;
-  return <></>;
+  return <>PostDetailsHomeView</>;
 }
 
 // export async function generateStaticParams() {

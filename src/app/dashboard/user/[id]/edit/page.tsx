@@ -1,6 +1,6 @@
-import { _userList } from 'src/_mock/_user';
+// import { _userList } from 'src/_mock/_user';
 
-import { UserEditView } from 'src/sections/user/view';
+// import { UserEditView } from 'src/sections/user/view';
 
 // ----------------------------------------------------------------------
 
@@ -15,10 +15,10 @@ type Props = {
 };
 
 export default function UserEditPage({ params }: Props) {
-  const { id } = params;
+  // const { id } = params;
 
   // return <UserEditView id={id} />;
-  return <></>;
+  return <>UserEditView</>;
 }
 
 // export async function generateStaticParams() {

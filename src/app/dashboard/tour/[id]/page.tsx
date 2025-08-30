@@ -1,6 +1,6 @@
-import { _tours } from 'src/_mock/_tour';
+// import { _tours } from 'src/_mock/_tour';
 
-import { TourDetailsView } from 'src/sections/tour/view';
+// import { TourDetailsView } from 'src/sections/tour/view';
 
 // ----------------------------------------------------------------------
 
@@ -15,10 +15,10 @@ type Props = {
 };
 
 export default function TourDetailsPage({ params }: Props) {
-  const { id } = params;
+  // const { id } = params;
 
   // return <TourDetailsView id={id} />;
-  return <></>;
+  return <>TourDetailsView</>;
 }
 
 // export async function generateStaticParams() {

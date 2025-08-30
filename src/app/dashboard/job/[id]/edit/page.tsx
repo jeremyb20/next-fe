@@ -1,6 +1,6 @@
-import { _jobs } from 'src/_mock/_job';
+// import { _jobs } from 'src/_mock/_job';
 
-import { JobEditView } from 'src/sections/job/view';
+// import { JobEditView } from 'src/sections/job/view';
 
 // ----------------------------------------------------------------------
 
@@ -15,10 +15,10 @@ type Props = {
 };
 
 export default function JobEditPage({ params }: Props) {
-  const { id } = params;
+  //  const { id } = params;
 
   // return <JobEditView id={id} />;
-  return <></>;
+  return <>JobEditView</>;
 }
 
 // export async function generateStaticParams() {
