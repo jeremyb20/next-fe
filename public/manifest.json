@@ -1,6 +1,6 @@
 {
-  "name": "Minimal UI",
-  "short_name": "Minimal UI",
+  "name": "Plaquitas CR",
+  "short_name": "Plaquitas CR",
   "display": "standalone",
   "start_url": "/",
   "theme_color": "#000000",

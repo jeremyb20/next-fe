@@ -63,7 +63,7 @@ export default function PermissionDeniedView() {
         </ToggleButton>
 
         <ToggleButton value="user" aria-label="user role">
-          isUser
+          is User
         </ToggleButton>
       </ToggleButtonGroup>
 

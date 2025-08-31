@@ -135,7 +135,6 @@ export function AuthProvider({ children }: Props) {
     };
 
     const res = await axios.post(endpoints.auth.login, data);
-    console.log(res);
     const { token: accessToken, payload: user } = res.data;
 
     setSession(accessToken);
@@ -145,6 +144,7 @@ export function AuthProvider({ children }: Props) {
         user: {
           ...user,
           accessToken,
+          role: 'admin',
         },
       },
     });

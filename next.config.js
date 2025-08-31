@@ -1,3 +1,4 @@
+const { version } = require('./package.json');
 module.exports = {
   trailingSlash: true,
   modularizeImports: {
@@ -17,5 +18,24 @@ module.exports = {
       use: ['@svgr/webpack'],
     });
     return config;
+  },
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'res.cloudinary.com',
+        port: '',
+        pathname: '/**', // Allow all cloudinary paths
+      },
+    ],
+  },
+  onDemandEntries: {
+    // period (in ms) where the server will keep pages in the buffer
+    maxInactiveAge: 25 * 1000,
+    // number of pages that should be kept simultaneously without being disposed
+    pagesBufferLength: 2,
+  },
+  env: {
+    APP_VERSION: version,
   },
 };

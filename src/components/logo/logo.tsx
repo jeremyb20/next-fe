@@ -1,10 +1,12 @@
+import Image from 'next/image';
 import { forwardRef } from 'react';
 
 import Link from '@mui/material/Link';
-import { useTheme } from '@mui/material/styles';
 import Box, { BoxProps } from '@mui/material/Box';
 
 import { RouterLink } from 'src/routes/components';
+
+import { useAuthContext } from 'src/auth/hooks';
 
 // ----------------------------------------------------------------------
 
@@ -14,13 +16,7 @@ export interface LogoProps extends BoxProps {
 
 const Logo = forwardRef<HTMLDivElement, LogoProps>(
   ({ disabledLink = false, sx, ...other }, ref) => {
-    const theme = useTheme();
-
-    const PRIMARY_LIGHT = theme.palette.primary.light;
-
-    const PRIMARY_MAIN = theme.palette.primary.main;
-
-    const PRIMARY_DARK = theme.palette.primary.dark;
+    const { authenticated } = useAuthContext();
 
     // OR using local (public folder)
     // -------------------------------------------------------
@@ -44,7 +40,7 @@ const Logo = forwardRef<HTMLDivElement, LogoProps>(
         }}
         {...other}
       >
-        <svg
+        {/* <svg
           xmlns="http://www.w3.org/2000/svg"
           width="100%"
           height="100%"
@@ -86,7 +82,19 @@ const Logo = forwardRef<HTMLDivElement, LogoProps>(
               d="M450 384c26.509 0 48-21.491 48-48s-21.491-48-48-48-48 21.491-48 48 21.491 48 48 48"
             />
           </g>
-        </svg>
+        </svg> */}
+
+        <Image
+          src="https://res.cloudinary.com/ensamble/image/upload/v1692285552/gw2pih5qe3vritw5xv13.png"
+          alt="logo"
+          width={100}
+          height={100}
+          style={{
+            objectFit: 'contain',
+            height: 'auto',
+            width: '100px',
+          }}
+        />
       </Box>
     );
 
@@ -95,7 +103,11 @@ const Logo = forwardRef<HTMLDivElement, LogoProps>(
     }
 
     return (
-      <Link component={RouterLink} href="/" sx={{ display: 'contents' }}>
+      <Link
+        component={RouterLink}
+        href={authenticated ? '/dashboard' : '/'}
+        sx={{ display: 'contents' }}
+      >
         {logo}
       </Link>
     );

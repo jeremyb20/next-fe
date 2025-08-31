@@ -246,7 +246,7 @@ export function useNavData() {
             title: t('item_by_roles'),
             path: paths.dashboard.permission,
             icon: ICONS.lock,
-            roles: ['admin', 'manager'],
+            roles: ['admin', 'manager', 'user'],
             caption: t('only_admin_can_see_this_item'),
           },
           {

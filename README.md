@@ -12,3 +12,5 @@ npm install yarn
 
 - npm i OR npm i --legacy-peer-deps
 - npm run dev
+
+-ngrok http --url=normal-actively-bug.ngrok-free.app 80

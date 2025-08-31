@@ -4,7 +4,6 @@ import Box from '@mui/material/Box';
 import Link from '@mui/material/Link';
 import Stack from '@mui/material/Stack';
 import AppBar from '@mui/material/AppBar';
-import Button from '@mui/material/Button';
 import Toolbar from '@mui/material/Toolbar';
 import { useTheme } from '@mui/material/styles';
 import Container from '@mui/material/Container';
@@ -27,7 +26,6 @@ import { navConfig } from './config-navigation';
 import LoginButton from '../common/login-button';
 import HeaderShadow from '../common/header-shadow';
 import SettingsButton from '../common/settings-button';
-
 // ----------------------------------------------------------------------
 
 export async function generateMetadata({
@@ -93,7 +91,7 @@ export default function Header() {
                   color="info"
                   sx={{ textTransform: 'unset', height: 22, px: 0.5 }}
                 >
-                  v5.7.0
+                  v{process.env.APP_VERSION}
                 </Label>
               </Link>
             }
@@ -109,16 +107,16 @@ export default function Header() {
             alignItems="center"
             direction={{ xs: 'row', md: 'row-reverse' }}
           >
-            <Button
+            {/* <Button
               variant="contained"
               target="_blank"
               rel="noopener"
               href={paths.minimalUI}
             >
               Purchase Now
-            </Button>
+            </Button> */}
 
-            {mdUp && <LoginButton />}
+            <LoginButton />
 
             <SettingsButton
               sx={{

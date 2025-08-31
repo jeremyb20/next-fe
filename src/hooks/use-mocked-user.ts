@@ -28,8 +28,8 @@ export function useMockedUser() {
     zipCode: '94116',
     about:
       'Praesent turpis. Phasellus viverra nulla ut metus varius laoreet. Phasellus tempus.',
-    role: 'admin',
-    isPublic: true,
+    role: 'admin', // admin | user | guest
+    isPublic: false,
   };
 
   return { user };

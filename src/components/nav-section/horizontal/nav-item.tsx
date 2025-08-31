@@ -29,7 +29,7 @@ const NavItem = forwardRef<HTMLDivElement, NavItemProps>(
       active,
       hasChild,
       externalLink,
-      currentRole = 'admin',
+      currentRole = 'user',
       ...other
     },
     ref

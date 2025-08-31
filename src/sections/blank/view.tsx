@@ -7,6 +7,9 @@ import Typography from '@mui/material/Typography';
 
 import { useSettingsContext } from 'src/components/settings';
 
+import MapView from '../_examples/extra/map-view';
+import CopyToClipboardView from '../_examples/extra/copy-to-clipboard-view';
+
 // ----------------------------------------------------------------------
 
 export default function BlankView() {
@@ -15,7 +18,6 @@ export default function BlankView() {
   return (
     <Container maxWidth={settings.themeStretch ? false : 'xl'}>
       <Typography variant="h4"> Blank </Typography>
-
       <Box
         sx={{
           mt: 5,
@@ -26,6 +28,8 @@ export default function BlankView() {
           border: (theme) => `dashed 1px ${theme.palette.divider}`,
         }}
       />
+      <CopyToClipboardView />
+      <MapView />;
     </Container>
   );
 }
