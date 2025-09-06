@@ -55,7 +55,7 @@ export const _contacts = [...Array(20)].map((_, index) => {
 
 // ----------------------------------------------------------------------
 
-export const _notifications = [...Array(9)].map((_, index) => ({
+export const _notifications = [...Array(3)].map((_, index) => ({
   id: _mock.id(index),
   avatarUrl: [
     _mock.image.avatar(1),

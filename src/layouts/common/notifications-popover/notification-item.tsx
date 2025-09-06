@@ -1,3 +1,6 @@
+import Iconify from '@/src/components/iconify';
+import { NotificationData } from '@/src/types/api';
+
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
@@ -15,15 +18,7 @@ import FileThumbnail from 'src/components/file-thumbnail';
 // ----------------------------------------------------------------------
 
 type NotificationItemProps = {
-  notification: {
-    id: string;
-    title: string;
-    category: string;
-    createdAt: Date;
-    isUnRead: boolean;
-    type: string;
-    avatarUrl: string | null;
-  };
+  notification: NotificationData;
 };
 
 export default function NotificationItem({
@@ -47,15 +42,16 @@ export default function NotificationItem({
             bgcolor: 'background.neutral',
           }}
         >
-          <Box
-            component="img"
-            src={`/assets/icons/notification/${
+          <Iconify
+            icon={
+              (notification.type === 'system' && 'line-md:bell-loop') ||
+              (notification.type === 'schedule' && 'lets-icons:clock') ||
               (notification.type === 'order' && 'ic_order') ||
               (notification.type === 'chat' && 'ic_chat') ||
               (notification.type === 'mail' && 'ic_mail') ||
-              (notification.type === 'delivery' && 'ic_delivery')
-            }.svg`}
-            sx={{ width: 24, height: 24 }}
+              (notification.type === 'delivery' && 'ic_delivery') ||
+              ''
+            }
           />
         </Stack>
       )}
@@ -90,7 +86,7 @@ export default function NotificationItem({
     />
   );
 
-  const renderUnReadBadge = notification.isUnRead && (
+  const renderUnReadBadge = notification.read && (
     <Box
       sx={{
         top: 26,

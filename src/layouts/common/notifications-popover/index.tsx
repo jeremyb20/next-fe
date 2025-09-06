@@ -1,5 +1,7 @@
 import { m } from 'framer-motion';
-import { useState, useCallback } from 'react';
+import { NotificationData } from '@/src/types/api';
+import { useFetchGetNotifications } from '@/src/hooks/use-fetch';
+import { useMemo, useState, useEffect, useCallback } from 'react';
 
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
@@ -17,43 +19,42 @@ import Typography from '@mui/material/Typography';
 import { useBoolean } from 'src/hooks/use-boolean';
 import { useResponsive } from 'src/hooks/use-responsive';
 
-import { _notifications } from 'src/_mock';
-
 import Label from 'src/components/label';
 import Iconify from 'src/components/iconify';
 import Scrollbar from 'src/components/scrollbar';
 import { varHover } from 'src/components/animate';
 
 import NotificationItem from './notification-item';
+import ScheduleNotificationForm from './components/schedule-notification-form';
 
 // ----------------------------------------------------------------------
 
-const TABS = [
-  {
-    value: 'all',
-    label: 'All',
-    count: 22,
-  },
-  {
-    value: 'unread',
-    label: 'Unread',
-    count: 12,
-  },
-  {
-    value: 'archived',
-    label: 'Archived',
-    count: 10,
-  },
-];
+interface TabType {
+  value: string;
+  label: string;
+  count: number;
+}
 
 // ----------------------------------------------------------------------
 
 export default function NotificationsPopover() {
   const drawer = useBoolean();
-
   const smUp = useResponsive('up', 'sm');
+  const [currentTab, setCurrentTab] = useState<string>('all');
 
-  const [currentTab, setCurrentTab] = useState('all');
+  // Usar el hook para obtener notificaciones reales
+  const { data: fetchedNotifications = [], refetch: refetchNotifications } =
+    useFetchGetNotifications();
+
+  // Estado para las notificaciones
+  const [notifications, setNotifications] = useState<NotificationData[]>([]);
+
+  // Actualizar notificaciones cuando los datos obtenidos cambien
+  useEffect(() => {
+    if (fetchedNotifications && fetchedNotifications.length > 0) {
+      setNotifications(fetchedNotifications);
+    }
+  }, [fetchedNotifications]);
 
   const handleChangeTab = useCallback(
     (event: React.SyntheticEvent, newValue: string) => {
@@ -62,17 +63,50 @@ export default function NotificationsPopover() {
     []
   );
 
-  const [notifications, setNotifications] = useState(_notifications);
+  const filteredNotifications = useMemo(() => {
+    switch (currentTab) {
+      case 'unread':
+        return fetchedNotifications.filter((item) => item.read === false);
+      case 'schedule':
+        return fetchedNotifications.filter((item) => item.type === 'scheduled');
+      case 'all':
+      default:
+        return fetchedNotifications;
+    }
+  }, [fetchedNotifications, currentTab]);
 
-  const totalUnRead = notifications.filter(
-    (item) => item.isUnRead === true
-  ).length;
+  const totalUnRead = useMemo(
+    () => fetchedNotifications.filter((item) => item.read === false).length,
+    [fetchedNotifications]
+  );
 
+  const totalScheduled = useMemo(
+    () =>
+      fetchedNotifications.filter((item) => item.type === 'scheduled').length,
+    [fetchedNotifications]
+  );
+  const TABS: TabType[] = [
+    {
+      value: 'all',
+      label: 'All',
+      count: fetchedNotifications.length,
+    },
+    {
+      value: 'unread',
+      label: 'Unread',
+      count: totalUnRead,
+    },
+    {
+      value: 'schedule',
+      label: 'Schedule',
+      count: totalScheduled,
+    },
+  ];
   const handleMarkAllAsRead = () => {
     setNotifications(
       notifications.map((notification) => ({
         ...notification,
-        isUnRead: false,
+        read: false,
       }))
     );
   };
@@ -86,7 +120,6 @@ export default function NotificationsPopover() {
       <Typography variant="h6" sx={{ flexGrow: 1 }}>
         Notifications
       </Typography>
-
       {!!totalUnRead && (
         <Tooltip title="Mark all as read">
           <IconButton color="primary" onClick={handleMarkAllAsRead}>
@@ -136,15 +169,22 @@ export default function NotificationsPopover() {
       ))}
     </Tabs>
   );
-
   const renderList = (
     <Scrollbar>
       <List disablePadding>
-        {notifications.map((notification) => (
+        {filteredNotifications.map((notification) => (
           <NotificationItem key={notification.id} notification={notification} />
         ))}
       </List>
     </Scrollbar>
+  );
+
+  const renderScheduleTab = (
+    <Box sx={{ p: 2 }}>
+      <ScheduleNotificationForm
+        onNotificationScheduled={refetchNotifications}
+      />
+    </Box>
   );
 
   return (
@@ -174,7 +214,6 @@ export default function NotificationsPopover() {
         }}
       >
         {renderHead}
-
         <Divider />
 
         <Stack
@@ -191,13 +230,15 @@ export default function NotificationsPopover() {
 
         <Divider />
 
-        {renderList}
+        {currentTab === 'schedule' ? renderScheduleTab : renderList}
 
-        <Box sx={{ p: 1 }}>
-          <Button fullWidth size="large">
-            View All
-          </Button>
-        </Box>
+        {currentTab !== 'schedule' && (
+          <Box sx={{ p: 1 }}>
+            <Button fullWidth size="large">
+              View All
+            </Button>
+          </Box>
+        )}
       </Drawer>
     </>
   );

@@ -1,5 +1,5 @@
 // import { paramCase } from 'src/utils/change-case';
-// import axios, { endpoints } from 'src/utils/axios';
+// import axios, { endpoints } from '@/src/utils/axios';
 
 // import { PostEditView } from 'src/sections/blog/view';
 

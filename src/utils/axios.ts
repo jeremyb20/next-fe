@@ -34,6 +34,11 @@ export const endpoints = {
     login: '/api/user/email/sign-in',
     register: '/api/user/register',
   },
+  notification: {
+    notifications: '/api/notifications/getNotifications',
+    subscribe: '/api/notifications/subscribe',
+    schedule: '/api/notifications/schedule',
+  },
   mail: {
     list: '/api/mail/list',
     details: '/api/mail/details',
