@@ -20,10 +20,12 @@ import FileThumbnail from 'src/components/file-thumbnail';
 
 type NotificationItemProps = {
   notification: NotificationData;
+  deleteScheduledNotification: (id: string) => void;
 };
 
 export default function NotificationItem({
   notification,
+  deleteScheduledNotification,
 }: NotificationItemProps) {
   const renderAvatar = (
     <ListItemAvatar>
@@ -45,7 +47,8 @@ export default function NotificationItem({
         >
           <Iconify
             icon={
-              (notification.type === 'system' && 'line-md:bell-loop') ||
+              (notification.type === 'system' &&
+                'solar:bell-bing-bold-duotone') ||
               (notification.type === 'schedule' && 'lets-icons:clock') ||
               (notification.type === 'order' && 'ic_order') ||
               (notification.type === 'chat' && 'ic_chat') ||
@@ -67,6 +70,7 @@ export default function NotificationItem({
         <Stack
           direction="row"
           alignItems="center"
+          justifyContent="space-between"
           sx={{ typography: 'caption', color: 'text.disabled' }}
           divider={
             <Box
@@ -82,6 +86,12 @@ export default function NotificationItem({
         >
           {fToNow(notification.createdAt)}
           {notification.category}
+          <IconButton
+            edge="end"
+            onClick={() => deleteScheduledNotification(notification._id)}
+          >
+            <Iconify width={24} icon="tabler:trash" />
+          </IconButton>
         </Stack>
       }
     />
@@ -242,14 +252,6 @@ export default function NotificationItem({
         {notification.type === 'file' && fileAction}
         {notification.type === 'tags' && tagsAction}
         {notification.type === 'payment' && paymentAction}
-        <IconButton
-          edge="end"
-          // onClick={() =>
-          //   deleteScheduledNotification(notification.id)
-          // }
-        >
-          <Iconify width={24} icon="eva:smiling-face-fill" />
-        </IconButton>
       </Stack>
     </ListItemButton>
   );

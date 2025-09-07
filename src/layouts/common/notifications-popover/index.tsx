@@ -1,7 +1,10 @@
 import { m } from 'framer-motion';
+import { endpoints } from '@/src/utils/axios';
+import { HOST_API } from '@/src/config-global';
 import { NotificationData } from '@/src/types/api';
 import { useFetchGetNotifications } from '@/src/hooks/use-fetch';
 import { useMemo, useState, useEffect, useCallback } from 'react';
+import { useCreateGenericMutation } from '@/src/hooks/user-generic-mutation';
 import PushNotificationManager from '@/src/components/notifications/push-notifications-manager';
 
 import Tab from '@mui/material/Tab';
@@ -42,6 +45,7 @@ export default function NotificationsPopover() {
   const smUp = useResponsive('up', 'sm');
   const [currentTab, setCurrentTab] = useState<string>('all');
   const [showSettings, setShowSettings] = useState(false);
+  const { mutateAsync } = useCreateGenericMutation();
 
   // Usar el hook para obtener notificaciones reales
   const { data: fetchedNotifications = [], refetch: refetchNotifications } =
@@ -63,7 +67,7 @@ export default function NotificationsPopover() {
       [...notifs].sort((a, b) => {
         const dateA = new Date(a.createdAt || 0);
         const dateB = new Date(b.createdAt || 0);
-        return dateB.getTime() - dateA.getTime(); // Orden descendente (más reciente primero)
+        return dateB.getTime() - dateA.getTime();
       }),
     []
   );
@@ -129,6 +133,23 @@ export default function NotificationsPopover() {
       read: true, // Cambiado a true para marcar como leído
     }));
     setNotifications(updatedNotifications);
+  };
+
+  const deleteScheduledNotification = async (notificationId: string) => {
+    try {
+      await mutateAsync<{ id: string }>({
+        payload: { id: notificationId },
+        pEndpoint: `${HOST_API}${endpoints.notification.delete}/${notificationId}`,
+        method: 'DELETE',
+      });
+      setNotifications((prevNotifications) =>
+        prevNotifications.filter(
+          (notification) => notification._id !== notificationId
+        )
+      );
+    } catch (error) {
+      console.error('Error al eliminar la notificación:', error);
+    }
   };
 
   const toggleSettings = () => {
@@ -211,6 +232,7 @@ export default function NotificationsPopover() {
           <NotificationItem
             key={notification._id}
             notification={notification}
+            deleteScheduledNotification={deleteScheduledNotification}
           />
         ))}
       </List>
@@ -274,7 +296,13 @@ export default function NotificationsPopover() {
         </Stack>
 
         <Divider />
-
+        {notifications.length === 0 && (
+          <Box sx={{ p: 2 }}>
+            <Typography variant="h6" sx={{ textAlign: 'center' }}>
+              No notifications available
+            </Typography>
+          </Box>
+        )}
         {renderContent()}
 
         {!showSettings && currentTab !== 'schedule' && (

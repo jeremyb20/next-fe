@@ -87,6 +87,7 @@ const Logo = forwardRef<HTMLDivElement, LogoProps>(
         <Image
           src="https://res.cloudinary.com/ensamble/image/upload/v1692285552/gw2pih5qe3vritw5xv13.png"
           alt="logo"
+          priority
           width={100}
           height={100}
           style={{
