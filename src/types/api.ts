@@ -20,7 +20,7 @@ export interface QueryOptions {
 export interface BaseApiResponse {
   status: string;
   message: string;
-  data?: unknown; // Opcional por si incluye datos adicionales
+  payload?: unknown; // Opcional por si incluye datos adicionales
 }
 
 // external interfaces

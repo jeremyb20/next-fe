@@ -1,7 +1,7 @@
 // schedule-notification-form.tsx
 import { useState } from 'react';
 import { endpoints } from '@/src/utils/axios';
-import { NotificationFormData } from '@/src/types/api';
+import { NotificationData, NotificationFormData } from '@/src/types/api';
 import { useCreateGenericMutation } from '@/src/hooks/user-generic-mutation';
 
 import {
@@ -17,10 +17,12 @@ import { HOST_API } from 'src/config-global';
 
 interface ScheduleNotificationFormProps {
   onNotificationScheduled: () => void;
+  setNotifications: React.Dispatch<React.SetStateAction<NotificationData[]>>;
 }
 
 const ScheduleNotificationForm = ({
   onNotificationScheduled,
+  setNotifications,
 }: ScheduleNotificationFormProps) => {
   const [formData, setFormData] = useState<NotificationFormData>({
     title: '',
@@ -77,6 +79,10 @@ const ScheduleNotificationForm = ({
       })
         .then((data) => {
           console.log('Éxito:', data);
+          setNotifications((prevNotifications) => [
+            ...prevNotifications,
+            data.payload as NotificationData,
+          ]);
         })
         .catch((error) => {
           console.error('Error:', error);
@@ -96,9 +102,9 @@ const ScheduleNotificationForm = ({
       });
 
       // Notificar al componente padre para actualizar la lista
-      if (onNotificationScheduled) {
-        onNotificationScheduled();
-      }
+      // if (onNotificationScheduled) {
+      //   onNotificationScheduled();
+      // }
     } catch (error) {
       console.error('Error scheduling notification:', error);
       setMessage({

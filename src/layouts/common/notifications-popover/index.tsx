@@ -41,7 +41,7 @@ export default function NotificationsPopover() {
   const drawer = useBoolean();
   const smUp = useResponsive('up', 'sm');
   const [currentTab, setCurrentTab] = useState<string>('all');
-  const [showSettings, setShowSettings] = useState(false); // Cambiado el nombre para mayor claridad
+  const [showSettings, setShowSettings] = useState(false);
 
   // Usar el hook para obtener notificaciones reales
   const { data: fetchedNotifications = [], refetch: refetchNotifications } =
@@ -57,6 +57,17 @@ export default function NotificationsPopover() {
     }
   }, [fetchedNotifications]);
 
+  // Función para ordenar notificaciones por fecha (más reciente primero)
+  const sortNotificationsByDate = useCallback(
+    (notifs: NotificationData[]) =>
+      [...notifs].sort((a, b) => {
+        const dateA = new Date(a.createdAt || 0);
+        const dateB = new Date(b.createdAt || 0);
+        return dateB.getTime() - dateA.getTime(); // Orden descendente (más reciente primero)
+      }),
+    []
+  );
+
   const handleChangeTab = useCallback(
     (event: React.SyntheticEvent, newValue: string) => {
       setCurrentTab(newValue);
@@ -65,33 +76,39 @@ export default function NotificationsPopover() {
   );
 
   const filteredNotifications = useMemo(() => {
+    let filtered = notifications;
+
     switch (currentTab) {
       case 'unread':
-        return fetchedNotifications.filter((item) => item.read === false);
+        filtered = notifications.filter((item) => item.read === false);
+        break;
       case 'schedule':
-        return fetchedNotifications.filter((item) => item.type === 'schedule');
+        filtered = notifications.filter((item) => item.type === 'schedule');
+        break;
       case 'all':
       default:
-        return fetchedNotifications;
+        filtered = notifications;
+        break;
     }
-  }, [fetchedNotifications, currentTab]);
+
+    return sortNotificationsByDate(filtered);
+  }, [notifications, currentTab, sortNotificationsByDate]);
 
   const totalUnRead = useMemo(
-    () => fetchedNotifications.filter((item) => item.read === false).length,
-    [fetchedNotifications]
+    () => notifications.filter((item) => item.read === false).length,
+    [notifications]
   );
 
   const totalScheduled = useMemo(
-    () =>
-      fetchedNotifications.filter((item) => item.type === 'schedule').length,
-    [fetchedNotifications]
+    () => notifications.filter((item) => item.type === 'schedule').length,
+    [notifications]
   );
 
   const TABS: TabType[] = [
     {
       value: 'all',
       label: 'All',
-      count: fetchedNotifications.length,
+      count: notifications.length,
     },
     {
       value: 'unread',
@@ -106,12 +123,11 @@ export default function NotificationsPopover() {
   ];
 
   const handleMarkAllAsRead = () => {
-    setNotifications(
-      notifications.map((notification) => ({
-        ...notification,
-        read: false,
-      }))
-    );
+    const updatedNotifications = notifications.map((notification) => ({
+      ...notification,
+      read: true, // Cambiado a true para marcar como leído
+    }));
+    setNotifications(updatedNotifications);
   };
 
   const toggleSettings = () => {
@@ -202,7 +218,10 @@ export default function NotificationsPopover() {
 
   const renderScheduleTab = (
     <Box sx={{ p: 2 }}>
-      <PushNotificationManager onNotificationScheduled={refetchNotifications} />
+      <PushNotificationManager
+        onNotificationScheduled={refetchNotifications}
+        setNotifications={setNotifications}
+      />
     </Box>
   );
 
@@ -211,10 +230,6 @@ export default function NotificationsPopover() {
     if (showSettings) {
       return renderScheduleTab;
     }
-
-    // if (currentTab === 'schedule') {
-    //   return renderScheduleTab;
-    // }
 
     return renderList;
   };

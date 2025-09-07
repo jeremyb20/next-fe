@@ -1,6 +1,7 @@
 'use client';
 
 import { endpoints } from '@/src/utils/axios';
+import { NotificationData } from '@/src/types/api';
 import { useRef, useState, useEffect, useCallback } from 'react';
 import { getApplicationServerKey } from '@/src/utils/notifications';
 import { useCreateGenericMutation } from '@/src/hooks/user-generic-mutation';
@@ -21,10 +22,12 @@ import Iconify from 'src/components/iconify';
 
 interface PushNotificationProps {
   onNotificationScheduled: () => void;
+  setNotifications: React.Dispatch<React.SetStateAction<NotificationData[]>>;
 }
 
 const PushNotificationManager = ({
   onNotificationScheduled,
+  setNotifications,
 }: PushNotificationProps) => {
   const initializedRef = useRef(false);
   const [isSupported, setIsSupported] = useState<boolean>(false);
@@ -280,6 +283,7 @@ const PushNotificationManager = ({
             </Box>
             <ScheduleNotificationForm
               onNotificationScheduled={onNotificationScheduled}
+              setNotifications={setNotifications}
             />
           </CardContent>
         </Card>
