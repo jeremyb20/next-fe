@@ -1,7 +1,7 @@
 'use client';
 
 import { endpoints } from '@/src/utils/axios';
-import { useRef, useState, useEffect } from 'react';
+import { useRef, useState, useEffect, useCallback } from 'react';
 import { getApplicationServerKey } from '@/src/utils/notifications';
 import { useCreateGenericMutation } from '@/src/hooks/user-generic-mutation';
 import ScheduleNotificationForm from '@/src/layouts/common/notifications-popover/components/schedule-notification-form';
@@ -31,28 +31,116 @@ const PushNotificationManager = ({
   const { mutateAsync } = useCreateGenericMutation();
   const [permission, setPermission] =
     useState<NotificationPermission>('default');
+  const [isSubscribed, setIsSubscribed] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  useEffect(() => {
-    // Evitar ejecución múltiple en desarrollo
-    if (initializedRef.current) return;
+  const checkExistingSubscription = useCallback(async () => {
+    try {
+      const registration = await navigator.serviceWorker.ready;
+      const existingSubscription =
+        await registration.pushManager.getSubscription();
 
-    // Verificar compatibilidad
-    if (
-      'Notification' in window &&
-      'serviceWorker' in navigator &&
-      'PushManager' in window
-    ) {
-      setIsSupported(true);
-      setPermission(Notification.permission);
+      if (existingSubscription) {
+        setIsSubscribed(true);
+        console.log('Ya existe una suscripción activa');
+        return true;
+      }
 
-      // Cargar notificaciones programadas existentes
-      onNotificationScheduled();
-
-      initializedRef.current = true;
+      setIsSubscribed(false);
+      return false;
+    } catch (error) {
+      console.error('Error verificando suscripción existente:', error);
+      setIsSubscribed(false);
+      return false;
     }
-  }, [onNotificationScheduled]);
+  }, []);
 
-  const requestPermission = async () => {
+  const registerServiceWorker = useCallback(async () => {
+    setIsLoading(true);
+    try {
+      const vapidPublicKey = process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY;
+      if (!vapidPublicKey) {
+        console.error('VAPID public key is not defined');
+        setIsLoading(false);
+        return;
+      }
+
+      // Verificar si ya existe una suscripción
+      const alreadySubscribed = await checkExistingSubscription();
+      if (alreadySubscribed) {
+        console.log(
+          'Usuario ya está suscrito, no es necesario suscribirse nuevamente'
+        );
+        setIsLoading(false);
+        onNotificationScheduled();
+        return;
+      }
+
+      // Registrar service worker si no existe
+      let registration;
+      try {
+        registration = await navigator.serviceWorker.getRegistration();
+        if (!registration) {
+          registration = await navigator.serviceWorker.register('/sw.js');
+          console.log('Service Worker registrado correctamente');
+        }
+      } catch (swError) {
+        console.error('Error con Service Worker:', swError);
+        setIsLoading(false);
+        return;
+      }
+
+      // Suscribirse a las notificaciones push
+      const subscription = await registration.pushManager.subscribe({
+        userVisibleOnly: true,
+        applicationServerKey: getApplicationServerKey(vapidPublicKey),
+      });
+
+      // Enviar la suscripción al servidor
+      await mutateAsync<PushSubscription>({
+        payload: subscription,
+        pEndpoint: `${HOST_API}${endpoints.notification.subscribe}`,
+        method: 'POST',
+      });
+
+      setIsSubscribed(true);
+      console.log('Suscripción creada exitosamente');
+      onNotificationScheduled();
+    } catch (error) {
+      console.error('Error en el proceso de suscripción:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  }, [mutateAsync, onNotificationScheduled, checkExistingSubscription]);
+
+  const unsubscribeFromNotifications = useCallback(async () => {
+    try {
+      const registration = await navigator.serviceWorker.ready;
+      const subscription = await registration.pushManager.getSubscription();
+
+      if (subscription) {
+        await subscription.unsubscribe();
+        console.log('Suscripción cancelada');
+
+        // Opcional: Notificar al servidor que se canceló la suscripción
+        try {
+          await mutateAsync({
+            payload: { endpoint: subscription.endpoint },
+            pEndpoint: `${HOST_API}${endpoints.notification.unsubscribe}`,
+            method: 'POST',
+          });
+        } catch (serverError) {
+          console.error('Error notificando al servidor:', serverError);
+        }
+
+        setIsSubscribed(false);
+      }
+    } catch (error) {
+      console.error('Error cancelando suscripción:', error);
+    }
+  }, [mutateAsync]);
+
+  const requestPermission = useCallback(async () => {
     if (!isSupported) return;
 
     const result = await Notification.requestPermission();
@@ -61,33 +149,36 @@ const PushNotificationManager = ({
     if (result === 'granted') {
       await registerServiceWorker();
     }
-  };
+  }, [isSupported, registerServiceWorker]);
 
-  const registerServiceWorker = async () => {
-    try {
-      const vapidPublicKey = process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY;
-      if (!vapidPublicKey) {
-        console.error('VAPID public key is not defined');
-        return;
+  useEffect(() => {
+    if (initializedRef.current) return;
+
+    const initializePushNotifications = async () => {
+      if (
+        'Notification' in window &&
+        'serviceWorker' in navigator &&
+        'PushManager' in window
+      ) {
+        setIsSupported(true);
+        setPermission(Notification.permission);
+
+        // Si ya tiene permiso concedido, verificar el estado de la suscripción
+        if (Notification.permission === 'granted') {
+          try {
+            await navigator.serviceWorker.ready;
+            await checkExistingSubscription();
+          } catch (error) {
+            console.error('Error inicializando notificaciones:', error);
+          }
+        }
+
+        initializedRef.current = true;
       }
-      const registration = await navigator.serviceWorker.register('/sw.js');
-      console.log('Service Worker registrado correctamente');
+    };
 
-      // Suscribirse a las notificaciones push
-      const subscription = await registration.pushManager.subscribe({
-        userVisibleOnly: true,
-        applicationServerKey: getApplicationServerKey(vapidPublicKey),
-      });
-      await mutateAsync<PushSubscription>({
-        payload: subscription,
-        pEndpoint: `${HOST_API}${endpoints.notification.subscribe}`,
-        method: 'POST',
-      });
-      onNotificationScheduled();
-    } catch (error) {
-      console.error('Error registrando Service Worker:', error);
-    }
-  };
+    initializePushNotifications();
+  }, [checkExistingSubscription]);
 
   if (!isSupported) {
     return (
@@ -121,17 +212,48 @@ const PushNotificationManager = ({
               <Button
                 variant="contained"
                 onClick={requestPermission}
+                disabled={isLoading}
                 startIcon={<Iconify icon="eva:checkmark-circle-2-fill" />}
               >
-                Activar Notificaciones
+                {isLoading ? 'Procesando...' : 'Activar Notificaciones'}
               </Button>
             </Box>
           )}
 
           {permission === 'granted' && (
-            <Alert severity="success" sx={{ mb: 2 }}>
-              Notificaciones activadas correctamente
-            </Alert>
+            <Box>
+              <Alert severity="success" sx={{ mb: 2 }}>
+                {isSubscribed
+                  ? 'Notificaciones activadas correctamente'
+                  : 'Permiso concedido, pero necesita suscribirse'}
+              </Alert>
+
+              {!isSubscribed && (
+                <Button
+                  variant="contained"
+                  onClick={registerServiceWorker}
+                  disabled={isLoading}
+                  startIcon={<Iconify icon="eva:bell-fill" />}
+                >
+                  {isLoading
+                    ? 'Suscribiendo...'
+                    : 'Suscribirse a Notificaciones'}
+                </Button>
+              )}
+
+              {isSubscribed && (
+                <Button
+                  variant="outlined"
+                  color="error"
+                  onClick={unsubscribeFromNotifications}
+                  disabled={isLoading}
+                  startIcon={<Iconify icon="eva:bell-off-fill" />}
+                  sx={{ mt: 1 }}
+                >
+                  Desactivar Notificaciones
+                </Button>
+              )}
+            </Box>
           )}
 
           {permission === 'denied' && (
@@ -143,7 +265,7 @@ const PushNotificationManager = ({
         </CardContent>
       </Card>
 
-      {permission === 'granted' && (
+      {permission === 'granted' && isSubscribed && (
         <Card sx={{ mb: 3 }}>
           <CardContent>
             <Box display="flex" alignItems="center" mb={2}>

@@ -41,6 +41,7 @@ export default function NotificationsPopover() {
   const drawer = useBoolean();
   const smUp = useResponsive('up', 'sm');
   const [currentTab, setCurrentTab] = useState<string>('all');
+  const [showSettings, setShowSettings] = useState(false); // Cambiado el nombre para mayor claridad
 
   // Usar el hook para obtener notificaciones reales
   const { data: fetchedNotifications = [], refetch: refetchNotifications } =
@@ -68,7 +69,7 @@ export default function NotificationsPopover() {
       case 'unread':
         return fetchedNotifications.filter((item) => item.read === false);
       case 'schedule':
-        return fetchedNotifications.filter((item) => item.type === 'scheduled');
+        return fetchedNotifications.filter((item) => item.type === 'schedule');
       case 'all':
       default:
         return fetchedNotifications;
@@ -82,9 +83,10 @@ export default function NotificationsPopover() {
 
   const totalScheduled = useMemo(
     () =>
-      fetchedNotifications.filter((item) => item.type === 'scheduled').length,
+      fetchedNotifications.filter((item) => item.type === 'schedule').length,
     [fetchedNotifications]
   );
+
   const TABS: TabType[] = [
     {
       value: 'all',
@@ -102,6 +104,7 @@ export default function NotificationsPopover() {
       count: totalScheduled,
     },
   ];
+
   const handleMarkAllAsRead = () => {
     setNotifications(
       notifications.map((notification) => ({
@@ -109,6 +112,10 @@ export default function NotificationsPopover() {
         read: false,
       }))
     );
+  };
+
+  const toggleSettings = () => {
+    setShowSettings(!showSettings);
   };
 
   const renderHead = (
@@ -127,6 +134,16 @@ export default function NotificationsPopover() {
           </IconButton>
         </Tooltip>
       )}
+
+      <IconButton onClick={toggleSettings}>
+        <Iconify
+          icon={
+            showSettings
+              ? 'solar:bell-bing-bold-duotone'
+              : 'solar:settings-bold-duotone'
+          }
+        />
+      </IconButton>
 
       {!smUp && (
         <IconButton onClick={drawer.onFalse}>
@@ -169,6 +186,7 @@ export default function NotificationsPopover() {
       ))}
     </Tabs>
   );
+
   const renderList = (
     <Scrollbar>
       <List disablePadding>
@@ -187,6 +205,19 @@ export default function NotificationsPopover() {
       <PushNotificationManager onNotificationScheduled={refetchNotifications} />
     </Box>
   );
+
+  // Determinar qué contenido mostrar
+  const renderContent = () => {
+    if (showSettings) {
+      return renderScheduleTab;
+    }
+
+    // if (currentTab === 'schedule') {
+    //   return renderScheduleTab;
+    // }
+
+    return renderList;
+  };
 
   return (
     <>
@@ -224,17 +255,13 @@ export default function NotificationsPopover() {
           sx={{ pl: 2.5, pr: 1 }}
         >
           {renderTabs}
-          <IconButton onClick={handleMarkAllAsRead}>
-            <Iconify icon="solar:settings-bold-duotone" />
-          </IconButton>
         </Stack>
 
         <Divider />
 
-        {currentTab === 'schedule' ? renderScheduleTab : renderList}
-        {/* {currentTab === 'schedule' ? <PushNotificationManager /> : renderList} */}
+        {renderContent()}
 
-        {currentTab !== 'schedule' && (
+        {!showSettings && currentTab !== 'schedule' && (
           <Box sx={{ p: 1 }}>
             <Button fullWidth size="large">
               View All

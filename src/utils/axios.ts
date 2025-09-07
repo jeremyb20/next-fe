@@ -38,6 +38,7 @@ export const endpoints = {
     notifications: '/api/notifications/getNotifications',
     subscribe: '/api/notifications/subscribe',
     schedule: '/api/notifications/schedule',
+    unsubscribe: '/api/notifications/unsubscribe',
   },
   mail: {
     list: '/api/mail/list',
