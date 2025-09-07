@@ -2,6 +2,7 @@ import { m } from 'framer-motion';
 import { NotificationData } from '@/src/types/api';
 import { useFetchGetNotifications } from '@/src/hooks/use-fetch';
 import { useMemo, useState, useEffect, useCallback } from 'react';
+import PushNotificationManager from '@/src/components/notifications/push-notifications-manager';
 
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
@@ -25,7 +26,6 @@ import Scrollbar from 'src/components/scrollbar';
 import { varHover } from 'src/components/animate';
 
 import NotificationItem from './notification-item';
-import ScheduleNotificationForm from './components/schedule-notification-form';
 
 // ----------------------------------------------------------------------
 
@@ -173,7 +173,10 @@ export default function NotificationsPopover() {
     <Scrollbar>
       <List disablePadding>
         {filteredNotifications.map((notification) => (
-          <NotificationItem key={notification.id} notification={notification} />
+          <NotificationItem
+            key={notification._id}
+            notification={notification}
+          />
         ))}
       </List>
     </Scrollbar>
@@ -181,9 +184,7 @@ export default function NotificationsPopover() {
 
   const renderScheduleTab = (
     <Box sx={{ p: 2 }}>
-      <ScheduleNotificationForm
-        onNotificationScheduled={refetchNotifications}
-      />
+      <PushNotificationManager onNotificationScheduled={refetchNotifications} />
     </Box>
   );
 
@@ -231,6 +232,7 @@ export default function NotificationsPopover() {
         <Divider />
 
         {currentTab === 'schedule' ? renderScheduleTab : renderList}
+        {/* {currentTab === 'schedule' ? <PushNotificationManager /> : renderList} */}
 
         {currentTab !== 'schedule' && (
           <Box sx={{ p: 1 }}>

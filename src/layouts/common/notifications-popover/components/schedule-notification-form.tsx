@@ -1,6 +1,8 @@
 // schedule-notification-form.tsx
 import { useState } from 'react';
-import axiosInstance, { endpoints } from '@/src/utils/axios';
+import { endpoints } from '@/src/utils/axios';
+import { NotificationFormData } from '@/src/types/api';
+import { useCreateGenericMutation } from '@/src/hooks/user-generic-mutation';
 
 import {
   Box,
@@ -12,13 +14,6 @@ import {
 } from '@mui/material';
 
 import { HOST_API } from 'src/config-global';
-
-interface NotificationFormData {
-  title: string;
-  body: string;
-  date: string;
-  time: string;
-}
 
 interface ScheduleNotificationFormProps {
   onNotificationScheduled: () => void;
@@ -38,6 +33,7 @@ const ScheduleNotificationForm = ({
     type: 'success' | 'error' | 'info' | 'warning';
     text: string;
   }>({ type: 'info', text: '' });
+  const { mutateAsync } = useCreateGenericMutation();
 
   const handleFormChange =
     (field: keyof NotificationFormData) =>
@@ -70,12 +66,21 @@ const ScheduleNotificationForm = ({
         body: formData.body,
         scheduledTime: scheduledTime.toISOString(),
         type: 'schedule',
+        date: '',
+        time: '',
       };
 
-      await axiosInstance.post(
-        `${HOST_API}${endpoints.notification.schedule}`,
-        schedule
-      );
+      await mutateAsync<NotificationFormData>({
+        payload: schedule,
+        pEndpoint: `${HOST_API}${endpoints.notification.schedule}`,
+        method: 'POST',
+      })
+        .then((data) => {
+          console.log('Éxito:', data);
+        })
+        .catch((error) => {
+          console.error('Error:', error);
+        });
 
       setMessage({
         type: 'success',

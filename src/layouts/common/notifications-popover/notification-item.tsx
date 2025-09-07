@@ -5,6 +5,7 @@ import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import Avatar from '@mui/material/Avatar';
+import { IconButton } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import ListItemText from '@mui/material/ListItemText';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
@@ -241,6 +242,14 @@ export default function NotificationItem({
         {notification.type === 'file' && fileAction}
         {notification.type === 'tags' && tagsAction}
         {notification.type === 'payment' && paymentAction}
+        <IconButton
+          edge="end"
+          // onClick={() =>
+          //   deleteScheduledNotification(notification.id)
+          // }
+        >
+          <Iconify width={24} icon="eva:smiling-face-fill" />
+        </IconButton>
       </Stack>
     </ListItemButton>
   );

@@ -3,8 +3,8 @@ self.addEventListener('push', function(event) {
     const data = event.data.json();
     const options = {
       body: data.body,
-      icon: '/public/favicon/android-chrome-192x192.png',
-      badge: '/public/favicon/android-chrome-192x192.png',
+      icon: 'https://res.cloudinary.com/ensamble/image/upload/v1692285552/gw2pih5qe3vritw5xv13.png',
+      badge: 'https://res.cloudinary.com/ensamble/image/upload/v1692285552/gw2pih5qe3vritw5xv13.png',
       vibrate: [200, 100, 200],
       tag: 'scheduled-notification'
     };
