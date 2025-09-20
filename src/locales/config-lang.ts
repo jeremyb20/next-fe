@@ -42,17 +42,6 @@ import {
 
 export const allLangs = [
   {
-    label: 'English',
-    value: 'en',
-    systemValue: merge(enUSDate, enUSDataGrid, enUSCore),
-    adapterLocale: enUSAdapter,
-    icon: 'flagpack:us',
-    numberFormat: {
-      code: 'en-US',
-      currency: 'USD',
-    },
-  },
-  {
     label: 'Español',
     value: 'es',
     systemValue: merge(esESDate, esESDataGrid),
@@ -61,6 +50,17 @@ export const allLangs = [
     numberFormat: {
       code: 'es-ES',
       currency: 'EUR',
+    },
+  },
+  {
+    label: 'English',
+    value: 'en',
+    systemValue: merge(enUSDate, enUSDataGrid, enUSCore),
+    adapterLocale: enUSAdapter,
+    icon: 'flagpack:us',
+    numberFormat: {
+      code: 'en-US',
+      currency: 'USD',
     },
   },
   {
@@ -109,7 +109,7 @@ export const allLangs = [
   },
 ];
 
-export const defaultLang = allLangs[0]; // English
+export const defaultLang = allLangs[0]; // Spanish
 
 // GET MORE COUNTRY FLAGS
 // https://icon-sets.iconify.design/flagpack/

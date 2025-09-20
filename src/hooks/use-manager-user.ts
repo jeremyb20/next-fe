@@ -9,26 +9,27 @@ import { _mock } from 'src/_mock';
 // TO:
 import { useAuthContext } from 'src/auth/hooks';
 
+import { getUserRoleFromState } from '../utils/constants';
+
 // ----------------------------------------------------------------------
 
 export function useMangerUser() {
   const { user: authUser } = useAuthContext();
-  const test = authUser;
   const user = {
     id: '8864c717-587d-472a-929a-8e5f298024da-0',
     displayName: 'Jeremy Bacca',
-    email: test?.email,
+    email: authUser?.email,
     password: 'demo1234',
     photoURL: _mock.image.avatar(24),
-    phoneNumber: test?.phone,
-    country: test?.country,
+    phoneNumber: authUser?.phone,
+    country: authUser?.country,
     address: '90210 Broadway Blvd',
     state: 'California',
     city: 'San Francisco',
     zipCode: '94116',
     about:
       'Praesent turpis. Phasellus viverra nulla ut metus varius laoreet. Phasellus tempus.',
-    role: 'admin', // admin | user | groomer | veterinarian
+    role: getUserRoleFromState(authUser?.userState), // admin | user | groomer | veterinarian
     isPublic: false,
   };
 

@@ -1,12 +1,12 @@
 'use client';
 
+import { useMangerUser } from '@/src/hooks/use-manager-user';
+
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import { useTheme } from '@mui/material/styles';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Unstable_Grid2';
-
-import { useMangerUser } from '@/src/hooks/use-manager-user';
 
 import { useAuthContext } from 'src/auth/hooks';
 import { SeoIllustration } from 'src/assets/illustrations';

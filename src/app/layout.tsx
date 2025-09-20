@@ -1,7 +1,4 @@
-/* eslint-disable perfectionist/sort-imports */
 import 'src/global.css';
-
-// i18n
 import 'src/locales/i18n';
 
 // ----------------------------------------------------------------------
@@ -9,6 +6,8 @@ import 'src/locales/i18n';
 import ThemeProvider from 'src/theme';
 import { LocalizationProvider } from 'src/locales';
 import { primaryFont } from 'src/theme/typography';
+import { AuthProvider } from 'src/auth/context/jwt';
+import QueryProvider from 'src/query/query-provider';
 
 import ProgressBar from 'src/components/progress-bar';
 import { MotionLazy } from 'src/components/animate/motion-lazy';
@@ -16,9 +15,6 @@ import SnackbarProvider from 'src/components/snackbar/snackbar-provider';
 import { SettingsDrawer, SettingsProvider } from 'src/components/settings';
 
 import { CheckoutProvider } from 'src/sections/checkout/context';
-
-import { AuthProvider } from 'src/auth/context/jwt';
-import QueryProvider from 'src/query/query-provider';
 // import { AuthProvider } from 'src/auth/context/auth0';
 // import { AuthProvider } from 'src/auth/context/amplify';
 // import { AuthProvider } from 'src/auth/context/firebase';

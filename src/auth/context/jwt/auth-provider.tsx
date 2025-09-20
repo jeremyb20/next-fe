@@ -144,7 +144,6 @@ export function AuthProvider({ children }: Props) {
         user: {
           ...user,
           accessToken,
-          role: 'admin',
         },
       },
     });
