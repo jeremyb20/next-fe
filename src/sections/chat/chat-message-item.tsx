@@ -6,7 +6,7 @@ import Avatar from '@mui/material/Avatar';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 
-import { useMockedUser } from 'src/hooks/use-mocked-user';
+import { useMangerUser } from '@/src/hooks/use-manager-user';
 
 import Iconify from 'src/components/iconify';
 
@@ -27,7 +27,7 @@ export default function ChatMessageItem({
   participants,
   onOpenLightbox,
 }: Props) {
-  const { user } = useMockedUser();
+  const { user } = useMangerUser();
 
   const { me, senderDetails, hasImage } = useGetMessage({
     message,

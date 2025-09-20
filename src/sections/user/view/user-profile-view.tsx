@@ -9,7 +9,7 @@ import Tabs, { tabsClasses } from '@mui/material/Tabs';
 
 import { paths } from 'src/routes/paths';
 
-import { useMockedUser } from 'src/hooks/use-mocked-user';
+import { useMangerUser } from '@/src/hooks/use-manager-user';
 
 import {
   _userAbout,
@@ -59,7 +59,7 @@ const TABS = [
 export default function UserProfileView() {
   const settings = useSettingsContext();
 
-  const { user } = useMockedUser();
+  const { user } = useMangerUser();
 
   const [searchFriends, setSearchFriends] = useState('');
 

@@ -12,7 +12,7 @@ import Typography from '@mui/material/Typography';
 import { paths } from 'src/routes/paths';
 import { useRouter } from 'src/routes/hooks';
 
-import { useMockedUser } from 'src/hooks/use-mocked-user';
+import { useMangerUser } from '@/src/hooks/use-manager-user';
 
 import { useAuthContext } from 'src/auth/hooks';
 
@@ -42,7 +42,7 @@ const OPTIONS = [
 export default function AccountPopover() {
   const router = useRouter();
 
-  const { user } = useMockedUser();
+  const { user } = useMangerUser();
 
   const { logout } = useAuthContext();
 

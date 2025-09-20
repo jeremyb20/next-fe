@@ -16,7 +16,7 @@ import InputAdornment from '@mui/material/InputAdornment';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import AvatarGroup, { avatarGroupClasses } from '@mui/material/AvatarGroup';
 
-import { useMockedUser } from 'src/hooks/use-mocked-user';
+import { useMangerUser } from '@/src/hooks/use-manager-user';
 
 import { fDate } from 'src/utils/format-time';
 import { fShortenNumber } from 'src/utils/format-number';
@@ -33,7 +33,7 @@ interface Props {
 }
 
 export default function ProfilePostItem({ post }: Props) {
-  const { user } = useMockedUser();
+  const { user } = useMangerUser();
 
   const commentRef = useRef<HTMLInputElement>(null);
 

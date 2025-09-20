@@ -3,15 +3,15 @@ import { _mock } from 'src/_mock';
 // TO GET THE USER FROM THE AUTHCONTEXT, YOU CAN USE
 
 // CHANGE:
-// import { useMockedUser } from 'src/hooks/use-mocked-user';
-// const { user } = useMockedUser();
+// import { useMangerUser } from 'src/hooks/use-mocked-user';
+// const { user } = useMangerUser();
 
 // TO:
 import { useAuthContext } from 'src/auth/hooks';
 
 // ----------------------------------------------------------------------
 
-export function useMockedUser() {
+export function useMangerUser() {
   const { user: authUser } = useAuthContext();
   const test = authUser;
   const user = {
@@ -28,7 +28,7 @@ export function useMockedUser() {
     zipCode: '94116',
     about:
       'Praesent turpis. Phasellus viverra nulla ut metus varius laoreet. Phasellus tempus.',
-    role: 'admin', // admin | user | guest
+    role: 'admin', // admin | user | groomer | veterinarian
     isPublic: false,
   };
 

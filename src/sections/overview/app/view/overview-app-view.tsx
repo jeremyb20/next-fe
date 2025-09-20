@@ -6,7 +6,7 @@ import { useTheme } from '@mui/material/styles';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Unstable_Grid2';
 
-import { useMockedUser } from 'src/hooks/use-mocked-user';
+import { useMangerUser } from '@/src/hooks/use-manager-user';
 
 import { useAuthContext } from 'src/auth/hooks';
 import { SeoIllustration } from 'src/assets/illustrations';
@@ -34,7 +34,7 @@ import AppTopInstalledCountries from '../app-top-installed-countries';
 // ----------------------------------------------------------------------
 
 export default function OverviewAppView() {
-  const { user } = useMockedUser();
+  const { user } = useMangerUser();
   const { user: usuario } = useAuthContext();
   console.log(usuario, 'usuario');
   const theme = useTheme();

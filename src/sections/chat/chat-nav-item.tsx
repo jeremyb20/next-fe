@@ -14,7 +14,7 @@ import { paths } from 'src/routes/paths';
 import { useRouter } from 'src/routes/hooks';
 
 import { useResponsive } from 'src/hooks/use-responsive';
-import { useMockedUser } from 'src/hooks/use-mocked-user';
+import { useMangerUser } from '@/src/hooks/use-manager-user';
 
 import { clickConversation } from 'src/api/chat';
 
@@ -37,7 +37,7 @@ export default function ChatNavItem({
   conversation,
   onCloseMobile,
 }: Props) {
-  const { user } = useMockedUser();
+  const { user } = useMangerUser();
 
   const mdUp = useResponsive('up', 'md');
 
