@@ -1,4 +1,5 @@
 import { useMemo } from 'react';
+import { NavItemBaseProps } from '@/src/components/nav-section';
 
 import { paths } from 'src/routes/paths';
 
@@ -48,15 +49,36 @@ const ICONS = {
   dashboard: icon('ic_dashboard'),
 };
 
+const filterByRole = (
+  items: NavItemBaseProps[],
+  userRole: string
+): NavItemBaseProps[] =>
+  items
+    .filter((item: NavItemBaseProps) => {
+      if (item.disabled) return false;
+
+      if (!item.roles) return true;
+
+      return item.roles.includes(userRole);
+    })
+    .map((item: NavItemBaseProps) => {
+      if (item.children && Array.isArray(item.children)) {
+        return {
+          ...item,
+          children: filterByRole(item.children, userRole),
+        };
+      }
+      return item;
+    });
+
 // ----------------------------------------------------------------------
 
-export function useNavData() {
+export function useNavData(userRole: string) {
   const { t } = useTranslate();
 
-  const data = useMemo(
-    () => [
-      // OVERVIEW
-      // ----------------------------------------------------------------------
+  const data = useMemo(() => {
+    const allNavData: { subheader: string; items: NavItemBaseProps[] }[] = [
+      //     // OVERVIEW
       {
         subheader: t('overview'),
         items: [
@@ -64,6 +86,7 @@ export function useNavData() {
             title: t('app'),
             path: paths.dashboard.root,
             icon: ICONS.dashboard,
+            roles: ['admin'],
           },
           {
             title: t('ecommerce'),
@@ -241,12 +264,11 @@ export function useNavData() {
             // default roles : All roles can see this entry.
             // roles: ['user'] Only users can see this item.
             // roles: ['admin'] Only admin can see this item.
-            // roles: ['admin', 'manager'] Only admin/manager can see this item.
             // Reference from 'src/guards/RoleBasedGuard'.
             title: t('item_by_roles'),
             path: paths.dashboard.permission,
             icon: ICONS.lock,
-            roles: ['admin', 'manager', 'user'],
+            roles: ['admin', 'user'],
             caption: t('only_admin_can_see_this_item'),
           },
           {
@@ -322,9 +344,18 @@ export function useNavData() {
           },
         ],
       },
-    ],
-    [t]
-  );
+
+      // ... otras secciones
+    ];
+
+    // Filtrar por rol y luego eliminar secciones vacías
+    return allNavData
+      .map((section) => ({
+        ...section,
+        items: filterByRole(section.items, userRole),
+      }))
+      .filter((section) => section.items.length > 0);
+  }, [t, userRole]);
 
   return data;
 }

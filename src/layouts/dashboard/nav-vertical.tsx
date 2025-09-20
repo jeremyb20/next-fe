@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { useMangerUser } from '@/src/hooks/use-manager-user';
 
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
@@ -7,7 +8,6 @@ import Drawer from '@mui/material/Drawer';
 import { usePathname } from 'src/routes/hooks';
 
 import { useResponsive } from 'src/hooks/use-responsive';
-import { useMangerUser } from '@/src/hooks/use-manager-user';
 
 import Logo from 'src/components/logo';
 import Scrollbar from 'src/components/scrollbar';
@@ -27,12 +27,13 @@ type Props = {
 
 export default function NavVertical({ openNav, onCloseNav }: Props) {
   const { user } = useMangerUser();
+  const currentRole = user?.role;
 
   const pathname = usePathname();
 
   const lgUp = useResponsive('up', 'lg');
 
-  const navData = useNavData();
+  const navData = useNavData(currentRole);
 
   useEffect(() => {
     if (openNav) {

@@ -1,6 +1,7 @@
 import parse from 'autosuggest-highlight/parse';
 import match from 'autosuggest-highlight/match';
 import { memo, useState, useCallback } from 'react';
+import { useMangerUser } from '@/src/hooks/use-manager-user';
 
 import Box from '@mui/material/Box';
 import List from '@mui/material/List';
@@ -39,7 +40,10 @@ function Searchbar() {
 
   const [searchQuery, setSearchQuery] = useState('');
 
-  const navData = useNavData();
+  const { user } = useMangerUser();
+  const currentRole = user?.role;
+
+  const navData = useNavData(currentRole);
 
   const handleClose = useCallback(() => {
     search.onFalse();
