@@ -5,18 +5,12 @@ import merge from 'lodash/merge';
 import {
   fr as frFRAdapter,
   vi as viVNAdapter,
+  es as esESAdapter,
   enUS as enUSAdapter,
   zhCN as zhCNAdapter,
   arSA as arSAAdapter,
 } from 'date-fns/locale';
 
-// date pickers (MUI)
-import {
-  enUS as enUSDate,
-  frFR as frFRDate,
-  viVN as viVNDate,
-  zhCN as zhCNDate,
-} from '@mui/x-date-pickers/locales';
 // core (MUI)
 import {
   enUS as enUSCore,
@@ -25,6 +19,14 @@ import {
   zhCN as zhCNCore,
   arSA as arSACore,
 } from '@mui/material/locale';
+// date pickers (MUI)
+import {
+  enUS as enUSDate,
+  frFR as frFRDate,
+  viVN as viVNDate,
+  zhCN as zhCNDate,
+  esES as esESDate,
+} from '@mui/x-date-pickers/locales';
 // data grid (MUI)
 import {
   enUS as enUSDataGrid,
@@ -32,6 +34,7 @@ import {
   viVN as viVNDataGrid,
   zhCN as zhCNDataGrid,
   arSD as arSDDataGrid,
+  esES as esESDataGrid,
 } from '@mui/x-data-grid';
 
 // PLEASE REMOVE `LOCAL STORAGE` WHEN YOU CHANGE SETTINGS.
@@ -47,6 +50,17 @@ export const allLangs = [
     numberFormat: {
       code: 'en-US',
       currency: 'USD',
+    },
+  },
+  {
+    label: 'Español',
+    value: 'es',
+    systemValue: merge(esESDate, esESDataGrid),
+    adapterLocale: esESAdapter,
+    icon: 'flagpack:es',
+    numberFormat: {
+      code: 'es-ES',
+      currency: 'EUR',
     },
   },
   {
