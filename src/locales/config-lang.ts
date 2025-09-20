@@ -46,7 +46,7 @@ export const allLangs = [
     value: 'en',
     systemValue: merge(enUSDate, enUSDataGrid, enUSCore),
     adapterLocale: enUSAdapter,
-    icon: 'flagpack:gb-nir',
+    icon: 'flagpack:us',
     numberFormat: {
       code: 'en-US',
       currency: 'USD',

@@ -4,8 +4,6 @@ import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
 
-import { localStorageGetItem } from 'src/utils/storage-available';
-
 import { defaultLang } from './config-lang';
 import translationEn from './langs/en.json';
 import translationFr from './langs/fr.json';
@@ -15,8 +13,6 @@ import translationAr from './langs/ar.json';
 import translationEs from './langs/es.json';
 
 // ----------------------------------------------------------------------
-
-const lng = localStorageGetItem('i18nextLng', defaultLang.value);
 
 i18n
   .use(LanguageDetector)
@@ -30,8 +26,12 @@ i18n
       ar: { translations: translationAr },
       es: { translations: translationEs },
     },
-    lng,
-    fallbackLng: 'en',
+    detection: {
+      order: ['localStorage', 'navigator'],
+      caches: ['localStorage'],
+      lookupLocalStorage: 'i18nextLng',
+    },
+    fallbackLng: defaultLang.value,
     debug: false,
     ns: ['translations'],
     defaultNS: 'translations',
