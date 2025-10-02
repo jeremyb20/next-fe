@@ -76,8 +76,6 @@ const UsersList: React.FC = () => {
     );
   }
 
-  console.log('Fetched Users Data:', data);
-
   return (
     <Box sx={{ p: 3 }}>
       {/* Header with title and page size selector */}
@@ -126,11 +124,6 @@ const UsersList: React.FC = () => {
                 </Box>
 
                 <Box display="flex" gap={1}>
-                  <Chip
-                    label={user.petStatus}
-                    color={user.petStatus === 'active' ? 'success' : 'default'}
-                    size="small"
-                  />
                   <Chip
                     label={user.userState}
                     variant="outlined"

@@ -1,0 +1,423 @@
+'use client';
+
+import { IUser } from '@/src/types/api';
+import { useMemo, useState, useCallback } from 'react';
+import { useGetAllRegisteredUsers } from '@/src/hooks/use-fetch-paginates';
+
+import Tab from '@mui/material/Tab';
+import Tabs from '@mui/material/Tabs';
+import Card from '@mui/material/Card';
+import { Alert } from '@mui/material';
+import Table from '@mui/material/Table';
+import Button from '@mui/material/Button';
+import Tooltip from '@mui/material/Tooltip';
+import { alpha } from '@mui/material/styles';
+import Container from '@mui/material/Container';
+import TableBody from '@mui/material/TableBody';
+import IconButton from '@mui/material/IconButton';
+import TableContainer from '@mui/material/TableContainer';
+
+import { paths } from 'src/routes/paths';
+import { useRouter } from 'src/routes/hooks';
+
+import { useBoolean } from 'src/hooks/use-boolean';
+
+import { isAfter, isBetween } from 'src/utils/format-time';
+
+import Label from 'src/components/label';
+import Iconify from 'src/components/iconify';
+import Scrollbar from 'src/components/scrollbar';
+import { useSnackbar } from 'src/components/snackbar';
+import { ConfirmDialog } from 'src/components/custom-dialog';
+import { useSettingsContext } from 'src/components/settings';
+import CustomBreadcrumbs from 'src/components/custom-breadcrumbs';
+import {
+  useTable,
+  TableNoData,
+  getComparator,
+  TableSkeleton,
+  TableHeadCustom,
+  TableSelectedAction,
+  TablePaginationCustom,
+} from 'src/components/table';
+
+import OrderTableRow from '../order-table-row';
+import OrderTableToolbar from '../order-table-toolbar';
+import OrderTableFiltersResult from '../order-table-filters-result';
+
+export interface IUserTableFilters {
+  name: string;
+  status: string;
+  startDate: Date | null;
+  endDate: Date | null;
+}
+
+export type IUserTableFilterValue = string | Date | null;
+
+const STATUS_OPTIONS = [
+  { value: 'all', label: 'All' },
+  { value: 'active', label: 'Active' },
+  { value: 'inactive', label: 'Inactive' },
+  { value: 'suspended', label: 'Suspended' },
+];
+
+const TABLE_HEAD = [
+  { id: 'email', label: 'Email' },
+  { id: 'createdAt', label: 'Created', width: 140 },
+  { id: 'updatedAt', label: 'Updated', width: 140 },
+  { id: 'petStatus', label: 'Pet Status', width: 120 },
+  { id: 'userState', label: 'User State', width: 120 },
+  { id: 'petCount', label: 'No. Pets', width: 100, align: 'center' },
+  { id: '', width: 88 },
+];
+
+const defaultFilters: IUserTableFilters = {
+  name: '',
+  status: 'all',
+  startDate: null,
+  endDate: null,
+};
+
+// ----------------------------------------------------------------------
+
+export default function UserListView() {
+  const { enqueueSnackbar } = useSnackbar();
+  const table = useTable({ defaultOrderBy: 'createdAt' });
+  const settings = useSettingsContext();
+  const router = useRouter();
+  const confirm = useBoolean();
+
+  // Use your hook for data fetching
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize, setPageSize] = useState(5);
+
+  const {
+    data: usersData,
+    isFetching,
+    isError,
+    error,
+  } = useGetAllRegisteredUsers(currentPage, pageSize);
+
+  // Transform API data to table data
+  const tableData: IUser[] = useMemo(
+    () =>
+      usersData?.payload?.map((user) => ({
+        id: user.id,
+        email: user.email,
+        userState: user.userState,
+        createdAt: user.createdAt,
+        updatedAt: user.updatedAt,
+        newPetProfile: user.newPetProfile,
+        petCount: user.newPetProfile?.length || 0,
+        petStatus: user.userState,
+      })) || [],
+    [usersData?.payload]
+  );
+
+  const [filters, setFilters] = useState(defaultFilters);
+
+  const dateError = isAfter(filters.startDate, filters.endDate);
+
+  // Apply client-side filtering and sorting
+  const dataFiltered = useMemo(() => {
+    // Primero aplicar filtros
+    let filteredData = applyFilter({
+      inputData: tableData,
+      filters,
+      dateError,
+    });
+
+    // Luego aplicar ordenamiento con type assertion
+    if (table.orderBy) {
+      const comparator = getComparator(table.order, table.orderBy) as (
+        a: IUser,
+        b: IUser
+      ) => number;
+      filteredData = filteredData.sort(comparator);
+    }
+
+    return filteredData;
+  }, [tableData, table.order, table.orderBy, filters, dateError]);
+
+  const canReset =
+    !!filters.name ||
+    filters.status !== 'all' ||
+    (!!filters.startDate && !!filters.endDate);
+
+  const notFound = !tableData.length || (!dataFiltered.length && canReset);
+
+  const handleFilters = useCallback(
+    (name: string, value: IUserTableFilterValue) => {
+      setCurrentPage(1);
+      table.onResetPage();
+      setFilters((prevState) => ({
+        ...prevState,
+        [name]: value,
+      }));
+    },
+    [table]
+  );
+
+  const handleResetFilters = useCallback(() => {
+    setCurrentPage(1);
+    setFilters(defaultFilters);
+  }, []);
+
+  const handleDeleteRow = useCallback(
+    (id: string) => {
+      enqueueSnackbar('Delete success!');
+    },
+    [enqueueSnackbar]
+  );
+
+  const handleDeleteRows = useCallback(() => {
+    enqueueSnackbar('Delete success!');
+    confirm.onFalse();
+  }, [enqueueSnackbar, confirm]);
+
+  const handleViewRow = useCallback(
+    (id: string) => {
+      router.push(paths.dashboard.order.details(id));
+    },
+    [router]
+  );
+
+  const handleFilterStatus = useCallback(
+    (event: React.SyntheticEvent, newValue: string) => {
+      handleFilters('status', newValue);
+    },
+    [handleFilters]
+  );
+
+  const handlePageChange = useCallback((event: unknown, newPage: number) => {
+    setCurrentPage(newPage + 1);
+  }, []);
+
+  const handleRowsPerPageChange = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      const newRowsPerPage = parseInt(event.target.value, 10);
+      setPageSize(newRowsPerPage);
+      setCurrentPage(1);
+    },
+    []
+  );
+
+  if (isError) {
+    return (
+      <Container maxWidth={settings.themeStretch ? false : 'lg'}>
+        <Card sx={{ p: 3 }}>
+          <Alert severity="error">Error loading users: {error?.message}</Alert>
+        </Card>
+      </Container>
+    );
+  }
+
+  return (
+    <>
+      <Container maxWidth={settings.themeStretch ? false : 'lg'}>
+        <CustomBreadcrumbs
+          heading="Users List"
+          links={[
+            {
+              name: 'Dashboard',
+              href: paths.dashboard.root,
+            },
+            {
+              name: 'Users',
+              href: paths.dashboard.user.root,
+            },
+            { name: 'List' },
+          ]}
+          sx={{
+            mb: { xs: 3, md: 5 },
+          }}
+        />
+
+        <Card>
+          <Tabs
+            value={filters.status}
+            onChange={handleFilterStatus}
+            sx={{
+              px: 2.5,
+              boxShadow: (theme) =>
+                `inset 0 -2px 0 0 ${alpha(theme.palette.grey[500], 0.08)}`,
+            }}
+          >
+            {STATUS_OPTIONS.map((tab) => (
+              <Tab
+                key={tab.value}
+                iconPosition="end"
+                value={tab.value}
+                label={tab.label}
+                icon={
+                  <Label
+                    variant={
+                      ((tab.value === 'all' || tab.value === filters.status) &&
+                        'filled') ||
+                      'soft'
+                    }
+                    color={
+                      (tab.value === 'active' && 'success') ||
+                      (tab.value === 'inactive' && 'warning') ||
+                      (tab.value === 'suspended' && 'error') ||
+                      'default'
+                    }
+                  >
+                    {tab.value === 'all'
+                      ? usersData?.total || 0
+                      : tableData.filter((user) => user.userState === tab.value)
+                          .length}
+                  </Label>
+                }
+              />
+            ))}
+          </Tabs>
+
+          <OrderTableToolbar
+            filters={filters}
+            onFilters={handleFilters}
+            dateError={dateError}
+          />
+
+          {canReset && (
+            <OrderTableFiltersResult
+              filters={filters}
+              onFilters={handleFilters}
+              onResetFilters={handleResetFilters}
+              results={dataFiltered.length}
+              sx={{ p: 2.5, pt: 0 }}
+            />
+          )}
+
+          <TableContainer sx={{ position: 'relative', overflow: 'unset' }}>
+            <TableSelectedAction
+              dense={table.dense}
+              numSelected={table.selected.length}
+              rowCount={dataFiltered.length}
+              onSelectAllRows={(checked) =>
+                table.onSelectAllRows(
+                  checked,
+                  dataFiltered.map((row) => row.id)
+                )
+              }
+              action={
+                <Tooltip title="Delete">
+                  <IconButton color="primary" onClick={confirm.onTrue}>
+                    <Iconify icon="solar:trash-bin-trash-bold" />
+                  </IconButton>
+                </Tooltip>
+              }
+            />
+
+            <Scrollbar>
+              <Table
+                size={table.dense ? 'small' : 'medium'}
+                sx={{ minWidth: 960 }}
+              >
+                <TableHeadCustom
+                  order={table.order}
+                  orderBy={table.orderBy}
+                  headLabel={TABLE_HEAD}
+                  rowCount={dataFiltered.length}
+                  numSelected={table.selected.length}
+                  onSort={table.onSort}
+                  onSelectAllRows={(checked) =>
+                    table.onSelectAllRows(
+                      checked,
+                      dataFiltered.map((row) => row.id)
+                    )
+                  }
+                />
+
+                <TableBody>
+                  {isFetching && <TableSkeleton />}
+                  {dataFiltered.map((row) => (
+                    <OrderTableRow
+                      key={row.id}
+                      row={row}
+                      selected={table.selected.includes(row.id)}
+                      onSelectRow={() => table.onSelectRow(row.id)}
+                      onDeleteRow={() => handleDeleteRow(row.id)}
+                      onViewRow={() => handleViewRow(row.id)}
+                    />
+                  ))}
+
+                  <TableNoData notFound={notFound} />
+                </TableBody>
+              </Table>
+            </Scrollbar>
+          </TableContainer>
+
+          <TablePaginationCustom
+            count={usersData?.total || 0}
+            page={currentPage - 1}
+            rowsPerPage={pageSize}
+            onPageChange={handlePageChange}
+            onRowsPerPageChange={handleRowsPerPageChange}
+            dense={table.dense}
+            onChangeDense={table.onChangeDense}
+          />
+        </Card>
+      </Container>
+
+      <ConfirmDialog
+        open={confirm.value}
+        onClose={confirm.onFalse}
+        title="Delete"
+        content={
+          <>
+            Are you sure want to delete{' '}
+            <strong> {table.selected.length} </strong> users?
+          </>
+        }
+        action={
+          <Button variant="contained" color="error" onClick={handleDeleteRows}>
+            Delete
+          </Button>
+        }
+      />
+    </>
+  );
+}
+
+// ----------------------------------------------------------------------
+
+// Función de filtrado simplificada - solo filtros, sin ordenamiento
+function applyFilter({
+  inputData,
+  filters,
+  dateError,
+}: {
+  inputData: IUser[];
+  filters: IUserTableFilters;
+  dateError: boolean;
+}) {
+  const { status, name, startDate, endDate } = filters;
+
+  // Si no hay filtros aplicados, devolver los datos tal cual
+  if (!name && status === 'all' && !startDate && !endDate) {
+    return inputData;
+  }
+
+  let filteredData = [...inputData];
+
+  if (name) {
+    filteredData = filteredData.filter((user) =>
+      user.email.toLowerCase().includes(name.toLowerCase())
+    );
+  }
+
+  if (status !== 'all') {
+    filteredData = filteredData.filter((user) => user.userState === status);
+  }
+
+  if (!dateError) {
+    if (startDate && endDate) {
+      filteredData = filteredData.filter((user) =>
+        isBetween(new Date(user.createdAt), startDate, endDate)
+      );
+    }
+  }
+
+  return filteredData;
+}

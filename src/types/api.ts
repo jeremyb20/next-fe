@@ -73,17 +73,17 @@ export interface NotificationFormData {
 }
 
 // Admin User interface
-export interface User {
+export interface IUser {
   id: string;
   email: string;
-  petStatus: string;
   updatedAt: string;
   createdAt: string;
   userState: string;
-  newPetProfile: PetProfile[] | null;
+  newPetProfile: IPetProfile[] | null;
+  [key: string]: any; // Para permitir propiedades adicionales
 }
 
-export interface PetProfile {
+export interface IPetProfile {
   _id: string;
   idParental: string;
   petName: string;
