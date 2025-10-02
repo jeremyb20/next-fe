@@ -1,4 +1,24 @@
 // types/Global response
+
+export interface PaginationParams {
+  page: number;
+  limit: number;
+}
+
+export interface FilterParams {
+  [key: string]: any;
+}
+
+export interface QueryParams extends PaginationParams, FilterParams {}
+export interface UsePaginatedOptions {
+  refetchOnMount?: boolean;
+  refetchOnWindowFocus?: boolean;
+  staleTime?: number;
+  retry?: number;
+  enabled?: boolean;
+  placeholderData?: any;
+}
+
 export interface ApiResponse<T> {
   payload: T;
   success: boolean;

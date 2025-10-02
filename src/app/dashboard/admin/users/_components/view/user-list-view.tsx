@@ -2,7 +2,12 @@
 
 import { IUser } from '@/src/types/api';
 import { useMemo, useState, useCallback } from 'react';
-import { useGetAllRegisteredUsers } from '@/src/hooks/use-fetch-paginates';
+import FilterToolbar from '@/src/components/filters/filter-toolbar';
+import { ADMIN_USER_FILTER_TOOLBAR } from '@/src/components/filters/filter-constants';
+import {
+  UserQueryParams,
+  useGetAllRegisteredUsers,
+} from '@/src/hooks/use-fetch-paginated';
 
 import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
@@ -42,7 +47,6 @@ import {
 } from 'src/components/table';
 
 import OrderTableRow from '../order-table-row';
-import OrderTableToolbar from '../order-table-toolbar';
 import OrderTableFiltersResult from '../order-table-filters-result';
 
 export interface IUserTableFilters {
@@ -88,35 +92,36 @@ export default function UserListView() {
   const confirm = useBoolean();
 
   // Use your hook for data fetching
-  const [currentPage, setCurrentPage] = useState(1);
-  const [pageSize, setPageSize] = useState(5);
+  // const [currentPage, setCurrentPage] = useState(1);
+  // const [pageSize, setPageSize] = useState(5);
+
+  // Estado unificado para todos los parámetros
+  const [queryParams, setQueryParams] = useState<Partial<UserQueryParams>>({
+    page: 1,
+    limit: 5,
+  });
+
+  const dateError = useMemo(() => {
+    const startDate = queryParams.startDate
+      ? new Date(queryParams.startDate)
+      : null;
+    const endDate = queryParams.endDate ? new Date(queryParams.endDate) : null;
+    return isAfter(startDate, endDate);
+  }, [queryParams.startDate, queryParams.endDate]);
 
   const {
     data: usersData,
     isFetching,
     isError,
     error,
-  } = useGetAllRegisteredUsers(currentPage, pageSize);
+  } = useGetAllRegisteredUsers(queryParams);
 
-  // Transform API data to table data
   const tableData: IUser[] = useMemo(
-    () =>
-      usersData?.payload?.map((user) => ({
-        id: user.id,
-        email: user.email,
-        userState: user.userState,
-        createdAt: user.createdAt,
-        updatedAt: user.updatedAt,
-        newPetProfile: user.newPetProfile,
-        petCount: user.newPetProfile?.length || 0,
-        petStatus: user.userState,
-      })) || [],
+    () => usersData?.payload || [],
     [usersData?.payload]
   );
 
   const [filters, setFilters] = useState(defaultFilters);
-
-  const dateError = isAfter(filters.startDate, filters.endDate);
 
   // Apply client-side filtering and sorting
   const dataFiltered = useMemo(() => {
@@ -148,7 +153,6 @@ export default function UserListView() {
 
   const handleFilters = useCallback(
     (name: string, value: IUserTableFilterValue) => {
-      setCurrentPage(1);
       table.onResetPage();
       setFilters((prevState) => ({
         ...prevState,
@@ -158,9 +162,23 @@ export default function UserListView() {
     [table]
   );
 
+  const handleFiltersChange = useCallback(
+    (newFilters: Partial<UserQueryParams>) => {
+      setQueryParams((prev) => ({
+        ...prev,
+        ...newFilters,
+        page: 1, // Reset to first page on filter change
+      }));
+      table.onResetPage();
+    },
+    [table]
+  );
+
   const handleResetFilters = useCallback(() => {
-    setCurrentPage(1);
-    setFilters(defaultFilters);
+    setQueryParams({
+      page: 1,
+      limit: 5,
+    });
   }, []);
 
   const handleDeleteRow = useCallback(
@@ -190,14 +208,20 @@ export default function UserListView() {
   );
 
   const handlePageChange = useCallback((event: unknown, newPage: number) => {
-    setCurrentPage(newPage + 1);
+    setQueryParams((prev) => ({
+      ...prev,
+      page: newPage + 1,
+    }));
   }, []);
 
   const handleRowsPerPageChange = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
       const newRowsPerPage = parseInt(event.target.value, 10);
-      setPageSize(newRowsPerPage);
-      setCurrentPage(1);
+      setQueryParams((prev) => ({
+        ...prev,
+        limit: newRowsPerPage,
+        page: 1, // Reset to first page
+      }));
     },
     []
   );
@@ -273,9 +297,10 @@ export default function UserListView() {
             ))}
           </Tabs>
 
-          <OrderTableToolbar
-            filters={filters}
-            onFilters={handleFilters}
+          <FilterToolbar
+            filters={queryParams}
+            onFilters={handleFiltersChange}
+            filterConfig={ADMIN_USER_FILTER_TOOLBAR}
             dateError={dateError}
           />
 
@@ -350,8 +375,8 @@ export default function UserListView() {
 
           <TablePaginationCustom
             count={usersData?.total || 0}
-            page={currentPage - 1}
-            rowsPerPage={pageSize}
+            page={(queryParams.page || 1) - 1}
+            rowsPerPage={queryParams.limit || 5}
             onPageChange={handlePageChange}
             onRowsPerPageChange={handleRowsPerPageChange}
             dense={table.dense}
