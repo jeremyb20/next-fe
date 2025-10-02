@@ -5,7 +5,7 @@ import { useTheme } from '@mui/material/styles';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Unstable_Grid2';
 
-import { useMangerUser } from '@/src/hooks/use-manager-user';
+import { useManagerUser } from '@/src/hooks/use-manager-user';
 
 import { MotivationIllustration } from 'src/assets/illustrations';
 import {
@@ -30,7 +30,7 @@ import EcommerceCurrentBalance from '../ecommerce-current-balance';
 // ----------------------------------------------------------------------
 
 export default function OverviewEcommerceView() {
-  const { user } = useMangerUser();
+  const { user } = useManagerUser();
 
   const theme = useTheme();
 

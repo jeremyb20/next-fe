@@ -58,6 +58,8 @@ const STATUS_OPTIONS = [
   ...ORDER_STATUS_OPTIONS,
 ];
 
+console.log(STATUS_OPTIONS, 'STATUS_OPTIONS');
+
 const TABLE_HEAD = [
   { id: 'orderNumber', label: 'Order', width: 116 },
   { id: 'name', label: 'Customer' },

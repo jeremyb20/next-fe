@@ -6,7 +6,7 @@ import Avatar from '@mui/material/Avatar';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 
-import { useMangerUser } from '@/src/hooks/use-manager-user';
+import { useManagerUser } from '@/src/hooks/use-manager-user';
 
 import Iconify from 'src/components/iconify';
 
@@ -27,7 +27,7 @@ export default function ChatMessageItem({
   participants,
   onOpenLightbox,
 }: Props) {
-  const { user } = useMangerUser();
+  const { user } = useManagerUser();
 
   const { me, senderDetails, hasImage } = useGetMessage({
     message,

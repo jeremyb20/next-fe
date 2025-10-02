@@ -5,14 +5,14 @@ import Avatar from '@mui/material/Avatar';
 import InputBase from '@mui/material/InputBase';
 import IconButton from '@mui/material/IconButton';
 
-import { useMangerUser } from '@/src/hooks/use-manager-user';
+import { useManagerUser } from '@/src/hooks/use-manager-user';
 
 import Iconify from 'src/components/iconify';
 
 // ----------------------------------------------------------------------
 
 export default function KanbanDetailsCommentInput() {
-  const { user } = useMangerUser();
+  const { user } = useManagerUser();
 
   return (
     <Stack

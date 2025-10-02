@@ -71,3 +71,30 @@ export interface NotificationFormData {
   time: string;
   scheduledTime?: string;
 }
+
+// Admin User interface
+export interface User {
+  id: string;
+  email: string;
+  petStatus: string;
+  updatedAt: string;
+  createdAt: string;
+  userState: string;
+  newPetProfile: PetProfile[] | null;
+}
+
+export interface PetProfile {
+  _id: string;
+  idParental: string;
+  petName: string;
+  email: string;
+  phone: string;
+  photo: string;
+  age: number;
+  birthDate: string;
+  ownerPetName: string;
+  petStatus: string;
+  petViewCounter: number;
+  photo_id: string;
+  isDigitalIdentificationActive: boolean;
+}

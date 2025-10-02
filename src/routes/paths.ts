@@ -106,6 +106,17 @@ export const paths = {
     calendar: `${ROOTS.DASHBOARD}/calendar`,
     fileManager: `${ROOTS.DASHBOARD}/file-manager`,
     permission: `${ROOTS.DASHBOARD}/permission`,
+    admin: {
+      panelAdmin: `${ROOTS.DASHBOARD}/admin/panel`,
+      catalogAdmin: `${ROOTS.DASHBOARD}/admin/catalog`,
+      usersAdmin: `${ROOTS.DASHBOARD}/admin/users`,
+      groomersAdmin: `${ROOTS.DASHBOARD}/admin/groomers`,
+      veterinarianAdmin: `${ROOTS.DASHBOARD}/admin/veterinarian`,
+      qrPanel: `${ROOTS.DASHBOARD}/admin/qrcode`,
+      blogAdmin: `${ROOTS.DASHBOARD}/admin/blog`,
+      seoAdmin: `${ROOTS.DASHBOARD}/admin/seo`,
+      blogPanel: `${ROOTS.DASHBOARD}/admin/blog`,
+    },
     general: {
       app: `${ROOTS.DASHBOARD}/app`,
       ecommerce: `${ROOTS.DASHBOARD}/ecommerce`,

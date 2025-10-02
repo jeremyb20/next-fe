@@ -11,7 +11,7 @@ import Grid from '@mui/material/Unstable_Grid2';
 import Typography from '@mui/material/Typography';
 import LoadingButton from '@mui/lab/LoadingButton';
 
-import { useMangerUser } from '@/src/hooks/use-manager-user';
+import { useManagerUser } from '@/src/hooks/use-manager-user';
 
 import { fData } from 'src/utils/format-number';
 
@@ -44,7 +44,7 @@ type UserType = {
 export default function AccountGeneral() {
   const { enqueueSnackbar } = useSnackbar();
 
-  const { user } = useMangerUser();
+  const { user } = useManagerUser();
 
   const UpdateUserSchema = Yup.object().shape({
     displayName: Yup.string().required('Name is required'),

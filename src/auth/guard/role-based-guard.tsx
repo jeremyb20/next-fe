@@ -1,10 +1,9 @@
 import { m } from 'framer-motion';
+import { useManagerUser } from '@/src/hooks/use-manager-user';
 
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import { Theme, SxProps } from '@mui/material/styles';
-
-import { useMangerUser } from '@/src/hooks/use-manager-user';
 
 import { ForbiddenIllustration } from 'src/assets/illustrations';
 
@@ -26,7 +25,7 @@ export default function RoleBasedGuard({
   sx,
 }: RoleBasedGuardProp) {
   // Logic here to get current user role
-  const { user } = useMangerUser();
+  const { user } = useManagerUser();
 
   // const currentRole = 'user';
   const currentRole = user?.role; // admin;

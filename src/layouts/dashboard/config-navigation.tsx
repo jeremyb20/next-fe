@@ -11,16 +11,38 @@ import SvgColor from 'src/components/svg-color';
 
 // ----------------------------------------------------------------------
 
-const icon = (name: string) => (
-  <SvgColor
-    src={`/assets/icons/navbar/${name}.svg`}
-    sx={{ width: 1, height: 1 }}
-  />
-  // OR
-  // <Iconify icon="fluent:mail-24-filled" />
-  // https://icon-sets.iconify.design/solar/
-  // https://www.streamlinehq.com/icons
-);
+// const icon = (name: string) => (
+//   <SvgColor
+//     src={`/assets/icons/navbar/${name}.svg`}
+//     sx={{ width: 1, height: 1 }}
+//   />
+//   // OR
+//   // <Iconify icon="fluent:mail-24-filled" />
+//   // https://icon-sets.iconify.design/solar/
+//   // https://www.streamlinehq.com/icons
+// );
+const icon = (name: string) => {
+  if (name.includes('ic_')) {
+    return (
+      <SvgColor
+        src={`/assets/icons/navbar/${name}.svg`}
+        sx={{ width: 1, height: 1 }}
+      />
+    );
+  }
+
+  if (name.includes(':')) {
+    return <Iconify icon={name} sx={{ width: 1, height: 1 }} />;
+  }
+
+  // Puedes cambiar el default a lo que prefieras, o lanzar un error, o retornar un icono por defecto.
+  return (
+    <SvgColor
+      src={`/assets/icons/navbar/${name}.svg`}
+      sx={{ width: 1, height: 1 }}
+    />
+  );
+};
 
 const ICONS = {
   job: icon('ic_job'),
@@ -28,6 +50,7 @@ const ICONS = {
   chat: icon('ic_chat'),
   mail: icon('ic_mail'),
   user: icon('ic_user'),
+  users: icon('mdi:users'),
   file: icon('ic_file'),
   lock: icon('ic_lock'),
   tour: icon('ic_tour'),
@@ -47,6 +70,13 @@ const ICONS = {
   ecommerce: icon('ic_ecommerce'),
   analytics: icon('ic_analytics'),
   dashboard: icon('ic_dashboard'),
+  paw: icon('ph:paw-print-light'),
+  grooming: icon('streamline-sharp:pet-friendly-hotel'),
+  hospital: icon('tabler:building-hospital'),
+  QR_code: icon('lucide:qr-code'),
+  catalogs: icon('carbon:catalog-publish'),
+  seo: icon('hugeicons:seo'),
+  blogPanel: icon('meteor-icons:blogger'),
 };
 
 const filterByRole = (
@@ -80,39 +110,82 @@ export function useNavData(userRole: string) {
     const allNavData: { subheader: string; items: NavItemBaseProps[] }[] = [
       //     // OVERVIEW
       {
-        subheader: t('overview'),
+        subheader: t('Admin'),
         items: [
           {
-            title: t('app'),
+            // title: t('app'),
+            title: 'Panel Administrador',
             path: paths.dashboard.root,
             icon: ICONS.dashboard,
             roles: ['admin'],
           },
           {
-            title: t('ecommerce'),
-            path: paths.dashboard.general.ecommerce,
-            icon: ICONS.ecommerce,
+            title: 'Lista de Catálogos',
+            path: paths.dashboard.admin.catalogAdmin,
+            icon: ICONS.catalogs,
+            roles: ['admin'],
           },
           {
-            title: t('analytics'),
-            path: paths.dashboard.general.analytics,
-            icon: ICONS.analytics,
+            title: 'Lista de Usuarios',
+            path: paths.dashboard.admin.usersAdmin,
+            icon: ICONS.users,
+            roles: ['admin'],
           },
           {
-            title: t('banking'),
-            path: paths.dashboard.general.banking,
-            icon: ICONS.banking,
+            title: 'Lista de Groomers',
+            path: paths.dashboard.admin.groomersAdmin,
+            icon: ICONS.grooming,
+            roles: ['admin'],
           },
           {
-            title: t('booking'),
-            path: paths.dashboard.general.booking,
-            icon: ICONS.booking,
+            title: 'Lista de Veterinarias',
+            path: paths.dashboard.admin.veterinarianAdmin,
+            icon: ICONS.paw,
+            roles: ['admin'],
           },
           {
-            title: t('file'),
-            path: paths.dashboard.general.file,
-            icon: ICONS.file,
+            title: 'QR Panel',
+            path: paths.dashboard.admin.qrPanel,
+            icon: ICONS.QR_code,
+            roles: ['admin'],
           },
+          {
+            title: 'Seo Panel',
+            path: paths.dashboard.admin.seoAdmin,
+            icon: ICONS.seo,
+            roles: ['admin'],
+          },
+          {
+            title: 'Blog Panel',
+            path: paths.dashboard.admin.blogPanel,
+            icon: ICONS.blogPanel,
+            roles: ['admin'],
+          },
+          // {
+          //   title: t('ecommerce'),
+          //   path: paths.dashboard.general.ecommerce,
+          //   icon: ICONS.ecommerce,
+          // },
+          // {
+          //   title: t('analytics'),
+          //   path: paths.dashboard.general.analytics,
+          //   icon: ICONS.analytics,
+          // },
+          // {
+          //   title: t('banking'),
+          //   path: paths.dashboard.general.banking,
+          //   icon: ICONS.banking,
+          // },
+          // {
+          //   title: t('booking'),
+          //   path: paths.dashboard.general.booking,
+          //   icon: ICONS.booking,
+          // },
+          // {
+          //   title: t('file'),
+          //   path: paths.dashboard.general.file,
+          //   icon: ICONS.file,
+          // },
         ],
       },
 

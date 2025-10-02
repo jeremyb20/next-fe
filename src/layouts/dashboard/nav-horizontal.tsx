@@ -1,5 +1,5 @@
 import { memo } from 'react';
-import { useMangerUser } from '@/src/hooks/use-manager-user';
+import { useManagerUser } from '@/src/hooks/use-manager-user';
 
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
@@ -19,7 +19,7 @@ import HeaderShadow from '../common/header-shadow';
 function NavHorizontal() {
   const theme = useTheme();
 
-  const { user } = useMangerUser();
+  const { user } = useManagerUser();
   const currentRole = user?.role;
 
   const navData = useNavData(currentRole);

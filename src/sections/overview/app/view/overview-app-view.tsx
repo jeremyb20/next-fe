@@ -1,6 +1,6 @@
 'use client';
 
-import { useMangerUser } from '@/src/hooks/use-manager-user';
+import { useManagerUser } from '@/src/hooks/use-manager-user';
 
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
@@ -34,7 +34,7 @@ import AppTopInstalledCountries from '../app-top-installed-countries';
 // ----------------------------------------------------------------------
 
 export default function OverviewAppView() {
-  const { user } = useMangerUser();
+  const { user } = useManagerUser();
   const { user: usuario } = useAuthContext();
   console.log(usuario, 'usuario');
   const theme = useTheme();

@@ -1,4 +1,4 @@
-import { useMangerUser } from '@/src/hooks/use-manager-user';
+import { useManagerUser } from '@/src/hooks/use-manager-user';
 
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
@@ -15,7 +15,7 @@ import NavToggleButton from '../common/nav-toggle-button';
 // ----------------------------------------------------------------------
 
 export default function NavMini() {
-  const { user } = useMangerUser();
+  const { user } = useManagerUser();
   const currentRole = user?.role;
 
   const navData = useNavData(currentRole);

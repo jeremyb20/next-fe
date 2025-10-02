@@ -41,6 +41,9 @@ export const endpoints = {
     unsubscribe: '/api/notifications/unsubscribe',
     delete: '/api/notifications/delete',
   },
+  admin: {
+    getAllRegisteredUsers: '/api/admin/getAllRegisteredUsers',
+  },
   mail: {
     list: '/api/mail/list',
     details: '/api/mail/details',

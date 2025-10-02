@@ -10,7 +10,7 @@ import Typography from '@mui/material/Typography';
 import { paths } from 'src/routes/paths';
 import { useRouter, useSearchParams } from 'src/routes/hooks';
 
-import { useMangerUser } from '@/src/hooks/use-manager-user';
+import { useManagerUser } from '@/src/hooks/use-manager-user';
 
 import {
   useGetContacts,
@@ -34,7 +34,7 @@ import ChatHeaderCompose from '../chat-header-compose';
 export default function ChatView() {
   const router = useRouter();
 
-  const { user } = useMangerUser();
+  const { user } = useManagerUser();
 
   const settings = useSettingsContext();
 
