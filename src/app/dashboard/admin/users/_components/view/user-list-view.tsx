@@ -91,9 +91,10 @@ export default function UserListView() {
   const router = useRouter();
   const confirm = useBoolean();
 
-  // Use your hook for data fetching
-  // const [currentPage, setCurrentPage] = useState(1);
-  // const [pageSize, setPageSize] = useState(5);
+  const [activeFilters, setActiveFilters] = useState<Partial<UserQueryParams>>({
+    page: 1,
+    limit: 5,
+  });
 
   // Estado unificado para todos los parámetros
   const [queryParams, setQueryParams] = useState<Partial<UserQueryParams>>({
@@ -102,19 +103,21 @@ export default function UserListView() {
   });
 
   const dateError = useMemo(() => {
-    const startDate = queryParams.startDate
-      ? new Date(queryParams.startDate)
+    const startDate = activeFilters.startDate
+      ? new Date(activeFilters.startDate)
       : null;
-    const endDate = queryParams.endDate ? new Date(queryParams.endDate) : null;
+    const endDate = activeFilters.endDate
+      ? new Date(activeFilters.endDate)
+      : null;
     return isAfter(startDate, endDate);
-  }, [queryParams.startDate, queryParams.endDate]);
+  }, [activeFilters.startDate, activeFilters.endDate]);
 
   const {
     data: usersData,
     isFetching,
     isError,
     error,
-  } = useGetAllRegisteredUsers(queryParams);
+  } = useGetAllRegisteredUsers(activeFilters);
 
   const tableData: IUser[] = useMemo(
     () => usersData?.payload || [],
@@ -132,7 +135,6 @@ export default function UserListView() {
       dateError,
     });
 
-    // Luego aplicar ordenamiento con type assertion
     if (table.orderBy) {
       const comparator = getComparator(table.order, table.orderBy) as (
         a: IUser,
@@ -164,14 +166,12 @@ export default function UserListView() {
 
   const handleFiltersChange = useCallback(
     (newFilters: Partial<UserQueryParams>) => {
-      setQueryParams((prev) => ({
+      setActiveFilters((prev) => ({
         ...prev,
         ...newFilters,
-        page: 1, // Reset to first page on filter change
       }));
-      table.onResetPage();
     },
-    [table]
+    []
   );
 
   const handleResetFilters = useCallback(() => {
@@ -225,6 +225,26 @@ export default function UserListView() {
     },
     []
   );
+
+  const handleSearch = useCallback(() => {
+    setActiveFilters((prev) => ({
+      ...prev,
+      page: 1,
+    }));
+    table.onResetPage();
+    enqueueSnackbar('Búsqueda realizada', { variant: 'success' });
+  }, [table, enqueueSnackbar]);
+
+  const handleClear = useCallback(() => {
+    const clearedFilters = {
+      page: 1,
+      limit: activeFilters.limit || 5,
+    };
+
+    setActiveFilters(clearedFilters);
+    table.onResetPage();
+    enqueueSnackbar('Filtros limpiados', { variant: 'info' });
+  }, [activeFilters.limit, table, enqueueSnackbar]);
 
   if (isError) {
     return (
@@ -297,11 +317,20 @@ export default function UserListView() {
             ))}
           </Tabs>
 
-          <FilterToolbar
+          {/* <FilterToolbar
             filters={queryParams}
             onFilters={handleFiltersChange}
             filterConfig={ADMIN_USER_FILTER_TOOLBAR}
             dateError={dateError}
+          /> */}
+
+          <FilterToolbar
+            filters={activeFilters}
+            onFilters={handleFiltersChange}
+            filterConfig={ADMIN_USER_FILTER_TOOLBAR}
+            dateError={dateError}
+            onSearch={handleSearch}
+            onClear={handleClear}
           />
 
           {canReset && (

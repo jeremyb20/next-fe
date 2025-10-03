@@ -1,8 +1,8 @@
-import { useCallback } from 'react';
+import { useState, useCallback } from 'react';
 
 import Stack from '@mui/material/Stack';
-import { MenuItem } from '@mui/material';
 import TextField from '@mui/material/TextField';
+import { Button, MenuItem } from '@mui/material';
 import InputAdornment from '@mui/material/InputAdornment';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 
@@ -13,6 +13,8 @@ interface FilterToolbarProps {
   onFilters: (filters: any) => void;
   filterConfig: FilterConfig[];
   dateError?: boolean;
+  onSearch: () => void;
+  onClear: () => void;
 }
 
 export interface FilterConfig {
@@ -21,7 +23,7 @@ export interface FilterConfig {
   label: string;
   placeholder?: string;
   options?: { value: string; label: string }[];
-  width?: number;
+  width?: number | string;
 }
 
 export default function FilterToolbar({
@@ -29,16 +31,44 @@ export default function FilterToolbar({
   onFilters,
   filterConfig,
   dateError,
+  onSearch,
+  onClear,
 }: FilterToolbarProps) {
-  const handleFilterChange = useCallback(
-    (key: string, value: any) => {
-      onFilters({
-        ...filters,
-        [key]: value,
-      });
-    },
-    [filters, onFilters]
-  );
+  const [localFilters, setLocalFilters] = useState(filters);
+
+  const handleLocalFilterChange = useCallback((key: string, value: any) => {
+    setLocalFilters((prev: any) => ({
+      ...prev,
+      [key]: value,
+    }));
+  }, []);
+
+  const handleSearch = useCallback(() => {
+    onFilters(localFilters);
+    onSearch();
+  }, [localFilters, onFilters, onSearch]);
+
+  const handleClear = useCallback(() => {
+    const clearedFilters: any = {};
+    filterConfig.forEach((config) => {
+      clearedFilters[config.key] = '';
+    });
+    // Mantener paginación
+    clearedFilters.page = filters.page || 1;
+    clearedFilters.limit = filters.limit || 10;
+
+    setLocalFilters(clearedFilters);
+    onFilters(clearedFilters);
+    onClear();
+  }, [filterConfig, filters.page, filters.limit, onFilters, onClear]);
+
+  // Verificar si hay filtros activos para habilitar el botón de limpiar
+  const hasActiveFilters = useCallback(() => {
+    const { ...activeFilters } = localFilters;
+    return Object.values(activeFilters).some(
+      (value) => value !== undefined && value !== null && value !== ''
+    );
+  }, [localFilters]);
 
   const renderFilterField = (config: FilterConfig) => {
     switch (config.type) {
@@ -47,8 +77,10 @@ export default function FilterToolbar({
           <TextField
             key={config.key}
             fullWidth
-            value={filters[config.key] || ''}
-            onChange={(e) => handleFilterChange(config.key, e.target.value)}
+            value={localFilters[config.key] || ''}
+            onChange={(e) =>
+              handleLocalFilterChange(config.key, e.target.value)
+            }
             placeholder={config.placeholder}
             InputProps={{
               startAdornment: (
@@ -61,6 +93,11 @@ export default function FilterToolbar({
               ),
             }}
             sx={{ maxWidth: config.width }}
+            onKeyPress={(e) => {
+              if (e.key === 'Enter') {
+                handleSearch();
+              }
+            }}
           />
         );
 
@@ -69,8 +106,10 @@ export default function FilterToolbar({
           <DatePicker
             key={config.key}
             label={config.label}
-            value={filters[config.key] || null}
-            onChange={(newValue) => handleFilterChange(config.key, newValue)}
+            value={localFilters[config.key] || null}
+            onChange={(newValue) =>
+              handleLocalFilterChange(config.key, newValue)
+            }
             slotProps={{
               textField: {
                 fullWidth: true,
@@ -88,8 +127,10 @@ export default function FilterToolbar({
             select
             fullWidth
             label={config.label}
-            value={filters[config.key] || ''}
-            onChange={(e) => handleFilterChange(config.key, e.target.value)}
+            value={localFilters[config.key] || ''}
+            onChange={(e) =>
+              handleLocalFilterChange(config.key, e.target.value)
+            }
             sx={{ maxWidth: config.width }}
           >
             {config.options?.map((option) => (
@@ -113,6 +154,28 @@ export default function FilterToolbar({
       sx={{ p: 2.5, pr: { xs: 2.5, md: 1 } }}
     >
       {filterConfig.map(renderFilterField)}
+
+      {/* Botones de acción */}
+      <Stack direction="row" spacing={1} sx={{ minWidth: 200 }}>
+        <Button
+          variant="contained"
+          onClick={handleSearch}
+          startIcon={<Iconify icon="eva:search-fill" />}
+          sx={{ flex: 1 }}
+        >
+          Buscar
+        </Button>
+
+        <Button
+          variant="outlined"
+          onClick={handleClear}
+          disabled={!hasActiveFilters()}
+          startIcon={<Iconify icon="eva:trash-2-outline" />}
+          sx={{ flex: 1 }}
+        >
+          Limpiar
+        </Button>
+      </Stack>
     </Stack>
   );
 }
