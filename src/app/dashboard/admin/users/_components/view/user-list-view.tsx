@@ -12,7 +12,6 @@ import {
 import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
 import Card from '@mui/material/Card';
-import { Alert } from '@mui/material';
 import Table from '@mui/material/Table';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
@@ -20,6 +19,7 @@ import { alpha } from '@mui/material/styles';
 import Container from '@mui/material/Container';
 import TableBody from '@mui/material/TableBody';
 import IconButton from '@mui/material/IconButton';
+import { Alert, LinearProgress } from '@mui/material';
 import TableContainer from '@mui/material/TableContainer';
 
 import { paths } from 'src/routes/paths';
@@ -40,14 +40,12 @@ import {
   useTable,
   TableNoData,
   getComparator,
-  TableSkeleton,
   TableHeadCustom,
   TableSelectedAction,
   TablePaginationCustom,
 } from 'src/components/table';
 
 import OrderTableRow from '../order-table-row';
-import OrderTableFiltersResult from '../order-table-filters-result';
 
 export interface IUserTableFilters {
   name: string;
@@ -91,13 +89,8 @@ export default function UserListView() {
   const router = useRouter();
   const confirm = useBoolean();
 
+  // SOLUCIÓN: Unificar en un solo estado para filtros y paginación
   const [activeFilters, setActiveFilters] = useState<Partial<UserQueryParams>>({
-    page: 1,
-    limit: 5,
-  });
-
-  // Estado unificado para todos los parámetros
-  const [queryParams, setQueryParams] = useState<Partial<UserQueryParams>>({
     page: 1,
     limit: 5,
   });
@@ -174,13 +167,6 @@ export default function UserListView() {
     []
   );
 
-  const handleResetFilters = useCallback(() => {
-    setQueryParams({
-      page: 1,
-      limit: 5,
-    });
-  }, []);
-
   const handleDeleteRow = useCallback(
     (id: string) => {
       enqueueSnackbar('Delete success!');
@@ -207,8 +193,9 @@ export default function UserListView() {
     [handleFilters]
   );
 
+  // SOLUCIÓN: Actualizar activeFilters en la paginación
   const handlePageChange = useCallback((event: unknown, newPage: number) => {
-    setQueryParams((prev) => ({
+    setActiveFilters((prev) => ({
       ...prev,
       page: newPage + 1,
     }));
@@ -217,7 +204,7 @@ export default function UserListView() {
   const handleRowsPerPageChange = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
       const newRowsPerPage = parseInt(event.target.value, 10);
-      setQueryParams((prev) => ({
+      setActiveFilters((prev) => ({
         ...prev,
         limit: newRowsPerPage,
         page: 1, // Reset to first page
@@ -317,13 +304,6 @@ export default function UserListView() {
             ))}
           </Tabs>
 
-          {/* <FilterToolbar
-            filters={queryParams}
-            onFilters={handleFiltersChange}
-            filterConfig={ADMIN_USER_FILTER_TOOLBAR}
-            dateError={dateError}
-          /> */}
-
           <FilterToolbar
             filters={activeFilters}
             onFilters={handleFiltersChange}
@@ -332,16 +312,6 @@ export default function UserListView() {
             onSearch={handleSearch}
             onClear={handleClear}
           />
-
-          {canReset && (
-            <OrderTableFiltersResult
-              filters={filters}
-              onFilters={handleFilters}
-              onResetFilters={handleResetFilters}
-              results={dataFiltered.length}
-              sx={{ p: 2.5, pt: 0 }}
-            />
-          )}
 
           <TableContainer sx={{ position: 'relative', overflow: 'unset' }}>
             <TableSelectedAction
@@ -382,9 +352,7 @@ export default function UserListView() {
                     )
                   }
                 />
-
                 <TableBody>
-                  {isFetching && <TableSkeleton />}
                   {dataFiltered.map((row) => (
                     <OrderTableRow
                       key={row.id}
@@ -399,13 +367,15 @@ export default function UserListView() {
                   <TableNoData notFound={notFound} />
                 </TableBody>
               </Table>
+              {isFetching ? <LinearProgress color="secondary" /> : null}
             </Scrollbar>
           </TableContainer>
 
+          {/* SOLUCIÓN: Usar activeFilters para la paginación */}
           <TablePaginationCustom
             count={usersData?.total || 0}
-            page={(queryParams.page || 1) - 1}
-            rowsPerPage={queryParams.limit || 5}
+            page={(activeFilters.page || 1) - 1} // Convertir a base 0 para MUI
+            rowsPerPage={activeFilters.limit || 5}
             onPageChange={handlePageChange}
             onRowsPerPageChange={handleRowsPerPageChange}
             dense={table.dense}
