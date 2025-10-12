@@ -114,7 +114,14 @@ export interface IPetProfile {
   birthDate: string;
   ownerPetName: string;
   petStatus: string;
-  petViewCounter: number;
+  petViewCounter: ILocation[];
   photo_id: string;
   isDigitalIdentificationActive: boolean;
+}
+
+interface ILocation {
+  lat: string;
+  lng: string;
+  dateViewed: string;
+  _id: string;
 }

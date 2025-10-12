@@ -1,8 +1,10 @@
 /* eslint-disable no-nested-ternary */
 // import { IOrderItem } from 'src/types/order';
 import { IUser } from '@/src/types/api';
+import { useTranslation } from 'react-i18next';
+import { STATUS_OPTIONS } from '@/src/components/filters/filter-constants';
+import { AvatarWithSkeleton } from '@/src/components/avatar/avatar-with-skeleton';
 
-import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
@@ -44,6 +46,8 @@ export default function OrderTableRow({
   const { newPetProfile, createdAt, userState, email, id, updatedAt } = row;
 
   const confirm = useBoolean();
+
+  const { t } = useTranslation();
 
   const collapse = useBoolean();
 
@@ -98,28 +102,15 @@ export default function OrderTableRow({
         />
       </TableCell>
 
-      <TableCell>
-        {/* {fCurrency(subTotal)}  */}
-        subtotal
-      </TableCell>
+      <TableCell>Active</TableCell>
 
       <TableCell>
-        <Label
-          variant="soft"
-          color={
-            (userState.toString() === '3' && 'success') ||
-            (userState.toString() === '2' && 'warning') ||
-            (userState.toString() === '1' && 'error') ||
-            'default'
-          }
-        >
-          {userState.toString() === '3'
-            ? 'Cliente'
-            : userState.toString() === '2'
-              ? 'Pendiente'
-              : userState.toString() === '1'
-                ? 'Inactivo'
-                : 'Desconocido'}
+        <Label variant="soft" color="default">
+          {t(
+            STATUS_OPTIONS.find(
+              (option) => option.value === userState.toString()
+            )?.label || 'N/A'
+          )}
         </Label>
       </TableCell>
 
@@ -129,7 +120,6 @@ export default function OrderTableRow({
       </TableCell>
 
       <TableCell align="right" sx={{ px: 1, whiteSpace: 'nowrap' }}>
-        {/* {newPetProfile && newPetProfile.length > 0 && ( */}
         <IconButton
           color={collapse.value ? 'inherit' : 'default'}
           onClick={collapse.onToggle}
@@ -172,9 +162,9 @@ export default function OrderTableRow({
           <Stack component={Paper} sx={{ m: 1.5 }}>
             {newPetProfile && newPetProfile.length > 0 && (
               <>
-                {newPetProfile.map((item) => (
+                {newPetProfile.map((item, index) => (
                   <Stack
-                    key={item.idParental}
+                    key={item.idParental + index}
                     direction="row"
                     alignItems="center"
                     sx={{
@@ -185,31 +175,96 @@ export default function OrderTableRow({
                       },
                     }}
                   >
-                    <Avatar
-                      src={item.photo}
-                      variant="rounded"
-                      sx={{ width: 48, height: 48, mr: 2 }}
+                    <Stack
+                      direction="row"
+                      sx={{ width: 210, textAlign: 'left' }}
+                    >
+                      <AvatarWithSkeleton
+                        src={item.photo}
+                        alt={item.petName}
+                        variant="rounded"
+                        sx={{ width: 48, height: 48, mr: 2 }}
+                      />
+
+                      <ListItemText
+                        primary={item.petName}
+                        secondary={item.ownerPetName || 'N/A'}
+                        primaryTypographyProps={{
+                          typography: 'body2',
+                        }}
+                        secondaryTypographyProps={{
+                          component: 'span',
+                          color: 'text.disabled',
+                          mt: 0.5,
+                        }}
+                      />
+                    </Stack>
+
+                    <ListItemText
+                      primary="Birth Date"
+                      secondary={fDate(item.birthDate) || 'N/A'}
+                      primaryTypographyProps={{
+                        typography: 'body2',
+                        noWrap: true,
+                      }}
+                      secondaryTypographyProps={{
+                        mt: 0.5,
+                        component: 'span',
+                        typography: 'caption',
+                      }}
                     />
 
                     <ListItemText
-                      primary={item.petName}
-                      secondary={item.petStatus}
+                      primary="Identification Active"
+                      secondary={
+                        item.isDigitalIdentificationActive ? 'Yes' : 'No'
+                      }
                       primaryTypographyProps={{
                         typography: 'body2',
+                        noWrap: true,
                       }}
                       secondaryTypographyProps={{
-                        component: 'span',
-                        color: 'text.disabled',
                         mt: 0.5,
+                        component: 'span',
+                        typography: 'caption',
                       }}
                     />
 
-                    <Box>x{item.age}</Box>
+                    <ListItemText
+                      primary="Phone"
+                      secondary={item.phone || 'N/A'}
+                      primaryTypographyProps={{
+                        typography: 'body2',
+                        noWrap: true,
+                      }}
+                      secondaryTypographyProps={{
+                        mt: 0.5,
+                        component: 'span',
+                        typography: 'caption',
+                      }}
+                    />
 
-                    <Box sx={{ width: 110, textAlign: 'right' }}>
-                      {/* {fCurrency(item.price)} */}
+                    <ListItemText
+                      primary="Register Location"
+                      secondary={
+                        item.petViewCounter
+                          ? item.petViewCounter.length || 'N/A'
+                          : 'N/A'
+                      }
+                      primaryTypographyProps={{
+                        typography: 'body2',
+                        noWrap: true,
+                      }}
+                      secondaryTypographyProps={{
+                        mt: 0.5,
+                        component: 'span',
+                        typography: 'caption',
+                      }}
+                    />
+
+                    {/* <Box sx={{ width: 110, textAlign: 'right' }}> 
                       holi
-                    </Box>
+                    </Box> */}
                   </Stack>
                 ))}
               </>

@@ -6,6 +6,8 @@ import TablePagination, {
   TablePaginationProps,
 } from '@mui/material/TablePagination';
 
+import { ROWS_PER_PAGE_OPTIONS } from '../filters/filter-constants';
+
 // ----------------------------------------------------------------------
 
 type Props = {
@@ -17,7 +19,7 @@ type Props = {
 export default function TablePaginationCustom({
   dense,
   onChangeDense,
-  rowsPerPageOptions = [5, 10, 25],
+  rowsPerPageOptions = ROWS_PER_PAGE_OPTIONS,
   sx,
   ...other
 }: Props & TablePaginationProps) {
