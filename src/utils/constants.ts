@@ -8,3 +8,12 @@ export const getUserRoleFromState = (userState: number): string => {
 
   return roleMap[userState] || 'user'; // Valor por defecto 'user' si no encuentra el estado
 };
+
+export const getUserStatusFromState = (userState: number): string => {
+  const roleMap: { [key: number]: string } = {
+    0: 'active',
+    1: 'inactive',
+  };
+
+  return roleMap[userState] || 'active'; // Valor por defecto 'user' si no encuentra el estado
+};

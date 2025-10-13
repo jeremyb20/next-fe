@@ -88,7 +88,7 @@ export function AuthProvider({ children }: Props) {
     if (initializedRef.current) return;
     initializedRef.current = true;
     try {
-      const accessToken = sessionStorage.getItem(STORAGE_KEY);
+      const accessToken = localStorage.getItem(STORAGE_KEY);
       if (accessToken && isValidToken(accessToken)) {
         setSession(accessToken);
 
@@ -168,7 +168,8 @@ export function AuthProvider({ children }: Props) {
 
       const { accessToken, user } = res.data;
 
-      sessionStorage.setItem(STORAGE_KEY, accessToken);
+      // sessionStorage.setItem(STORAGE_KEY, accessToken);
+      localStorage.setItem(STORAGE_KEY, accessToken);
 
       dispatch({
         type: Types.REGISTER,

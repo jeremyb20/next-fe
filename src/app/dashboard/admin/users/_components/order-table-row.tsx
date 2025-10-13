@@ -2,6 +2,7 @@
 // import { IOrderItem } from 'src/types/order';
 import { IUser } from '@/src/types/api';
 import { useTranslation } from 'react-i18next';
+import { getUserRoleFromState } from '@/src/utils/constants';
 import { STATUS_OPTIONS } from '@/src/components/filters/filter-constants';
 import { AvatarWithSkeleton } from '@/src/components/avatar/avatar-with-skeleton';
 
@@ -43,7 +44,7 @@ export default function OrderTableRow({
   onSelectRow,
   onDeleteRow,
 }: Props) {
-  const { newPetProfile, createdAt, userState, email, id, updatedAt } = row;
+  const { pets, createdAt, userStatus, email, id, updatedAt, role } = row;
 
   const confirm = useBoolean();
 
@@ -102,28 +103,32 @@ export default function OrderTableRow({
         />
       </TableCell>
 
-      <TableCell>Active</TableCell>
+      <TableCell sx={{ textTransform: 'capitalize' }}>
+        {getUserRoleFromState(role)}
+      </TableCell>
 
       <TableCell>
-        <Label variant="soft" color="default">
-          {t(
-            STATUS_OPTIONS.find(
-              (option) => option.value === userState.toString()
-            )?.label || 'N/A'
-          )}
+        <Label
+          variant="soft"
+          color="default"
+          sx={{ textTransform: 'capitalize' }}
+        >
+          {userStatus &&
+            t(
+              STATUS_OPTIONS.find(
+                (option) => option.value === userStatus.toString()
+              )?.label || 'N/A'
+            )}
         </Label>
       </TableCell>
 
-      <TableCell align="center">
-        {' '}
-        {newPetProfile ? newPetProfile.length : 0}{' '}
-      </TableCell>
+      <TableCell align="center"> {pets ? pets.length : 0} </TableCell>
 
       <TableCell align="right" sx={{ px: 1, whiteSpace: 'nowrap' }}>
         <IconButton
           color={collapse.value ? 'inherit' : 'default'}
           onClick={collapse.onToggle}
-          disabled={!newPetProfile || newPetProfile.length === 0}
+          disabled={!pets || pets.length === 0}
           sx={{
             ...(collapse.value && {
               bgcolor: 'action.hover',
@@ -132,7 +137,7 @@ export default function OrderTableRow({
         >
           <Iconify
             icon={
-              !newPetProfile || newPetProfile.length === 0
+              !pets || pets.length === 0
                 ? 'fe:disabled'
                 : 'eva:arrow-ios-downward-fill'
             }
@@ -160,9 +165,9 @@ export default function OrderTableRow({
           sx={{ bgcolor: 'background.neutral' }}
         >
           <Stack component={Paper} sx={{ m: 1.5 }}>
-            {newPetProfile && newPetProfile.length > 0 && (
+            {pets && pets.length > 0 && (
               <>
-                {newPetProfile.map((item, index) => (
+                {pets.map((item, index) => (
                   <Stack
                     key={item.idParental + index}
                     direction="row"

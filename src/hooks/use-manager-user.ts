@@ -9,7 +9,10 @@ import { _mock } from 'src/_mock';
 // TO:
 import { useAuthContext } from 'src/auth/hooks';
 
-import { getUserRoleFromState } from '../utils/constants';
+import {
+  getUserRoleFromState,
+  getUserStatusFromState,
+} from '../utils/constants';
 
 // ----------------------------------------------------------------------
 
@@ -29,7 +32,8 @@ export function useManagerUser() {
     zipCode: '94116',
     about:
       'Praesent turpis. Phasellus viverra nulla ut metus varius laoreet. Phasellus tempus.',
-    role: getUserRoleFromState(authUser?.userState), // admin | user | groomer | veterinarian
+    role: getUserRoleFromState(authUser?.role), // admin | user | groomer | veterinarian
+    isActive: getUserStatusFromState(authUser?.user), // active | inactive
     isPublic: false,
   };
 

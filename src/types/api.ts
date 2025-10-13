@@ -98,8 +98,9 @@ export interface IUser {
   email: string;
   updatedAt: string;
   createdAt: string;
-  userState: string;
-  newPetProfile: IPetProfile[] | null;
+  userStatus: string;
+  role: number;
+  pets: IPetProfile[] | null;
   [key: string]: any; // Para permitir propiedades adicionales
 }
 
