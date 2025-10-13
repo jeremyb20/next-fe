@@ -67,8 +67,8 @@ const TABLE_HEAD = [
   { id: 'email', label: 'Email' },
   { id: 'createdAt', label: 'Created', width: 140 },
   { id: 'updatedAt', label: 'Updated', width: 140 },
-  { id: 'petStatus', label: 'User State', width: 120 },
   { id: 'userState', label: 'User Type', width: 120 },
+  { id: 'petStatus', label: 'User State', width: 120 },
   { id: 'petCount', label: 'No. Pets', width: 100, align: 'center' },
   { id: '', width: 88 },
 ];

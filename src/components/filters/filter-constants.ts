@@ -1,11 +1,9 @@
 import { FilterConfig } from './filter-toolbar';
 
 export const STATUS_OPTIONS = [
-  { value: 'all', label: 'All' },
-  { value: '0', label: 'Admin' },
-  { value: '1', label: 'Groomer' },
-  { value: '2', label: 'Veterinarian' },
-  { value: '3', label: 'Client' },
+  { value: '2', label: 'Verified' },
+  { value: '3', label: 'Not verified' },
+  { value: '1', label: 'Inactive' },
 ];
 
 export const ROWS_PER_PAGE_OPTIONS = [5, 10, 25];
