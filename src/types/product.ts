@@ -31,6 +31,13 @@ export type IProductReview = {
   postedAt: Date;
 };
 
+// ----------------------------------------------------------------------
+export type IImage = {
+  image_id: string;
+  imageURL: string;
+  _id: string;
+};
+
 export type IProductItem = {
   id: string;
   sku: string;
@@ -43,7 +50,7 @@ export type IProductItem = {
   sizes: string[];
   publish: string;
   coverUrl: string;
-  images: string[];
+  images: IImage[];
   colors: string[];
   quantity: number;
   category: string;

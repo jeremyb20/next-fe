@@ -1,3 +1,4 @@
+// multi-file-preview.tsx
 import { m, AnimatePresence } from 'framer-motion';
 
 import Stack from '@mui/material/Stack';
@@ -22,10 +23,16 @@ export default function MultiFilePreview({
 }: UploadProps) {
   return (
     <AnimatePresence initial={false}>
-      {files?.map((file) => {
-        const { key, name = '', size = 0 } = fileData(file);
+      {files?.map((file, index) => {
+        const {
+          key,
+          name = '',
+          size = 0,
+        } = fileData(file as 'string | ExtendFile');
 
         const isNotFormatFile = typeof file === 'string';
+
+        // Obtener la URL de la imagen para el preview
 
         if (thumbnail) {
           return (

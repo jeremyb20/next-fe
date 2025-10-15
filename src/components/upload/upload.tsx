@@ -10,12 +10,42 @@ import Typography from '@mui/material/Typography';
 import { UploadIllustration } from 'src/assets/illustrations';
 
 import Iconify from '../iconify';
-import { UploadProps } from './types';
+import { UploadFile, UploadProps } from './types';
 import MultiFilePreview from './preview-multi-file';
 import RejectionFiles from './errors-rejection-files';
 import SingleFilePreview from './preview-single-file';
 
 // ----------------------------------------------------------------------
+export const getImageUrl = (
+  file: UploadFile | string | null | undefined
+): string => {
+  if (!file) return '';
+
+  if (typeof file === 'string') {
+    return file;
+  }
+
+  // Para objetos CustomFile/UploadFile
+  return file.preview || file.imageURL || file.url || '';
+};
+
+export const isUploadFile = (file: UploadFile | string): file is UploadFile =>
+  typeof file === 'object';
+
+export const getFileKey = (
+  file: UploadFile | string,
+  index: number
+): string => {
+  if (typeof file === 'string') return `file-${index}-${file}`;
+
+  const uploadFile = file as UploadFile;
+  return (
+    uploadFile._id ||
+    uploadFile.id ||
+    uploadFile.image_id ||
+    `file-${index}-${file.name}-${file.size}`
+  );
+};
 
 export default function Upload({
   disabled,
@@ -79,10 +109,10 @@ export default function Upload({
       </Stack>
     </Stack>
   );
-
   const renderSinglePreview = (
     <SingleFilePreview
-      imgUrl={typeof file === 'string' ? file : file?.preview}
+      // imgUrl={typeof file === 'string' ? file : file?.preview}
+      imgUrl={getImageUrl(file)}
     />
   );
 
@@ -110,7 +140,17 @@ export default function Upload({
     <>
       <Box sx={{ my: 3 }}>
         <MultiFilePreview
-          files={files}
+          // eslint-disable-next-line @typescript-eslint/no-shadow
+          files={files.map((file) => {
+            // Si es string, mantenerlo como string
+            if (typeof file === 'string') return file;
+
+            // Si es objeto, asegurarse de tener la propiedad preview
+            return {
+              ...file,
+              preview: getImageUrl(file),
+            };
+          })}
           thumbnail={thumbnail}
           onRemove={onRemove}
         />

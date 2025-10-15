@@ -110,7 +110,7 @@ export default function OrderTableRow({
       <TableCell>
         <Label
           variant="soft"
-          color="default"
+          color={(userStatus.toString() === '2' && 'success') || 'default'}
           sx={{ textTransform: 'capitalize' }}
         >
           {userStatus &&

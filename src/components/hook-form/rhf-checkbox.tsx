@@ -66,10 +66,14 @@ export function RHFMultiCheckbox({
 }: RHFMultiCheckboxProps) {
   const { control } = useFormContext();
 
-  const getSelected = (selectedItems: string[], item: string) =>
-    selectedItems.includes(item)
-      ? selectedItems.filter((value) => value !== item)
-      : [...selectedItems, item];
+  const getSelected = (selectedItems: string[], item: string) => {
+    // Asegurarnos de que selectedItems es un array
+    const currentItems = Array.isArray(selectedItems) ? selectedItems : [];
+
+    return currentItems.includes(item)
+      ? currentItems.filter((value) => value !== item)
+      : [...currentItems, item];
+  };
 
   return (
     <Controller
@@ -107,10 +111,14 @@ export function RHFMultiCheckbox({
                 key={option.value}
                 control={
                   <Checkbox
-                    checked={field.value.includes(option.value)}
-                    onChange={() =>
-                      field.onChange(getSelected(field.value, option.value))
+                    checked={
+                      Array.isArray(field.value) &&
+                      field.value.includes(option.value)
                     }
+                    onChange={() => {
+                      const newValue = getSelected(field.value, option.value);
+                      field.onChange(newValue);
+                    }}
                   />
                 }
                 label={option.label}

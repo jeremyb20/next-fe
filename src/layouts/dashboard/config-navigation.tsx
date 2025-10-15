@@ -120,6 +120,12 @@ export function useNavData(userRole: string) {
             roles: ['admin'],
           },
           {
+            title: 'Lista de Productos',
+            path: paths.dashboard.admin.product.root,
+            icon: ICONS.product,
+            roles: ['admin'],
+          },
+          {
             title: 'Lista de Catálogos',
             path: paths.dashboard.admin.catalogAdmin,
             icon: ICONS.catalogs,

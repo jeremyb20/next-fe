@@ -1,8 +1,8 @@
 {
-  "name": "@minimal-kit/next-ts",
-  "author": "Minimals",
-  "version": "5.0.0",
-  "description": "Next & TypeScript",
+  "name": "plaquitascr",
+  "author": "JeremyBarquero",
+  "version": "4.0.1-030424",
+  "description": "Frontend para sistema para mascotas y mas - TypeScrip",
   "private": true,
   "scripts": {
     "dev": "next dev -p 8083",

@@ -1,5 +1,6 @@
 'use client';
 
+import { STORAGE_KEY } from '@/src/config-global';
 import { useRef, useMemo, useEffect, useReducer, useCallback } from 'react';
 
 import axios, { endpoints } from 'src/utils/axios';
@@ -74,8 +75,6 @@ const reducer = (state: AuthStateType, action: ActionsType) => {
 };
 
 // ----------------------------------------------------------------------
-
-const STORAGE_KEY = 'accessToken';
 
 type Props = {
   children: React.ReactNode;

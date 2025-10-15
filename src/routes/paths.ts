@@ -109,6 +109,16 @@ export const paths = {
     admin: {
       panelAdmin: `${ROOTS.DASHBOARD}/admin/panel`,
       catalogAdmin: `${ROOTS.DASHBOARD}/admin/catalog`,
+      product: {
+        root: `${ROOTS.DASHBOARD}/admin/product`,
+        new: `${ROOTS.DASHBOARD}/admin/product/new`,
+        details: (id: string) => `${ROOTS.DASHBOARD}/admin/product/${id}`,
+        edit: (id: string) => `${ROOTS.DASHBOARD}/admin/product/${id}/edit`,
+        demo: {
+          details: `${ROOTS.DASHBOARD}/product/${MOCK_ID}`,
+          edit: `${ROOTS.DASHBOARD}/product/${MOCK_ID}/edit`,
+        },
+      },
       usersAdmin: `${ROOTS.DASHBOARD}/admin/users`,
       groomersAdmin: `${ROOTS.DASHBOARD}/admin/groomers`,
       veterinarianAdmin: `${ROOTS.DASHBOARD}/admin/veterinarian`,

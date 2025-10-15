@@ -9,13 +9,10 @@ import {
   useGetAllRegisteredUsers,
 } from '@/src/hooks/use-fetch-paginated';
 
-import Tab from '@mui/material/Tab';
-import Tabs from '@mui/material/Tabs';
 import Card from '@mui/material/Card';
 import Table from '@mui/material/Table';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
-import { alpha } from '@mui/material/styles';
 import Container from '@mui/material/Container';
 import TableBody from '@mui/material/TableBody';
 import IconButton from '@mui/material/IconButton';
@@ -29,7 +26,6 @@ import { useBoolean } from 'src/hooks/use-boolean';
 
 import { isAfter, isBetween } from 'src/utils/format-time';
 
-import Label from 'src/components/label';
 import Iconify from 'src/components/iconify';
 import Scrollbar from 'src/components/scrollbar';
 import { useSnackbar } from 'src/components/snackbar';
@@ -55,13 +51,6 @@ export interface IUserTableFilters {
 }
 
 export type IUserTableFilterValue = string | Date | null;
-
-const STATUS_OPTIONS = [
-  { value: 'all', label: 'All' },
-  { value: 'active', label: 'Active' },
-  { value: 'inactive', label: 'Inactive' },
-  { value: 'suspended', label: 'Suspended' },
-];
 
 const TABLE_HEAD = [
   { id: 'email', label: 'Email' },
@@ -117,7 +106,7 @@ export default function UserListView() {
     [usersData?.payload]
   );
 
-  const [filters, setFilters] = useState(defaultFilters);
+  const [filters] = useState(defaultFilters);
 
   // Apply client-side filtering and sorting
   const dataFiltered = useMemo(() => {
@@ -146,17 +135,6 @@ export default function UserListView() {
 
   const notFound = !tableData.length || (!dataFiltered.length && canReset);
 
-  const handleFilters = useCallback(
-    (name: string, value: IUserTableFilterValue) => {
-      table.onResetPage();
-      setFilters((prevState) => ({
-        ...prevState,
-        [name]: value,
-      }));
-    },
-    [table]
-  );
-
   const handleFiltersChange = useCallback(
     (newFilters: Partial<UserQueryParams>) => {
       setActiveFilters((prev) => ({
@@ -184,13 +162,6 @@ export default function UserListView() {
       router.push(paths.dashboard.order.details(id));
     },
     [router]
-  );
-
-  const handleFilterStatus = useCallback(
-    (event: React.SyntheticEvent, newValue: string) => {
-      handleFilters('status', newValue);
-    },
-    [handleFilters]
   );
 
   // SOLUCIÓN: Actualizar activeFilters en la paginación
@@ -265,45 +236,6 @@ export default function UserListView() {
         />
 
         <Card>
-          <Tabs
-            value={filters.status}
-            onChange={handleFilterStatus}
-            sx={{
-              px: 2.5,
-              boxShadow: (theme) =>
-                `inset 0 -2px 0 0 ${alpha(theme.palette.grey[500], 0.08)}`,
-            }}
-          >
-            {STATUS_OPTIONS.map((tab) => (
-              <Tab
-                key={tab.value}
-                iconPosition="end"
-                value={tab.value}
-                label={tab.label}
-                icon={
-                  <Label
-                    variant={
-                      ((tab.value === 'all' || tab.value === filters.status) &&
-                        'filled') ||
-                      'soft'
-                    }
-                    color={
-                      (tab.value === 'active' && 'success') ||
-                      (tab.value === 'inactive' && 'warning') ||
-                      (tab.value === 'suspended' && 'error') ||
-                      'default'
-                    }
-                  >
-                    {tab.value === 'all'
-                      ? usersData?.total || 0
-                      : tableData.filter((user) => user.userState === tab.value)
-                          .length}
-                  </Label>
-                }
-              />
-            ))}
-          </Tabs>
-
           <FilterToolbar
             filters={activeFilters}
             onFilters={handleFiltersChange}

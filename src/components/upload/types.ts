@@ -1,3 +1,4 @@
+// types.ts
 import { DropzoneOptions } from 'react-dropzone';
 
 import { Theme, SxProps } from '@mui/material/styles';
@@ -10,6 +11,15 @@ export interface CustomFile extends File {
   lastModifiedDate?: Date;
 }
 
+// Extiende CustomFile para incluir propiedades de imágenes existentes
+export interface UploadFile extends CustomFile {
+  _id?: string;
+  id?: string;
+  imageURL?: string;
+  url?: string;
+  image_id?: string;
+}
+
 export interface UploadProps extends DropzoneOptions {
   error?: boolean;
   sx?: SxProps<Theme>;
@@ -18,11 +28,12 @@ export interface UploadProps extends DropzoneOptions {
   helperText?: React.ReactNode;
   disableMultiple?: boolean;
   //
-  file?: CustomFile | string | null;
+  file?: UploadFile | string | null;
   onDelete?: VoidFunction;
   //
-  files?: (File | string)[];
+  files?: (UploadFile | string)[];
   onUpload?: VoidFunction;
-  onRemove?: (file: CustomFile | string) => void;
+  onRemove?: (file: UploadFile | string) => void;
+  //  onRemove?: (index: number) => void;
   onRemoveAll?: VoidFunction;
 }

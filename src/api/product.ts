@@ -7,19 +7,19 @@ import { IProductItem } from 'src/types/product';
 // ----------------------------------------------------------------------
 
 export function useGetProducts() {
-  const URL = endpoints.product.list;
+  const URL = endpoints.admin.product.list;
 
   const { data, isLoading, error, isValidating } = useSWR(URL, fetcher);
 
   const memoizedValue = useMemo(
     () => ({
-      products: (data?.products as IProductItem[]) || [],
+      products: (data?.payload as IProductItem[]) || [],
       productsLoading: isLoading,
       productsError: error,
       productsValidating: isValidating,
-      productsEmpty: !isLoading && !data?.products.length,
+      productsEmpty: !isLoading && !data?.payload.length,
     }),
-    [data?.products, error, isLoading, isValidating]
+    [data?.payload, error, isLoading, isValidating]
   );
 
   return memoizedValue;
@@ -29,19 +29,19 @@ export function useGetProducts() {
 
 export function useGetProduct(productId: string) {
   const URL = productId
-    ? [endpoints.product.details, { params: { productId } }]
+    ? [endpoints.admin.product.getProductById, { params: { id: productId } }]
     : '';
 
   const { data, isLoading, error, isValidating } = useSWR(URL, fetcher);
 
   const memoizedValue = useMemo(
     () => ({
-      product: data?.product as IProductItem,
+      product: data?.payload as IProductItem,
       productLoading: isLoading,
       productError: error,
       productValidating: isValidating,
     }),
-    [data?.product, error, isLoading, isValidating]
+    [data?.payload, error, isLoading, isValidating]
   );
 
   return memoizedValue;

@@ -7,12 +7,14 @@ import { Container } from '@mui/material';
 
 import { useSettingsContext } from 'src/components/settings';
 
-export default function CatalogView() {
+import { ProductListView } from './product/view';
+
+export default function ProductView() {
   const settings = useSettingsContext();
   return (
     <Container maxWidth={settings.themeStretch ? false : 'xl'}>
       <RoleBasedGuard hasContent roles={['admin']} sx={{ py: 10 }}>
-        <h1>this works</h1>
+        <ProductListView />
       </RoleBasedGuard>
     </Container>
   );

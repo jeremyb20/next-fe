@@ -4,6 +4,7 @@ export const PRODUCT_GENDER_OPTIONS = [
   { label: 'Men', value: 'Men' },
   { label: 'Women', value: 'Women' },
   { label: 'Kids', value: 'Kids' },
+  { label: 'Animals', value: 'Animals' },
 ];
 
 export const PRODUCT_CATEGORY_OPTIONS = ['Shose', 'Apparel', 'Accessories'];
@@ -27,14 +28,14 @@ export const PRODUCT_COLOR_OPTIONS = [
 ];
 
 export const PRODUCT_COLOR_NAME_OPTIONS = [
-  { value: 'red', label: 'Red' },
-  { value: 'blue', label: 'Blue' },
-  { value: 'cyan', label: 'Cyan' },
-  { value: 'green', label: 'Green' },
-  { value: 'yellow', label: 'Yellow' },
-  { value: 'violet', label: 'Violet' },
-  { value: 'black', label: 'Black' },
-  { value: 'white', label: 'White' },
+  { value: '#FF4842', label: 'Red' }, // Rojo coral
+  { value: '#1890FF', label: 'Blue' }, // Azul
+  { value: '#00AB55', label: 'Green' }, // Verde esmeralda
+  { value: '#FFC107', label: 'Yellow' }, // Amarillo ámbar
+  { value: '#FFC0CB', label: 'Pink' }, // Rosa (en lugar de Violet)
+  { value: '#94D82D', label: 'Lime' }, // Verde lima (en lugar de Cyan)
+  { value: '#000000', label: 'Black' }, // Negro
+  { value: '#FFFFFF', label: 'White' }, // Blanco
 ];
 
 export const PRODUCT_SIZE_OPTIONS = [
@@ -87,6 +88,10 @@ export const PRODUCT_CATEGORY_GROUP_OPTIONS = [
   {
     group: 'Accessories',
     classify: ['Shoes', 'Backpacks and bags', 'Bracelets', 'Face masks'],
+  },
+  {
+    group: 'Pets',
+    classify: ['Food', 'Collars & leashes', 'Toys', 'Apparel & accessories'],
   },
 ];
 

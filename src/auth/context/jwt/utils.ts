@@ -1,4 +1,5 @@
 import axios from '@/src/utils/axios';
+import { STORAGE_KEY } from '@/src/config-global';
 
 import { paths } from 'src/routes/paths';
 
@@ -49,8 +50,8 @@ export const tokenExpired = (exp: number) => {
   expiredTimer = setTimeout(() => {
     alert('Token expired');
 
-    // sessionStorage.removeItem('accessToken');
-    localStorage.removeItem('accessToken');
+    // sessionStorage.removeItem(STORAGE_KEY
+    localStorage.removeItem(STORAGE_KEY);
 
     window.location.href = paths.auth.jwt.login;
   }, timeLeft);
@@ -61,7 +62,7 @@ export const tokenExpired = (exp: number) => {
 export const setSession = (accessToken: string | null) => {
   if (accessToken) {
     // sessionStorage.setItem('accessToken', accessToken);
-    localStorage.setItem('accessToken', accessToken);
+    localStorage.setItem(STORAGE_KEY, accessToken);
 
     axios.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
     // axios.defaults.headers.common.Authorization = `${accessToken}`;
@@ -72,7 +73,7 @@ export const setSession = (accessToken: string | null) => {
   } else {
     // sessionStorage.removeItem('accessToken');
 
-    localStorage.removeItem('accessToken');
+    localStorage.removeItem(STORAGE_KEY);
 
     delete axios.defaults.headers.common.Authorization;
   }

@@ -1,6 +1,6 @@
 import axios, { AxiosRequestConfig } from 'axios';
 
-import { HOST_API } from 'src/config-global';
+import { HOST_API, STORAGE_KEY } from 'src/config-global';
 
 // ----------------------------------------------------------------------
 
@@ -21,11 +21,21 @@ export default axiosInstance;
 export const fetcher = async (args: string | [string, AxiosRequestConfig]) => {
   const [url, config] = Array.isArray(args) ? args : [args];
 
-  const res = await axiosInstance.get(url, { ...config });
+  // Obtener el token de donde lo tengas almacenado (localStorage, sessionStorage, etc.)
+  const token = localStorage.getItem(STORAGE_KEY); // o sessionStorage, cookies, etc.
+
+  const headers = {
+    ...config?.headers,
+    ...(token && { Authorization: `Bearer ${token}` }),
+  };
+
+  const res = await axiosInstance.get(url, {
+    ...config,
+    headers,
+  });
 
   return res.data;
 };
-
 // ----------------------------------------------------------------------
 
 export const endpoints = {
@@ -43,6 +53,15 @@ export const endpoints = {
   },
   admin: {
     getAllRegisteredUsers: '/api/admin/getAllRegisteredUsers',
+    // getAllProducList: '/api/admin/getAllProductList',
+    product: {
+      list: '/api/admin/product/list',
+      search: '/api/admin/product/search',
+      getProductById: '/api/admin/product/details',
+      createProduct: '/api/admin/createProduct',
+      updateProduct: '/api/admin/updateProduct',
+      deleteProduct: '/api/admin/deleteProduct',
+    },
   },
   mail: {
     list: '/api/mail/list',
