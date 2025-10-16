@@ -1,11 +1,11 @@
 import { useMemo } from 'react';
+import Label from '@/src/components/label';
 import { NavItemBaseProps } from '@/src/components/nav-section';
 
 import { paths } from 'src/routes/paths';
 
 import { useTranslate } from 'src/locales';
 
-import Label from 'src/components/label';
 import Iconify from 'src/components/iconify';
 import SvgColor from 'src/components/svg-color';
 
@@ -77,6 +77,7 @@ const ICONS = {
   catalogs: icon('carbon:catalog-publish'),
   seo: icon('hugeicons:seo'),
   blogPanel: icon('meteor-icons:blogger'),
+  inventory: icon('material-symbols:inventory'),
 };
 
 const filterByRole = (
@@ -117,6 +118,12 @@ export function useNavData(userRole: string) {
             title: 'Panel Administrador',
             path: paths.dashboard.root,
             icon: ICONS.dashboard,
+            roles: ['admin'],
+          },
+          {
+            title: 'Panel Inventarios',
+            path: paths.dashboard.admin.inventory.root,
+            icon: ICONS.inventory,
             roles: ['admin'],
           },
           {
@@ -336,93 +343,93 @@ export function useNavData(userRole: string) {
       },
 
       // DEMO MENU STATES
-      {
-        subheader: t(t('other_cases')),
-        items: [
-          {
-            // default roles : All roles can see this entry.
-            // roles: ['user'] Only users can see this item.
-            // roles: ['admin'] Only admin can see this item.
-            // Reference from 'src/guards/RoleBasedGuard'.
-            title: t('item_by_roles'),
-            path: paths.dashboard.permission,
-            icon: ICONS.lock,
-            roles: ['admin', 'user'],
-            caption: t('only_admin_can_see_this_item'),
-          },
-          {
-            title: t('menu_level'),
-            path: '#/dashboard/menu_level',
-            icon: ICONS.menuItem,
-            children: [
-              {
-                title: t('menu_level_1a'),
-                path: '#/dashboard/menu_level/menu_level_1a',
-              },
-              {
-                title: t('menu_level_1b'),
-                path: '#/dashboard/menu_level/menu_level_1b',
-                children: [
-                  {
-                    title: t('menu_level_2a'),
-                    path: '#/dashboard/menu_level/menu_level_1b/menu_level_2a',
-                  },
-                  {
-                    title: t('menu_level_2b'),
-                    path: '#/dashboard/menu_level/menu_level_1b/menu_level_2b',
-                    children: [
-                      {
-                        title: t('menu_level_3a'),
-                        path: '#/dashboard/menu_level/menu_level_1b/menu_level_2b/menu_level_3a',
-                      },
-                      {
-                        title: t('menu_level_3b'),
-                        path: '#/dashboard/menu_level/menu_level_1b/menu_level_2b/menu_level_3b',
-                      },
-                    ],
-                  },
-                ],
-              },
-            ],
-          },
-          {
-            title: t('item_disabled'),
-            path: '#disabled',
-            icon: ICONS.disabled,
-            disabled: true,
-          },
-          {
-            title: t('item_label'),
-            path: '#label',
-            icon: ICONS.label,
-            info: (
-              <Label
-                color="info"
-                startIcon={<Iconify icon="solar:bell-bing-bold-duotone" />}
-              >
-                NEW
-              </Label>
-            ),
-          },
-          {
-            title: t('item_caption'),
-            path: '#caption',
-            icon: ICONS.menuItem,
-            caption:
-              'Quisque malesuada placerat nisl. In hac habitasse platea dictumst. Cras id dui. Pellentesque commodo eros a enim. Morbi mollis tellus ac sapien.',
-          },
-          {
-            title: t('item_external_link'),
-            path: 'https://www.google.com/',
-            icon: ICONS.external,
-          },
-          {
-            title: t('blank'),
-            path: paths.dashboard.blank,
-            icon: ICONS.blank,
-          },
-        ],
-      },
+      // {
+      //   subheader: t(t('other_cases')),
+      //   items: [
+      //     {
+      //       // default roles : All roles can see this entry.
+      //       // roles: ['user'] Only users can see this item.
+      //       // roles: ['admin'] Only admin can see this item.
+      //       // Reference from 'src/guards/RoleBasedGuard'.
+      //       title: t('item_by_roles'),
+      //       path: paths.dashboard.permission,
+      //       icon: ICONS.lock,
+      //       roles: ['admin', 'user'],
+      //       caption: t('only_admin_can_see_this_item'),
+      //     },
+      //     {
+      //       title: t('menu_level'),
+      //       path: '#/dashboard/menu_level',
+      //       icon: ICONS.menuItem,
+      //       children: [
+      //         {
+      //           title: t('menu_level_1a'),
+      //           path: '#/dashboard/menu_level/menu_level_1a',
+      //         },
+      //         {
+      //           title: t('menu_level_1b'),
+      //           path: '#/dashboard/menu_level/menu_level_1b',
+      //           children: [
+      //             {
+      //               title: t('menu_level_2a'),
+      //               path: '#/dashboard/menu_level/menu_level_1b/menu_level_2a',
+      //             },
+      //             {
+      //               title: t('menu_level_2b'),
+      //               path: '#/dashboard/menu_level/menu_level_1b/menu_level_2b',
+      //               children: [
+      //                 {
+      //                   title: t('menu_level_3a'),
+      //                   path: '#/dashboard/menu_level/menu_level_1b/menu_level_2b/menu_level_3a',
+      //                 },
+      //                 {
+      //                   title: t('menu_level_3b'),
+      //                   path: '#/dashboard/menu_level/menu_level_1b/menu_level_2b/menu_level_3b',
+      //                 },
+      //               ],
+      //             },
+      //           ],
+      //         },
+      //       ],
+      //     },
+      //     {
+      //       title: t('item_disabled'),
+      //       path: '#disabled',
+      //       icon: ICONS.disabled,
+      //       disabled: true,
+      //     },
+      //     {
+      //       title: t('item_label'),
+      //       path: '#label',
+      //       icon: ICONS.label,
+      //       info: (
+      //         <Label
+      //           color="info"
+      //           startIcon={<Iconify icon="solar:bell-bing-bold-duotone" />}
+      //         >
+      //           NEW
+      //         </Label>
+      //       ),
+      //     },
+      //     {
+      //       title: t('item_caption'),
+      //       path: '#caption',
+      //       icon: ICONS.menuItem,
+      //       caption:
+      //         'Quisque malesuada placerat nisl. In hac habitasse platea dictumst. Cras id dui. Pellentesque commodo eros a enim. Morbi mollis tellus ac sapien.',
+      //     },
+      //     {
+      //       title: t('item_external_link'),
+      //       path: 'https://www.google.com/',
+      //       icon: ICONS.external,
+      //     },
+      //     {
+      //       title: t('blank'),
+      //       path: paths.dashboard.blank,
+      //       icon: ICONS.blank,
+      //     },
+      //   ],
+      // },
 
       // ... otras secciones
     ];

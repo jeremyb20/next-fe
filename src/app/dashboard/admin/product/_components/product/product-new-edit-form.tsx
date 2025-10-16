@@ -2,9 +2,10 @@ import * as Yup from 'yup';
 import { useForm } from 'react-hook-form';
 import { paths } from '@/src/routes/paths';
 import { endpoints } from '@/src/utils/axios';
+import { HOST_API } from '@/src/config-global';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { HOST_API, CURRENCY_KEY } from '@/src/config-global';
 import { useMemo, useState, useEffect, useCallback } from 'react';
+import { fCurrency, getLocaleCode } from '@/src/utils/format-number';
 import { useCreateGenericMutation } from '@/src/hooks/user-generic-mutation';
 
 import Box from '@mui/material/Box';
@@ -55,6 +56,8 @@ type Props = {
 export default function ProductNewEditForm({ currentProduct }: Props) {
   const { mutateAsync } = useCreateGenericMutation();
 
+  const { symbol } = getLocaleCode();
+
   const { enqueueSnackbar } = useSnackbar();
 
   const mdUp = useResponsive('up', 'md');
@@ -70,7 +73,7 @@ export default function ProductNewEditForm({ currentProduct }: Props) {
     images: Yup.array().min(1, 'Images is required'),
     tags: Yup.array().min(2, 'Must have at least 2 tags'),
     category: Yup.string().required('Category is required'),
-    price: Yup.number().moreThan(0, `Price should not be ${CURRENCY_KEY}0.00`),
+    price: Yup.number().moreThan(0, `Price should not be ${fCurrency(0.0)}`),
     description: Yup.string().required('Description is required'),
     // not required
     taxes: Yup.number(),
@@ -491,14 +494,14 @@ export default function ProductNewEditForm({ currentProduct }: Props) {
             <RHFTextField
               name="price"
               label="Regular Price"
-              placeholder="0.00"
+              placeholder={fCurrency(0.0)}
               type="number"
               InputLabelProps={{ shrink: true }}
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
                     <Box component="span" sx={{ color: 'text.disabled' }}>
-                      {CURRENCY_KEY}
+                      {symbol}
                     </Box>
                   </InputAdornment>
                 ),
@@ -508,14 +511,14 @@ export default function ProductNewEditForm({ currentProduct }: Props) {
             <RHFTextField
               name="priceSale"
               label="Sale Price"
-              placeholder="0.00"
+              placeholder={fCurrency(0.0)}
               type="number"
               InputLabelProps={{ shrink: true }}
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
                     <Box component="span" sx={{ color: 'text.disabled' }}>
-                      {CURRENCY_KEY}
+                      {symbol}
                     </Box>
                   </InputAdornment>
                 ),

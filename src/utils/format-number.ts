@@ -9,16 +9,17 @@ import { useLocales as getLocales } from 'src/locales';
 
 type InputValue = string | number | null;
 
-function getLocaleCode() {
+export function getLocaleCode() {
   const {
     currentLang: {
-      numberFormat: { code, currency },
+      numberFormat: { code, currency, symbol },
     },
   } = getLocales();
 
   return {
     code: code ?? 'en-US',
     currency: currency ?? 'USD',
+    symbol: symbol ?? '$',
   };
 }
 

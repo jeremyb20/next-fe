@@ -305,7 +305,7 @@ export default function UserListView() {
 
           {/* SOLUCIÓN: Usar activeFilters para la paginación */}
           <TablePaginationCustom
-            count={usersData?.total || 0}
+            count={usersData?.pagination.total || 0}
             page={(activeFilters.page || 1) - 1} // Convertir a base 0 para MUI
             rowsPerPage={activeFilters.limit || 5}
             onPageChange={handlePageChange}

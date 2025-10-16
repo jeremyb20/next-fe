@@ -46,10 +46,11 @@ export const allLangs = [
     value: 'es',
     systemValue: merge(esESDate, esESDataGrid),
     adapterLocale: esESAdapter,
-    icon: 'flagpack:es',
+    icon: 'flagpack:cr',
     numberFormat: {
-      code: 'es-ES',
-      currency: 'EUR',
+      code: 'es-CR',
+      currency: 'CRC',
+      symbol: '₡',
     },
   },
   {
@@ -61,6 +62,7 @@ export const allLangs = [
     numberFormat: {
       code: 'en-US',
       currency: 'USD',
+      symbol: '$',
     },
   },
   {
@@ -72,6 +74,7 @@ export const allLangs = [
     numberFormat: {
       code: 'fr-Fr',
       currency: 'EUR',
+      symbol: '€',
     },
   },
   {
@@ -83,6 +86,7 @@ export const allLangs = [
     numberFormat: {
       code: 'vi-VN',
       currency: 'VND',
+      symbol: '₫',
     },
   },
   {
@@ -94,6 +98,7 @@ export const allLangs = [
     numberFormat: {
       code: 'zh-CN',
       currency: 'CNY',
+      symbol: '¥',
     },
   },
   {
@@ -105,6 +110,7 @@ export const allLangs = [
     numberFormat: {
       code: 'ar',
       currency: 'AED',
+      symbol: 'ر.ق',
     },
   },
 ];

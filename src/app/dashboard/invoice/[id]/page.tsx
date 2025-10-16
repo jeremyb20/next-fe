@@ -1,6 +1,4 @@
-// import { _invoices } from 'src/_mock/_invoice';
-
-// import { InvoiceDetailsView } from 'src/sections/invoice/view';
+import { InvoiceDetailsView } from 'src/sections/invoice/view';
 
 // ----------------------------------------------------------------------
 
@@ -15,14 +13,13 @@ type Props = {
 };
 
 export default function InvoiceDetailsPage({ params }: Props) {
-  // const { id } = params;
+  const { id } = params;
 
-  // return <InvoiceDetailsView id={id} />;
-  return <>InvoiceDetailsView</>;
+  return <InvoiceDetailsView id={id} />;
 }
 
-// export async function generateStaticParams() {
-//   return _invoices.map((invoice) => ({
-//     id: invoice.id,
-//   }));
-// }
+// // export async function generateStaticParams() {
+// //   return _invoices.map((invoice) => ({
+// //     id: invoice.id,
+// //   }));
+// // }

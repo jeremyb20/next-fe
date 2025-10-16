@@ -17,9 +17,21 @@ export function useLocales() {
   const currentLang =
     allLangs.find((lang) => lang.value === langStorage) || defaultLang;
 
+  const symbol = currentLang.numberFormat?.currency
+    ? new Intl.NumberFormat(currentLang.numberFormat.code, {
+        style: 'currency',
+        currency: currentLang.numberFormat.currency,
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 0,
+      })
+        .formatToParts(0)
+        .find((part) => part.type === 'currency')?.value
+    : '$';
+
   return {
     allLangs,
     currentLang,
+    symbol,
   };
 }
 

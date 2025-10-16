@@ -22,12 +22,21 @@ export interface UsePaginatedOptions {
 export interface ApiResponse<T> {
   payload: T;
   success: boolean;
-  totalPages?: number;
-  currentPage?: number;
-  total?: number;
+  pagination: {
+    page: number;
+    limit: number;
+    total: number;
+    pages: number;
+  };
   message?: string;
 }
 
+export interface Ipagination {
+  page: number;
+  limit: number;
+  total: number;
+  pages: number;
+}
 export interface QueryOptions {
   refetchOnMount?: boolean;
   refetchOnWindowFocus?: boolean;
