@@ -193,28 +193,25 @@ export default function ProductNewEditForm({ currentProduct }: Props) {
         // 🆕 MODO CREACIÓN
         // eslint-disable-next-line no-lonely-if
         if (newImageFiles.length > 0) {
-          // Solo archivos nuevos (en creación no hay existentes)
           await mutateAsync<IProductItem>({
             payload: {
               ...productData,
-              existingImages: [], // ← Array vacío para existentes
-              images: newImageFiles, // ← Archivos nuevos
+              // ELIMINAR existingImages: [] y enviar directamente
+              images: newImageFiles,
             } as unknown as IProductItem,
             pEndpoint: `${HOST_API}${endpoints.admin.product.createProduct}`,
             method: 'POST',
             isFormData: true,
           });
         } else {
-          // Crear sin imágenes
           await mutateAsync<IProductItem>({
             payload: {
               ...productData,
-              existingImages: [],
-              images: [],
+              // ELIMINAR existingImages: [] y images: []
             } as unknown as IProductItem,
             pEndpoint: `${HOST_API}${endpoints.admin.product.createProduct}`,
             method: 'POST',
-            isFormData: false,
+            isFormData: false, // O true si siempre usas FormData
           });
         }
       }
