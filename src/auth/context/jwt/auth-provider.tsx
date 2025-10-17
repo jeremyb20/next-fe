@@ -133,10 +133,14 @@ export function AuthProvider({ children }: Props) {
       password,
     };
 
-    const res = await axios.post(endpoints.auth.login, data);
-    const { token: accessToken, payload: user } = res.data;
+    const loginRes = await axios.post(endpoints.auth.login, data);
+    const { token: accessToken } = loginRes.data;
 
     setSession(accessToken);
+
+    const meRes = await axios.get(endpoints.auth.me);
+    const { payload: user } = meRes.data;
+
     dispatch({
       type: Types.LOGIN,
       payload: {

@@ -53,7 +53,6 @@ export const endpoints = {
   },
   admin: {
     getAllRegisteredUsers: '/api/admin/getAllRegisteredUsers',
-    // getAllProducList: '/api/admin/getAllProductList',
     product: {
       list: '/api/admin/product/list',
       search: '/api/admin/product/search',
@@ -62,6 +61,14 @@ export const endpoints = {
       updateProduct: '/api/admin/updateProduct',
       deleteProduct: '/api/admin/deleteProduct',
     },
+  },
+  user: {
+    getAllPetsByUser: '/api/user/getAllPetsByUser',
+    search: '/api/user/search',
+    getUserById: '/api/user/details',
+    createUser: '/api/user/create',
+    updateUser: '/api/user/update',
+    deleteUser: '/api/user/delete',
   },
   mail: {
     list: '/api/mail/list',

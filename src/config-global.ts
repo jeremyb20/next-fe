@@ -38,5 +38,9 @@ export const MAPBOX_API = process.env.NEXT_PUBLIC_MAPBOX_API;
 
 export const STORAGE_KEY = 'accessToken';
 
+export const LOGO =
+  process.env.NEXT_PUBLIC_LOGO ||
+  'https://res.cloudinary.com/ensamble/image/upload/v1692285552/gw2pih5qe3vritw5xv13.png';
+
 // ROOT PATH AFTER LOGIN SUCCESSFUL
 export const PATH_AFTER_LOGIN = paths.dashboard.root; // as '/dashboard'

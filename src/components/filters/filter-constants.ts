@@ -36,3 +36,25 @@ export const ADMIN_USER_FILTER_TOOLBAR: FilterConfig[] = [
     width: '100%',
   },
 ];
+
+export const PET_FILTER_TOOLBAR: FilterConfig[] = [
+  {
+    key: 'search',
+    type: 'text',
+    label: 'Search',
+    placeholder: 'Search by Name...',
+    width: '100%',
+  },
+  {
+    key: 'startDate',
+    type: 'date',
+    label: 'Start Date',
+    width: '100%',
+  },
+  {
+    key: 'endDate',
+    type: 'date',
+    label: 'End Date',
+    width: '100%',
+  },
+];

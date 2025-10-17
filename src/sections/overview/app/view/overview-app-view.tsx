@@ -8,7 +8,6 @@ import { useTheme } from '@mui/material/styles';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Unstable_Grid2';
 
-import { useAuthContext } from 'src/auth/hooks';
 import { SeoIllustration } from 'src/assets/illustrations';
 import {
   _appAuthors,
@@ -35,8 +34,6 @@ import AppTopInstalledCountries from '../app-top-installed-countries';
 
 export default function OverviewAppView() {
   const { user } = useManagerUser();
-  const { user: usuario } = useAuthContext();
-  console.log(usuario, 'usuario');
   const theme = useTheme();
 
   const settings = useSettingsContext();

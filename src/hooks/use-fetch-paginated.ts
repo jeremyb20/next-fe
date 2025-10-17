@@ -11,6 +11,8 @@ import {
   UsePaginatedOptions,
 } from '@/src/types/api';
 
+import { IUserPetProfile } from '../types/user';
+
 interface UsePaginatedQueryProps<T> {
   queryKey: string | string[];
   endpoint: string;
@@ -112,6 +114,17 @@ export const useGetAllRegisteredUsers = (
   useFetchPaginated<IUser[]>({
     queryKey: ['users'],
     endpoint: endpoints.admin.getAllRegisteredUsers,
+    params: {
+      page: 1,
+      limit: 10,
+      ...params,
+    },
+  });
+
+export const useGetAllPetsByUser = (params: Partial<UserQueryParams> = {}) =>
+  useFetchPaginated<IUserPetProfile[]>({
+    queryKey: ['getAllPetsByUser'],
+    endpoint: endpoints.user.getAllPetsByUser,
     params: {
       page: 1,
       limit: 10,

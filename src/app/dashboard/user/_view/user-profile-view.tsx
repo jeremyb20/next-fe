@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useCallback } from 'react';
+import { AccountView } from '@/src/sections/account/view';
 import { useManagerUser } from '@/src/hooks/use-manager-user';
 
 import Tab from '@mui/material/Tab';
@@ -10,24 +11,15 @@ import Tabs, { tabsClasses } from '@mui/material/Tabs';
 
 import { paths } from 'src/routes/paths';
 
-import {
-  _userAbout,
-  _userFeeds,
-  _userFriends,
-  _userGallery,
-  _userFollowers,
-} from 'src/_mock';
-
 import Iconify from 'src/components/iconify';
 import { useSettingsContext } from 'src/components/settings';
 import CustomBreadcrumbs from 'src/components/custom-breadcrumbs';
 
-import ProfileHome from '../profile-home';
-import ProfileCover from '../profile-cover';
-import ProfileFriends from '../profile-friends';
-import ProfileGallery from '../profile-gallery';
-import ProfileFollowers from '../profile-followers';
-import UserPetCardsView from './user-pets-cards-view';
+import ProfileCover from '../_components/profile-cover';
+// import ProfileFriends from '../_components/profile-friends';
+// import ProfileGallery from '../_components/profile-gallery';
+// import ProfileFollowers from '../_components/profile-followers';
+import UserPetCardsView from '../_components/user-pets-cards-view';
 
 // ----------------------------------------------------------------------
 
@@ -42,21 +34,21 @@ const TABS = [
     label: 'Profile',
     icon: <Iconify icon="solar:user-id-bold" width={24} />,
   },
-  {
-    value: 'followers',
-    label: 'Followers',
-    icon: <Iconify icon="solar:heart-bold" width={24} />,
-  },
-  {
-    value: 'friends',
-    label: 'Friends',
-    icon: <Iconify icon="solar:users-group-rounded-bold" width={24} />,
-  },
-  {
-    value: 'gallery',
-    label: 'Gallery',
-    icon: <Iconify icon="solar:gallery-wide-bold" width={24} />,
-  },
+  // {
+  //   value: 'followers',
+  //   label: 'Followers',
+  //   icon: <Iconify icon="solar:heart-bold" width={24} />,
+  // },
+  // {
+  //   value: 'friends',
+  //   label: 'Friends',
+  //   icon: <Iconify icon="solar:users-group-rounded-bold" width={24} />,
+  // },
+  // {
+  //   value: 'gallery',
+  //   label: 'Gallery',
+  //   icon: <Iconify icon="solar:gallery-wide-bold" width={24} />,
+  // },
 ];
 
 // ----------------------------------------------------------------------
@@ -105,10 +97,11 @@ export default function UserProfileView() {
         }}
       >
         <ProfileCover
-          role={_userAbout.role}
+          role={user.role}
           name={user?.displayName}
           avatarUrl={user?.photoURL}
-          coverUrl={_userAbout.coverUrl}
+          coverUrl={user.coverUrl}
+          updatedAt={user.updatedAt}
         />
 
         <Tabs
@@ -143,10 +136,11 @@ export default function UserProfileView() {
       {currentTab === 'myPets' && <UserPetCardsView />}
 
       {currentTab === 'profile' && (
-        <ProfileHome info={_userAbout} posts={_userFeeds} />
+        // <ProfileHome info={_userAbout} posts={_userFeeds} />
+        <AccountView />
       )}
 
-      {currentTab === 'followers' && (
+      {/* {currentTab === 'followers' && (
         <ProfileFollowers followers={_userFollowers} />
       )}
 
@@ -158,7 +152,7 @@ export default function UserProfileView() {
         />
       )}
 
-      {currentTab === 'gallery' && <ProfileGallery gallery={_userGallery} />}
+      {currentTab === 'gallery' && <ProfileGallery gallery={_userGallery} />} */}
     </Container>
   );
 }

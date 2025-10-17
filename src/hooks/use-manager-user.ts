@@ -1,5 +1,3 @@
-import { _mock } from 'src/_mock';
-
 // TO GET THE USER FROM THE AUTHCONTEXT, YOU CAN USE
 
 // CHANGE:
@@ -9,6 +7,8 @@ import { _mock } from 'src/_mock';
 // TO:
 import { useAuthContext } from 'src/auth/hooks';
 
+import { LOGO } from '../config-global';
+import { useResponsive } from './use-responsive';
 import {
   getUserRoleFromState,
   getUserStatusFromState,
@@ -18,14 +18,19 @@ import {
 
 export function useManagerUser() {
   const { user: authUser } = useAuthContext();
+  const isMobile = useResponsive('down', 'sm');
   const user = {
-    id: '8864c717-587d-472a-929a-8e5f298024da-0',
+    id: authUser?._id,
     displayName: 'Jeremy Bacca',
     email: authUser?.email,
     password: 'demo1234',
-    photoURL: _mock.image.avatar(24),
+    photoURL: LOGO,
+    coverUrl: `https://picsum.photos/seed/picsum/${isMobile ? '300' : '1800'}/${
+      isMobile ? '300' : '500'
+    }`,
     phoneNumber: authUser?.phone,
     country: authUser?.country,
+    memberId: authUser?.memberId,
     address: '90210 Broadway Blvd',
     state: 'California',
     city: 'San Francisco',
@@ -35,6 +40,9 @@ export function useManagerUser() {
     role: getUserRoleFromState(authUser?.role), // admin | user | groomer | veterinarian
     isActive: getUserStatusFromState(authUser?.user), // active | inactive
     isPublic: false,
+    updatedAt: authUser?.updatedAt,
+    createdAt: authUser?.createdAt,
+    isVerified: authUser?.isVerified,
   };
 
   return { user };

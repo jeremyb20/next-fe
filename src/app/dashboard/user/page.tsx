@@ -1,6 +1,6 @@
-import { UserProfileView } from 'src/sections/user/view';
-
 // ----------------------------------------------------------------------
+
+import UserProfileView from './_view/user-profile-view';
 
 export const metadata = {
   title: 'Dashboard: User Profile',
