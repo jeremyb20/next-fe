@@ -1,6 +1,11 @@
 import axiosInstance, { endpoints } from '@/src/utils/axios';
 import { useQuery, keepPreviousData } from '@tanstack/react-query';
-import { ApiResponse, QueryOptions, NotificationData } from '@/src/types/api';
+import {
+  IQRStats,
+  ApiResponse,
+  QueryOptions,
+  NotificationData,
+} from '@/src/types/api';
 
 import { useAuthContext } from '../auth/hooks';
 
@@ -43,6 +48,19 @@ export const useFetchGetNotifications = () => {
   return useFetch<NotificationData[]>(
     'NotificationData',
     endpoints.notification.notifications,
+    {
+      staleTime: 5 * 60 * 1000,
+      retry: 2,
+      enabled: authenticated,
+    }
+  );
+};
+
+export const useGetQRStats = () => {
+  const { authenticated } = useAuthContext();
+  return useFetch<IQRStats[]>(
+    'useGetQRStats',
+    endpoints.admin.qrcode.getStats,
     {
       staleTime: 5 * 60 * 1000,
       retry: 2,

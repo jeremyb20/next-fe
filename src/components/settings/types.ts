@@ -7,11 +7,12 @@ export type SettingsValueProps = {
   themeContrast: 'default' | 'bold';
   themeLayout: 'vertical' | 'horizontal' | 'mini';
   themeColorPresets: 'default' | 'cyan' | 'purple' | 'blue' | 'orange' | 'red';
+  fontSizeScale: number; // Nuevo: factor de escala de tipografía
 };
 
 export type SettingsContextProps = SettingsValueProps & {
   // Update
-  onUpdate: (name: string, value: string | boolean) => void;
+  onUpdate: (name: string, value: string | boolean | number) => void;
   // Direction by lang
   onChangeDirectionByLang: (lang: string) => void;
   // Reset

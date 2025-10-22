@@ -19,6 +19,7 @@ import PresetsOptions from './presets-options';
 import StretchOptions from './stretch-options';
 import { useSettingsContext } from '../context';
 import FullScreenOption from './fullscreen-option';
+import { FontSizeSlider } from './fontSize-slider';
 
 // ----------------------------------------------------------------------
 
@@ -166,6 +167,12 @@ export default function SettingsDrawer() {
     </div>
   );
 
+  const renderFontSize = (
+    <div>
+      <FontSizeSlider sx={{ ...labelStyles }} />
+    </div>
+  );
+
   return (
     <Drawer
       anchor="right"
@@ -198,6 +205,8 @@ export default function SettingsDrawer() {
           {renderStretch}
 
           {renderPresets}
+
+          {renderFontSize}
         </Stack>
       </Scrollbar>
 

@@ -61,6 +61,12 @@ export const endpoints = {
       updateProduct: '/api/admin/updateProduct',
       deleteProduct: '/api/admin/deleteProduct',
     },
+    qrcode: {
+      getStats: '/api/admin/getQRStats',
+      list: '/api/admin/getAllQrCodeList',
+      search: '/api/admin/product/search',
+      updateQRCode: '/api/admin/updateQRCode',
+    },
   },
   user: {
     getAllPetsByUser: '/api/user/getAllPetsByUser',

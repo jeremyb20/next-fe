@@ -135,3 +135,36 @@ interface ILocation {
   dateViewed: string;
   _id: string;
 }
+
+export interface IQrCode {
+  _id: string;
+  status: 'available' | 'assigned' | 'activated' | 'expired' | 'pending';
+  purchaseInfo: PurchaseInfo;
+  randomCode: string;
+  assignedTo: any;
+  assignedPet: any;
+  activatedBy: any;
+  activationDate: string;
+  hostName: string;
+  createdAt: string;
+  updatedAt: string;
+  [key: string]: any;
+}
+
+export interface PurchaseInfo {
+  price: number;
+  seller: string;
+  soldDate: any;
+}
+
+export interface IQRStats {
+  totalCodes: number;
+  totalRevenue: number;
+  byStatus: ByStatu[];
+}
+
+export interface ByStatu {
+  status: string;
+  count: number;
+  totalValue: number;
+}

@@ -123,11 +123,16 @@ function AppNewInvoiceRow({ row }: AppNewInvoiceRowProps) {
         <TableCell>
           <Label
             variant="soft"
+            component="label"
             color={
               (row.status === 'progress' && 'warning') ||
               (row.status === 'out of date' && 'error') ||
               'success'
             }
+            // sx={{
+            //   fontSize: 'inherit', // Hereda el tamaño de fuente del contexto
+            //   fontFamily: 'inherit', // Hereda la familia de fuente
+            // }}
           >
             {row.status}
           </Label>

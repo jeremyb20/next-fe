@@ -71,7 +71,8 @@ export default function OverviewAppView() {
 
         <Grid xs={12} md={4}>
           <AppWidgetSummary
-            title="Total Installed"
+            // title="Total Installed"
+            title="Total Pets Registered"
             percent={0.2}
             total={4876}
             chart={{
@@ -83,7 +84,8 @@ export default function OverviewAppView() {
 
         <Grid xs={12} md={4}>
           <AppWidgetSummary
-            title="Total Downloads"
+            // title="Total Downloads"
+            title="Total Products Registered"
             percent={-0.1}
             total={678}
             chart={{

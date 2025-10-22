@@ -2,6 +2,7 @@
 
 import { IUser } from '@/src/types/api';
 import { useMemo, useState, useCallback } from 'react';
+import EmptyContent from '@/src/components/empty-content';
 import FilterToolbar from '@/src/components/filters/filter-toolbar';
 import { ADMIN_USER_FILTER_TOOLBAR } from '@/src/components/filters/filter-constants';
 import {
@@ -13,14 +14,15 @@ import Card from '@mui/material/Card';
 import Table from '@mui/material/Table';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
+import { LinearProgress } from '@mui/material';
 import Container from '@mui/material/Container';
 import TableBody from '@mui/material/TableBody';
 import IconButton from '@mui/material/IconButton';
-import { Alert, LinearProgress } from '@mui/material';
 import TableContainer from '@mui/material/TableContainer';
 
 import { paths } from 'src/routes/paths';
 import { useRouter } from 'src/routes/hooks';
+import { RouterLink } from 'src/routes/components';
 
 import { useBoolean } from 'src/hooks/use-boolean';
 
@@ -206,11 +208,21 @@ export default function UserListView() {
 
   if (isError) {
     return (
-      <Container maxWidth={settings.themeStretch ? false : 'lg'}>
-        <Card sx={{ p: 3 }}>
-          <Alert severity="error">Error loading users: {error?.message}</Alert>
-        </Card>
-      </Container>
+      <EmptyContent
+        filled
+        title={`${error?.message}`}
+        action={
+          <Button
+            component={RouterLink}
+            href={paths.dashboard.admin.usersAdmin}
+            startIcon={<Iconify icon="eva:arrow-ios-back-fill" width={16} />}
+            sx={{ mt: 3 }}
+          >
+            Back to List
+          </Button>
+        }
+        sx={{ py: 10 }}
+      />
     );
   }
 

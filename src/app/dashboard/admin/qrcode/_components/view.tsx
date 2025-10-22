@@ -7,12 +7,14 @@ import { Container } from '@mui/material';
 
 import { useSettingsContext } from 'src/components/settings';
 
+import QrCodeListView from './view/qrcode-list-view';
+
 export default function QrPanelView() {
   const settings = useSettingsContext();
   return (
     <Container maxWidth={settings.themeStretch ? false : 'xl'}>
       <RoleBasedGuard hasContent roles={['admin']} sx={{ py: 10 }}>
-        <div>Qr Panel Works</div>
+        <QrCodeListView />
       </RoleBasedGuard>
     </Container>
   );
