@@ -1,9 +1,19 @@
 import { FilterConfig } from './filter-toolbar';
 
-export const STATUS_OPTIONS = [
-  { value: '2', label: 'Verified' },
-  { value: '3', label: 'Not verified' },
-  { value: '1', label: 'Inactive' },
+export const USER_STATUS_OPTIONS = [
+  { value: '0', label: 'Active', color: 'success' },
+  { value: '1', label: 'Pending', color: 'info' },
+  { value: '2', label: 'Banned', color: 'error' },
+  { value: '3', label: 'Not Verified', color: 'info' },
+  { value: '4', label: 'Rejected', color: 'warning' },
+];
+
+export const USER_ROLE_OPTIONS = [
+  { value: '0', label: 'Admin' },
+  { value: '1', label: 'Veterinarian' },
+  { value: '2', label: 'Groomer' },
+  { value: '3', label: 'Client' },
+  { value: '4', label: 'Guest' },
 ];
 
 export const STATUS_QRCODE_OPTIONS = [
@@ -29,7 +39,7 @@ export const ADMIN_USER_FILTER_TOOLBAR: FilterConfig[] = [
     key: 'status',
     type: 'select',
     label: 'Status',
-    options: STATUS_OPTIONS,
+    options: USER_STATUS_OPTIONS,
     width: '100%',
   },
   {

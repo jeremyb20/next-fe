@@ -52,7 +52,11 @@ export const endpoints = {
     delete: '/api/notifications/delete',
   },
   admin: {
-    getAllRegisteredUsers: '/api/admin/getAllRegisteredUsers',
+    users: {
+      getAllRegisteredUsers: '/api/admin/getAllRegisteredUsers',
+      updateUserById: '/api/admin/updateUserById',
+      deleteUser: '/api/admin/users/delete',
+    },
     product: {
       list: '/api/admin/product/list',
       search: '/api/admin/product/search',

@@ -91,12 +91,9 @@ export default function QrCodeEditForm({
 
   const {
     reset,
-    watch,
     handleSubmit,
     formState: { isSubmitting },
   } = methods;
-
-  const values = watch();
 
   useEffect(() => {
     if (currentQrCode) {
@@ -117,6 +114,7 @@ export default function QrCodeEditForm({
         pEndpoint: `${HOST_API}${endpoints.admin.qrcode.updateQRCode}`,
         method: 'PUT',
       });
+      close(false);
       enqueueSnackbar('QR code updated successfully!', { variant: 'success' });
       refetchAll();
     } catch (error) {

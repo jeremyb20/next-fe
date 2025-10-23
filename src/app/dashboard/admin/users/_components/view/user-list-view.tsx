@@ -1,6 +1,7 @@
 'use client';
 
 import { IUser } from '@/src/types/api';
+import useIPInfo from '@/src/hooks/use-ip-info';
 import { useMemo, useState, useCallback } from 'react';
 import EmptyContent from '@/src/components/empty-content';
 import FilterToolbar from '@/src/components/filters/filter-toolbar';
@@ -43,7 +44,7 @@ import {
   TablePaginationCustom,
 } from 'src/components/table';
 
-import OrderTableRow from '../order-table-row';
+import UserTableRow from '../user-table-row';
 
 export interface IUserTableFilters {
   name: string;
@@ -80,6 +81,8 @@ export default function UserListView() {
   const router = useRouter();
   const confirm = useBoolean();
 
+  const { ipData } = useIPInfo();
+
   // SOLUCIÓN: Unificar en un solo estado para filtros y paginación
   const [activeFilters, setActiveFilters] = useState<Partial<UserQueryParams>>({
     page: 1,
@@ -101,6 +104,7 @@ export default function UserListView() {
     isFetching,
     isError,
     error,
+    refetch,
   } = useGetAllRegisteredUsers(activeFilters);
 
   const tableData: IUser[] = useMemo(
@@ -121,8 +125,8 @@ export default function UserListView() {
 
     if (table.orderBy) {
       const comparator = getComparator(table.order, table.orderBy) as (
-        a: IUser,
-        b: IUser
+        a: any,
+        b: any
       ) => number;
       filteredData = filteredData.sort(comparator);
     }
@@ -298,13 +302,15 @@ export default function UserListView() {
                 />
                 <TableBody>
                   {dataFiltered.map((row) => (
-                    <OrderTableRow
+                    <UserTableRow
                       key={row.id}
                       row={row}
                       selected={table.selected.includes(row.id)}
                       onSelectRow={() => table.onSelectRow(row.id)}
                       onDeleteRow={() => handleDeleteRow(row.id)}
                       onViewRow={() => handleViewRow(row.id)}
+                      ipDataInfo={ipData}
+                      refetch={refetch}
                     />
                   ))}
 

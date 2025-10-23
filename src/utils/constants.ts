@@ -12,7 +12,9 @@ export const getUserRoleFromState = (userState: number): string => {
 export const getUserStatusFromState = (userState: number): string => {
   const roleMap: { [key: number]: string } = {
     0: 'active',
-    1: 'inactive',
+    1: 'pending',
+    2: 'banned',
+    3: 'rejected',
   };
 
   return roleMap[userState] || 'active'; // Valor por defecto 'user' si no encuentra el estado

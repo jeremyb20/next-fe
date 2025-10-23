@@ -251,8 +251,6 @@ export default function QrCodeListView() {
   );
 
   const handleEditRow = useCallback((qrcode: IQrCode) => {
-    // router.push(paths.dashboard.invoice.edit(id));
-    console.log(qrcode);
     setEditQrCode(true);
     setQrCodeItem(qrcode);
   }, []);

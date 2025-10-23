@@ -55,7 +55,7 @@ export function textField(theme: Theme) {
       },
     },
 
-    // BASE
+    // BASE - AQUÍ AGREGAMOS EL AUTOFILL
     MuiInputBase: {
       styleOverrides: {
         root: {
@@ -70,6 +70,20 @@ export function textField(theme: Theme) {
           '&::placeholder': {
             opacity: 1,
             color: color.placeholder,
+          },
+          // ESTILOS PARA AUTOFILL
+          '&:-webkit-autofill': {
+            WebkitBoxShadow: `0 0 0 100px #212B36 inset !important`,
+            WebkitTextFillColor: theme.palette.text.primary,
+            caretColor: theme.palette.text.primary,
+            borderRadius: '0px !important',
+            border: '0px solid #212B36 !important',
+          },
+          '&:-webkit-autofill:hover': {
+            WebkitBoxShadow: `0 0 0 100px #212B36 inset`,
+          },
+          '&:-webkit-autofill:focus': {
+            WebkitBoxShadow: `0 0 0 100px #212B36 inset`,
           },
         },
       },

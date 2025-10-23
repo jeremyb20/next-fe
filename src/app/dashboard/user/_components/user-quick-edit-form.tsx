@@ -2,6 +2,7 @@ import * as Yup from 'yup';
 import { useMemo } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { USER_STATUS_OPTIONS } from '@/src/components/filters/filter-constants';
 
 import Box from '@mui/material/Box';
 import Alert from '@mui/material/Alert';
@@ -14,7 +15,6 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 
 import { countries } from 'src/assets/data';
-import { USER_STATUS_OPTIONS } from 'src/_mock';
 
 import { useSnackbar } from 'src/components/snackbar';
 import FormProvider, {

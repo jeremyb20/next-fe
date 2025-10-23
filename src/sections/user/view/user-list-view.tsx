@@ -2,6 +2,7 @@
 
 import isEqual from 'lodash/isEqual';
 import { useState, useCallback } from 'react';
+import { USER_STATUS_OPTIONS } from '@/src/components/filters/filter-constants';
 
 import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
@@ -21,7 +22,7 @@ import { RouterLink } from 'src/routes/components';
 
 import { useBoolean } from 'src/hooks/use-boolean';
 
-import { _roles, _userList, USER_STATUS_OPTIONS } from 'src/_mock';
+import { _roles, _userList } from 'src/_mock';
 
 import Label from 'src/components/label';
 import Iconify from 'src/components/iconify';

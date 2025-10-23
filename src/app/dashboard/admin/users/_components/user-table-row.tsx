@@ -2,12 +2,14 @@
 // import { IOrderItem } from 'src/types/order';
 import { IUser } from '@/src/types/api';
 import { useTranslation } from 'react-i18next';
+import { IPInfoResponse } from '@/src/hooks/use-ip-info';
 import { getUserRoleFromState } from '@/src/utils/constants';
-import { STATUS_OPTIONS } from '@/src/components/filters/filter-constants';
+import { USER_STATUS_OPTIONS } from '@/src/components/filters/filter-constants';
 import { AvatarWithSkeleton } from '@/src/components/avatar/avatar-with-skeleton';
 
 import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
+import { Tooltip } from '@mui/material';
 import Button from '@mui/material/Button';
 import Avatar from '@mui/material/Avatar';
 import Collapse from '@mui/material/Collapse';
@@ -22,10 +24,12 @@ import { useBoolean } from 'src/hooks/use-boolean';
 
 import { fDate, fTime } from 'src/utils/format-time';
 
-import Label from 'src/components/label';
 import Iconify from 'src/components/iconify';
+import Label, { LabelColor } from 'src/components/label';
 import { ConfirmDialog } from 'src/components/custom-dialog';
 import CustomPopover, { usePopover } from 'src/components/custom-popover';
+
+import UserQuickEditForm from './user-quick-edit-form';
 
 // ----------------------------------------------------------------------
 
@@ -35,14 +39,18 @@ type Props = {
   onViewRow: VoidFunction;
   onSelectRow: VoidFunction;
   onDeleteRow: VoidFunction;
+  ipDataInfo: IPInfoResponse | null;
+  refetch: () => void;
 };
 
-export default function OrderTableRow({
+export default function UserTableRow({
   row,
   selected,
   onViewRow,
   onSelectRow,
   onDeleteRow,
+  ipDataInfo,
+  refetch,
 }: Props) {
   const { pets, createdAt, userStatus, email, id, updatedAt, role } = row;
 
@@ -53,6 +61,8 @@ export default function OrderTableRow({
   const collapse = useBoolean();
 
   const popover = usePopover();
+
+  const quickEdit = useBoolean();
 
   const renderPrimary = (
     <TableRow hover selected={selected}>
@@ -110,12 +120,16 @@ export default function OrderTableRow({
       <TableCell>
         <Label
           variant="soft"
-          color={(userStatus.toString() === '2' && 'success') || 'default'}
+          color={
+            USER_STATUS_OPTIONS.find(
+              (option) => option.value === userStatus.toString()
+            )?.color as LabelColor
+          }
           sx={{ textTransform: 'capitalize' }}
         >
           {userStatus &&
             t(
-              STATUS_OPTIONS.find(
+              USER_STATUS_OPTIONS.find(
                 (option) => option.value === userStatus.toString()
               )?.label || 'N/A'
             )}
@@ -143,7 +157,14 @@ export default function OrderTableRow({
             }
           />
         </IconButton>
-        {/* )} */}
+        <Tooltip title="Quick Edit" placement="top" arrow>
+          <IconButton
+            color={quickEdit.value ? 'inherit' : 'default'}
+            onClick={quickEdit.onTrue}
+          >
+            <Iconify icon="solar:pen-bold" />
+          </IconButton>
+        </Tooltip>
 
         <IconButton
           color={popover.open ? 'inherit' : 'default'}
@@ -152,6 +173,13 @@ export default function OrderTableRow({
           <Iconify icon="eva:more-vertical-fill" />
         </IconButton>
       </TableCell>
+      <UserQuickEditForm
+        currentUser={row}
+        open={quickEdit.value}
+        onClose={quickEdit.onFalse}
+        ipDataInfo={ipDataInfo}
+        refetch={refetch}
+      />
     </TableRow>
   );
 

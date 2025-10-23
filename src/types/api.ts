@@ -109,8 +109,13 @@ export interface IUser {
   createdAt: string;
   userStatus: string;
   role: number;
+  address: string;
   pets: IPetProfile[] | null;
-  [key: string]: any; // Para permitir propiedades adicionales
+  name: string;
+  phone: string;
+  country: string;
+  userState: string;
+  // [key: string]: any; // Para permitir propiedades adicionales
 }
 
 export interface IPetProfile {

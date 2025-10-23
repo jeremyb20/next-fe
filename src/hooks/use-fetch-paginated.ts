@@ -114,7 +114,7 @@ export const useGetAllRegisteredUsers = (
 ) =>
   useFetchPaginated<IUser[]>({
     queryKey: ['users'],
-    endpoint: endpoints.admin.getAllRegisteredUsers,
+    endpoint: endpoints.admin.users.getAllRegisteredUsers,
     params: {
       page: 1,
       limit: 10,
