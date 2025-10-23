@@ -71,6 +71,12 @@ export const endpoints = {
       search: '/api/admin/product/search',
       updateQRCode: '/api/admin/updateQRCode',
     },
+    seo: {
+      list: '/api/admin/getAllSeoList',
+      createSeo: '/api/admin/createSeo',
+      deleteSeo: '/api/admin/deleteSeo',
+      updateSeoById: '/api/admin/updateSeoById',
+    },
   },
   user: {
     getAllPetsByUser: '/api/user/getAllPetsByUser',

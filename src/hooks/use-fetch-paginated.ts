@@ -5,6 +5,7 @@ import {
   keepPreviousData,
 } from '@tanstack/react-query';
 import {
+  ISeo,
   IUser,
   IQrCode,
   ApiResponse,
@@ -137,6 +138,17 @@ export const useGetAllQrCodeList = (params: Partial<UserQueryParams> = {}) =>
   useFetchPaginated<IQrCode[]>({
     queryKey: ['qrcode'],
     endpoint: endpoints.admin.qrcode.list,
+    params: {
+      page: 1,
+      limit: 10,
+      ...params,
+    },
+  });
+
+export const useGetAllSeo = (params: Partial<UserQueryParams> = {}) =>
+  useFetchPaginated<ISeo[]>({
+    queryKey: ['seo'],
+    endpoint: endpoints.admin.seo.list,
     params: {
       page: 1,
       limit: 10,

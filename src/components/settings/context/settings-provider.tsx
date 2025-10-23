@@ -30,7 +30,7 @@ export function SettingsProvider({
 
   const [openDrawer, setOpenDrawer] = useState(false);
 
-  const isArabic = localStorageGetItem('i18nextLng') === 'ar';
+  const isArabic = localStorageGetItem('i18next') === 'ar';
 
   useEffect(() => {
     if (isArabic) {

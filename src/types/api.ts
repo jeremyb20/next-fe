@@ -173,3 +173,37 @@ export interface ByStatu {
   count: number;
   totalValue: number;
 }
+
+export interface ISeoContent {
+  language: string;
+  title: string;
+  description: string;
+  keywords: string[];
+  canonicalUrl?: string;
+  ogTitle?: string;
+  ogDescription?: string;
+  ogImage?: string;
+  metaTags?: Array<{
+    name: string;
+    content: string;
+    attribute?: string;
+  }>;
+  structuredData?: object;
+}
+
+export interface ISeo {
+  _id?: string;
+  pageId: string;
+  route: string;
+  contentType: string;
+  contentId?: string;
+  multiLanguageContent: ISeoContent[];
+  status: 'active' | 'inactive' | 'draft';
+  priority: number;
+  changeFrequency: string;
+  lastModified: Date;
+  createdBy: string;
+  updatedBy: string;
+  createdAt?: Date;
+  updatedAt?: Date;
+}

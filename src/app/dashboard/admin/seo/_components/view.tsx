@@ -7,12 +7,14 @@ import { Container } from '@mui/material';
 
 import { useSettingsContext } from 'src/components/settings';
 
+import SeoListView from './view/seo-list-view';
+
 export default function SeoPanelView() {
   const settings = useSettingsContext();
   return (
     <Container maxWidth={settings.themeStretch ? false : 'xl'}>
       <RoleBasedGuard hasContent roles={['admin']} sx={{ py: 10 }}>
-        <div>Seo Panel Works</div>
+        <SeoListView />
       </RoleBasedGuard>
     </Container>
   );

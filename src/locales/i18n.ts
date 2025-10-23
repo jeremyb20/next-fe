@@ -27,9 +27,9 @@ i18n
       es: { translations: translationEs },
     },
     detection: {
-      order: ['localStorage', 'navigator'],
-      caches: ['localStorage'],
-      lookupLocalStorage: 'i18nextLng',
+      order: ['localStorage', 'navigator', 'cookie'],
+      caches: ['localStorage', 'cookie'],
+      lookupLocalStorage: 'i18next',
     },
     fallbackLng: defaultLang.value,
     debug: false,
