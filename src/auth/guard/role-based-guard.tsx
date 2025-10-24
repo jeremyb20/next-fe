@@ -30,7 +30,7 @@ export default function RoleBasedGuard({
   // const currentRole = 'user';
   const currentRole = user?.role; // admin;
 
-  if (typeof roles !== 'undefined' && !roles.includes(currentRole)) {
+  if (typeof roles !== 'undefined' && !roles.includes(currentRole || '')) {
     return hasContent ? (
       <Container
         component={MotionContainer}

@@ -275,8 +275,8 @@ export default function SeoQuickEditForm({
         id: currentSeo?._id,
         multiLanguageContent: filteredContent,
         lastModified: new Date(),
-        createdBy: currentSeo?._id ? data.createdBy : user.id,
-        updatedBy: user.id,
+        createdBy: currentSeo?._id ? data.createdBy : user?.id,
+        updatedBy: user?.id,
       };
 
       const endpoint = currentSeo?._id

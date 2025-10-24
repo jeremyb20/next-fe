@@ -382,7 +382,9 @@ function applyFilter({
   }
 
   if (status !== 'all') {
-    filteredData = filteredData.filter((user) => user.userState === status);
+    filteredData = filteredData.filter(
+      (user) => user.userState.toString() === status
+    );
   }
 
   if (!dateError) {

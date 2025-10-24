@@ -36,7 +36,7 @@ export default function UserPetCardsView() {
   const [activeFilters, setActiveFilters] = useState<Partial<UserQueryParams>>({
     page: 1,
     limit: 5,
-    id: user.id,
+    id: user?.id,
   });
 
   const dateError = useMemo(() => {
@@ -70,12 +70,12 @@ export default function UserPetCardsView() {
     const clearedFilters = {
       page: 1,
       limit: activeFilters.limit || 5,
-      id: user.id,
+      id: user?.id,
     };
 
     setActiveFilters(clearedFilters);
     enqueueSnackbar('Filtros limpiados', { variant: 'info' });
-  }, [activeFilters.limit, enqueueSnackbar, user.id]);
+  }, [activeFilters.limit, enqueueSnackbar, user?.id]);
 
   const handleSearch = useCallback(() => {
     setActiveFilters((prev) => ({

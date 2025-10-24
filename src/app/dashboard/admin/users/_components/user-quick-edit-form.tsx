@@ -107,11 +107,11 @@ export default function UserQuickEditForm({
 
   const defaultValues: FormValues = useMemo(
     () => ({
-      name: currentUser?.name || '',
+      name: currentUser?.profile.name || '',
       email: currentUser?.email || '',
-      phone: currentUser?.phone || '',
-      address: currentUser?.address || '',
-      country: currentUser?.country || '',
+      phone: currentUser?.profile.phone || '',
+      address: currentUser?.profile.address || '',
+      country: currentUser?.profile.country || '',
       role: currentUser?.role.toString() || '',
       status: currentUser?.userStatus,
     }),

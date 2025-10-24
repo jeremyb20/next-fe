@@ -80,10 +80,10 @@ export const endpoints = {
   },
   user: {
     getAllPetsByUser: '/api/user/getAllPetsByUser',
+    updateMyProfile: '/api/user/updateMyProfile',
     search: '/api/user/search',
     getUserById: '/api/user/details',
     createUser: '/api/user/create',
-    updateUser: '/api/user/update',
     deleteUser: '/api/user/delete',
   },
   mail: {

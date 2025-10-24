@@ -68,6 +68,7 @@ export type JWTContextType = CanRemove & {
     lastName: string
   ) => Promise<void>;
   logout: () => Promise<void>;
+  updateUser: (userData: Partial<AuthUserType>) => void;
 };
 
 export type FirebaseContextType = CanRemove & {

@@ -101,20 +101,55 @@ export interface NotificationFormData {
   scheduledTime?: string;
 }
 
+// Interface para el perfil del usuario
+interface IUserProfile {
+  address: string;
+  phone: string;
+  country: string;
+  name: string;
+  username: string;
+  photoProfile?: string;
+  photo_id_profile?: string;
+}
+
+// Interface para la configuración del tema
+export interface IUserThemeConfig {
+  fontSizeScale: number;
+  themeColorPresets: string;
+  themeContrast: string;
+  themeDirection: string;
+  themeLayout: string;
+  themeMode: string;
+  themeStretch: boolean;
+}
+
+// Interface para los permisos
+export interface IUserPermissions {
+  showPhoneInfo: boolean;
+  showEmailInfo: boolean;
+  showPersonalInfo: boolean;
+}
+
+// Interface para la configuración completa
+export interface IUserConfiguration {
+  theme: IUserThemeConfig;
+  permissions: IUserPermissions; // ← Permissions movido aquí
+}
 // Admin User interface
 export interface IUser {
+  _id: string;
+  isVerified: boolean;
+  memberId: string;
   id: string;
   email: string;
   updatedAt: string;
   createdAt: string;
   userStatus: string;
   role: number;
-  address: string;
   pets: IPetProfile[] | null;
-  name: string;
-  phone: string;
-  country: string;
-  userState: string;
+  userState: number;
+  configuration: IUserConfiguration; // ← Permissions ahora está aquí
+  profile: IUserProfile;
   // [key: string]: any; // Para permitir propiedades adicionales
 }
 

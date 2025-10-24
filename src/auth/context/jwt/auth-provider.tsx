@@ -22,6 +22,7 @@ enum Types {
   LOGIN = 'LOGIN',
   REGISTER = 'REGISTER',
   LOGOUT = 'LOGOUT',
+  UPDATE_USER = 'UPDATE_USER',
 }
 
 type Payload = {
@@ -33,6 +34,9 @@ type Payload = {
   };
   [Types.REGISTER]: {
     user: AuthUserType;
+  };
+  [Types.UPDATE_USER]: {
+    user: Partial<AuthUserType>;
   };
   [Types.LOGOUT]: undefined;
 };
@@ -69,6 +73,12 @@ const reducer = (state: AuthStateType, action: ActionsType) => {
     return {
       ...state,
       user: null,
+    };
+  }
+  if (action.type === Types.UPDATE_USER) {
+    return {
+      ...state,
+      user: state.user ? { ...state.user, ...action.payload.user } : null,
     };
   }
   return state;
@@ -195,6 +205,15 @@ export function AuthProvider({ children }: Props) {
     });
   }, []);
 
+  const updateUser = useCallback((userData: Partial<AuthUserType>) => {
+    dispatch({
+      type: Types.UPDATE_USER,
+      payload: {
+        user: userData,
+      },
+    });
+  }, []);
+
   // ----------------------------------------------------------------------
 
   const checkAuthenticated = state.user ? 'authenticated' : 'unauthenticated';
@@ -212,8 +231,9 @@ export function AuthProvider({ children }: Props) {
       login,
       register,
       logout,
+      updateUser,
     }),
-    [login, logout, register, state.user, status]
+    [login, logout, register, state.user, status, updateUser]
   );
 
   return (

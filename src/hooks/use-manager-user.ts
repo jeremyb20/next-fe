@@ -1,10 +1,6 @@
-// TO GET THE USER FROM THE AUTHCONTEXT, YOU CAN USE
+// use-manager-user.ts
+import { useCallback } from 'react';
 
-// CHANGE:
-// import { useManagerUser } from 'src/hooks/use-mocked-user';
-// const { user } = useManagerUser();
-
-// TO:
 import { useAuthContext } from 'src/auth/hooks';
 
 import { LOGO } from '../config-global';
@@ -17,33 +13,69 @@ import {
 // ----------------------------------------------------------------------
 
 export function useManagerUser() {
-  const { user: authUser } = useAuthContext();
+  const { user: authUser, updateUser } = useAuthContext();
   const isMobile = useResponsive('down', 'sm');
+
+  const fullName = authUser?.profile?.name || authUser?.profile?.userName;
+  const gender = authUser?.profile?.gender || 'boy';
+
   const user = {
     id: authUser?._id,
-    displayName: 'Jeremy Bacca',
+    displayName: fullName,
     email: authUser?.email,
-    password: 'demo1234',
-    photoURL: LOGO,
+    photoURL:
+      authUser?.profile?.photoProfile ||
+      `https://avatar.iran.liara.run/public/${gender}?username=${fullName}` ||
+      LOGO,
     coverUrl: `https://picsum.photos/seed/picsum/${isMobile ? '300' : '1800'}/${
       isMobile ? '300' : '500'
     }`,
-    phoneNumber: authUser?.phone,
-    country: authUser?.country,
     memberId: authUser?.memberId,
-    address: '90210 Broadway Blvd',
-    state: 'California',
-    city: 'San Francisco',
-    zipCode: '94116',
-    about:
-      'Praesent turpis. Phasellus viverra nulla ut metus varius laoreet. Phasellus tempus.',
-    role: getUserRoleFromState(authUser?.role), // admin | user | groomer | veterinarian
-    isActive: getUserStatusFromState(authUser?.user), // active | inactive
-    isPublic: false,
+    phoneNumber: authUser?.profile?.phone,
+    country: authUser?.profile?.country,
+    address: authUser?.profile?.address,
+    state: authUser?.profile?.state,
+    city: authUser?.profile?.city,
+    zipCode: authUser?.profile?.zipCode,
+    isPublic: authUser?.profile?.isPublic,
+    about: authUser?.profile?.about || '',
+    role: getUserRoleFromState(authUser?.role),
+    isActive: getUserStatusFromState(authUser?.userState),
     updatedAt: authUser?.updatedAt,
     createdAt: authUser?.createdAt,
     isVerified: authUser?.isVerified,
+    configuration: authUser?.configuration,
+    profile: authUser?.profile,
   };
 
-  return { user };
+  // Función específica para actualizar el perfil - CON useCallback
+  const updateUserProfile = useCallback(
+    (profileData: any) => {
+      if (authUser) {
+        updateUser({
+          ...authUser,
+          profile: {
+            ...authUser.profile,
+            ...profileData,
+          },
+        });
+      }
+    },
+    [authUser, updateUser]
+  );
+
+  // Función para actualizar cualquier dato del usuario
+  const updateUserData = useCallback(
+    (userData: any) => {
+      updateUser(userData);
+    },
+    [updateUser]
+  );
+
+  return {
+    user,
+    updateUser, // Función general del contexto
+    updateUserProfile, // Función específica para perfil
+    updateUserData, // Función para cualquier dato
+  };
 }

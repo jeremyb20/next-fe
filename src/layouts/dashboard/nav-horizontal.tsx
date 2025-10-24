@@ -22,7 +22,7 @@ function NavHorizontal() {
   const { user } = useManagerUser();
   const currentRole = user?.role;
 
-  const navData = useNavData(currentRole);
+  const navData = useNavData(currentRole || '');
 
   return (
     <AppBar
