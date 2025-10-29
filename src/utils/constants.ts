@@ -19,3 +19,20 @@ export const getUserStatusFromState = (userState: number): string => {
 
   return roleMap[userState] || 'active'; // Valor por defecto 'user' si no encuentra el estado
 };
+
+export const openLink = (linkRedirect: string) => {
+  window.open(linkRedirect, '_blank');
+};
+
+export const parseWeight = (weightString: string | undefined) => {
+  if (!weightString) return { value: '', unit: 'kg' };
+
+  const match = weightString.match(/^([\d.]+)\s*(kg|lb)?$/i);
+  if (match) {
+    return {
+      value: match[1],
+      unit: (match[2]?.toLowerCase() as 'kg' | 'lb') || 'kg',
+    };
+  }
+  return { value: '', unit: 'kg' };
+};

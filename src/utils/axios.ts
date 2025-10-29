@@ -78,6 +78,13 @@ export const endpoints = {
       updateSeoById: '/api/admin/updateSeoById',
     },
   },
+  pet: {
+    getProfileById: '/api/pet/getProfileById',
+    updatePetById: '/api/pet/updatePetById',
+    createPet: '/api/pet/createPet',
+    deletePet: '/api/pet/deletePet',
+    details: '/api/pet/details',
+  },
   user: {
     getAllPetsByUser: '/api/user/getAllPetsByUser',
     updateMyProfile: '/api/user/updateMyProfile',

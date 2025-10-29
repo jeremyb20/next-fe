@@ -153,20 +153,50 @@ export interface IUser {
   // [key: string]: any; // Para permitir propiedades adicionales
 }
 
+interface IPetPermissions {
+  showPhoneInfo: boolean;
+  showEmailInfo: boolean;
+  showLinkTwitter: boolean;
+  showLinkFacebook: boolean;
+  showLinkInstagram: boolean;
+  showOwnerPetName: boolean;
+  showBirthDate: boolean;
+  showAddressInfo: boolean;
+  showAgeInfo: boolean;
+  showVeterinarianContact: boolean;
+  showPhoneVeterinarian: boolean;
+  showHealthAndRequirements: boolean;
+  showFavoriteActivities: boolean;
+  showLocationInfo: boolean;
+}
+
 export interface IPetProfile {
   _id: string;
+  race: string;
+  updatedAt: string | number | Date;
+  createdAt: string;
+  memberPetId: string;
+  genderSelected: string;
+  weight: string;
+  favoriteActivities: string;
+  healthAndRequirements: string;
+  phoneVeterinarian: string;
+  veterinarianContact: string;
+  address: string;
   idParental: string;
   petName: string;
   email: string;
   phone: string;
   photo: string;
-  age: number;
   birthDate: string;
   ownerPetName: string;
   petStatus: string;
   petViewCounter: ILocation[];
   photo_id: string;
   isDigitalIdentificationActive: boolean;
+  permissions: IPetPermissions;
+  type?: string;
+  owner?: IUserProfile;
 }
 
 interface ILocation {

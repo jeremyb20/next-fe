@@ -17,6 +17,11 @@ import {
   USER_ROLE_OPTIONS,
   USER_STATUS_OPTIONS,
 } from '@/src/components/filters/filter-constants';
+import {
+  getPhoneHelperText,
+  getPhonePlaceholder,
+  simplePhoneValidation,
+} from '@/src/utils/phone-validation';
 
 import Box from '@mui/material/Box';
 import { Stack } from '@mui/system';
@@ -72,21 +77,6 @@ export default function UserQuickEditForm({
   const userStatus = USER_STATUS_OPTIONS.find(
     (option) => option.value === currentUser?.userStatus.toString()
   ) as any;
-
-  // Versión alternativa más simple de la validación
-  const simplePhoneValidation = (phone: string, context: any) => {
-    const { country } = context.parent;
-
-    if (!country || !phone) {
-      return true; // Deja que las validaciones required de Yup manejen esto
-    }
-
-    const countryData = countries.find((c) => c.label === country);
-    if (!countryData) return false;
-
-    const countryCode = countryData.code as CountryCode;
-    return isValidPhoneNumber(phone, countryCode);
-  };
 
   const NewUserSchema = Yup.object().shape({
     name: Yup.string().required('Name is required'),
@@ -188,54 +178,6 @@ export default function UserQuickEditForm({
     }
   });
 
-  // Función para obtener el placeholder del teléfono según el país
-  const getPhonePlaceholder = () => {
-    if (!watchCountry) return 'Phone number';
-
-    const countryData = countries.find((c) => c.label === watchCountry);
-    if (!countryData) return 'Phone number';
-
-    const countryCode = countryData.code as CountryCode;
-
-    // Ejemplos de formatos por país
-    const examples: Record<string, string> = {
-      US: '(555) 123-4567',
-      MX: '55 1234 5678',
-      ES: '612 345 678',
-      FR: '6 12 34 56 78',
-      GB: '07123 456789',
-      BR: '(11) 91234-5678',
-      AR: '11 2345-6789',
-      CO: '301 1234567',
-    };
-
-    return examples[countryCode] || 'Phone number';
-  };
-
-  // Función para obtener el mensaje de ayuda
-  const getPhoneHelperText = () => {
-    if (!watchCountry) return 'Select a country first';
-
-    const countryData = countries.find((c) => c.label === watchCountry);
-    if (!countryData) return 'Invalid country';
-
-    const countryCode = countryData.code as CountryCode;
-    const phoneValue = watchPhone;
-
-    if (!phoneValue) return `Enter phone number for ${watchCountry}`;
-
-    try {
-      const phoneNumber = parsePhoneNumberFromString(phoneValue, countryCode);
-      if (phoneNumber && isValidPhoneNumber(phoneValue, countryCode)) {
-        return `✓ Valid ${watchCountry} number`;
-      }
-    } catch (error) {
-      // Ignorar errores de parsing
-    }
-
-    return `Enter valid phone number for ${watchCountry}`;
-  };
-
   return (
     <Dialog
       fullWidth
@@ -297,8 +239,8 @@ export default function UserQuickEditForm({
             <RHFTextField
               name="phone"
               label="Phone Number"
-              placeholder={getPhonePlaceholder()}
-              helperText={getPhoneHelperText()}
+              placeholder={getPhonePlaceholder(watchCountry, 'Phone number')}
+              helperText={getPhoneHelperText(watchCountry, watchPhone)}
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">

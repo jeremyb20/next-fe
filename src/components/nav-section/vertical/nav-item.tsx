@@ -149,7 +149,6 @@ const StyledNavItem = styled(ListItemButton, {
   shouldForwardProp: (prop) => prop !== 'active',
 })<NavItemStateProps>(({ active, open, depth, theme }) => {
   const subItem = depth !== 1;
-
   const opened = open && !active;
 
   const deepSubItem = Number(depth) > 2;

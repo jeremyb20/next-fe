@@ -37,6 +37,8 @@ export const SUPABASE_API = {
 export const MAPBOX_API = process.env.NEXT_PUBLIC_MAPBOX_API;
 
 export const STORAGE_KEY = 'accessToken';
+export const DOMAIN =
+  process.env.NEXT_PUBLIC_DOMAIN || 'https://plaquitascr.com';
 
 export const LOGO =
   process.env.NEXT_PUBLIC_LOGO ||

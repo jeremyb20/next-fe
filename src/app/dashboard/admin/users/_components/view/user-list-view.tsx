@@ -57,6 +57,7 @@ export type IUserTableFilterValue = string | Date | null;
 
 const TABLE_HEAD = [
   { id: 'email', label: 'Email' },
+  { id: 'memberId', label: 'Member ID', width: 140 },
   { id: 'createdAt', label: 'Created', width: 140 },
   { id: 'updatedAt', label: 'Updated', width: 140 },
   { id: 'userState', label: 'User Type', width: 120 },

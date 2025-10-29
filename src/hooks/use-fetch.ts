@@ -3,6 +3,7 @@ import { useQuery, keepPreviousData } from '@tanstack/react-query';
 import {
   IQRStats,
   ApiResponse,
+  IPetProfile,
   QueryOptions,
   NotificationData,
 } from '@/src/types/api';
@@ -68,3 +69,13 @@ export const useGetQRStats = () => {
     }
   );
 };
+
+export const useGetPetProfileById = (identifier: string | undefined) =>
+  useFetch<IPetProfile[]>(
+    'useGetPetProfileById',
+    `${endpoints.pet.getProfileById}/${identifier}`,
+    {
+      staleTime: 5 * 60 * 1000,
+      retry: 2,
+    }
+  );

@@ -1,7 +1,7 @@
 // lib/seo-metadata.ts
 import { Metadata } from 'next';
 
-import { HOST_API } from '../config-global';
+import { DOMAIN, HOST_API } from '../config-global';
 
 interface SeoMetadata {
   title: string;
@@ -51,7 +51,7 @@ function generateMetadataFromSeo(
   content: SeoMetadata,
   route: string
 ): Metadata {
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://plaquitascr.com';
+  const baseUrl = DOMAIN || 'https://plaquitascr.com';
   const canonical = content.canonicalUrl || `${baseUrl}${route}`;
 
   return {
