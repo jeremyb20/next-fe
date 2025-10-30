@@ -2,7 +2,7 @@ import Box from '@mui/material/Box';
 
 // import { IUserCard } from 'src/types/user';
 
-import { IUserPetProfile } from '@/src/types/user';
+import { IPetProfile } from '@/src/types/api';
 
 import UserCard from './user-card';
 
@@ -10,7 +10,7 @@ import UserCard from './user-card';
 
 type Props = {
   // users: IUserCard[];
-  pets: IUserPetProfile[];
+  pets: IPetProfile[];
 };
 
 export default function UserCardList({ pets }: Props) {

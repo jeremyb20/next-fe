@@ -108,7 +108,6 @@ export const paths = {
     permission: `${ROOTS.DASHBOARD}/permission`,
     admin: {
       panelAdmin: `${ROOTS.DASHBOARD}/admin/panel`,
-      catalogAdmin: `${ROOTS.DASHBOARD}/admin/catalog`,
       product: {
         root: `${ROOTS.DASHBOARD}/admin/product`,
         new: `${ROOTS.DASHBOARD}/admin/product/new`,
@@ -145,7 +144,9 @@ export const paths = {
       booking: `${ROOTS.DASHBOARD}/booking`,
       file: `${ROOTS.DASHBOARD}/file`,
     },
+
     user: {
+      myPets: `${ROOTS.DASHBOARD}/user/mypets`,
       root: `${ROOTS.DASHBOARD}/user`,
       new: `${ROOTS.DASHBOARD}/user/new`,
       list: `${ROOTS.DASHBOARD}/user/list`,

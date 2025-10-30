@@ -171,6 +171,8 @@ interface IPetPermissions {
 }
 
 export interface IPetProfile {
+  lng: string;
+  lat: string;
   _id: string;
   race: string;
   updatedAt: string | number | Date;
@@ -185,7 +187,6 @@ export interface IPetProfile {
   address: string;
   idParental: string;
   petName: string;
-  email: string;
   phone: string;
   photo: string;
   birthDate: string;

@@ -1,6 +1,5 @@
 /* eslint-disable no-nested-ternary */
 import * as Yup from 'yup';
-import { useForm } from 'react-hook-form';
 import { endpoints } from '@/src/utils/axios';
 import { countries } from '@/src/assets/data';
 import { HOST_API } from '@/src/config-global';
@@ -8,6 +7,7 @@ import Iconify from '@/src/components/iconify';
 import { parseWeight } from '@/src/utils/constants';
 import { useMemo, useState, useEffect } from 'react';
 import { IUser, IPetProfile } from '@/src/types/api';
+import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import CustomPopover, { usePopover } from '@/src/components/custom-popover';
 import { useCreateGenericMutation } from '@/src/hooks/user-generic-mutation';
@@ -26,6 +26,7 @@ import LoadingButton from '@mui/lab/LoadingButton';
 import DialogTitle from '@mui/material/DialogTitle';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import {
   Tab,
   Tabs,
@@ -192,8 +193,10 @@ export default function PetQuickEditForm({
       genderSelected: currentPet?.genderSelected || '',
       race: currentPet?.race || '',
       weight: parsedWeight.value,
-      // birthDate: fDate(currentPet?.birthDate, 'yyyy-MM-dd') || '',
-      birthDate: currentPet?.birthDate || '',
+      birthDate: currentPet?.birthDate
+        ? new Date(currentPet.birthDate).toISOString() // Convertir a ISO
+        : '',
+      // birthDate: currentPet?.birthDate || '',
       favoriteActivities: currentPet?.favoriteActivities || '',
       healthAndRequirements: currentPet?.healthAndRequirements || '',
       phoneVeterinarian: currentPet?.phoneVeterinarian || '',
@@ -231,6 +234,7 @@ export default function PetQuickEditForm({
     handleSubmit,
     watch,
     setValue,
+    control,
     formState: { isSubmitting },
   } = methods;
 
@@ -440,13 +444,30 @@ export default function PetQuickEditForm({
                   ),
                 }}
               />
-              <RHFTextField
-                name="birthDate"
-                label="Birth Date"
-                type="date"
-                InputLabelProps={{ shrink: true }}
-              />
 
+              <Controller
+                name="birthDate"
+                control={control}
+                defaultValue={defaultValues.birthDate}
+                render={({ field, fieldState: { error } }) => (
+                  <DatePicker
+                    views={['year', 'month', 'day']}
+                    label="Year and Month"
+                    minDate={new Date('2000-03-01')}
+                    maxDate={new Date()}
+                    value={field.value ? new Date(field.value) : null}
+                    onChange={(newValue) => {
+                      field.onChange(newValue ? newValue.toISOString() : '');
+                    }}
+                    slotProps={{
+                      textField: {
+                        fullWidth: true,
+                        margin: 'normal',
+                      },
+                    }}
+                  />
+                )}
+              />
               <RHFTextField name="ownerPetName" label="Owner Name" />
               <RHFTextField
                 name="phone"

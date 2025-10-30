@@ -1,11 +1,16 @@
+/* eslint-disable no-nested-ternary */
+
 'use client';
 
 import { useSnackbar } from 'notistack';
+import { IUser, IPetProfile } from '@/src/types/api';
+import { useBoolean } from '@/src/hooks/use-boolean';
 import { useMemo, useState, useCallback } from 'react';
 import { useResponsive } from '@/src/hooks/use-responsive';
 import { useManagerUser } from '@/src/hooks/use-manager-user';
 import { useSettingsContext } from '@/src/components/settings';
 import FilterToolbar from '@/src/components/filters/filter-toolbar';
+import { PetsGrid } from '@/src/app/pet/_components/cards/pet-grid';
 import { PET_FILTER_TOOLBAR } from '@/src/components/filters/filter-constants';
 import {
   UserQueryParams,
@@ -13,23 +18,32 @@ import {
 } from '@/src/hooks/use-fetch-paginated';
 
 import { Box } from '@mui/system';
-import Button from '@mui/material/Button';
-import { Card, Stack, Alert, Container, CircularProgress } from '@mui/material';
-
-import { paths } from 'src/routes/paths';
-import { RouterLink } from 'src/routes/components';
+import {
+  Card,
+  Alert,
+  Avatar,
+  Container,
+  SpeedDial,
+  Typography,
+  CardContent,
+  SpeedDialAction,
+  CircularProgress,
+} from '@mui/material';
 
 import { isAfter } from 'src/utils/format-time';
 
 import Iconify from 'src/components/iconify';
 
-import UserCardList from './user-card-list';
-// ----------------------------------------------------------------------
+import PetQuickEditForm from '../../admin/users/_components/pet-quick-edit-form';
 
+// ----------------------------------------------------------------------
+const actions = [{ icon: 'tabler:paw', name: 'New Pet', color: '#ffffff' }];
 export default function UserPetCardsView() {
   const { user } = useManagerUser();
   const { enqueueSnackbar } = useSnackbar();
-  const isMobile = useResponsive('down', 'sm');
+  const petQuickEdit = useBoolean();
+
+  const smUp = useResponsive('up', 'sm');
 
   const settings = useSettingsContext();
 
@@ -38,6 +52,7 @@ export default function UserPetCardsView() {
     limit: 5,
     id: user?.id,
   });
+  const [petSelected, setPetSelected] = useState<IPetProfile>();
 
   const dateError = useMemo(() => {
     const startDate = activeFilters.startDate
@@ -54,6 +69,7 @@ export default function UserPetCardsView() {
     isFetching,
     isError,
     error,
+    refetch,
   } = useGetAllPetsByUser(activeFilters);
 
   const handleFiltersChange = useCallback(
@@ -85,50 +101,119 @@ export default function UserPetCardsView() {
     enqueueSnackbar('Búsqueda realizada', { variant: 'success' });
   }, [enqueueSnackbar]);
 
+  const handlePetDelete = (pet: IPetProfile) => {
+    console.log('Eliminar mascota:', pet);
+  };
+
+  const handlePetView = (pet: IPetProfile) => {
+    console.log('Ver mascota:', pet);
+  };
+
+  const handlePetEdit = (pet: IPetProfile) => {
+    setPetSelected(pet);
+    petQuickEdit.onTrue();
+    console.log('Editar mascota:', pet);
+  };
+
   if (isError) {
     return (
       <Container maxWidth={settings.themeStretch ? false : 'lg'}>
         <Card sx={{ p: 3 }}>
-          <Alert severity="error">Error loading users: {error?.message}</Alert>
+          <Alert severity="error">Error loading pets: {error?.message}</Alert>
         </Card>
       </Container>
     );
   }
 
   return (
-    <Box>
-      <Box>
-        <Stack
-          direction={isMobile ? 'column' : 'row'}
-          alignItems="center"
-          justifyContent="space-between"
-          sx={{ mb: { xs: 1, md: 3 }, width: '100%' }}
-        >
-          <FilterToolbar
-            filters={activeFilters}
-            onFilters={handleFiltersChange}
-            filterConfig={PET_FILTER_TOOLBAR}
-            dateError={dateError}
-            onSearch={handleSearch}
-            onClear={handleClear}
-          />
-          <Button
-            component={RouterLink}
-            href={paths.dashboard.user.new}
-            variant="contained"
-            startIcon={<Iconify icon="mingcute:add-line" />}
-          >
-            New Pet
-          </Button>
-        </Stack>
+    <Container maxWidth={settings.themeStretch ? false : 'lg'}>
+      <Card
+        sx={{
+          borderRadius: 4,
+          mb: 3,
+          position: 'relative',
+          color: 'inherit',
+          backgroundColor: 'backgound.paper',
+        }}
+      >
+        <CardContent sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+          <Avatar src={user.photoURL} sx={{ width: 60, height: 60 }} />
+          <Box>
+            <Typography variant="h6" fontWeight={600}>
+              Hi, {user.displayName}
+            </Typography>
+            <Typography variant="body2" color="text.secondary">
+              Pets Registered:{' '}
+              {isFetching ? <CircularProgress /> : usersData?.payload.length}{' '}
+            </Typography>
+          </Box>
+        </CardContent>
+      </Card>
 
-        <Box sx={{ mb: { xs: 3, md: 5 } }}>
-          Mascotas registradas:{' '}
-          {isFetching ? <CircularProgress /> : usersData?.payload.length}{' '}
-        </Box>
-
-        <UserCardList pets={usersData ? usersData.payload : []} />
+      <Box sx={{ my: 2 }}>
+        <FilterToolbar
+          filters={activeFilters}
+          onFilters={handleFiltersChange}
+          filterConfig={PET_FILTER_TOOLBAR}
+          dateError={dateError}
+          onSearch={handleSearch}
+          onClear={handleClear}
+        />
       </Box>
-    </Box>
+
+      <PetsGrid
+        isFetching={isFetching}
+        usersData={usersData?.payload}
+        skeletonCount={(usersData && usersData.payload.length) || 2}
+        onPetDelete={handlePetDelete}
+        onPetView={handlePetView}
+        onPetEdit={handlePetEdit}
+        emptyMessage="No se encontraron mascotas"
+      />
+
+      <PetQuickEditForm
+        currentUser={user as unknown as IUser}
+        currentPet={petSelected}
+        open={petQuickEdit.value}
+        onClose={petQuickEdit.onFalse}
+        refetch={refetch}
+      />
+
+      <Box
+        sx={{
+          position: 'fixed',
+          display: { xs: 'flex' },
+          bottom: 20,
+          right: 20,
+          transform: 'translateZ(0px)',
+          width: 'auto',
+          bgcolor: '#000',
+          borderRadius: 8,
+          px: 1,
+        }}
+      >
+        <SpeedDial
+          direction={smUp ? 'left' : 'up'}
+          ariaLabel="Share post"
+          icon={<Iconify icon="mingcute:add-line" />}
+          FabProps={{ size: 'medium' }}
+          sx={{
+            position: 'absolute',
+            bottom: { xs: 32, md: 64 },
+            right: { xs: -7, md: 24 },
+          }}
+        >
+          {actions.map((action) => (
+            <SpeedDialAction
+              key={action.name}
+              icon={<Iconify icon={action.icon} sx={{ color: action.color }} />}
+              tooltipTitle={action.name}
+              tooltipPlacement="top"
+              FabProps={{ color: 'default' }}
+            />
+          ))}
+        </SpeedDial>
+      </Box>
+    </Container>
   );
 }

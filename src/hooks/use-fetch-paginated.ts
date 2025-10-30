@@ -10,10 +10,9 @@ import {
   IQrCode,
   ApiResponse,
   QueryParams,
+  IPetProfile,
   UsePaginatedOptions,
 } from '@/src/types/api';
-
-import { IUserPetProfile } from '../types/user';
 
 interface UsePaginatedQueryProps<T> {
   queryKey: string | string[];
@@ -124,7 +123,7 @@ export const useGetAllRegisteredUsers = (
   });
 
 export const useGetAllPetsByUser = (params: Partial<UserQueryParams> = {}) =>
-  useFetchPaginated<IUserPetProfile[]>({
+  useFetchPaginated<IPetProfile[]>({
     queryKey: ['getAllPetsByUser'],
     endpoint: endpoints.user.getAllPetsByUser,
     params: {

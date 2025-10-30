@@ -96,7 +96,6 @@ export default function JwtLoginView() {
   const renderForm = (
     <Stack spacing={2.5}>
       <RHFTextField name="email" label="Email address" />
-
       <RHFTextField
         name="password"
         label="Password"
@@ -115,7 +114,6 @@ export default function JwtLoginView() {
           ),
         }}
       />
-
       <Link
         variant="body2"
         color="inherit"
@@ -124,7 +122,6 @@ export default function JwtLoginView() {
       >
         Forgot password?
       </Link>
-
       <LoadingButton
         fullWidth
         color="inherit"

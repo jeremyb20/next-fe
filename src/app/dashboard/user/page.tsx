@@ -1,11 +1,11 @@
 // ----------------------------------------------------------------------
 
-import UserProfileView from './_view/user-profile-view';
+import { AccountView } from '@/src/sections/account/view';
 
 export const metadata = {
   title: 'Dashboard: User Profile',
 };
 
 export default function UserProfilePage() {
-  return <UserProfileView />;
+  return <AccountView />;
 }

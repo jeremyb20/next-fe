@@ -1,5 +1,4 @@
 import { useMemo } from 'react';
-import Label from '@/src/components/label';
 import { NavItemBaseProps } from '@/src/components/nav-section';
 
 import { paths } from 'src/routes/paths';
@@ -70,7 +69,8 @@ const ICONS = {
   ecommerce: icon('ic_ecommerce'),
   analytics: icon('ic_analytics'),
   dashboard: icon('ic_dashboard'),
-  paw: icon('ph:paw-print-light'),
+  // paw: icon('ph:paw-print-light'),
+  paw: icon('tabler:paw'),
   grooming: icon('streamline-sharp:pet-friendly-hotel'),
   hospital: icon('tabler:building-hospital'),
   QR_code: icon('lucide:qr-code'),
@@ -115,27 +115,21 @@ export function useNavData(userRole: string) {
         items: [
           {
             // title: t('app'),
-            title: 'Panel Administrador',
+            title: 'Panel Principal',
             path: paths.dashboard.root,
             icon: ICONS.dashboard,
             roles: ['admin'],
           },
-          {
-            title: 'Panel Inventarios',
-            path: paths.dashboard.admin.inventory.root,
-            icon: ICONS.inventory,
-            roles: ['admin'],
-          },
+          // {
+          //   title: 'Panel Inventarios',
+          //   path: paths.dashboard.admin.inventory.root,
+          //   icon: ICONS.inventory,
+          //   roles: ['admin'],
+          // },
           {
             title: 'Lista de Productos',
             path: paths.dashboard.admin.product.root,
             icon: ICONS.product,
-            roles: ['admin'],
-          },
-          {
-            title: 'Lista de Catálogos',
-            path: paths.dashboard.admin.catalogAdmin,
-            icon: ICONS.catalogs,
             roles: ['admin'],
           },
           {
@@ -144,18 +138,18 @@ export function useNavData(userRole: string) {
             icon: ICONS.users,
             roles: ['admin'],
           },
-          {
-            title: 'Lista de Groomers',
-            path: paths.dashboard.admin.groomersAdmin,
-            icon: ICONS.grooming,
-            roles: ['admin'],
-          },
-          {
-            title: 'Lista de Veterinarias',
-            path: paths.dashboard.admin.veterinarianAdmin,
-            icon: ICONS.paw,
-            roles: ['admin'],
-          },
+          // {
+          //   title: 'Lista de Groomers',
+          //   path: paths.dashboard.admin.groomersAdmin,
+          //   icon: ICONS.grooming,
+          //   roles: ['admin'],
+          // },
+          // {
+          //   title: 'Lista de Veterinarias',
+          //   path: paths.dashboard.admin.veterinarianAdmin,
+          //   icon: ICONS.paw,
+          //   roles: ['admin'],
+          // },
           {
             title: 'QR Panel',
             path: paths.dashboard.admin.qrPanel,
@@ -168,12 +162,12 @@ export function useNavData(userRole: string) {
             icon: ICONS.seo,
             roles: ['admin'],
           },
-          {
-            title: 'Blog Panel',
-            path: paths.dashboard.admin.blogPanel,
-            icon: ICONS.blogPanel,
-            roles: ['admin'],
-          },
+          // {
+          //   title: 'Blog Panel',
+          //   path: paths.dashboard.admin.blogPanel,
+          //   icon: ICONS.blogPanel,
+          //   roles: ['admin'],
+          // },
           // {
           //   title: t('ecommerce'),
           //   path: paths.dashboard.general.ecommerce,
@@ -205,126 +199,140 @@ export function useNavData(userRole: string) {
       // MANAGEMENT
       // ----------------------------------------------------------------------
       {
-        subheader: t('management'),
+        subheader: t('overview'),
         items: [
           // USER
           {
-            title: 'My Profile',
-            path: paths.dashboard.user.root,
+            // title: t('app'),
+            title: 'Panel Principal',
+            path: paths.dashboard.root,
+            icon: ICONS.dashboard,
+            roles: ['client'],
+          },
+          {
+            title: 'Account',
+            path: paths.dashboard.user.account,
             icon: ICONS.user,
-            children: [
-              { title: t('profile'), path: paths.dashboard.user.root },
-              { title: t('cards'), path: paths.dashboard.user.cards },
-              { title: t('list'), path: paths.dashboard.user.list },
-              { title: t('create'), path: paths.dashboard.user.new },
-              { title: t('edit'), path: paths.dashboard.user.demo.edit },
-              { title: t('account'), path: paths.dashboard.user.account },
-            ],
+            //  children: [
+            // { title: t('profile'), path: paths.dashboard.user.root },
+            // { title: t('cards'), path: paths.dashboard.user.cards },
+            // { title: t('list'), path: paths.dashboard.user.list },
+            // { title: t('create'), path: paths.dashboard.user.new },
+            // { title: t('edit'), path: paths.dashboard.user.demo.edit },
+            // { title: t('account'), path: paths.dashboard.user.account },
+            //  ],
+          },
+          {
+            // title: t('app'),
+            title: 'My Pets',
+            path: paths.dashboard.user.myPets,
+            icon: ICONS.paw,
+            roles: ['admin', 'client'],
           },
 
           // PRODUCT
-          {
-            title: t('product'),
-            path: paths.dashboard.product.root,
-            icon: ICONS.product,
-            children: [
-              { title: t('list'), path: paths.dashboard.product.root },
-              {
-                title: t('details'),
-                path: paths.dashboard.product.demo.details,
-              },
-              { title: t('create'), path: paths.dashboard.product.new },
-              { title: t('edit'), path: paths.dashboard.product.demo.edit },
-            ],
-          },
+          // {
+          //   title: t('product'),
+          //   path: paths.dashboard.product.root,
+          //   icon: ICONS.product,
+          //   children: [
+          //     { title: t('list'), path: paths.dashboard.product.root },
+          //     {
+          //       title: t('details'),
+          //       path: paths.dashboard.product.demo.details,
+          //     },
+          //     { title: t('create'), path: paths.dashboard.product.new },
+          //     { title: t('edit'), path: paths.dashboard.product.demo.edit },
+          //   ],
+          // },
 
           // ORDER
-          {
-            title: t('order'),
-            path: paths.dashboard.order.root,
-            icon: ICONS.order,
-            children: [
-              { title: t('list'), path: paths.dashboard.order.root },
-              { title: t('details'), path: paths.dashboard.order.demo.details },
-            ],
-          },
+          // {
+          //   title: t('order'),
+          //   path: paths.dashboard.order.root,
+          //   icon: ICONS.order,
+          //   children: [
+          //     { title: t('list'), path: paths.dashboard.order.root },
+          //     { title: t('details'), path: paths.dashboard.order.demo.details },
+          //   ],
+          // },
 
           // INVOICE
-          {
-            title: t('invoice'),
-            path: paths.dashboard.invoice.root,
-            icon: ICONS.invoice,
-            children: [
-              { title: t('list'), path: paths.dashboard.invoice.root },
-              {
-                title: t('details'),
-                path: paths.dashboard.invoice.demo.details,
-              },
-              { title: t('create'), path: paths.dashboard.invoice.new },
-              { title: t('edit'), path: paths.dashboard.invoice.demo.edit },
-            ],
-          },
+          // {
+          //   title: t('invoice'),
+          //   path: paths.dashboard.invoice.root,
+          //   icon: ICONS.invoice,
+          //   children: [
+          //     { title: t('list'), path: paths.dashboard.invoice.root },
+          //     {
+          //       title: t('details'),
+          //       path: paths.dashboard.invoice.demo.details,
+          //     },
+          //     { title: t('create'), path: paths.dashboard.invoice.new },
+          //     { title: t('edit'), path: paths.dashboard.invoice.demo.edit },
+          //   ],
+          // },
 
           // BLOG
-          {
-            title: t('blog'),
-            path: paths.dashboard.post.root,
-            icon: ICONS.blog,
-            children: [
-              { title: t('list'), path: paths.dashboard.post.root },
-              { title: t('details'), path: paths.dashboard.post.demo.details },
-              { title: t('create'), path: paths.dashboard.post.new },
-              { title: t('edit'), path: paths.dashboard.post.demo.edit },
-            ],
-          },
+          // {
+          //   title: t('blog'),
+          //   path: paths.dashboard.post.root,
+          //   icon: ICONS.blog,
+          //   children: [
+          //     { title: t('list'), path: paths.dashboard.post.root },
+          //     { title: t('details'), path: paths.dashboard.post.demo.details },
+          //     { title: t('create'), path: paths.dashboard.post.new },
+          //     { title: t('edit'), path: paths.dashboard.post.demo.edit },
+          //   ],
+          // },
 
           // JOB
-          {
-            title: t('job'),
-            path: paths.dashboard.job.root,
-            icon: ICONS.job,
-            children: [
-              { title: t('list'), path: paths.dashboard.job.root },
-              { title: t('details'), path: paths.dashboard.job.demo.details },
-              { title: t('create'), path: paths.dashboard.job.new },
-              { title: t('edit'), path: paths.dashboard.job.demo.edit },
-            ],
-          },
+          // {
+          //   title: t('job'),
+          //   path: paths.dashboard.job.root,
+          //   icon: ICONS.job,
+          //   children: [
+          //     { title: t('list'), path: paths.dashboard.job.root },
+          //     { title: t('details'), path: paths.dashboard.job.demo.details },
+          //     { title: t('create'), path: paths.dashboard.job.new },
+          //     { title: t('edit'), path: paths.dashboard.job.demo.edit },
+          //   ],
+          // },
 
           // TOUR
-          {
-            title: t('tour'),
-            path: paths.dashboard.tour.root,
-            icon: ICONS.tour,
-            children: [
-              { title: t('list'), path: paths.dashboard.tour.root },
-              { title: t('details'), path: paths.dashboard.tour.demo.details },
-              { title: t('create'), path: paths.dashboard.tour.new },
-              { title: t('edit'), path: paths.dashboard.tour.demo.edit },
-            ],
-          },
+          // {
+          //   title: t('tour'),
+          //   path: paths.dashboard.tour.root,
+          //   icon: ICONS.tour,
+          //   children: [
+          //     { title: t('list'), path: paths.dashboard.tour.root },
+          //     { title: t('details'), path: paths.dashboard.tour.demo.details },
+          //     { title: t('create'), path: paths.dashboard.tour.new },
+          //     { title: t('edit'), path: paths.dashboard.tour.demo.edit },
+          //   ],
+          // },
 
           // FILE MANAGER
-          {
-            title: t('file_manager'),
-            path: paths.dashboard.fileManager,
-            icon: ICONS.folder,
-          },
+          // {
+          //   title: t('file_manager'),
+          //   path: paths.dashboard.fileManager,
+          //   icon: ICONS.folder,
+          // },
 
           // MAIL
-          {
-            title: t('mail'),
-            path: paths.dashboard.mail,
-            icon: ICONS.mail,
-            info: <Label color="error">+32</Label>,
-          },
+          // {
+          //   title: t('mail'),
+          //   path: paths.dashboard.mail,
+          //   icon: ICONS.mail,
+          //   info: <Label color="error">+32</Label>,
+          // },
 
           // CHAT
-          {
-            title: t('chat'),
-            path: paths.dashboard.chat,
-            icon: ICONS.chat,
-          },
+          // {
+          //   title: t('chat'),
+          //   path: paths.dashboard.chat,
+          //   icon: ICONS.chat,
+          // },
 
           // CALENDAR
           {
@@ -334,11 +342,11 @@ export function useNavData(userRole: string) {
           },
 
           // KANBAN
-          {
-            title: t('kanban'),
-            path: paths.dashboard.kanban,
-            icon: ICONS.kanban,
-          },
+          // {
+          //   title: t('kanban'),
+          //   path: paths.dashboard.kanban,
+          //   icon: ICONS.kanban,
+          // },
         ],
       },
 

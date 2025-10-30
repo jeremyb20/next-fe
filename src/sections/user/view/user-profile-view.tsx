@@ -35,7 +35,7 @@ const TABS = [
   {
     value: 'myPets',
     label: 'My Pets',
-    icon: <Iconify icon="solar:paw-bold" width={24} />,
+    icon: <Iconify icon="tabler:paw" width={24} />,
   },
   {
     value: 'profile',

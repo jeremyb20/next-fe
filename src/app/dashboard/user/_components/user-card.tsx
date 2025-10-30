@@ -1,3 +1,4 @@
+import { IPetProfile } from '@/src/types/api';
 import { fDate } from '@/src/utils/format-time';
 
 import Box from '@mui/material/Box';
@@ -16,13 +17,11 @@ import { AvatarShape } from 'src/assets/illustrations';
 import Image from 'src/components/image';
 import Iconify from 'src/components/iconify';
 
-import { IUserPetProfile } from 'src/types/user';
-
 // ----------------------------------------------------------------------
 
 type Props = {
   // user: IUserCard;
-  pet: IUserPetProfile;
+  pet: IPetProfile;
 };
 
 export default function UserCard({ pet }: Props) {
