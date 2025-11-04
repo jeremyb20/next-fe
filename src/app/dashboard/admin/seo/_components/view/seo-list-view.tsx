@@ -11,10 +11,10 @@ import Card from '@mui/material/Card';
 import Table from '@mui/material/Table';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
-import { LinearProgress } from '@mui/material';
 import Container from '@mui/material/Container';
 import TableBody from '@mui/material/TableBody';
 import IconButton from '@mui/material/IconButton';
+import { Box, LinearProgress } from '@mui/material';
 import TableContainer from '@mui/material/TableContainer';
 
 import { paths } from 'src/routes/paths';
@@ -283,14 +283,16 @@ export default function SeoListView() {
         />
 
         <Card>
-          <FilterToolbar
-            filters={activeFilters}
-            onFilters={handleFiltersChange}
-            filterConfig={SEO_FILTER_TOOLBAR}
-            dateError={dateError}
-            onSearch={handleSearch}
-            onClear={handleClear}
-          />
+          <Box sx={{ my: 2 }}>
+            <FilterToolbar
+              filters={activeFilters}
+              onFilters={handleFiltersChange}
+              filterConfig={SEO_FILTER_TOOLBAR}
+              dateError={dateError}
+              onSearch={handleSearch}
+              onClear={handleClear}
+            />
+          </Box>
 
           <TableContainer sx={{ position: 'relative', overflow: 'unset' }}>
             <TableSelectedAction

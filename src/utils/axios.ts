@@ -84,6 +84,9 @@ export const endpoints = {
     createPet: '/api/pet/createPet',
     deletePet: '/api/pet/deletePet',
     details: '/api/pet/details',
+    getMedicalRecordsByPet: '/api/pet/getMedicalRecordsByPet',
+    updateMedicalRecord: '/api/pet/updateMedicalRecord',
+    createMedicalRecord: '/api/pet/createMedicalRecord',
   },
   user: {
     getAllPetsByUser: '/api/user/getAllPetsByUser',

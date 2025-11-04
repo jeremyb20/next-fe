@@ -9,8 +9,10 @@ import Iconify from '@/src/components/iconify';
 import { fDate } from '@/src/utils/format-time';
 // Importaciones de react-share
 
+import { paths } from '@/src/routes/paths';
 import { AvatarShape } from '@/src/assets/illustrations';
 import { useSettingsContext } from '@/src/components/settings';
+import CardComponent from '@/src/sections/_examples/card-component';
 
 import {
   Box,
@@ -23,6 +25,7 @@ import {
   alpha,
   Avatar,
   Dialog,
+  Button,
   Divider,
   useTheme,
   Container,
@@ -33,12 +36,16 @@ import {
   SwipeableDrawer,
 } from '@mui/material';
 
+import { RouterLink } from 'src/routes/components';
+
 import Image from 'src/components/image';
 
 import ShareButtons from '../share/share-buttons';
+import MedicalControlView from './medical-control-view';
 
 interface Props {
   petProfile: IPetProfile | null;
+  canEdit?: boolean;
 }
 
 interface TabPanelProps {
@@ -63,7 +70,7 @@ function TabPanel(props: TabPanelProps) {
   );
 }
 
-export default function PetProfileView({ petProfile }: Props) {
+export default function PetProfileView({ petProfile, canEdit }: Props) {
   console.log(petProfile, 'petProfile');
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
@@ -144,6 +151,16 @@ export default function PetProfileView({ petProfile }: Props) {
   return (
     <>
       <Container maxWidth={settings.themeStretch ? false : 'xl'}>
+        <Stack spacing={3} direction="row" justifyContent="flex-start" mb={3}>
+          <Button
+            component={RouterLink}
+            href={paths.dashboard.user.myPets}
+            startIcon={<Iconify icon="eva:arrow-ios-back-fill" width={16} />}
+          >
+            Back
+          </Button>
+          <Box sx={{ flexGrow: 1 }} />
+        </Stack>
         <Grid container spacing={0}>
           <Grid xs={12} md={4}>
             {/* Header Section */}
@@ -295,7 +312,7 @@ export default function PetProfileView({ petProfile }: Props) {
                   boxShadow: '0 4px 20px rgba(0,0,0,0.1)',
                 }}
               >
-                <Tabs
+                {/* <Tabs
                   value={tabValue}
                   onChange={handleTabChange}
                   variant={isMobile ? 'scrollable' : 'fullWidth'}
@@ -320,16 +337,46 @@ export default function PetProfileView({ petProfile }: Props) {
                     iconPosition="start"
                     label="Galería"
                   />
-                  {/* <Tab
-                    icon={<Iconify icon="solar:users-group-rounded-linear" />}
-                    iconPosition="start"
-                    label="Co-Propietarios"
-                  />
-                  <Tab
-                    icon={<Iconify icon="solar:heart-linear" />}
-                    iconPosition="start"
-                    label="Seguidores"
-                  /> */}
+                  
+                </Tabs> */}
+
+                <Tabs
+                  variant="fullWidth"
+                  value={tabValue}
+                  onChange={handleTabChange}
+                >
+                  {[
+                    {
+                      id: 0,
+                      value: 'information',
+                      label: 'Información',
+                      icon: 'solar:user-rounded-linear',
+                    },
+                    {
+                      id: 1,
+                      value: 'galery',
+                      label: 'Galería',
+                      icon: 'solar:gallery-linear',
+                    },
+                    ...(canEdit
+                      ? [
+                          {
+                            id: 2,
+                            value: 'medicalControl',
+                            label: 'Control Médico',
+                            icon: 'hugeicons:injection',
+                          },
+                        ]
+                      : []),
+                  ].map((tab) => (
+                    <Tab
+                      iconPosition="start"
+                      key={tab.value}
+                      icon={<Iconify icon={tab.icon} />}
+                      label={tab.label}
+                      value={tab.id}
+                    />
+                  ))}
                 </Tabs>
 
                 {/* Information Tab */}
@@ -339,13 +386,7 @@ export default function PetProfileView({ petProfile }: Props) {
                       <Grid item xs={12} md={6}>
                         <Stack spacing={3}>
                           {/* Basic Information */}
-                          <Box>
-                            <Typography
-                              variant="h6"
-                              sx={{ mb: 2, fontWeight: 600 }}
-                            >
-                              Información Básica
-                            </Typography>
+                          <CardComponent title="Información Básica">
                             <Stack spacing={2}>
                               <Box
                                 sx={{
@@ -469,18 +510,10 @@ export default function PetProfileView({ petProfile }: Props) {
                                   </Box>
                                 )}
                             </Stack>
-                          </Box>
-
-                          <Divider />
+                          </CardComponent>
 
                           {/* Status Information */}
-                          <Box>
-                            <Typography
-                              variant="h6"
-                              sx={{ mb: 2, fontWeight: 600 }}
-                            >
-                              Estado
-                            </Typography>
+                          <CardComponent title="Estado">
                             <Stack spacing={2}>
                               <Box
                                 sx={{
@@ -535,27 +568,15 @@ export default function PetProfileView({ petProfile }: Props) {
                                 />
                               </Box>
                             </Stack>
-                          </Box>
+                          </CardComponent>
                         </Stack>
-                        <Divider
-                          sx={{
-                            mt: 4,
-                            display: { xs: 'block', sm: 'block', md: 'none' },
-                          }}
-                        />
                       </Grid>
 
                       <Grid item xs={12} md={6}>
                         <Stack spacing={3}>
                           {/* Owner Information */}
-                          <Box>
-                            <Typography
-                              variant="h6"
-                              sx={{ mb: 2, fontWeight: 600 }}
-                            >
-                              Información de Contacto
-                            </Typography>
-                            <Stack spacing={2}>
+                          <CardComponent title="Información de Contacto">
+                            <Stack spacing={2} sx={{ pb: 2 }}>
                               {/* Nombre del propietario - controlado por permisos */}
                               {canShowOwnerPetName && (
                                 <Box
@@ -674,20 +695,12 @@ export default function PetProfileView({ petProfile }: Props) {
                                 </Typography>
                               </Box>
                             </Stack>
-                          </Box>
-
-                          <Divider />
+                          </CardComponent>
 
                           {/* Veterinarian Information */}
                           {(canShowVeterinarianContact ||
                             canShowPhoneVeterinarian) && (
-                            <Box>
-                              <Typography
-                                variant="h6"
-                                sx={{ mb: 2, fontWeight: 600 }}
-                              >
-                                Información Veterinaria
-                              </Typography>
+                            <CardComponent title="Información Veterinaria">
                               <Stack spacing={2}>
                                 {/* Contacto del veterinario - controlado por permisos */}
                                 {canShowVeterinarianContact && (
@@ -735,18 +748,12 @@ export default function PetProfileView({ petProfile }: Props) {
                                   </Box>
                                 )}
                               </Stack>
-                            </Box>
+                            </CardComponent>
                           )}
 
                           {/* Activity Information */}
-                          <Divider />
-                          <Box>
-                            <Typography
-                              variant="h6"
-                              sx={{ mb: 2, fontWeight: 600 }}
-                            >
-                              Actividad
-                            </Typography>
+
+                          <CardComponent title="Actividad">
                             <Stack spacing={2}>
                               <Box
                                 sx={{
@@ -782,7 +789,7 @@ export default function PetProfileView({ petProfile }: Props) {
                                 </Typography>
                               </Box>
                             </Stack>
-                          </Box>
+                          </CardComponent>
                         </Stack>
                       </Grid>
                     </Grid>
@@ -810,21 +817,8 @@ export default function PetProfileView({ petProfile }: Props) {
                 </TabPanel>
 
                 <TabPanel value={tabValue} index={2}>
-                  <Box sx={{ textAlign: 'center', py: 4 }}>
-                    <Iconify
-                      icon="solar:users-group-rounded-linear"
-                      sx={{ fontSize: 64, color: '#ccc', mb: 2 }}
-                    />
-                    <Typography variant="h6" color="text.secondary">
-                      Co-Propietarios
-                    </Typography>
-                    <Typography
-                      variant="body2"
-                      color="text.secondary"
-                      sx={{ mt: 1 }}
-                    >
-                      Gestiona los co-propietarios de {petProfile.petName}
-                    </Typography>
+                  <Box px={1}>
+                    <MedicalControlView currentPet={petProfile} />
                   </Box>
                 </TabPanel>
 

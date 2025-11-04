@@ -268,6 +268,7 @@ export default function FilterToolbar({
         spacing={2}
         alignItems={{ xs: 'flex-start', md: 'center' }}
         direction={{ xs: 'column', md: 'row' }}
+        sx={{ px: 2 }}
       >
         {/* Botón de configuración de filtros */}
         <IconButton

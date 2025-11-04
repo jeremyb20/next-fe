@@ -40,6 +40,7 @@ import {
 } from '@/src/hooks/use-fetch-paginated';
 
 import {
+  Box,
   Paper,
   Dialog,
   Typography,
@@ -458,15 +459,16 @@ export default function QrCodeListView() {
               />
             ))}
           </Tabs>
-
-          <FilterToolbar
-            filters={activeFilters}
-            onFilters={handleFiltersChange}
-            filterConfig={ADMIN_QRCODE_FILTER_TOOLBAR}
-            dateError={dateError}
-            onSearch={handleSearch}
-            onClear={handleClear}
-          />
+          <Box sx={{ my: 2 }}>
+            <FilterToolbar
+              filters={activeFilters}
+              onFilters={handleFiltersChange}
+              filterConfig={ADMIN_QRCODE_FILTER_TOOLBAR}
+              dateError={dateError}
+              onSearch={handleSearch}
+              onClear={handleClear}
+            />
+          </Box>
 
           <TableContainer sx={{ position: 'relative', overflow: 'unset' }}>
             <TableSelectedAction

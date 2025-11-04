@@ -12,6 +12,7 @@ import {
   QueryParams,
   IPetProfile,
   UsePaginatedOptions,
+  IMedicalRecordResponse,
 } from '@/src/types/api';
 
 interface UsePaginatedQueryProps<T> {
@@ -148,6 +149,19 @@ export const useGetAllSeo = (params: Partial<UserQueryParams> = {}) =>
   useFetchPaginated<ISeo[]>({
     queryKey: ['seo'],
     endpoint: endpoints.admin.seo.list,
+    params: {
+      page: 1,
+      limit: 10,
+      ...params,
+    },
+  });
+
+export const useGetMedicalRecordsByPet = (
+  params: Partial<UserQueryParams> = {}
+) =>
+  useFetchPaginated<IMedicalRecordResponse[]>({
+    queryKey: ['useGetMedicalRecordsByPet'],
+    endpoint: endpoints.pet.getMedicalRecordsByPet,
     params: {
       page: 1,
       limit: 10,

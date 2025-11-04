@@ -25,6 +25,12 @@ export const STATUS_QRCODE_OPTIONS = [
   { value: 'pending', label: 'Pending' },
 ];
 
+export const MEDICAL_OPTIONS = [
+  { value: 'vaccine', label: 'vaccine' },
+  { value: 'deworming', label: 'Deworming' },
+  { value: 'medical_visit', label: 'Medical Visit' },
+];
+
 // SEO Status Options
 const SEO_STATUS_OPTIONS = [
   { value: 'all', label: 'All' },
@@ -156,6 +162,35 @@ export const ADMIN_QRCODE_FILTER_TOOLBAR: FilterConfig[] = [
     type: 'select',
     label: 'Status',
     options: STATUS_QRCODE_OPTIONS,
+    width: '100%',
+  },
+  {
+    key: 'startDate',
+    type: 'date',
+    label: 'Start Date',
+    width: '100%',
+  },
+  {
+    key: 'endDate',
+    type: 'date',
+    label: 'End Date',
+    width: '100%',
+  },
+];
+
+export const MEDICAL_RECORD_FILTER_TOOLBAR: FilterConfig[] = [
+  {
+    key: 'search',
+    type: 'text',
+    label: 'Search',
+    placeholder: 'Search by random code...',
+    width: '100%',
+  },
+  {
+    key: 'status',
+    type: 'select',
+    label: 'Status',
+    options: MEDICAL_OPTIONS,
     width: '100%',
   },
   {

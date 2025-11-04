@@ -5,12 +5,14 @@ import { countries } from '@/src/assets/data';
 import { HOST_API } from '@/src/config-global';
 import Iconify from '@/src/components/iconify';
 import { parseWeight } from '@/src/utils/constants';
-import { useMemo, useState, useEffect } from 'react';
 import { IUser, IPetProfile } from '@/src/types/api';
+import { useMemo, useState, useEffect } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
+import CardComponent from '@/src/sections/_examples/card-component';
 import CustomPopover, { usePopover } from '@/src/components/custom-popover';
 import { useCreateGenericMutation } from '@/src/hooks/user-generic-mutation';
+import MedicalControlView from '@/src/app/pet/_components/view/medical-control-view';
 import {
   getPhoneHelperText,
   getPhonePlaceholder,
@@ -283,7 +285,7 @@ export default function PetQuickEditForm({
 
       refetch();
       onClose();
-      enqueueSnackbar('Pet updated successfully!');
+      // enqueueSnackbar('Pet updated successfully!');
     } catch (error) {
       console.error(error);
       enqueueSnackbar('Error updating pet', { variant: 'error' });
@@ -389,215 +391,221 @@ export default function PetQuickEditForm({
           </Tabs>
 
           <TabPanel value={tabValue} index={0}>
-            <Box
-              rowGap={3}
-              columnGap={2}
-              display="grid"
-              gridTemplateColumns={{
-                xs: 'repeat(1, 1fr)',
-                sm: 'repeat(2, 1fr)',
-              }}
-            >
-              <RHFSelect name="petStatus" label="Status">
-                {PET_STATUS_OPTIONS.map((status) => (
-                  <MenuItem key={status.value} value={status.value}>
-                    {status.label}
-                  </MenuItem>
-                ))}
-              </RHFSelect>
-
-              <RHFSelect name="genderSelected" label="Gender">
-                {GENDER_OPTIONS.map((gender) => (
-                  <MenuItem key={gender.value} value={gender.value}>
-                    {gender.label}
-                  </MenuItem>
-                ))}
-              </RHFSelect>
-
-              <RHFTextField name="petName" label="Pet Name" />
-              <RHFTextField name="race" label="Breed" />
-              <RHFTextField
-                name="weight"
-                label="Weight"
-                type="number"
-                inputProps={{ step: '0.1' }} // Para permitir decimales
-                InputProps={{
-                  endAdornment: (
-                    <ButtonGroup
-                      variant="outlined"
-                      aria-label="Weight unit selector"
-                      size="small"
-                    >
-                      <Button
-                        onClick={() => handleWeightUnitChange('kg')}
-                        variant={weightUnit === 'kg' ? 'contained' : 'outlined'}
-                      >
-                        kg
-                      </Button>
-                      <Button
-                        onClick={() => handleWeightUnitChange('lb')}
-                        variant={weightUnit === 'lb' ? 'contained' : 'outlined'}
-                      >
-                        lb
-                      </Button>
-                    </ButtonGroup>
-                  ),
+            <CardComponent>
+              <Box
+                rowGap={3}
+                columnGap={2}
+                display="grid"
+                gridTemplateColumns={{
+                  xs: 'repeat(1, 1fr)',
+                  sm: 'repeat(2, 1fr)',
                 }}
-              />
-
-              <Controller
-                name="birthDate"
-                control={control}
-                defaultValue={defaultValues.birthDate}
-                render={({ field, fieldState: { error } }) => (
-                  <DatePicker
-                    views={['year', 'month', 'day']}
-                    label="Year and Month"
-                    minDate={new Date('2000-03-01')}
-                    maxDate={new Date()}
-                    value={field.value ? new Date(field.value) : null}
-                    onChange={(newValue) => {
-                      field.onChange(newValue ? newValue.toISOString() : '');
-                    }}
-                    slotProps={{
-                      textField: {
-                        fullWidth: true,
-                        margin: 'normal',
-                      },
-                    }}
-                  />
-                )}
-              />
-              <RHFTextField name="ownerPetName" label="Owner Name" />
-              <RHFTextField
-                name="phone"
-                label="Phone"
-                placeholder={getPhonePlaceholder(
-                  currentUser?.profile.country || '',
-                  'Phone number'
-                )}
-                helperText={getPhoneHelperText(
-                  currentUser?.profile.country || '',
-                  watchPhone
-                )}
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <Stack direction="row" alignItems="center" spacing={1}>
-                        <Iconify
-                          icon={`flag:${countries
-                            .find(
-                              (c) =>
-                                c.label.toLowerCase() ===
-                                currentUser?.profile.country?.toLowerCase()
-                            )
-                            ?.code.toLowerCase()}-4x3`}
-                        />
-                        <Box>
-                          (+
-                          {`${countries
-                            .find(
-                              (c) =>
-                                c.label.toLowerCase() ===
-                                currentUser?.profile.country?.toLowerCase()
-                            )
-                            ?.phone.toLowerCase()}`}{' '}
-                          )
-                        </Box>
-                      </Stack>
-                    </InputAdornment>
-                  ),
-                  endAdornment: (
-                    <IconButton onClick={popover.onOpen}>
-                      <Iconify icon="line-md:cog-filled" />
-                    </IconButton>
-                  ),
-                }}
-              />
-
-              <CustomPopover
-                open={popover.open}
-                onClose={popover.onClose}
-                arrow="right-top"
-                sx={{ width: 140 }}
               >
-                <MenuItem
-                  onClick={() => {
-                    setValue('phone', currentUser?.profile.phone || '');
-                    popover.onClose();
+                <RHFSelect name="petStatus" label="Status">
+                  {PET_STATUS_OPTIONS.map((status) => (
+                    <MenuItem key={status.value} value={status.value}>
+                      {status.label}
+                    </MenuItem>
+                  ))}
+                </RHFSelect>
+
+                <RHFSelect name="genderSelected" label="Gender">
+                  {GENDER_OPTIONS.map((gender) => (
+                    <MenuItem key={gender.value} value={gender.value}>
+                      {gender.label}
+                    </MenuItem>
+                  ))}
+                </RHFSelect>
+
+                <RHFTextField name="petName" label="Pet Name" />
+                <RHFTextField name="race" label="Breed" />
+                <RHFTextField
+                  name="weight"
+                  label="Weight"
+                  type="number"
+                  inputProps={{ step: '0.1' }} // Para permitir decimales
+                  InputProps={{
+                    endAdornment: (
+                      <ButtonGroup
+                        variant="outlined"
+                        aria-label="Weight unit selector"
+                        size="small"
+                      >
+                        <Button
+                          onClick={() => handleWeightUnitChange('kg')}
+                          variant={
+                            weightUnit === 'kg' ? 'contained' : 'outlined'
+                          }
+                        >
+                          kg
+                        </Button>
+                        <Button
+                          onClick={() => handleWeightUnitChange('lb')}
+                          variant={
+                            weightUnit === 'lb' ? 'contained' : 'outlined'
+                          }
+                        >
+                          lb
+                        </Button>
+                      </ButtonGroup>
+                    ),
                   }}
+                />
+
+                <Controller
+                  name="birthDate"
+                  control={control}
+                  defaultValue={defaultValues.birthDate}
+                  render={({ field, fieldState: { error } }) => (
+                    <DatePicker
+                      views={['year', 'month', 'day']}
+                      label="Year and Month"
+                      minDate={new Date('2000-03-01')}
+                      maxDate={new Date()}
+                      value={field.value ? new Date(field.value) : null}
+                      onChange={(newValue) => {
+                        field.onChange(newValue ? newValue.toISOString() : '');
+                      }}
+                      slotProps={{
+                        textField: {
+                          fullWidth: true,
+                          margin: 'normal',
+                        },
+                      }}
+                    />
+                  )}
+                />
+                <RHFTextField name="ownerPetName" label="Owner Name" />
+                <RHFTextField
+                  name="phone"
+                  label="Phone"
+                  placeholder={getPhonePlaceholder(
+                    currentUser?.profile.country || '',
+                    'Phone number'
+                  )}
+                  helperText={getPhoneHelperText(
+                    currentUser?.profile.country || '',
+                    watchPhone
+                  )}
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <Stack direction="row" alignItems="center" spacing={1}>
+                          <Iconify
+                            icon={`flag:${countries
+                              .find(
+                                (c) =>
+                                  c.label.toLowerCase() ===
+                                  currentUser?.profile.country?.toLowerCase()
+                              )
+                              ?.code.toLowerCase()}-4x3`}
+                          />
+                          <Box>
+                            (+
+                            {`${countries
+                              .find(
+                                (c) =>
+                                  c.label.toLowerCase() ===
+                                  currentUser?.profile.country?.toLowerCase()
+                              )
+                              ?.phone.toLowerCase()}`}{' '}
+                            )
+                          </Box>
+                        </Stack>
+                      </InputAdornment>
+                    ),
+                    endAdornment: (
+                      <IconButton onClick={popover.onOpen}>
+                        <Iconify icon="line-md:cog-filled" />
+                      </IconButton>
+                    ),
+                  }}
+                />
+
+                <CustomPopover
+                  open={popover.open}
+                  onClose={popover.onClose}
+                  arrow="right-top"
+                  sx={{ width: 140 }}
                 >
-                  Set to {currentUser?.profile.phone} {' * '}
-                  <Iconify icon="line-md:phone" />
-                </MenuItem>
-              </CustomPopover>
+                  <MenuItem
+                    onClick={() => {
+                      setValue('phone', currentUser?.profile.phone || '');
+                      popover.onClose();
+                    }}
+                  >
+                    Set to {currentUser?.profile.phone} {' * '}
+                    <Iconify icon="line-md:phone" />
+                  </MenuItem>
+                </CustomPopover>
 
-              <RHFTextField
-                name="favoriteActivities"
-                label="Favorite Activities"
-                multiline
-                rows={2}
-              />
-              <RHFTextField
-                name="healthAndRequirements"
-                label="Health & Requirements"
-                multiline
-                rows={2}
-              />
+                <RHFTextField
+                  name="favoriteActivities"
+                  label="Favorite Activities"
+                  multiline
+                  rows={2}
+                />
+                <RHFTextField
+                  name="healthAndRequirements"
+                  label="Health & Requirements"
+                  multiline
+                  rows={2}
+                />
 
-              <RHFTextField
-                name="veterinarianContact"
-                label="Veterinarian Name"
-              />
-              <RHFTextField
-                name="phoneVeterinarian"
-                label="Veterinarian Phone"
-                placeholder={getPhonePlaceholder(
-                  currentUser?.profile.country || '',
-                  'Veterinanrian Phone'
-                )}
-                helperText={getPhoneHelperText(
-                  currentUser?.profile.country || '',
-                  watchPhoneVeterinarian
-                )}
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <Stack direction="row" alignItems="center" spacing={1}>
-                        <Iconify
-                          icon={`flag:${countries
-                            .find(
-                              (c) =>
-                                c.label.toLowerCase() ===
-                                currentUser?.profile.country?.toLowerCase()
+                <RHFTextField
+                  name="veterinarianContact"
+                  label="Veterinarian Name"
+                />
+                <RHFTextField
+                  name="phoneVeterinarian"
+                  label="Veterinarian Phone"
+                  placeholder={getPhonePlaceholder(
+                    currentUser?.profile.country || '',
+                    'Veterinanrian Phone'
+                  )}
+                  helperText={getPhoneHelperText(
+                    currentUser?.profile.country || '',
+                    watchPhoneVeterinarian
+                  )}
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <Stack direction="row" alignItems="center" spacing={1}>
+                          <Iconify
+                            icon={`flag:${countries
+                              .find(
+                                (c) =>
+                                  c.label.toLowerCase() ===
+                                  currentUser?.profile.country?.toLowerCase()
+                              )
+                              ?.code.toLowerCase()}-4x3`}
+                          />
+                          <Box>
+                            (+
+                            {`${countries
+                              .find(
+                                (c) =>
+                                  c.label.toLowerCase() ===
+                                  currentUser?.profile.country?.toLowerCase()
+                              )
+                              ?.phone.toLowerCase()}`}{' '}
                             )
-                            ?.code.toLowerCase()}-4x3`}
-                        />
-                        <Box>
-                          (+
-                          {`${countries
-                            .find(
-                              (c) =>
-                                c.label.toLowerCase() ===
-                                currentUser?.profile.country?.toLowerCase()
-                            )
-                            ?.phone.toLowerCase()}`}{' '}
-                          )
-                        </Box>
-                      </Stack>
-                    </InputAdornment>
-                  ),
-                }}
-              />
+                          </Box>
+                        </Stack>
+                      </InputAdornment>
+                    ),
+                  }}
+                />
 
-              <RHFTextField
-                name="address"
-                label="Address"
-                multiline
-                rows={2}
-                sx={{ gridColumn: '1 / -1' }}
-              />
-            </Box>
+                <RHFTextField
+                  name="address"
+                  label="Address"
+                  multiline
+                  rows={2}
+                  sx={{ gridColumn: '1 / -1' }}
+                />
+              </Box>
+            </CardComponent>
           </TabPanel>
 
           <TabPanel value={tabValue} index={1}>
@@ -794,12 +802,11 @@ export default function PetQuickEditForm({
           <TabPanel value={tabValue} index={2}>
             <Box sx={{ maxHeight: '55vh', overflow: 'auto' }}>
               Location Goes here
+              {/* <MapView />; */}
             </Box>
           </TabPanel>
           <TabPanel value={tabValue} index={3}>
-            <Box sx={{ maxHeight: '55vh', overflow: 'auto' }}>
-              Vaccines Goes here
-            </Box>
+            <MedicalControlView currentPet={currentPet} />
           </TabPanel>
         </DialogContent>
 

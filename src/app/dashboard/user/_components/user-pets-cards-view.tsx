@@ -3,6 +3,7 @@
 'use client';
 
 import { useSnackbar } from 'notistack';
+import { paths } from '@/src/routes/paths';
 import { IUser, IPetProfile } from '@/src/types/api';
 import { useBoolean } from '@/src/hooks/use-boolean';
 import { useMemo, useState, useCallback } from 'react';
@@ -30,6 +31,8 @@ import {
   CircularProgress,
 } from '@mui/material';
 
+import { useRouter } from 'src/routes/hooks';
+
 import { isAfter } from 'src/utils/format-time';
 
 import Iconify from 'src/components/iconify';
@@ -40,8 +43,12 @@ import PetQuickEditForm from '../../admin/users/_components/pet-quick-edit-form'
 const actions = [{ icon: 'tabler:paw', name: 'New Pet', color: '#ffffff' }];
 export default function UserPetCardsView() {
   const { user } = useManagerUser();
+
   const { enqueueSnackbar } = useSnackbar();
+
   const petQuickEdit = useBoolean();
+
+  const router = useRouter();
 
   const smUp = useResponsive('up', 'sm');
 
@@ -105,14 +112,21 @@ export default function UserPetCardsView() {
     console.log('Eliminar mascota:', pet);
   };
 
-  const handlePetView = (pet: IPetProfile) => {
-    console.log('Ver mascota:', pet);
-  };
+  // const handlePetView = (pet: IPetProfile) => {
+  //   console.log('Ver mascota:', pet);
+  // };
+
+  const handlePetView = useCallback(
+    (pet: IPetProfile) => {
+      console.log('Ver mascota:', pet);
+      router.push(paths.dashboard.user.details(pet.memberPetId));
+    },
+    [router]
+  );
 
   const handlePetEdit = (pet: IPetProfile) => {
     setPetSelected(pet);
     petQuickEdit.onTrue();
-    console.log('Editar mascota:', pet);
   };
 
   if (isError) {

@@ -147,6 +147,7 @@ export const paths = {
 
     user: {
       myPets: `${ROOTS.DASHBOARD}/user/mypets`,
+      details: (id: string) => `${ROOTS.DASHBOARD}/user/mypets/${id}`,
       root: `${ROOTS.DASHBOARD}/user`,
       new: `${ROOTS.DASHBOARD}/user/new`,
       list: `${ROOTS.DASHBOARD}/user/list`,

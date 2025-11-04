@@ -273,3 +273,15 @@ export interface ISeo {
   createdAt?: Date;
   updatedAt?: Date;
 }
+
+export interface IMedicalRecordResponse {
+  _id: string;
+  type: 'vaccine' | 'deworming' | 'medical_visit';
+  date: string;
+  name: string;
+  nextDate?: string;
+  veterinarianName?: string;
+  observations?: string;
+  createdAt: string;
+  updatedAt: string;
+}
