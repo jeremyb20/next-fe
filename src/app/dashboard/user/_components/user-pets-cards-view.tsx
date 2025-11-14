@@ -23,6 +23,7 @@ import {
   Card,
   Alert,
   Avatar,
+  Backdrop,
   Container,
   SpeedDial,
   Typography,
@@ -40,9 +41,13 @@ import Iconify from 'src/components/iconify';
 import PetQuickEditForm from '../../admin/users/_components/pet-quick-edit-form';
 
 // ----------------------------------------------------------------------
-const actions = [{ icon: 'tabler:paw', name: 'New Pet', color: '#ffffff' }];
+const actions = [{ icon: 'tabler:paw', name: 'Pet', color: '#ffffff' }];
 export default function UserPetCardsView() {
   const { user } = useManagerUser();
+
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
   const { enqueueSnackbar } = useSnackbar();
 
@@ -202,28 +207,25 @@ export default function UserPetCardsView() {
           transform: 'translateZ(0px)',
           width: 'auto',
           bgcolor: '#000',
-          borderRadius: 8,
-          px: 1,
         }}
       >
+        <Backdrop open={open} />
         <SpeedDial
-          direction={smUp ? 'left' : 'up'}
-          ariaLabel="Share post"
+          ariaLabel="SpeedDial tooltip example"
+          sx={{ position: 'absolute', bottom: 16, right: 16 }}
           icon={<Iconify icon="mingcute:add-line" />}
-          FabProps={{ size: 'medium' }}
-          sx={{
-            position: 'absolute',
-            bottom: { xs: 32, md: 64 },
-            right: { xs: -7, md: 24 },
-          }}
+          onClose={handleClose}
+          onOpen={handleOpen}
+          open={open}
         >
           {actions.map((action) => (
             <SpeedDialAction
               key={action.name}
               icon={<Iconify icon={action.icon} sx={{ color: action.color }} />}
               tooltipTitle={action.name}
-              tooltipPlacement="top"
+              tooltipOpen
               FabProps={{ color: 'default' }}
+              onClick={handleClose}
             />
           ))}
         </SpeedDial>

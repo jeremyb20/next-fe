@@ -232,7 +232,7 @@ export default function MedicalControlView({
     {
       id: 2,
       value: 'citas',
-      label: 'Citas',
+      label: 'Vsitas Médicas',
       icon: 'solar:calendar-date-bold-duotone',
       component: (
         <MedicalVisitsList
@@ -308,7 +308,10 @@ export default function MedicalControlView({
 
       <MedicalRecordForm
         open={open}
-        onClose={closeForm}
+        onClose={() => {
+          console.log('closing');
+          closeForm();
+        }}
         type={currentType}
         petId={petId}
         currentRecord={currentRecord}

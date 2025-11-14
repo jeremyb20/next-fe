@@ -1,4 +1,5 @@
 import { IPetProfile } from '@/src/types/api';
+import { BreedOptions } from '@/src/utils/constants';
 
 import {
   Box,
@@ -81,7 +82,8 @@ export function PetCard({
             {pet.petName || 'No name'}
           </Typography>
           <Typography variant="body2" sx={{ opacity: 0.8 }}>
-            {pet.race || 'Unknown breed'}
+            {BreedOptions.todos.find((breed) => breed.value === pet.breed)
+              ?.label || 'Unknown breed'}
           </Typography>
         </CardContent>
       </Card>

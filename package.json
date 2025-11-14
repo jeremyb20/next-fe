@@ -1,7 +1,7 @@
 {
   "name": "plaquitascr",
   "author": "JeremyBarquero",
-  "version": "4.0.1-030424",
+  "version": "5.0.0",
   "description": "Frontend para sistema para mascotas y mas - TypeScrip",
   "private": true,
   "scripts": {

@@ -192,7 +192,7 @@ export default function OverviewAppUser() {
                       {pet.petName || 'No name'}
                     </Typography>
                     <Typography variant="body2" sx={{ opacity: 0.8 }}>
-                      {pet.race || 'Unknown breed'}
+                      {pet.breed || 'Unknown breed'}
                     </Typography>
                   </CardContent>
                 </Card>

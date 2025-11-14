@@ -4,7 +4,6 @@ import { useRef, useState, useEffect, useCallback } from 'react';
 import Box from '@mui/material/Box';
 import Link from '@mui/material/Link';
 import Stack from '@mui/material/Stack';
-import Rating from '@mui/material/Rating';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Unstable_Grid2';
@@ -192,8 +191,8 @@ export default function HomeHero() {
             textAlign: 'center',
           }}
         >
-          Start a <br />
-          New Project with
+          Plaquitas inteligentes <br />
+          para mascotas con código QR
         </Typography>
       </m.div>
 
@@ -207,17 +206,17 @@ export default function HomeHero() {
             repeat: Infinity,
           }}
         >
-          Minimal
+          Afiliarme
         </StyledTextGradient>
       </m.div>
 
       <m.div variants={varFade().in}>
-        <Typography variant="body2" sx={{ textAlign: 'center' }}>
-          The starting point for your next project is based on MUI.Easy
-          customization Helps you build apps faster and better.
+        <Typography variant="body2" sx={{ textAlign: 'center', py: 2 }}>
+          &ldquo;Centraliza la información de tu mascota en un perfil digital
+          para asegurar su protección en caso de pérdida.&rdquo;
         </Typography>
       </m.div>
-
+      {/* 
       <m.div variants={varFade().in}>
         <Stack
           spacing={0.75}
@@ -234,7 +233,7 @@ export default function HomeHero() {
             (99+ reviews)
           </Typography>
         </Stack>
-      </m.div>
+      </m.div> */}
 
       <m.div variants={varFade().in}>
         <Stack
@@ -251,7 +250,7 @@ export default function HomeHero() {
               variant="contained"
               startIcon={<Iconify icon="eva:flash-fill" width={24} />}
             >
-              Live Preview
+              Registrarme
             </Button>
 
             <Link
@@ -271,7 +270,7 @@ export default function HomeHero() {
                 width={16}
                 sx={{ mr: 0.5 }}
               />
-              Get Free Version
+              Iniciar sesión
             </Link>
           </Stack>
 
@@ -285,7 +284,7 @@ export default function HomeHero() {
             href={paths.figma}
             sx={{ borderColor: 'text.primary' }}
           >
-            Design Preview
+            Iniciar sesión
           </Button>
         </Stack>
       </m.div>

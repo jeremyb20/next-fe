@@ -311,7 +311,7 @@ export default function MedicalRecordForm({
 
       refetch();
       onSubmitSuccess?.(data);
-      onClose();
+      // onClose();
       reset();
     } catch (error) {
       console.error(error);

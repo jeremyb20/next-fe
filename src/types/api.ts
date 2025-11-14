@@ -174,7 +174,7 @@ export interface IPetProfile {
   lng: string;
   lat: string;
   _id: string;
-  race: string;
+  breed: string;
   updatedAt: string | number | Date;
   createdAt: string;
   memberPetId: string;

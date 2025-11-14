@@ -435,7 +435,7 @@ export default function PetProfileView({ petProfile, canEdit }: Props) {
                                   Raza
                                 </Typography>
                                 <Typography variant="body1" fontWeight={600}>
-                                  {petProfile.race || 'N/A'}
+                                  {petProfile.breed || 'N/A'}
                                 </Typography>
                               </Box>
 

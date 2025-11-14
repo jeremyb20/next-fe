@@ -4,7 +4,7 @@ import { endpoints } from '@/src/utils/axios';
 import { countries } from '@/src/assets/data';
 import { HOST_API } from '@/src/config-global';
 import Iconify from '@/src/components/iconify';
-import { parseWeight } from '@/src/utils/constants';
+import { OptionType } from '@/src/types/global';
 import { IUser, IPetProfile } from '@/src/types/api';
 import { useMemo, useState, useEffect } from 'react';
 import { useForm, Controller } from 'react-hook-form';
@@ -13,6 +13,11 @@ import CardComponent from '@/src/sections/_examples/card-component';
 import CustomPopover, { usePopover } from '@/src/components/custom-popover';
 import { useCreateGenericMutation } from '@/src/hooks/user-generic-mutation';
 import MedicalControlView from '@/src/app/pet/_components/view/medical-control-view';
+import {
+  parseWeight,
+  BreedOptions,
+  GENDER_OPTIONS,
+} from '@/src/utils/constants';
 import {
   getPhoneHelperText,
   getPhonePlaceholder,
@@ -46,6 +51,7 @@ import FormProvider, {
   RHFSelect,
   RHFSwitch,
   RHFTextField,
+  RHFAutocomplete,
 } from 'src/components/hook-form';
 
 // ----------------------------------------------------------------------
@@ -53,7 +59,7 @@ import FormProvider, {
 type FormValues = {
   petName: string;
   genderSelected: string;
-  race: string;
+  breed: string;
   weight: string;
   address: string;
   phone: string;
@@ -109,11 +115,6 @@ const PET_STATUS_OPTIONS = [
   { value: 'deceased', label: 'Deceased' },
 ];
 
-const GENDER_OPTIONS = [
-  { value: 'male', label: 'Male' },
-  { value: 'female', label: 'Female' },
-  { value: 'unknown', label: 'Unknown' },
-];
 type Props = {
   open: boolean;
   onClose: VoidFunction;
@@ -149,7 +150,7 @@ export default function PetQuickEditForm({
     petName: Yup.string().required('Pet name is required'),
     petStatus: Yup.string().required('Status is required'),
     genderSelected: Yup.string().optional().default(''),
-    race: Yup.string().optional().default(''),
+    breed: Yup.string().optional().default(''),
     weight: Yup.string().optional().default(''),
     birthDate: Yup.string().optional().default(''),
     favoriteActivities: Yup.string().optional().default(''),
@@ -193,7 +194,7 @@ export default function PetQuickEditForm({
     return {
       petName: currentPet?.petName || '',
       genderSelected: currentPet?.genderSelected || '',
-      race: currentPet?.race || '',
+      breed: currentPet?.breed || '',
       weight: parsedWeight.value,
       birthDate: currentPet?.birthDate
         ? new Date(currentPet.birthDate).toISOString() // Convertir a ISO
@@ -391,7 +392,7 @@ export default function PetQuickEditForm({
           </Tabs>
 
           <TabPanel value={tabValue} index={0}>
-            <CardComponent>
+            <CardComponent sx={{ p: 2 }}>
               <Box
                 rowGap={3}
                 columnGap={2}
@@ -418,7 +419,50 @@ export default function PetQuickEditForm({
                 </RHFSelect>
 
                 <RHFTextField name="petName" label="Pet Name" />
-                <RHFTextField name="race" label="Breed" />
+                {/* <RHFTextField name="breed" label="Breed" /> */}
+
+                <RHFAutocomplete
+                  name="breed"
+                  label="Raza de la mascota"
+                  options={BreedOptions.todos}
+                  getOptionLabel={(option: OptionType | string) => {
+                    if (typeof option === 'string') {
+                      // Buscar la opción por el value string
+                      const foundOption = BreedOptions.todos.find(
+                        (opt) => opt.value === option
+                      );
+                      return foundOption ? foundOption.label : option;
+                    }
+                    return option.label;
+                  }}
+                  isOptionEqualToValue={(option, value) => {
+                    if (typeof value === 'string') {
+                      return option.value === value;
+                    }
+                    return option.value === value?.value;
+                  }}
+                  onChange={(event, newValue) => {
+                    // Asegurar que solo se guarde el value como string
+                    let stringValue = '';
+                    if (newValue) {
+                      if (typeof newValue === 'string') {
+                        stringValue = newValue;
+                      } else if (
+                        typeof newValue === 'object' &&
+                        'value' in newValue
+                      ) {
+                        stringValue = newValue.value;
+                      }
+                    }
+                    // Actualizar el valor del formulario
+                    setValue('breed', stringValue, { shouldValidate: true });
+                  }}
+                  renderOption={(props, option) => (
+                    <li {...props} key={option.value}>
+                      {option.label}
+                    </li>
+                  )}
+                />
                 <RHFTextField
                   name="weight"
                   label="Weight"
@@ -480,11 +524,11 @@ export default function PetQuickEditForm({
                   name="phone"
                   label="Phone"
                   placeholder={getPhonePlaceholder(
-                    currentUser?.profile.country || '',
+                    currentUser?.profile?.country || '',
                     'Phone number'
                   )}
                   helperText={getPhoneHelperText(
-                    currentUser?.profile.country || '',
+                    currentUser?.profile?.country || '',
                     watchPhone
                   )}
                   InputProps={{
@@ -496,7 +540,7 @@ export default function PetQuickEditForm({
                               .find(
                                 (c) =>
                                   c.label.toLowerCase() ===
-                                  currentUser?.profile.country?.toLowerCase()
+                                  currentUser?.profile?.country?.toLowerCase()
                               )
                               ?.code.toLowerCase()}-4x3`}
                           />
@@ -506,7 +550,7 @@ export default function PetQuickEditForm({
                               .find(
                                 (c) =>
                                   c.label.toLowerCase() ===
-                                  currentUser?.profile.country?.toLowerCase()
+                                  currentUser?.profile?.country?.toLowerCase()
                               )
                               ?.phone.toLowerCase()}`}{' '}
                             )

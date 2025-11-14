@@ -1,7 +1,7 @@
 /* eslint-disable object-shorthand */
 import { Metadata } from 'next';
 import { endpoints } from '@/src/utils/axios';
-import { IPetProfile } from '@/src/types/api';
+import { PetApiResponse } from '@/src/types/global';
 import { DOMAIN, HOST_API } from '@/src/config-global';
 
 import NotFoundPage from '../../not-found';
@@ -13,14 +13,6 @@ type Props = {
     id: string;
   };
 };
-
-interface PetApiResponse {
-  success: boolean;
-  payload?: IPetProfile | null;
-  qrCode?: any;
-  type: 'pet_profile' | 'qr_code_unregistered' | 'not_found';
-  msg?: string;
-}
 
 async function getPetData(identifier: string): Promise<PetApiResponse> {
   try {
@@ -127,8 +119,7 @@ export default async function Page({ params }: Props) {
 
   // Si es código QR no registrado
   if (data.type === 'qr_code_unregistered' && data.qrCode) {
-    // return <RegistrationPetView qrCode={data.qrCode} identifier={id} />;
-    return <RegistrationPetView />;
+    return <RegistrationPetView registerPet={data} />;
   }
 
   // Si no se encuentra nada
