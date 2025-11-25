@@ -1,5 +1,6 @@
 'use client';
 
+import { useState } from 'react';
 import Logo from '@/src/components/logo';
 import { PetApiResponse } from '@/src/types/global';
 import { useResponsive } from '@/src/hooks/use-responsive';
@@ -8,7 +9,9 @@ import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import Stack from '@mui/material/Stack';
 
-import PetRegistrationCodeStepper from '../forms/pet-registration-code-stepper';
+import { RegistrationTypeSelector } from '../cards/registration-type-selector';
+import { PetRegistrationExistingUser } from '../forms/pet-registration-existing-user';
+import PetRegistrationCodeStepperFirstTime from '../forms/pet-registration-code-stepper-first-time';
 
 // ----------------------------------------------------------------------
 
@@ -17,13 +20,21 @@ export default function RegistrationPetView({
 }: {
   registerPet: PetApiResponse;
 }) {
+  const [registrationType, setRegistrationType] = useState<
+    'new' | 'existing' | null
+  >(null);
+
+  const handleBackToSelection = () => {
+    setRegistrationType(null);
+  };
   const mdUp = useResponsive('up', 'md');
+
   const renderContent = (
     <Stack
       sx={{
         width: 1,
         mx: 'auto',
-        maxWidth: 480,
+        maxWidth: registrationType === null ? 580 : 480,
         px: { xs: 2 },
       }}
     >
@@ -35,7 +46,6 @@ export default function RegistrationPetView({
           }}
         />
       )}
-
       <Card
         sx={{
           py: { xs: 3, md: 5 },
@@ -46,8 +56,23 @@ export default function RegistrationPetView({
           my: 3,
         }}
       >
+        {' '}
         {!mdUp && <Logo sx={{ mb: 2 }} />}
-        <PetRegistrationCodeStepper code={registerPet?.qrCode?.randomCode} />
+        {registrationType === null && (
+          <RegistrationTypeSelector onSelect={setRegistrationType} />
+        )}
+        {registrationType === 'new' && (
+          <PetRegistrationCodeStepperFirstTime
+            code={registerPet?.qrCode?.randomCode}
+            onBackToSelection={handleBackToSelection}
+          />
+        )}
+        {registrationType === 'existing' && (
+          <PetRegistrationExistingUser
+            code={registerPet?.qrCode?.randomCode}
+            onBackToSelection={handleBackToSelection}
+          />
+        )}
       </Card>
     </Stack>
   );

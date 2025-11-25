@@ -120,10 +120,12 @@ const steps = [
   },
 ];
 
-export default function PetRegistrationCodeStepper({
+export default function PetRegistrationCodeStepperFirstTime({
   code,
+  onBackToSelection,
 }: {
   code?: string;
+  onBackToSelection?: () => void;
 }) {
   const router = useRouter();
   const password = useBoolean();
@@ -300,13 +302,6 @@ export default function PetRegistrationCodeStepper({
   // Paso 2: Registro de usuario
   const onUserSubmit = handleUserSubmit(async (data) => {
     try {
-      // Aquí iría tu lógica de registro
-      //   await register?.(
-      //     data.email,
-      //     data.password,
-      //     data.firstName,
-      //     data.lastName
-      //   );
       setUserData(data);
       handleNext();
     } catch (error) {
@@ -429,6 +424,9 @@ export default function PetRegistrationCodeStepper({
         />
 
         <Box sx={{ mt: 3 }}>
+          <Button onClick={onBackToSelection} sx={{ mr: 1 }}>
+            Back
+          </Button>
           <LoadingButton
             type="submit"
             variant="contained"
@@ -876,13 +874,6 @@ export default function PetRegistrationCodeStepper({
   useEffect(() => {
     if (code) {
       codeMethods.setValue('code', code);
-      // Opcional: validar automáticamente si el código viene por props
-      // validateCode(code).then(isValid => {
-      //   if (isValid) {
-      //     setIsCodeValid(true);
-      //     setActiveStep(1);
-      //   }
-      // });
     }
   }, [code, codeMethods]);
 

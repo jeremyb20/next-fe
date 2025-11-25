@@ -6,6 +6,7 @@ export const USER_STATUS_OPTIONS = [
   { value: '2', label: 'Banned', color: 'error' },
   { value: '3', label: 'Not Verified', color: 'info' },
   { value: '4', label: 'Rejected', color: 'warning' },
+  { value: '5', label: 'Inactive', color: 'warning' },
 ];
 
 export const USER_ROLE_OPTIONS = [
