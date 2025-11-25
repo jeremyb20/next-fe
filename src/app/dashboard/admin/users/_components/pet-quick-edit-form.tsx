@@ -604,11 +604,11 @@ export default function PetQuickEditForm({
                   name="phoneVeterinarian"
                   label="Veterinarian Phone"
                   placeholder={getPhonePlaceholder(
-                    currentUser?.profile.country || '',
+                    currentUser?.profile?.country || '',
                     'Veterinanrian Phone'
                   )}
                   helperText={getPhoneHelperText(
-                    currentUser?.profile.country || '',
+                    currentUser?.profile?.country || '',
                     watchPhoneVeterinarian
                   )}
                   InputProps={{
@@ -620,7 +620,7 @@ export default function PetQuickEditForm({
                               .find(
                                 (c) =>
                                   c.label.toLowerCase() ===
-                                  currentUser?.profile.country?.toLowerCase()
+                                  currentUser?.profile?.country?.toLowerCase()
                               )
                               ?.code.toLowerCase()}-4x3`}
                           />
