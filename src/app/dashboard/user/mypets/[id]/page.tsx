@@ -1,8 +1,8 @@
 /* eslint-disable object-shorthand */
 import { Metadata } from 'next';
 import { endpoints } from '@/src/utils/axios';
-import { IPetProfile } from '@/src/types/api';
 import NotFoundPage from '@/src/app/error/404/page';
+import { PetApiResponse } from '@/src/types/global';
 import { DOMAIN, HOST_API } from '@/src/config-global';
 import PetProfileView from '@/src/app/pet/_components/view/pet-profile-view';
 
@@ -11,14 +11,6 @@ type Props = {
     id: string;
   };
 };
-
-interface PetApiResponse {
-  success: boolean;
-  payload?: IPetProfile | null;
-  qrCode?: any;
-  type: 'pet_profile' | 'qr_code_unregistered' | 'not_found';
-  msg?: string;
-}
 
 async function getPetData(identifier: string): Promise<PetApiResponse> {
   try {
@@ -43,7 +35,7 @@ async function getPetData(identifier: string): Promise<PetApiResponse> {
     return {
       success: false,
       type: 'not_found',
-      msg: 'Error al conectar con el servidor',
+      message: 'Error al conectar con el servidor',
     };
   }
 }

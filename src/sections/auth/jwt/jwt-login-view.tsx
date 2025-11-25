@@ -1,8 +1,8 @@
 'use client';
 
 import * as Yup from 'yup';
-import { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { useState, useEffect } from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
 
 import Link from '@mui/material/Link';
@@ -60,8 +60,12 @@ export default function JwtLoginView() {
   const {
     reset,
     handleSubmit,
+    watch,
     formState: { isSubmitting },
   } = methods;
+
+  const watchedEmail = watch('email');
+  const watchedPassword = watch('password');
 
   const onSubmit = handleSubmit(async (data) => {
     try {
@@ -74,6 +78,10 @@ export default function JwtLoginView() {
       setErrorMsg(typeof error === 'string' ? error : error.message);
     }
   });
+
+  useEffect(() => {
+    setErrorMsg('');
+  }, [watchedEmail, watchedPassword]);
 
   const renderHead = (
     <Stack spacing={2} sx={{ mb: 5 }}>
@@ -144,15 +152,15 @@ export default function JwtLoginView() {
         <strong> demo1234</strong>
       </Alert>
 
-      {!!errorMsg && (
-        <Alert severity="error" sx={{ mb: 3 }}>
-          {errorMsg}
-        </Alert>
-      )}
-
       <FormProvider methods={methods} onSubmit={onSubmit}>
         {renderForm}
       </FormProvider>
+
+      {!!errorMsg && (
+        <Alert severity="error" sx={{ my: 3 }}>
+          {errorMsg}
+        </Alert>
+      )}
     </>
   );
 }

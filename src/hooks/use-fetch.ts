@@ -79,3 +79,10 @@ export const useGetPetProfileById = (identifier: string | undefined) =>
       retry: 2,
     }
   );
+
+export const getValidationCode = async (code: string) => {
+  const response = await axiosInstance.get(
+    `${endpoints.user.validateQrCode}?code=${code}`
+  );
+  return response.data;
+};

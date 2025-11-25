@@ -100,7 +100,6 @@ export function AuthProvider({ children }: Props) {
       const accessToken = localStorage.getItem(STORAGE_KEY);
       if (accessToken && isValidToken(accessToken)) {
         setSession(accessToken);
-
         const res = await axios.get(endpoints.auth.me);
 
         const { payload: user } = res.data;
@@ -137,29 +136,53 @@ export function AuthProvider({ children }: Props) {
   }, [initialize]);
 
   // LOGIN
+  // LOGIN
   const login = useCallback(async (email: string, password: string) => {
-    const data = {
-      email,
-      password,
-    };
+    try {
+      const data = {
+        email,
+        password,
+      };
 
-    const loginRes = await axios.post(endpoints.auth.login, data);
-    const { token: accessToken } = loginRes.data;
+      const loginRes = await axios.post(endpoints.auth.login, data);
 
-    setSession(accessToken);
+      // Verificar si la respuesta es exitosa
+      if (!loginRes.data.success) {
+        throw new Error(loginRes.data.message || 'Login failed');
+      }
 
-    const meRes = await axios.get(endpoints.auth.me);
-    const { payload: user } = meRes.data;
+      const { token: accessToken } = loginRes.data;
 
-    dispatch({
-      type: Types.LOGIN,
-      payload: {
-        user: {
-          ...user,
-          accessToken,
+      setSession(accessToken);
+
+      const meRes = await axios.get(endpoints.auth.me);
+      const { payload: user } = meRes.data;
+
+      dispatch({
+        type: Types.LOGIN,
+        payload: {
+          user: {
+            ...user,
+            accessToken,
+          },
         },
-      },
-    });
+      });
+
+      return loginRes.data; // Retornar la respuesta para verificación adicional
+    } catch (error: any) {
+      // Manejar errores de axios o del servidor
+      if (error.response) {
+        // El servidor respondió con un código de error
+        const errorMessage = error.response.data?.message || 'Login failed';
+        throw new Error(errorMessage);
+      } else if (error.request) {
+        // La petición fue hecha pero no se recibió respuesta
+        throw new Error('Network error. Please try again.');
+      } else {
+        // Algo pasó al configurar la petición
+        throw new Error(error.message || 'An error occurred');
+      }
+    }
   }, []);
 
   // REGISTER

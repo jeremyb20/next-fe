@@ -25,12 +25,17 @@ import { countries } from 'src/assets/data';
 // import { useAuthContext } from 'src/auth/hooks';
 // import { PATH_AFTER_LOGIN } from 'src/config-global';
 
+import { useSnackbar } from 'notistack';
+import { endpoints } from '@/src/utils/axios';
 import Iconify from '@/src/components/iconify';
+import { HOST_API } from '@/src/config-global';
 import { OptionType } from '@/src/types/global';
 import useIPInfo from '@/src/hooks/use-ip-info';
 import { useBoolean } from '@/src/hooks/use-boolean';
+import { getValidationCode } from '@/src/hooks/use-fetch';
 import { PetAgeCalculator } from '@/src/utils/pet-age-calculator';
 import { BreedOptions, GENDER_OPTIONS } from '@/src/utils/constants';
+import { useCreateGenericMutation } from '@/src/hooks/user-generic-mutation';
 import {
   getDogSizeFromBreed,
   getSpeciesFromBreed,
@@ -124,6 +129,9 @@ export default function PetRegistrationCodeStepper({
   const password = useBoolean();
   const { ipData } = useIPInfo();
 
+  const { mutateAsync } = useCreateGenericMutation();
+  const { enqueueSnackbar } = useSnackbar();
+
   // Estado local para la edad de la mascota
   const [ageResult, setAgeResult] = useState<any>(null);
   const [recommendations, setRecommendations] = useState<string[]>([]);
@@ -207,41 +215,39 @@ export default function PetRegistrationCodeStepper({
     setWeightUnit(unit);
   };
 
-  // Función para validar el código
-  const validateCode = async (codeValue: string): Promise<boolean> => {
-    // Aquí iría tu lógica de validación del código
-    // Por ejemplo, una llamada a la API para verificar si el código es válido
-    try {
-      // Simulación de validación - reemplaza con tu lógica real
-      console.log('Validating code:', codeValue);
-
-      // Ejemplo: validar que el código tenga al menos 4 caracteres y sea alfanumérico
-      const isValid = codeValue.length >= 4 && /^[a-zA-Z0-9]+$/.test(codeValue);
-
-      // Simular una llamada a API
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-
-      return isValid;
-    } catch (error) {
-      console.error('Error validating code:', error);
-      return false;
-    }
-  };
-
   // Paso 1: Validación del código
+
   const onCodeSubmit = handleCodeSubmit(async (data) => {
     try {
-      const isValid = await validateCode(data.code);
+      setErrorMsg(''); // Limpiar errores previos
 
-      if (isValid) {
-        setIsCodeValid(true);
-        handleNext();
-      } else {
-        setErrorMsg('Invalid code. Please check and try again.');
+      const { data: res, error, isError } = await getValidationCode(data.code);
+
+      console.log('Full validation response:', { res, error, isError });
+
+      // Si hay error en la petición (network, etc.)
+      if (isError) {
+        setErrorMsg(error?.message || 'Network error. Please try again.');
+        return;
       }
-    } catch (error) {
-      console.error(error);
-      setErrorMsg('Error validating code. Please try again.');
+
+      // Si no hay respuesta
+      if (!res) {
+        setErrorMsg('No response from server. Please try again.');
+        return;
+      }
+
+      // Si todo está bien - usar callback para asegurar el estado
+      setIsCodeValid(true);
+      setErrorMsg('');
+
+      // Avanzar inmediatamente
+      setActiveStep(1);
+    } catch (error: any) {
+      console.error('Unexpected error:', error);
+      setErrorMsg(
+        error.message || 'An unexpected error occurred. Please try again.'
+      );
     }
   });
 
@@ -330,18 +336,34 @@ export default function PetRegistrationCodeStepper({
         ? `${petData.weight} ${weightUnit}`
         : '';
       const completeData = {
-        ...petData,
-        weight: weightWithUnit,
+        code: watchCodeValue, // El código validado
+        userData: {
+          ...userData,
+        },
+        petData: {
+          ...petData,
+          weight: weightWithUnit,
+        },
       };
-      console.log('User Data:', userData);
-      console.log('Pet Data ** :', completeData);
-      console.log('Validated Code:', watchCodeValue);
 
+      const test = await mutateAsync<any>({
+        payload: completeData as any,
+        pEndpoint: `${HOST_API}${endpoints.user.registerNewPetByQRcode}`,
+        method: 'POST',
+      });
+      console.log('Test:', test);
+      setErrorMsg('');
+      enqueueSnackbar('Registration completed successfully', {
+        variant: 'success',
+      });
       // Redirigir al dashboard o página de éxito
       //   router.push(PATH_AFTER_LOGIN);
     } catch (error) {
       console.error(error);
-      setErrorMsg('Error completing registration');
+      setErrorMsg(error.message || 'Error completing registration');
+      enqueueSnackbar(error.message || 'Error completing registration', {
+        variant: 'error',
+      });
     }
   };
 
@@ -714,12 +736,6 @@ export default function PetRegistrationCodeStepper({
   // Renderizar el paso 4 - Preview
   const renderPreviewStep = () => (
     <Box sx={{ mt: 2 }}>
-      {!!errorMsg && (
-        <Alert severity="error" sx={{ mb: 2 }}>
-          {errorMsg}
-        </Alert>
-      )}
-
       <Paper sx={{ p: 3, mb: 3, bgcolor: 'background.neutral' }}>
         <Typography variant="h6" gutterBottom>
           Code Information
@@ -755,7 +771,9 @@ export default function PetRegistrationCodeStepper({
           <strong>Name:</strong> {petData?.petName}
         </Typography>
         <Typography variant="body2" color="text.secondary">
-          <strong>Breed:</strong> {petData?.breed}
+          <strong>Breed: </strong>
+          {BreedOptions.todos.find((breed) => breed.value === petData?.breed)
+            ?.label || 'Unknown breed'}
         </Typography>
         <Typography variant="body2" color="text.secondary">
           <strong>Gender:</strong> {petData?.genderSelected}
@@ -816,7 +834,11 @@ export default function PetRegistrationCodeStepper({
           )}
         </Paper>
       )}
-
+      {!!errorMsg && (
+        <Alert severity="error" sx={{ my: 2 }}>
+          {errorMsg}
+        </Alert>
+      )}
       <Box sx={{ mt: 3 }}>
         <Button onClick={handleBack} sx={{ mr: 1 }}>
           Back

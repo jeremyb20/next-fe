@@ -25,7 +25,7 @@ export interface PetApiResponse {
   payload?: IPetProfile | null;
   qrCode?: QrCode;
   type: 'pet_profile' | 'qr_code_unregistered' | 'not_found';
-  msg?: string;
+  message?: string;
 }
 
 export interface QrCode {

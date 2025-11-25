@@ -574,11 +574,11 @@ export default function PetQuickEditForm({
                 >
                   <MenuItem
                     onClick={() => {
-                      setValue('phone', currentUser?.profile.phone || '');
+                      setValue('phone', currentUser?.profile?.phone || '');
                       popover.onClose();
                     }}
                   >
-                    Set to {currentUser?.profile.phone} {' * '}
+                    Set to {currentUser?.profile?.phone} {' * '}
                     <Iconify icon="line-md:phone" />
                   </MenuItem>
                 </CustomPopover>

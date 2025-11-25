@@ -37,7 +37,7 @@ async function getPetData(identifier: string): Promise<PetApiResponse> {
     return {
       success: false,
       type: 'not_found',
-      msg: 'Error al conectar con el servidor',
+      message: 'Error al conectar con el servidor',
     };
   }
 }
