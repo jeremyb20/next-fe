@@ -31,8 +31,10 @@ import Iconify from '@/src/components/iconify';
 import { HOST_API } from '@/src/config-global';
 import { OptionType } from '@/src/types/global';
 import useIPInfo from '@/src/hooks/use-ip-info';
+import { fData } from '@/src/utils/format-number';
 import { useBoolean } from '@/src/hooks/use-boolean';
 import { getValidationCode } from '@/src/hooks/use-fetch';
+import UploadAvatar from '@/src/components/upload/upload-avatar';
 import { PetAgeCalculator } from '@/src/utils/pet-age-calculator';
 import { BreedOptions, GENDER_OPTIONS } from '@/src/utils/constants';
 import { useCreateGenericMutation } from '@/src/hooks/user-generic-mutation';
@@ -48,10 +50,13 @@ import {
 } from '@/src/utils/phone-validation';
 
 import {
+  Card,
   Stack,
   MenuItem,
   IconButton,
+  CardHeader,
   ButtonGroup,
+  CardContent,
   InputAdornment,
 } from '@mui/material';
 
@@ -139,11 +144,34 @@ export default function PetRegistrationCodeStepperFirstTime({
   const [recommendations, setRecommendations] = useState<string[]>([]);
   const [isCodeValid, setIsCodeValid] = useState<boolean>(false);
 
+  const [petPhoto, setPetPhoto] = useState<File | null>(null);
+  const [petPhotoPreview, setPetPhotoPreview] = useState<string | null>(null);
+
   const [weightUnit, setWeightUnit] = useState<'kg' | 'lb'>('kg');
   const [activeStep, setActiveStep] = useState(0);
   const [errorMsg, setErrorMsg] = useState('');
   const [userData, setUserData] = useState<any>(null);
   const [petData, setPetData] = useState<any>(null);
+
+  // Función para manejar la subida de foto
+  const handleDropPetPhoto = useCallback((acceptedFiles: File[]) => {
+    const newFile = acceptedFiles[0];
+    if (newFile) {
+      setPetPhoto(newFile);
+      // Crear preview para mostrar
+      const previewUrl = URL.createObjectURL(newFile);
+      setPetPhotoPreview(previewUrl);
+    }
+  }, []);
+
+  // Función para eliminar la foto
+  const handleRemovePetPhoto = useCallback(() => {
+    setPetPhoto(null);
+    if (petPhotoPreview) {
+      URL.revokeObjectURL(petPhotoPreview);
+    }
+    setPetPhotoPreview(null);
+  }, [petPhotoPreview]);
 
   // Formulario para código
   const codeMethods = useForm({
@@ -313,7 +341,10 @@ export default function PetRegistrationCodeStepperFirstTime({
   // Paso 3: Información de la mascota
   const onPetSubmit = handlePetSubmit(async (data) => {
     try {
-      setPetData(data);
+      setPetData({
+        ...data,
+        photo: petPhoto, // Incluir el archivo de la foto
+      });
       handleNext();
     } catch (error) {
       console.error(error);
@@ -330,21 +361,23 @@ export default function PetRegistrationCodeStepperFirstTime({
       const weightWithUnit = petData.weight
         ? `${petData.weight} ${weightUnit}`
         : '';
-      const completeData = {
-        code: watchCodeValue, // El código validado
-        userData: {
-          ...userData,
-        },
-        petData: {
-          ...petData,
-          weight: weightWithUnit,
-        },
-      };
 
       const test = await mutateAsync<any>({
-        payload: completeData as any,
+        // payload: completeData as any,
+        payload: {
+          code: watchCodeValue,
+          userData: {
+            ...userData,
+          },
+          petData: {
+            ...petData,
+            weight: weightWithUnit,
+          },
+          image: petPhoto,
+        } as any,
         pEndpoint: `${HOST_API}${endpoints.user.registerNewPetByQRcode}`,
         method: 'POST',
+        isFormData: !!petPhoto,
       });
       console.log('Test:', test);
       setErrorMsg('');
@@ -575,8 +608,59 @@ export default function PetRegistrationCodeStepperFirstTime({
             {errorMsg}
           </Alert>
         )}
+        {/* Sección de Foto de la Mascota */}
+        <Card sx={{ mb: 3 }}>
+          <CardHeader title="Pet Photo (Optional)" />
+          <CardContent>
+            <UploadAvatar
+              file={petPhotoPreview}
+              onDrop={handleDropPetPhoto}
+              onDelete={handleRemovePetPhoto}
+              validator={(fileData) => {
+                // Validar tipo de archivo
+                const allowedTypes = [
+                  'image/jpeg',
+                  'image/jpg',
+                  'image/png',
+                  'image/gif',
+                ];
+                if (!allowedTypes.includes(fileData.type)) {
+                  return {
+                    code: 'invalid-file-type',
+                    message: 'Only JPEG, JPG, PNG or GIF images are allowed',
+                  };
+                }
 
-        <ValuesPreview />
+                // Validar tamaño (2MB máximo)
+                if (fileData.size > 2 * 1024 * 1024) {
+                  return {
+                    code: 'file-too-large',
+                    message: `Image is too large. Maximum ${fData(
+                      2 * 1024 * 1024
+                    )}`,
+                  };
+                }
+
+                return null;
+              }}
+              helperText={
+                <Typography
+                  variant="caption"
+                  sx={{
+                    mt: 2,
+                    mx: 'auto',
+                    display: 'block',
+                    textAlign: 'center',
+                    color: 'text.disabled',
+                  }}
+                >
+                  Allowed *.jpeg, *.jpg, *.png, *.gif
+                  <br /> max size of {fData(2 * 1024 * 1024)}
+                </Typography>
+              }
+            />
+          </CardContent>
+        </Card>
 
         <Box
           sx={{
@@ -765,6 +849,28 @@ export default function PetRegistrationCodeStepperFirstTime({
         <Typography variant="h6" gutterBottom>
           Pet Information
         </Typography>
+
+        {/* Mostrar preview de la foto si existe */}
+        {petPhotoPreview && (
+          <Box sx={{ mb: 2, textAlign: 'center' }}>
+            <Typography variant="subtitle2" gutterBottom>
+              Pet Photo:
+            </Typography>
+            <Box
+              component="img"
+              src={petPhotoPreview}
+              alt="Pet preview"
+              sx={{
+                width: 100,
+                height: 100,
+                borderRadius: '50%',
+                objectFit: 'cover',
+                border: (theme) => `2px solid ${theme.palette.divider}`,
+              }}
+            />
+          </Box>
+        )}
+
         <Typography variant="body2" color="text.secondary">
           <strong>Name:</strong> {petData?.petName}
         </Typography>

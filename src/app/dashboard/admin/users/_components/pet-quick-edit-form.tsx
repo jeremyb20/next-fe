@@ -630,7 +630,7 @@ export default function PetQuickEditForm({
                               .find(
                                 (c) =>
                                   c.label.toLowerCase() ===
-                                  currentUser?.profile.country?.toLowerCase()
+                                  currentUser?.profile?.country?.toLowerCase()
                               )
                               ?.phone.toLowerCase()}`}{' '}
                             )
