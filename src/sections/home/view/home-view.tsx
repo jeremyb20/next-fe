@@ -10,15 +10,13 @@ import MainLayout from 'src/layouts/main';
 import ScrollProgress from 'src/components/scroll-progress';
 
 import HomeHero from '../home-hero';
-import HomeMinimal from '../home-minimal';
-import HomePricing from '../home-pricing';
-import HomeDarkMode from '../home-dark-mode';
-import HomeLookingFor from '../home-looking-for';
-import HomeForDesigner from '../home-for-designer';
-import HomeColorPresets from '../home-color-presets';
-import HomeAdvertisement from '../home-advertisement';
-import HomeCleanInterfaces from '../home-clean-interfaces';
-import HomeHugePackElements from '../home-hugepack-elements';
+import HomeShop from '../home-shop';
+import HomeBlog from '../home-blog';
+import HomeFeatures from '../home-features';
+import HomeServices from '../home-services';
+import HomeGrooming from '../home-grooming';
+import HomePetTracking from '../home-pet-tracking';
+import HomeTestimonials from '../home-testimonials';
 
 // ----------------------------------------------------------------------
 
@@ -66,27 +64,27 @@ export default function HomeView() {
           bgcolor: 'background.default',
         }}
       >
-        <HomeMinimal />
+        <HomeFeatures />
 
-        <HomeHugePackElements />
+        <HomePetTracking />
 
         <Box sx={{ position: 'relative' }}>
           <StyledPolygon />
-          <HomeForDesigner />
+          <HomeServices />
           <StyledPolygon anchor="bottom" />
         </Box>
 
-        <HomeDarkMode />
+        <HomeGrooming />
 
-        <HomeColorPresets />
+        {/* <HomeVeterinarians /> */}
 
-        <HomeCleanInterfaces />
+        <HomeShop />
 
-        <HomePricing />
+        {/* <HomePricing /> */}
 
-        <HomeLookingFor />
+        <HomeTestimonials />
 
-        <HomeAdvertisement />
+        <HomeBlog />
       </Box>
     </MainLayout>
   );

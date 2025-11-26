@@ -46,3 +46,4 @@ export const LOGO =
 
 // ROOT PATH AFTER LOGIN SUCCESSFUL
 export const PATH_AFTER_LOGIN = paths.dashboard.root; // as '/dashboard'
+export const APP_NAME = process.env.NEXT_PUBLIC_APP_NAME || 'Plaquitascr';

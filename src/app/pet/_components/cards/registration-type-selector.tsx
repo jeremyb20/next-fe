@@ -3,6 +3,7 @@
 'use client';
 
 import Iconify from '@/src/components/iconify';
+import { APP_NAME } from '@/src/config-global';
 
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
@@ -54,7 +55,7 @@ export function RegistrationTypeSelector({
             <Iconify icon="mdi:account-plus" width={48} />
           </Box>
           <Typography variant="h6" gutterBottom>
-            New to PetCare
+            New to {APP_NAME}
           </Typography>
           <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
             Create a new account and register your first pet

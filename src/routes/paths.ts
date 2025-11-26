@@ -218,4 +218,8 @@ export const paths = {
       },
     },
   },
+
+  veterinarian: {
+    register: '/register',
+  },
 };
