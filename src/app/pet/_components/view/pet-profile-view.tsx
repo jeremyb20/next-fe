@@ -71,7 +71,6 @@ function TabPanel(props: TabPanelProps) {
 }
 
 export default function PetProfileView({ petProfile, canEdit }: Props) {
-  console.log(petProfile, 'petProfile');
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const [tabValue, setTabValue] = useState(0);

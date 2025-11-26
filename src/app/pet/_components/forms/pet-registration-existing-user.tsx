@@ -5,7 +5,6 @@
 import * as Yup from 'yup';
 import { useSnackbar } from 'notistack';
 import { endpoints } from '@/src/utils/axios';
-import { HOST_API } from '@/src/config-global';
 import Iconify from '@/src/components/iconify';
 import { OptionType } from '@/src/types/global';
 import { useAuthContext } from '@/src/auth/hooks';
@@ -15,9 +14,11 @@ import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useState, useEffect, useCallback } from 'react';
 import { getValidationCode } from '@/src/hooks/use-fetch';
+import { HOST_API, PATH_AFTER_LOGIN } from '@/src/config-global';
 import UploadAvatar from '@/src/components/upload/upload-avatar';
 import { PetAgeCalculator } from '@/src/utils/pet-age-calculator';
 import { BreedOptions, GENDER_OPTIONS } from '@/src/utils/constants';
+import useCelebrationConfetti from '@/src/hooks/use-celebration-confetti';
 import { useCreateGenericMutation } from '@/src/hooks/user-generic-mutation';
 import {
   getDogSizeFromBreed,
@@ -45,6 +46,8 @@ import {
   CardContent,
   InputAdornment,
 } from '@mui/material';
+
+import { useRouter } from 'src/routes/hooks';
 
 import FormProvider, {
   RHFSelect,
@@ -112,9 +115,11 @@ export function PetRegistrationExistingUser({
   onBackToSelection,
 }: PetRegistrationExistingUserProps) {
   const password = useBoolean();
+  const router = useRouter();
   const { login } = useAuthContext();
   const { enqueueSnackbar } = useSnackbar();
   const { mutateAsync } = useCreateGenericMutation();
+  const { celebrate } = useCelebrationConfetti();
 
   const [activeStep, setActiveStep] = useState(0);
   const [errorMsg, setErrorMsg] = useState('');
@@ -123,8 +128,8 @@ export function PetRegistrationExistingUser({
   const [ageResult, setAgeResult] = useState<any>(null);
   const [recommendations, setRecommendations] = useState<string[]>([]);
   const [weightUnit, setWeightUnit] = useState<'kg' | 'lb'>('kg');
-  const [isCodeValid, setIsCodeValid] = useState<boolean>(false);
   const [validatedCode, setValidatedCode] = useState<string>('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const [petPhoto, setPetPhoto] = useState<File | null>(null);
   const [petPhotoPreview, setPetPhotoPreview] = useState<string | null>(null);
@@ -275,7 +280,6 @@ export function PetRegistrationExistingUser({
         return;
       }
 
-      setIsCodeValid(true);
       setValidatedCode(data.code);
       setErrorMsg('');
       handleNext();
@@ -318,10 +322,12 @@ export function PetRegistrationExistingUser({
   // Paso 4: Confirmación y registro completo
   const handleCompleteRegistration = async () => {
     try {
+      setIsSubmitting(true);
+
       const weightWithUnit = petData.weight
         ? `${petData.weight} ${weightUnit}`
         : '';
-      const result = await mutateAsync<any>({
+      await mutateAsync<any>({
         payload: {
           code: validatedCode,
           userCredentials: userData,
@@ -336,13 +342,19 @@ export function PetRegistrationExistingUser({
         isFormData: !!petPhoto,
       });
 
-      console.log('Registration result:', result);
       setErrorMsg('');
+      celebrate({
+        type: 'celebration',
+        customOptions: {
+          particleCount: 250,
+          spread: 80,
+        },
+      });
       enqueueSnackbar('Pet added to your account successfully', {
         variant: 'success',
       });
-
-      // router.push(PATH_AFTER_LOGIN);
+      setIsSubmitting(false);
+      setActiveStep(4);
     } catch (error: any) {
       console.error(error);
       setErrorMsg(error.message || 'Error completing registration');
@@ -350,6 +362,10 @@ export function PetRegistrationExistingUser({
         variant: 'error',
       });
     }
+  };
+
+  const goToLogin = () => {
+    router.push(PATH_AFTER_LOGIN);
   };
 
   // Renderizar paso de validación de código
@@ -661,6 +677,21 @@ export function PetRegistrationExistingUser({
             <Typography variant="body2" sx={{ mt: 1 }}>
               {ageResult.description}
             </Typography>
+
+            {recommendations.length > 0 && (
+              <Box sx={{ mt: 2 }}>
+                <Typography variant="subtitle2" gutterBottom>
+                  Recomendaciones:
+                </Typography>
+                <ul style={{ margin: 0, paddingLeft: '20px' }}>
+                  {recommendations.map((rec, index) => (
+                    <li key={index}>
+                      <Typography variant="body2">{rec}</Typography>
+                    </li>
+                  ))}
+                </ul>
+              </Box>
+            )}
           </Paper>
         )}
 
@@ -801,9 +832,15 @@ export function PetRegistrationExistingUser({
         <Button onClick={handleBack} sx={{ mr: 1 }}>
           Back
         </Button>
-        <Button variant="contained" onClick={handleCompleteRegistration}>
+
+        <LoadingButton
+          type="submit"
+          variant="contained"
+          loading={isSubmitting}
+          onClick={handleCompleteRegistration}
+        >
           Complete Registration
-        </Button>
+        </LoadingButton>
       </Box>
     </Box>
   );
@@ -862,9 +899,11 @@ export function PetRegistrationExistingUser({
           }}
         >
           <Typography sx={{ mb: 2 }}>
-            Pet added to your account successfully!
+            Registration completed successfully!
           </Typography>
-          <Button onClick={onBackToSelection}>Add Another Pet</Button>
+          <Button variant="contained" onClick={goToLogin}>
+            Redirect to login
+          </Button>
         </Paper>
       )}
     </>

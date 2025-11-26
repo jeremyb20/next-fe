@@ -1,9 +1,32 @@
 'use client';
 
 import * as Yup from 'yup';
+import { useSnackbar } from 'notistack';
+import { endpoints } from '@/src/utils/axios';
+import Iconify from '@/src/components/iconify';
+import { OptionType } from '@/src/types/global';
+import useIPInfo from '@/src/hooks/use-ip-info';
+import { fData } from '@/src/utils/format-number';
+import { useBoolean } from '@/src/hooks/use-boolean';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useState, useEffect, useCallback } from 'react';
+import { getValidationCode } from '@/src/hooks/use-fetch';
+import { HOST_API, PATH_AFTER_LOGIN } from '@/src/config-global';
+import UploadAvatar from '@/src/components/upload/upload-avatar';
+import { PetAgeCalculator } from '@/src/utils/pet-age-calculator';
+import { BreedOptions, GENDER_OPTIONS } from '@/src/utils/constants';
+import useCelebrationConfetti from '@/src/hooks/use-celebration-confetti';
+import { useCreateGenericMutation } from '@/src/hooks/user-generic-mutation';
+import {
+  getDogSizeFromBreed,
+  getSpeciesFromBreed,
+} from '@/src/utils/pet-utils';
+import {
+  getPhoneHelperText,
+  getPhonePlaceholder,
+  simplePhoneValidation,
+} from '@/src/utils/phone-validation';
 
 import Box from '@mui/material/Box';
 import Step from '@mui/material/Step';
@@ -17,38 +40,6 @@ import Typography from '@mui/material/Typography';
 import LoadingButton from '@mui/lab/LoadingButton';
 import StepContent from '@mui/material/StepContent';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-
-import { useRouter } from 'src/routes/hooks';
-
-import { countries } from 'src/assets/data';
-
-// import { useAuthContext } from 'src/auth/hooks';
-// import { PATH_AFTER_LOGIN } from 'src/config-global';
-
-import { useSnackbar } from 'notistack';
-import { endpoints } from '@/src/utils/axios';
-import Iconify from '@/src/components/iconify';
-import { HOST_API } from '@/src/config-global';
-import { OptionType } from '@/src/types/global';
-import useIPInfo from '@/src/hooks/use-ip-info';
-import { fData } from '@/src/utils/format-number';
-import { useBoolean } from '@/src/hooks/use-boolean';
-import { getValidationCode } from '@/src/hooks/use-fetch';
-import UploadAvatar from '@/src/components/upload/upload-avatar';
-import { PetAgeCalculator } from '@/src/utils/pet-age-calculator';
-import { BreedOptions, GENDER_OPTIONS } from '@/src/utils/constants';
-import { useCreateGenericMutation } from '@/src/hooks/user-generic-mutation';
-import {
-  getDogSizeFromBreed,
-  getSpeciesFromBreed,
-} from '@/src/utils/pet-utils';
-import ValuesPreview from '@/src/sections/_examples/extra/form-validation-view/values-preview';
-import {
-  getPhoneHelperText,
-  getPhonePlaceholder,
-  simplePhoneValidation,
-} from '@/src/utils/phone-validation';
-
 import {
   Card,
   Stack,
@@ -59,6 +50,10 @@ import {
   CardContent,
   InputAdornment,
 } from '@mui/material';
+
+import { useRouter } from 'src/routes/hooks';
+
+import { countries } from 'src/assets/data';
 
 import FormProvider, {
   RHFSelect,
@@ -135,14 +130,14 @@ export default function PetRegistrationCodeStepperFirstTime({
   const router = useRouter();
   const password = useBoolean();
   const { ipData } = useIPInfo();
-
+  const { celebrate } = useCelebrationConfetti();
   const { mutateAsync } = useCreateGenericMutation();
   const { enqueueSnackbar } = useSnackbar();
 
+  const [isSubmitting, setIsSubmitting] = useState(false);
   // Estado local para la edad de la mascota
   const [ageResult, setAgeResult] = useState<any>(null);
   const [recommendations, setRecommendations] = useState<string[]>([]);
-  const [isCodeValid, setIsCodeValid] = useState<boolean>(false);
 
   const [petPhoto, setPetPhoto] = useState<File | null>(null);
   const [petPhotoPreview, setPetPhotoPreview] = useState<string | null>(null);
@@ -253,8 +248,6 @@ export default function PetRegistrationCodeStepperFirstTime({
 
       const { data: res, error, isError } = await getValidationCode(data.code);
 
-      console.log('Full validation response:', { res, error, isError });
-
       // Si hay error en la petición (network, etc.)
       if (isError) {
         setErrorMsg(error?.message || 'Network error. Please try again.');
@@ -267,8 +260,6 @@ export default function PetRegistrationCodeStepperFirstTime({
         return;
       }
 
-      // Si todo está bien - usar callback para asegurar el estado
-      setIsCodeValid(true);
       setErrorMsg('');
 
       // Avanzar inmediatamente
@@ -357,12 +348,12 @@ export default function PetRegistrationCodeStepperFirstTime({
     try {
       // Aquí iría la lógica para guardar la mascota en la base de datos
       // usando userData y petData
-
+      setIsSubmitting(true);
       const weightWithUnit = petData.weight
         ? `${petData.weight} ${weightUnit}`
         : '';
 
-      const test = await mutateAsync<any>({
+      await mutateAsync<any>({
         // payload: completeData as any,
         payload: {
           code: watchCodeValue,
@@ -379,34 +370,62 @@ export default function PetRegistrationCodeStepperFirstTime({
         method: 'POST',
         isFormData: !!petPhoto,
       });
-      console.log('Test:', test);
       setErrorMsg('');
+      // 🔥 ACTIVAR CONFETI DESPUÉS DEL REGISTRO EXITOSO
+      celebrate({
+        type: 'celebration',
+        customOptions: {
+          particleCount: 250,
+          spread: 80,
+        },
+      });
       enqueueSnackbar('Registration completed successfully', {
         variant: 'success',
       });
-      // Redirigir al dashboard o página de éxito
-      //   router.push(PATH_AFTER_LOGIN);
+      setIsSubmitting(false);
+      setActiveStep(4);
     } catch (error) {
       console.error(error);
       setErrorMsg(error.message || 'Error completing registration');
       enqueueSnackbar(error.message || 'Error completing registration', {
         variant: 'error',
       });
+      setIsSubmitting(false);
     }
   };
 
-  const handleReset = () => {
-    setActiveStep(0);
-    setIsCodeValid(false);
-    setUserData(null);
-    setPetData(null);
-    setErrorMsg('');
-    setAgeResult(null);
-    setRecommendations([]);
-    codeMethods.reset();
-    userMethods.reset();
-    petMethods.reset();
+  const goToLogin = () => {
+    router.push(PATH_AFTER_LOGIN);
   };
+
+  // Revalidar el teléfono cuando cambia el país
+  useEffect(() => {
+    if (watchPhone && watchCountry) {
+      userMethods.trigger('phone');
+    }
+  }, [watchCountry, watchPhone, userMethods]);
+
+  useEffect(() => {
+    if (ipData?.country) {
+      setUserValue('country', ipData.country, { shouldValidate: true });
+    }
+  }, [ipData, setUserValue]);
+
+  useEffect(() => {
+    const currentBreed = watchPetForm('breed');
+    const currentBirthDate = watchPetForm('birthDate');
+
+    if (currentBirthDate && currentBreed) {
+      calculatePetAge(currentBirthDate, currentBreed);
+    }
+  }, [calculatePetAge, watchPetForm]);
+
+  // Si el código viene por props, pre-llenar el campo y avanzar automáticamente si es válido
+  useEffect(() => {
+    if (code) {
+      codeMethods.setValue('code', code);
+    }
+  }, [code, codeMethods]);
 
   // Renderizar Edad de la mascota cuando se calcule
   const renderAgeResult = (
@@ -492,8 +511,6 @@ export default function PetRegistrationCodeStepperFirstTime({
         <Typography variant="body1" sx={{ mb: 3, color: 'success.main' }}>
           ✓ Code validated successfully
         </Typography>
-
-        <ValuesPreview />
 
         <Box
           sx={{
@@ -947,41 +964,17 @@ export default function PetRegistrationCodeStepperFirstTime({
         <Button onClick={handleBack} sx={{ mr: 1 }}>
           Back
         </Button>
-        <Button variant="contained" onClick={handleCompleteRegistration}>
+        <LoadingButton
+          type="submit"
+          variant="contained"
+          loading={isSubmitting}
+          onClick={handleCompleteRegistration}
+        >
           Complete Registration
-        </Button>
+        </LoadingButton>
       </Box>
     </Box>
   );
-
-  // Revalidar el teléfono cuando cambia el país
-  useEffect(() => {
-    if (watchPhone && watchCountry) {
-      userMethods.trigger('phone');
-    }
-  }, [watchCountry, watchPhone, userMethods]);
-
-  useEffect(() => {
-    if (ipData?.country) {
-      setUserValue('country', ipData.country, { shouldValidate: true });
-    }
-  }, [ipData, setUserValue]);
-
-  useEffect(() => {
-    const currentBreed = watchPetForm('breed');
-    const currentBirthDate = watchPetForm('birthDate');
-
-    if (currentBirthDate && currentBreed) {
-      calculatePetAge(currentBirthDate, currentBreed);
-    }
-  }, [calculatePetAge, watchPetForm]);
-
-  // Si el código viene por props, pre-llenar el campo y avanzar automáticamente si es válido
-  useEffect(() => {
-    if (code) {
-      codeMethods.setValue('code', code);
-    }
-  }, [code, codeMethods]);
 
   return (
     <>
@@ -1022,7 +1015,9 @@ export default function PetRegistrationCodeStepperFirstTime({
           <Typography sx={{ mb: 2 }}>
             Registration completed successfully!
           </Typography>
-          <Button onClick={handleReset}>Register Another Pet</Button>
+          <Button variant="contained" onClick={goToLogin}>
+            Redirect to login
+          </Button>
         </Paper>
       )}
     </>
