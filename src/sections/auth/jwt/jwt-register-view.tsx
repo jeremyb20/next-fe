@@ -1,10 +1,17 @@
 'use client';
 
 import * as Yup from 'yup';
-import { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { useState, useEffect } from 'react';
+import useIPInfo from '@/src/hooks/use-ip-info';
 import { yupResolver } from '@hookform/resolvers/yup';
+import {
+  getPhoneHelperText,
+  getPhonePlaceholder,
+  simplePhoneValidation,
+} from '@/src/utils/phone-validation';
 
+import { Box } from '@mui/material';
 import Link from '@mui/material/Link';
 import Alert from '@mui/material/Alert';
 import Stack from '@mui/material/Stack';
@@ -19,11 +26,15 @@ import { useRouter, useSearchParams } from 'src/routes/hooks';
 
 import { useBoolean } from 'src/hooks/use-boolean';
 
+import { countries } from 'src/assets/data';
 import { useAuthContext } from 'src/auth/hooks';
 import { PATH_AFTER_LOGIN } from 'src/config-global';
 
 import Iconify from 'src/components/iconify';
-import FormProvider, { RHFTextField } from 'src/components/hook-form';
+import FormProvider, {
+  RHFTextField,
+  RHFAutocomplete,
+} from 'src/components/hook-form';
 
 // ----------------------------------------------------------------------
 
@@ -40,9 +51,19 @@ export default function JwtRegisterView() {
 
   const password = useBoolean();
 
+  const { ipData } = useIPInfo();
+
   const RegisterSchema = Yup.object().shape({
     firstName: Yup.string().required('First name required'),
     lastName: Yup.string().required('Last name required'),
+    phone: Yup.string()
+      .required('Phone number is required')
+      .test(
+        'valid-phone',
+        'Please enter a valid phone number for the selected country',
+        simplePhoneValidation
+      ),
+    country: Yup.string().required('Country is required'),
     email: Yup.string()
       .required('Email is required')
       .email('Email must be a valid email address'),
@@ -54,6 +75,8 @@ export default function JwtRegisterView() {
     lastName: '',
     email: '',
     password: '',
+    phone: '',
+    country: '',
   };
 
   const methods = useForm({
@@ -64,8 +87,12 @@ export default function JwtRegisterView() {
   const {
     reset,
     handleSubmit,
+    watch,
+    setValue,
     formState: { isSubmitting },
   } = methods;
+  const watchCountry = watch('country');
+  const watchPhone = watch('phone');
 
   const onSubmit = handleSubmit(async (data) => {
     try {
@@ -73,7 +100,9 @@ export default function JwtRegisterView() {
         data.email,
         data.password,
         data.firstName,
-        data.lastName
+        data.lastName,
+        data.country,
+        data.phone
       );
 
       router.push(returnTo || PATH_AFTER_LOGIN);
@@ -83,6 +112,12 @@ export default function JwtRegisterView() {
       setErrorMsg(typeof error === 'string' ? error : error.message);
     }
   });
+
+  useEffect(() => {
+    if (ipData?.country) {
+      setValue('country', ipData.country, { shouldValidate: true });
+    }
+  }, [ipData, setValue]);
 
   const renderHead = (
     <Stack spacing={2} sx={{ mb: 5, position: 'relative' }}>
@@ -130,6 +165,60 @@ export default function JwtRegisterView() {
         <RHFTextField name="firstName" label="First name" />
         <RHFTextField name="lastName" label="Last name" />
       </Stack>
+
+      <Box
+        sx={{
+          display: 'grid',
+          gap: 3,
+          gridTemplateColumns: '1fr',
+          mt: 1,
+        }}
+      >
+        <RHFAutocomplete
+          name="country"
+          type="country"
+          label="Country"
+          placeholder="Choose a country"
+          fullWidth
+          options={countries.map((option) => option.label)}
+          getOptionLabel={(option) => option}
+        />
+        <RHFTextField
+          name="phone"
+          label="Phone Number"
+          placeholder={getPhonePlaceholder(watchCountry, 'Phone number')}
+          helperText={getPhoneHelperText(watchCountry, watchPhone)}
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <Stack direction="row" alignItems="center" spacing={1}>
+                  <Iconify
+                    icon={`flag:${countries
+                      .find(
+                        (c) =>
+                          c.label.toLowerCase() === watchCountry?.toLowerCase()
+                      )
+                      ?.code.toLowerCase()}-4x3`}
+                  />
+                  <Box>
+                    (+
+                    {`${
+                      countries
+                        .find(
+                          (c) =>
+                            c.label.toLowerCase() ===
+                            watchCountry?.toLowerCase()
+                        )
+                        ?.phone.toLowerCase() || ''
+                    }`}{' '}
+                    )
+                  </Box>
+                </Stack>
+              </InputAdornment>
+            ),
+          }}
+        />
+      </Box>
 
       <RHFTextField name="email" label="Email address" />
 

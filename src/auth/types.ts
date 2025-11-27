@@ -33,7 +33,9 @@ type CanRemove = {
     email: string,
     password: string,
     firstName: string,
-    lastName: string
+    lastName: string,
+    country: string,
+    phone: string
   ) => Promise<void>;
   //
   loginWithGoogle?: () => Promise<void>;
@@ -65,7 +67,9 @@ export type JWTContextType = CanRemove & {
     email: string,
     password: string,
     firstName: string,
-    lastName: string
+    lastName: string,
+    country: string,
+    phone: string
   ) => Promise<void>;
   logout: () => Promise<void>;
   updateUser: (userData: Partial<AuthUserType>) => void;

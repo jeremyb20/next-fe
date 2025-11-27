@@ -560,13 +560,15 @@ export default function PetRegistrationCodeStepperFirstTime({
                     />
                     <Box>
                       (+
-                      {`${countries
-                        .find(
-                          (c) =>
-                            c.label.toLowerCase() ===
-                            watchCountry?.toLowerCase()
-                        )
-                        ?.phone.toLowerCase()}`}{' '}
+                      {`${
+                        countries
+                          .find(
+                            (c) =>
+                              c.label.toLowerCase() ===
+                              watchCountry?.toLowerCase()
+                          )
+                          ?.phone.toLowerCase() || ''
+                      }`}{' '}
                       )
                     </Box>
                   </Stack>
