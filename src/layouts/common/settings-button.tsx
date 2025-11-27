@@ -13,9 +13,13 @@ import { useSettingsContext } from 'src/components/settings';
 
 type Props = {
   sx?: SxProps<Theme>;
+  icon?: string;
 };
 
-export default function SettingsButton({ sx }: Props) {
+export default function SettingsButton({
+  sx,
+  icon = 'solar:settings-bold-duotone',
+}: Props) {
   const settings = useSettingsContext();
 
   return (
@@ -54,7 +58,7 @@ export default function SettingsButton({ sx }: Props) {
             height: 40,
           }}
         >
-          <Iconify icon="solar:settings-bold-duotone" width={24} />
+          <Iconify icon={icon} width={24} />
         </IconButton>
       </Box>
     </Badge>

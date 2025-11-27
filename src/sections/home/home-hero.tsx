@@ -155,7 +155,7 @@ export default function HomeHero() {
           <Stack alignItems="center" spacing={2}>
             <Button
               component={RouterLink}
-              href={paths.auth.jwt.register}
+              href={paths.auth.register}
               color="primary"
               size="large"
               variant="contained"
@@ -166,7 +166,7 @@ export default function HomeHero() {
 
             <Link
               component={RouterLink}
-              href={paths.auth.jwt.login}
+              href={paths.auth.login}
               variant="caption"
               sx={{
                 color: 'common.white',

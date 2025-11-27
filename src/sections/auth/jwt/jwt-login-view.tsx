@@ -26,7 +26,6 @@ import Iconify from 'src/components/iconify';
 import FormProvider, { RHFTextField } from 'src/components/hook-form';
 
 // ----------------------------------------------------------------------
-
 export default function JwtLoginView() {
   const { login } = useAuthContext();
 
@@ -48,8 +47,8 @@ export default function JwtLoginView() {
   });
 
   const defaultValues = {
-    email: 'jerebac@hotmail.com',
-    password: 'qwer1234',
+    email: '',
+    password: '',
   };
 
   const methods = useForm({
@@ -92,7 +91,7 @@ export default function JwtLoginView() {
 
         <Link
           component={RouterLink}
-          href={paths.auth.jwt.register}
+          href={paths.auth.register}
           variant="subtitle2"
         >
           Create an account
@@ -148,8 +147,7 @@ export default function JwtLoginView() {
       {renderHead}
 
       <Alert severity="info" sx={{ mb: 3 }}>
-        Use email : <strong>demo@minimals.cc</strong> / password :
-        <strong> demo1234</strong>
+        Use your credentials to login.
       </Alert>
 
       <FormProvider methods={methods} onSubmit={onSubmit}>

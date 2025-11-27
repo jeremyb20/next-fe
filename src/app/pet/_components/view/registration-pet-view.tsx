@@ -4,6 +4,7 @@ import { useState } from 'react';
 import Logo from '@/src/components/logo';
 import { PetApiResponse } from '@/src/types/global';
 import { useResponsive } from '@/src/hooks/use-responsive';
+import SettingsButton from '@/src/layouts/common/settings-button';
 
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
@@ -58,6 +59,15 @@ export default function RegistrationPetView({
       >
         {' '}
         {!mdUp && <Logo sx={{ mb: 2 }} />}
+        <SettingsButton
+          sx={{
+            ml: { xs: 1, md: 0 },
+            mr: { md: 2 },
+            position: 'absolute',
+            top: 16,
+            right: 16,
+          }}
+        />
         {registrationType === null && (
           <RegistrationTypeSelector onSelect={setRegistrationType} />
         )}
