@@ -5,10 +5,12 @@ import { countries } from '@/src/assets/data';
 import { HOST_API } from '@/src/config-global';
 import Iconify from '@/src/components/iconify';
 import { OptionType } from '@/src/types/global';
+import { fData } from '@/src/utils/format-number';
 import { IUser, IPetProfile } from '@/src/types/api';
-import { useMemo, useState, useEffect } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
+import UploadAvatar from '@/src/components/upload/upload-avatar';
+import { useMemo, useState, useEffect, useCallback } from 'react';
 import CardComponent from '@/src/sections/_examples/card-component';
 import CustomPopover, { usePopover } from '@/src/components/custom-popover';
 import { useCreateGenericMutation } from '@/src/hooks/user-generic-mutation';
@@ -138,6 +140,51 @@ export default function PetQuickEditForm({
   const [weightUnit, setWeightUnit] = useState<'kg' | 'lb'>('kg');
   const popover = usePopover();
 
+  const [petPhoto, setPetPhoto] = useState<File | null>(null);
+  const [petPhotoPreview, setPetPhotoPreview] = useState<string | null>(
+    currentPet?.photo || null
+  );
+  const [photoIdToDelete, setPhotoIdToDelete] = useState<string | null>(null);
+
+  // Función para manejar la subida de foto
+  const handleDropPetPhoto = useCallback(
+    (acceptedFiles: File[]) => {
+      const newFile = acceptedFiles[0];
+      if (newFile) {
+        setPetPhoto(newFile);
+
+        // Si hay una foto existente, guardar su photo_id para eliminarla después
+        if (currentPet?.photo_id) {
+          setPhotoIdToDelete(currentPet.photo_id);
+        }
+
+        // Crear preview para mostrar
+        const previewUrl = URL.createObjectURL(newFile);
+        setPetPhotoPreview(previewUrl);
+      }
+    },
+    [currentPet?.photo_id]
+  );
+
+  // Función para eliminar la foto
+  const handleRemovePetPhoto = useCallback(() => {
+    setPetPhoto(null);
+
+    // Si hay una foto existente, guardar su photo_id para eliminarla
+    if (currentPet?.photo_id) {
+      setPhotoIdToDelete(currentPet.photo_id);
+    }
+
+    if (petPhotoPreview) {
+      // Si es una URL creada con createObjectURL, revócala
+      if (petPhotoPreview.startsWith('blob:')) {
+        URL.revokeObjectURL(petPhotoPreview);
+      }
+    }
+
+    setPetPhotoPreview(null);
+  }, [currentPet?.photo_id, petPhotoPreview]);
+
   const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
     setTabValue(newValue);
   };
@@ -251,11 +298,18 @@ export default function PetQuickEditForm({
   const onSubmit = handleSubmit(async (data) => {
     try {
       const weightWithUnit = data.weight ? `${data.weight} ${weightUnit}` : '';
-      const updateData = {
+      const userPetId = currentUser?._id || '';
+      const petData = {
         ...data,
         id: currentPet?._id,
         weight: weightWithUnit,
         genderSelected: data.genderSelected,
+        // Si el usuario eliminó la foto, agregar flag para eliminar
+        ...(photoIdToDelete &&
+          !petPhoto &&
+          !petPhotoPreview && { removePhoto: true }),
+        // Agregar photo_id de la imagen anterior si existe
+        ...(photoIdToDelete && { photo_id: photoIdToDelete }),
         // Estructura para las permissions
         permissions: {
           showPhoneInfo: data.showPhoneInfo,
@@ -272,27 +326,44 @@ export default function PetQuickEditForm({
           showLocationInfo: data.showLocationInfo,
         },
       };
+
+      // Crear el payload según el formato que espera tu API
+      const payload = {
+        // eslint-disable-next-line object-shorthand
+        petData: petData,
+        userId: userPetId,
+        // Solo agregar la imagen si existe
+        ...(petPhoto && { image: petPhoto }),
+      };
+
       const endpoint = currentPet?._id
         ? `${HOST_API}${endpoints.pet.updatePetById}`
         : `${HOST_API}${endpoints.pet.createPet}`;
 
       const method = currentPet?._id ? 'PUT' : 'POST';
 
-      await mutateAsync<IPetProfile>({
-        payload: updateData as unknown as IPetProfile,
+      await mutateAsync<typeof payload>({
+        payload: payload as any,
         pEndpoint: endpoint,
         method,
+        isFormData: Boolean(petPhoto),
       });
 
       refetch();
       onClose();
-      // enqueueSnackbar('Pet updated successfully!');
+      enqueueSnackbar(
+        currentPet?._id
+          ? 'Pet updated successfully!'
+          : 'Pet created successfully!',
+        {
+          variant: 'success',
+        }
+      );
     } catch (error) {
       console.error(error);
       enqueueSnackbar('Error updating pet', { variant: 'error' });
     }
   });
-
   // Reemplaza useMemo por useEffect para weightUnit
   useEffect(() => {
     if (currentPet?.weight) {
@@ -309,6 +380,16 @@ export default function PetQuickEditForm({
       methods.reset(defaultValues);
     }
   }, [open, currentPet, methods, defaultValues]);
+
+  // Agrega un useEffect para limpiar las URLs
+  useEffect(
+    () => () => {
+      if (petPhotoPreview && petPhotoPreview.startsWith('blob:')) {
+        URL.revokeObjectURL(petPhotoPreview);
+      }
+    },
+    [petPhotoPreview]
+  );
 
   return (
     <Dialog
@@ -393,6 +474,57 @@ export default function PetQuickEditForm({
 
           <TabPanel value={tabValue} index={0}>
             <CardComponent sx={{ p: 2 }}>
+              <Box my={3}>
+                <UploadAvatar
+                  file={petPhotoPreview}
+                  onDrop={handleDropPetPhoto}
+                  onDelete={handleRemovePetPhoto}
+                  validator={(fileData) => {
+                    // Validar tipo de archivo
+                    const allowedTypes = [
+                      'image/jpeg',
+                      'image/jpg',
+                      'image/png',
+                      'image/gif',
+                    ];
+                    if (!allowedTypes.includes(fileData.type)) {
+                      return {
+                        code: 'invalid-file-type',
+                        message:
+                          'Only JPEG, JPG, PNG or GIF images are allowed',
+                      };
+                    }
+
+                    // Validar tamaño (2MB máximo)
+                    if (fileData.size > 2 * 1024 * 1024) {
+                      return {
+                        code: 'file-too-large',
+                        message: `Image is too large. Maximum ${fData(
+                          2 * 1024 * 1024
+                        )}`,
+                      };
+                    }
+
+                    return null;
+                  }}
+                  helperText={
+                    <Typography
+                      variant="caption"
+                      sx={{
+                        mt: 2,
+                        mx: 'auto',
+                        display: 'block',
+                        textAlign: 'center',
+                        color: 'text.disabled',
+                      }}
+                    >
+                      Allowed *.jpeg, *.jpg, *.png, *.gif
+                      <br /> max size of {fData(2 * 1024 * 1024)}
+                    </Typography>
+                  }
+                />
+              </Box>
+
               <Box
                 rowGap={3}
                 columnGap={2}
