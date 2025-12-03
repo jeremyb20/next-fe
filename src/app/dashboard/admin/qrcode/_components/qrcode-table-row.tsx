@@ -72,8 +72,8 @@ export default function QrCodeTableRow({
 
       <TableCell sx={{ display: 'flex', alignItems: 'center' }}>
         <ListItemText
-          primary={assignedTo || 'N/A'}
-          secondary={assignedPet || 'N/A'}
+          primary={assignedTo?.email || 'N/A'}
+          secondary={assignedPet?.breed || 'N/A'}
           primaryTypographyProps={{ typography: 'body2' }}
           secondaryTypographyProps={{
             component: 'span',
