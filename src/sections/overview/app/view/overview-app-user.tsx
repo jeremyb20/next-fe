@@ -2,15 +2,21 @@
 
 'use client';
 
+import Logo from '@/src/components/logo';
 import { paths } from '@/src/routes/paths';
 import { bgGradient } from '@/src/theme/css';
 import { useState, useCallback } from 'react';
 import Iconify from '@/src/components/iconify';
+import { IUser, IPetProfile } from '@/src/types/api';
+import { useBoolean } from '@/src/hooks/use-boolean';
 import { useManagerUser } from '@/src/hooks/use-manager-user';
+import { PetsGrid } from '@/src/app/pet/_components/cards/pet-grid';
 import {
   UserQueryParams,
   useGetAllPetsByUser,
 } from '@/src/hooks/use-fetch-paginated';
+import PetQuickEditForm from '@/src/app/dashboard/admin/users/_components/pet-quick-edit-form';
+import RegisterPetByUserModal from '@/src/app/pet/_components/modals/register-pet-by-user-modal';
 
 import {
   Box,
@@ -20,7 +26,6 @@ import {
   Alert,
   Avatar,
   useTheme,
-  Skeleton,
   Container,
   IconButton,
   Typography,
@@ -35,6 +40,11 @@ export default function OverviewAppUser() {
   const { user } = useManagerUser();
   const theme = useTheme();
   const router = useRouter();
+
+  const [petSelected, setPetSelected] = useState<IPetProfile>();
+  const petQuickEdit = useBoolean();
+  const registerPetModal = useBoolean();
+
   const [activeFilters, setActiveFilters] = useState<Partial<UserQueryParams>>({
     page: 1,
     limit: 5,
@@ -45,6 +55,7 @@ export default function OverviewAppUser() {
     isFetching,
     isError,
     error,
+    refetch,
   } = useGetAllPetsByUser(activeFilters);
 
   const HandleRedirect = useCallback(
@@ -53,6 +64,23 @@ export default function OverviewAppUser() {
     },
     [router]
   );
+
+  const handlePetDelete = (pet: IPetProfile) => {
+    console.log('Eliminar mascota:', pet);
+  };
+
+  const handlePetView = useCallback(
+    (pet: IPetProfile) => {
+      console.log('Ver mascota:', pet);
+      router.push(paths.dashboard.user.details(pet.memberPetId));
+    },
+    [router]
+  );
+
+  const handlePetEdit = (pet: IPetProfile) => {
+    setPetSelected(pet);
+    petQuickEdit.onTrue();
+  };
 
   if (!user) {
     return (
@@ -127,84 +155,34 @@ export default function OverviewAppUser() {
             </Typography>
           </Box>
 
-          <Box sx={{ display: 'flex', gap: 2 }}>
-            {isFetching ? (
-              // Skeletons mientras carga
-              Array.from({
-                length: (usersData && usersData.payload.length) || 2,
-              }).map((_, index) => (
-                <Card
-                  key={`skeleton-${index}`}
-                  sx={{
-                    flex: 1,
-                    borderRadius: 4,
-                    bgcolor: 'background.neutral',
-                  }}
-                >
-                  <CardContent>
-                    <Box
-                      sx={{
-                        display: 'flex',
-                        justifyContent: 'space-between',
-                        alignItems: 'flex-start',
-                        mb: 2,
-                      }}
-                    >
-                      <Skeleton variant="circular" width={80} height={80} />
-                      <Skeleton variant="circular" width={32} height={32} />
-                    </Box>
-                    <Skeleton variant="text" width="60%" height={32} />
-                    <Skeleton variant="text" width="80%" height={24} />
-                  </CardContent>
-                </Card>
-              ))
-            ) : usersData ? (
-              // Cards de mascotas cuando hay datos
-              usersData.payload?.map((pet, index) => (
-                <Card
-                  key={pet._id || `pet-${index}`}
-                  sx={{
-                    flex: 1,
-                    borderRadius: 4,
-                    bgcolor: 'background.neutral',
-                    position: 'relative',
-                  }}
-                >
-                  <CardContent>
-                    <Box
-                      sx={{
-                        display: 'flex',
-                        justifyContent: 'space-between',
-                        alignItems: 'flex-start',
-                        mb: 2,
-                      }}
-                    >
-                      <Avatar
-                        src={pet.photo || `/default-pet-${index + 1}.jpg`}
-                        sx={{ width: 80, height: 80 }}
-                        alt={pet.petName}
-                      />
-                      <IconButton size="small" sx={{ color: '#fff' }}>
-                        <Iconify icon="eva:more-vertical-fill" />
-                      </IconButton>
-                    </Box>
-                    <Typography variant="h6" fontWeight={600}>
-                      {pet.petName || 'No name'}
-                    </Typography>
-                    <Typography variant="body2" sx={{ opacity: 0.8 }}>
-                      {pet.breed || 'Unknown breed'}
-                    </Typography>
-                  </CardContent>
-                </Card>
-              ))
-            ) : (
-              // Mensaje cuando no hay mascotas
-              <Box sx={{ flex: 1, textAlign: 'center', py: 4 }}>
-                <Typography variant="body1" color="text.secondary">
-                  No pets found
-                </Typography>
-              </Box>
-            )}
+          <Box>
+            <PetsGrid
+              isFetching={isFetching}
+              usersData={usersData?.payload}
+              skeletonCount={(usersData && usersData.payload.length) || 2}
+              onPetDelete={handlePetDelete}
+              onPetView={handlePetView}
+              onPetEdit={handlePetEdit}
+              emptyMessage="No se encontraron mascotas"
+              showAddMoreButton={usersData && usersData.payload.length <= 9}
+              onAddMore={() => registerPetModal.onTrue()}
+              addMoreButtonText="Add Pet"
+            />
+
+            <PetQuickEditForm
+              currentUser={user as unknown as IUser}
+              currentPet={petSelected}
+              open={petQuickEdit.value}
+              onClose={petQuickEdit.onFalse}
+              refetch={refetch}
+            />
+
+            <RegisterPetByUserModal
+              currentUser={user as unknown as IUser}
+              open={registerPetModal.value}
+              onClose={registerPetModal.onFalse}
+              refetch={refetch}
+            />
           </Box>
         </Box>
 
@@ -246,10 +224,11 @@ export default function OverviewAppUser() {
                 }}
               >
                 <Box sx={{ display: 'flex', gap: 2, alignItems: 'center' }}>
-                  <Avatar
+                  {/* <Avatar
                     src="/pet-care-logo.jpg"
                     sx={{ width: 50, height: 50 }}
-                  />
+                  /> */}
+                  <Logo />
                   <Box>
                     <Typography variant="h6" fontWeight={600}>
                       Animal Pet Care
@@ -337,10 +316,7 @@ export default function OverviewAppUser() {
                 }}
               >
                 <Box sx={{ display: 'flex', gap: 2, alignItems: 'center' }}>
-                  <Avatar
-                    src="/pet-care-logo.jpg"
-                    sx={{ width: 50, height: 50 }}
-                  />
+                  <Iconify icon="mdi:needle" sx={{ width: 50, height: 50 }} />
                   <Box>
                     <Typography variant="h6" fontWeight={600}>
                       Reminder For Vaccination

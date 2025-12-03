@@ -66,10 +66,12 @@ export function PetCard({
             }}
           >
             <Avatar
-              src={pet.photo || `/default-pet-${index + 1}.jpg`}
+              src={pet.photo}
               sx={{ width: 80, height: 80 }}
               alt={pet.petName}
-            />
+            >
+              {pet.petName?.charAt(0) || '?'}
+            </Avatar>
             <IconButton
               size="small"
               sx={{ color: '#fff' }}

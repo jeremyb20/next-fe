@@ -19,7 +19,7 @@ import { RouterLink } from 'src/routes/components';
 
 import { useBoolean } from 'src/hooks/use-boolean';
 
-import { useAuthContext } from 'src/auth/hooks';
+// import { useAuthContext } from 'src/auth/hooks';
 
 import Iconify from 'src/components/iconify';
 import FormProvider, { RHFTextField } from 'src/components/hook-form';
@@ -27,7 +27,7 @@ import FormProvider, { RHFTextField } from 'src/components/hook-form';
 // ----------------------------------------------------------------------
 
 export default function FirebaseRegisterView() {
-  const { register } = useAuthContext();
+  // const { register } = useAuthContext();
 
   const [errorMsg, setErrorMsg] = useState('');
 
@@ -64,12 +64,12 @@ export default function FirebaseRegisterView() {
 
   const onSubmit = handleSubmit(async (data) => {
     try {
-      await register?.(
-        data.email,
-        data.password,
-        data.firstName,
-        data.lastName
-      );
+      // await register?.(
+      //   data.email,
+      //   data.password,
+      //   data.firstName,
+      //   data.lastName
+      // );
       const searchParams = new URLSearchParams({
         email: data.email,
       }).toString();

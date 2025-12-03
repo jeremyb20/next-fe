@@ -17,6 +17,7 @@ import {
   UserQueryParams,
   useGetAllPetsByUser,
 } from '@/src/hooks/use-fetch-paginated';
+import RegisterPetByUserModal from '@/src/app/pet/_components/modals/register-pet-by-user-modal';
 
 import { Box } from '@mui/system';
 import {
@@ -52,6 +53,7 @@ export default function UserPetCardsView() {
   const { enqueueSnackbar } = useSnackbar();
 
   const petQuickEdit = useBoolean();
+  const registerPetModal = useBoolean();
 
   const router = useRouter();
 
@@ -188,6 +190,9 @@ export default function UserPetCardsView() {
         onPetView={handlePetView}
         onPetEdit={handlePetEdit}
         emptyMessage="No se encontraron mascotas"
+        showAddMoreButton={usersData && usersData.payload.length <= 9}
+        onAddMore={() => registerPetModal.onTrue()}
+        addMoreButtonText="Add Pet"
       />
 
       <PetQuickEditForm
@@ -197,7 +202,12 @@ export default function UserPetCardsView() {
         onClose={petQuickEdit.onFalse}
         refetch={refetch}
       />
-
+      <RegisterPetByUserModal
+        currentUser={user as unknown as IUser}
+        open={registerPetModal.value}
+        onClose={registerPetModal.onFalse}
+        refetch={refetch}
+      />
       <Box
         sx={{
           position: 'fixed',

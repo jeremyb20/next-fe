@@ -20,7 +20,7 @@ import { RouterLink } from 'src/routes/components';
 
 import { useBoolean } from 'src/hooks/use-boolean';
 
-import { useAuthContext } from 'src/auth/hooks';
+// import { useAuthContext } from 'src/auth/hooks';
 
 import Iconify from 'src/components/iconify';
 import FormProvider, { RHFTextField } from 'src/components/hook-form';
@@ -28,8 +28,7 @@ import FormProvider, { RHFTextField } from 'src/components/hook-form';
 // ----------------------------------------------------------------------
 
 export default function FirebaseRegisterView() {
-  const { register, loginWithGoogle, loginWithGithub, loginWithTwitter } =
-    useAuthContext();
+  // const { register, loginWithGoogle, loginWithGithub, loginWithTwitter } = useAuthContext();
 
   const [errorMsg, setErrorMsg] = useState('');
 
@@ -66,12 +65,12 @@ export default function FirebaseRegisterView() {
 
   const onSubmit = handleSubmit(async (data) => {
     try {
-      await register?.(
-        data.email,
-        data.password,
-        data.firstName,
-        data.lastName
-      );
+      // await register?.(
+      //   data.email,
+      //   data.password,
+      //   data.firstName,
+      //   data.lastName
+      // );
       const searchParams = new URLSearchParams({
         email: data.email,
       }).toString();
@@ -86,29 +85,29 @@ export default function FirebaseRegisterView() {
     }
   });
 
-  const handleGoogleLogin = async () => {
-    try {
-      await loginWithGoogle?.();
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  // const handleGoogleLogin = async () => {
+  //   try {
+  //     await loginWithGoogle?.();
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
 
-  const handleGithubLogin = async () => {
-    try {
-      await loginWithGithub?.();
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  // const handleGithubLogin = async () => {
+  //   try {
+  //     await loginWithGithub?.();
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
 
-  const handleTwitterLogin = async () => {
-    try {
-      await loginWithTwitter?.();
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  // const handleTwitterLogin = async () => {
+  //   try {
+  //     await loginWithTwitter?.();
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
 
   const renderHead = (
     <Stack spacing={2} sx={{ mb: 5, position: 'relative' }}>
@@ -206,7 +205,7 @@ export default function FirebaseRegisterView() {
         OR
       </Divider>
 
-      <Stack direction="row" justifyContent="center" spacing={2}>
+      {/* <Stack direction="row" justifyContent="center" spacing={2}>
         <IconButton onClick={handleGoogleLogin}>
           <Iconify icon="eva:google-fill" color="#DF3E30" />
         </IconButton>
@@ -218,7 +217,7 @@ export default function FirebaseRegisterView() {
         <IconButton onClick={handleTwitterLogin}>
           <Iconify icon="eva:twitter-fill" color="#1C9CEA" />
         </IconButton>
-      </Stack>
+      </Stack> */}
     </div>
   );
 

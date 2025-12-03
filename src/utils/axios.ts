@@ -98,6 +98,7 @@ export const endpoints = {
     registerNewPetByQRcode: '/api/user/registerNewPetByQRcode',
     validateQrCode: '/api/user/validateQrCode',
     addPetToExistingUser: '/api/user/addPetToExistingUser',
+    addPetToAuthenticatedUser: '/api/user/addPetToAuthenticatedUser',
   },
   mail: {
     list: '/api/mail/list',

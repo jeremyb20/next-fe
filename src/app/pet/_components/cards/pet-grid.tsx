@@ -1,6 +1,7 @@
 import { IPetProfile } from '@/src/types/api';
+import Iconify from '@/src/components/iconify';
 
-import { Box } from '@mui/material';
+import { Box, Button } from '@mui/material';
 
 import { PetCard } from './pet-card-list';
 import { EmptyState } from './empty-cards';
@@ -14,6 +15,9 @@ interface PetsGridProps {
   onPetView?: (pet: IPetProfile) => void;
   onPetEdit?: (pet: IPetProfile) => void;
   emptyMessage?: string;
+  showAddMoreButton?: boolean;
+  onAddMore?: () => void;
+  addMoreButtonText?: string;
 }
 
 export function PetsGrid({
@@ -24,10 +28,10 @@ export function PetsGrid({
   onPetView,
   onPetEdit,
   emptyMessage = 'No pets found',
+  showAddMoreButton,
+  onAddMore,
+  addMoreButtonText = 'Add More',
 }: PetsGridProps) {
-  if (isFetching) {
-    <PetCardSkeleton count={skeletonCount} />;
-  }
   return (
     <Box
       gap={{
@@ -42,19 +46,68 @@ export function PetsGrid({
         md: 'repeat(3, 1fr)',
       }}
     >
-      {usersData && usersData?.length > 0 ? (
-        usersData.map((pet, index) => (
-          <PetCard
-            key={pet._id || `pet-${index}`}
-            pet={pet}
-            index={index}
-            onDelete={onPetDelete}
-            onView={onPetView}
-            onEdit={onPetEdit}
-          />
-        ))
+      {isFetching && <PetCardSkeleton count={skeletonCount} />}
+
+      {usersData && usersData.length > 0 ? (
+        <>
+          {/* Renderizar todas las cards de mascotas */}
+          {usersData.map((pet, index) => (
+            <PetCard
+              key={pet._id || `pet-${index}`}
+              pet={pet}
+              index={index}
+              onDelete={onPetDelete}
+              onView={onPetView}
+              onEdit={onPetEdit}
+            />
+          ))}
+
+          {/* Botón "Agregar más" al final si está habilitado */}
+          {showAddMoreButton && onAddMore && (
+            <Box
+              sx={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                minHeight: 'auto',
+                border: '2px dashed',
+                borderColor: 'divider',
+                borderRadius: 4,
+                backgroundColor: 'background.paper',
+                cursor: 'pointer',
+                transition: 'all 0.2s ease-in-out',
+                '&:hover': {
+                  borderColor: 'primary.main',
+                  backgroundColor: 'action.hover',
+                },
+              }}
+              onClick={onAddMore}
+            >
+              <Button
+                variant="outlined"
+                startIcon={<Iconify icon="eva:plus-fill" />}
+                sx={{
+                  py: 2,
+                  px: 4,
+                  borderRadius: 4,
+                  flexDirection: 'column',
+                  height: '100%',
+                  width: '100%',
+                  minHeight: 'auto',
+                }}
+              >
+                {addMoreButtonText}
+              </Button>
+            </Box>
+          )}
+        </>
       ) : (
-        <EmptyState message={emptyMessage} />
+        <EmptyState
+          message={emptyMessage}
+          showAddButton={showAddMoreButton}
+          onAddClick={onAddMore}
+          addButtonText={addMoreButtonText}
+        />
       )}
     </Box>
   );

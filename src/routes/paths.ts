@@ -150,6 +150,7 @@ export const paths = {
 
     user: {
       myPets: `${ROOTS.DASHBOARD}/user/mypets`,
+      addPet: `${ROOTS.DASHBOARD}/user/add-pet`,
       details: (id: string) => `${ROOTS.DASHBOARD}/user/mypets/${id}`,
       root: `${ROOTS.DASHBOARD}/user`,
       new: `${ROOTS.DASHBOARD}/user/new`,
