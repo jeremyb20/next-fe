@@ -9,6 +9,10 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useManagerUser } from '@/src/hooks/use-manager-user';
 import { useCreateGenericMutation } from '@/src/hooks/user-generic-mutation';
 import {
+  getPhoneHelperText,
+  getPhonePlaceholder,
+} from '@/src/utils/phone-validation';
+import {
   CountryCode,
   isValidPhoneNumber,
   parsePhoneNumberFromString,
@@ -55,6 +59,8 @@ export default function AccountGeneral() {
   const { enqueueSnackbar } = useSnackbar();
   const { user, updateUserProfile } = useManagerUser();
   const { mutateAsync } = useCreateGenericMutation();
+
+  console.log('User en account general:', user);
 
   // Validación simplificada del teléfono
   const phoneValidation = (phone: string, context: any) => {
@@ -199,54 +205,6 @@ export default function AccountGeneral() {
     [setValue]
   );
 
-  // Función para obtener el placeholder del teléfono según el país
-  const getPhonePlaceholder = () => {
-    if (!watchCountry) return 'Phone number';
-
-    const countryData = countries.find((c) => c.label === watchCountry);
-    if (!countryData) return 'Phone number';
-
-    const countryCode = countryData.code as CountryCode;
-
-    // Ejemplos de formatos por país
-    const examples: Record<string, string> = {
-      US: '(555) 123-4567',
-      MX: '55 1234 5678',
-      ES: '612 345 678',
-      FR: '6 12 34 56 78',
-      GB: '07123 456789',
-      BR: '(11) 91234-5678',
-      AR: '11 2345-6789',
-      CO: '301 1234567',
-    };
-
-    return examples[countryCode] || 'Phone number';
-  };
-
-  // Función para obtener el mensaje de ayuda
-  const getPhoneHelperText = () => {
-    if (!watchCountry) return 'Select a country first';
-
-    const countryData = countries.find((c) => c.label === watchCountry);
-    if (!countryData) return 'Invalid country';
-
-    const countryCode = countryData.code as CountryCode;
-    const phoneValue = watchPhone;
-
-    if (!phoneValue) return `Enter phone number for ${watchCountry}`;
-
-    try {
-      const phoneNumber = parsePhoneNumberFromString(phoneValue, countryCode);
-      if (phoneNumber && isValidPhoneNumber(phoneValue, countryCode)) {
-        return `✓ Valid ${watchCountry} number`;
-      }
-    } catch (error) {
-      // Ignorar errores de parsing
-    }
-
-    return `Enter valid phone number for ${watchCountry}`;
-  };
-
   return (
     <FormProvider methods={methods} onSubmit={onSubmit}>
       <Grid container spacing={3}>
@@ -304,14 +262,15 @@ export default function AccountGeneral() {
                 type="country"
                 label="Country"
                 placeholder="Choose a country"
+                fullWidth
                 options={countries.map((option) => option.label)}
                 getOptionLabel={(option) => option}
               />
               <RHFTextField
-                name="phoneNumber"
+                name="phone"
                 label="Phone Number"
-                placeholder={getPhonePlaceholder()}
-                helperText={getPhoneHelperText()}
+                placeholder={getPhonePlaceholder(watchCountry, 'Phone number')}
+                helperText={getPhoneHelperText(watchCountry, watchPhone)}
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position="start">
@@ -324,15 +283,18 @@ export default function AccountGeneral() {
                                 watchCountry?.toLowerCase()
                             )
                             ?.code.toLowerCase()}-4x3`}
-                          width={20}
                         />
-                        <Box component="span" sx={{ fontSize: '0.875rem' }}>
+                        <Box>
                           (+
-                          {`${countries.find(
-                            (c) =>
-                              c.label.toLowerCase() ===
-                              watchCountry?.toLowerCase()
-                          )?.phone}`}
+                          {`${
+                            countries
+                              .find(
+                                (c) =>
+                                  c.label.toLowerCase() ===
+                                  watchCountry?.toLowerCase()
+                              )
+                              ?.phone.toLowerCase() || ''
+                          }`}{' '}
                           )
                         </Box>
                       </Stack>

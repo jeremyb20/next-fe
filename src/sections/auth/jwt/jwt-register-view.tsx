@@ -88,7 +88,6 @@ export default function JwtRegisterView() {
   });
 
   const {
-    reset,
     handleSubmit,
     watch,
     setValue,

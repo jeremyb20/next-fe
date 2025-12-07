@@ -193,8 +193,8 @@ export function AuthProvider({ children }: Props) {
       password: string,
       firstName: string,
       lastName: string,
-      phone: string,
       country: string,
+      phone: string,
       settings: Record<string, any>
     ) => {
       try {

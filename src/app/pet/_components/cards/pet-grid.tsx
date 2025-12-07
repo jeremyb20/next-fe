@@ -41,9 +41,9 @@ export function PetsGrid({
       }}
       display="grid"
       gridTemplateColumns={{
-        xs: 'repeat(2, 1fr)',
-        sm: 'repeat(2, 1fr)',
-        md: 'repeat(3, 1fr)',
+        xs: usersData && usersData.length > 0 ? 'repeat(2, 1fr)' : '1fr',
+        sm: usersData && usersData.length > 0 ? 'repeat(2, 1fr)' : '1fr',
+        md: usersData && usersData.length > 0 ? 'repeat(3, 1fr)' : '1fr',
       }}
     >
       {isFetching && <PetCardSkeleton count={skeletonCount} />}

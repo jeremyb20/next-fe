@@ -1,4 +1,6 @@
-import { Box, Button, Typography } from '@mui/material';
+import Iconify from '@/src/components/iconify';
+
+import { Box, Card, Button, Typography } from '@mui/material';
 
 interface EmptyStateProps {
   message?: string;
@@ -14,7 +16,7 @@ export function EmptyState({
   addButtonText = 'Add Pet',
 }: EmptyStateProps) {
   return (
-    <Box sx={{ flex: 1, textAlign: 'center', py: 4 }}>
+    <Card sx={{ textAlign: 'center', py: 4 }}>
       <Typography variant="body1" color="text.secondary">
         {message}
       </Typography>
@@ -25,9 +27,12 @@ export function EmptyState({
       )}
       {showAddButton && (
         <Box sx={{ mt: 2 }}>
-          <Button onClick={onAddClick}>{addButtonText}</Button>
+          <Button variant="contained" onClick={onAddClick}>
+            <Iconify icon="eva:plus-fill" sx={{ mr: 1 }} />
+            {addButtonText}
+          </Button>
         </Box>
       )}
-    </Box>
+    </Card>
   );
 }
