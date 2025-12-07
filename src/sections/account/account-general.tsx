@@ -60,8 +60,6 @@ export default function AccountGeneral() {
   const { user, updateUserProfile } = useManagerUser();
   const { mutateAsync } = useCreateGenericMutation();
 
-  console.log('User en account general:', user);
-
   // Validación simplificada del teléfono
   const phoneValidation = (phone: string, context: any) => {
     const { country } = context.parent;
