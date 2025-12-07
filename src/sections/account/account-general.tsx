@@ -45,7 +45,7 @@ type UserType = {
   displayName: string;
   email: string;
   photoURL: any;
-  phoneNumber: string;
+  phone: string;
   country: string;
   address: string;
   state: string;
@@ -83,7 +83,7 @@ export default function AccountGeneral() {
       .required('Email is required')
       .email('Email must be a valid email address'),
     photoURL: Yup.mixed<any>().nullable().required('Avatar is required'),
-    phoneNumber: Yup.string()
+    phone: Yup.string()
       .required('Phone number is required')
       .test(
         'valid-phone',
@@ -105,7 +105,7 @@ export default function AccountGeneral() {
       displayName: user?.displayName || '',
       email: user?.email || '',
       photoURL: user?.photoURL || null,
-      phoneNumber: user?.phoneNumber || '',
+      phone: user?.phone || '',
       country: user?.country || '',
       address: user?.address || '',
       state: user?.state || '',
@@ -132,31 +132,28 @@ export default function AccountGeneral() {
 
   // Observar cambios en el país y teléfono para revalidar
   const watchCountry = watch('country');
-  const watchPhone = watch('phoneNumber');
+  const watchPhone = watch('phone');
 
   // Revalidar el teléfono cuando cambia el país
   useMemo(() => {
     if (watchPhone && watchCountry) {
-      trigger('phoneNumber');
+      trigger('phone');
     }
   }, [watchCountry, watchPhone, trigger]);
 
   const onSubmit = handleSubmit(async (data) => {
     try {
       // Validar el teléfono una vez más antes de enviar
-      if (data.country && data.phoneNumber) {
+      if (data.country && data.phone) {
         const countryData = countries.find((c) => c.label === data.country);
         if (countryData) {
           const countryCode = countryData.code as CountryCode;
           const phoneNumber = parsePhoneNumberFromString(
-            data.phoneNumber,
+            data.phone,
             countryCode
           );
 
-          if (
-            !phoneNumber ||
-            !isValidPhoneNumber(data.phoneNumber, countryCode)
-          ) {
+          if (!phoneNumber || !isValidPhoneNumber(data.phone, countryCode)) {
             enqueueSnackbar('Please enter a valid phone number', {
               variant: 'error',
             });
@@ -172,7 +169,7 @@ export default function AccountGeneral() {
       const updateProfile = {
         ...data,
         name: data.displayName,
-        phone: data.phoneNumber,
+        phone: data.phone,
         photoProfile: data.photoURL,
       };
 

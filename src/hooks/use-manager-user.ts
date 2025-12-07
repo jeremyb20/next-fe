@@ -32,6 +32,7 @@ export function useManagerUser() {
     }`,
     memberId: authUser?.memberId,
     phoneNumber: authUser?.profile?.phone,
+    phone: authUser?.profile?.phone,
     country: authUser?.profile?.country,
     address: authUser?.profile?.address,
     state: authUser?.profile?.state,
