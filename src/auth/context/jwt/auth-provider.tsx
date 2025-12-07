@@ -1,6 +1,7 @@
 'use client';
 
 import { STORAGE_KEY } from '@/src/config-global';
+import { SettingsValueProps } from '@/src/components/settings';
 import { useRef, useMemo, useEffect, useReducer, useCallback } from 'react';
 
 import axios, { endpoints } from 'src/utils/axios';
@@ -191,31 +192,73 @@ export function AuthProvider({ children }: Props) {
       email: string,
       password: string,
       firstName: string,
-      lastName: string
+      lastName: string,
+      phone: string,
+      country: string,
+      settings: Record<string, any>
     ) => {
-      const data = {
-        email,
-        password,
-        firstName,
-        lastName,
-      };
+      try {
+        const defaultTheme: SettingsValueProps = {
+          fontSizeScale: settings.fontSizeScale || 1,
+          themeColorPresets: settings.themeColorPresets || 'default',
+          themeContrast: settings.themeContrast || 'default',
+          themeDirection: settings.themeDirection || 'ltr',
+          themeLayout: settings.themeLayout || 'vertical',
+          themeMode: settings.themeMode || 'dark',
+          themeStretch: settings.themeStretch || false,
+        };
 
-      const res = await axios.post(endpoints.auth.register, data);
+        const data = {
+          email,
+          password,
+          firstName,
+          lastName,
+          phone,
+          country,
+          settings: defaultTheme,
+        };
 
-      const { accessToken, user } = res.data;
+        const registerRes = await axios.post(
+          endpoints.auth.registerAccountWithEmail,
+          data
+        );
 
-      // sessionStorage.setItem(STORAGE_KEY, accessToken);
-      localStorage.setItem(STORAGE_KEY, accessToken);
+        // Verificar si la respuesta es exitosa
+        if (!registerRes.data.success) {
+          throw new Error(registerRes.data.message || 'Registration failed');
+        }
 
-      dispatch({
-        type: Types.REGISTER,
-        payload: {
-          user: {
-            ...user,
-            accessToken,
+        const { token: accessToken } = registerRes.data.data;
+        // Guardar el token en sesión (igual que en login)
+        setSession(accessToken);
+
+        // Llamar al endpoint 'me' para obtener información del usuario
+        const meRes = await axios.get(endpoints.auth.me);
+        const { payload: user } = meRes.data;
+
+        dispatch({
+          type: Types.REGISTER,
+          payload: {
+            user: {
+              ...user,
+              accessToken,
+            },
           },
-        },
-      });
+        });
+
+        return registerRes.data; // Retornar la respuesta
+      } catch (error: any) {
+        // Manejar errores de axios o del servidor (igual que en login)
+        if (error.response) {
+          const errorMessage =
+            error.response.data?.message || 'Registration failed';
+          throw new Error(errorMessage);
+        } else if (error.request) {
+          throw new Error('Network error. Please try again.');
+        } else {
+          throw new Error(error.message || 'An error occurred');
+        }
+      }
     },
     []
   );

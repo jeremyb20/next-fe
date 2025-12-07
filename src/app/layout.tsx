@@ -12,7 +12,11 @@ import QueryProvider from 'src/query/query-provider';
 import ProgressBar from 'src/components/progress-bar';
 import { MotionLazy } from 'src/components/animate/motion-lazy';
 import SnackbarProvider from 'src/components/snackbar/snackbar-provider';
-import { SettingsDrawer, SettingsProvider } from 'src/components/settings';
+import {
+  SettingsDrawer,
+  defaultSettings,
+  SettingsProvider,
+} from 'src/components/settings';
 
 import { CheckoutProvider } from 'src/sections/checkout/context';
 // import { AuthProvider } from 'src/auth/context/auth0';
@@ -68,17 +72,7 @@ export default function RootLayout({ children }: Props) {
         <QueryProvider>
           <AuthProvider>
             <LocalizationProvider>
-              <SettingsProvider
-                defaultSettings={{
-                  themeMode: 'dark', // 'light' | 'dark'
-                  themeDirection: 'ltr', //  'rtl' | 'ltr'
-                  themeContrast: 'default', // 'default' | 'bold'
-                  themeLayout: 'vertical', // 'vertical' | 'horizontal' | 'mini'
-                  themeColorPresets: 'default', // 'default' | 'cyan' | 'purple' | 'blue' | 'orange' | 'red'
-                  themeStretch: false,
-                  fontSizeScale: 1,
-                }}
-              >
+              <SettingsProvider defaultSettings={defaultSettings}>
                 <ThemeProvider>
                   <MotionLazy>
                     <SnackbarProvider>

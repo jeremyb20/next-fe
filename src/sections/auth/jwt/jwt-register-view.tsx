@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form';
 import { useState, useEffect } from 'react';
 import useIPInfo from '@/src/hooks/use-ip-info';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useSettingsContext } from '@/src/components/settings';
 import {
   getPhoneHelperText,
   getPhonePlaceholder,
@@ -52,6 +53,8 @@ export default function JwtRegisterView() {
   const password = useBoolean();
 
   const { ipData } = useIPInfo();
+
+  const settings = useSettingsContext();
 
   const RegisterSchema = Yup.object().shape({
     firstName: Yup.string().required('First name required'),
@@ -102,13 +105,13 @@ export default function JwtRegisterView() {
         data.firstName,
         data.lastName,
         data.country,
-        data.phone
+        data.phone,
+        settings
       );
 
       router.push(returnTo || PATH_AFTER_LOGIN);
     } catch (error) {
       console.error(error);
-      reset();
       setErrorMsg(typeof error === 'string' ? error : error.message);
     }
   });
@@ -260,17 +263,17 @@ export default function JwtRegisterView() {
     <>
       {renderHead}
 
-      {!!errorMsg && (
-        <Alert severity="error" sx={{ m: 3 }}>
-          {errorMsg}
-        </Alert>
-      )}
-
       <FormProvider methods={methods} onSubmit={onSubmit}>
         {renderForm}
       </FormProvider>
 
       {renderTerms}
+
+      {!!errorMsg && (
+        <Alert severity="error" sx={{ m: 3 }} onClose={() => setErrorMsg('')}>
+          {errorMsg}
+        </Alert>
+      )}
     </>
   );
 }

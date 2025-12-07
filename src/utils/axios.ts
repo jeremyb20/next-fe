@@ -42,7 +42,7 @@ export const endpoints = {
   auth: {
     me: '/api/user/me',
     login: '/api/user/email/sign-in',
-    register: '/api/user/register',
+    registerAccountWithEmail: '/api/user/email/registerAccountWithEmail',
   },
   notification: {
     notifications: '/api/notifications/getNotifications',

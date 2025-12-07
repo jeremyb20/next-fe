@@ -10,6 +10,16 @@ export type SettingsValueProps = {
   fontSizeScale: number; // Nuevo: factor de escala de tipografía
 };
 
+export const defaultSettings: SettingsValueProps = {
+  themeMode: 'dark', // 'light' | 'dark'
+  themeDirection: 'ltr', //  'rtl' | 'ltr'
+  themeContrast: 'default', // 'default' | 'bold'
+  themeLayout: 'vertical', // 'vertical' | 'horizontal' | 'mini'
+  themeColorPresets: 'default', // 'default' | 'cyan' | 'purple' | 'blue' | 'orange' | 'red'
+  themeStretch: false,
+  fontSizeScale: 1,
+};
+
 export type SettingsContextProps = SettingsValueProps & {
   // Update
   onUpdate: (name: string, value: string | boolean | number) => void;
