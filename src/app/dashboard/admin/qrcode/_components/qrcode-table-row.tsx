@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import { IQrCode } from '@/src/types/api';
 import { useTranslation } from 'react-i18next';
+import { BreedOptions } from '@/src/utils/constants';
 import { QrcodeCustom } from '@/src/components/qr-generator/qr-codes';
 
 import Paper from '@mui/material/Paper';
@@ -73,7 +74,11 @@ export default function QrCodeTableRow({
       <TableCell sx={{ display: 'flex', alignItems: 'center' }}>
         <ListItemText
           primary={assignedTo?.email || 'N/A'}
-          secondary={assignedPet?.breed || 'N/A'}
+          secondary={
+            BreedOptions.todos.find(
+              (breed) => breed.value === assignedPet?.breed
+            )?.label || 'Unknown breed'
+          }
           primaryTypographyProps={{ typography: 'body2' }}
           secondaryTypographyProps={{
             component: 'span',

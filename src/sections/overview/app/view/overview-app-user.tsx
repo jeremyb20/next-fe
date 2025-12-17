@@ -2,7 +2,6 @@
 
 'use client';
 
-import Logo from '@/src/components/logo';
 import { paths } from '@/src/routes/paths';
 import { bgGradient } from '@/src/theme/css';
 import { useState, useCallback } from 'react';
@@ -21,13 +20,11 @@ import RegisterPetByUserModal from '@/src/app/pet/_components/modals/register-pe
 import {
   Box,
   Card,
-  Chip,
   alpha,
   Alert,
   Avatar,
   useTheme,
   Container,
-  IconButton,
   Typography,
   CardContent,
   BottomNavigation,
@@ -210,11 +207,11 @@ export default function OverviewAppUser() {
           <Card
             sx={{
               borderRadius: 4,
-              bgcolor: '#8B7B6B',
+              bgcolor: 'background.paper',
               color: '#fff',
             }}
           >
-            <CardContent>
+            {/* <CardContent>
               <Box
                 sx={{
                   display: 'flex',
@@ -224,10 +221,7 @@ export default function OverviewAppUser() {
                 }}
               >
                 <Box sx={{ display: 'flex', gap: 2, alignItems: 'center' }}>
-                  {/* <Avatar
-                    src="/pet-care-logo.jpg"
-                    sx={{ width: 50, height: 50 }}
-                  /> */}
+                  
                   <Logo />
                   <Box>
                     <Typography variant="h6" fontWeight={600}>
@@ -275,6 +269,16 @@ export default function OverviewAppUser() {
                   }}
                 />
               </Box>
+            </CardContent> */}
+
+            <CardContent>
+              <Typography variant="h3" sx={{ mb: 2 }}>
+                Coming Soon!
+              </Typography>
+
+              <Typography sx={{ color: 'text.secondary' }}>
+                We are currently working hard on this page!
+              </Typography>
             </CardContent>
           </Card>
         </Box>
@@ -307,7 +311,7 @@ export default function OverviewAppUser() {
               color: '#fff',
             }}
           >
-            <CardContent>
+            {/* <CardContent>
               <Box
                 sx={{
                   display: 'flex',
@@ -336,6 +340,16 @@ export default function OverviewAppUser() {
                   <Iconify icon="eva:more-vertical-fill" />
                 </IconButton>
               </Box>
+            </CardContent> */}
+
+            <CardContent>
+              <Typography variant="h3" sx={{ mb: 2 }}>
+                Coming Soon!
+              </Typography>
+
+              <Typography sx={{ color: 'text.secondary' }}>
+                We are currently working hard on this page!
+              </Typography>
             </CardContent>
           </Card>
         </Box>

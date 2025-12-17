@@ -10,6 +10,7 @@ import { fDate } from '@/src/utils/format-time';
 // Importaciones de react-share
 
 import { paths } from '@/src/routes/paths';
+import { BreedOptions } from '@/src/utils/constants';
 import { AvatarShape } from '@/src/assets/illustrations';
 import { useSettingsContext } from '@/src/components/settings';
 import CardComponent from '@/src/sections/_examples/card-component';
@@ -434,7 +435,9 @@ export default function PetProfileView({ petProfile, canEdit }: Props) {
                                   Raza
                                 </Typography>
                                 <Typography variant="body1" fontWeight={600}>
-                                  {petProfile.breed || 'N/A'}
+                                  {BreedOptions.todos.find(
+                                    (breed) => breed.value === petProfile?.breed
+                                  )?.label || 'Unknown breed'}
                                 </Typography>
                               </Box>
 
