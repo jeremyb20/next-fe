@@ -285,3 +285,21 @@ export interface IMedicalRecordResponse {
   createdAt: string;
   updatedAt: string;
 }
+
+export interface IUserSettingsResponse {
+  payload: any;
+  theme: {
+    fontSizeScale: number;
+    themeColorPresets: string;
+    themeContrast: string;
+    themeDirection: string;
+    themeLayout: string;
+    themeMode: string;
+    themeStretch: boolean;
+  };
+  permissions: {
+    showPhoneInfo: boolean;
+    showEmailInfo: boolean;
+    showPersonalInfo: boolean;
+  };
+}

@@ -6,6 +6,7 @@ import {
   IPetProfile,
   QueryOptions,
   NotificationData,
+  IUserSettingsResponse,
 } from '@/src/types/api';
 
 import { useAuthContext } from '../auth/hooks';
@@ -85,4 +86,17 @@ export const getValidationCode = async (code: string) => {
     `${endpoints.user.validateQrCode}?code=${code}`
   );
   return response.data;
+};
+
+export const useGetUserSettings = () => {
+  const { authenticated } = useAuthContext();
+  return useFetch<Partial<IUserSettingsResponse>>(
+    'useGetUserSettings',
+    endpoints.user.getSettings,
+    {
+      staleTime: 5 * 60 * 1000,
+      retry: 2,
+      enabled: authenticated,
+    }
+  );
 };

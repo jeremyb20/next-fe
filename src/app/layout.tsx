@@ -34,10 +34,11 @@ export const viewport = {
 };
 
 export const metadata = {
-  title: 'Minimal UI Kit',
+  title: 'Plaquitas para mascotas CR',
   description:
-    'The starting point for your next project with Minimal UI Kit, built on the newest version of Material-UI ©, ready to be customized to your style',
-  keywords: 'react,material,kit,application,dashboard,admin,template',
+    'Gestiona perfiles de mascotas, compra productos, agenda servicios veterinarios, grooming y descubre eventos. Todo en una sola plataforma.',
+  keywords:
+    'plataforma, mascotas, veterinaria, grooming, eventos, productos para mascotas',
   manifest: '/manifest.json',
   icons: [
     { rel: 'icon', url: '/favicon/favicon.ico' },

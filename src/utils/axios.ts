@@ -99,6 +99,8 @@ export const endpoints = {
     validateQrCode: '/api/user/validateQrCode',
     addPetToExistingUser: '/api/user/addPetToExistingUser',
     addPetToAuthenticatedUser: '/api/user/addPetToAuthenticatedUser',
+    getSettings: '/api/user/settings',
+    updateSettings: '/api/user/updateSettings',
   },
   mail: {
     list: '/api/mail/list',
