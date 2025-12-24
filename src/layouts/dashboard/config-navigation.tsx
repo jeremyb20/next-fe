@@ -120,12 +120,7 @@ export function useNavData(userRole: string) {
             icon: ICONS.dashboard,
             roles: ['admin'],
           },
-          // {
-          //   title: 'Panel Inventarios',
-          //   path: paths.dashboard.admin.inventory.root,
-          //   icon: ICONS.inventory,
-          //   roles: ['admin'],
-          // },
+
           {
             title: 'Lista de Productos',
             path: paths.dashboard.admin.product.root,
@@ -138,18 +133,7 @@ export function useNavData(userRole: string) {
             icon: ICONS.users,
             roles: ['admin'],
           },
-          // {
-          //   title: 'Lista de Groomers',
-          //   path: paths.dashboard.admin.groomersAdmin,
-          //   icon: ICONS.grooming,
-          //   roles: ['admin'],
-          // },
-          // {
-          //   title: 'Lista de Veterinarias',
-          //   path: paths.dashboard.admin.veterinarianAdmin,
-          //   icon: ICONS.paw,
-          //   roles: ['admin'],
-          // },
+
           {
             title: 'QR Panel',
             path: paths.dashboard.admin.qrPanel,
@@ -162,6 +146,24 @@ export function useNavData(userRole: string) {
             icon: ICONS.seo,
             roles: ['admin'],
           },
+          // {
+          //   title: 'Panel Inventarios',
+          //   path: paths.dashboard.admin.inventory.root,
+          //   icon: ICONS.inventory,
+          //   roles: ['admin'],
+          // },
+          // {
+          //   title: 'Lista de Groomers',
+          //   path: paths.dashboard.admin.groomersAdmin,
+          //   icon: ICONS.grooming,
+          //   roles: ['admin'],
+          // },
+          // {
+          //   title: 'Lista de Veterinarias',
+          //   path: paths.dashboard.admin.veterinarianAdmin,
+          //   icon: ICONS.paw,
+          //   roles: ['admin'],
+          // },
           // {
           //   title: 'Blog Panel',
           //   path: paths.dashboard.admin.blogPanel,
@@ -230,21 +232,41 @@ export function useNavData(userRole: string) {
             roles: ['admin', 'client'],
           },
 
-          // PRODUCT
+          // CALENDAR
+          {
+            title: t('calendar'),
+            path: paths.dashboard.calendar,
+            icon: ICONS.calendar,
+          },
           // {
-          //   title: t('product'),
-          //   path: paths.dashboard.product.root,
-          //   icon: ICONS.product,
-          //   children: [
-          //     { title: t('list'), path: paths.dashboard.product.root },
-          //     {
-          //       title: t('details'),
-          //       path: paths.dashboard.product.demo.details,
-          //     },
-          //     { title: t('create'), path: paths.dashboard.product.new },
-          //     { title: t('edit'), path: paths.dashboard.product.demo.edit },
-          //   ],
+          // title: t('pets market'),
+          // path: authenticated
+          //   ? paths.dashboard.petsmarket.root
+          //   : paths.petsmarket,
+          // icon: ICONS.ecommerce,
+          // children: [
+          //   { title: t('list'), path: paths.dashboard.tour.root },
+          //   { title: t('details'), path: paths.dashboard.tour.demo.details },
+          //   { title: t('create'), path: paths.dashboard.tour.new },
+          //   { title: t('edit'), path: paths.dashboard.tour.demo.edit },
+          // ],
           // },
+
+          // PRODUCT
+          {
+            title: t('pets market'),
+            path: paths.dashboard.product.root,
+            icon: ICONS.ecommerce,
+            // children: [
+            //   { title: t('list'), path: paths.dashboard.product.root },
+            //   {
+            //     title: t('details'),
+            //     path: paths.dashboard.product.demo.details,
+            //   },
+            //   { title: t('create'), path: paths.dashboard.product.new },
+            //   { title: t('edit'), path: paths.dashboard.product.demo.edit },
+            // ],
+          },
 
           // ORDER
           // {
@@ -333,13 +355,6 @@ export function useNavData(userRole: string) {
           //   path: paths.dashboard.chat,
           //   icon: ICONS.chat,
           // },
-
-          // CALENDAR
-          {
-            title: t('calendar'),
-            path: paths.dashboard.calendar,
-            icon: ICONS.calendar,
-          },
 
           // KANBAN
           // {

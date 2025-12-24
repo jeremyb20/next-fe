@@ -77,6 +77,7 @@ export type IProductItem = {
     enabled: boolean;
     content: string;
   };
+  productId: string;
 };
 
 export type IProductTableFilterValue = string | string[];

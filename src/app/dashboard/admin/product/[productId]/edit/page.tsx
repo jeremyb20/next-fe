@@ -12,14 +12,14 @@ export const metadata = {
 
 type Props = {
   params: {
-    id: string;
+    productId: string;
   };
 };
 
 export default function ProductEditPage({ params }: Props) {
-  const { id } = params;
+  const { productId } = params;
 
-  return <ProductEditView id={id} />;
+  return <ProductEditView productId={productId} />;
   // return <>ProductEditView</>;
 }
 // Que se use el endpoint correcto para cuando el usuario no esta loggeado

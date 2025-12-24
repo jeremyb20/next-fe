@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useCallback } from 'react';
+import { useAuthContext } from '@/src/auth/hooks';
 
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
@@ -65,6 +66,8 @@ export default function ProductShopDetailsView({ id }: Props) {
 
   const { product, productLoading, productError } = useGetProduct(id);
 
+  const { authenticated } = useAuthContext();
+
   const handleChangeTab = useCallback(
     (event: React.SyntheticEvent, newValue: string) => {
       setCurrentTab(newValue);
@@ -99,7 +102,9 @@ export default function ProductShopDetailsView({ id }: Props) {
           { name: 'Home', href: '/' },
           {
             name: 'Shop',
-            href: paths.product.root,
+            href: authenticated
+              ? paths.dashboard.product.root
+              : paths.product.root,
           },
           { name: product?.name },
         ]}

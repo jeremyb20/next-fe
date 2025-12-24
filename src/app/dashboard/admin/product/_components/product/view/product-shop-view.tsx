@@ -3,7 +3,6 @@
 import orderBy from 'lodash/orderBy';
 import isEqual from 'lodash/isEqual';
 import { useState, useCallback } from 'react';
-import { useCheckoutContext } from '@/src/sections/checkout/context';
 
 import Stack from '@mui/material/Stack';
 import Container from '@mui/material/Container';
@@ -34,7 +33,6 @@ import {
 
 import ProductList from '../product-list';
 import ProductSort from '../product-sort';
-import CartIcon from '../common/cart-icon';
 import ProductSearch from '../product-search';
 import ProductFilters from '../product-filters';
 import ProductFiltersResult from '../product-filters-result';
@@ -53,8 +51,6 @@ const defaultFilters: IProductFilters = {
 
 export default function ProductShopView() {
   const settings = useSettingsContext();
-
-  const checkout = useCheckoutContext();
 
   const openFilters = useBoolean();
 
@@ -167,15 +163,13 @@ export default function ProductShopView() {
         mb: 15,
       }}
     >
-      <CartIcon totalItems={checkout.totalItems} />
-
       <Typography
         variant="h4"
         sx={{
           my: { xs: 3, md: 5 },
         }}
       >
-        Shop
+        Pets Shop
       </Typography>
 
       <Stack

@@ -1,3 +1,5 @@
+import { useAuthContext } from '@/src/auth/hooks';
+
 import Box from '@mui/material/Box';
 import Badge from '@mui/material/Badge';
 
@@ -13,10 +15,15 @@ type Props = {
 };
 
 export default function CartIcon({ totalItems }: Props) {
+  const { authenticated } = useAuthContext();
   return (
     <Box
       component={RouterLink}
-      href={paths.product.checkout}
+      href={
+        authenticated
+          ? paths.dashboard.product.checkout
+          : paths.product.checkout
+      }
       sx={{
         right: 0,
         top: 112,

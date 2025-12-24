@@ -43,6 +43,7 @@ export const paths = {
       details: `/product/${MOCK_ID}`,
     },
   },
+  petsmarket: '/petsmarket',
   post: {
     root: `/post`,
     details: (title: string) => `/post/${paramCase(title)}`,
@@ -109,13 +110,20 @@ export const paths = {
     calendar: `${ROOTS.DASHBOARD}/calendar`,
     fileManager: `${ROOTS.DASHBOARD}/file-manager`,
     permission: `${ROOTS.DASHBOARD}/permission`,
+    petsmarket: {
+      root: `${ROOTS.DASHBOARD}/petsmarket`,
+      details: (productId: string) =>
+        `${ROOTS.DASHBOARD}/petsmarket/${productId}`,
+    },
     admin: {
       panelAdmin: `${ROOTS.DASHBOARD}/admin/panel`,
       product: {
         root: `${ROOTS.DASHBOARD}/admin/product`,
         new: `${ROOTS.DASHBOARD}/admin/product/new`,
-        details: (id: string) => `${ROOTS.DASHBOARD}/admin/product/${id}`,
-        edit: (id: string) => `${ROOTS.DASHBOARD}/admin/product/${id}/edit`,
+        details: (productId: string) =>
+          `${ROOTS.DASHBOARD}/admin/product/${productId}`,
+        edit: (productId: string) =>
+          `${ROOTS.DASHBOARD}/admin/product/${productId}/edit`,
         demo: {
           details: `${ROOTS.DASHBOARD}/product/${MOCK_ID}`,
           edit: `${ROOTS.DASHBOARD}/product/${MOCK_ID}/edit`,
@@ -166,6 +174,7 @@ export const paths = {
     product: {
       root: `${ROOTS.DASHBOARD}/product`,
       new: `${ROOTS.DASHBOARD}/product/new`,
+      checkout: `${ROOTS.DASHBOARD}/product/checkout`,
       details: (id: string) => `${ROOTS.DASHBOARD}/product/${id}`,
       edit: (id: string) => `${ROOTS.DASHBOARD}/product/${id}/edit`,
       demo: {

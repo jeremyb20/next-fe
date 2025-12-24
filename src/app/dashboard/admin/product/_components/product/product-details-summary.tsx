@@ -1,5 +1,6 @@
 import { useEffect, useCallback } from 'react';
 import { useForm, Controller } from 'react-hook-form';
+import { inventoryStatusOptions } from '@/src/utils/constants';
 
 import Box from '@mui/material/Box';
 import Link from '@mui/material/Link';
@@ -23,8 +24,6 @@ import FormProvider, { RHFSelect } from 'src/components/hook-form';
 
 import { IProductItem } from 'src/types/product';
 import { ICheckoutItem } from 'src/types/checkout';
-
-import IncrementerButton from './common/incrementer-button';
 
 // ----------------------------------------------------------------------
 
@@ -244,15 +243,6 @@ export default function ProductDetailsSummary({
       </Typography>
 
       <Stack spacing={1}>
-        <IncrementerButton
-          name="quantity"
-          quantity={values.quantity}
-          disabledDecrease={values.quantity <= 1}
-          disabledIncrease={values.quantity >= available}
-          onIncrease={() => setValue('quantity', values.quantity + 1)}
-          onDecrease={() => setValue('quantity', values.quantity - 1)}
-        />
-
         <Typography
           variant="caption"
           component="div"
@@ -276,7 +266,7 @@ export default function ProductDetailsSummary({
         onClick={handleAddCart}
         sx={{ whiteSpace: 'nowrap' }}
       >
-        Add to Cart
+        Add to Carts
       </Button>
 
       <Button
@@ -330,12 +320,13 @@ export default function ProductDetailsSummary({
       sx={{
         typography: 'overline',
         color:
-          (inventoryType === 'out of stock' && 'error.main') ||
-          (inventoryType === 'low stock' && 'warning.main') ||
+          (inventoryType === 'out_of_stock' && 'error.main') ||
+          (inventoryType === 'low_stock' && 'warning.main') ||
           'success.main',
       }}
     >
-      {inventoryType}
+      {inventoryStatusOptions.find((option) => option.value === inventoryType)
+        ?.label || 'Unknown'}
     </Box>
   );
 

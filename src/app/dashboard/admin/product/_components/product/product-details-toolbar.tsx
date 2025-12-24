@@ -1,3 +1,5 @@
+import { RoleBasedGuard } from '@/src/auth/guard';
+
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
@@ -57,59 +59,61 @@ export default function ProductDetailsToolbar({
         </Button>
 
         <Box sx={{ flexGrow: 1 }} />
+        <RoleBasedGuard roles={['admin']} sx={{ py: 10 }}>
+          {publish === 'published' && (
+            <Tooltip title="Go Live">
+              <IconButton component={RouterLink} href={liveLink}>
+                <Iconify icon="eva:external-link-fill" />
+              </IconButton>
+            </Tooltip>
+          )}
 
-        {publish === 'published' && (
-          <Tooltip title="Go Live">
-            <IconButton component={RouterLink} href={liveLink}>
-              <Iconify icon="eva:external-link-fill" />
+          <Tooltip title="Edit">
+            <IconButton component={RouterLink} href={editLink}>
+              <Iconify icon="solar:pen-bold" />
             </IconButton>
           </Tooltip>
-        )}
 
-        <Tooltip title="Edit">
-          <IconButton component={RouterLink} href={editLink}>
-            <Iconify icon="solar:pen-bold" />
-          </IconButton>
-        </Tooltip>
-
-        <LoadingButton
-          color="inherit"
-          variant="contained"
-          loading={!publish}
-          loadingIndicator="Loading…"
-          endIcon={<Iconify icon="eva:arrow-ios-downward-fill" />}
-          onClick={popover.onOpen}
-          sx={{ textTransform: 'capitalize' }}
-        >
-          {publish}
-        </LoadingButton>
-      </Stack>
-
-      <CustomPopover
-        open={popover.open}
-        onClose={popover.onClose}
-        arrow="top-right"
-        sx={{ width: 140 }}
-      >
-        {publishOptions.map((option) => (
-          <MenuItem
-            key={option.value}
-            selected={option.value === publish}
-            onClick={() => {
-              popover.onClose();
-              onChangePublish(option.value);
-            }}
+          <LoadingButton
+            color="inherit"
+            variant="contained"
+            loading={!publish}
+            loadingIndicator="Loading…"
+            endIcon={<Iconify icon="eva:arrow-ios-downward-fill" />}
+            onClick={popover.onOpen}
+            sx={{ textTransform: 'capitalize' }}
           >
-            {option.value === 'published' && (
-              <Iconify icon="eva:cloud-upload-fill" />
-            )}
-            {option.value === 'draft' && (
-              <Iconify icon="solar:file-text-bold" />
-            )}
-            {option.label}
-          </MenuItem>
-        ))}
-      </CustomPopover>
+            {publish}
+          </LoadingButton>
+        </RoleBasedGuard>
+      </Stack>
+      <RoleBasedGuard roles={['admin']} sx={{ py: 10 }}>
+        <CustomPopover
+          open={popover.open}
+          onClose={popover.onClose}
+          arrow="top-right"
+          sx={{ width: 140 }}
+        >
+          {publishOptions.map((option) => (
+            <MenuItem
+              key={option.value}
+              selected={option.value === publish}
+              onClick={() => {
+                popover.onClose();
+                onChangePublish(option.value);
+              }}
+            >
+              {option.value === 'published' && (
+                <Iconify icon="eva:cloud-upload-fill" />
+              )}
+              {option.value === 'draft' && (
+                <Iconify icon="solar:file-text-bold" />
+              )}
+              {option.label}
+            </MenuItem>
+          ))}
+        </CustomPopover>
+      </RoleBasedGuard>
     </>
   );
 }

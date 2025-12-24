@@ -134,7 +134,7 @@ export default function ProductListView() {
 
   const handleDeleteRows = useCallback(() => {
     const deleteRows = tableData.filter(
-      (row) => !selectedRowIds.includes(row.id)
+      (row) => !selectedRowIds.includes(row.productId)
     );
 
     enqueueSnackbar('Delete success!');
@@ -143,15 +143,15 @@ export default function ProductListView() {
   }, [enqueueSnackbar, selectedRowIds, tableData]);
 
   const handleEditRow = useCallback(
-    (id: string) => {
-      router.push(paths.dashboard.admin.product.edit(id));
+    (productId: string) => {
+      router.push(paths.dashboard.admin.product.edit(productId));
     },
     [router]
   );
 
   const handleViewRow = useCallback(
-    (id: string) => {
-      router.push(paths.dashboard.admin.product.details(id));
+    (productId: string) => {
+      router.push(paths.dashboard.admin.product.details(productId));
     },
     [router]
   );
@@ -215,13 +215,13 @@ export default function ProductListView() {
           showInMenu
           icon={<Iconify icon="solar:eye-bold" />}
           label="View"
-          onClick={() => handleViewRow(params.row.id)}
+          onClick={() => handleViewRow(params.row.productId)}
         />,
         <GridActionsCellItem
           showInMenu
           icon={<Iconify icon="solar:pen-bold" />}
           label="Edit"
-          onClick={() => handleEditRow(params.row.id)}
+          onClick={() => handleEditRow(params.row.productId)}
         />,
         <GridActionsCellItem
           showInMenu

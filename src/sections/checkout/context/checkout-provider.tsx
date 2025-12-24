@@ -1,6 +1,7 @@
 'use client';
 
 import uniq from 'lodash/uniq';
+import { useAuthContext } from '@/src/auth/hooks';
 import { useMemo, useEffect, useCallback } from 'react';
 
 import { paths } from 'src/routes/paths';
@@ -38,6 +39,8 @@ export function CheckoutProvider({ children }: Props) {
   const router = useRouter();
 
   const { state, update, reset } = useLocalStorage(STORAGE_KEY, initialState);
+
+  const { authenticated } = useAuthContext();
 
   const onGetCart = useCallback(() => {
     const totalItems: number = state.items.reduce(
@@ -188,9 +191,11 @@ export function CheckoutProvider({ children }: Props) {
   const onReset = useCallback(() => {
     if (completed) {
       reset();
-      router.replace(paths.product.root);
+      router.replace(
+        authenticated ? paths.dashboard.product.root : paths.product.root
+      );
     }
-  }, [completed, reset, router]);
+  }, [authenticated, completed, reset, router]);
 
   const memoizedValue = useMemo(
     () => ({

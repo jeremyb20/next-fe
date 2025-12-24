@@ -14,13 +14,13 @@ import ProductNewEditForm from '../product-new-edit-form';
 // ----------------------------------------------------------------------
 
 type Props = {
-  id: string;
+  productId: string;
 };
 
-export default function ProductEditView({ id }: Props) {
+export default function ProductEditView({ productId }: Props) {
   const settings = useSettingsContext();
 
-  const { product: currentProduct } = useGetProduct(id);
+  const { product: currentProduct } = useGetProduct(productId);
 
   return (
     <Container maxWidth={settings.themeStretch ? false : 'lg'}>

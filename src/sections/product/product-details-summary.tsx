@@ -1,5 +1,7 @@
 import { useEffect, useCallback } from 'react';
+import { useAuthContext } from '@/src/auth/hooks';
 import { useForm, Controller } from 'react-hook-form';
+import { inventoryStatusOptions } from '@/src/utils/constants';
 
 import Box from '@mui/material/Box';
 import Link from '@mui/material/Link';
@@ -63,6 +65,8 @@ export default function ProductDetailsSummary({
     subDescription,
   } = product;
 
+  console.log(sizes, 'sizes');
+
   const existProduct =
     !!items?.length && items.map((item) => item.id).includes(id);
 
@@ -90,6 +94,8 @@ export default function ProductDetailsSummary({
 
   const values = watch();
 
+  const { authenticated } = useAuthContext();
+
   useEffect(() => {
     if (product) {
       reset(defaultValues);
@@ -107,7 +113,11 @@ export default function ProductDetailsSummary({
         });
       }
       onGotoStep?.(0);
-      router.push(paths.product.checkout);
+      router.push(
+        authenticated
+          ? paths.dashboard.product.checkout
+          : paths.product.checkout
+      );
     } catch (error) {
       console.error(error);
     }
@@ -335,7 +345,8 @@ export default function ProductDetailsSummary({
           'success.main',
       }}
     >
-      {inventoryType}
+      {inventoryStatusOptions.find((option) => option.value === inventoryType)
+        ?.label || 'Unknown'}
     </Box>
   );
 

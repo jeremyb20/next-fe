@@ -1,3 +1,5 @@
+import { useAuthContext } from '@/src/auth/hooks';
+
 import Fab from '@mui/material/Fab';
 import Box from '@mui/material/Box';
 import Link from '@mui/material/Link';
@@ -39,9 +41,14 @@ export default function ProductItem({ product }: Props) {
     priceSale,
     newLabel,
     saleLabel,
+    productId,
   } = product;
 
-  const linkTo = paths.product.details(id);
+  const { authenticated } = useAuthContext();
+
+  const linkTo = authenticated
+    ? paths.dashboard.product.details(productId)
+    : paths.product.details(productId);
 
   const handleAddCart = async () => {
     const newProduct = {

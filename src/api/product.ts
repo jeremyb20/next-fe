@@ -7,7 +7,27 @@ import { IProductItem } from 'src/types/product';
 // ----------------------------------------------------------------------
 
 export function useGetProducts() {
-  const URL = endpoints.admin.product.list;
+  // const URL = endpoints.admin.product.list;
+  const URL = endpoints.petsmarket.listPublished;
+
+  const { data, isLoading, error, isValidating } = useSWR(URL, fetcher);
+
+  const memoizedValue = useMemo(
+    () => ({
+      products: (data?.payload as IProductItem[]) || [],
+      productsLoading: isLoading,
+      productsError: error,
+      productsValidating: isValidating,
+      productsEmpty: !isLoading && !data?.payload.length,
+    }),
+    [data?.payload, error, isLoading, isValidating]
+  );
+
+  return memoizedValue;
+}
+
+export function useGetProductsPublished() {
+  const URL = endpoints.petsmarket.listPublished;
 
   const { data, isLoading, error, isValidating } = useSWR(URL, fetcher);
 
@@ -29,7 +49,10 @@ export function useGetProducts() {
 
 export function useGetProduct(productId: string) {
   const URL = productId
-    ? [endpoints.admin.product.getProductById, { params: { id: productId } }]
+    ? [
+        endpoints.petsmarket.getProductPublishedById,
+        { params: { id: productId } },
+      ]
     : '';
 
   const { data, isLoading, error, isValidating } = useSWR(URL, fetcher);

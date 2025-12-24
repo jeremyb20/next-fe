@@ -158,3 +158,9 @@ export const GENDER_OPTIONS = [
   { value: 'female', label: 'Female' },
   { value: 'unknown', label: 'Unknown' },
 ];
+
+export const inventoryStatusOptions = [
+  { value: 'in_stock', label: 'In Stock' },
+  { value: 'out_of_stock', label: 'Out of Stock' },
+  { value: 'low_stock', label: 'Low Stock' },
+];

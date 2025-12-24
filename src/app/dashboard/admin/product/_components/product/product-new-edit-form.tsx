@@ -75,6 +75,7 @@ export default function ProductNewEditForm({ currentProduct }: Props) {
     category: Yup.string().required('Category is required'),
     price: Yup.number().moreThan(0, `Price should not be ${fCurrency(0.0)}`),
     description: Yup.string().required('Description is required'),
+    publish: Yup.boolean().required('Publish status is required'),
     // not required
     taxes: Yup.number(),
     newLabel: Yup.object().shape({
@@ -93,7 +94,7 @@ export default function ProductNewEditForm({ currentProduct }: Props) {
       description: currentProduct?.description || '',
       subDescription: currentProduct?.subDescription || '',
       images: currentProduct?.images || [],
-      //
+      publish: currentProduct?.publish === 'published',
       code: currentProduct?.code || '',
       sku: currentProduct?.sku || '',
       price: currentProduct?.price || 0,
@@ -143,6 +144,7 @@ export default function ProductNewEditForm({ currentProduct }: Props) {
   const onSubmit = handleSubmit(async (formData) => {
     try {
       const { images, ...productData } = formData;
+      const isPublish = formData.publish ? 'published' : 'draft';
 
       // Separar correctamente:
       const existingImages =
@@ -170,6 +172,7 @@ export default function ProductNewEditForm({ currentProduct }: Props) {
           await mutateAsync<IProductItem>({
             payload: {
               ...productData,
+              publish: isPublish,
               id: currentProduct?.id,
               existingImages, // ← Imágenes ya subidas
               images: newImageFiles, // ← Archivos nuevos a subir
@@ -183,6 +186,7 @@ export default function ProductNewEditForm({ currentProduct }: Props) {
           await mutateAsync<IProductItem>({
             payload: {
               ...productData,
+              publish: isPublish,
               id: currentProduct?.id,
               existingImages, // ← Solo las existentes
               // images: [], // ← Array vacío para nuevos
@@ -200,6 +204,7 @@ export default function ProductNewEditForm({ currentProduct }: Props) {
             payload: {
               ...productData,
               // ELIMINAR existingImages: [] y enviar directamente
+              publish: 'draft',
               images: newImageFiles,
             } as unknown as IProductItem,
             pEndpoint: `${HOST_API}${endpoints.admin.product.createProduct}`,
@@ -210,6 +215,7 @@ export default function ProductNewEditForm({ currentProduct }: Props) {
           await mutateAsync<IProductItem>({
             payload: {
               ...productData,
+              publish: 'draft',
               // ELIMINAR existingImages: [] y images: []
             } as unknown as IProductItem,
             pEndpoint: `${HOST_API}${endpoints.admin.product.createProduct}`,
@@ -562,11 +568,20 @@ export default function ProductNewEditForm({ currentProduct }: Props) {
   const renderActions = (
     <>
       {mdUp && <Grid md={4} />}
-      <Grid xs={12} md={8} sx={{ display: 'flex', alignItems: 'center' }}>
-        <FormControlLabel
-          control={<Switch defaultChecked />}
+      <Grid
+        xs={12}
+        md={8}
+        sx={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+        }}
+      >
+        <RHFSwitch
+          name="publish"
           label="Publish"
           sx={{ flexGrow: 1, pl: 3 }}
+          labelPlacement="start"
         />
 
         <LoadingButton

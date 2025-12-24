@@ -1,3 +1,5 @@
+import { useAuthContext } from '@/src/auth/hooks';
+
 import Card from '@mui/material/Card';
 import Button from '@mui/material/Button';
 import Grid from '@mui/material/Unstable_Grid2';
@@ -21,6 +23,7 @@ export default function CheckoutCart() {
 
   const empty = !checkout.items.length;
 
+  const { authenticated } = useAuthContext();
   return (
     <Grid container spacing={3}>
       <Grid xs={12} md={8}>
@@ -56,7 +59,9 @@ export default function CheckoutCart() {
 
         <Button
           component={RouterLink}
-          href={paths.product.root}
+          href={
+            authenticated ? paths.dashboard.product.root : paths.product.root
+          }
           color="inherit"
           startIcon={<Iconify icon="eva:arrow-ios-back-fill" />}
         >

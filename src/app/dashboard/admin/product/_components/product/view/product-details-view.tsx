@@ -52,11 +52,12 @@ const SUMMARY = [
 // ----------------------------------------------------------------------
 
 type Props = {
-  id: string;
+  productId: string;
+  backLink: string;
 };
 
-export default function ProductDetailsView({ id }: Props) {
-  const { product, productLoading, productError } = useGetProduct(id);
+export default function ProductDetailsView({ productId, backLink }: Props) {
+  const { product, productLoading, productError } = useGetProduct(productId);
 
   const settings = useSettingsContext();
 
@@ -90,7 +91,7 @@ export default function ProductDetailsView({ id }: Props) {
       action={
         <Button
           component={RouterLink}
-          href={paths.dashboard.product.root}
+          href={backLink}
           startIcon={<Iconify icon="eva:arrow-ios-back-fill" width={16} />}
           sx={{ mt: 3 }}
         >
@@ -104,9 +105,9 @@ export default function ProductDetailsView({ id }: Props) {
   const renderProduct = product && (
     <>
       <ProductDetailsToolbar
-        backLink={paths.dashboard.admin.product.root}
-        editLink={paths.dashboard.admin.product.edit(`${product?.id}`)}
-        liveLink={paths.product.details(`${product?.id}`)}
+        backLink={backLink}
+        editLink={paths.dashboard.admin.product.edit(`${product?.productId}`)}
+        liveLink={paths.product.details(`${product?.productId}`)}
         publish={publish || ''}
         onChangePublish={handleChangePublish}
         publishOptions={PRODUCT_PUBLISH_OPTIONS}
@@ -118,7 +119,7 @@ export default function ProductDetailsView({ id }: Props) {
         </Grid>
 
         <Grid xs={12} md={6} lg={5}>
-          <ProductDetailsSummary disabledActions product={product} />
+          <ProductDetailsSummary disabledActions={false} product={product} />
         </Grid>
       </Grid>
 

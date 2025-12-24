@@ -23,7 +23,6 @@ import EmptyContent from 'src/components/empty-content';
 import { useSettingsContext } from 'src/components/settings';
 import CustomBreadcrumbs from 'src/components/custom-breadcrumbs';
 
-import CartIcon from '../common/cart-icon';
 import ProductDetailsReview from '../product-details-review';
 import { ProductDetailsSkeleton } from '../product-skeleton';
 import ProductDetailsSummary from '../product-details-summary';
@@ -197,8 +196,6 @@ export default function ProductShopDetailsView({ id }: Props) {
         mb: 15,
       }}
     >
-      <CartIcon totalItems={checkout.totalItems} />
-
       {productLoading && renderSkeleton}
 
       {productError && renderError}

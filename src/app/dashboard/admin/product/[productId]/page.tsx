@@ -1,6 +1,8 @@
 // import axios, { endpoints } from '@/src/utils/axios';
 
-import { ProductShopDetailsView } from 'src/sections/product/view';
+import { paths } from '@/src/routes/paths';
+
+import { ProductDetailsView } from '../_components/product/view';
 
 // ----------------------------------------------------------------------
 
@@ -10,14 +12,19 @@ export const metadata = {
 
 type Props = {
   params: {
-    id: string;
+    productId: string;
   };
 };
 
 export default function ProductDetailsPage({ params }: Props) {
-  const { id } = params;
+  const { productId } = params;
 
-  return <ProductShopDetailsView id={id} />;
+  return (
+    <ProductDetailsView
+      productId={productId}
+      backLink={paths.dashboard.admin.product.root}
+    />
+  );
   // return <>ProductDetailsView</>;
 }
 

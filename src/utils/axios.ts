@@ -121,4 +121,8 @@ export const endpoints = {
   chat: '/api/chat',
   kanban: '/api/kanban',
   calendar: '/api/calendar',
+  petsmarket: {
+    listPublished: '/api/user/getAllPublishedProductList',
+    getProductPublishedById: '/api/user/getProductPublishedById',
+  },
 };
