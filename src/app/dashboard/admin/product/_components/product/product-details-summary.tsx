@@ -65,10 +65,10 @@ export default function ProductDetailsSummary({
   const existProduct =
     !!items?.length && items.map((item) => item.id).includes(id);
 
-  const isMaxQuantity =
-    !!items?.length &&
-    items.filter((item) => item.id === id).map((item) => item.quantity)[0] >=
-      available;
+  // const isMaxQuantity =
+  //   !!items?.length &&
+  //   items.filter((item) => item.id === id).map((item) => item.quantity)[0] >=
+  //     available;
 
   const defaultValues = {
     id,
@@ -77,7 +77,7 @@ export default function ProductDetailsSummary({
     available,
     price,
     colors: colors[0],
-    size: sizes[4],
+    size: sizes && sizes.length > 0 ? sizes[0] : '', // Always defined
     quantity: available < 1 ? 0 : 1,
   };
 
@@ -85,7 +85,7 @@ export default function ProductDetailsSummary({
     defaultValues,
   });
 
-  const { reset, watch, control, setValue, handleSubmit } = methods;
+  const { reset, watch, control, handleSubmit } = methods;
 
   const values = watch();
 
@@ -227,6 +227,10 @@ export default function ProductDetailsSummary({
           },
         }}
       >
+        {/* Add empty option first */}
+        <MenuItem value="">
+          <em>Select size</em>
+        </MenuItem>
         {sizes.map((size) => (
           <MenuItem key={size} value={size}>
             {size}
@@ -258,7 +262,8 @@ export default function ProductDetailsSummary({
     <Stack direction="row" spacing={2}>
       <Button
         fullWidth
-        disabled={isMaxQuantity || disabledActions}
+        // disabled={isMaxQuantity || disabledActions}
+        disabled
         size="large"
         color="warning"
         variant="contained"
@@ -274,7 +279,8 @@ export default function ProductDetailsSummary({
         size="large"
         type="submit"
         variant="contained"
-        disabled={disabledActions}
+        // disabled={disabledActions}
+        disabled
       >
         Buy Now
       </Button>

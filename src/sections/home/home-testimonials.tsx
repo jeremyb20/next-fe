@@ -334,7 +334,7 @@ export default function HomeTestimonials() {
     <Box
       sx={{
         py: { xs: 10, md: 15 },
-        bgcolor: 'background.default',
+        bgcolor: 'background.neutral',
       }}
     >
       <Container component={MotionViewport}>

@@ -2,21 +2,18 @@
 
 import { useState, useCallback } from 'react';
 import { useAuthContext } from '@/src/auth/hooks';
+import { IProductItem } from '@/src/types/product';
 
 import Tab from '@mui/material/Tab';
-import Box from '@mui/material/Box';
 import Tabs from '@mui/material/Tabs';
 import Card from '@mui/material/Card';
 import Button from '@mui/material/Button';
 import { alpha } from '@mui/material/styles';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Unstable_Grid2';
-import Typography from '@mui/material/Typography';
 
 import { paths } from 'src/routes/paths';
 import { RouterLink } from 'src/routes/components';
-
-import { useGetProduct } from 'src/api/product';
 
 import Iconify from 'src/components/iconify';
 import EmptyContent from 'src/components/empty-content';
@@ -33,40 +30,26 @@ import ProductDetailsDescription from '../product-details-description';
 
 // ----------------------------------------------------------------------
 
-const SUMMARY = [
-  {
-    title: '100% Original',
-    description: 'Chocolate bar candy canes ice cream toffee cookie halvah.',
-    icon: 'solar:verified-check-bold',
-  },
-  {
-    title: '10 Day Replacement',
-    description: 'Marshmallow biscuit donut dragée fruitcake wafer.',
-    icon: 'solar:clock-circle-bold',
-  },
-  {
-    title: 'Year Warranty',
-    description: 'Cotton candy gingerbread cake I love sugar sweet.',
-    icon: 'solar:shield-check-bold',
-  },
-];
-
-// ----------------------------------------------------------------------
-
 type Props = {
   id: string;
+  product?: IProductItem;
 };
 
-export default function ProductShopDetailsView({ id }: Props) {
+export default function ProductShopDetailsView({ id, product }: Props) {
   const settings = useSettingsContext();
-
   const checkout = useCheckoutContext();
-
   const [currentTab, setCurrentTab] = useState('description');
-
-  const { product, productLoading, productError } = useGetProduct(id);
-
   const { authenticated } = useAuthContext();
+  const [isLoading] = useState(!product);
+
+  // Si el producto viene del server, no necesitamos cargarlo
+  // Pero si necesitas refrescar datos, puedes usar esto:
+  // useEffect(() => {
+  //   if (!product) {
+  //     // Lógica para cargar el producto si no vino del server
+  //     // fetchProduct(id).then(...)
+  //   }
+  // }, [id, product]);
 
   const handleChangeTab = useCallback(
     (event: React.SyntheticEvent, newValue: string) => {
@@ -80,7 +63,8 @@ export default function ProductShopDetailsView({ id }: Props) {
   const renderError = (
     <EmptyContent
       filled
-      title={`${productError?.message}`}
+      title="Producto no encontrado"
+      description="El producto que buscas no está disponible o ha sido removido."
       action={
         <Button
           component={RouterLink}
@@ -88,7 +72,7 @@ export default function ProductShopDetailsView({ id }: Props) {
           startIcon={<Iconify icon="eva:arrow-ios-back-fill" width={16} />}
           sx={{ mt: 3 }}
         >
-          Back to List
+          Volver a productos
         </Button>
       }
       sx={{ py: 10 }}
@@ -99,19 +83,19 @@ export default function ProductShopDetailsView({ id }: Props) {
     <>
       <CustomBreadcrumbs
         links={[
-          { name: 'Home', href: '/' },
+          { name: 'Inicio', href: '/' },
           {
-            name: 'Shop',
+            name: 'Tienda',
             href: authenticated
               ? paths.dashboard.product.root
               : paths.product.root,
           },
-          { name: product?.name },
+          { name: product.name },
         ]}
         sx={{ mb: 5 }}
       />
 
-      <Grid container spacing={{ xs: 3, md: 5, lg: 8 }}>
+      <Grid container mb={4} spacing={{ xs: 3, md: 5, lg: 8 }}>
         <Grid xs={12} md={6} lg={7}>
           <ProductDetailsCarousel product={product} />
         </Grid>
@@ -126,35 +110,8 @@ export default function ProductShopDetailsView({ id }: Props) {
         </Grid>
       </Grid>
 
-      <Box
-        gap={5}
-        display="grid"
-        gridTemplateColumns={{
-          xs: 'repeat(1, 1fr)',
-          md: 'repeat(3, 1fr)',
-        }}
-        sx={{ my: 10 }}
-      >
-        {SUMMARY.map((item) => (
-          <Box key={item.title} sx={{ textAlign: 'center', px: 5 }}>
-            <Iconify
-              icon={item.icon}
-              width={32}
-              sx={{ color: 'primary.main' }}
-            />
-
-            <Typography variant="subtitle1" sx={{ mb: 1, mt: 2 }}>
-              {item.title}
-            </Typography>
-
-            <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-              {item.description}
-            </Typography>
-          </Box>
-        ))}
-      </Box>
-
-      <Card>
+      {/* Descripción y Reviews */}
+      <Card sx={{ mt: 4 }}>
         <Tabs
           value={currentTab}
           onChange={handleChangeTab}
@@ -164,30 +121,23 @@ export default function ProductShopDetailsView({ id }: Props) {
               `inset 0 -2px 0 0 ${alpha(theme.palette.grey[500], 0.08)}`,
           }}
         >
-          {[
-            {
-              value: 'description',
-              label: 'Description',
-            },
-            {
-              value: 'reviews',
-              label: `Reviews (${product.reviews.length})`,
-            },
-          ].map((tab) => (
-            <Tab key={tab.value} value={tab.value} label={tab.label} />
-          ))}
+          <Tab value="description" label="Descripción" />
+          <Tab
+            value="reviews"
+            label={`Reseñas (${product.reviews?.length || 0})`}
+          />
         </Tabs>
 
         {currentTab === 'description' && (
-          <ProductDetailsDescription description={product?.description} />
+          <ProductDetailsDescription description={product.description} />
         )}
 
-        {currentTab === 'reviews' && (
+        {currentTab === 'reviews' && product.reviews && (
           <ProductDetailsReview
-            ratings={product.ratings}
+            ratings={product.ratings || 0}
             reviews={product.reviews}
-            totalRatings={product.totalRatings}
-            totalReviews={product.totalReviews}
+            totalRatings={product.totalRatings || 0}
+            totalReviews={product.totalReviews || 0}
           />
         )}
       </Card>
@@ -204,10 +154,8 @@ export default function ProductShopDetailsView({ id }: Props) {
     >
       <CartIcon totalItems={checkout.totalItems} />
 
-      {productLoading && renderSkeleton}
-
-      {productError && renderError}
-
+      {isLoading && renderSkeleton}
+      {!product && !isLoading && renderError}
       {product && renderProduct}
     </Container>
   );

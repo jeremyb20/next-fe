@@ -117,3 +117,20 @@ export function fData(inputValue: InputValue) {
 
   return fm;
 }
+
+export function convert(from: string, amount: number) {
+  const to = getLocaleCode().currency;
+
+  return fetch(
+    `https://api.frankfurter.dev/v1/latest?base=${from}&symbols=${to}`
+  )
+    .then((resp) => resp.json())
+    .then((data) => {
+      const convertedAmount = (amount * data.rates[to]).toFixed(2);
+      const res = `${amount} ${from} = ${convertedAmount} ${to}`;
+
+      return { convertedAmount, res };
+    });
+}
+
+// convert("EUR", "USD", 10);

@@ -1,3 +1,4 @@
+import { countries } from '@/src/assets/data';
 import { useEffect, useCallback } from 'react';
 import { useAuthContext } from '@/src/auth/hooks';
 import { useForm, Controller } from 'react-hook-form';
@@ -65,8 +66,6 @@ export default function ProductDetailsSummary({
     subDescription,
   } = product;
 
-  console.log(sizes, 'sizes');
-
   const existProduct =
     !!items?.length && items.map((item) => item.id).includes(id);
 
@@ -82,7 +81,7 @@ export default function ProductDetailsSummary({
     available,
     price,
     colors: colors[0],
-    size: sizes[4],
+    size: sizes && sizes.length > 0 ? sizes[0] : '', // Always defined
     quantity: available < 1 ? 0 : 1,
   };
 
@@ -294,7 +293,7 @@ export default function ProductDetailsSummary({
         size="large"
         type="submit"
         variant="contained"
-        disabled={disabledActions}
+        disabled={disabledActions || !authenticated}
       >
         Buy Now
       </Button>
@@ -349,7 +348,63 @@ export default function ProductDetailsSummary({
         ?.label || 'Unknown'}
     </Box>
   );
+  const renderWhatsAppButton = () => (
+    <Button
+      fullWidth
+      size="large"
+      color="success"
+      variant="contained"
+      startIcon={<Iconify icon="ic:baseline-whatsapp" width={24} />}
+      onClick={() => {
+        const countrieCode = countries.find(
+          (country) => country.label === product.country
+        )?.phone;
+        const sellerPhone =
+          `+${countrieCode}${product.sellerWhatsApp}` || '+50670160434';
 
+        // Mensaje base
+        let message = `*CONSULTA DE PRODUCTO*\n\n`;
+
+        // Información básica
+        message += `*Producto:* ${product.name}\n`;
+        message += `*ID Referencia: ${product.productId}\n\n`;
+        message += `*Precio:* ${fCurrency(product.price)}\n`;
+        if (product.inventoryType) {
+          message += `*Disponibilidad:* ${
+            inventoryStatusOptions.find(
+              (option) => option.value === inventoryType
+            )?.label || 'Unknown'
+          }\n`;
+        }
+
+        // Especificaciones seleccionadas
+        message += `\n*Mis selecciones:*\n`;
+        message += `• Tamaño: ${values.size}\n`;
+        message += `• Cantidad: ${values.quantity}\n`;
+
+        // Enlace a la página y imagen
+        message += `\n*Enlaces:*\n`;
+        message += `• Link del producto: ${window.location.href}\n`;
+
+        // Pregunta final
+        message += `\n¿Podrías confirmarme si está disponible con estas características?`;
+
+        const whatsappUrl = `https://wa.me/${sellerPhone}?text=${encodeURIComponent(
+          message
+        )}`;
+        window.open(whatsappUrl, '_blank');
+      }}
+      sx={{
+        backgroundColor: '#25D366',
+        '&:hover': {
+          backgroundColor: '#1DA851',
+        },
+        mt: 1,
+      }}
+    >
+      Consultar producto por WhatsApp
+    </Button>
+  );
   return (
     <FormProvider methods={methods} onSubmit={onSubmit}>
       <Stack spacing={3} sx={{ pt: 3 }} {...other}>
@@ -378,6 +433,8 @@ export default function ProductDetailsSummary({
         <Divider sx={{ borderStyle: 'dashed' }} />
 
         {renderActions}
+
+        {renderWhatsAppButton()}
 
         {renderShare}
       </Stack>

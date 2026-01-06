@@ -42,7 +42,7 @@ const BLOG_POSTS = [
 
 export default function HomeBlog() {
   return (
-    <Box sx={{ bgcolor: 'background.neutral', py: { xs: 10, md: 15 } }}>
+    <Box sx={{ bgcolor: 'background.default', py: { xs: 10, md: 15 } }}>
       <Container component={MotionViewport}>
         <Stack spacing={3} sx={{ textAlign: 'center', mb: 8 }}>
           <m.div variants={varFade().inUp}>

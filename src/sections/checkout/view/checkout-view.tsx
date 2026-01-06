@@ -1,15 +1,15 @@
 'use client';
 
 import Container from '@mui/material/Container';
-import Grid from '@mui/material/Unstable_Grid2';
+// import Grid from '@mui/material/Unstable_Grid2';
 import Typography from '@mui/material/Typography';
 
-import { PRODUCT_CHECKOUT_STEPS } from 'src/_mock/_product';
+// import { PRODUCT_CHECKOUT_STEPS } from 'src/_mock/_product';
 
 import { useSettingsContext } from 'src/components/settings';
 
 import CheckoutCart from '../checkout-cart';
-import CheckoutSteps from '../checkout-steps';
+// import CheckoutSteps from '../checkout-steps';
 import { useCheckoutContext } from '../context';
 import CheckoutPayment from '../checkout-payment';
 import CheckoutOrderComplete from '../checkout-order-complete';
@@ -28,7 +28,7 @@ export default function CheckoutView() {
         Checkout
       </Typography>
 
-      <Grid
+      {/* <Grid
         container
         justifyContent={checkout.completed ? 'center' : 'flex-start'}
       >
@@ -38,7 +38,7 @@ export default function CheckoutView() {
             steps={PRODUCT_CHECKOUT_STEPS}
           />
         </Grid>
-      </Grid>
+      </Grid> */}
 
       {checkout.completed ? (
         <CheckoutOrderComplete

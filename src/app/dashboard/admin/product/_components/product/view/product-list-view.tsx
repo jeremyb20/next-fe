@@ -167,7 +167,6 @@ export default function ProductListView() {
       headerName: 'Product',
       flex: 1,
       minWidth: 360,
-      hideable: false,
       renderCell: (params) => <RenderCellProduct params={params} />,
     },
     {

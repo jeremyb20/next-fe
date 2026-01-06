@@ -78,6 +78,9 @@ export type IProductItem = {
     content: string;
   };
   productId: string;
+  country: string;
+  sellerName: string;
+  sellerWhatsApp: string;
 };
 
 export type IProductTableFilterValue = string | string[];

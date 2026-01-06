@@ -1,3 +1,6 @@
+import { paths } from '@/src/routes/paths';
+import { inventoryStatusOptions } from '@/src/utils/constants';
+
 import Box from '@mui/material/Box';
 import Link from '@mui/material/Link';
 import Stack from '@mui/material/Stack';
@@ -5,6 +8,8 @@ import Avatar from '@mui/material/Avatar';
 import { GridCellParams } from '@mui/x-data-grid';
 import ListItemText from '@mui/material/ListItemText';
 import LinearProgress from '@mui/material/LinearProgress';
+
+import { useRouter } from 'src/routes/hooks';
 
 import { fCurrency } from 'src/utils/format-number';
 import { fTime, fDate } from 'src/utils/format-time';
@@ -54,19 +59,23 @@ export function RenderCellStock({ params }: ParamsProps) {
         value={(params.row.available * 100) / params.row.quantity}
         variant="determinate"
         color={
-          (params.row.inventoryType === 'out of stock' && 'error') ||
-          (params.row.inventoryType === 'low stock' && 'warning') ||
+          (params.row.inventoryType === 'out_of_stock' && 'error') ||
+          (params.row.inventoryType === 'low_stock' && 'warning') ||
           'success'
         }
         sx={{ mb: 1, height: 6, maxWidth: 80 }}
       />
       {!!params.row.available && params.row.available}{' '}
-      {params.row.inventoryType}
+      {inventoryStatusOptions.find(
+        (option) => option.value === params.row.inventoryType
+      )?.label || 'Unknown'}
     </Stack>
   );
 }
 
 export function RenderCellProduct({ params }: ParamsProps) {
+  const router = useRouter();
+
   return (
     <Stack direction="row" alignItems="center" sx={{ py: 2, width: 1 }}>
       <Avatar
@@ -83,7 +92,11 @@ export function RenderCellProduct({ params }: ParamsProps) {
             noWrap
             color="inherit"
             variant="subtitle2"
-            onClick={params.row.onViewRow}
+            onClick={() => {
+              router.push(
+                paths.dashboard.admin.product.details(params.row.productId)
+              );
+            }}
             sx={{ cursor: 'pointer' }}
           >
             {params.row.name}

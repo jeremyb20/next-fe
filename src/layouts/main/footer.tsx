@@ -62,9 +62,9 @@ export default function Footer() {
         <Logo sx={{ mb: 1, mx: 'auto' }} />
 
         <Typography variant="caption" component="div">
-          © All rights reserved
+          © {new Date().getFullYear()} All rights reserved
           <br /> made by
-          <Link href="https://google.com/"> Jeba-Tek </Link>
+          <Link href="https://google.com/"> PlaquitasCR </Link>
         </Typography>
       </Container>
     </Box>
@@ -163,7 +163,7 @@ export default function Footer() {
         </Grid>
 
         <Typography variant="body2" sx={{ mt: 10 }}>
-          © 2021. All rights reserved
+          © {new Date().getFullYear()}. All rights reserved
         </Typography>
       </Container>
     </Box>

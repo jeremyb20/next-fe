@@ -26,6 +26,7 @@ import { navConfig } from './config-navigation';
 import LoginButton from '../common/login-button';
 import HeaderShadow from '../common/header-shadow';
 import SettingsButton from '../common/settings-button';
+import LanguagePopover from '../common/language-popover';
 // ----------------------------------------------------------------------
 
 export async function generateMetadata({
@@ -115,8 +116,8 @@ export default function Header() {
             >
               Purchase Now
             </Button> */}
-
-            <LoginButton />
+            <LoginButton sx={{ mx: 2 }} />
+            <LanguagePopover />
 
             <SettingsButton
               sx={{

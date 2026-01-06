@@ -31,7 +31,7 @@ export default function RegisterPetByUserModal({
       scroll="paper"
     >
       <DialogTitle>
-        Add pet {currentUser?.profile.name}
+        Add pet {currentUser?.profile?.name}
         <IconButton
           onClick={onClose}
           sx={{ position: 'absolute', right: 8, top: 8 }}

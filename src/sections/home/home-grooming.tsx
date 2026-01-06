@@ -10,7 +10,7 @@ import { varFade, MotionViewport } from 'src/components/animate';
 
 export default function HomeGrooming() {
   return (
-    <Box sx={{ bgcolor: 'background.default', py: { xs: 10, md: 15 } }}>
+    <Box sx={{ bgcolor: 'background.neutral', py: { xs: 10, md: 15 } }}>
       <Container component={MotionViewport}>
         <Stack
           spacing={5}

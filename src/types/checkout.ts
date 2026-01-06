@@ -12,6 +12,10 @@ export type ICheckoutItem = {
   size: string;
   quantity: number;
   subTotal: number;
+  productId?: number;
+  sellerName?: string;
+  sellerWhatsApp?: string;
+  country?: string;
 };
 
 export type ICheckoutDeliveryOption = {

@@ -3,10 +3,18 @@ import { useForm } from 'react-hook-form';
 import { paths } from '@/src/routes/paths';
 import { endpoints } from '@/src/utils/axios';
 import { HOST_API } from '@/src/config-global';
+import Iconify from '@/src/components/iconify';
+import useIPInfo from '@/src/hooks/use-ip-info';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { countries } from '@/src/assets/data/countries';
 import { useMemo, useState, useEffect, useCallback } from 'react';
 import { fCurrency, getLocaleCode } from '@/src/utils/format-number';
 import { useCreateGenericMutation } from '@/src/hooks/user-generic-mutation';
+import {
+  getPhoneHelperText,
+  getPhonePlaceholder,
+  simplePhoneValidation,
+} from '@/src/utils/phone-validation';
 
 import Box from '@mui/material/Box';
 import Chip from '@mui/material/Chip';
@@ -68,6 +76,8 @@ export default function ProductNewEditForm({ currentProduct }: Props) {
 
   const [includeTaxes, setIncludeTaxes] = useState(false);
 
+  const { ipData } = useIPInfo();
+
   const NewProductSchema = Yup.object().shape({
     name: Yup.string().required('Name is required'),
     images: Yup.array().min(1, 'Images is required'),
@@ -86,6 +96,15 @@ export default function ProductNewEditForm({ currentProduct }: Props) {
       enabled: Yup.boolean(),
       content: Yup.string(),
     }),
+    country: Yup.string().required('Country is required'),
+    sellerWhatsApp: Yup.string()
+      .required('Seller WhatsApp is required')
+      .test(
+        'valid-phone',
+        'Please enter a valid phone number for the selected country',
+        simplePhoneValidation
+      ),
+    sellerName: Yup.string().required('Seller Name is required'),
   });
 
   const defaultValues = useMemo(
@@ -108,8 +127,11 @@ export default function ProductNewEditForm({ currentProduct }: Props) {
       sizes: currentProduct?.sizes || [],
       newLabel: currentProduct?.newLabel || { enabled: false, content: '' },
       saleLabel: currentProduct?.saleLabel || { enabled: false, content: '' },
+      country: currentProduct?.country || ipData?.country || '',
+      sellerWhatsApp: currentProduct?.sellerWhatsApp || '',
+      sellerName: currentProduct?.sellerName || '',
     }),
-    [currentProduct]
+    [currentProduct, ipData]
   );
 
   const methods = useForm({
@@ -126,6 +148,21 @@ export default function ProductNewEditForm({ currentProduct }: Props) {
   } = methods;
 
   const values = watch();
+  const watchCountry = watch('country');
+  const sellerWhatsApp = watch('sellerWhatsApp');
+
+  // Revalidar el teléfono cuando cambia el país
+  useEffect(() => {
+    if (sellerWhatsApp && watchCountry) {
+      methods.trigger('sellerWhatsApp');
+    }
+  }, [watchCountry, sellerWhatsApp, methods]);
+
+  // useEffect(() => {
+  //   if (ipData?.country) {
+  //     setValue('country', ipData.country, { shouldValidate: true });
+  //   }
+  // }, [ipData, setValue]);
 
   useEffect(() => {
     if (currentProduct) {
@@ -565,6 +602,88 @@ export default function ProductNewEditForm({ currentProduct }: Props) {
     </>
   );
 
+  const renderSellerInformation = (
+    <>
+      {mdUp && (
+        <Grid md={4}>
+          <Typography variant="h6" sx={{ mb: 0.5 }}>
+            Seller Information
+          </Typography>
+          <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+            Details about the seller...
+          </Typography>
+        </Grid>
+      )}
+
+      <Grid xs={12} md={8}>
+        <Card>
+          {!mdUp && <CardHeader title="Seller Information" />}
+
+          <Stack spacing={3} sx={{ p: 3 }}>
+            {/* Aquí puedes agregar campos relacionados con la información del vendedor */}
+            <Box
+              rowGap={3}
+              columnGap={2}
+              display="grid"
+              gridTemplateColumns={{
+                xs: 'repeat(1, 1fr)',
+                sm: 'repeat(2, 1fr)',
+              }}
+            >
+              <RHFAutocomplete
+                name="country"
+                type="country"
+                label="Country"
+                placeholder="Choose a country"
+                fullWidth
+                options={countries.map((option) => option.label)}
+                getOptionLabel={(option) => option}
+              />
+              <RHFTextField
+                name="sellerWhatsApp"
+                label="Phone Number"
+                placeholder={getPhonePlaceholder(watchCountry, 'Phone number')}
+                helperText={getPhoneHelperText(watchCountry, sellerWhatsApp)}
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <Stack direction="row" alignItems="center" spacing={1}>
+                        <Iconify
+                          icon={`flag:${countries
+                            .find(
+                              (c) =>
+                                c.label.toLowerCase() ===
+                                watchCountry?.toLowerCase()
+                            )
+                            ?.code.toLowerCase()}-4x3`}
+                        />
+                        <Box>
+                          (+
+                          {`${
+                            countries
+                              .find(
+                                (c) =>
+                                  c.label.toLowerCase() ===
+                                  watchCountry?.toLowerCase()
+                              )
+                              ?.phone.toLowerCase() || ''
+                          }`}{' '}
+                          )
+                        </Box>
+                      </Stack>
+                    </InputAdornment>
+                  ),
+                }}
+              />
+
+              <RHFTextField name="sellerName" label="Seller Name" />
+            </Box>
+          </Stack>
+        </Card>
+      </Grid>
+    </>
+  );
+
   const renderActions = (
     <>
       {mdUp && <Grid md={4} />}
@@ -604,6 +723,8 @@ export default function ProductNewEditForm({ currentProduct }: Props) {
         {renderProperties}
 
         {renderPricing}
+
+        {renderSellerInformation}
 
         {renderActions}
       </Grid>

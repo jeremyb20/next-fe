@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useAuthContext } from '@/src/auth/hooks';
 
 import Fab from '@mui/material/Fab';
@@ -29,6 +30,7 @@ type Props = {
 
 export default function ProductItem({ product }: Props) {
   const { onAddToCart } = useCheckoutContext();
+  const [convertedPrice, setConvertedPrice] = useState<string>('');
 
   const {
     id,
@@ -42,6 +44,9 @@ export default function ProductItem({ product }: Props) {
     newLabel,
     saleLabel,
     productId,
+    sellerName,
+    sellerWhatsApp,
+    country,
   } = product;
 
   const { authenticated } = useAuthContext();
@@ -49,6 +54,17 @@ export default function ProductItem({ product }: Props) {
   const linkTo = authenticated
     ? paths.dashboard.product.details(productId)
     : paths.product.details(productId);
+
+  // useEffect(() => {
+  //   const currency = countries.find((c) => c.label === country)?.currency || 'USD';
+  //   convert(currency, price)
+  //     .then((result) => {
+  //       setConvertedPrice(result.convertedAmount);
+  //     })
+  //     .catch(() => {
+  //       setConvertedPrice(fCurrency(price));
+  //     });
+  // }, [country, price]);
 
   const handleAddCart = async () => {
     const newProduct = {
@@ -60,6 +76,10 @@ export default function ProductItem({ product }: Props) {
       colors: [colors[0]],
       size: sizes[0],
       quantity: 1,
+      productId: Number(productId),
+      sellerName,
+      sellerWhatsApp,
+      country,
     };
     try {
       onAddToCart(newProduct);
@@ -156,6 +176,9 @@ export default function ProductItem({ product }: Props) {
           )}
 
           <Box component="span">{fCurrency(price)}</Box>
+          {/* <Box component="span">
+            {convertedPrice || fCurrency(price)}
+          </Box> */}
         </Stack>
       </Stack>
     </Stack>
