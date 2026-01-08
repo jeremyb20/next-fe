@@ -14,6 +14,7 @@ interface StyledAvatarProps {
   onClick?: () => void;
   disabled?: boolean;
   sx?: any;
+  skeleton?: boolean;
 }
 
 export default function StyledAvatar({
@@ -22,6 +23,7 @@ export default function StyledAvatar({
   onClick,
   disabled = false,
   sx,
+  skeleton = false,
 }: StyledAvatarProps) {
   const hasFile = !!src;
 
@@ -33,6 +35,17 @@ export default function StyledAvatar({
         width: 1,
         height: 1,
         borderRadius: '50%',
+      }}
+    />
+  );
+
+  const renderSkeleton = skeleton && (
+    <Box
+      sx={{
+        width: 1,
+        height: 1,
+        borderRadius: '50%',
+        bgcolor: (theme) => alpha(theme.palette.grey[500], 0.08),
       }}
     />
   );
@@ -114,7 +127,7 @@ export default function StyledAvatar({
         ...sx,
       }}
     >
-      {renderContent}
+      {skeleton ? renderSkeleton : renderContent}
     </Box>
   );
 }

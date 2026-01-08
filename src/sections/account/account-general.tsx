@@ -29,6 +29,7 @@ import LoadingButton from '@mui/lab/LoadingButton';
 
 // import { fData } from 'src/utils/format-number';
 
+import { useAuthContext } from '@/src/auth/hooks';
 import { useBoolean } from '@/src/hooks/use-boolean';
 import StyledAvatar from '@/src/components/avatar/styled-avatar';
 
@@ -65,6 +66,7 @@ export default function AccountGeneral() {
   const { user, updateUserProfile } = useManagerUser();
   const { mutateAsync } = useCreateGenericMutation();
   const avatarDialog = useBoolean();
+  const { authenticated } = useAuthContext();
 
   const avatars = useMemo(
     () =>
@@ -275,6 +277,7 @@ export default function AccountGeneral() {
                   avatarDialog.onTrue();
                 }}
                 sx={{ width: 200, height: 200, mt: 2 }}
+                skeleton={!authenticated}
               />
 
               <RHFSwitch
