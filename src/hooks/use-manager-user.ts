@@ -17,16 +17,13 @@ export function useManagerUser() {
   const isMobile = useResponsive('down', 'sm');
 
   const fullName = authUser?.profile?.name || authUser?.profile?.userName;
-  const gender = authUser?.profile?.gender || 'boy';
+  const avatarProfile = authUser?.profile?.avatarProfile || 2;
 
   const user = {
     id: authUser?._id,
     displayName: fullName,
     email: authUser?.email,
-    photoURL:
-      authUser?.profile?.photoProfile ||
-      `https://avatar.iran.liara.run/public/${gender}?username=${fullName}` ||
-      LOGO,
+    photoURL: `/assets/images/avatars/avatar-${avatarProfile}.webp` || LOGO,
     coverUrl: `https://picsum.photos/seed/picsum/${isMobile ? '300' : '1800'}/${
       isMobile ? '300' : '500'
     }`,
@@ -47,6 +44,7 @@ export function useManagerUser() {
     isVerified: authUser?.isVerified,
     configuration: authUser?.configuration,
     profile: authUser?.profile,
+    avatarProfile: authUser?.profile?.avatarProfile || 2,
   };
 
   // Función específica para actualizar el perfil - CON useCallback

@@ -1,7 +1,7 @@
 import * as Yup from 'yup';
+import { useMemo } from 'react';
 import { IUser } from '@/src/types/api';
 import { useForm } from 'react-hook-form';
-import { useMemo, useCallback } from 'react';
 import { endpoints } from '@/src/utils/axios';
 import Iconify from '@/src/components/iconify';
 import { HOST_API } from '@/src/config-global';
@@ -24,10 +24,13 @@ import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import { InputAdornment } from '@mui/material';
 import Grid from '@mui/material/Unstable_Grid2';
-import Typography from '@mui/material/Typography';
+// import Typography from '@mui/material/Typography';
 import LoadingButton from '@mui/lab/LoadingButton';
 
-import { fData } from 'src/utils/format-number';
+// import { fData } from 'src/utils/format-number';
+
+import { useBoolean } from '@/src/hooks/use-boolean';
+import StyledAvatar from '@/src/components/avatar/styled-avatar';
 
 import { countries } from 'src/assets/data';
 
@@ -35,16 +38,18 @@ import { useSnackbar } from 'src/components/snackbar';
 import FormProvider, {
   RHFSwitch,
   RHFTextField,
-  RHFUploadAvatar,
+  // RHFUploadAvatar,
   RHFAutocomplete,
 } from 'src/components/hook-form';
+
+import AccountSelectionModal from './account-selection-modal';
 
 // ----------------------------------------------------------------------
 
 type UserType = {
   displayName: string;
   email: string;
-  photoURL: any;
+  avatarProfile: string;
   phone: string;
   country: string;
   address: string;
@@ -59,6 +64,17 @@ export default function AccountGeneral() {
   const { enqueueSnackbar } = useSnackbar();
   const { user, updateUserProfile } = useManagerUser();
   const { mutateAsync } = useCreateGenericMutation();
+  const avatarDialog = useBoolean();
+
+  const avatars = useMemo(
+    () =>
+      Array.from({ length: 20 }, (_, i) => ({
+        id: i + 1,
+        src: `/assets/images/avatars/avatar-${i + 1}.webp`,
+        alt: `Avatar ${i + 1}`,
+      })),
+    []
+  );
 
   // Validación simplificada del teléfono
   const phoneValidation = (phone: string, context: any) => {
@@ -80,7 +96,7 @@ export default function AccountGeneral() {
     email: Yup.string()
       .required('Email is required')
       .email('Email must be a valid email address'),
-    photoURL: Yup.mixed<any>().nullable().required('Avatar is required'),
+    avatarProfile: Yup.mixed<any>().nullable().required('Avatar is required'),
     phone: Yup.string()
       .required('Phone number is required')
       .test(
@@ -102,7 +118,7 @@ export default function AccountGeneral() {
     () => ({
       displayName: user?.displayName || '',
       email: user?.email || '',
-      photoURL: user?.photoURL || null,
+      avatarProfile: user?.avatarProfile || null,
       phone: user?.phone || '',
       country: user?.country || '',
       address: user?.address || '',
@@ -168,7 +184,7 @@ export default function AccountGeneral() {
         ...data,
         name: data.displayName,
         phone: data.phone,
-        photoProfile: data.photoURL,
+        avatarProfile: data.avatarProfile,
       };
 
       // await new Promise((resolve) => setTimeout(resolve, 500));
@@ -185,27 +201,54 @@ export default function AccountGeneral() {
     }
   });
 
-  const handleDrop = useCallback(
-    (acceptedFiles: File[]) => {
-      const file = acceptedFiles[0];
+  // const handleDrop = useCallback(
+  //   (acceptedFiles: File[]) => {
+  //     const file = acceptedFiles[0];
 
-      const newFile = Object.assign(file, {
-        preview: URL.createObjectURL(file),
+  //     const newFile = Object.assign(file, {
+  //       preview: URL.createObjectURL(file),
+  //     });
+
+  //     if (file) {
+  //       setValue('photoURL', newFile, { shouldValidate: true });
+  //     }
+  //   },
+  //   [setValue]
+  // );
+
+  const handleSelectAvatar = async (avatarSrc: string) => {
+    setValue('avatarProfile', avatarSrc, { shouldValidate: true });
+    try {
+      await mutateAsync<IUser>({
+        payload: { avatarProfile: avatarSrc } as unknown as IUser,
+        pEndpoint: `${HOST_API}${endpoints.user.updateMyProfile}`,
+        method: 'PUT',
       });
-
-      if (file) {
-        setValue('photoURL', newFile, { shouldValidate: true });
-      }
-    },
-    [setValue]
-  );
+      updateUserProfile({ avatarProfile: avatarSrc });
+      avatarDialog.onFalse();
+      enqueueSnackbar('Avatar updated successfully!', { variant: 'success' });
+    } catch (error) {
+      enqueueSnackbar('Error updating avatar', { variant: 'error' });
+    }
+  };
 
   return (
-    <FormProvider methods={methods} onSubmit={onSubmit}>
-      <Grid container spacing={3}>
-        <Grid xs={12} md={4}>
-          <Card sx={{ pt: 10, pb: 5, px: 3, textAlign: 'center' }}>
-            <RHFUploadAvatar
+    <>
+      <FormProvider methods={methods} onSubmit={onSubmit}>
+        <Grid container spacing={3}>
+          <Grid xs={12} md={4}>
+            <Card
+              sx={{
+                pt: 10,
+                pb: 5,
+                px: 3,
+                textAlign: 'center',
+                display: 'flex',
+                alignItems: 'center',
+                flexDirection: 'column',
+              }}
+            >
+              {/* <RHFUploadAvatar
               name="photoURL"
               maxSize={3145728}
               onDrop={handleDrop}
@@ -224,100 +267,124 @@ export default function AccountGeneral() {
                   <br /> max size of {fData(3145728)}
                 </Typography>
               }
-            />
-
-            <RHFSwitch
-              name="isPublic"
-              labelPlacement="start"
-              label="Public Profile"
-              sx={{ mt: 5 }}
-            />
-
-            <Button variant="soft" color="error" sx={{ mt: 3 }}>
-              Delete User
-            </Button>
-          </Card>
-        </Grid>
-
-        <Grid xs={12} md={8}>
-          <Card sx={{ p: 3 }}>
-            <Box
-              rowGap={3}
-              columnGap={2}
-              display="grid"
-              gridTemplateColumns={{
-                xs: 'repeat(1, 1fr)',
-                sm: 'repeat(2, 1fr)',
-              }}
-            >
-              <RHFTextField name="displayName" label="Name" />
-              <RHFTextField name="email" label="Email Address" />
-              <RHFAutocomplete
-                name="country"
-                type="country"
-                label="Country"
-                placeholder="Choose a country"
-                fullWidth
-                options={countries.map((option) => option.label)}
-                getOptionLabel={(option) => option}
+            /> */}
+              <StyledAvatar
+                src={user?.photoURL}
+                alt={user?.displayName}
+                onClick={() => {
+                  avatarDialog.onTrue();
+                }}
+                sx={{ width: 200, height: 200, mt: 2 }}
               />
-              <RHFTextField
-                name="phone"
-                label="Phone Number"
-                placeholder={getPhonePlaceholder(watchCountry, 'Phone number')}
-                helperText={getPhoneHelperText(watchCountry, watchPhone)}
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <Stack direction="row" alignItems="center" spacing={1}>
-                        <Iconify
-                          icon={`flag:${countries
-                            .find(
-                              (c) =>
-                                c.label.toLowerCase() ===
-                                watchCountry?.toLowerCase()
-                            )
-                            ?.code.toLowerCase()}-4x3`}
-                        />
-                        <Box>
-                          (+
-                          {`${
-                            countries
+
+              <RHFSwitch
+                name="isPublic"
+                labelPlacement="start"
+                label="Public Profile"
+                sx={{ mt: 5 }}
+              />
+
+              <Button variant="soft" color="error" sx={{ mt: 3 }}>
+                Delete User
+              </Button>
+            </Card>
+          </Grid>
+
+          <Grid xs={12} md={8}>
+            <Card sx={{ p: 3 }}>
+              <Box
+                rowGap={3}
+                columnGap={2}
+                display="grid"
+                gridTemplateColumns={{
+                  xs: 'repeat(1, 1fr)',
+                  sm: 'repeat(2, 1fr)',
+                }}
+              >
+                <RHFTextField name="displayName" label="Name" />
+                <RHFTextField name="email" label="Email Address" />
+                <RHFAutocomplete
+                  name="country"
+                  type="country"
+                  label="Country"
+                  placeholder="Choose a country"
+                  fullWidth
+                  options={countries.map((option) => option.label)}
+                  getOptionLabel={(option) => option}
+                />
+                <RHFTextField
+                  name="phone"
+                  label="Phone Number"
+                  placeholder={getPhonePlaceholder(
+                    watchCountry,
+                    'Phone number'
+                  )}
+                  helperText={getPhoneHelperText(watchCountry, watchPhone)}
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <Stack direction="row" alignItems="center" spacing={1}>
+                          <Iconify
+                            icon={`flag:${countries
                               .find(
                                 (c) =>
                                   c.label.toLowerCase() ===
                                   watchCountry?.toLowerCase()
                               )
-                              ?.phone.toLowerCase() || ''
-                          }`}{' '}
-                          )
-                        </Box>
-                      </Stack>
-                    </InputAdornment>
-                  ),
-                }}
-              />
+                              ?.code.toLowerCase()}-4x3`}
+                          />
+                          <Box>
+                            (+
+                            {`${
+                              countries
+                                .find(
+                                  (c) =>
+                                    c.label.toLowerCase() ===
+                                    watchCountry?.toLowerCase()
+                                )
+                                ?.phone.toLowerCase() || ''
+                            }`}{' '}
+                            )
+                          </Box>
+                        </Stack>
+                      </InputAdornment>
+                    ),
+                  }}
+                />
 
-              <RHFTextField name="city" label="City" />
-              <RHFTextField name="state" label="State/Region/Province" />
-              {/* <RHFTextField name="address" label="Address" /> */}
-              <RHFTextField name="zipCode" label="Zip/Code" />
-            </Box>
+                <RHFTextField name="city" label="City" />
+                <RHFTextField name="state" label="State/Region/Province" />
+                {/* <RHFTextField name="address" label="Address" /> */}
+                <RHFTextField name="zipCode" label="Zip/Code" />
+              </Box>
 
-            <Stack spacing={3} alignItems="flex-end" sx={{ mt: 3 }}>
-              <RHFTextField name="address" multiline rows={4} label="Address" />
+              <Stack spacing={3} alignItems="flex-end" sx={{ mt: 3 }}>
+                <RHFTextField
+                  name="address"
+                  multiline
+                  rows={4}
+                  label="Address"
+                />
 
-              <LoadingButton
-                type="submit"
-                variant="contained"
-                loading={isSubmitting}
-              >
-                Save Changes
-              </LoadingButton>
-            </Stack>
-          </Card>
+                <LoadingButton
+                  type="submit"
+                  variant="contained"
+                  loading={isSubmitting}
+                >
+                  Save Changes
+                </LoadingButton>
+              </Stack>
+            </Card>
+          </Grid>
         </Grid>
-      </Grid>
-    </FormProvider>
+      </FormProvider>
+
+      <AccountSelectionModal
+        avatarDialog={avatarDialog}
+        user={user}
+        avatars={avatars}
+        handleSelectAvatar={handleSelectAvatar}
+      />
+    </>
   );
 }

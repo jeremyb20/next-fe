@@ -148,6 +148,9 @@ function getLocaleForCurrency(currency: CurrencyCode): string {
     CRC: 'es-CR',
     USD: 'en-US',
     EUR: 'de-DE', // o 'fr-FR' dependiendo de tu preferencia
+    CNY: 'zh-CN',
+    VND: 'vi-VN',
+    AED: 'ar-AE',
   };
   return locales[currency] || 'en-US';
 }
