@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { useAuthContext } from '@/src/auth/hooks';
 import { useCurrency } from '@/src/hooks/use-currency';
 
@@ -29,7 +28,6 @@ type Props = {
 
 export default function ProductItem({ product }: Props) {
   const { onAddToCart } = useCheckoutContext();
-  const [convertedPrice, setConvertedPrice] = useState<string>('');
 
   const {
     id,

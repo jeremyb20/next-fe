@@ -7,16 +7,16 @@ export const DEFAULT_CURRENCY = 'CRC'; // Moneda base de los productos
 
 export const EXCHANGE_RATES = {
   CRC: {
-    USD: 0.00167, // 1 CRC = 0.00167 USD
-    EUR: 0.00152, // 1 CRC = 0.00152 EUR
+    USD: 0.002, // 1 CRC = 0.002 USD
+    EUR: 0.0017, // 1 CRC = 0.0017 EUR
   },
   USD: {
-    CRC: 600, // 1 USD = 600 CRC
-    EUR: 0.92, // 1 USD = 0.92 EUR
+    CRC: 497, // 1 USD = 497 CRC
+    EUR: 0.86, // 1 USD = 0.86 EUR
   },
   EUR: {
-    CRC: 650, // 1 EUR = 650 CRC
-    USD: 1.09, // 1 EUR = 1.09 USD
+    CRC: 579, // 1 EUR = 579 CRC
+    USD: 1.16, // 1 EUR = 1.16 USD
   },
 };
 

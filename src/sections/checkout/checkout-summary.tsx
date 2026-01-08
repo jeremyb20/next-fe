@@ -1,3 +1,5 @@
+import { useCurrency } from '@/src/hooks/use-currency';
+
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import Stack from '@mui/material/Stack';
@@ -8,8 +10,6 @@ import CardHeader from '@mui/material/CardHeader';
 import Typography from '@mui/material/Typography';
 import CardContent from '@mui/material/CardContent';
 import InputAdornment from '@mui/material/InputAdornment';
-
-import { fCurrency } from 'src/utils/format-number';
 
 import Iconify from 'src/components/iconify';
 
@@ -35,6 +35,7 @@ export default function CheckoutSummary({
   onApplyDiscount,
 }: Props) {
   const displayShipping = shipping !== null ? 'Free' : '-';
+  const { formatCurrency } = useCurrency();
 
   return (
     <Card sx={{ mb: 3 }}>
@@ -59,7 +60,9 @@ export default function CheckoutSummary({
             <Typography variant="body2" sx={{ color: 'text.secondary' }}>
               Sub Total
             </Typography>
-            <Typography variant="subtitle2">{fCurrency(subTotal)}</Typography>
+            <Typography variant="subtitle2">
+              {formatCurrency(subTotal)}
+            </Typography>
           </Stack>
 
           <Stack direction="row" justifyContent="space-between">
@@ -67,7 +70,7 @@ export default function CheckoutSummary({
               Discount
             </Typography>
             <Typography variant="subtitle2">
-              {discount ? fCurrency(-discount) : '-'}
+              {discount ? formatCurrency(-discount) : '-'}
             </Typography>
           </Stack>
 
@@ -76,7 +79,7 @@ export default function CheckoutSummary({
               Shipping
             </Typography>
             <Typography variant="subtitle2">
-              {shipping ? fCurrency(shipping) : displayShipping}
+              {shipping ? formatCurrency(shipping) : displayShipping}
             </Typography>
           </Stack>
 
@@ -86,7 +89,7 @@ export default function CheckoutSummary({
             <Typography variant="subtitle1">Total</Typography>
             <Box sx={{ textAlign: 'right' }}>
               <Typography variant="subtitle1" sx={{ color: 'error.main' }}>
-                {fCurrency(total)}
+                {formatCurrency(total)}
               </Typography>
               <Typography variant="caption" sx={{ fontStyle: 'italic' }}>
                 (VAT included if applicable)

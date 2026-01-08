@@ -1,3 +1,5 @@
+import { useCurrency } from '@/src/hooks/use-currency';
+
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import Avatar from '@mui/material/Avatar';
@@ -6,8 +8,6 @@ import TableRow from '@mui/material/TableRow';
 import TableCell from '@mui/material/TableCell';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
-
-import { fCurrency } from 'src/utils/format-number';
 
 import Label from 'src/components/label';
 import Iconify from 'src/components/iconify';
@@ -33,6 +33,7 @@ export default function CheckoutCartProduct({
   onIncrease,
 }: Props) {
   const { name, size, price, colors, coverUrl, quantity, available } = row;
+  const { formatCurrency } = useCurrency();
 
   return (
     <TableRow>
@@ -61,7 +62,7 @@ export default function CheckoutCartProduct({
         </Stack>
       </TableCell>
 
-      <TableCell>{fCurrency(price)}</TableCell>
+      <TableCell>{formatCurrency(price)}</TableCell>
 
       <TableCell>
         <Box sx={{ width: 88, textAlign: 'right' }}>
@@ -83,7 +84,7 @@ export default function CheckoutCartProduct({
         </Box>
       </TableCell>
 
-      <TableCell align="right">{fCurrency(price * quantity)}</TableCell>
+      <TableCell align="right">{formatCurrency(price * quantity)}</TableCell>
 
       <TableCell align="right" sx={{ px: 1 }}>
         <IconButton onClick={onDelete}>

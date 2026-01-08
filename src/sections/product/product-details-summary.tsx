@@ -2,6 +2,7 @@ import { countries } from '@/src/assets/data';
 import { useEffect, useCallback } from 'react';
 import { useAuthContext } from '@/src/auth/hooks';
 import { useForm, Controller } from 'react-hook-form';
+import { useCurrency } from '@/src/hooks/use-currency';
 import { inventoryStatusOptions } from '@/src/utils/constants';
 
 import Box from '@mui/material/Box';
@@ -17,7 +18,7 @@ import { formHelperTextClasses } from '@mui/material/FormHelperText';
 import { paths } from 'src/routes/paths';
 import { useRouter } from 'src/routes/hooks';
 
-import { fCurrency, fShortenNumber } from 'src/utils/format-number';
+import { fShortenNumber } from 'src/utils/format-number';
 
 import Label from 'src/components/label';
 import Iconify from 'src/components/iconify';
@@ -95,6 +96,8 @@ export default function ProductDetailsSummary({
 
   const { authenticated } = useAuthContext();
 
+  const { formatCurrency } = useCurrency();
+
   useEffect(() => {
     if (product) {
       reset(defaultValues);
@@ -145,11 +148,11 @@ export default function ProductDetailsSummary({
             mr: 0.5,
           }}
         >
-          {fCurrency(priceSale)}
+          {formatCurrency(priceSale)}
         </Box>
       )}
 
-      {fCurrency(price)}
+      {formatCurrency(price)}
     </Box>
   );
 
@@ -368,7 +371,7 @@ export default function ProductDetailsSummary({
         // Información básica
         message += `*Producto:* ${product.name}\n`;
         message += `*ID Referencia: ${product.productId}\n\n`;
-        message += `*Precio:* ${fCurrency(product.price)}\n`;
+        message += `*Precio:* ${formatCurrency(product.price)}\n`;
         if (product.inventoryType) {
           message += `*Disponibilidad:* ${
             inventoryStatusOptions.find(
