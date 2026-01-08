@@ -1,3 +1,5 @@
+/* eslint-disable no-nested-ternary */
+
 'use client';
 
 import { endpoints } from '@/src/utils/axios';
@@ -5,7 +7,6 @@ import { NotificationData } from '@/src/types/api';
 import { useRef, useState, useEffect, useCallback } from 'react';
 import { getApplicationServerKey } from '@/src/utils/notifications';
 import { useCreateGenericMutation } from '@/src/hooks/user-generic-mutation';
-import ScheduleNotificationForm from '@/src/layouts/common/notifications-popover/components/schedule-notification-form';
 
 import {
   Box,
@@ -14,6 +15,7 @@ import {
   Button,
   Typography,
   CardContent,
+  CircularProgress,
 } from '@mui/material';
 
 import { HOST_API } from 'src/config-global';
@@ -36,6 +38,8 @@ const PushNotificationManager = ({
     useState<NotificationPermission>('default');
   const [isSubscribed, setIsSubscribed] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [swRegistered, setSwRegistered] = useState<boolean>(false);
+  const [errors, setError] = useState<string>('');
 
   const checkExistingSubscription = useCallback(async () => {
     try {
@@ -45,76 +49,138 @@ const PushNotificationManager = ({
 
       if (existingSubscription) {
         setIsSubscribed(true);
-        console.log('Ya existe una suscripción activa');
+        console.log('Suscripción existente:', existingSubscription);
         return true;
       }
-
-      setIsSubscribed(false);
       return false;
     } catch (error) {
-      console.error('Error verificando suscripción existente:', error);
-      setIsSubscribed(false);
+      console.error('Error verificando suscripción:', error);
       return false;
     }
   }, []);
 
   const registerServiceWorker = useCallback(async () => {
     setIsLoading(true);
+    setError('');
+
     try {
       const vapidPublicKey = process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY;
       if (!vapidPublicKey) {
-        console.error('VAPID public key is not defined');
-        setIsLoading(false);
-        return;
+        throw new Error('VAPID public key no configurada');
       }
 
-      // Verificar si ya existe una suscripción
-      const alreadySubscribed = await checkExistingSubscription();
-      if (alreadySubscribed) {
-        console.log(
-          'Usuario ya está suscrito, no es necesario suscribirse nuevamente'
-        );
-        setIsLoading(false);
-        onNotificationScheduled();
-        return;
+      // Verificar permisos
+      if (Notification.permission === 'denied') {
+        throw new Error('Los permisos de notificación fueron denegados');
       }
 
-      // Registrar service worker si no existe
-      let registration;
+      // Solicitar permiso si es necesario
+      if (Notification.permission === 'default') {
+        const permissionResult = await Notification.requestPermission();
+        setPermission(permissionResult);
+
+        if (permissionResult !== 'granted') {
+          throw new Error('Permiso denegado por el usuario');
+        }
+      }
+
+      // Registrar Service Worker
+      let registration: ServiceWorkerRegistration;
       try {
-        registration = await navigator.serviceWorker.getRegistration();
-        if (!registration) {
-          registration = await navigator.serviceWorker.register('/sw.js');
-          console.log('Service Worker registrado correctamente');
+        registration = await navigator.serviceWorker.register('/sw.js', {
+          scope: '/',
+          updateViaCache: 'none',
+        });
+
+        console.log('Service Worker registrado:', registration);
+        setSwRegistered(true);
+
+        // Esperar a que el service worker esté activo
+        await registration.update();
+        const worker =
+          registration.active ||
+          registration.waiting ||
+          registration.installing;
+        if (worker) {
+          await new Promise((resolve) => {
+            if (worker.state === 'activated') {
+              resolve(true);
+            } else {
+              worker.addEventListener('statechange', function listener() {
+                if (worker.state === 'activated') {
+                  worker.removeEventListener('statechange', listener);
+                  resolve(true);
+                }
+              });
+            }
+          });
         }
       } catch (swError) {
-        console.error('Error con Service Worker:', swError);
-        setIsLoading(false);
-        return;
+        console.error('Error registrando Service Worker:', swError);
+        throw new Error('No se pudo registrar el Service Worker');
       }
 
-      // Suscribirse a las notificaciones push
+      // Suscribirse a push notifications
       const subscription = await registration.pushManager.subscribe({
         userVisibleOnly: true,
         applicationServerKey: getApplicationServerKey(vapidPublicKey),
       });
 
-      // Enviar la suscripción al servidor
-      await mutateAsync<PushSubscription>({
-        payload: subscription,
+      console.log('Suscripción creada:', subscription);
+
+      // Enviar al servidor
+      const subscriptionData = {
+        endpoint: subscription.endpoint,
+        keys: {
+          p256dh: btoa(
+            String.fromCharCode.apply(
+              null,
+              Array.from(new Uint8Array(subscription.getKey('p256dh')!))
+            )
+          ),
+          auth: btoa(
+            String.fromCharCode.apply(
+              null,
+              Array.from(new Uint8Array(subscription.getKey('auth')!))
+            )
+          ),
+        },
+      };
+
+      await mutateAsync({
+        payload: subscriptionData,
         pEndpoint: `${HOST_API}${endpoints.notification.subscribe}`,
         method: 'POST',
       });
 
       setIsSubscribed(true);
-      console.log('Suscripción creada exitosamente');
-      onNotificationScheduled();
-    } catch (error) {
-      console.error('Error en el proceso de suscripción:', error);
+      console.log('Suscripción completada exitosamente');
+
+      // Test: Enviar notificación de prueba
+      setTimeout(async () => {
+        try {
+          await mutateAsync({
+            payload: {
+              title: '¡Notificaciones activadas!',
+              body: 'Ahora recibirás notificaciones importantes.',
+              type: 'system',
+            },
+            pEndpoint: `${HOST_API}${endpoints.notification.send}`,
+            method: 'POST',
+          });
+          console.log('Notificación de prueba enviada');
+        } catch (testError) {
+          console.error('Error enviando notificación de prueba:', testError);
+        }
+      }, 2000);
+    } catch (error: any) {
+      console.error('Error en suscripción:', error);
+      setError(error.message || 'Error desconocido');
+      setIsSubscribed(false);
     } finally {
       setIsLoading(false);
     }
-  }, [mutateAsync, onNotificationScheduled, checkExistingSubscription]);
+  }, [mutateAsync]);
 
   const unsubscribeFromNotifications = useCallback(async () => {
     try {
@@ -122,42 +188,32 @@ const PushNotificationManager = ({
       const subscription = await registration.pushManager.getSubscription();
 
       if (subscription) {
-        await subscription.unsubscribe();
-        console.log('Suscripción cancelada');
+        const success = await subscription.unsubscribe();
+        if (success) {
+          console.log('Suscripción cancelada');
+          setIsSubscribed(false);
 
-        // Opcional: Notificar al servidor que se canceló la suscripción
-        try {
-          await mutateAsync({
-            payload: { endpoint: subscription.endpoint },
-            pEndpoint: `${HOST_API}${endpoints.notification.unsubscribe}`,
-            method: 'POST',
-          });
-        } catch (serverError) {
-          console.error('Error notificando al servidor:', serverError);
+          // Notificar al servidor
+          try {
+            await mutateAsync({
+              payload: { endpoint: subscription.endpoint },
+              pEndpoint: `${HOST_API}${endpoints.notification.unsubscribe}`,
+              method: 'POST',
+            });
+          } catch (serverError) {
+            console.error('Error notificando al servidor:', serverError);
+          }
         }
-
-        setIsSubscribed(false);
       }
     } catch (error) {
       console.error('Error cancelando suscripción:', error);
     }
   }, [mutateAsync]);
 
-  const requestPermission = useCallback(async () => {
-    if (!isSupported) return;
-
-    const result = await Notification.requestPermission();
-    setPermission(result);
-
-    if (result === 'granted') {
-      await registerServiceWorker();
-    }
-  }, [isSupported, registerServiceWorker]);
-
   useEffect(() => {
     if (initializedRef.current) return;
 
-    const initializePushNotifications = async () => {
+    const initialize = async () => {
       if (
         'Notification' in window &&
         'serviceWorker' in navigator &&
@@ -166,34 +222,40 @@ const PushNotificationManager = ({
         setIsSupported(true);
         setPermission(Notification.permission);
 
-        // Si ya tiene permiso concedido, verificar el estado de la suscripción
-        if (Notification.permission === 'granted') {
-          try {
-            await navigator.serviceWorker.ready;
+        try {
+          // Verificar si ya hay una suscripción activa
+          const registered = await navigator.serviceWorker.getRegistration();
+          if (registered) {
+            setSwRegistered(true);
             await checkExistingSubscription();
-          } catch (error) {
-            console.error('Error inicializando notificaciones:', error);
           }
+        } catch (error) {
+          console.error('Error inicializando:', error);
         }
 
         initializedRef.current = true;
       }
     };
 
-    initializePushNotifications();
+    initialize();
   }, [checkExistingSubscription]);
 
   if (!isSupported) {
     return (
       <Alert severity="warning" sx={{ mb: 3 }}>
-        Tu navegador no soporta notificaciones push. Por favor, actualiza a un
-        navegador más moderno.
+        Tu navegador no soporta notificaciones push. Usa Chrome, Firefox o Edge.
       </Alert>
     );
   }
 
   return (
     <Box>
+      {errors && (
+        <Alert severity="error" sx={{ mb: 2 }}>
+          {errors}
+        </Alert>
+      )}
+
       <Card sx={{ mb: 3 }}>
         <CardContent>
           <Box display="flex" alignItems="center" mb={2}>
@@ -207,87 +269,80 @@ const PushNotificationManager = ({
             </Typography>
           </Box>
 
-          {permission === 'default' && (
-            <Box>
-              <Typography paragraph>
-                Para recibir notificaciones, necesitamos tu permiso.
-              </Typography>
-              <Button
-                variant="contained"
-                onClick={requestPermission}
-                disabled={isLoading}
-                startIcon={<Iconify icon="eva:checkmark-circle-2-fill" />}
-              >
-                {isLoading ? 'Procesando...' : 'Activar Notificaciones'}
-              </Button>
-            </Box>
+          <Typography variant="body2" color="text.secondary" paragraph>
+            Estado: {isSubscribed ? '✅ Suscrito' : '❌ No suscrito'}
+          </Typography>
+          <Typography variant="body2" color="text.secondary" paragraph>
+            Permisos:{' '}
+            {permission === 'granted'
+              ? '✅ Concedidos'
+              : permission === 'denied'
+                ? '❌ Denegados'
+                : '⏳ Pendientes'}
+          </Typography>
+          <Typography variant="body2" color="text.secondary" paragraph>
+            Service Worker:{' '}
+            {swRegistered ? '✅ Registrado' : '❌ No registrado'}
+          </Typography>
+
+          {permission === 'granted' && !isSubscribed && (
+            <Button
+              variant="contained"
+              onClick={registerServiceWorker}
+              disabled={isLoading}
+              startIcon={
+                isLoading ? (
+                  <CircularProgress size={20} />
+                ) : (
+                  <Iconify icon="eva:bell-fill" />
+                )
+              }
+              sx={{ mt: 2 }}
+            >
+              {isLoading ? 'Suscribiendo...' : 'Suscribirse a Notificaciones'}
+            </Button>
           )}
 
-          {permission === 'granted' && (
-            <Box>
-              <Alert severity="success" sx={{ mb: 2 }}>
-                {isSubscribed
-                  ? 'Notificaciones activadas correctamente'
-                  : 'Permiso concedido, pero necesita suscribirse'}
-              </Alert>
+          {isSubscribed && (
+            <Button
+              variant="outlined"
+              color="error"
+              onClick={unsubscribeFromNotifications}
+              disabled={isLoading}
+              startIcon={<Iconify icon="eva:bell-off-fill" />}
+              sx={{ mt: 2 }}
+            >
+              Desactivar Notificaciones
+            </Button>
+          )}
 
-              {!isSubscribed && (
-                <Button
-                  variant="contained"
-                  onClick={registerServiceWorker}
-                  disabled={isLoading}
-                  startIcon={<Iconify icon="eva:bell-fill" />}
-                >
-                  {isLoading
-                    ? 'Suscribiendo...'
-                    : 'Suscribirse a Notificaciones'}
-                </Button>
-              )}
-
-              {isSubscribed && (
-                <Button
-                  variant="outlined"
-                  color="error"
-                  onClick={unsubscribeFromNotifications}
-                  disabled={isLoading}
-                  startIcon={<Iconify icon="eva:bell-off-fill" />}
-                  sx={{ mt: 1 }}
-                >
-                  Desactivar Notificaciones
-                </Button>
-              )}
-            </Box>
+          {permission === 'default' && (
+            <Button
+              variant="contained"
+              onClick={registerServiceWorker}
+              disabled={isLoading}
+              startIcon={
+                isLoading ? (
+                  <CircularProgress size={20} />
+                ) : (
+                  <Iconify icon="eva:checkmark-circle-2-fill" />
+                )
+              }
+              sx={{ mt: 2 }}
+            >
+              {isLoading ? 'Solicitando...' : 'Activar Notificaciones'}
+            </Button>
           )}
 
           {permission === 'denied' && (
-            <Alert severity="error">
-              Has bloqueado las notificaciones. Para activarlas, actualiza los
-              permisos en la configuración de tu navegador.
+            <Alert severity="error" sx={{ mt: 2 }}>
+              Has bloqueado las notificaciones. Para activarlas, ve a la
+              configuración de tu navegador y permite las notificaciones para
+              este sitio.
             </Alert>
           )}
         </CardContent>
       </Card>
-
-      {permission === 'granted' && isSubscribed && (
-        <Card sx={{ mb: 3 }}>
-          <CardContent>
-            <Box display="flex" alignItems="center" mb={2}>
-              <Iconify
-                width={28}
-                icon="eva:clock-fill"
-                style={{ marginRight: 8 }}
-              />
-              <Typography variant="h6" component="h3">
-                Programar Nueva Notificación
-              </Typography>
-            </Box>
-            <ScheduleNotificationForm
-              onNotificationScheduled={onNotificationScheduled}
-              setNotifications={setNotifications}
-            />
-          </CardContent>
-        </Card>
-      )}
     </Box>
   );
 };
