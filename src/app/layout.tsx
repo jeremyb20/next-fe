@@ -19,6 +19,8 @@ import {
 } from 'src/components/settings';
 
 import { CheckoutProvider } from 'src/sections/checkout/context';
+
+import LocaleProvider from '../locales/provider';
 // import { AuthProvider } from 'src/auth/context/auth0';
 // import { AuthProvider } from 'src/auth/context/amplify';
 // import { AuthProvider } from 'src/auth/context/firebase';
@@ -70,25 +72,27 @@ export default function RootLayout({ children }: Props) {
   return (
     <html lang="en" className={primaryFont.className}>
       <body>
-        <QueryProvider>
-          <AuthProvider>
-            <LocalizationProvider>
-              <SettingsProvider defaultSettings={defaultSettings}>
-                <ThemeProvider>
-                  <MotionLazy>
-                    <SnackbarProvider>
-                      <CheckoutProvider>
-                        <SettingsDrawer />
-                        <ProgressBar />
-                        {children}
-                      </CheckoutProvider>
-                    </SnackbarProvider>
-                  </MotionLazy>
-                </ThemeProvider>
-              </SettingsProvider>
-            </LocalizationProvider>
-          </AuthProvider>
-        </QueryProvider>
+        <LocaleProvider>
+          <QueryProvider>
+            <AuthProvider>
+              <LocalizationProvider>
+                <SettingsProvider defaultSettings={defaultSettings}>
+                  <ThemeProvider>
+                    <MotionLazy>
+                      <SnackbarProvider>
+                        <CheckoutProvider>
+                          <SettingsDrawer />
+                          <ProgressBar />
+                          {children}
+                        </CheckoutProvider>
+                      </SnackbarProvider>
+                    </MotionLazy>
+                  </ThemeProvider>
+                </SettingsProvider>
+              </LocalizationProvider>
+            </AuthProvider>
+          </QueryProvider>
+        </LocaleProvider>
       </body>
     </html>
   );

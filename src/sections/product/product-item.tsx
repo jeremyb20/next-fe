@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useAuthContext } from '@/src/auth/hooks';
+import { useCurrency } from '@/src/hooks/use-currency';
 
 import Fab from '@mui/material/Fab';
 import Box from '@mui/material/Box';
@@ -10,8 +11,6 @@ import Tooltip from '@mui/material/Tooltip';
 
 import { paths } from 'src/routes/paths';
 import { RouterLink } from 'src/routes/components';
-
-import { fCurrency } from 'src/utils/format-number';
 
 import Label from 'src/components/label';
 import Image from 'src/components/image';
@@ -50,7 +49,7 @@ export default function ProductItem({ product }: Props) {
   } = product;
 
   const { authenticated } = useAuthContext();
-
+  const { formatCurrency } = useCurrency();
   const linkTo = authenticated
     ? paths.dashboard.product.details(productId)
     : paths.product.details(productId);
@@ -171,11 +170,13 @@ export default function ProductItem({ product }: Props) {
               component="span"
               sx={{ color: 'text.disabled', textDecoration: 'line-through' }}
             >
-              {fCurrency(priceSale)}
+              {formatCurrency(priceSale)}
             </Box>
           )}
 
-          <Box component="span">{fCurrency(price)}</Box>
+          {/* <Box component="span">{fCurrency(price)}</Box> */}
+          <Box component="span">{formatCurrency(price)}</Box>
+
           {/* <Box component="span">
             {convertedPrice || fCurrency(price)}
           </Box> */}

@@ -14,30 +14,32 @@ import translationEs from './langs/es.json';
 
 // ----------------------------------------------------------------------
 
-i18n
-  .use(LanguageDetector)
-  .use(initReactI18next)
-  .init({
-    resources: {
-      en: { translations: translationEn },
-      fr: { translations: translationFr },
-      vi: { translations: translationVi },
-      cn: { translations: translationCn },
-      ar: { translations: translationAr },
-      es: { translations: translationEs },
-    },
-    detection: {
-      order: ['localStorage', 'navigator', 'cookie'],
-      caches: ['localStorage', 'cookie'],
-      lookupLocalStorage: 'i18next',
-    },
-    fallbackLng: defaultLang.value,
-    debug: false,
-    ns: ['translations'],
-    defaultNS: 'translations',
-    interpolation: {
-      escapeValue: false,
-    },
-  });
+// Initialize only once
+if (!i18n.isInitialized) {
+  i18n
+    .use(LanguageDetector)
+    .use(initReactI18next)
+    .init({
+      resources: {
+        en: { translations: translationEn },
+        fr: { translations: translationFr },
+        vi: { translations: translationVi },
+        cn: { translations: translationCn },
+        ar: { translations: translationAr },
+        es: { translations: translationEs },
+      },
+      detection: {
+        order: ['localStorage', 'navigator', 'cookie'],
+        caches: ['localStorage', 'cookie'],
+        lookupLocalStorage: 'i18next',
+      },
+      fallbackLng: defaultLang.value,
+      ns: ['translations'],
+      defaultNS: 'translations',
+      interpolation: {
+        escapeValue: false,
+      },
+    });
+}
 
 export default i18n;

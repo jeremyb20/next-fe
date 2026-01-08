@@ -3,7 +3,6 @@ import { APP_NAME } from '@/src/config-global';
 import { useRef, useState, useEffect, useCallback } from 'react';
 
 import Box from '@mui/material/Box';
-import Link from '@mui/material/Link';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
@@ -164,7 +163,7 @@ export default function HomeHero() {
               Comenzar Ahora
             </Button>
 
-            <Link
+            {/* <Link
               component={RouterLink}
               href={paths.auth.login}
               variant="caption"
@@ -177,7 +176,7 @@ export default function HomeHero() {
             >
               <Iconify icon="mdi:login" width={16} sx={{ mr: 0.5 }} />
               Ya tengo cuenta
-            </Link>
+            </Link> */}
           </Stack>
 
           <Button
@@ -186,10 +185,11 @@ export default function HomeHero() {
             variant="outlined"
             startIcon={<Iconify icon="mdi:vet" width={24} />}
             component={RouterLink}
-            href={paths.veterinarian.register}
+            href={paths.auth.login}
             sx={{ borderColor: 'common.white', color: 'common.white' }}
           >
-            Soy Veterinario
+            {/* Soy Veterinario */}
+            Ya tengo cuenta
           </Button>
         </Stack>
       </m.div>

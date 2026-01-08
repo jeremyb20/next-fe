@@ -1,5 +1,6 @@
 import { m } from 'framer-motion';
 import { forwardRef } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import Box from '@mui/material/Box';
 import { styled } from '@mui/material/styles';
@@ -20,6 +21,7 @@ export const NavItem = forwardRef<HTMLDivElement, NavItemProps>(
     { title, path, open, active, hasChild, externalLink, subItem, ...other },
     ref
   ) => {
+    const { t } = useTranslation(); // Add this line to get the translation function
     const renderContent = (
       <StyledNavItem
         disableRipple
@@ -30,7 +32,7 @@ export const NavItem = forwardRef<HTMLDivElement, NavItemProps>(
         subItem={subItem}
         {...other}
       >
-        {title}
+        {t(title)}
 
         {hasChild && (
           <Iconify

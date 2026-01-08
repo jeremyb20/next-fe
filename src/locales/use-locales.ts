@@ -8,6 +8,7 @@ import { localStorageGetItem } from 'src/utils/storage-available';
 import { useSettingsContext } from 'src/components/settings';
 
 import { allLangs, defaultLang } from './config-lang';
+import { getExchangeRate, DEFAULT_CURRENCY } from '../utils/currency-service';
 
 // ----------------------------------------------------------------------
 
@@ -17,6 +18,11 @@ export function useLocales() {
   const currentLang =
     allLangs.find((lang) => lang.value === langStorage) || defaultLang;
 
+  const targetCurrency = currentLang.numberFormat?.currency || 'USD';
+  const exchangeRate = getExchangeRate(DEFAULT_CURRENCY, targetCurrency);
+  const shouldConvert = DEFAULT_CURRENCY !== targetCurrency;
+
+  // Obtener símbolo de moneda
   const symbol = currentLang.numberFormat?.currency
     ? new Intl.NumberFormat(currentLang.numberFormat.code, {
         style: 'currency',
@@ -32,6 +38,9 @@ export function useLocales() {
     allLangs,
     currentLang,
     symbol,
+    targetCurrency,
+    exchangeRate,
+    shouldConvert,
   };
 }
 

@@ -31,7 +31,7 @@ const TESTIMONIALS = [
     content:
       'Increíble aplicación! Perdí a mi gato y gracias al código QR en su placa, me contactaron en menos de 2 horas. La paz mental que me da es invaluable.',
     pet: 'Gato - Simba',
-    location: 'Madrid, España',
+    location: 'San José, Costa Rica',
   },
   {
     id: 2,
@@ -42,7 +42,7 @@ const TESTIMONIALS = [
     content:
       'Como dueño de 2 perros y 1 gato, la gestión de vacunas y citas veterinarias se ha vuelto mucho más sencilla. Nunca más olvidaré una vacuna.',
     pet: 'Perros - Max y Luna',
-    location: 'Barcelona, España',
+    location: 'Cartago, Costa Rica',
   },
   {
     id: 3,
@@ -53,7 +53,7 @@ const TESTIMONIALS = [
     content:
       'Desde que me afilié, mi consulta ha aumentado en un 40%. La plataforma me permite gestionar citas eficientemente y los historiales médicos digitales son un gran avance.',
     pet: 'Clínica VetCare',
-    location: 'Valencia, España',
+    location: 'Heredia, Costa Rica',
   },
   {
     id: 4,
@@ -64,7 +64,7 @@ const TESTIMONIALS = [
     content:
       'El servicio de grooming a través de la app es excelente. Puedo ver disponibilidad, precios y reviews de cada profesional. Mi perro siempre sale feliz!',
     pet: 'Perro - Rocky',
-    location: 'Sevilla, España',
+    location: 'Alajuela, Costa Rica',
   },
   {
     id: 5,
@@ -74,7 +74,7 @@ const TESTIMONIALS = [
     rating: 5,
     content: `${APP_NAME} ha transformado mi negocio. Ahora tengo agenda completa toda la semana y los clientes llegan con toda la información de sus mascotas. Muy profesional.`,
     pet: 'PetGroom Studio',
-    location: 'Bilbao, España',
+    location: 'Desamparados, Costa Rica',
   },
   {
     id: 6,
@@ -85,7 +85,7 @@ const TESTIMONIALS = [
     content:
       'Para mí que tengo problemas de memoria, esta app es una bendición. Recordatorios de medicamentos, citas y todo el historial de mi perro senior en un lugar.',
     pet: 'Perro - Toby (12 años)',
-    location: 'Málaga, España',
+    location: 'Puntarenas, Costa Rica',
   },
 ];
 
