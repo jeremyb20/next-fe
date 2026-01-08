@@ -113,7 +113,6 @@ export default function HomeHero() {
           variant="h2"
           sx={{
             textAlign: 'center',
-            color: 'common.white',
           }}
         >
           La App Completa <br />
@@ -136,10 +135,7 @@ export default function HomeHero() {
       </m.div>
 
       <m.div variants={varFade().in}>
-        <Typography
-          variant="body2"
-          sx={{ textAlign: 'center', py: 2, color: 'common.white' }}
-        >
+        <Typography variant="body2" sx={{ textAlign: 'center', py: 2 }}>
           Registra hasta 10 mascotas, gestiona su salud, agenda citas y disfruta
           de descuentos exclusivos
         </Typography>
@@ -186,7 +182,6 @@ export default function HomeHero() {
             startIcon={<Iconify icon="mdi:vet" width={24} />}
             component={RouterLink}
             href={paths.auth.login}
-            sx={{ borderColor: 'common.white', color: 'common.white' }}
           >
             {/* Soy Veterinario */}
             Ya tengo cuenta
