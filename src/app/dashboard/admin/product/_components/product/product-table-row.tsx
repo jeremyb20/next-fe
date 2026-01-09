@@ -1,4 +1,5 @@
 import { paths } from '@/src/routes/paths';
+import { useCurrency } from '@/src/hooks/use-currency';
 import { inventoryStatusOptions } from '@/src/utils/constants';
 
 import Box from '@mui/material/Box';
@@ -11,7 +12,6 @@ import LinearProgress from '@mui/material/LinearProgress';
 
 import { useRouter } from 'src/routes/hooks';
 
-import { fCurrency } from 'src/utils/format-number';
 import { fTime, fDate } from 'src/utils/format-time';
 
 import Label from 'src/components/label';
@@ -23,7 +23,22 @@ type ParamsProps = {
 };
 
 export function RenderCellPrice({ params }: ParamsProps) {
-  return <>{fCurrency(params.row.price)}</>;
+  const { formatCurrency } = useCurrency();
+
+  return (
+    <Stack direction="row" spacing={0.5} sx={{ typography: 'subtitle1' }}>
+      {params.row.price && (
+        <Box
+          component="span"
+          sx={{ color: 'text.disabled', textDecoration: 'line-through' }}
+        >
+          {formatCurrency(params.row.price)}
+        </Box>
+      )}
+
+      <Box component="span">{formatCurrency(params.row.priceSale)}</Box>
+    </Stack>
+  );
 }
 
 export function RenderCellPublish({ params }: ParamsProps) {

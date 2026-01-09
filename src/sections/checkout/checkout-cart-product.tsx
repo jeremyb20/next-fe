@@ -32,7 +32,7 @@ export default function CheckoutCartProduct({
   onDecrease,
   onIncrease,
 }: Props) {
-  const { name, size, price, colors, coverUrl, quantity, available } = row;
+  const { name, size, priceSale, colors, coverUrl, quantity, available } = row;
   const { formatCurrency } = useCurrency();
 
   return (
@@ -62,7 +62,7 @@ export default function CheckoutCartProduct({
         </Stack>
       </TableCell>
 
-      <TableCell>{formatCurrency(price)}</TableCell>
+      <TableCell>{formatCurrency(priceSale)}</TableCell>
 
       <TableCell>
         <Box sx={{ width: 88, textAlign: 'right' }}>
@@ -84,7 +84,9 @@ export default function CheckoutCartProduct({
         </Box>
       </TableCell>
 
-      <TableCell align="right">{formatCurrency(price * quantity)}</TableCell>
+      <TableCell align="right">
+        {formatCurrency(priceSale * quantity)}
+      </TableCell>
 
       <TableCell align="right" sx={{ px: 1 }}>
         <IconButton onClick={onDelete}>

@@ -8,6 +8,7 @@ export type ICheckoutItem = {
   coverUrl: string;
   available: number;
   price: number;
+  priceSale: number;
   colors: string[];
   size: string;
   quantity: number;

@@ -50,7 +50,7 @@ export function CheckoutProvider({ children }: Props) {
 
     const subTotal: number = state.items.reduce(
       (total: number, item: ICheckoutItem) =>
-        total + item.quantity * item.price,
+        total + item.quantity * item.priceSale,
       0
     );
 

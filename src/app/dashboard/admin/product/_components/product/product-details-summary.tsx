@@ -76,6 +76,7 @@ export default function ProductDetailsSummary({
     coverUrl,
     available,
     price,
+    priceSale,
     colors: colors[0],
     size: sizes && sizes.length > 0 ? sizes[0] : '', // Always defined
     quantity: available < 1 ? 0 : 1,
@@ -85,9 +86,9 @@ export default function ProductDetailsSummary({
     defaultValues,
   });
 
-  const { reset, watch, control, handleSubmit } = methods;
+  const { reset, control, handleSubmit } = methods;
 
-  const values = watch();
+  // const values = watch();
 
   useEffect(() => {
     if (product) {
@@ -99,11 +100,11 @@ export default function ProductDetailsSummary({
   const onSubmit = handleSubmit(async (data) => {
     try {
       if (!existProduct) {
-        onAddCart?.({
-          ...data,
-          colors: [values.colors],
-          subTotal: data.price * data.quantity,
-        });
+        // onAddCart?.({
+        //   ...data,
+        //   colors: [values.colors],
+        //   subTotal: data.priceSale * data.quantity,
+        // });
       }
       onGotoStep?.(0);
       router.push(paths.product.checkout);
@@ -114,15 +115,15 @@ export default function ProductDetailsSummary({
 
   const handleAddCart = useCallback(() => {
     try {
-      onAddCart?.({
-        ...values,
-        colors: [values.colors],
-        subTotal: values.price * values.quantity,
-      });
+      // onAddCart?.({
+      //   ...values,
+      //   colors: [values.colors],
+      //   subTotal: values.price * values.quantity,
+      // });
     } catch (error) {
       console.error(error);
     }
-  }, [onAddCart, values]);
+  }, []);
 
   const renderPrice = (
     <Box sx={{ typography: 'h5' }}>

@@ -6,6 +6,7 @@ import { HOST_API } from '@/src/config-global';
 import Iconify from '@/src/components/iconify';
 import useIPInfo from '@/src/hooks/use-ip-info';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useCurrency } from '@/src/hooks/use-currency';
 import { countries } from '@/src/assets/data/countries';
 import { useMemo, useState, useEffect, useCallback } from 'react';
 import { fCurrency, getLocaleCode } from '@/src/utils/format-number';
@@ -66,6 +67,8 @@ export default function ProductNewEditForm({ currentProduct }: Props) {
 
   const { symbol } = getLocaleCode();
 
+  const { formatCurrency } = useCurrency();
+
   const { enqueueSnackbar } = useSnackbar();
 
   const mdUp = useResponsive('up', 'md');
@@ -84,6 +87,14 @@ export default function ProductNewEditForm({ currentProduct }: Props) {
     tags: Yup.array().min(2, 'Must have at least 2 tags'),
     category: Yup.string().required('Category is required'),
     price: Yup.number().moreThan(0, `Price should not be ${fCurrency(0.0)}`),
+    priceSale: Yup.number().when('price', {
+      is: (price: number) => price > 0,
+      then: (schema) =>
+        schema.max(
+          Yup.ref('price'),
+          'Sale price should be less than regular price'
+        ),
+    }),
     description: Yup.string().required('Description is required'),
     publish: Yup.boolean().required('Publish status is required'),
     // not required
@@ -150,6 +161,8 @@ export default function ProductNewEditForm({ currentProduct }: Props) {
   const values = watch();
   const watchCountry = watch('country');
   const sellerWhatsApp = watch('sellerWhatsApp');
+  const price = watch('price');
+  const priceSale = watch('priceSale');
 
   // Revalidar el teléfono cuando cambia el país
   useEffect(() => {
@@ -537,7 +550,7 @@ export default function ProductNewEditForm({ currentProduct }: Props) {
             <RHFTextField
               name="price"
               label="Regular Price"
-              placeholder={fCurrency(0.0)}
+              placeholder={formatCurrency(0.0)}
               type="number"
               InputLabelProps={{ shrink: true }}
               InputProps={{
@@ -554,7 +567,7 @@ export default function ProductNewEditForm({ currentProduct }: Props) {
             <RHFTextField
               name="priceSale"
               label="Sale Price"
-              placeholder={fCurrency(0.0)}
+              placeholder={formatCurrency(0.0)}
               type="number"
               InputLabelProps={{ shrink: true }}
               InputProps={{
@@ -567,6 +580,28 @@ export default function ProductNewEditForm({ currentProduct }: Props) {
                 ),
               }}
             />
+
+            <Stack
+              direction="row"
+              spacing={0.5}
+              sx={{ typography: 'subtitle1' }}
+            >
+              <span>Preview Price:</span>
+              {price && (
+                <Box
+                  component="span"
+                  sx={{
+                    color: 'text.disabled',
+                    textDecoration: 'line-through',
+                  }}
+                >
+                  {formatCurrency(price)}
+                </Box>
+              )}
+              {priceSale && (
+                <Box component="span">{formatCurrency(priceSale)}</Box>
+              )}
+            </Stack>
 
             <FormControlLabel
               control={

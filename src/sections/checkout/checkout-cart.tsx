@@ -72,7 +72,7 @@ export default function CheckoutCart() {
     checkout.items.forEach((item, index) => {
       message += `*${index + 1}. ${item.name}*\n`;
       message += `    ID: ${item.productId || item.id}\n`;
-      message += `    Precio unitario: ${fCurrency(item.price)}\n`;
+      message += `    Precio unitario: ${fCurrency(item.priceSale)}\n`;
 
       // Información de especificaciones seleccionadas
       if (item.size) {
@@ -84,7 +84,7 @@ export default function CheckoutCart() {
       }
 
       message += `    Cantidad: ${item.quantity}\n`;
-      message += `    Subtotal: ${fCurrency(item.price * item.quantity)}\n`;
+      message += `    Subtotal: ${fCurrency(item.priceSale * item.quantity)}\n`;
 
       // Separador entre productos
       if (index < checkout.items.length - 1) {
@@ -136,91 +136,91 @@ export default function CheckoutCart() {
   };
 
   // Versión alternativa: si los productos tienen diferentes vendedores
-  const handleWhatsAppOrderMultipleSellers = () => {
-    // Agrupar productos por vendedor (por si acaso)
-    const sellerGroups: Record<string, any[]> = {};
+  // const handleWhatsAppOrderMultipleSellers = () => {
+  //   // Agrupar productos por vendedor (por si acaso)
+  //   const sellerGroups: Record<string, any[]> = {};
 
-    checkout.items.forEach((item) => {
-      const sellerId = item.productId || 'default';
+  //   checkout.items.forEach((item) => {
+  //     const sellerId = item.productId || 'default';
 
-      if (!sellerGroups[sellerId]) {
-        sellerGroups[sellerId] = [];
-      }
+  //     if (!sellerGroups[sellerId]) {
+  //       sellerGroups[sellerId] = [];
+  //     }
 
-      sellerGroups[sellerId].push(item);
-    });
+  //     sellerGroups[sellerId].push(item);
+  //   });
 
-    // Si hay más de un vendedor, mostrar advertencia
-    const sellerCount = Object.keys(sellerGroups).length;
+  //   // Si hay más de un vendedor, mostrar advertencia
+  //   const sellerCount = Object.keys(sellerGroups).length;
 
-    if (sellerCount > 1) {
-      const confirmMessage = `Has seleccionado productos de ${sellerCount} vendedores diferentes. Se abrirán ${sellerCount} conversaciones de WhatsApp. ¿Deseas continuar?`;
+  //   if (sellerCount > 1) {
+  //     const confirmMessage = `Has seleccionado productos de ${sellerCount} vendedores diferentes. Se abrirán ${sellerCount} conversaciones de WhatsApp. ¿Deseas continuar?`;
 
-      if (!window.confirm(confirmMessage)) {
-        return;
-      }
+  //     if (!window.confirm(confirmMessage)) {
+  //       return;
+  //     }
 
-      // Abrir conversación para cada vendedor
-      Object.entries(sellerGroups).forEach(([sellerId, products], index) => {
-        const firstProduct = products[0];
-        const sellerName = firstProduct.sellerName || `Vendedor ${index + 1}`;
-        const { sellerWhatsApp } = firstProduct;
-        const sellerCountry = firstProduct.country || 'Costa Rica';
+  //     // Abrir conversación para cada vendedor
+  //     Object.entries(sellerGroups).forEach(([sellerId, products], index) => {
+  //       const firstProduct = products[0];
+  //       const sellerName = firstProduct.sellerName || `Vendedor ${index + 1}`;
+  //       const { sellerWhatsApp } = firstProduct;
+  //       const sellerCountry = firstProduct.country || 'Costa Rica';
 
-        const countryCode =
-          countries.find((country) => country.label === sellerCountry)?.phone ||
-          '506';
+  //       const countryCode =
+  //         countries.find((country) => country.label === sellerCountry)?.phone ||
+  //         '506';
 
-        if (sellerWhatsApp) {
-          const sellerPhone = `+${countryCode}${sellerWhatsApp}`;
+  //       if (sellerWhatsApp) {
+  //         const sellerPhone = `+${countryCode}${sellerWhatsApp}`;
 
-          // Generar mensaje para este vendedor específico
-          let message = `*PEDIDO PARA ${sellerName.toUpperCase()}*\n\n`;
-          message += `*Fecha:* ${new Date().toLocaleDateString()}\n`;
-          message += `*Cliente:* ${
-            authenticated ? 'Usuario registrado' : 'Cliente nuevo'
-          }\n\n`;
+  //         // Generar mensaje para este vendedor específico
+  //         let message = `*PEDIDO PARA ${sellerName.toUpperCase()}*\n\n`;
+  //         message += `*Fecha:* ${new Date().toLocaleDateString()}\n`;
+  //         message += `*Cliente:* ${
+  //           authenticated ? 'Usuario registrado' : 'Cliente nuevo'
+  //         }\n\n`;
 
-          message += `*Productos solicitados:*\n`;
-          message += `══════════════════════════════════\n\n`;
+  //         message += `*Productos solicitados:*\n`;
+  //         message += `══════════════════════════════════\n\n`;
 
-          products.forEach((product, productIndex) => {
-            message += `*${productIndex + 1}. ${product.name}*\n`;
-            message += `   📋 ID: ${product.productId || product.id}\n`;
-            message += `   💰 Precio: ${fCurrency(product.price)}\n`;
-            message += `   🛒 Cantidad: ${product.quantity}\n`;
-            message += `   📏 Tamaño: ${product.size || 'N/A'}\n`;
-            message += `   💵 Subtotal: ${fCurrency(
-              product.price * product.quantity
-            )}\n\n`;
-          });
+  //         products.forEach((product, productIndex) => {
+  //           message += `*${productIndex + 1}. ${product.name}*\n`;
+  //           message += `   📋 ID: ${product.productId || product.id}\n`;
+  //           message += `   💰 Precio: ${fCurrency(product.price)}\n`;
+  //           message += `   🛒 Cantidad: ${product.quantity}\n`;
+  //           message += `   📏 Tamaño: ${product.size || 'N/A'}\n`;
+  //           message += `   💵 Subtotal: ${fCurrency(
+  //             product.price * product.quantity
+  //           )}\n\n`;
+  //         });
 
-          const sellerSubtotal = products.reduce(
-            (sum, product) => sum + product.price * product.quantity,
-            0
-          );
+  //         const sellerSubtotal = products.reduce(
+  //           (sum, product) => sum + product.price * product.quantity,
+  //           0
+  //         );
 
-          message += `*RESUMEN:*\n`;
-          message += `• Productos: ${products.length}\n`;
-          message += `• *Total: ${fCurrency(sellerSubtotal)}*\n\n`;
+  //         message += `*RESUMEN:*\n`;
+  //         message += `• Productos: ${products.length}\n`;
+  //         message += `• *Total: ${fCurrency(sellerSubtotal)}*\n\n`;
 
-          message += `¿Podrías confirmar la disponibilidad?`;
+  //         message += `¿Podrías confirmar la disponibilidad?`;
 
-          const whatsappUrl = `https://wa.me/${sellerPhone}?text=${encodeURIComponent(
-            message
-          )}`;
+  //         const whatsappUrl = `https://wa.me/${sellerPhone}?text=${encodeURIComponent(
+  //           message
+  //         )}`;
 
-          // Abrir con un pequeño delay para evitar bloqueos del navegador
-          setTimeout(() => {
-            window.open(whatsappUrl, '_blank');
-          }, index * 500); // 500ms de delay entre cada ventana
-        }
-      });
-    } else {
-      // Solo un vendedor, usar la función simple
-      handleWhatsAppOrder();
-    }
-  };
+  //         // Abrir con un pequeño delay para evitar bloqueos del navegador
+  //         setTimeout(() => {
+  //           window.open(whatsappUrl, '_blank');
+  //         }, index * 500); // 500ms de delay entre cada ventana
+  //       }
+  //     });
+  //   } else {
+  //     // Solo un vendedor, usar la función simple
+  //     handleWhatsAppOrder();
+  //   }
+  // };
 
   return (
     <Grid container spacing={3}>

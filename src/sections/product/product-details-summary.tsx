@@ -81,6 +81,7 @@ export default function ProductDetailsSummary({
     coverUrl,
     available,
     price,
+    priceSale,
     colors: colors[0],
     size: sizes && sizes.length > 0 ? sizes[0] : '', // Always defined
     quantity: available < 1 ? 0 : 1,
@@ -112,6 +113,7 @@ export default function ProductDetailsSummary({
           ...data,
           colors: [values.colors],
           subTotal: data.price * data.quantity,
+          priceSale: data.priceSale || 0,
         });
       }
       onGotoStep?.(0);
@@ -131,6 +133,7 @@ export default function ProductDetailsSummary({
         ...values,
         colors: [values.colors],
         subTotal: values.price * values.quantity,
+        priceSale: values.priceSale || 0,
       });
     } catch (error) {
       console.error(error);
@@ -139,7 +142,7 @@ export default function ProductDetailsSummary({
 
   const renderPrice = (
     <Box sx={{ typography: 'h5' }}>
-      {priceSale && (
+      {price && (
         <Box
           component="span"
           sx={{
@@ -148,11 +151,11 @@ export default function ProductDetailsSummary({
             mr: 0.5,
           }}
         >
-          {formatCurrency(priceSale)}
+          {formatCurrency(price)}
         </Box>
       )}
 
-      {formatCurrency(price)}
+      {priceSale && formatCurrency(priceSale)}
     </Box>
   );
 
@@ -371,7 +374,7 @@ export default function ProductDetailsSummary({
         // Información básica
         message += `*Producto:* ${product.name}\n`;
         message += `*ID Referencia: ${product.productId}\n\n`;
-        message += `*Precio:* ${formatCurrency(product.price)}\n`;
+        message += `*Precio:* ${formatCurrency(product.priceSale)}\n`;
         if (product.inventoryType) {
           message += `*Disponibilidad:* ${
             inventoryStatusOptions.find(

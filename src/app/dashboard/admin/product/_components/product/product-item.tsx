@@ -50,6 +50,7 @@ export default function ProductItem({ product }: Props) {
       coverUrl,
       available,
       price,
+      priceSale: priceSale || 0,
       colors: [colors[0]],
       size: sizes[0],
       quantity: 1,
@@ -139,16 +140,16 @@ export default function ProductItem({ product }: Props) {
         <ColorPreview colors={colors} />
 
         <Stack direction="row" spacing={0.5} sx={{ typography: 'subtitle1' }}>
-          {priceSale && (
+          {price && (
             <Box
               component="span"
               sx={{ color: 'text.disabled', textDecoration: 'line-through' }}
             >
-              {fCurrency(priceSale)}
+              {fCurrency(price)}
             </Box>
           )}
 
-          <Box component="span">{fCurrency(price)}</Box>
+          <Box component="span">{fCurrency(priceSale)}</Box>
         </Stack>
       </Stack>
     </Stack>
