@@ -7,8 +7,8 @@ import { IProductItem } from 'src/types/product';
 // ----------------------------------------------------------------------
 
 export function useGetProducts() {
-  // const URL = endpoints.admin.product.list;
-  const URL = endpoints.petsmarket.listPublished;
+  const URL = endpoints.admin.product.list;
+  // const URL = endpoints.petsmarket.listPublished;
 
   const { data, isLoading, error, isValidating } = useSWR(URL, fetcher);
 
