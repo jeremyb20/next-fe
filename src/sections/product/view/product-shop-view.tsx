@@ -13,7 +13,7 @@ import { paths } from 'src/routes/paths';
 import { useBoolean } from 'src/hooks/use-boolean';
 import { useDebounce } from 'src/hooks/use-debounce';
 
-import { useGetProducts, useSearchProducts } from 'src/api/product';
+import { useSearchProducts, useGetProductsPublished } from 'src/api/product';
 import {
   PRODUCT_SORT_OPTIONS,
   PRODUCT_COLOR_OPTIONS,
@@ -66,7 +66,8 @@ export default function ProductShopView() {
 
   const [filters, setFilters] = useState(defaultFilters);
 
-  const { products, productsLoading, productsEmpty } = useGetProducts();
+  const { products, productsLoading, productsEmpty } =
+    useGetProductsPublished();
 
   const { searchResults, searchLoading } = useSearchProducts(debouncedQuery);
 
