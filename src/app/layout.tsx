@@ -70,7 +70,7 @@ type Props = {
 
 export default function RootLayout({ children }: Props) {
   return (
-    <html lang="en" className={primaryFont.className}>
+    <html lang="en" className={primaryFont.className} translate="no">
       <body>
         <LocaleProvider>
           <QueryProvider>
