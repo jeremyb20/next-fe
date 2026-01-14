@@ -45,9 +45,9 @@ export default function ContactMap({ contacts }: Props) {
     <StyledRoot>
       <Map
         initialViewState={{
-          latitude: 12,
-          longitude: 42,
-          zoom: 2,
+          latitude: 9.9281, // San José
+          longitude: -84.0907,
+          zoom: 8, // Zoom adecuado para ver todo el país
         }}
         mapStyle={`mapbox://styles/mapbox/${lightMode ? 'light' : 'dark'}-v10`}
         mapboxAccessToken={MAPBOX_API}
@@ -72,7 +72,7 @@ export default function ContactMap({ contacts }: Props) {
             latitude={popupInfo.latlng[0]}
             onClose={() => setPopupInfo(null)}
             sx={{
-              '& .mapboxgl-popup-content': { bgcolor: 'common.white' },
+              '& .mapboxgl-popup-content': { bgcolor: 'background.paper' },
               '&.mapboxgl-popup-anchor-bottom .mapboxgl-popup-tip': {
                 borderTopColor: '#FFF',
               },

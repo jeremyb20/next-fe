@@ -14,24 +14,9 @@ import { varFade, MotionContainer } from 'src/components/animate';
 
 const CONTACTS = [
   {
-    country: 'Bali',
-    address: '508 Bridle Avenue Newnan, GA 30263',
+    country: 'Costa Rica',
+    address: 'San José, Costa Rica, Desamparados CR 10307',
     phoneNumber: '(239) 555-0108',
-  },
-  {
-    country: 'London',
-    address: '508 Bridle Avenue Newnan, GA 30263',
-    phoneNumber: '(319) 555-0115',
-  },
-  {
-    country: 'Prague',
-    address: '508 Bridle Avenue Newnan, GA 30263',
-    phoneNumber: '(252) 555-0126',
-  },
-  {
-    country: 'Moscow',
-    address: '508 Bridle',
-    phoneNumber: '(307) 555-0133',
   },
 ];
 
@@ -45,7 +30,7 @@ export default function ContactHero() {
       sx={{
         ...bgGradient({
           color: alpha(theme.palette.grey[900], 0.8),
-          imgUrl: '/assets/images/contact/hero.jpg',
+          imgUrl: '/assets/images/contact/hero.jpeg',
         }),
         height: { md: 560 },
         py: { xs: 10, md: 0 },

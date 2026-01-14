@@ -115,14 +115,19 @@ export const _notifications = [...Array(3)].map((_, index) => ({
 
 export const _mapContact = [
   {
-    latlng: [33, 65],
-    address: _mock.fullAddress(1),
-    phoneNumber: _mock.phoneNumber(1),
+    latlng: [9.9281, -84.0907], // San José, Costa Rica
+    address: 'San José, Costa Rica, Avenida Central, Calle 1',
+    phoneNumber: '+506 2222-2222',
+    city: 'San José',
+    description: 'Oficinas principales y centro de distribución',
   },
+
   {
-    latlng: [-12.5, 18.5],
-    address: _mock.fullAddress(2),
-    phoneNumber: _mock.phoneNumber(2),
+    latlng: [9.976, -84.0068], // Cartago, Costa Rica
+    address: 'Cartago, Costa Rica, Centro Histórico',
+    phoneNumber: '+506 2551-2020',
+    city: 'Cartago',
+    description: 'Distribuidor autorizado',
   },
 ];
 
