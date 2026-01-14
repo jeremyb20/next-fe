@@ -1,4 +1,5 @@
 import { sub } from 'date-fns';
+import { useManagerUser } from '@/src/hooks/use-manager-user';
 import { useRef, useMemo, useState, useCallback } from 'react';
 
 import Stack from '@mui/material/Stack';
@@ -7,8 +8,6 @@ import IconButton from '@mui/material/IconButton';
 
 import { paths } from 'src/routes/paths';
 import { useRouter } from 'src/routes/hooks';
-
-import { useManagerUser } from '@/src/hooks/use-manager-user';
 
 import uuidv4 from 'src/utils/uuidv4';
 

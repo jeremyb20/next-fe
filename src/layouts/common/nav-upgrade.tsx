@@ -1,3 +1,7 @@
+import { useSnackbar } from 'notistack';
+import Iconify from '@/src/components/iconify';
+import { useAuthContext } from '@/src/auth/hooks';
+import { useRouter } from '@/src/routes/hooks/use-router';
 import { useManagerUser } from '@/src/hooks/use-manager-user';
 
 import Box from '@mui/material/Box';
@@ -6,15 +10,25 @@ import Button from '@mui/material/Button';
 import Avatar from '@mui/material/Avatar';
 import Typography from '@mui/material/Typography';
 
-import { paths } from 'src/routes/paths';
-
-import Label from 'src/components/label';
+// import Label from 'src/components/label';
 
 // ----------------------------------------------------------------------
 
 export default function NavUpgrade() {
   const { user } = useManagerUser();
+  const { logout } = useAuthContext();
+  const router = useRouter();
+  const { enqueueSnackbar } = useSnackbar();
 
+  const handleLogout = async () => {
+    try {
+      await logout();
+      router.replace('/');
+    } catch (error) {
+      console.error(error);
+      enqueueSnackbar('Unable to logout!', { variant: 'error' });
+    }
+  };
   return (
     <Stack
       sx={{
@@ -33,7 +47,7 @@ export default function NavUpgrade() {
             {user?.displayName?.charAt(0).toUpperCase()}
           </Avatar>
 
-          <Label
+          {/* <Label
             color="success"
             variant="filled"
             sx={{
@@ -46,7 +60,7 @@ export default function NavUpgrade() {
             }}
           >
             Free
-          </Label>
+          </Label> */}
         </Box>
 
         <Stack spacing={0.5} sx={{ mb: 2, mt: 1.5, width: 1 }}>
@@ -61,11 +75,11 @@ export default function NavUpgrade() {
 
         <Button
           variant="contained"
-          href={paths.minimalUI}
-          target="_blank"
           rel="noopener"
+          onClick={() => handleLogout()}
         >
-          Upgrade to Pro
+          Logout{' '}
+          <Iconify icon="solar:login-2-linear" width={20} sx={{ ml: 1 }} />
         </Button>
       </Stack>
     </Stack>

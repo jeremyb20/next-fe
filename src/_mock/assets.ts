@@ -416,6 +416,8 @@ export const _companyNames = [
 // ----------------------------------------------------------------------
 
 export const _tags = [
+  'Pets',
+  'Resin Art',
   'Technology',
   'Marketing',
   'Design',
@@ -435,7 +437,6 @@ export const _tags = [
   'Education',
   'Motivation',
   'Gaming',
-  'Pets',
   'Cooking',
   'Finance',
   'Selfcare',

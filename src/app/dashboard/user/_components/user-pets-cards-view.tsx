@@ -7,7 +7,6 @@ import { paths } from '@/src/routes/paths';
 import { IUser, IPetProfile } from '@/src/types/api';
 import { useBoolean } from '@/src/hooks/use-boolean';
 import { useMemo, useState, useCallback } from 'react';
-import { useResponsive } from '@/src/hooks/use-responsive';
 import { useManagerUser } from '@/src/hooks/use-manager-user';
 import { useSettingsContext } from '@/src/components/settings';
 import FilterToolbar from '@/src/components/filters/filter-toolbar';
@@ -56,8 +55,6 @@ export default function UserPetCardsView() {
   const registerPetModal = useBoolean();
 
   const router = useRouter();
-
-  const smUp = useResponsive('up', 'sm');
 
   const settings = useSettingsContext();
 

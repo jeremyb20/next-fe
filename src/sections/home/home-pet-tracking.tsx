@@ -1,5 +1,6 @@
 import { m } from 'framer-motion';
 import Iconify from '@/src/components/iconify';
+import { useTranslation } from 'react-i18next';
 
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
@@ -9,6 +10,8 @@ import Typography from '@mui/material/Typography';
 import { varFade, MotionViewport } from 'src/components/animate';
 
 export default function HomePetTracking() {
+  const { t } = useTranslation();
+
   return (
     <Box sx={{ bgcolor: 'background.neutral', py: { xs: 10, md: 15 } }}>
       <Container component={MotionViewport}>
@@ -20,24 +23,26 @@ export default function HomePetTracking() {
           <Box sx={{ flex: 1 }}>
             <m.div variants={varFade().inUp}>
               <Typography variant="h2" gutterBottom>
-                Seguimiento de Salud Completo
+                {t('Complete Health Monitoring')}
               </Typography>
             </m.div>
 
             <m.div variants={varFade().inUp}>
               <Typography variant="h6" color="text.secondary" paragraph>
-                Mantén un registro detallado de la salud de tu mascota
+                {t(
+                  'Monitor your pets health and receive personalized recommendations.'
+                )}
               </Typography>
             </m.div>
 
             <Stack spacing={2}>
               {[
-                'Control de vacunas y recordatorios',
-                'Historial de tratamientos médicos',
-                'Registro de peso y crecimiento',
-                'Alertas de próximas citas',
-                'Medicamentos y dosis',
-                'Notas del veterinario',
+                'Complete Health Monitoring',
+                'Monitor your pets health and receive personalized recommendations.',
+                'Vaccination tracking and reminders',
+                'Health records and medical history',
+                'Appointment scheduling with vets and groomers',
+                'Personalized care recommendations',
               ].map((item, index) => (
                 <m.div key={item} variants={varFade().inUp}>
                   <Stack direction="row" spacing={2} alignItems="center">
@@ -49,7 +54,7 @@ export default function HomePetTracking() {
                         bgcolor: 'primary.main',
                       }}
                     />
-                    <Typography>{item}</Typography>
+                    <Typography>{t(item)}</Typography>
                   </Stack>
                 </m.div>
               ))}

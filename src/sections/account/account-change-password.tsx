@@ -1,6 +1,9 @@
 import * as Yup from 'yup';
 import { useForm } from 'react-hook-form';
+import { endpoints } from '@/src/utils/axios';
+import { HOST_API } from '@/src/config-global';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useCreateGenericMutation } from '@/src/hooks/user-generic-mutation';
 
 import Card from '@mui/material/Card';
 import Stack from '@mui/material/Stack';
@@ -18,6 +21,7 @@ import FormProvider, { RHFTextField } from 'src/components/hook-form';
 
 export default function AccountChangePassword() {
   const { enqueueSnackbar } = useSnackbar();
+  const { mutateAsync } = useCreateGenericMutation();
 
   const password = useBoolean();
 
@@ -30,7 +34,12 @@ export default function AccountChangePassword() {
         'no-match',
         'New password must be different than old password',
         (value, { parent }) => value !== parent.oldPassword
+      )
+      .matches(
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]/,
+        'Password must contain at least one uppercase letter, one lowercase letter, one number and one special character'
       ),
+
     confirmNewPassword: Yup.string().oneOf(
       [Yup.ref('newPassword')],
       'Passwords must match'
@@ -56,7 +65,12 @@ export default function AccountChangePassword() {
 
   const onSubmit = handleSubmit(async (data) => {
     try {
-      await new Promise((resolve) => setTimeout(resolve, 500));
+      // await new Promise((resolve) => setTimeout(resolve, 500));
+      await mutateAsync({
+        payload: data,
+        pEndpoint: `${HOST_API}${endpoints.user.updatePassword}`,
+        method: 'PUT',
+      });
       reset();
       enqueueSnackbar('Update success!');
       console.info('DATA', data);

@@ -1,5 +1,6 @@
 import { m, useScroll } from 'framer-motion';
 import { APP_NAME } from '@/src/config-global';
+import { useTranslation } from 'react-i18next';
 import { useRef, useState, useEffect, useCallback } from 'react';
 
 import Box from '@mui/material/Box';
@@ -12,8 +13,6 @@ import { alpha, styled } from '@mui/material/styles';
 
 import { paths } from 'src/routes/paths';
 import { RouterLink } from 'src/routes/components';
-
-import { useResponsive } from 'src/hooks/use-responsive';
 
 import { HEADER } from 'src/layouts/config-layout';
 import { bgGradient, textGradient } from 'src/theme/css';
@@ -71,10 +70,10 @@ const StyledTextGradient = styled(m.h1)(({ theme }) => ({
 }));
 
 export default function HomeHero() {
-  const mdUp = useResponsive('up', 'md');
   const heroRef = useRef<HTMLDivElement | null>(null);
   const { scrollY } = useScroll();
   const [percent, setPercent] = useState(0);
+  const { t } = useTranslation();
 
   const getScroll = useCallback(() => {
     let heroHeight = 0;
@@ -115,8 +114,8 @@ export default function HomeHero() {
             textAlign: 'center',
           }}
         >
-          La App Completa <br />
-          para el Cuidado de tu Mascota
+          {t('The Complete App')} <br />
+          {t('for Caring for Your Pet')}
         </Typography>
       </m.div>
 
@@ -136,8 +135,11 @@ export default function HomeHero() {
 
       <m.div variants={varFade().in}>
         <Typography variant="body2" sx={{ textAlign: 'center', py: 2 }}>
-          Registra hasta 10 mascotas, gestiona su salud, agenda citas y disfruta
-          de descuentos exclusivos
+          {/* Registra hasta 10 mascotas, gestiona su salud, agenda citas y disfruta
+          de descuentos exclusivos */}
+          {t(
+            'Register up to 10 pets, manage their health, schedule appointments and enjoy exclusive discounts'
+          )}
         </Typography>
       </m.div>
 
@@ -156,7 +158,7 @@ export default function HomeHero() {
               variant="contained"
               startIcon={<Iconify icon="mdi:paw" width={24} />}
             >
-              Comenzar Ahora
+              {t('Get Started')}
             </Button>
 
             {/* <Link
@@ -183,8 +185,7 @@ export default function HomeHero() {
             component={RouterLink}
             href={paths.auth.login}
           >
-            {/* Soy Veterinario */}
-            Ya tengo cuenta
+            {t('I have an account')}
           </Button>
         </Stack>
       </m.div>

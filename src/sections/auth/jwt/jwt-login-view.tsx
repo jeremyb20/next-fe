@@ -57,7 +57,6 @@ export default function JwtLoginView() {
   });
 
   const {
-    reset,
     handleSubmit,
     watch,
     formState: { isSubmitting },
@@ -73,7 +72,7 @@ export default function JwtLoginView() {
       router.push(returnTo || PATH_AFTER_LOGIN);
     } catch (error) {
       console.error(error);
-      reset();
+      // reset();
       setErrorMsg(typeof error === 'string' ? error : error.message);
     }
   });
@@ -126,6 +125,7 @@ export default function JwtLoginView() {
         color="inherit"
         underline="always"
         sx={{ alignSelf: 'flex-end' }}
+        href={paths.auth.forgotPassword}
       >
         Forgot password?
       </Link>

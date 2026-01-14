@@ -39,6 +39,10 @@ export const PRODUCT_COLOR_NAME_OPTIONS = [
 ];
 
 export const PRODUCT_SIZE_OPTIONS = [
+  { value: 'small', label: 'Small' },
+  { value: 'medium', label: 'Medium' },
+  { value: 'large', label: 'Large' },
+  { value: 'xlarge', label: 'X-Large' },
   { value: '7', label: '7' },
   { value: '8', label: '8' },
   { value: '8.5', label: '8.5' },
@@ -78,6 +82,10 @@ export const PRODUCT_SORT_OPTIONS = [
 
 export const PRODUCT_CATEGORY_GROUP_OPTIONS = [
   {
+    group: 'Pets',
+    classify: ['Food', 'Collars & leashes', 'Toys', 'Apparel & accessories'],
+  },
+  {
     group: 'Clothing',
     classify: ['Shirts', 'T-shirts', 'Jeans', 'Leather', 'Accessories'],
   },
@@ -88,10 +96,6 @@ export const PRODUCT_CATEGORY_GROUP_OPTIONS = [
   {
     group: 'Accessories',
     classify: ['Shoes', 'Backpacks and bags', 'Bracelets', 'Face masks'],
-  },
-  {
-    group: 'Pets',
-    classify: ['Food', 'Collars & leashes', 'Toys', 'Apparel & accessories'],
   },
 ];
 

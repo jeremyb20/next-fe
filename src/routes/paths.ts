@@ -83,6 +83,7 @@ export const paths = {
     login: `${ROOTS.AUTH}/login`,
     register: `${ROOTS.AUTH}/register`,
     verify: `${ROOTS.AUTH}/verify`,
+    forgotPassword: `/forgot`,
   },
   authDemo: {
     classic: {

@@ -53,11 +53,13 @@ const ScheduleNotificationForm = ({
 
     try {
       const scheduledTime = new Date(`${formData.date}T${formData.time}`);
+      const now = new Date();
 
-      if (scheduledTime <= new Date()) {
+      // Validación: si la fecha/hora seleccionada es anterior al momento actual
+      if (scheduledTime <= now) {
         setMessage({
           type: 'error',
-          text: 'Please select a future date and time',
+          text: 'Please select a date and time in the future',
         });
         setIsSubmitting(false);
         return;
@@ -116,6 +118,23 @@ const ScheduleNotificationForm = ({
     }
   };
 
+  // Función para obtener la fecha mínima (hoy)
+  const getMinDate = () => {
+    const today = new Date();
+    return today.toISOString().split('T')[0];
+  };
+
+  // Función para obtener la hora mínima si la fecha seleccionada es hoy
+  const getMinTime = () => {
+    if (formData.date === getMinDate()) {
+      const now = new Date();
+      // Agregar 1 minuto al tiempo actual para evitar segundos/milisegundos de diferencia
+      const nextMinute = new Date(now.getTime() + 60000);
+      return nextMinute.toTimeString().slice(0, 5); // Formato HH:mm
+    }
+    return undefined;
+  };
+
   return (
     <Box component="form" onSubmit={handleSubmit}>
       <Typography variant="h6" gutterBottom>
@@ -156,6 +175,7 @@ const ScheduleNotificationForm = ({
             value={formData.date}
             onChange={handleFormChange('date')}
             InputLabelProps={{ shrink: true }}
+            inputProps={{ min: getMinDate() }} // Establecer fecha mínima como hoy
             fullWidth
             required
             variant="outlined"
@@ -167,6 +187,9 @@ const ScheduleNotificationForm = ({
             value={formData.time}
             onChange={handleFormChange('time')}
             InputLabelProps={{ shrink: true }}
+            inputProps={{
+              min: getMinTime(), // Si la fecha es hoy, establecer hora mínima
+            }}
             fullWidth
             required
             variant="outlined"

@@ -2,6 +2,7 @@ import { m } from 'framer-motion';
 import { endpoints } from '@/src/utils/axios';
 import { HOST_API } from '@/src/config-global';
 import { NotificationData } from '@/src/types/api';
+import { useManagerUser } from '@/src/hooks/use-manager-user';
 import { useFetchGetNotifications } from '@/src/hooks/use-fetch';
 import { useMemo, useState, useEffect, useCallback } from 'react';
 import { useCreateGenericMutation } from '@/src/hooks/user-generic-mutation';
@@ -29,13 +30,14 @@ import Scrollbar from 'src/components/scrollbar';
 import { varHover } from 'src/components/animate';
 
 import NotificationItem from './notification-item';
+import ScheduleNotificationForm from './components/schedule-notification-form';
 
 // ----------------------------------------------------------------------
 
 interface TabType {
   value: string;
   label: string;
-  count: number;
+  count: number | null;
 }
 
 // ----------------------------------------------------------------------
@@ -45,6 +47,8 @@ export default function NotificationsPopover() {
   const smUp = useResponsive('up', 'sm');
   const [currentTab, setCurrentTab] = useState<string>('all');
   const [showSettings, setShowSettings] = useState(false);
+  const { user } = useManagerUser();
+  const currentRole = user?.role;
   const { mutateAsync } = useCreateGenericMutation();
 
   // Usar el hook para obtener notificaciones reales
@@ -125,6 +129,15 @@ export default function NotificationsPopover() {
       label: 'Schedule',
       count: totalScheduled,
     },
+    ...(currentRole === 'admin'
+      ? [
+          {
+            value: 'newSchedule',
+            label: 'New Schedule',
+            count: null,
+          },
+        ]
+      : []),
   ];
 
   const handleMarkAllAsRead = () => {
@@ -212,7 +225,11 @@ export default function NotificationsPopover() {
                 'default'
               }
             >
-              {tab.count}
+              {tab.count !== null ? (
+                tab.count
+              ) : (
+                <Iconify icon="eva:plus-fill" />
+              )}
             </Label>
           }
           sx={{
@@ -242,6 +259,15 @@ export default function NotificationsPopover() {
   const renderScheduleTab = (
     <Box sx={{ p: 2 }}>
       <PushNotificationManager
+        onNotificationScheduled={refetchNotifications}
+        setNotifications={setNotifications}
+      />
+    </Box>
+  );
+
+  const renderNewScheduleTab = (
+    <Box sx={{ p: 2 }}>
+      <ScheduleNotificationForm
         onNotificationScheduled={refetchNotifications}
         setNotifications={setNotifications}
       />
@@ -296,7 +322,8 @@ export default function NotificationsPopover() {
         </Stack>
 
         <Divider />
-        {notifications.length === 0 && (
+        {currentTab === 'newSchedule' && renderNewScheduleTab}
+        {notifications.length === 0 && currentTab !== 'newSchedule' && (
           <Box sx={{ p: 2 }}>
             <Typography variant="h6" sx={{ textAlign: 'center' }}>
               No notifications available
@@ -305,13 +332,15 @@ export default function NotificationsPopover() {
         )}
         {renderContent()}
 
-        {!showSettings && currentTab !== 'schedule' && (
-          <Box sx={{ p: 1 }}>
-            <Button fullWidth size="large">
-              View All
-            </Button>
-          </Box>
-        )}
+        {!showSettings &&
+          currentTab !== 'schedule' &&
+          currentTab !== 'newSchedule' && (
+            <Box sx={{ p: 1 }}>
+              <Button fullWidth size="large">
+                View All
+              </Button>
+            </Box>
+          )}
       </Drawer>
     </>
   );

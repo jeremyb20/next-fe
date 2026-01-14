@@ -1,5 +1,6 @@
 import { m } from 'framer-motion';
 import Iconify from '@/src/components/iconify';
+import { useTranslation } from 'react-i18next';
 
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
@@ -16,27 +17,29 @@ const FEATURES = [
   {
     // icon: '/assets/icons/pets/ic_pet_profile.svg',
     icon: 'uil:10-plus',
-    title: 'Perfil Digital',
+    title: 'Digital Profile',
     description:
-      'Hasta 10 mascotas por cuenta con información completa y accesible mediante código QR.',
+      'Up to 10 pets per account with complete information and accessible via QR code.',
   },
   {
     icon: 'uil:medical',
-    title: 'Historial Médico',
+    title: 'Medical History',
     description:
-      'Registro completo de vacunas, tratamientos y visitas al veterinario en un solo lugar.',
+      'Complete record of vaccines, treatments and veterinary visits in one place.',
   },
   {
     icon: 'carbon:array-dates',
-    title: 'Gestión de Citas',
+    title: 'Appointment Management',
     description:
-      'Agenda citas con veterinarios y peluqueros afiliados de manera rápida y sencilla.',
+      'Schedule appointments with affiliated veterinarians and groomers quickly and easily.',
   },
 ];
 
 // ----------------------------------------------------------------------
 
 export default function HomeFeatures() {
+  const { t } = useTranslation();
+
   return (
     <Container
       component={MotionViewport}
@@ -57,13 +60,13 @@ export default function HomeFeatures() {
             variant="overline"
             sx={{ color: 'text.disabled' }}
           >
-            Características Principales
+            {t('Key Features')}
           </Typography>
         </m.div>
 
         <m.div variants={varFade().inDown}>
           <Typography variant="h2">
-            Todo lo que necesitas <br /> para el cuidado de tu mascota
+            {t('Everything you need')} <br /> {t('for the care of your pet')}
           </Typography>
         </m.div>
       </Stack>
@@ -108,11 +111,11 @@ export default function HomeFeatures() {
               />
 
               <Typography variant="h5" sx={{ mt: 8, mb: 2 }}>
-                {feature.title}
+                {t(feature.title)}
               </Typography>
 
               <Typography sx={{ color: 'text.secondary' }}>
-                {feature.description}
+                {t(feature.description)}
               </Typography>
             </Card>
           </m.div>

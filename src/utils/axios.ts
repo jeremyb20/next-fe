@@ -102,6 +102,9 @@ export const endpoints = {
     addPetToAuthenticatedUser: '/api/user/addPetToAuthenticatedUser',
     getSettings: '/api/user/settings',
     updateSettings: '/api/user/updateSettings',
+    updatePassword: '/api/user/updatePassword',
+    forgotPassword: '/api/user/forgotPassword',
+    resetPassword: '/api/user/resetPassword',
   },
   mail: {
     list: '/api/mail/list',

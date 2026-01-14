@@ -1,4 +1,5 @@
 import { m } from 'framer-motion';
+import { useManagerUser } from '@/src/hooks/use-manager-user';
 
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
@@ -11,8 +12,6 @@ import Typography from '@mui/material/Typography';
 
 import { paths } from 'src/routes/paths';
 import { useRouter } from 'src/routes/hooks';
-
-import { useManagerUser } from '@/src/hooks/use-manager-user';
 
 import { useAuthContext } from 'src/auth/hooks';
 

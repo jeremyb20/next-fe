@@ -3,8 +3,8 @@ import { isEqual } from 'lodash';
 import { m } from 'framer-motion';
 import orderBy from 'lodash/orderBy';
 import { paths } from '@/src/routes/paths';
-import { useGetProducts } from '@/src/api/product';
 import EmptyContent from '@/src/components/empty-content';
+import { useGetProductsPublished } from '@/src/api/product';
 import { IProductItem, IProductFilters } from '@/src/types/product';
 
 import Box from '@mui/material/Box';
@@ -28,7 +28,8 @@ const defaultFilters: IProductFilters = {
 };
 // ----------------------------------------------------------------------
 export default function HomeShop() {
-  const { products, productsLoading, productsEmpty } = useGetProducts();
+  const { products, productsLoading, productsEmpty } =
+    useGetProductsPublished();
   const [filters] = useState(defaultFilters);
   const [sortBy] = useState('newest');
   const router = useRouter();

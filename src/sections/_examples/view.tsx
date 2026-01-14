@@ -2,6 +2,7 @@
 
 import { m } from 'framer-motion';
 import orderBy from 'lodash/orderBy';
+import { RoleBasedGuard } from '@/src/auth/guard';
 
 import Link from '@mui/material/Link';
 import Stack from '@mui/material/Stack';
@@ -20,7 +21,7 @@ import { muiNav, extraNav, foundationNav } from './config-navigation';
 
 export default function ComponentsView() {
   return (
-    <>
+    <RoleBasedGuard hasContent roles={['admin']} sx={{ py: 10 }}>
       <ComponentHero sx={{ py: 15 }}>
         <MotionContainer sx={{ textAlign: 'center' }}>
           <m.div variants={varFade().inUp}>
@@ -116,7 +117,7 @@ export default function ComponentsView() {
           </Grid>
         </Stack>
       </Container>
-    </>
+    </RoleBasedGuard>
   );
 }
 

@@ -1,10 +1,16 @@
 'use client';
 
 import * as Yup from 'yup';
+import { useState } from 'react';
+import { useSnackbar } from 'notistack';
 import { useForm } from 'react-hook-form';
+import { endpoints } from '@/src/utils/axios';
+import { HOST_API } from '@/src/config-global';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useCreateGenericMutation } from '@/src/hooks/user-generic-mutation';
 
 import Link from '@mui/material/Link';
+import { Alert } from '@mui/material';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import LoadingButton from '@mui/lab/LoadingButton';
@@ -20,6 +26,13 @@ import FormProvider, { RHFTextField } from 'src/components/hook-form';
 // ----------------------------------------------------------------------
 
 export default function ModernForgotPasswordView() {
+  const { mutateAsync } = useCreateGenericMutation();
+  const { enqueueSnackbar } = useSnackbar();
+  const [messageResponse, setMessageResponse] = useState({
+    status: '',
+    message: '',
+  });
+
   const ForgotPasswordSchema = Yup.object().shape({
     email: Yup.string()
       .required('Email is required')
@@ -42,10 +55,23 @@ export default function ModernForgotPasswordView() {
 
   const onSubmit = handleSubmit(async (data) => {
     try {
-      await new Promise((resolve) => setTimeout(resolve, 500));
+      const res = await mutateAsync({
+        payload: data,
+        pEndpoint: `${HOST_API}${endpoints.user.forgotPassword}`,
+        method: 'POST',
+      });
+      setMessageResponse({ status: 'success', message: res.message });
       console.info('DATA', data);
+      enqueueSnackbar('Request sent! Please check your email.');
     } catch (error) {
       console.error(error);
+      setMessageResponse({
+        status: 'error',
+        message:
+          typeof error === 'string'
+            ? error
+            : error.message || 'Something went wrong!',
+      });
     }
   });
 
@@ -101,6 +127,16 @@ export default function ModernForgotPasswordView() {
       {renderHead}
 
       {renderForm}
+
+      {!!messageResponse.message && (
+        <Alert
+          severity={messageResponse.status as 'error' | 'success'}
+          sx={{ my: 3 }}
+          onClose={() => setMessageResponse({ status: '', message: '' })}
+        >
+          {messageResponse.message}
+        </Alert>
+      )}
     </FormProvider>
   );
 }
