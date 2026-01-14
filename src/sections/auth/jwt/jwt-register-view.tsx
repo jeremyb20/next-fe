@@ -6,6 +6,8 @@ import { useState, useEffect } from 'react';
 import useIPInfo from '@/src/hooks/use-ip-info';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useSettingsContext } from '@/src/components/settings';
+import PrivacyPolicyModal from '@/src/app/privacy-policy/_components/privacy-policy-modal';
+import TermsAndConditionsModal from '@/src/app/terms-and-conditions/_components/terms-and-condition-modal';
 import {
   getPhoneHelperText,
   getPhonePlaceholder,
@@ -95,6 +97,28 @@ export default function JwtRegisterView() {
   } = methods;
   const watchCountry = watch('country');
   const watchPhone = watch('phone');
+  const [openTerms, setOpenTerms] = useState(false);
+  const [openPrivacyPolicy, setOpenPrivacyPolicy] = useState(false);
+
+  const handleClosePrivacyPolicy = () => {
+    setOpenPrivacyPolicy(false);
+  };
+
+  const handleAcceptPrivacyPolicy = () => {
+    setOpenPrivacyPolicy(false);
+  };
+
+  const handleOpenTerms = () => {
+    setOpenTerms(true);
+  };
+
+  const handleCloseTerms = () => {
+    setOpenTerms(false);
+  };
+
+  const handleAcceptTerms = () => {
+    setOpenTerms(false);
+  };
 
   const onSubmit = handleSubmit(async (data) => {
     try {
@@ -150,11 +174,15 @@ export default function JwtRegisterView() {
       }}
     >
       {'By signing up, I agree to '}
-      <Link underline="always" color="text.primary">
+      <Link underline="always" color="text.primary" onClick={handleOpenTerms}>
         Terms of Service
       </Link>
       {' and '}
-      <Link underline="always" color="text.primary">
+      <Link
+        underline="always"
+        color="text.primary"
+        onClick={() => setOpenPrivacyPolicy(true)}
+      >
         Privacy Policy
       </Link>
       .
@@ -273,6 +301,18 @@ export default function JwtRegisterView() {
           {errorMsg}
         </Alert>
       )}
+
+      <TermsAndConditionsModal
+        open={openTerms}
+        onClose={handleCloseTerms}
+        onAccept={handleAcceptTerms}
+      />
+
+      <PrivacyPolicyModal
+        open={openPrivacyPolicy}
+        onClose={handleClosePrivacyPolicy}
+        onAccept={handleAcceptPrivacyPolicy}
+      />
     </>
   );
 }

@@ -1,10 +1,10 @@
 'use client';
 
+import AboutUs from '../about-us';
 import AboutHero from '../about-hero';
-import AboutWhat from '../about-what';
-import AboutTeam from '../about-team';
-import AboutVision from '../about-vision';
-import AboutTestimonials from '../about-testimonials';
+// import AboutTeam from '../about-team';
+// import AboutVision from '../about-vision';
+// import AboutTestimonials from '../about-testimonials';
 
 // ----------------------------------------------------------------------
 
@@ -13,13 +13,15 @@ export default function AboutView() {
     <>
       <AboutHero />
 
-      <AboutWhat />
+      {/* <AboutWhat /> */}
 
-      <AboutVision />
+      <AboutUs />
+
+      {/* <AboutVision />
 
       <AboutTeam />
 
-      <AboutTestimonials />
+      <AboutTestimonials /> */}
     </>
   );
 }

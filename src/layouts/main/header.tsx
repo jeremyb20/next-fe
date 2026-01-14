@@ -34,11 +34,10 @@ export async function generateMetadata({
 }: {
   params: { lang: string };
 }): Promise<Metadata> {
-  console.log('params*************************************', params);
   return {
-    title: '***Minimal: The starting point for your next project',
+    title: '***Plaquitas para mascotas CR***',
     description:
-      'The most minimal ui library for react -- then start your project by including minimal components.',
+      'Crea un perfil digital único para tu mascota. Centraliza toda su información esencial —como datos médicos, contacto y características únicas— en un solo lugar. Es tu mejor herramienta para asegurar su rápida recuperación en caso de extravío.',
   };
 }
 

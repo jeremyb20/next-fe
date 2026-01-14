@@ -1,5 +1,6 @@
 import { m } from 'framer-motion';
 import { useState, useCallback } from 'react';
+import { EMAIL_SUPPORT } from '@/src/config-global';
 
 import Box from '@mui/material/Box';
 import Tab from '@mui/material/Tab';
@@ -139,7 +140,7 @@ export default function HomePricing() {
               color="inherit"
               size="large"
               variant="contained"
-              href="mailto:support@minimals.cc?subject=[Feedback] from Customer"
+              href={`mailto:${EMAIL_SUPPORT}?subject=[Feedback] from Customer`}
             >
               Contact us
             </Button>

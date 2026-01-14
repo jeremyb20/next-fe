@@ -1,3 +1,5 @@
+import { APP_NAME, EMAIL_SUPPORT } from '@/src/config-global';
+
 import Box from '@mui/material/Box';
 import Link from '@mui/material/Link';
 import Stack from '@mui/material/Stack';
@@ -21,7 +23,7 @@ import Iconify from 'src/components/iconify';
 
 const LINKS = [
   {
-    headline: 'Minimal',
+    headline: APP_NAME,
     children: [
       { name: 'About us', href: paths.about },
       { name: 'Contact us', href: paths.contact },
@@ -31,13 +33,13 @@ const LINKS = [
   {
     headline: 'Legal',
     children: [
-      { name: 'Terms and Condition', href: '#' },
-      { name: 'Privacy Policy', href: '#' },
+      { name: 'Terms and Condition', href: '/terms-and-conditions' },
+      { name: 'Privacy Policy', href: '/privacy-policy' },
     ],
   },
   {
     headline: 'Contact',
-    children: [{ name: 'support@minimals.cc', href: '#' }],
+    children: [{ name: EMAIL_SUPPORT, href: '#' }],
   },
 ];
 
@@ -104,9 +106,10 @@ export default function Footer() {
                 mx: { xs: 'auto', md: 'unset' },
               }}
             >
-              The starting point for your next project with Minimal UI Kit,
-              built on the newest version of Material-UI ©, ready to be
-              customized to your style.
+              Crea un perfil digital único para tu mascota. Centraliza toda su
+              información esencial —como datos médicos, contacto y
+              características únicas— en un solo lugar. Es tu mejor herramienta
+              para asegurar su rápida recuperación en caso de extravío.
             </Typography>
 
             <Stack

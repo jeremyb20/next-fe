@@ -1,4 +1,5 @@
 import { useState, useCallback } from 'react';
+import { EMAIL_SUPPORT } from '@/src/config-global';
 
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
@@ -119,7 +120,7 @@ export default function InvoiceDetails({ invoice }: Props) {
       <Grid xs={12} md={3} sx={{ py: 3, textAlign: 'right' }}>
         <Typography variant="subtitle2">Have a Question?</Typography>
 
-        <Typography variant="body2">support@minimals.cc</Typography>
+        <Typography variant="body2">{EMAIL_SUPPORT}</Typography>
       </Grid>
     </Grid>
   );

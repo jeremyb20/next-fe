@@ -2,15 +2,15 @@ import { m, MotionProps } from 'framer-motion';
 
 import Stack from '@mui/material/Stack';
 import Container from '@mui/material/Container';
-import TextField from '@mui/material/TextField';
+// import TextField from '@mui/material/TextField';
 import Box, { BoxProps } from '@mui/material/Box';
 import { alpha, useTheme } from '@mui/material/styles';
-import InputAdornment from '@mui/material/InputAdornment';
-import { outlinedInputClasses } from '@mui/material/OutlinedInput';
+// import InputAdornment from '@mui/material/InputAdornment';
+// import { outlinedInputClasses } from '@mui/material/OutlinedInput';
 
 import { bgGradient } from 'src/theme/css';
 
-import Iconify from 'src/components/iconify';
+// import Iconify from 'src/components/iconify';
 import { varFade, MotionContainer } from 'src/components/animate';
 
 // ----------------------------------------------------------------------
@@ -23,7 +23,7 @@ export default function FaqsHero() {
       sx={{
         ...bgGradient({
           color: alpha(theme.palette.grey[900], 0.8),
-          imgUrl: '/assets/images/faqs/hero.jpg',
+          imgUrl: '/assets/images/faqs/hero-cat.jpg',
         }),
         height: { md: 560 },
         py: { xs: 10, md: 0 },
@@ -60,7 +60,7 @@ export default function FaqsHero() {
             </Stack>
           </div>
 
-          <m.div variants={varFade().in}>
+          {/* <m.div variants={varFade().in}>
             <TextField
               fullWidth
               placeholder="Search support..."
@@ -79,13 +79,14 @@ export default function FaqsHero() {
                 maxWidth: 360,
                 [`& .${outlinedInputClasses.root}`]: {
                   bgcolor: 'common.white',
+                  color: 'text.secondary',
                 },
                 [`& .${outlinedInputClasses.input}`]: {
                   typography: 'subtitle1',
                 },
               }}
             />
-          </m.div>
+          </m.div> */}
         </Box>
       </Container>
     </Box>
