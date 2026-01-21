@@ -3,6 +3,7 @@
 import * as Yup from 'yup';
 import { useForm } from 'react-hook-form';
 import { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import useIPInfo from '@/src/hooks/use-ip-info';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useSettingsContext } from '@/src/components/settings';
@@ -44,6 +45,8 @@ import FormProvider, {
 export default function JwtRegisterView() {
   const { register } = useAuthContext();
 
+  const { t } = useTranslation();
+
   const router = useRouter();
 
   const [errorMsg, setErrorMsg] = useState('');
@@ -59,20 +62,20 @@ export default function JwtRegisterView() {
   const settings = useSettingsContext();
 
   const RegisterSchema = Yup.object().shape({
-    firstName: Yup.string().required('First name required'),
-    lastName: Yup.string().required('Last name required'),
+    firstName: Yup.string().required(t('First name is required')),
+    lastName: Yup.string().required(t('Last name is required')),
     phone: Yup.string()
-      .required('Phone number is required')
+      .required(t('Phone number is required'))
       .test(
         'valid-phone',
-        'Please enter a valid phone number for the selected country',
+        t('Please enter a valid phone number for the selected country'),
         simplePhoneValidation
       ),
-    country: Yup.string().required('Country is required'),
+    country: Yup.string().required(t('Country is required')),
     email: Yup.string()
-      .required('Email is required')
-      .email('Email must be a valid email address'),
-    password: Yup.string().required('Password is required'),
+      .required(t('Email is required'))
+      .email(t('Email must be a valid email address')),
+    password: Yup.string().required(t('Password is required')),
   });
 
   const defaultValues = {
@@ -147,17 +150,19 @@ export default function JwtRegisterView() {
 
   const renderHead = (
     <Stack spacing={2} sx={{ mb: 5, position: 'relative' }}>
-      <Typography variant="h4">Get started absolutely free</Typography>
-
+      <Typography variant="h4">{t('Get started absolutely free.')}</Typography>
       <Stack direction="row" spacing={0.5}>
-        <Typography variant="body2"> Already have an account? </Typography>
+        <Typography variant="body2">
+          {' '}
+          {t('Already have an account?')}{' '}
+        </Typography>
 
         <Link
           href={paths.auth.login}
           component={RouterLink}
           variant="subtitle2"
         >
-          Sign in
+          {t('Sign in')}
         </Link>
       </Stack>
     </Stack>
@@ -173,17 +178,18 @@ export default function JwtRegisterView() {
         color: 'text.secondary',
       }}
     >
-      {'By signing up, I agree to '}
+      {t('By registering, I agree to the')}{' '}
       <Link underline="always" color="text.primary" onClick={handleOpenTerms}>
-        Terms of Service
+        {t('Terms and Conditions')}
       </Link>
-      {' and '}
+      {'  '}
+      {t('and')}{' '}
       <Link
         underline="always"
         color="text.primary"
         onClick={() => setOpenPrivacyPolicy(true)}
       >
-        Privacy Policy
+        {t('Privacy Policy')}
       </Link>
       .
     </Typography>
@@ -192,8 +198,8 @@ export default function JwtRegisterView() {
   const renderForm = (
     <Stack spacing={2.5}>
       <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
-        <RHFTextField name="firstName" label="First name" />
-        <RHFTextField name="lastName" label="Last name" />
+        <RHFTextField name="firstName" label={t('First name')} />
+        <RHFTextField name="lastName" label={t('Last name')} />
       </Stack>
 
       <Box
@@ -207,16 +213,16 @@ export default function JwtRegisterView() {
         <RHFAutocomplete
           name="country"
           type="country"
-          label="Country"
-          placeholder="Choose a country"
+          label={t('Country')}
+          placeholder={t('Choose a country')}
           fullWidth
           options={countries.map((option) => option.label)}
           getOptionLabel={(option) => option}
         />
         <RHFTextField
           name="phone"
-          label="Phone Number"
-          placeholder={getPhonePlaceholder(watchCountry, 'Phone number')}
+          label={t('Phone number')}
+          placeholder={getPhonePlaceholder(watchCountry, t('Phone number'))}
           helperText={getPhoneHelperText(watchCountry, watchPhone)}
           InputProps={{
             startAdornment: (
@@ -250,11 +256,11 @@ export default function JwtRegisterView() {
         />
       </Box>
 
-      <RHFTextField name="email" label="Email address" />
+      <RHFTextField name="email" label={t('Email address')} />
 
       <RHFTextField
         name="password"
-        label="Password"
+        label={t('Password')}
         type={password.value ? 'text' : 'password'}
         InputProps={{
           endAdornment: (
@@ -281,7 +287,7 @@ export default function JwtRegisterView() {
         endIcon={<Iconify icon="eva:arrow-ios-forward-fill" />}
         sx={{ justifyContent: 'space-between', pl: 2, pr: 1.5 }}
       >
-        Create account
+        {t('Create Account')}
       </LoadingButton>
     </Stack>
   );
@@ -298,7 +304,7 @@ export default function JwtRegisterView() {
 
       {!!errorMsg && (
         <Alert severity="error" sx={{ m: 3 }} onClose={() => setErrorMsg('')}>
-          {errorMsg}
+          {t(errorMsg)}
         </Alert>
       )}
 

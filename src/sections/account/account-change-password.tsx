@@ -2,6 +2,7 @@ import * as Yup from 'yup';
 import { useForm } from 'react-hook-form';
 import { endpoints } from '@/src/utils/axios';
 import { HOST_API } from '@/src/config-global';
+import { useTranslation } from 'react-i18next';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useCreateGenericMutation } from '@/src/hooks/user-generic-mutation';
 
@@ -22,27 +23,30 @@ import FormProvider, { RHFTextField } from 'src/components/hook-form';
 export default function AccountChangePassword() {
   const { enqueueSnackbar } = useSnackbar();
   const { mutateAsync } = useCreateGenericMutation();
+  const { t } = useTranslation();
 
   const password = useBoolean();
 
   const ChangePassWordSchema = Yup.object().shape({
-    oldPassword: Yup.string().required('Old Password is required'),
+    oldPassword: Yup.string().required(t('Old Password is required')),
     newPassword: Yup.string()
-      .required('New Password is required')
-      .min(6, 'Password must be at least 6 characters')
+      .required(t('New Password is required'))
+      .min(6, t('Password must be at least 6 characters'))
       .test(
         'no-match',
-        'New password must be different than old password',
+        t('New password must be different than old password'),
         (value, { parent }) => value !== parent.oldPassword
       )
       .matches(
         /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]/,
-        'Password must contain at least one uppercase letter, one lowercase letter, one number and one special character'
+        t(
+          'Password must contain at least one uppercase letter, one lowercase letter, one number and one special character'
+        )
       ),
 
     confirmNewPassword: Yup.string().oneOf(
       [Yup.ref('newPassword')],
-      'Passwords must match'
+      t('Passwords must match')
     ),
   });
 

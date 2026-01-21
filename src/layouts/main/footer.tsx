@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import { APP_NAME, EMAIL_SUPPORT } from '@/src/config-global';
 
 import Box from '@mui/material/Box';
@@ -47,6 +48,7 @@ const LINKS = [
 
 export default function Footer() {
   const pathname = usePathname();
+  const { t } = useTranslation();
 
   const homePage = pathname === '/';
 
@@ -64,9 +66,12 @@ export default function Footer() {
         <Logo sx={{ mb: 1, mx: 'auto' }} />
 
         <Typography variant="caption" component="div">
-          © {new Date().getFullYear()} All rights reserved
-          <br /> made by
-          <Link href="https://google.com/"> PlaquitasCR </Link>
+          © {new Date().getFullYear()} {t('All rights reserved')}.
+          <br /> {t('made by')}
+          <Link href="https://jeremy-bacca-portfolio.netlify.app/">
+            {' '}
+            {APP_NAME}.{' '}
+          </Link>
         </Typography>
       </Container>
     </Box>
@@ -106,10 +111,7 @@ export default function Footer() {
                 mx: { xs: 'auto', md: 'unset' },
               }}
             >
-              Crea un perfil digital único para tu mascota. Centraliza toda su
-              información esencial —como datos médicos, contacto y
-              características únicas— en un solo lugar. Es tu mejor herramienta
-              para asegurar su rápida recuperación en caso de extravío.
+              {t('Create a unique digital profile')}
             </Typography>
 
             <Stack
@@ -165,8 +167,13 @@ export default function Footer() {
           </Grid>
         </Grid>
 
-        <Typography variant="body2" sx={{ mt: 10 }}>
-          © {new Date().getFullYear()}. All rights reserved
+        <Typography variant="caption" component="div">
+          © {new Date().getFullYear()} {t('All rights reserved')}.
+          <br /> {t('made by')}
+          <Link href="https://jeremy-bacca-portfolio.netlify.app/">
+            {' '}
+            {APP_NAME}.{' '}
+          </Link>
         </Typography>
       </Container>
     </Box>

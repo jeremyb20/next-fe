@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
@@ -39,16 +40,16 @@ const TABS = [
   //   label: 'Billing',
   //   icon: <Iconify icon="solar:bill-list-bold" width={24} />,
   // },
-  {
-    value: 'notifications',
-    label: 'Notifications',
-    icon: <Iconify icon="solar:bell-bing-bold" width={24} />,
-  },
-  {
-    value: 'social',
-    label: 'Social links',
-    icon: <Iconify icon="solar:share-bold" width={24} />,
-  },
+  // {
+  //   value: 'notifications',
+  //   label: 'Notifications',
+  //   icon: <Iconify icon="solar:bell-bing-bold" width={24} />,
+  // },
+  // {
+  //   value: 'social',
+  //   label: 'Social links',
+  //   icon: <Iconify icon="solar:share-bold" width={24} />,
+  // },
   {
     value: 'security',
     label: 'Security',
@@ -60,6 +61,7 @@ const TABS = [
 
 export default function AccountView() {
   const settings = useSettingsContext();
+  const { t } = useTranslation();
 
   const [currentTab, setCurrentTab] = useState('general');
 
@@ -94,7 +96,7 @@ export default function AccountView() {
         {TABS.map((tab) => (
           <Tab
             key={tab.value}
-            label={tab.label}
+            label={t(tab.label)}
             icon={tab.icon}
             value={tab.value}
           />

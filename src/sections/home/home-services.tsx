@@ -1,5 +1,6 @@
 import { m } from 'framer-motion';
 import Iconify from '@/src/components/iconify';
+import { useTranslation } from 'react-i18next';
 
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
@@ -12,36 +13,37 @@ import { varFade, MotionViewport } from 'src/components/animate';
 
 const SERVICES = [
   {
-    title: 'Veterinarias',
-    description: 'Encuentra veterinarias afiliadas y agenda consultas',
+    title: 'Veterinarians',
+    description: 'Find affiliated veterinarians and schedule consultations',
     icon: 'wpf:medical-doctor',
     color: 'primary',
   },
   {
-    title: 'Peluquería',
-    description: 'Servicios de grooming profesionales para tu mascota',
+    title: 'Grooming',
+    description: 'Professional grooming services for your pet',
     icon: 'temaki:pet-grooming',
     color: 'secondary',
   },
   {
-    title: 'Tiendas',
-    description: 'Productos y accesorios con descuentos exclusivos',
+    title: 'Stores',
+    description: 'Products and accessories with exclusive discounts',
     icon: 'hugeicons:store-location-02',
     color: 'info',
   },
 ];
 
 export default function HomeServices() {
+  const { t } = useTranslation();
+
   return (
     <Container component={MotionViewport} sx={{ py: { xs: 10, md: 15 } }}>
       <Stack spacing={3} sx={{ textAlign: 'center', mb: 8 }}>
         <m.div variants={varFade().inUp}>
-          <Typography variant="h2">Servicios Disponibles</Typography>
+          <Typography variant="h2">{t('Available Services')}</Typography>
         </m.div>
         <m.div variants={varFade().inUp}>
           <Typography variant="h6" color="text.secondary">
-            Todo lo que necesitas para el bienestar de tu mascota en un solo
-            lugar
+            {t('Everything you need for your well-being in one place')}
           </Typography>
         </m.div>
       </Stack>
@@ -78,15 +80,15 @@ export default function HomeServices() {
               />
 
               <Typography variant="h5" gutterBottom>
-                {service.title}
+                {t(service.title)}
               </Typography>
 
               <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
-                {service.description}
+                {t(service.description)}
               </Typography>
 
               <Button variant="outlined" color={service.color as any}>
-                Conocer más
+                {t('Know more')}
               </Button>
             </Card>
           </m.div>

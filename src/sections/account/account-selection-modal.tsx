@@ -1,5 +1,6 @@
 import React from 'react';
 import Iconify from '@/src/components/iconify';
+import { useTranslation } from 'react-i18next';
 
 import {
   Box,
@@ -37,6 +38,8 @@ export default function AccountSelectionModal({
   avatars,
   handleSelectAvatar,
 }: AvatarOption) {
+  const { t } = useTranslation();
+
   return (
     <Dialog
       open={avatarDialog.value}
@@ -53,15 +56,16 @@ export default function AccountSelectionModal({
       >
         <Stack direction="row" alignItems="center" spacing={1}>
           <Iconify icon="mdi:account-circle" width={24} />
-          <span>Choose Your Avatar</span>
+          <span>{t('Choose Your Avatar')}</span>
         </Stack>
       </DialogTitle>
 
       <DialogContent sx={{ pt: 3 }}>
         <Box sx={{ mb: 3 }}>
           <Typography variant="body2" color="text.secondary">
-            Click on an avatar to select it. The selected avatar will be
-            highlighted with a blue border.
+            {t(
+              'Click on an avatar to select it. The selected avatar will be highlighted with a blue border.'
+            )}
           </Typography>
         </Box>
 
@@ -116,7 +120,7 @@ export default function AccountSelectionModal({
         {user?.avatarProfile && (
           <Box sx={{ mt: 4, pt: 2, borderTop: 1, borderColor: 'divider' }}>
             <Typography variant="subtitle2" gutterBottom>
-              Current Avatar:
+              {t('Current Avatar:')}
             </Typography>
             <Stack direction="row" spacing={2} alignItems="center">
               <Box
@@ -136,7 +140,7 @@ export default function AccountSelectionModal({
                 />
               </Box>
               <Typography variant="body2" color="text.secondary">
-                Your current profile picture
+                {t('Your current profile picture')}
               </Typography>
             </Stack>
           </Box>
@@ -150,7 +154,7 @@ export default function AccountSelectionModal({
           color="inherit"
           startIcon={<Iconify icon="mdi:close" />}
         >
-          Cancel
+          {t('Cancel')}
         </Button>
         <Button
           onClick={() => {
@@ -160,7 +164,7 @@ export default function AccountSelectionModal({
           variant="contained"
           startIcon={<Iconify icon="mdi:check" />}
         >
-          Keep Selection
+          {t('Keep Selection')}
         </Button>
       </DialogActions>
     </Dialog>

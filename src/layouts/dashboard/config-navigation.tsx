@@ -1,9 +1,8 @@
 import { useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import { NavItemBaseProps } from '@/src/components/nav-section';
 
 import { paths } from 'src/routes/paths';
-
-import { useTranslate } from 'src/locales';
 
 import Iconify from 'src/components/iconify';
 import SvgColor from 'src/components/svg-color';
@@ -105,7 +104,7 @@ const filterByRole = (
 // ----------------------------------------------------------------------
 
 export function useNavData(userRole: string) {
-  const { t } = useTranslate();
+  const { t } = useTranslation();
 
   const data = useMemo(() => {
     const allNavData: { subheader: string; items: NavItemBaseProps[] }[] = [
@@ -115,33 +114,33 @@ export function useNavData(userRole: string) {
         items: [
           {
             // title: t('app'),
-            title: 'Panel Principal',
+            title: t('Admin Panel'),
             path: paths.dashboard.root,
             icon: ICONS.dashboard,
             roles: ['admin'],
           },
 
           {
-            title: 'Lista de Productos',
+            title: t('Product Management'),
             path: paths.dashboard.admin.product.root,
             icon: ICONS.product,
             roles: ['admin'],
           },
           {
-            title: 'Lista de Usuarios',
+            title: t('User List'),
             path: paths.dashboard.admin.usersAdmin,
             icon: ICONS.users,
             roles: ['admin'],
           },
 
           {
-            title: 'QR Panel',
+            title: t('QR Panel'),
             path: paths.dashboard.admin.qrPanel,
             icon: ICONS.QR_code,
             roles: ['admin'],
           },
           {
-            title: 'Seo Panel',
+            title: t('Seo Panel'),
             path: paths.dashboard.admin.seoAdmin,
             icon: ICONS.seo,
             roles: ['admin'],
@@ -206,13 +205,13 @@ export function useNavData(userRole: string) {
           // USER
           {
             // title: t('app'),
-            title: 'Panel Principal',
+            title: t('Dashboard'),
             path: paths.dashboard.root,
             icon: ICONS.dashboard,
             roles: ['client'],
           },
           {
-            title: 'Account',
+            title: t('Account'),
             path: paths.dashboard.user.account,
             icon: ICONS.user,
             //  children: [
@@ -226,7 +225,7 @@ export function useNavData(userRole: string) {
           },
           {
             // title: t('app'),
-            title: 'My Pets',
+            title: t('My Pets'),
             path: paths.dashboard.user.myPets,
             icon: ICONS.paw,
             roles: ['admin', 'client'],
@@ -234,7 +233,7 @@ export function useNavData(userRole: string) {
 
           // CALENDAR
           {
-            title: t('calendar'),
+            title: t('Calendar'),
             path: paths.dashboard.calendar,
             icon: ICONS.calendar,
           },
@@ -254,7 +253,7 @@ export function useNavData(userRole: string) {
 
           // PRODUCT
           {
-            title: t('pets market'),
+            title: t('Pets Store'),
             path: paths.dashboard.product.root,
             icon: ICONS.ecommerce,
             // children: [

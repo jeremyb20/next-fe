@@ -10,6 +10,7 @@ import { fDate } from '@/src/utils/format-time';
 // Importaciones de react-share
 
 import { paths } from '@/src/routes/paths';
+import { useTranslation } from 'react-i18next';
 import { BreedOptions } from '@/src/utils/constants';
 import { AvatarShape } from '@/src/assets/illustrations';
 import { useSettingsContext } from '@/src/components/settings';
@@ -77,6 +78,7 @@ export default function PetProfileView({ petProfile, canEdit }: Props) {
   const [tabValue, setTabValue] = useState(0);
   const [shareOpen, setShareOpen] = useState(false);
   const settings = useSettingsContext();
+  const { t } = useTranslation();
 
   const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
     setTabValue(newValue);
@@ -92,10 +94,12 @@ export default function PetProfileView({ petProfile, canEdit }: Props) {
 
   // Datos para compartir
   const shareUrl = typeof window !== 'undefined' ? window.location.href : '';
-  const shareTitle = `Mira el perfil de ${
-    petProfile?.petName || 'esta mascota'
+  const shareTitle = `${t('View the profile of')} ${
+    petProfile?.petName || t('this pet')
   }`;
-  const shareDescription = `Conoce a ${petProfile?.petName}, una mascota que necesita tu atención.`;
+  const shareDescription = `${t('Meet')} ${petProfile?.petName}, ${t(
+    'a pet who needs your attention.'
+  )}`;
 
   // Función para calcular la edad
   const calculateAge = (birthDate: string) => {
@@ -140,7 +144,7 @@ export default function PetProfileView({ petProfile, canEdit }: Props) {
         }}
       >
         <Typography variant="h6" color="text.secondary">
-          No se encontró información de la mascota
+          {t('No information was found about the pet.')}
         </Typography>
       </Box>
     );
@@ -157,7 +161,7 @@ export default function PetProfileView({ petProfile, canEdit }: Props) {
             href={paths.dashboard.user.myPets}
             startIcon={<Iconify icon="eva:arrow-ios-back-fill" width={16} />}
           >
-            Back
+            {t('Back')}
           </Button>
           <Box sx={{ flexGrow: 1 }} />
         </Stack>
@@ -251,9 +255,9 @@ export default function PetProfileView({ petProfile, canEdit }: Props) {
                 <ListItemText
                   sx={{ mt: 7, mb: 1 }}
                   primary={petProfile.petName}
-                  secondary={`${fDate(petProfile.birthDate)} ( ${
-                    age.years
-                  } años ${age.months > 0 && `${age.months} meses )`} • ID:
+                  secondary={`${fDate(petProfile.birthDate)} ( ${age.years} ${t(
+                    'years'
+                  )} ${age.months > 0 && `${age.months} ${t('months')} )`} • ID:
                   ${petProfile.memberPetId}`}
                   primaryTypographyProps={{ typography: 'subtitle1' }}
                   secondaryTypographyProps={{ component: 'span', mt: 0.5 }}
@@ -272,7 +276,7 @@ export default function PetProfileView({ petProfile, canEdit }: Props) {
                       component="div"
                       sx={{ mb: 0.5, color: 'text.secondary' }}
                     >
-                      Joined
+                      {t('Joined')}
                     </Typography>
                     {fDate(petProfile.createdAt) || 'N/A'}
                   </div>
@@ -283,7 +287,7 @@ export default function PetProfileView({ petProfile, canEdit }: Props) {
                       component="div"
                       sx={{ mb: 0.5, color: 'text.secondary' }}
                     >
-                      Updated at
+                      {t('Updated at')}
                     </Typography>
                     {fDate(petProfile.updatedAt) || 'N/A'}
                   </div>
@@ -294,7 +298,7 @@ export default function PetProfileView({ petProfile, canEdit }: Props) {
                       component="div"
                       sx={{ mb: 0.5, color: 'text.secondary' }}
                     >
-                      Total Views
+                      {t('Total Views')}
                     </Typography>
                     {petProfile.petViewCounter.length}
                   </div>
@@ -349,13 +353,13 @@ export default function PetProfileView({ petProfile, canEdit }: Props) {
                     {
                       id: 0,
                       value: 'information',
-                      label: 'Información',
+                      label: 'Information',
                       icon: 'solar:user-rounded-linear',
                     },
                     {
                       id: 1,
                       value: 'galery',
-                      label: 'Galería',
+                      label: 'Galery',
                       icon: 'solar:gallery-linear',
                     },
                     ...(canEdit
@@ -363,7 +367,7 @@ export default function PetProfileView({ petProfile, canEdit }: Props) {
                           {
                             id: 2,
                             value: 'medicalControl',
-                            label: 'Control Médico',
+                            label: 'Medical Control',
                             icon: 'hugeicons:injection',
                           },
                         ]
@@ -373,7 +377,7 @@ export default function PetProfileView({ petProfile, canEdit }: Props) {
                       iconPosition="start"
                       key={tab.value}
                       icon={<Iconify icon={tab.icon} />}
-                      label={tab.label}
+                      label={t(tab.label)}
                       value={tab.id}
                     />
                   ))}
@@ -386,7 +390,7 @@ export default function PetProfileView({ petProfile, canEdit }: Props) {
                       <Grid item xs={12} md={6}>
                         <Stack spacing={3}>
                           {/* Basic Information */}
-                          <CardComponent title="Información Básica">
+                          <CardComponent title={t('Basic Information')}>
                             <Stack spacing={2}>
                               <Box
                                 sx={{
@@ -398,7 +402,7 @@ export default function PetProfileView({ petProfile, canEdit }: Props) {
                                   variant="body1"
                                   color="text.secondary"
                                 >
-                                  Nombre
+                                  {t('Pet Name')}
                                 </Typography>
                                 <Typography variant="body1" fontWeight={600}>
                                   {petProfile.petName}
@@ -415,10 +419,10 @@ export default function PetProfileView({ petProfile, canEdit }: Props) {
                                   variant="body1"
                                   color="text.secondary"
                                 >
-                                  Especie
+                                  {t('Gender')}
                                 </Typography>
                                 <Typography variant="body1" fontWeight={600}>
-                                  Perro
+                                  {t(petProfile.genderSelected) || 'N/A'}
                                 </Typography>
                               </Box>
 
@@ -432,7 +436,7 @@ export default function PetProfileView({ petProfile, canEdit }: Props) {
                                   variant="body1"
                                   color="text.secondary"
                                 >
-                                  Raza
+                                  {t('Breed')}
                                 </Typography>
                                 <Typography variant="body1" fontWeight={600}>
                                   {BreedOptions.todos.find(
@@ -453,11 +457,12 @@ export default function PetProfileView({ petProfile, canEdit }: Props) {
                                     variant="body1"
                                     color="text.secondary"
                                   >
-                                    Edad
+                                    {t('Age')}
                                   </Typography>
                                   <Typography variant="body1" fontWeight={600}>
-                                    {age.years} años{' '}
-                                    {age.months > 0 && `${age.months} meses`}
+                                    {age.years} {t('years')}{' '}
+                                    {age.months > 0 &&
+                                      `${age.months} ${t('months')}`}
                                   </Typography>
                                 </Box>
                               )}
@@ -476,7 +481,7 @@ export default function PetProfileView({ petProfile, canEdit }: Props) {
                                       color="text.secondary"
                                       sx={{ mb: 1 }}
                                     >
-                                      Actividades Favoritas
+                                      {t('Favorite Activities')}
                                     </Typography>
                                     <Typography
                                       variant="body1"
@@ -501,7 +506,7 @@ export default function PetProfileView({ petProfile, canEdit }: Props) {
                                       color="text.secondary"
                                       sx={{ mb: 1 }}
                                     >
-                                      Salud y Requisitos
+                                      {t('Health & Requirements')}
                                     </Typography>
                                     <Typography
                                       variant="body1"
@@ -515,7 +520,7 @@ export default function PetProfileView({ petProfile, canEdit }: Props) {
                           </CardComponent>
 
                           {/* Status Information */}
-                          <CardComponent title="Estado">
+                          <CardComponent title={t('Status Information')}>
                             <Stack spacing={2}>
                               <Box
                                 sx={{
@@ -527,7 +532,7 @@ export default function PetProfileView({ petProfile, canEdit }: Props) {
                                   variant="body1"
                                   color="text.secondary"
                                 >
-                                  Estado Actual
+                                  {t('Current Status')}
                                 </Typography>
                                 <Chip
                                   label={petProfile.petStatus}
@@ -553,7 +558,7 @@ export default function PetProfileView({ petProfile, canEdit }: Props) {
                                   variant="body1"
                                   color="text.secondary"
                                 >
-                                  Identificación Digital
+                                  {t('Digital Identification')}
                                 </Typography>
                                 <Chip
                                   label={
@@ -577,7 +582,7 @@ export default function PetProfileView({ petProfile, canEdit }: Props) {
                       <Grid item xs={12} md={6}>
                         <Stack spacing={3}>
                           {/* Owner Information */}
-                          <CardComponent title="Información de Contacto">
+                          <CardComponent title={t('Owner Information')}>
                             <Stack spacing={2} sx={{ pb: 2 }}>
                               {/* Nombre del propietario - controlado por permisos */}
                               {canShowOwnerPetName && (
@@ -591,13 +596,32 @@ export default function PetProfileView({ petProfile, canEdit }: Props) {
                                     variant="body1"
                                     color="text.secondary"
                                   >
-                                    Nombre del Propietario
+                                    {t('Owner Name')}
                                   </Typography>
                                   <Typography variant="body1" fontWeight={600}>
                                     {petProfile.ownerPetName || 'N/A'}
                                   </Typography>
                                 </Box>
                               )}
+
+                              <Box
+                                sx={{
+                                  display: 'flex',
+                                  justifyContent: 'space-between',
+                                }}
+                              >
+                                <Typography
+                                  variant="body1"
+                                  color="text.secondary"
+                                >
+                                  {t('Country')}
+                                </Typography>
+                                <Typography variant="body1" fontWeight={600}>
+                                  {petProfile.owner?.country
+                                    ? petProfile.owner?.country
+                                    : 'N/A'}
+                                </Typography>
+                              </Box>
 
                               {/* Teléfono - controlado por permisos */}
                               {canShowPhoneInfo && (
@@ -611,7 +635,7 @@ export default function PetProfileView({ petProfile, canEdit }: Props) {
                                     variant="body1"
                                     color="text.secondary"
                                   >
-                                    Teléfono
+                                    {t('Phone Number')}
                                   </Typography>
                                   <Typography variant="body1" fontWeight={600}>
                                     {petProfile.phone || 'N/A'}
@@ -631,32 +655,10 @@ export default function PetProfileView({ petProfile, canEdit }: Props) {
                                     variant="body1"
                                     color="text.secondary"
                                   >
-                                    Dirección
+                                    {t('Address')}
                                   </Typography>
                                   <Typography variant="body1" fontWeight={600}>
                                     {petProfile.address || 'N/A'}
-                                  </Typography>
-                                </Box>
-                              )}
-
-                              {/* Información de ubicación - controlada por permisos */}
-                              {canShowLocationInfo && (
-                                <Box
-                                  sx={{
-                                    display: 'flex',
-                                    justifyContent: 'space-between',
-                                  }}
-                                >
-                                  <Typography
-                                    variant="body1"
-                                    color="text.secondary"
-                                  >
-                                    Ubicación
-                                  </Typography>
-                                  <Typography variant="body1" fontWeight={600}>
-                                    {petProfile.lat && petProfile.lng
-                                      ? 'Ubicación disponible'
-                                      : 'N/A'}
                                   </Typography>
                                 </Box>
                               )}
@@ -671,7 +673,7 @@ export default function PetProfileView({ petProfile, canEdit }: Props) {
                                   variant="body1"
                                   color="text.secondary"
                                 >
-                                  ID de Mascota
+                                  {t('Pet Id')}
                                 </Typography>
                                 <Typography variant="body1" fontWeight={600}>
                                   #{petProfile.memberPetId}
@@ -688,12 +690,13 @@ export default function PetProfileView({ petProfile, canEdit }: Props) {
                                   variant="body1"
                                   color="text.secondary"
                                 >
-                                  Fecha de Registro
+                                  {t('Registration Date')}
                                 </Typography>
                                 <Typography variant="body1" fontWeight={600}>
-                                  {new Date(
+                                  {/* {new Date(
                                     petProfile.createdAt
-                                  ).toLocaleDateString('es-ES')}
+                                  ).toLocaleDateString('es-ES')} */}
+                                  {fDate(petProfile.createdAt)}
                                 </Typography>
                               </Box>
                             </Stack>
@@ -702,7 +705,7 @@ export default function PetProfileView({ petProfile, canEdit }: Props) {
                           {/* Veterinarian Information */}
                           {(canShowVeterinarianContact ||
                             canShowPhoneVeterinarian) && (
-                            <CardComponent title="Información Veterinaria">
+                            <CardComponent title={t('Veterinary Information')}>
                               <Stack spacing={2}>
                                 {/* Contacto del veterinario - controlado por permisos */}
                                 {canShowVeterinarianContact && (
@@ -716,7 +719,7 @@ export default function PetProfileView({ petProfile, canEdit }: Props) {
                                       variant="body1"
                                       color="text.secondary"
                                     >
-                                      Veterinario
+                                      {t('Veterinarian')}
                                     </Typography>
                                     <Typography
                                       variant="body1"
@@ -739,7 +742,7 @@ export default function PetProfileView({ petProfile, canEdit }: Props) {
                                       variant="body1"
                                       color="text.secondary"
                                     >
-                                      Teléfono Veterinario
+                                      {t('Veterinary Phone Number')}
                                     </Typography>
                                     <Typography
                                       variant="body1"
@@ -755,24 +758,26 @@ export default function PetProfileView({ petProfile, canEdit }: Props) {
 
                           {/* Activity Information */}
 
-                          <CardComponent title="Actividad">
+                          <CardComponent title={t('Activity Information')}>
                             <Stack spacing={2}>
-                              <Box
-                                sx={{
-                                  display: 'flex',
-                                  justifyContent: 'space-between',
-                                }}
-                              >
-                                <Typography
-                                  variant="body1"
-                                  color="text.secondary"
+                              {canShowLocationInfo && (
+                                <Box
+                                  sx={{
+                                    display: 'flex',
+                                    justifyContent: 'space-between',
+                                  }}
                                 >
-                                  Vistas del Perfil
-                                </Typography>
-                                <Typography variant="body1" fontWeight={600}>
-                                  {petProfile.petViewCounter?.length || 0}
-                                </Typography>
-                              </Box>
+                                  <Typography
+                                    variant="body1"
+                                    color="text.secondary"
+                                  >
+                                    {t('Profile Views')}
+                                  </Typography>
+                                  <Typography variant="body1" fontWeight={600}>
+                                    {petProfile.petViewCounter?.length || 0}
+                                  </Typography>
+                                </Box>
+                              )}
 
                               <Box
                                 sx={{
@@ -784,7 +789,7 @@ export default function PetProfileView({ petProfile, canEdit }: Props) {
                                   variant="body1"
                                   color="text.secondary"
                                 >
-                                  Ubicaciones Registradas
+                                  {t('Registered Locations')}
                                 </Typography>
                                 <Typography variant="body1" fontWeight={600}>
                                   {petProfile.petViewCounter?.length || 0}
@@ -806,14 +811,14 @@ export default function PetProfileView({ petProfile, canEdit }: Props) {
                       sx={{ fontSize: 64, color: '#ccc', mb: 2 }}
                     />
                     <Typography variant="h6" color="text.secondary">
-                      Galería de fotos
+                      {t('Gallery')}
                     </Typography>
                     <Typography
                       variant="body2"
                       color="text.secondary"
                       sx={{ mt: 1 }}
                     >
-                      Aquí se mostrarán las fotos de {petProfile.petName}
+                      {t('Here you will see photos of')} {petProfile.petName}
                     </Typography>
                   </Box>
                 </TabPanel>
@@ -831,14 +836,15 @@ export default function PetProfileView({ petProfile, canEdit }: Props) {
                       sx={{ fontSize: 64, color: '#ccc', mb: 2 }}
                     />
                     <Typography variant="h6" color="text.secondary">
-                      Seguidores y Simpatizantes
+                      {t('Followers')}
                     </Typography>
                     <Typography
                       variant="body2"
                       color="text.secondary"
                       sx={{ mt: 1 }}
                     >
-                      Personas que siguen a {petProfile.petName}
+                      {t('Here you will see the followers of')}{' '}
+                      {petProfile.petName}
                     </Typography>
                   </Box>
                 </TabPanel>

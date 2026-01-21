@@ -29,6 +29,7 @@ import LoadingButton from '@mui/lab/LoadingButton';
 
 // import { fData } from 'src/utils/format-number';
 
+import { useTranslation } from 'react-i18next';
 import { useAuthContext } from '@/src/auth/hooks';
 import { useBoolean } from '@/src/hooks/use-boolean';
 import StyledAvatar from '@/src/components/avatar/styled-avatar';
@@ -67,6 +68,7 @@ export default function AccountGeneral() {
   const { mutateAsync } = useCreateGenericMutation();
   const avatarDialog = useBoolean();
   const { authenticated } = useAuthContext();
+  const { t } = useTranslation();
 
   const avatars = useMemo(
     () =>
@@ -94,23 +96,25 @@ export default function AccountGeneral() {
   };
 
   const UpdateUserSchema = Yup.object().shape({
-    displayName: Yup.string().required('Name is required'),
+    displayName: Yup.string().required(t('Name is required')),
     email: Yup.string()
-      .required('Email is required')
-      .email('Email must be a valid email address'),
-    avatarProfile: Yup.mixed<any>().nullable().required('Avatar is required'),
+      .required(t('Email is required'))
+      .email(t('Email must be a valid email address')),
+    avatarProfile: Yup.mixed<any>()
+      .nullable()
+      .required(t('Avatar is required')),
     phone: Yup.string()
-      .required('Phone number is required')
+      .required(t('Phone number is required'))
       .test(
         'valid-phone',
-        'Please enter a valid phone number for the selected country',
+        t('Please enter a valid phone number for the selected country'),
         phoneValidation
       ),
-    country: Yup.string().required('Country is required'),
-    address: Yup.string().required('Address is required'),
-    state: Yup.string().required('State is required'),
-    city: Yup.string().required('City is required'),
-    zipCode: Yup.string().required('Zip code is required'),
+    country: Yup.string().required(t('Country is required')),
+    address: Yup.string().required(t('Address is required')),
+    state: Yup.string().required(t('State is required')),
+    city: Yup.string().required(t('City is required')),
+    zipCode: Yup.string().required(t('Zip code is required')),
     // about: Yup.string().required('About is required'),
     // not required
     isPublic: Yup.boolean(),
@@ -196,10 +200,10 @@ export default function AccountGeneral() {
         method: 'PUT',
       });
       updateUserProfile(updateProfile);
-      enqueueSnackbar('Update success!');
+      enqueueSnackbar(t('Update success!'), { variant: 'success' });
     } catch (error) {
       console.error(error);
-      enqueueSnackbar('Error updating profile', { variant: 'error' });
+      enqueueSnackbar(t('Error updating profile'), { variant: 'error' });
     }
   });
 
@@ -228,7 +232,7 @@ export default function AccountGeneral() {
       });
       updateUserProfile({ avatarProfile: avatarSrc });
       avatarDialog.onFalse();
-      enqueueSnackbar('Avatar updated successfully!', { variant: 'success' });
+      enqueueSnackbar(t('Update success!'), { variant: 'success' });
     } catch (error) {
       enqueueSnackbar('Error updating avatar', { variant: 'error' });
     }
@@ -283,12 +287,12 @@ export default function AccountGeneral() {
               <RHFSwitch
                 name="isPublic"
                 labelPlacement="start"
-                label="Public Profile"
+                label={t('Public Profile')}
                 sx={{ mt: 5 }}
               />
 
-              <Button variant="soft" color="error" sx={{ mt: 3 }}>
-                Delete User
+              <Button variant="soft" color="error" disabled sx={{ mt: 3 }}>
+                {t('Delete User')}
               </Button>
             </Card>
           </Grid>
@@ -304,20 +308,20 @@ export default function AccountGeneral() {
                   sm: 'repeat(2, 1fr)',
                 }}
               >
-                <RHFTextField name="displayName" label="Name" />
-                <RHFTextField name="email" label="Email Address" />
+                <RHFTextField name="displayName" label={t('Name')} />
+                <RHFTextField name="email" label={t('Email address')} />
                 <RHFAutocomplete
                   name="country"
                   type="country"
-                  label="Country"
-                  placeholder="Choose a country"
+                  label={t('Country')}
+                  placeholder={t('Choose a country')}
                   fullWidth
                   options={countries.map((option) => option.label)}
                   getOptionLabel={(option) => option}
                 />
                 <RHFTextField
                   name="phone"
-                  label="Phone Number"
+                  label={t('Phone Number')}
                   placeholder={getPhonePlaceholder(
                     watchCountry,
                     'Phone number'
@@ -355,10 +359,10 @@ export default function AccountGeneral() {
                   }}
                 />
 
-                <RHFTextField name="city" label="City" />
-                <RHFTextField name="state" label="State/Region/Province" />
+                <RHFTextField name="city" label={t('City')} />
+                <RHFTextField name="state" label={t('State/Region/Province')} />
                 {/* <RHFTextField name="address" label="Address" /> */}
-                <RHFTextField name="zipCode" label="Zip/Code" />
+                <RHFTextField name="zipCode" label={t('Zip/Code')} />
               </Box>
 
               <Stack spacing={3} alignItems="flex-end" sx={{ mt: 3 }}>
@@ -366,7 +370,7 @@ export default function AccountGeneral() {
                   name="address"
                   multiline
                   rows={4}
-                  label="Address"
+                  label={t('Address')}
                 />
 
                 <LoadingButton
@@ -374,7 +378,7 @@ export default function AccountGeneral() {
                   variant="contained"
                   loading={isSubmitting}
                 >
-                  Save Changes
+                  {t('Save Changes')}
                 </LoadingButton>
               </Stack>
             </Card>

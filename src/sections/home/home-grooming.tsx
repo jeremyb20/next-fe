@@ -1,4 +1,5 @@
 import { m } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
@@ -9,6 +10,8 @@ import Typography from '@mui/material/Typography';
 import { varFade, MotionViewport } from 'src/components/animate';
 
 export default function HomeGrooming() {
+  const { t } = useTranslation();
+
   return (
     <Box sx={{ bgcolor: 'background.neutral', py: { xs: 10, md: 15 } }}>
       <Container component={MotionViewport}>
@@ -20,40 +23,42 @@ export default function HomeGrooming() {
           <Box sx={{ flex: 1 }}>
             <m.div variants={varFade().inUp}>
               <Typography variant="h2" gutterBottom>
-                Servicios de Peluquería Profesional
+                {t('Professional grooming service')}
               </Typography>
             </m.div>
 
             <m.div variants={varFade().inUp}>
               <Typography variant="h6" color="text.secondary" paragraph>
-                Cuida la apariencia de tu mascota con los mejores profesionales
+                {t('Care for your pets appearance with the best professionals')}
               </Typography>
             </m.div>
 
             <Stack spacing={3}>
               <m.div variants={varFade().inUp}>
                 <Typography variant="h6">
-                  • Baño y secado profesional
-                </Typography>
-              </m.div>
-              <m.div variants={varFade().inUp}>
-                <Typography variant="h6">• Corte de pelo según raza</Typography>
-              </m.div>
-              <m.div variants={varFade().inUp}>
-                <Typography variant="h6">
-                  • Corte de uñas y limpieza de oídos
+                  • {t('Bath and professional drying')}
                 </Typography>
               </m.div>
               <m.div variants={varFade().inUp}>
                 <Typography variant="h6">
-                  • Tratamientos especiales de belleza
+                  • {t('Haircut according to breed')}
+                </Typography>
+              </m.div>
+              <m.div variants={varFade().inUp}>
+                <Typography variant="h6">
+                  • {t('Nail trimming and ear cleaning')}
+                </Typography>
+              </m.div>
+              <m.div variants={varFade().inUp}>
+                <Typography variant="h6">
+                  • {t('Special beauty treatments')}
                 </Typography>
               </m.div>
             </Stack>
 
             <m.div variants={varFade().inUp}>
               <Button variant="contained" size="large" sx={{ mt: 3 }}>
-                Afiliar mi Negocio
+                {t('Affiliate my Business')}
               </Button>
             </m.div>
           </Box>

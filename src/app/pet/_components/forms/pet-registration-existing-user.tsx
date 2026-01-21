@@ -6,6 +6,7 @@ import * as Yup from 'yup';
 import { useSnackbar } from 'notistack';
 import { endpoints } from '@/src/utils/axios';
 import Iconify from '@/src/components/iconify';
+import { useTranslation } from 'react-i18next';
 import { OptionType } from '@/src/types/global';
 import { useAuthContext } from '@/src/auth/hooks';
 import { fData } from '@/src/utils/format-number';
@@ -57,35 +58,6 @@ import FormProvider, {
 
 // ----------------------------------------------------------------------
 
-// Esquema de validación para el código - 6 dígitos
-const CodeSchema = Yup.object().shape({
-  code: Yup.string()
-    .required('Code is required')
-    .length(6, 'Code must be exactly 6 characters')
-    .matches(/^[0-9a-zA-Z]+$/, 'Code must contain only letters and numbers'),
-});
-
-// Esquema de validación para login
-const LoginSchema = Yup.object().shape({
-  email: Yup.string()
-    .required('Email is required')
-    .email('Email must be a valid email address'),
-  password: Yup.string()
-    .required('Password is required')
-    .min(6, 'Password must be at least 6 characters'),
-});
-
-// Esquema de validación para la mascota
-const PetSchema = Yup.object().shape({
-  petName: Yup.string().required('Pet name is required'),
-  breed: Yup.string().required('Breed is required'),
-  genderSelected: Yup.string().required('Gender is required'),
-  birthDate: Yup.string().optional(),
-  favoriteActivities: Yup.string().optional(),
-  healthAndRequirements: Yup.string().optional(),
-  weight: Yup.string().optional(),
-});
-
 const steps = [
   {
     label: 'Code Validation',
@@ -120,6 +92,7 @@ export function PetRegistrationExistingUser({
   const { enqueueSnackbar } = useSnackbar();
   const { mutateAsync } = useCreateGenericMutation();
   const { celebrate } = useCelebrationConfetti();
+  const { t } = useTranslation();
 
   const [activeStep, setActiveStep] = useState(0);
   const [errorMsg, setErrorMsg] = useState('');
@@ -133,6 +106,34 @@ export function PetRegistrationExistingUser({
 
   const [petPhoto, setPetPhoto] = useState<File | null>(null);
   const [petPhotoPreview, setPetPhotoPreview] = useState<string | null>(null);
+
+  // Esquema de validación para el código - 6 dígitos
+  const CodeSchema = Yup.object().shape({
+    code: Yup.string()
+      .required(t('Code is required'))
+      .min(4, t('Code must be at least 4 characters')),
+  });
+
+  // Esquema de validación para login
+  const LoginSchema = Yup.object().shape({
+    email: Yup.string()
+      .required(t('Email is required'))
+      .email('Email must be a valid email address'),
+    password: Yup.string()
+      .required('Password is required')
+      .min(6, t('Password must be at least 6 characters')),
+  });
+
+  // Esquema de validación para la mascota
+  const PetSchema = Yup.object().shape({
+    petName: Yup.string().required(t('Pet name is required')),
+    breed: Yup.string().required(t('Breed is required')),
+    genderSelected: Yup.string().required(t('Gender is required')),
+    birthDate: Yup.string().optional(),
+    favoriteActivities: Yup.string().optional(),
+    healthAndRequirements: Yup.string().optional(),
+    weight: Yup.string().optional(),
+  });
 
   // Función para manejar la subida de foto
   const handleDropPetPhoto = useCallback((acceptedFiles: File[]) => {
@@ -268,13 +269,13 @@ export function PetRegistrationExistingUser({
 
       const { data: res, error, isError } = await getValidationCode(data.code);
 
-      console.log('Full validation response:', { res, error, isError });
-
+      // Si hay error en la petición (network, etc.)
       if (isError) {
         setErrorMsg(error?.message || 'Network error. Please try again.');
         return;
       }
 
+      // Si no hay respuesta
       if (!res) {
         setErrorMsg('No response from server. Please try again.');
         return;
@@ -350,7 +351,7 @@ export function PetRegistrationExistingUser({
           spread: 80,
         },
       });
-      enqueueSnackbar('Pet added to your account successfully', {
+      enqueueSnackbar(t('Pet added to your account successfully'), {
         variant: 'success',
       });
       setIsSubmitting(false);
@@ -358,7 +359,7 @@ export function PetRegistrationExistingUser({
     } catch (error: any) {
       console.error(error);
       setErrorMsg(error.message || 'Error completing registration');
-      enqueueSnackbar(error.message || 'Error completing registration', {
+      enqueueSnackbar(error.message || t('Error completing registration'), {
         variant: 'error',
       });
     }
@@ -374,7 +375,7 @@ export function PetRegistrationExistingUser({
       <Box sx={{ mt: 2 }}>
         {!!errorMsg && (
           <Alert severity="error" sx={{ mb: 2 }}>
-            {errorMsg}
+            {t(errorMsg)}
           </Alert>
         )}
 

@@ -4,6 +4,7 @@ import * as Yup from 'yup';
 import { useSnackbar } from 'notistack';
 import { endpoints } from '@/src/utils/axios';
 import Iconify from '@/src/components/iconify';
+import { useTranslation } from 'react-i18next';
 import { OptionType } from '@/src/types/global';
 import useIPInfo from '@/src/hooks/use-ip-info';
 import { fData } from '@/src/utils/format-number';
@@ -63,44 +64,6 @@ import FormProvider, {
 
 // ----------------------------------------------------------------------
 
-// Esquema de validación para el código
-const CodeSchema = Yup.object().shape({
-  code: Yup.string()
-    .required('Code is required')
-    .min(4, 'Code must be at least 4 characters'),
-});
-
-// Esquema de validación para el usuario
-const UserSchema = Yup.object().shape({
-  firstName: Yup.string().required('First name required'),
-  lastName: Yup.string().required('Last name required'),
-  phone: Yup.string()
-    .required('Phone number is required')
-    .test(
-      'valid-phone',
-      'Please enter a valid phone number for the selected country',
-      simplePhoneValidation
-    ),
-  country: Yup.string().required('Country is required'),
-  email: Yup.string()
-    .required('Email is required')
-    .email('Email must be a valid email address'),
-  password: Yup.string()
-    .required('Password is required')
-    .min(6, 'Password must be at least 6 characters'),
-});
-
-// Esquema de validación para la mascota
-const PetSchema = Yup.object().shape({
-  petName: Yup.string().required('Pet name is required'),
-  breed: Yup.string().required('Breed is required'),
-  genderSelected: Yup.string().required('Gender is required'),
-  birthDate: Yup.string().optional(),
-  favoriteActivities: Yup.string().optional(),
-  healthAndRequirements: Yup.string().optional(),
-  weight: Yup.string().optional(),
-});
-
 const steps = [
   {
     label: 'Code Validation',
@@ -133,6 +96,7 @@ export default function PetRegistrationCodeStepperFirstTime({
   const { celebrate } = useCelebrationConfetti();
   const { mutateAsync } = useCreateGenericMutation();
   const { enqueueSnackbar } = useSnackbar();
+  const { t } = useTranslation();
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   // Estado local para la edad de la mascota
@@ -147,6 +111,50 @@ export default function PetRegistrationCodeStepperFirstTime({
   const [errorMsg, setErrorMsg] = useState('');
   const [userData, setUserData] = useState<any>(null);
   const [petData, setPetData] = useState<any>(null);
+
+  // Esquema de validación para el código
+  const CodeSchema = Yup.object().shape({
+    code: Yup.string()
+      .required(t('Code is required'))
+      .min(4, t('Code must be at least 4 characters')),
+  });
+
+  // Esquema de validación para el usuario
+  const UserSchema = Yup.object().shape({
+    firstName: Yup.string().required(t('First name is required')),
+    lastName: Yup.string().required(t('Last name is required')),
+    phone: Yup.string()
+      .required(t('Phone number is required'))
+      .test(
+        'valid-phone',
+        t('Please enter a valid phone number for the selected country'),
+        simplePhoneValidation
+      ),
+    country: Yup.string().required(t('Country is required')),
+    email: Yup.string()
+      .required(t('Email is required'))
+      .email('Email must be a valid email address'),
+    password: Yup.string()
+      .required('Password is required')
+      .min(6, t('Password must be at least 6 characters'))
+      .matches(
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]/,
+        t(
+          'Password must contain at least one uppercase letter, one lowercase letter, one number and one special character'
+        )
+      ),
+  });
+
+  // Esquema de validación para la mascota
+  const PetSchema = Yup.object().shape({
+    petName: Yup.string().required(t('Pet name is required')),
+    breed: Yup.string().required(t('Breed is required')),
+    genderSelected: Yup.string().required(t('Gender is required')),
+    birthDate: Yup.string().optional(),
+    favoriteActivities: Yup.string().optional(),
+    healthAndRequirements: Yup.string().optional(),
+    weight: Yup.string().optional(),
+  });
 
   // Función para manejar la subida de foto
   const handleDropPetPhoto = useCallback((acceptedFiles: File[]) => {
@@ -379,7 +387,7 @@ export default function PetRegistrationCodeStepperFirstTime({
           spread: 80,
         },
       });
-      enqueueSnackbar('Registration completed successfully', {
+      enqueueSnackbar(t('Registration completed successfully'), {
         variant: 'success',
       });
       setIsSubmitting(false);
@@ -387,7 +395,7 @@ export default function PetRegistrationCodeStepperFirstTime({
     } catch (error) {
       console.error(error);
       setErrorMsg(error.message || 'Error completing registration');
-      enqueueSnackbar(error.message || 'Error completing registration', {
+      enqueueSnackbar(t(error.message) || t('Error completing registration'), {
         variant: 'error',
       });
       setIsSubmitting(false);
@@ -431,22 +439,22 @@ export default function PetRegistrationCodeStepperFirstTime({
   const renderAgeResult = (
     <>
       {ageResult && (
-        <Paper sx={{ p: 2, mt: 2 }}>
+        <Paper sx={{ p: 2, mb: 3 }}>
           <Typography variant="h6" gutterBottom>
-            Edad de la Mascota
+            {t('Pet Age Information')}
           </Typography>
           <Typography variant="body2" color="text.secondary">
-            <strong>Especie:</strong>{' '}
-            {ageResult.species === 'dog' ? 'Perro' : 'Gato'}
+            <strong>{t('Species')}:</strong>{' '}
+            {ageResult.species === 'dog' ? 'Dog' : 'Cat'}
             {ageResult.size &&
               ageResult.species === 'dog' &&
               ` (${ageResult.size})`}
           </Typography>
           <Typography variant="body2" color="text.secondary">
-            {ageResult.years} años y {ageResult.months} meses
+            {ageResult.years} {t('years and')} {ageResult.months} {t('months')}
           </Typography>
           <Typography variant="body2" sx={{ mt: 1 }}>
-            {ageResult.description}
+            {t(ageResult.description)}
           </Typography>
         </Paper>
       )}
@@ -459,25 +467,27 @@ export default function PetRegistrationCodeStepperFirstTime({
       <Box sx={{ mt: 2 }}>
         {!!errorMsg && (
           <Alert severity="error" sx={{ mb: 2 }}>
-            {errorMsg}
+            {t(errorMsg)}
           </Alert>
         )}
 
         <Typography variant="body1" sx={{ mb: 3 }}>
-          Please enter your invitation code to start the registration process.
+          {t(
+            'Please enter your invitation code to start the registration process.'
+          )}
         </Typography>
 
         <RHFTextField
           name="code"
-          label="Invitation Code"
-          placeholder="Enter your code"
+          label={t('Invitation Code')}
+          placeholder={t('Enter your code')}
           autoComplete="off"
           autoFocus
         />
 
         <Box sx={{ mt: 3 }}>
           <Button onClick={onBackToSelection} sx={{ mr: 1 }}>
-            Back
+            {t('Back')}
           </Button>
           <LoadingButton
             type="submit"
@@ -485,13 +495,14 @@ export default function PetRegistrationCodeStepperFirstTime({
             loading={isCodeSubmitting}
             disabled={!watchCodeValue}
           >
-            Validate Code
+            {t('Validate Code')}
           </LoadingButton>
         </Box>
 
         {code && (
           <Typography variant="body2" color="text.secondary" sx={{ mt: 2 }}>
-            Code provided: {code}
+            {t('Code provided: ')}
+            {code}
           </Typography>
         )}
       </Box>
@@ -509,7 +520,7 @@ export default function PetRegistrationCodeStepperFirstTime({
         )}
 
         <Typography variant="body1" sx={{ mb: 3, color: 'success.main' }}>
-          ✓ Code validated successfully
+          ✓ {t('Code validated successfully')}
         </Typography>
 
         <Box
@@ -519,8 +530,8 @@ export default function PetRegistrationCodeStepperFirstTime({
             gridTemplateColumns: { xs: '1fr', sm: '1fr 1fr' },
           }}
         >
-          <RHFTextField name="firstName" label="First name" />
-          <RHFTextField name="lastName" label="Last name" />
+          <RHFTextField name="firstName" label={t('First name')} />
+          <RHFTextField name="lastName" label={t('Last name')} />
         </Box>
 
         <Box
@@ -534,15 +545,15 @@ export default function PetRegistrationCodeStepperFirstTime({
           <RHFAutocomplete
             name="country"
             type="country"
-            label="Country"
-            placeholder="Choose a country"
+            label={t('Country')}
+            placeholder={t('Choose a country')}
             fullWidth
             options={countries.map((option) => option.label)}
             getOptionLabel={(option) => option}
           />
           <RHFTextField
             name="phone"
-            label="Phone Number"
+            label={t('Phone Number')}
             placeholder={getPhonePlaceholder(watchCountry, 'Phone number')}
             helperText={getPhoneHelperText(watchCountry, watchPhone)}
             InputProps={{
@@ -582,7 +593,7 @@ export default function PetRegistrationCodeStepperFirstTime({
 
         <RHFTextField
           name="password"
-          label="Password"
+          label={t('Password')}
           type={password.value ? 'text' : 'password'}
           InputProps={{
             endAdornment: (
@@ -604,14 +615,14 @@ export default function PetRegistrationCodeStepperFirstTime({
 
         <Box sx={{ mt: 3 }}>
           <Button onClick={handleBack} sx={{ mr: 1 }}>
-            Back
+            {t('Back')}
           </Button>
           <LoadingButton
             type="submit"
             variant="contained"
             loading={isUserSubmitting}
           >
-            Continue
+            {t('Continue')}
           </LoadingButton>
         </Box>
       </Box>
@@ -629,7 +640,7 @@ export default function PetRegistrationCodeStepperFirstTime({
         )}
         {/* Sección de Foto de la Mascota */}
         <Card sx={{ mb: 3 }}>
-          <CardHeader title="Pet Photo (Optional)" />
+          <CardHeader title={t('Pet Photo (Optional)')} />
           <CardContent>
             <UploadAvatar
               file={petPhotoPreview}
@@ -646,7 +657,7 @@ export default function PetRegistrationCodeStepperFirstTime({
                 if (!allowedTypes.includes(fileData.type)) {
                   return {
                     code: 'invalid-file-type',
-                    message: 'Only JPEG, JPG, PNG or GIF images are allowed',
+                    message: t('Only JPEG, JPG, PNG or GIF images are allowed'),
                   };
                 }
 
@@ -654,7 +665,7 @@ export default function PetRegistrationCodeStepperFirstTime({
                 if (fileData.size > 2 * 1024 * 1024) {
                   return {
                     code: 'file-too-large',
-                    message: `Image is too large. Maximum ${fData(
+                    message: `${t('Image is too large. Maximum')} ${fData(
                       2 * 1024 * 1024
                     )}`,
                   };
@@ -673,8 +684,8 @@ export default function PetRegistrationCodeStepperFirstTime({
                     color: 'text.disabled',
                   }}
                 >
-                  Allowed *.jpeg, *.jpg, *.png, *.gif
-                  <br /> max size of {fData(2 * 1024 * 1024)}
+                  {t('Allowed *.jpeg, *.jpg, *.png, *.gif')}
+                  <br /> {t('max size of')} {fData(2 * 1024 * 1024)}
                 </Typography>
               }
             />
@@ -688,10 +699,10 @@ export default function PetRegistrationCodeStepperFirstTime({
             gridTemplateColumns: { xs: '1fr', sm: '1fr 1fr' },
           }}
         >
-          <RHFTextField name="petName" label="Pet Name" />
+          <RHFTextField name="petName" label={t('Pet Name')} />
           <RHFAutocomplete
             name="breed"
-            label="Raza de la mascota"
+            label={t('Breed')}
             options={BreedOptions.todos}
             getOptionLabel={(option: OptionType | string) => {
               if (typeof option === 'string') {
@@ -724,21 +735,21 @@ export default function PetRegistrationCodeStepperFirstTime({
             }}
             renderOption={(props, option) => (
               <li {...props} key={option.value}>
-                {option.label}
+                {t(option.label)}
               </li>
             )}
           />
           <RHFSelect name="genderSelected" label="Gender">
             {GENDER_OPTIONS.map((gender) => (
               <MenuItem key={gender.value} value={gender.value}>
-                {gender.label}
+                {t(gender.label)}
               </MenuItem>
             ))}
           </RHFSelect>
 
           <RHFTextField
             name="weight"
-            label="Weight"
+            label={t('Weight')}
             type="number"
             inputProps={{ step: '0.1' }}
             InputProps={{
@@ -774,7 +785,7 @@ export default function PetRegistrationCodeStepperFirstTime({
               return (
                 <DatePicker
                   views={['year', 'month', 'day']}
-                  label="Birth Date"
+                  label={t('Birth Date')}
                   minDate={new Date('2000-03-01')}
                   maxDate={new Date()}
                   value={field.value ? new Date(field.value) : null}
@@ -805,14 +816,14 @@ export default function PetRegistrationCodeStepperFirstTime({
 
         <RHFTextField
           name="favoriteActivities"
-          label="Favorite Activities"
+          label={t('Favorite Activities')}
           multiline
           rows={2}
           sx={{ mt: 2 }}
         />
         <RHFTextField
           name="healthAndRequirements"
-          label="Health & Requirements"
+          label={t('Health & Requirements')}
           multiline
           rows={2}
           sx={{ mt: 2 }}
@@ -820,14 +831,14 @@ export default function PetRegistrationCodeStepperFirstTime({
 
         <Box sx={{ mt: 3 }}>
           <Button onClick={handleBack} sx={{ mr: 1 }}>
-            Back
+            {t('Back')}
           </Button>
           <LoadingButton
             type="submit"
             variant="contained"
             loading={isPetSubmitting}
           >
-            Continue
+            {t('Continue')}
           </LoadingButton>
         </Box>
       </Box>
@@ -839,41 +850,42 @@ export default function PetRegistrationCodeStepperFirstTime({
     <Box sx={{ mt: 2 }}>
       <Paper sx={{ p: 3, mb: 3, bgcolor: 'background.neutral' }}>
         <Typography variant="h6" gutterBottom>
-          Code Information
+          {t('Code Information')}
         </Typography>
         <Typography variant="body2" color="text.secondary">
-          <strong>Invitation Code:</strong> {watchCodeValue}
+          <strong>{t('Invitation Code')}:</strong> {watchCodeValue}
         </Typography>
       </Paper>
 
       <Paper sx={{ p: 3, mb: 3, bgcolor: 'background.neutral' }}>
         <Typography variant="h6" gutterBottom>
-          User Information
+          {t('User Information')}
         </Typography>
         <Typography variant="body2" color="text.secondary">
-          <strong>Name:</strong> {userData?.firstName} {userData?.lastName}
+          <strong>{t('Name')}:</strong> {userData?.firstName}{' '}
+          {userData?.lastName}
         </Typography>
         <Typography variant="body2" color="text.secondary">
-          <strong>Email:</strong> {userData?.email}
+          <strong>{t('Email address')}:</strong> {userData?.email}
         </Typography>
         <Typography variant="body2" color="text.secondary">
-          <strong>Phone:</strong> {userData?.phone}
+          <strong>{t('Phone Number')}:</strong> {userData?.phone}
         </Typography>
         <Typography variant="body2" color="text.secondary">
-          <strong>Country:</strong> {userData?.country}
+          <strong>{t('Country')}:</strong> {userData?.country}
         </Typography>
       </Paper>
 
       <Paper sx={{ p: 3, bgcolor: 'background.neutral' }}>
         <Typography variant="h6" gutterBottom>
-          Pet Information
+          {t('Pet Information')}
         </Typography>
 
         {/* Mostrar preview de la foto si existe */}
         {petPhotoPreview && (
           <Box sx={{ mb: 2, textAlign: 'center' }}>
             <Typography variant="subtitle2" gutterBottom>
-              Pet Photo:
+              {t('Pet Photo')}:
             </Typography>
             <Box
               component="img"
@@ -891,33 +903,34 @@ export default function PetRegistrationCodeStepperFirstTime({
         )}
 
         <Typography variant="body2" color="text.secondary">
-          <strong>Name:</strong> {petData?.petName}
+          <strong>{t('Pet Name')}:</strong> {petData?.petName}
         </Typography>
         <Typography variant="body2" color="text.secondary">
-          <strong>Breed: </strong>
+          <strong>{t('Breed')}: </strong>
           {BreedOptions.todos.find((breed) => breed.value === petData?.breed)
             ?.label || 'Unknown breed'}
         </Typography>
         <Typography variant="body2" color="text.secondary">
-          <strong>Gender:</strong> {petData?.genderSelected}
+          <strong>{t('Gender')}:</strong> {petData?.genderSelected}
         </Typography>
         <Typography variant="body2" color="text.secondary">
-          <strong>Weight:</strong> {petData?.weight} {weightUnit}
+          <strong>{t('Weight')}:</strong> {petData?.weight} {weightUnit}
         </Typography>
         <Typography variant="body2" color="text.secondary">
-          <strong>Birth Date:</strong>{' '}
+          <strong>{t('Birth Date')}:</strong>{' '}
           {petData?.birthDate
             ? new Date(petData.birthDate).toLocaleDateString()
-            : 'Not specified'}
+            : t('Not specified')}
         </Typography>
         {petData?.favoriteActivities && (
           <Typography variant="body2" color="text.secondary">
-            <strong>Favorite Activities:</strong> {petData.favoriteActivities}
+            <strong>{t('Favorite Activities')}:</strong>{' '}
+            {petData.favoriteActivities}
           </Typography>
         )}
         {petData?.healthAndRequirements && (
           <Typography variant="body2" color="text.secondary">
-            <strong>Health & Requirements:</strong>{' '}
+            <strong>{t('Health & Requirements')}:</strong>{' '}
             {petData.healthAndRequirements}
           </Typography>
         )}
@@ -926,16 +939,17 @@ export default function PetRegistrationCodeStepperFirstTime({
       {ageResult && (
         <Paper sx={{ p: 2, mt: 2 }}>
           <Typography variant="h6" gutterBottom>
-            Edad de la Mascota
+            {t('Pets Age')}
           </Typography>
           <Typography variant="body2">
-            <strong>Edad humana:</strong> {ageResult.humanYears} años
+            <strong>{t('Human age')}:</strong> {ageResult.humanYears}{' '}
+            {t('years')}
           </Typography>
           <Typography variant="body2">
-            <strong>Edad de mascota:</strong> {ageResult.petYears} años
+            <strong>{t('Pet age')}:</strong> {ageResult.petYears} {t('years')}
           </Typography>
           <Typography variant="body2">
-            <strong>Categoría:</strong> {ageResult.ageCategory}
+            <strong>{t('Category')}:</strong> {ageResult.ageCategory}
           </Typography>
           <Typography variant="body2" sx={{ mt: 1 }}>
             {ageResult.description}
@@ -944,12 +958,12 @@ export default function PetRegistrationCodeStepperFirstTime({
           {recommendations.length > 0 && (
             <Box sx={{ mt: 2 }}>
               <Typography variant="subtitle2" gutterBottom>
-                Recomendaciones:
+                {t('Recommendations')}:
               </Typography>
               <ul style={{ margin: 0, paddingLeft: '20px' }}>
                 {recommendations.map((rec, index) => (
                   <li key={index}>
-                    <Typography variant="body2">{rec}</Typography>
+                    <Typography variant="body2">{t(rec)}</Typography>
                   </li>
                 ))}
               </ul>
@@ -959,12 +973,12 @@ export default function PetRegistrationCodeStepperFirstTime({
       )}
       {!!errorMsg && (
         <Alert severity="error" sx={{ my: 2 }}>
-          {errorMsg}
+          {t(errorMsg)}
         </Alert>
       )}
       <Box sx={{ mt: 3 }}>
         <Button onClick={handleBack} sx={{ mr: 1 }}>
-          Back
+          {t('Back')}
         </Button>
         <LoadingButton
           type="submit"
@@ -972,7 +986,7 @@ export default function PetRegistrationCodeStepperFirstTime({
           loading={isSubmitting}
           onClick={handleCompleteRegistration}
         >
-          Complete Registration
+          {t('Complete Registration')}
         </LoadingButton>
       </Box>
     </Box>
@@ -986,15 +1000,15 @@ export default function PetRegistrationCodeStepperFirstTime({
             <StepLabel
               optional={
                 index === steps.length - 1 ? (
-                  <Typography variant="caption">Last step</Typography>
+                  <Typography variant="caption">{t('Last step')}</Typography>
                 ) : null
               }
             >
-              {step.label}
+              {t(step.label)}
             </StepLabel>
             <StepContent>
               <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-                {step.description}
+                {t(step.description)}
               </Typography>
 
               {index === 0 && renderCodeStep()}
@@ -1015,10 +1029,10 @@ export default function PetRegistrationCodeStepperFirstTime({
           }}
         >
           <Typography sx={{ mb: 2 }}>
-            Registration completed successfully!
+            {t('Registration completed successfully!')}
           </Typography>
           <Button variant="contained" onClick={goToLogin}>
-            Redirect to login
+            {t('Redirect to login')}
           </Button>
         </Paper>
       )}

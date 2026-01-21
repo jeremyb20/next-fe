@@ -1,4 +1,5 @@
 import { m, MotionProps } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 
 import Stack from '@mui/material/Stack';
 import Container from '@mui/material/Container';
@@ -10,6 +11,8 @@ import { varFade, MotionContainer } from 'src/components/animate';
 // ----------------------------------------------------------------------
 
 export default function AboutHero() {
+  const { t } = useTranslation();
+
   return (
     <Box
       sx={{
@@ -35,7 +38,7 @@ export default function AboutHero() {
           }}
         >
           <TextAnimate
-            text="Who"
+            text={t('Who')}
             variants={varFade().inRight}
             sx={{ color: 'primary.main' }}
           />
@@ -48,8 +51,8 @@ export default function AboutHero() {
             direction="row"
             sx={{ color: 'common.white' }}
           >
-            <TextAnimate text="we" />
-            <TextAnimate text="are?" />
+            <TextAnimate text={t('we')} />
+            <TextAnimate text={t('are?')} />
           </Stack>
 
           <m.div variants={varFade().inRight}>
@@ -61,8 +64,8 @@ export default function AboutHero() {
                 fontWeight: 'fontWeightSemiBold',
               }}
             >
-              Let&apos;s work together and
-              <br /> make awesome site easily
+              {t('Lets work together and')}
+              <br /> {t('make awesome site easily')}
             </Typography>
           </m.div>
         </Box>

@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { endpoints } from '@/src/utils/axios';
 import { HOST_API } from '@/src/config-global';
+import { useTranslation } from 'react-i18next';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useCreateGenericMutation } from '@/src/hooks/user-generic-mutation';
 
@@ -37,23 +38,26 @@ export default function ModernResetPasswordView({
 }: ModernResetPasswordViewProps) {
   const password = useBoolean();
   const { mutateAsync } = useCreateGenericMutation();
+  const { t } = useTranslation();
+
   const [messageResponse, setMessageResponse] = useState({
     status: '',
     message: '',
   });
-  console.log(token);
 
   const NewPasswordSchema = Yup.object().shape({
     password: Yup.string()
-      .min(6, 'Password must be at least 6 characters')
-      .required('Password is required')
+      .min(6, t('Password must be at least 6 characters'))
+      .required(t('Password is required'))
       .matches(
         /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]/,
-        'Password must contain at least one uppercase letter, one lowercase letter, one number and one special character'
+        t(
+          'Password must contain at least one uppercase letter, one lowercase letter, one number and one special character'
+        )
       ),
     confirmPassword: Yup.string()
-      .required('Confirm password is required')
-      .oneOf([Yup.ref('password')], 'Passwords must match'),
+      .required(t('Confirm password is required'))
+      .oneOf([Yup.ref('password')], t('Passwords must match')),
   });
 
   const defaultValues = {
@@ -116,7 +120,7 @@ export default function ModernResetPasswordView({
     <Stack spacing={3} alignItems="center">
       <RHFTextField
         name="password"
-        label="Password"
+        label={t('Password')}
         type={password.value ? 'text' : 'password'}
         InputProps={{
           endAdornment: (
@@ -135,7 +139,7 @@ export default function ModernResetPasswordView({
 
       <RHFTextField
         name="confirmPassword"
-        label="Confirm New Password"
+        label={t('Confirm New Password')}
         type={password.value ? 'text' : 'password'}
         InputProps={{
           endAdornment: (
@@ -159,7 +163,7 @@ export default function ModernResetPasswordView({
         variant="contained"
         loading={isSubmitting}
       >
-        Reset Password
+        {t('Reset Password')}
       </LoadingButton>
 
       <Link
@@ -173,7 +177,7 @@ export default function ModernResetPasswordView({
         }}
       >
         <Iconify icon="eva:arrow-ios-back-fill" width={16} />
-        Return to sign in
+        {t('Return to sign in')}
       </Link>
     </Stack>
   );
@@ -183,10 +187,10 @@ export default function ModernResetPasswordView({
       <SentIcon sx={{ height: 96 }} />
 
       <Stack spacing={1} sx={{ mt: 3, mb: 5 }}>
-        <Typography variant="h3">Reset your password!</Typography>
+        <Typography variant="h3">{t('Reset your password!')}</Typography>
 
         <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-          Please enter your new password below.
+          {t('Please enter your new password below.')}
         </Typography>
       </Stack>
     </>
@@ -204,7 +208,7 @@ export default function ModernResetPasswordView({
           sx={{ my: 3 }}
           onClose={() => setMessageResponse({ status: '', message: '' })}
         >
-          {messageResponse.message}
+          {t(messageResponse.message)}
         </Alert>
       )}
     </FormProvider>

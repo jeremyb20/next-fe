@@ -3,6 +3,7 @@
 import * as Yup from 'yup';
 import { useForm } from 'react-hook-form';
 import { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { yupResolver } from '@hookform/resolvers/yup';
 
 import Link from '@mui/material/Link';
@@ -20,7 +21,7 @@ import { useRouter, useSearchParams } from 'src/routes/hooks';
 import { useBoolean } from 'src/hooks/use-boolean';
 
 import { useAuthContext } from 'src/auth/hooks';
-import { PATH_AFTER_LOGIN } from 'src/config-global';
+import { APP_NAME, PATH_AFTER_LOGIN } from 'src/config-global';
 
 import Iconify from 'src/components/iconify';
 import FormProvider, { RHFTextField } from 'src/components/hook-form';
@@ -28,6 +29,7 @@ import FormProvider, { RHFTextField } from 'src/components/hook-form';
 // ----------------------------------------------------------------------
 export default function JwtLoginView() {
   const { login } = useAuthContext();
+  const { t } = useTranslation();
 
   const router = useRouter();
 
@@ -41,9 +43,9 @@ export default function JwtLoginView() {
 
   const LoginSchema = Yup.object().shape({
     email: Yup.string()
-      .required('Email is required')
-      .email('Email must be a valid email address'),
-    password: Yup.string().required('Password is required'),
+      .required(t('Email is required'))
+      .email(t('Email must be a valid email address')),
+    password: Yup.string().required(t('Password is required')),
   });
 
   const defaultValues = {
@@ -72,8 +74,7 @@ export default function JwtLoginView() {
       router.push(returnTo || PATH_AFTER_LOGIN);
     } catch (error) {
       console.error(error);
-      // reset();
-      setErrorMsg(typeof error === 'string' ? error : error.message);
+      setErrorMsg(t(typeof error === 'string' ? error : error.message));
     }
   });
 
@@ -83,17 +84,19 @@ export default function JwtLoginView() {
 
   const renderHead = (
     <Stack spacing={2} sx={{ mb: 5 }}>
-      <Typography variant="h4">Inicie Sesion con Plaquitas Cr</Typography>
+      <Typography variant="h4">
+        {t('Sign in to')} {APP_NAME}
+      </Typography>
 
       <Stack direction="row" spacing={0.5}>
-        <Typography variant="body2">New user?</Typography>
+        <Typography variant="body2">{t('New user?')}</Typography>
 
         <Link
           component={RouterLink}
           href={paths.auth.register}
           variant="subtitle2"
         >
-          Create an account
+          {t('Create an account')}
         </Link>
       </Stack>
     </Stack>
@@ -101,10 +104,10 @@ export default function JwtLoginView() {
 
   const renderForm = (
     <Stack spacing={2.5}>
-      <RHFTextField name="email" label="Email address" />
+      <RHFTextField name="email" label={t('Email address')} />
       <RHFTextField
         name="password"
-        label="Password"
+        label={t('Password')}
         type={password.value ? 'text' : 'password'}
         InputProps={{
           endAdornment: (
@@ -127,7 +130,7 @@ export default function JwtLoginView() {
         sx={{ alignSelf: 'flex-end' }}
         href={paths.auth.forgotPassword}
       >
-        Forgot password?
+        {t('Forgot password?')}
       </Link>
       <LoadingButton
         fullWidth
@@ -137,7 +140,7 @@ export default function JwtLoginView() {
         variant="contained"
         loading={isSubmitting}
       >
-        Login
+        {t('Sign In')}
       </LoadingButton>
     </Stack>
   );
@@ -147,7 +150,7 @@ export default function JwtLoginView() {
       {renderHead}
 
       <Alert severity="info" sx={{ mb: 3 }}>
-        Use your credentials to login.
+        {t('Use your credentials to login.')}
       </Alert>
 
       <FormProvider methods={methods} onSubmit={onSubmit}>

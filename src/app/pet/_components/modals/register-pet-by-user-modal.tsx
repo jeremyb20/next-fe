@@ -1,6 +1,7 @@
 import React from 'react';
 import { IUser } from '@/src/types/api';
 import Iconify from '@/src/components/iconify';
+import { useTranslation } from 'react-i18next';
 
 import { Dialog, IconButton, DialogTitle, DialogContent } from '@mui/material';
 
@@ -19,6 +20,8 @@ export default function RegisterPetByUserModal({
   onClose,
   refetch,
 }: Props) {
+  const { t } = useTranslation();
+
   return (
     <Dialog
       fullWidth
@@ -31,7 +34,7 @@ export default function RegisterPetByUserModal({
       scroll="paper"
     >
       <DialogTitle>
-        Add pet {currentUser?.profile?.name}
+        {t('Add New Pet')} {currentUser?.profile?.name}
         <IconButton
           onClick={onClose}
           sx={{ position: 'absolute', right: 8, top: 8 }}

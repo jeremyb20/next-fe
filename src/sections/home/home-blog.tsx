@@ -1,5 +1,6 @@
 import { m } from 'framer-motion';
 import { APP_NAME } from '@/src/config-global';
+import { useTranslation } from 'react-i18next';
 
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
@@ -12,45 +13,49 @@ import { varFade, MotionViewport } from 'src/components/animate';
 
 const BLOG_POSTS = [
   {
-    title: 'Cuidados esenciales para cachorros',
+    title: 'Tips and useful information for caring for your pet',
     excerpt:
-      'Aprende los cuidados básicos que tu nuevo cachorro necesita durante sus primeros meses...',
+      'Learn the basic care your new puppy needs during its first few months...',
     image:
       'https://www.kiwoko.com/blogmundoanimal/wp-content/uploads/2020/01/cuidados-de-cachorros.jpg',
     date: '15 Nov 2024',
-    category: 'Cuidados',
+    category: 'Care',
   },
   {
-    title: 'Alimentación saludable para mascotas adultas',
+    title: 'Healthy nutrition for adult pets',
     excerpt:
-      'Descubre cómo elegir la mejor alimentación según la raza, tamaño y actividad de tu mascota...',
+      "Discover how to choose the best diet according to your pet's breed, size and activity...",
     image:
       'https://es.banfield.com/-/media/Project/Banfield/Main/en/PHADO/Diet/Hub/Main-header/20190721_001_1920x400.jpeg?rev=cb2ef18b8917450d8c0804029df3f98f',
     date: '12 Nov 2024',
-    category: 'Nutrición',
+    category: 'Nutrition',
   },
   {
-    title: 'Señales de alerta en la salud de tu mascota',
+    title: 'Signs of Alert in Your Pets Health',
     excerpt:
-      'Conoce las señales que indican que tu mascota necesita atención veterinaria inmediata...',
+      'Learn the signs that indicate your pet needs immediate veterinary attention...',
     image:
       'https://www.infobae.com/resizer/v2/36VBXCTIG5CMDDB7OYRSNLAD7I.jpg?auth=055acf591d810d969bf439536337ae1a7fc63230a3504bc257b2354963ef2c8d&smart=true&width=992&height=558&quality=85',
     date: '10 Nov 2024',
-    category: 'Salud',
+    category: 'Health',
   },
 ];
 
 export default function HomeBlog() {
+  const { t } = useTranslation();
+
   return (
     <Box sx={{ bgcolor: 'background.default', py: { xs: 10, md: 15 } }}>
       <Container component={MotionViewport}>
         <Stack spacing={3} sx={{ textAlign: 'center', mb: 8 }}>
           <m.div variants={varFade().inUp}>
-            <Typography variant="h2">Blog {APP_NAME}</Typography>
+            <Typography variant="h2">
+              {t('Blog')} {APP_NAME}
+            </Typography>
           </m.div>
           <m.div variants={varFade().inUp}>
             <Typography variant="h6" color="text.secondary">
-              Consejos y información útil para el cuidado de tu mascota
+              {t('Tips and useful information for your pet care')}
             </Typography>
           </m.div>
         </Stack>
@@ -97,7 +102,7 @@ export default function HomeBlog() {
                   </Stack>
 
                   <Typography variant="h6" gutterBottom>
-                    {post.title}
+                    {t(post.title)}
                   </Typography>
 
                   <Typography
@@ -105,11 +110,11 @@ export default function HomeBlog() {
                     color="text.secondary"
                     sx={{ flexGrow: 1 }}
                   >
-                    {post.excerpt}
+                    {t(post.excerpt)}
                   </Typography>
 
                   <Button variant="text" sx={{ alignSelf: 'flex-start' }}>
-                    Leer más
+                    {t('Read more')}
                   </Button>
                 </Stack>
               </Card>
@@ -120,7 +125,7 @@ export default function HomeBlog() {
         <Box sx={{ textAlign: 'center', mt: 5 }}>
           <m.div variants={varFade().inUp}>
             <Button variant="outlined" size="large">
-              Ver Todos los Artículos
+              {t('Know more')}
             </Button>
           </m.div>
         </Box>

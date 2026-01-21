@@ -6,6 +6,7 @@ import { useSnackbar } from 'notistack';
 import { useForm } from 'react-hook-form';
 import { endpoints } from '@/src/utils/axios';
 import { HOST_API } from '@/src/config-global';
+import { useTranslation } from 'react-i18next';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useCreateGenericMutation } from '@/src/hooks/user-generic-mutation';
 
@@ -28,6 +29,8 @@ import FormProvider, { RHFTextField } from 'src/components/hook-form';
 export default function ModernForgotPasswordView() {
   const { mutateAsync } = useCreateGenericMutation();
   const { enqueueSnackbar } = useSnackbar();
+  const { t } = useTranslation();
+
   const [messageResponse, setMessageResponse] = useState({
     status: '',
     message: '',
@@ -35,8 +38,8 @@ export default function ModernForgotPasswordView() {
 
   const ForgotPasswordSchema = Yup.object().shape({
     email: Yup.string()
-      .required('Email is required')
-      .email('Email must be a valid email address'),
+      .required(t('Email is required'))
+      .email(t('Email must be a valid email address')),
   });
 
   const defaultValues = {
@@ -62,22 +65,23 @@ export default function ModernForgotPasswordView() {
       });
       setMessageResponse({ status: 'success', message: res.message });
       console.info('DATA', data);
-      enqueueSnackbar('Request sent! Please check your email.');
+      enqueueSnackbar(t('Request sent! Please check your email.'));
     } catch (error) {
       console.error(error);
       setMessageResponse({
         status: 'error',
-        message:
+        message: t(
           typeof error === 'string'
             ? error
-            : error.message || 'Something went wrong!',
+            : error.message || 'Something went wrong!'
+        ),
       });
     }
   });
 
   const renderForm = (
     <Stack spacing={3} alignItems="center">
-      <RHFTextField name="email" label="Email address" />
+      <RHFTextField name="email" label={t('Email address')} />
 
       <LoadingButton
         fullWidth
@@ -88,12 +92,12 @@ export default function ModernForgotPasswordView() {
         endIcon={<Iconify icon="eva:arrow-ios-forward-fill" />}
         sx={{ justifyContent: 'space-between', pl: 2, pr: 1.5 }}
       >
-        Send Request
+        {t('Send Request')}
       </LoadingButton>
 
       <Link
         component={RouterLink}
-        href={paths.authDemo.modern.login}
+        href={paths.auth.login}
         color="inherit"
         variant="subtitle2"
         sx={{
@@ -102,7 +106,7 @@ export default function ModernForgotPasswordView() {
         }}
       >
         <Iconify icon="eva:arrow-ios-back-fill" width={16} />
-        Return to sign in
+        {t('Return to sign in')}
       </Link>
     </Stack>
   );
@@ -112,11 +116,12 @@ export default function ModernForgotPasswordView() {
       <PasswordIcon sx={{ height: 96 }} />
 
       <Stack spacing={1} sx={{ mt: 3, mb: 5 }}>
-        <Typography variant="h3">Forgot your password?</Typography>
+        <Typography variant="h3">{t('Forgot your password?')}</Typography>
 
         <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-          Please enter the email address associated with your account and We
-          will email you a link to reset your password.
+          {t(
+            'Please enter the email address associated with your account and We will email you a link to reset your password.'
+          )}
         </Typography>
       </Stack>
     </>
@@ -134,7 +139,7 @@ export default function ModernForgotPasswordView() {
           sx={{ my: 3 }}
           onClose={() => setMessageResponse({ status: '', message: '' })}
         >
-          {messageResponse.message}
+          {t(messageResponse.message)}
         </Alert>
       )}
     </FormProvider>

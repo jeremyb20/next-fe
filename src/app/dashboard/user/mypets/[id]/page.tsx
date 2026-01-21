@@ -109,6 +109,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function Page({ params }: Props) {
   const { id } = params;
   const data = await getPetData(id);
+  console.log(data);
 
   // Si es perfil de mascota (QR ya convertido)
   if (data.type === 'pet_profile' && data.payload) {

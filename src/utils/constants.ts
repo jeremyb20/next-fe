@@ -38,7 +38,7 @@ export const parseWeight = (weightString: string | undefined) => {
 };
 
 export const BreedDogsOptions = [
-  { value: '', label: 'Selecciona una raza' },
+  { label: 'Choose breed', value: '' },
   { label: 'Criollo', value: 'criollo_perro' },
   { label: 'Labrador Retriever', value: 'labrador_retriever' },
   { label: 'Pastor Alemán', value: 'pastor_aleman' },

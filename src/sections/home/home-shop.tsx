@@ -3,6 +3,7 @@ import { isEqual } from 'lodash';
 import { m } from 'framer-motion';
 import orderBy from 'lodash/orderBy';
 import { paths } from '@/src/routes/paths';
+import { useTranslation } from 'react-i18next';
 import EmptyContent from '@/src/components/empty-content';
 import { useGetProductsPublished } from '@/src/api/product';
 import { IProductItem, IProductFilters } from '@/src/types/product';
@@ -33,6 +34,7 @@ export default function HomeShop() {
   const [filters] = useState(defaultFilters);
   const [sortBy] = useState('newest');
   const router = useRouter();
+  const { t } = useTranslation();
 
   const dataFiltered = applyFilter({
     inputData: products.slice(0, 4),
@@ -49,11 +51,11 @@ export default function HomeShop() {
     <Container component={MotionViewport} sx={{ py: { xs: 10, md: 15 } }}>
       <Stack spacing={3} sx={{ textAlign: 'center', mb: 8 }}>
         <m.div variants={varFade().inUp}>
-          <Typography variant="h2">Tiendas Afiliadas</Typography>
+          <Typography variant="h2"> {t('Affiliate Store')}</Typography>
         </m.div>
         <m.div variants={varFade().inUp}>
           <Typography variant="h6" color="text.secondary">
-            Descuentos exclusivos en productos para tu mascota
+            {t('Exclusive discounts on products for your pet')}
           </Typography>
         </m.div>
       </Stack>
@@ -77,7 +79,7 @@ export default function HomeShop() {
             onClick={() => router.push(paths.dashboard.product.root)}
             size="large"
           >
-            Ver Todas las Ofertas
+            {t('View All Offers')}
           </Button>
         </m.div>
       </Box>

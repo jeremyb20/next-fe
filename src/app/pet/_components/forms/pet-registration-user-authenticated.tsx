@@ -3,6 +3,7 @@
 import * as Yup from 'yup';
 import { useSnackbar } from 'notistack';
 import { endpoints } from '@/src/utils/axios';
+import { useTranslation } from 'react-i18next';
 import { OptionType } from '@/src/types/global';
 import { useAuthContext } from '@/src/auth/hooks';
 import { fData } from '@/src/utils/format-number';
@@ -45,17 +46,6 @@ import FormProvider, {
 
 // ----------------------------------------------------------------------
 
-// Esquema de validación para la mascota
-const PetSchema = Yup.object().shape({
-  petName: Yup.string().required('Pet name is required'),
-  breed: Yup.string().required('Breed is required'),
-  genderSelected: Yup.string().required('Gender is required'),
-  birthDate: Yup.string().optional(),
-  favoriteActivities: Yup.string().optional(),
-  healthAndRequirements: Yup.string().optional(),
-  weight: Yup.string().optional(),
-});
-
 interface PetRegistrationUserAuthenticatedProps {
   onSuccess?: () => void;
   onCancel?: () => void;
@@ -69,6 +59,7 @@ export function PetRegistrationUserAuthenticated({
   const { user } = useAuthContext(); // Obtener usuario actual
   const { mutateAsync } = useCreateGenericMutation();
   const { celebrate } = useCelebrationConfetti();
+  const { t } = useTranslation();
 
   const [errorMsg, setErrorMsg] = useState('');
   const [ageResult, setAgeResult] = useState<any>(null);
@@ -80,6 +71,17 @@ export function PetRegistrationUserAuthenticated({
   const [petPhotoPreview, setPetPhotoPreview] = useState<string | null>(null);
 
   const router = useRouter();
+
+  // Esquema de validación para la mascota
+  const PetSchema = Yup.object().shape({
+    petName: Yup.string().required(t('Pet name is required')),
+    breed: Yup.string().required(t('Breed is required')),
+    genderSelected: Yup.string().required(t('Gender is required')),
+    birthDate: Yup.string().optional(),
+    favoriteActivities: Yup.string().optional(),
+    healthAndRequirements: Yup.string().optional(),
+    weight: Yup.string().optional(),
+  });
 
   // Función para manejar la subida de foto
   const handleDropPetPhoto = useCallback((acceptedFiles: File[]) => {
@@ -200,7 +202,7 @@ export function PetRegistrationUserAuthenticated({
         },
       });
 
-      enqueueSnackbar('Pet added to your account successfully', {
+      enqueueSnackbar(t('Pet added to your account successfully'), {
         variant: 'success',
       });
 
@@ -225,8 +227,8 @@ export function PetRegistrationUserAuthenticated({
       setIsSubmitting(false);
     } catch (error: any) {
       console.error('Error adding pet:', error);
-      setErrorMsg(error.message || 'Error adding pet to your account');
-      enqueueSnackbar(error.message || 'Error adding pet to your account', {
+      setErrorMsg(t(error.message || 'Error adding pet to your account'));
+      enqueueSnackbar(t(error.message || 'Error adding pet to your account'), {
         variant: 'error',
       });
       setIsSubmitting(false);
@@ -253,24 +255,24 @@ export function PetRegistrationUserAuthenticated({
       {user && (
         <Paper sx={{ p: 2, mb: 3, bgcolor: 'background.neutral' }}>
           <Typography variant="subtitle1" gutterBottom>
-            Adding a new pet to your account
+            {t('Adding a new pet to your account')}
           </Typography>
           <Typography variant="body2" color="text.secondary">
-            Logged in as: <strong>{user.email}</strong>
+            {t('Logged in as')}: <strong>{user.email}</strong>
           </Typography>
         </Paper>
       )}
 
       {!!errorMsg && (
         <Alert severity="error" sx={{ mb: 3 }}>
-          {errorMsg}
+          {t(errorMsg)}
         </Alert>
       )}
 
       <FormProvider methods={petMethods} onSubmit={onSubmit}>
         {/* Sección de Foto de la Mascota */}
         <Card sx={{ mb: 3 }}>
-          <CardHeader title="Pet Photo (Optional)" />
+          <CardHeader title={t('Pet Photo (Optional)')} />
           <CardContent>
             <UploadAvatar
               file={petPhotoPreview}
@@ -287,7 +289,7 @@ export function PetRegistrationUserAuthenticated({
                 if (!allowedTypes.includes(fileData.type)) {
                   return {
                     code: 'invalid-file-type',
-                    message: 'Only JPEG, JPG, PNG or GIF images are allowed',
+                    message: t('Only JPEG, JPG, PNG or GIF images are allowed'),
                   };
                 }
 
@@ -295,7 +297,7 @@ export function PetRegistrationUserAuthenticated({
                 if (fileData.size > 2 * 1024 * 1024) {
                   return {
                     code: 'file-too-large',
-                    message: `Image is too large. Maximum ${fData(
+                    message: `${t('Image is too large. Maximum')} ${fData(
                       2 * 1024 * 1024
                     )}`,
                   };
@@ -314,8 +316,8 @@ export function PetRegistrationUserAuthenticated({
                     color: 'text.disabled',
                   }}
                 >
-                  Allowed *.jpeg, *.jpg, *.png, *.gif
-                  <br /> max size of {fData(2 * 1024 * 1024)}
+                  {t('Allowed *.jpeg, *.jpg, *.png, *.gif')}
+                  <br /> {t('max size of')} {fData(2 * 1024 * 1024)}
                 </Typography>
               }
             />
@@ -330,11 +332,11 @@ export function PetRegistrationUserAuthenticated({
             mb: 3,
           }}
         >
-          <RHFTextField name="petName" label="Pet Name" required />
+          <RHFTextField name="petName" label={t('Pet Name')} />
 
           <RHFAutocomplete
             name="breed"
-            label="Breed"
+            label={t('Breed')}
             options={BreedOptions.todos}
             getOptionLabel={(option: OptionType | string) => {
               if (typeof option === 'string') {
@@ -367,22 +369,22 @@ export function PetRegistrationUserAuthenticated({
             }}
             renderOption={(props, option) => (
               <li {...props} key={option.value}>
-                {option.label}
+                {t(option.label)}
               </li>
             )}
           />
 
-          <RHFSelect name="genderSelected" label="Gender" required>
+          <RHFSelect name="genderSelected" label={t('Gender')}>
             {GENDER_OPTIONS.map((gender) => (
               <MenuItem key={gender.value} value={gender.value}>
-                {gender.label}
+                {t(gender.label)}
               </MenuItem>
             ))}
           </RHFSelect>
 
           <RHFTextField
             name="weight"
-            label="Weight"
+            label={t('Weight')}
             type="number"
             inputProps={{ step: '0.1' }}
             InputProps={{
@@ -418,7 +420,7 @@ export function PetRegistrationUserAuthenticated({
               return (
                 <DatePicker
                   views={['year', 'month', 'day']}
-                  label="Birth Date"
+                  label={t('Birth Date')}
                   minDate={new Date('2000-03-01')}
                   maxDate={new Date()}
                   value={field.value ? new Date(field.value) : null}
@@ -448,31 +450,32 @@ export function PetRegistrationUserAuthenticated({
         {ageResult && (
           <Paper sx={{ p: 2, mb: 3 }}>
             <Typography variant="h6" gutterBottom>
-              Pet Age Information
+              {t('Pet Age Information')}
             </Typography>
             <Typography variant="body2" color="text.secondary">
-              <strong>Species:</strong>{' '}
+              <strong>{t('Species')}:</strong>{' '}
               {ageResult.species === 'dog' ? 'Dog' : 'Cat'}
               {ageResult.size &&
                 ageResult.species === 'dog' &&
                 ` (${ageResult.size})`}
             </Typography>
             <Typography variant="body2" color="text.secondary">
-              {ageResult.years} years and {ageResult.months} months
+              {ageResult.years} {t('years and')} {ageResult.months}{' '}
+              {t('months')}
             </Typography>
             <Typography variant="body2" sx={{ mt: 1 }}>
-              {ageResult.description}
+              {t(ageResult.description)}
             </Typography>
 
             {recommendations.length > 0 && (
               <Box sx={{ mt: 2 }}>
                 <Typography variant="subtitle2" gutterBottom>
-                  Recommendations:
+                  {t('Recommendations')}:
                 </Typography>
                 <ul style={{ margin: 0, paddingLeft: '20px' }}>
                   {recommendations.map((rec, index) => (
                     <li key={index}>
-                      <Typography variant="body2">{rec}</Typography>
+                      <Typography variant="body2">{t(rec)}</Typography>
                     </li>
                   ))}
                 </ul>
@@ -483,7 +486,7 @@ export function PetRegistrationUserAuthenticated({
 
         <RHFTextField
           name="favoriteActivities"
-          label="Favorite Activities"
+          label={t('Favorite Activities')}
           multiline
           rows={2}
           sx={{ mb: 2 }}
@@ -491,7 +494,7 @@ export function PetRegistrationUserAuthenticated({
 
         <RHFTextField
           name="healthAndRequirements"
-          label="Health & Requirements"
+          label={t('Health & Requirements')}
           multiline
           rows={2}
           sx={{ mb: 3 }}
@@ -500,11 +503,11 @@ export function PetRegistrationUserAuthenticated({
         <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: 1 }}>
           {onCancel ? (
             <Button onClick={onCancel} variant="outlined">
-              Cancel
+              {t('Cancel')}
             </Button>
           ) : (
             <Button onClick={goToDashboard} variant="outlined">
-              Back to Dashboard
+              {t('Back to Dashboard')}
             </Button>
           )}
 
@@ -513,7 +516,7 @@ export function PetRegistrationUserAuthenticated({
             variant="contained"
             loading={isSubmitting || isPetSubmitting}
           >
-            Add Pet
+            {t('Add New Pet')}
           </LoadingButton>
         </Box>
       </FormProvider>

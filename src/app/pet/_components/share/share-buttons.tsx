@@ -1,5 +1,6 @@
 import React from 'react';
 import { IPetProfile } from '@/src/types/api';
+import { useTranslation } from 'react-i18next';
 import {
   EmailShareButton,
   TwitterShareButton,
@@ -29,10 +30,12 @@ export default function ShareButtons({
   shareDescription,
   onClose,
 }: Props) {
+  const { t } = useTranslation();
+
   return (
     <Box sx={{ p: 3 }}>
       <Typography variant="h6" align="center" sx={{ mb: 3, fontWeight: 600 }}>
-        Compartir perfil de {petProfile?.petName}
+        {t('Share with friends')} {petProfile?.petName}
       </Typography>
 
       <Grid container spacing={3} justifyContent="center">
@@ -93,7 +96,7 @@ export default function ShareButtons({
       {!isMobile && (
         <Box sx={{ textAlign: 'center', mt: 3 }}>
           <Button variant="outlined" onClick={onClose} sx={{ borderRadius: 2 }}>
-            Cerrar
+            {t('Close')}
           </Button>
         </Box>
       )}

@@ -2,6 +2,7 @@
 import { m } from 'framer-motion';
 import Carousel from 'react-slick';
 import { APP_NAME } from '@/src/config-global';
+import { useTranslation } from 'react-i18next';
 import useCarousel from '@/src/components/carousel/use-carousel';
 
 import Box from '@mui/material/Box';
@@ -192,6 +193,7 @@ export default function HomeTestimonials() {
   const themes = useTheme();
   const mdUp = useResponsive('up', 'md');
   const smUp = useResponsive('up', 'sm');
+  const { t } = useTranslation();
 
   const carousel = useCarousel({
     dots: false,
@@ -228,21 +230,22 @@ export default function HomeTestimonials() {
           variant="overline"
           sx={{ color: 'text.disabled' }}
         >
-          Testimonios Reales
+          {t('From our users')}
         </Typography>
       </m.div>
 
       <m.div variants={varFade().inDown}>
         <Typography variant="h2">
-          Lo que dicen nuestros <br />
-          usuarios
+          {t('What do they say about us')} <br />
         </Typography>
       </m.div>
 
       <m.div variants={varFade().inDown}>
         <Typography sx={{ color: 'text.secondary', maxWidth: 600, mx: 'auto' }}>
-          Descubre por qué miles de dueños de mascotas, veterinarios y
-          profesionales confían en {APP_NAME} para el cuidado de sus animales.
+          {t(
+            'Discover why thousands of pet owners veterinarians and professionals trust'
+          )}{' '}
+          {APP_NAME} {t('for the care of their animals.')}
         </Typography>
       </m.div>
     </Stack>
@@ -310,10 +313,10 @@ export default function HomeTestimonials() {
         alignItems="center"
       >
         {[
-          { number: '50K+', label: 'Mascotas Registradas' },
-          { number: '1.2K+', label: 'Veterinarios Afiliados' },
-          { number: '800+', label: 'Peluqueros Certificados' },
-          { number: '4.9/5', label: 'Rating Promedio' },
+          { number: '50K+', label: 'Pets Registered' },
+          { number: '1.2K+', label: 'Affiliated Veterinarians' },
+          { number: '800+', label: 'Certified Groomers' },
+          { number: '4.9/5', label: 'Average Rating' },
         ].map((stat, index) => (
           <m.div key={stat.label} variants={varFade().inUp}>
             <Stack spacing={1}>
@@ -321,7 +324,7 @@ export default function HomeTestimonials() {
                 {stat.number}
               </Typography>
               <Typography variant="body2" color="text.secondary">
-                {stat.label}
+                {t(stat.label)}
               </Typography>
             </Stack>
           </m.div>

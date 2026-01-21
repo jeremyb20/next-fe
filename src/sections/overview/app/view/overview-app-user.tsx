@@ -6,6 +6,7 @@ import { paths } from '@/src/routes/paths';
 import { bgGradient } from '@/src/theme/css';
 import { useState, useCallback } from 'react';
 import Iconify from '@/src/components/iconify';
+import { useTranslation } from 'react-i18next';
 import { IUser, IPetProfile } from '@/src/types/api';
 import { useBoolean } from '@/src/hooks/use-boolean';
 import { useManagerUser } from '@/src/hooks/use-manager-user';
@@ -35,6 +36,8 @@ import { useRouter } from 'src/routes/hooks';
 
 export default function OverviewAppUser() {
   const { user } = useManagerUser();
+  const { t } = useTranslation();
+
   const theme = useTheme();
   const router = useRouter();
 
@@ -42,7 +45,7 @@ export default function OverviewAppUser() {
   const petQuickEdit = useBoolean();
   const registerPetModal = useBoolean();
 
-  const [activeFilters, setActiveFilters] = useState<Partial<UserQueryParams>>({
+  const [activeFilters] = useState<Partial<UserQueryParams>>({
     page: 1,
     limit: 5,
     id: user?.id,
@@ -68,7 +71,6 @@ export default function OverviewAppUser() {
 
   const handlePetView = useCallback(
     (pet: IPetProfile) => {
-      console.log('Ver mascota:', pet);
       router.push(paths.dashboard.user.details(pet.memberPetId));
     },
     [router]
@@ -82,7 +84,14 @@ export default function OverviewAppUser() {
   if (!user) {
     return (
       <Box sx={{ p: 3 }}>
-        <Alert severity="error">Error loading user data</Alert>
+        <Alert
+          severity="error"
+          onClose={() => {
+            window.location.reload();
+          }}
+        >
+          {t('Error loading user data')}
+        </Alert>
       </Box>
     );
   }
@@ -90,10 +99,22 @@ export default function OverviewAppUser() {
   if (isError) {
     return (
       <Box sx={{ p: 3 }}>
-        <Alert severity="error">{error.message}</Alert>
+        <Alert severity="error">{t(error.message)}</Alert>
       </Box>
     );
   }
+
+  const comingSoon = (
+    <CardContent>
+      <Typography variant="h3" sx={{ mb: 2 }}>
+        {t('Coming Soon!')}
+      </Typography>
+
+      <Typography sx={{ color: 'text.secondary' }}>
+        {t('We are currently working hard on this page!')}
+      </Typography>
+    </CardContent>
+  );
 
   return (
     <Box
@@ -121,7 +142,7 @@ export default function OverviewAppUser() {
             <Avatar src={user.photoURL} sx={{ width: 60, height: 60 }} />
             <Box>
               <Typography variant="h6" fontWeight={600}>
-                Hi, {user.displayName}
+                {t('Hi there!')}, {user.displayName}
               </Typography>
               <Typography variant="body2" color="text.secondary">
                 {user.email}
@@ -141,14 +162,14 @@ export default function OverviewAppUser() {
             }}
           >
             <Typography variant="h6" fontWeight={600}>
-              Your pets
+              {t('Your pets')}
             </Typography>
             <Typography
               variant="body2"
               sx={{ color: 'inherit', cursor: 'pointer' }}
               onClick={() => HandleRedirect(paths.dashboard.user.myPets)}
             >
-              See all
+              {t('View all')}
             </Typography>
           </Box>
 
@@ -160,10 +181,10 @@ export default function OverviewAppUser() {
               onPetDelete={handlePetDelete}
               onPetView={handlePetView}
               onPetEdit={handlePetEdit}
-              emptyMessage="No se encontraron mascotas"
+              emptyMessage={t('No pets found. Add your first pet!')}
               showAddMoreButton={usersData && usersData.payload.length <= 9}
               onAddMore={() => registerPetModal.onTrue()}
-              addMoreButtonText="Add Pet"
+              addMoreButtonText={t('Add New Pet')}
             />
 
             <PetQuickEditForm
@@ -194,13 +215,13 @@ export default function OverviewAppUser() {
             }}
           >
             <Typography variant="h6" fontWeight={600}>
-              Pet Care Nearby
+              {t('Pet Care Nearby')}
             </Typography>
             <Typography
               variant="body2"
               sx={{ color: 'inherit', cursor: 'pointer' }}
             >
-              See all
+              {t('View all')}
             </Typography>
           </Box>
 
@@ -271,15 +292,7 @@ export default function OverviewAppUser() {
               </Box>
             </CardContent> */}
 
-            <CardContent>
-              <Typography variant="h3" sx={{ mb: 2 }}>
-                Coming Soon!
-              </Typography>
-
-              <Typography sx={{ color: 'text.secondary' }}>
-                We are currently working hard on this page!
-              </Typography>
-            </CardContent>
+            {comingSoon}
           </Card>
         </Box>
 
@@ -294,13 +307,13 @@ export default function OverviewAppUser() {
             }}
           >
             <Typography variant="h6" fontWeight={600}>
-              Next Dates
+              {t('Next Dates')}
             </Typography>
             <Typography
               variant="body2"
               sx={{ color: 'inherit', cursor: 'pointer' }}
             >
-              See all
+              {t('View all')}
             </Typography>
           </Box>
 
@@ -342,15 +355,7 @@ export default function OverviewAppUser() {
               </Box>
             </CardContent> */}
 
-            <CardContent>
-              <Typography variant="h3" sx={{ mb: 2 }}>
-                Coming Soon!
-              </Typography>
-
-              <Typography sx={{ color: 'text.secondary' }}>
-                We are currently working hard on this page!
-              </Typography>
-            </CardContent>
+            {comingSoon}
           </Card>
         </Box>
       </Container>

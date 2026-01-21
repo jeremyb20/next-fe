@@ -123,8 +123,8 @@ export const _mapContact = [
   },
 
   {
-    latlng: [9.976, -84.0068], // Cartago, Costa Rica
-    address: 'Cartago, Costa Rica, Centro Histórico',
+    latlng: [9.867062, -84.037723], // Guatuso de Patarra, San José
+    address: 'Guatuso de Patarra, San José, Costa Rica. Carretera a Cartago',
     phoneNumber: '+506 2551-2020',
     city: 'Cartago',
     description: 'Distribuidor autorizado',

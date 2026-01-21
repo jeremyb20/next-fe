@@ -1,6 +1,7 @@
 import React from 'react';
 import { APP_NAME } from '@/src/config-global';
 import Iconify from '@/src/components/iconify';
+import { useTranslation } from 'react-i18next';
 
 import {
   Box,
@@ -16,36 +17,36 @@ import {
 
 const AboutUs = () => {
   const theme = useTheme();
+  const { t } = useTranslation();
 
   const values = [
     {
       icon: <Iconify icon="ic:outline-pets" sx={{ fontSize: 40 }} />,
-      title: 'Bienestar Animal',
-      description:
-        'Nuestra razón de ser es el cuidado y protección de las mascotas.',
+      title: 'Animal Welfare',
+      description: 'Our purpose is to care for and protect pets.',
     },
     {
       icon: <Iconify icon="ic:outline-family-restroom" sx={{ fontSize: 40 }} />,
-      title: 'Origen Familiar',
-      description: 'Empresa familiar costarricense con valores arraigados.',
+      title: 'Family Origin',
+      description: 'Costa Rican family business with rooted values.',
     },
     {
       icon: <Iconify icon="ic:outline-update" sx={{ fontSize: 40 }} />,
-      title: 'Innovación Constante',
-      description: 'Tecnología actualizada para soluciones permanentes.',
+      title: 'Constant Innovation',
+      description: 'Updated technology for permanent solutions.',
     },
     {
       icon: <Iconify icon="ic:outline-groups" sx={{ fontSize: 40 }} />,
-      title: 'Comunidad',
-      description: 'Crecimos gracias a la confianza de miles de familias.',
+      title: 'Community',
+      description: 'We grew thanks to the trust of thousands of families.',
     },
   ];
 
   const milestones = [
-    { year: '2021', event: 'Nacimiento de Plaquitas CR' },
-    { year: '2021', event: 'Lanzamiento de Plaquitas Inteligentes' },
-    { year: 'Actualidad', event: 'Más de 5,000 mascotas protegidas' },
-    { year: 'Próximo', event: 'Nuevas soluciones en desarrollo' },
+    { year: '2021', event: `Birth of ${APP_NAME}` },
+    { year: '2021', event: 'Launch of Smart Tags' },
+    { year: 'Actually', event: 'More than 5,000 pets protected' },
+    { year: 'Next', event: 'New solutions in development' },
   ];
 
   return (
@@ -76,7 +77,7 @@ const AboutUs = () => {
                 WebkitTextFillColor: 'transparent',
               }}
             >
-              Nuestra Historia
+              {t('Our Story')}
             </Typography>
             <Typography
               variant="h4"
@@ -85,17 +86,17 @@ const AboutUs = () => {
               color="primary"
               sx={{ fontWeight: 600 }}
             >
-              Desde febrero de 2021, en {APP_NAME} trabajamos por el bienestar
-              animal.
+              {t('Since February 2021, at')} {APP_NAME}{' '}
+              {t('we have been working for animal welfare.')}
             </Typography>
             <Typography
               variant="body1"
               paragraph
               sx={{ fontSize: '1.1rem', lineHeight: 1.8 }}
             >
-              Somos una empresa familiar costarricense que nació por una
-              necesidad genuina y con la visión creativa de una pareja que vio
-              un problema y se comprometió a crear nuevas posibilidades.
+              {t(
+                'We are a Costa Rican family business that was born out of a genuine need and the creative vision of a couple who saw a problem and committed themselves to creating new possibilities.'
+              )}
             </Typography>
           </Grid>
           <Grid item xs={12} md={6}>
@@ -133,20 +134,18 @@ const AboutUs = () => {
                     sx={{ mr: 2, fontSize: 40 }}
                   />
                   <Typography variant="h5" component="h2" fontWeight="bold">
-                    El Problema que nos Movilizó
+                    {t('The Problem that Moved Us')}
                   </Typography>
                 </Box>
                 <Typography variant="body1" paragraph sx={{ lineHeight: 1.8 }}>
-                  Nos tocó vivir la experiencia de perder a nuestras mascotas,
-                  así como ver sufrir a seres queridos por la misma situación.
-                  Sentimos esa mezcla de emociones inexplicable: la angustia, la
-                  incertidumbre, la desesperación.
+                  {t(
+                    'We have had to live through the experience of losing our pets, as well as seeing loved ones suffer from the same situation. We feel that inexplicable mix of emotions: anguish, uncertainty, despair.'
+                  )}
                 </Typography>
                 <Typography variant="body1" paragraph sx={{ lineHeight: 1.8 }}>
-                  No podíamos aceptar que en pleno 2021 la identificación de
-                  mascotas siguiera siendo escasa, tediosa y con fechas de
-                  vencimiento, dejando vulnerables a nuestros compañeros de
-                  vida.
+                  {t(
+                    'We could not accept that in 2021, pet identification continued to be scarce, tedious, and subject to expiration dates, leaving our companions vulnerable. life.'
+                  )}
                 </Typography>
               </CardContent>
             </Card>
@@ -161,19 +160,18 @@ const AboutUs = () => {
                     sx={{ mr: 2, fontSize: 40 }}
                   />
                   <Typography variant="h5" component="h2" fontWeight="bold">
-                    La Solución que Creemos
+                    {t('The Solution We Believe In')}
                   </Typography>
                 </Box>
                 <Typography variant="body1" paragraph sx={{ lineHeight: 1.8 }}>
-                  Vimos claramente que una identificación de mascotas más
-                  completa, actualizada y permanente era no solo posible, sino
-                  absolutamente necesaria. Con la tecnología como aliada,
-                  podíamos dar una solución real y efectiva.
+                  {t(
+                    'We clearly saw that more comprehensive, up-to-date, and permanent pet identification was not only possible but absolutely necessary. With technology as our ally, we could provide a real and effective solution.'
+                  )}
                 </Typography>
                 <Typography variant="body1" paragraph sx={{ lineHeight: 1.8 }}>
-                  Así nació nuestro compromiso: revolucionar la forma en que
-                  protegemos a nuestras mascotas, haciendo de su seguridad algo
-                  accesible, moderno y permanente.
+                  {t(
+                    'This is how our commitment was born: to revolutionize the way we protect our pets, making their safety accessible, modern, and permanent.'
+                  )}
                 </Typography>
               </CardContent>
             </Card>
@@ -190,7 +188,7 @@ const AboutUs = () => {
           align="center"
           sx={{ mb: 6 }}
         >
-          Nuestro Camino
+          {t('Our Journey')}
         </Typography>
         <Box
           sx={{
@@ -209,14 +207,14 @@ const AboutUs = () => {
                 fontWeight="bold"
                 color="primary"
               >
-                El Comienzo
+                {t('The Beginning')}
               </Typography>
               <Typography variant="body1" paragraph sx={{ lineHeight: 1.8 }}>
-                Empezamos a reunir al pequeño pero gran equipo que, a día de hoy
-                sigue siendo el mismo corazón de nuestra empresa. Dedicamos
-                meses de trabajo intenso, investigación y desarrollo para lanzar{' '}
-                {APP_NAME} con nuestro primer producto: las{' '}
-                <strong>Plaquitas Inteligentes</strong>.
+                {t(
+                  'We began to assemble the small but mighty team that, to this day, remains the heart of our company. We dedicated months of intense work, research, and development to launch'
+                )}
+                {APP_NAME} {t('with our first product: the')}{' '}
+                <strong>{t('Smart Tags')}</strong>.
               </Typography>
             </Grid>
             <Grid item xs={12} md={6}>
@@ -226,14 +224,12 @@ const AboutUs = () => {
                 fontWeight="bold"
                 color="primary"
               >
-                El Crecimiento
+                {t('Growth')}
               </Typography>
               <Typography variant="body1" paragraph sx={{ lineHeight: 1.8 }}>
-                Gracias a la hermosa comunidad que confió en nosotros desde el
-                primer momento, seguimos creciendo. Trabajamos con mucho
-                entusiasmo y dedicación para seguir evolucionando y poder
-                ofrecer más y mejores soluciones, no solo para la recuperación
-                de mascotas perdidas, sino para su bienestar integral.
+                {t(
+                  'Thanks to the beautiful community that trusted us from the very beginning, we have been able to grow and expand our services. Today, we are proud to offer a complete app that goes beyond pet identification, providing comprehensive care solutions.'
+                )}
               </Typography>
             </Grid>
           </Grid>
@@ -249,7 +245,7 @@ const AboutUs = () => {
           align="center"
           sx={{ mb: 4 }}
         >
-          Nuestros Valores
+          {t('Our Core Values')}
         </Typography>
         <Grid container spacing={3}>
           {values.map((value, index) => (
@@ -276,10 +272,10 @@ const AboutUs = () => {
                     gutterBottom
                     fontWeight="bold"
                   >
-                    {value.title}
+                    {t(value.title)}
                   </Typography>
                   <Typography variant="body2" color="text.secondary">
-                    {value.description}
+                    {t(value.description)}
                   </Typography>
                 </CardContent>
               </Card>
@@ -297,7 +293,7 @@ const AboutUs = () => {
           align="center"
           sx={{ mb: 4 }}
         >
-          Nuestra Trayectoria
+          {t('Our Milestones')}
         </Typography>
         <Box sx={{ position: 'relative' }}>
           <Divider
@@ -330,9 +326,9 @@ const AboutUs = () => {
                     fontWeight="bold"
                     gutterBottom
                   >
-                    {milestone.year}
+                    {t(milestone.year)}
                   </Typography>
-                  <Typography variant="body1">{milestone.event}</Typography>
+                  <Typography variant="body1">{t(milestone.event)}</Typography>
                 </Card>
               </Grid>
             ))}
@@ -353,19 +349,20 @@ const AboutUs = () => {
       >
         <Iconify icon="ic:outline-rocket-launch" sx={{ fontSize: 60, mb: 3 }} />
         <Typography variant="h4" component="h2" gutterBottom fontWeight="bold">
-          El Futuro que Construimos Juntos
+          {t('The Future We Build Together')}
         </Typography>
         <Typography variant="h6" paragraph sx={{ mb: 4, opacity: 0.9 }}>
-          Tenemos muchos desafíos por delante y muchas ganas de superarlos.
-          Seguimos innovando, creciendo y mejorando para ofrecerles las mejores
-          soluciones para el bienestar de sus mascotas.
+          {t(
+            'We have many challenges ahead of us and we are eager to overcome them. We continue to innovate, grow, and improve in order to offer you the best solutions for the well-being of your pets.'
+          )}
         </Typography>
         <Typography variant="h5" fontWeight="bold" sx={{ mb: 2 }}>
-          ¿Nos acompañás en este viaje?
+          {t('Will you join us on this journey?')}
         </Typography>
         <Typography variant="body1" sx={{ opacity: 0.8 }}>
-          Juntos, hagamos que ninguna mascota se pierda y que todas tengan la
-          protección que merecen.
+          {t(
+            'Together, lets make sure no pet gets lost and that they all have the protection they deserve.'
+          )}
         </Typography>
       </Paper>
     </Container>
