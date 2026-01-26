@@ -17,6 +17,8 @@ import HomeServices from '../home-services';
 import HomeGrooming from '../home-grooming';
 import HomePetTracking from '../home-pet-tracking';
 import HomeTestimonials from '../home-testimonials';
+import { useEffect, useState } from 'react';
+import { SplashScreen } from '@/src/components/loading-screen';
 
 // ----------------------------------------------------------------------
 
@@ -51,7 +53,13 @@ const StyledPolygon = styled('div')<StyledPolygonProps>(
 export default function HomeView() {
   const { scrollYProgress } = useScroll();
 
-  return (
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  return isClient ? (
     <MainLayout>
       <ScrollProgress scrollYProgress={scrollYProgress} />
 
@@ -87,5 +95,7 @@ export default function HomeView() {
         <HomeBlog />
       </Box>
     </MainLayout>
+  ) : (
+    <SplashScreen />
   );
 }
