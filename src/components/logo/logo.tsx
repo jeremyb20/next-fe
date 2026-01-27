@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import { forwardRef } from 'react';
+import { LOGO } from '@/src/config-global';
 
 import Link from '@mui/material/Link';
 import Box, { BoxProps } from '@mui/material/Box';
@@ -85,7 +86,10 @@ const Logo = forwardRef<HTMLDivElement, LogoProps>(
         </svg> */}
 
         <Image
-          src="https://res.cloudinary.com/ensamble/image/upload/v1692285552/gw2pih5qe3vritw5xv13.png"
+          src={
+            LOGO ||
+            'https://res.cloudinary.com/ensamble/image/upload/v1769553182/petlogo_fpmf2i.png'
+          }
           alt="logo"
           priority
           width={100}

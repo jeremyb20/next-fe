@@ -1,4 +1,7 @@
+import { useState, useEffect } from 'react';
 import { m, MotionProps } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
+import { SplashScreen } from '@/src/components/loading-screen';
 
 import Stack from '@mui/material/Stack';
 import Container from '@mui/material/Container';
@@ -24,6 +27,13 @@ const CONTACTS = [
 
 export default function ContactHero() {
   const theme = useTheme();
+  const { t } = useTranslation();
+
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
   return (
     <Box
@@ -39,54 +49,58 @@ export default function ContactHero() {
       }}
     >
       <Container component={MotionContainer}>
-        <Box
-          sx={{
-            bottom: { md: 80 },
-            position: { md: 'absolute' },
-            textAlign: { xs: 'center', md: 'unset' },
-          }}
-        >
-          <TextAnimate
-            text="Where"
-            sx={{ color: 'primary.main' }}
-            variants={varFade().inRight}
-          />
-          <br />
-
-          <Stack
-            spacing={2}
-            display="inline-flex"
-            direction="row"
-            sx={{ color: 'common.white' }}
+        {!isClient ? (
+          <SplashScreen />
+        ) : (
+          <Box
+            sx={{
+              bottom: { md: 80 },
+              position: { md: 'absolute' },
+              textAlign: { xs: 'center', md: 'unset' },
+            }}
           >
-            <TextAnimate text="to" />
-            <TextAnimate text="find" />
-            <TextAnimate text="us?" />
-          </Stack>
+            <TextAnimate
+              text={t('Where')}
+              sx={{ color: 'primary.main' }}
+              variants={varFade().inRight}
+            />
+            <br />
 
-          <Stack
-            spacing={5}
-            alignItems={{ xs: 'center', md: 'unset' }}
-            direction={{ xs: 'column', md: 'row' }}
-            sx={{ mt: 5, color: 'common.white' }}
-          >
-            {CONTACTS.map((contact) => (
-              <Stack key={contact.country} sx={{ maxWidth: 180 }}>
-                <m.div variants={varFade().in}>
-                  <Typography variant="h6" gutterBottom>
-                    {contact.country}
-                  </Typography>
-                </m.div>
+            <Stack
+              spacing={2}
+              display="inline-flex"
+              direction="row"
+              sx={{ color: 'common.white' }}
+            >
+              <TextAnimate text={t('to')} />
+              <TextAnimate text={t('find')} />
+              <TextAnimate text={t('us?')} />
+            </Stack>
 
-                <m.div variants={varFade().inRight}>
-                  <Typography variant="body2" sx={{ opacity: 0.8 }}>
-                    {contact.address}
-                  </Typography>
-                </m.div>
-              </Stack>
-            ))}
-          </Stack>
-        </Box>
+            <Stack
+              spacing={5}
+              alignItems={{ xs: 'center', md: 'unset' }}
+              direction={{ xs: 'column', md: 'row' }}
+              sx={{ mt: 5, color: 'common.white' }}
+            >
+              {CONTACTS.map((contact) => (
+                <Stack key={contact.country} sx={{ maxWidth: 180 }}>
+                  <m.div variants={varFade().in}>
+                    <Typography variant="h6" gutterBottom>
+                      {contact.country}
+                    </Typography>
+                  </m.div>
+
+                  <m.div variants={varFade().inRight}>
+                    <Typography variant="body2" sx={{ opacity: 0.8 }}>
+                      {contact.address}
+                    </Typography>
+                  </m.div>
+                </Stack>
+              ))}
+            </Stack>
+          </Box>
+        )}
       </Container>
     </Box>
   );

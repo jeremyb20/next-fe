@@ -70,7 +70,7 @@ export default function HomePetTracking() {
                 sx={{ width: '100%', maxWidth: 500, borderRadius: 3 }}
               /> */}
               <Iconify
-                icon="uil:file-medical-alt"
+                icon="ix:health"
                 height={300}
                 width={300}
                 sx={{ width: '100%', maxWidth: 500, borderRadius: 3 }}

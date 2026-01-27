@@ -1,3 +1,4 @@
+import Label from '@/src/components/label';
 import { useTranslation } from 'react-i18next';
 import { APP_NAME, EMAIL_SUPPORT } from '@/src/config-global';
 
@@ -71,6 +72,20 @@ export default function Footer() {
           <Link href="https://jeremy-bacca-portfolio.netlify.app/">
             {' '}
             {APP_NAME}.{' '}
+          </Link>
+          <Link
+            href={paths.auth.jwt.login}
+            target="_blank"
+            rel="noopener"
+            underline="none"
+            sx={{ ml: 1 }}
+          >
+            <Label
+              color="info"
+              sx={{ textTransform: 'unset', height: 22, px: 0.5 }}
+            >
+              v{process.env.APP_VERSION}
+            </Label>
           </Link>
         </Typography>
       </Container>
@@ -173,6 +188,20 @@ export default function Footer() {
           <Link href="https://jeremy-bacca-portfolio.netlify.app/">
             {' '}
             {APP_NAME}.{' '}
+          </Link>
+          <Link
+            href={paths.auth.jwt.login}
+            target="_blank"
+            rel="noopener"
+            underline="none"
+            sx={{ ml: 1 }}
+          >
+            <Label
+              color="info"
+              sx={{ textTransform: 'unset', height: 22, px: 0.5 }}
+            >
+              v{process.env.APP_VERSION}
+            </Label>
           </Link>
         </Typography>
       </Container>

@@ -70,7 +70,7 @@ export default function ContactMap({ contacts }: Props) {
         }}
         mapStyle={`mapbox://styles/mapbox/${lightMode ? 'light' : 'dark'}-v10`}
         mapboxAccessToken={MAPBOX_API}
-        onClick={marker}
+        // onClick={marker}
       >
         <MapControl hideGeolocateControl />
 

@@ -1,5 +1,6 @@
-import { useState } from 'react';
 import { m } from 'framer-motion';
+import { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { EMAIL_SUPPORT } from '@/src/config-global';
 
 import Box from '@mui/material/Box';
@@ -30,12 +31,16 @@ interface FormErrors {
 }
 
 export default function ContactForm() {
+  const { t } = useTranslation();
+
   const [formData, setFormData] = useState<ContactFormData>({
     name: '',
     email: '',
     subject: '',
     message: '',
   });
+
+  const [isClient, setIsClient] = useState(false);
 
   const [errors, setErrors] = useState<FormErrors>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -50,31 +55,31 @@ export default function ContactForm() {
 
     // Validación de nombre
     if (!formData.name.trim()) {
-      newErrors.name = 'El nombre es requerido';
+      newErrors.name = 'Name is required';
     } else if (formData.name.trim().length < 2) {
-      newErrors.name = 'El nombre debe tener al menos 2 caracteres';
+      newErrors.name = 'The name must have at least 2 characters.';
     }
 
     // Validación de email
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!formData.email.trim()) {
-      newErrors.email = 'El email es requerido';
+      newErrors.email = 'Email is required';
     } else if (!emailRegex.test(formData.email)) {
-      newErrors.email = 'Por favor ingresa un email válido';
+      newErrors.email = 'Email must be a valid email address';
     }
 
     // Validación de asunto
     if (!formData.subject.trim()) {
-      newErrors.subject = 'El asunto es requerido';
+      newErrors.subject = 'Subject is required';
     } else if (formData.subject.trim().length < 5) {
-      newErrors.subject = 'El asunto debe tener al menos 5 caracteres';
+      newErrors.subject = 'The subject must be at least 5 characters long.';
     }
 
     // Validación de mensaje
     if (!formData.message.trim()) {
-      newErrors.message = 'El mensaje es requerido';
+      newErrors.message = 'The message is required';
     } else if (formData.message.trim().length < 10) {
-      newErrors.message = 'El mensaje debe tener al menos 10 caracteres';
+      newErrors.message = 'The message must be at least 10 characters long.';
     }
 
     setErrors(newErrors);
@@ -105,7 +110,7 @@ export default function ContactForm() {
     if (!validateForm()) {
       setSnackbar({
         open: true,
-        message: 'Por favor corrige los errores en el formulario',
+        message: 'Please fix the errors in the form.',
         severity: 'error',
       });
       return;
@@ -129,7 +134,9 @@ export default function ContactForm() {
       const mailtoLink = `mailto:${EMAIL_SUPPORT}?subject=${encodeURIComponent(
         formData.subject
       )}&body=${encodeURIComponent(
-        `Nombre: ${formData.name}\nEmail: ${formData.email}\n\nMensaje:\n${formData.message}`
+        `${t('Name')}: ${formData.name}\nEmail: ${
+          formData.email
+        }\n\nMensaje:\n${formData.message}`
       )}`;
       window.open(mailtoLink, '_blank');
 
@@ -143,15 +150,14 @@ export default function ContactForm() {
 
       setSnackbar({
         open: true,
-        message: '¡Mensaje enviado con éxito! Te contactaremos pronto.',
+        message: 'Message sent successfully! We will contact you shortly.',
         severity: 'success',
       });
     } catch (error) {
       console.error('Error sending message:', error);
       setSnackbar({
         open: true,
-        message:
-          'Hubo un error al enviar el mensaje. Por favor intenta nuevamente.',
+        message: 'There was an error sending the message. Please try again.',
         severity: 'error',
       });
     } finally {
@@ -163,127 +169,139 @@ export default function ContactForm() {
     setSnackbar((prev) => ({ ...prev, open: false }));
   };
 
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
   return (
     <>
-      <Stack component={MotionViewport} spacing={3} sx={{ width: '100%' }}>
-        <m.div variants={varFade().inUp}>
-          <Typography variant="h4">Feel free to contact us.</Typography>
-          <Typography variant="body1" color="text.secondary" sx={{ mt: 1 }}>
-            We&apos;ll be glad to hear from you, buddy.
-          </Typography>
-        </m.div>
+      {isClient && (
+        <Box>
+          <Stack component={MotionViewport} spacing={3} sx={{ width: '100%' }}>
+            <m.div variants={varFade().inUp}>
+              <Typography variant="h4">
+                {t('Feel free to contact us.')}
+              </Typography>
+              <Typography variant="body1" color="text.secondary" sx={{ mt: 1 }}>
+                {t('We would love to hear from you, friend')}
+              </Typography>
+            </m.div>
 
-        <Stack component="form" onSubmit={handleSubmit} spacing={3}>
-          <m.div variants={varFade().inUp}>
-            <TextField
-              fullWidth
-              label="Nombre completo"
-              name="name"
-              value={formData.name}
-              onChange={handleChange}
-              error={!!errors.name}
-              helperText={errors.name}
-              disabled={isSubmitting}
-              placeholder="Ej: María Rodríguez"
-            />
-          </m.div>
-
-          <m.div variants={varFade().inUp}>
-            <TextField
-              fullWidth
-              label="Email"
-              name="email"
-              type="email"
-              value={formData.email}
-              onChange={handleChange}
-              error={!!errors.email}
-              helperText={errors.email}
-              disabled={isSubmitting}
-              placeholder="Ej: tu@email.com"
-            />
-          </m.div>
-
-          <m.div variants={varFade().inUp}>
-            <TextField
-              fullWidth
-              label="Asunto"
-              name="subject"
-              value={formData.subject}
-              onChange={handleChange}
-              error={!!errors.subject}
-              helperText={errors.subject}
-              disabled={isSubmitting}
-              placeholder="Ej: Consulta sobre placas para perros grandes"
-            />
-          </m.div>
-
-          <m.div variants={varFade().inUp}>
-            <TextField
-              fullWidth
-              label="Escribe tu mensaje aquí"
-              name="message"
-              value={formData.message}
-              onChange={handleChange}
-              error={!!errors.message}
-              helperText={errors.message}
-              disabled={isSubmitting}
-              multiline
-              rows={4}
-              placeholder="Describe detalladamente tu consulta o pregunta..."
-            />
-          </m.div>
-
-          <m.div variants={varFade().inUp}>
-            <Box sx={{ position: 'relative' }}>
-              <Button
-                size="large"
-                variant="contained"
-                type="submit"
-                disabled={isSubmitting}
-                sx={{ minWidth: 180 }}
-                startIcon={isSubmitting ? null : undefined}
-              >
-                {isSubmitting ? 'Enviando...' : 'Enviar Mensaje'}
-              </Button>
-              {isSubmitting && (
-                <CircularProgress
-                  size={24}
-                  sx={{
-                    position: 'absolute',
-                    top: '50%',
-                    left: '50%',
-                    marginTop: '-12px',
-                    marginLeft: '-12px',
-                  }}
+            <Stack component="form" onSubmit={handleSubmit} spacing={3}>
+              <m.div variants={varFade().inUp}>
+                <TextField
+                  fullWidth
+                  label={t('Full Name')}
+                  name="name"
+                  value={formData.name}
+                  onChange={handleChange}
+                  error={!!errors.name}
+                  helperText={errors.name}
+                  disabled={isSubmitting}
+                  placeholder={t('Ex: María Rodríguez')}
                 />
-              )}
-            </Box>
-            <Typography
-              variant="caption"
-              color="text.secondary"
-              sx={{ mt: 1, display: 'block' }}
-            >
-              También puedes escribirnos directamente a: {EMAIL_SUPPORT}
-            </Typography>
-          </m.div>
-        </Stack>
-      </Stack>
+              </m.div>
 
-      <Snackbar
-        open={snackbar.open}
-        autoHideDuration={6000}
-        onClose={handleCloseSnackbar}
-        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-      >
-        <Alert
-          onClose={handleCloseSnackbar}
-          severity={snackbar.severity}
-          variant="filled"
-          sx={{ width: '100%' }}
-        >
-          {snackbar.message}
-        </Alert>
-      </Snackbar>
+              <m.div variants={varFade().inUp}>
+                <TextField
+                  fullWidth
+                  label={t('Email address')}
+                  name="email"
+                  type="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  error={!!errors.email}
+                  helperText={errors.email}
+                  disabled={isSubmitting}
+                  placeholder="Ej: tu@email.com"
+                />
+              </m.div>
+
+              <m.div variants={varFade().inUp}>
+                <TextField
+                  fullWidth
+                  label={t('Subject')}
+                  name="subject"
+                  value={formData.subject}
+                  onChange={handleChange}
+                  error={!!errors.subject}
+                  helperText={errors.subject}
+                  disabled={isSubmitting}
+                  placeholder={t('Example: Inquiry about tags for large dogs')}
+                />
+              </m.div>
+
+              <m.div variants={varFade().inUp}>
+                <TextField
+                  fullWidth
+                  label={t('Write your message here')}
+                  name="message"
+                  value={formData.message}
+                  onChange={handleChange}
+                  error={!!errors.message}
+                  helperText={errors.message}
+                  disabled={isSubmitting}
+                  multiline
+                  rows={4}
+                  placeholder={t(
+                    'Describe your query or question in detail...'
+                  )}
+                />
+              </m.div>
+
+              <m.div variants={varFade().inUp}>
+                <Box sx={{ position: 'relative' }}>
+                  <Button
+                    size="large"
+                    variant="contained"
+                    type="submit"
+                    disabled={isSubmitting}
+                    sx={{ minWidth: 180 }}
+                    startIcon={isSubmitting ? null : undefined}
+                  >
+                    {isSubmitting ? t('Sending...') : t('Send Message')}
+                  </Button>
+                  {isSubmitting && (
+                    <CircularProgress
+                      size={24}
+                      sx={{
+                        position: 'absolute',
+                        top: '50%',
+                        left: '50%',
+                        marginTop: '-12px',
+                        marginLeft: '-12px',
+                      }}
+                    />
+                  )}
+                </Box>
+                <Typography
+                  variant="caption"
+                  color="text.secondary"
+                  sx={{ mt: 1, display: 'block' }}
+                >
+                  {t('You can also write to us directly at')}: {EMAIL_SUPPORT}
+                </Typography>
+              </m.div>
+            </Stack>
+          </Stack>
+
+          <Snackbar
+            open={snackbar.open}
+            autoHideDuration={6000}
+            onClose={handleCloseSnackbar}
+            anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+          >
+            <Alert
+              onClose={handleCloseSnackbar}
+              severity={snackbar.severity}
+              variant="filled"
+              sx={{ width: '100%' }}
+            >
+              {t(snackbar.message)}
+            </Alert>
+          </Snackbar>
+        </Box>
+      )}
     </>
   );
 }

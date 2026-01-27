@@ -42,7 +42,7 @@ export const DOMAIN =
 
 export const LOGO =
   process.env.NEXT_PUBLIC_LOGO ||
-  'https://res.cloudinary.com/ensamble/image/upload/v1692285552/gw2pih5qe3vritw5xv13.png';
+  'https://res.cloudinary.com/ensamble/image/upload/v1769553182/petlogo_fpmf2i.png';
 
 // ROOT PATH AFTER LOGIN SUCCESSFUL
 export const PATH_AFTER_LOGIN = paths.dashboard.root; // as '/dashboard'
