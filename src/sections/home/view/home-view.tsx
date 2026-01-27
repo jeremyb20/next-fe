@@ -1,6 +1,8 @@
 'use client';
 
 import { useScroll } from 'framer-motion';
+import { useState, useEffect } from 'react';
+import { SplashScreen } from '@/src/components/loading-screen';
 
 import Box from '@mui/material/Box';
 import { styled } from '@mui/material/styles';
@@ -17,8 +19,6 @@ import HomeServices from '../home-services';
 import HomeGrooming from '../home-grooming';
 import HomePetTracking from '../home-pet-tracking';
 import HomeTestimonials from '../home-testimonials';
-import { useEffect, useState } from 'react';
-import { SplashScreen } from '@/src/components/loading-screen';
 
 // ----------------------------------------------------------------------
 

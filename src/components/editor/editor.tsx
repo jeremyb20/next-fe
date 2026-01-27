@@ -1,10 +1,9 @@
-/* eslint-disable perfectionist/sort-imports */
-import 'src/utils/highlight';
-
 import dynamic from 'next/dynamic';
 
 import { alpha } from '@mui/material/styles';
 import Skeleton from '@mui/material/Skeleton';
+
+import 'src/utils/highlight';
 
 import { EditorProps } from './types';
 import { StyledEditor } from './styles';
