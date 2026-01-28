@@ -77,6 +77,7 @@ const ICONS = {
   seo: icon('hugeicons:seo'),
   blogPanel: icon('meteor-icons:blogger'),
   inventory: icon('material-symbols:inventory'),
+  home: icon('solar:home-2-linear'),
 };
 
 const filterByRole = (
@@ -209,6 +210,13 @@ export function useNavData(userRole: string) {
             path: paths.dashboard.root,
             icon: ICONS.dashboard,
             roles: ['client'],
+          },
+          {
+            // title: t('app'),
+            title: t('Dashboard'),
+            path: paths.dashboard.admin.home,
+            icon: ICONS.home,
+            roles: ['admin'],
           },
           {
             title: t('Account'),

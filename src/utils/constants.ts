@@ -164,3 +164,79 @@ export const inventoryStatusOptions = [
   { value: 'out_of_stock', label: 'Out of Stock' },
   { value: 'low_stock', label: 'Low Stock' },
 ];
+
+export const LANGUAGE_NORMALIZATION_MAP: Record<string, string> = {
+  // Inglés (en)
+  'en-US': 'en',
+  'en-GB': 'en',
+  'en-CA': 'en',
+  'en-AU': 'en',
+  'en-NZ': 'en',
+  'en-IE': 'en',
+  'en-IN': 'en',
+  'en-SG': 'en',
+  'en-ZA': 'en',
+
+  // Español (es)
+  'es-ES': 'es',
+  'es-CR': 'es',
+  'es-MX': 'es',
+  'es-AR': 'es',
+  'es-CO': 'es',
+  'es-PE': 'es',
+  'es-VE': 'es',
+  'es-CL': 'es',
+  'es-EC': 'es',
+  'es-GT': 'es',
+  'es-CU': 'es',
+  'es-DO': 'es',
+  'es-BO': 'es',
+  'es-HN': 'es',
+  'es-PY': 'es',
+  'es-SV': 'es',
+  'es-NI': 'es',
+  'es-UY': 'es',
+  'es-PA': 'es',
+  'es-PR': 'es',
+
+  // Francés (fr)
+  'fr-FR': 'fr',
+  'fr-CA': 'fr',
+  'fr-BE': 'fr',
+  'fr-CH': 'fr',
+  'fr-LU': 'fr',
+  'fr-MC': 'fr',
+  'fr-DZ': 'fr',
+  'fr-MA': 'fr',
+  'fr-TN': 'fr',
+
+  // Chino (cn)
+  // Chino - ¡IMPORTANTE! Convertir a 'cn' que es lo que usas en allLangs
+  'zh-CN': 'zh', // Chino simplificado (China)
+  zh: 'cn', // Solo 'zh' también a 'cn'
+  'zh-Hans': 'zh', // Chino simplificado
+  'zh-Hans-CN': 'zh', // Chino simplificado China
+  'zh-SG': 'zh',
+
+  // Árabe (ar)
+  'ar-SA': 'ar',
+  'ar-AE': 'ar',
+  'ar-EG': 'ar',
+  'ar-DZ': 'ar',
+  'ar-MA': 'ar',
+  'ar-IQ': 'ar',
+  'ar-SY': 'ar',
+  'ar-TN': 'ar',
+  'ar-JO': 'ar',
+  'ar-LB': 'ar',
+  'ar-KW': 'ar',
+  'ar-OM': 'ar',
+  'ar-QA': 'ar',
+  'ar-BH': 'ar',
+  'ar-YE': 'ar',
+  'ar-SD': 'ar',
+  'ar-LY': 'ar',
+
+  // Vietnamita (vi)
+  'vi-VN': 'vi',
+};

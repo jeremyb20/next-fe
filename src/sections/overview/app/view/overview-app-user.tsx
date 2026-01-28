@@ -370,9 +370,13 @@ export default function OverviewAppUser() {
           left: '50%',
           transform: 'translateX(-50%)',
           width: 'auto',
-          bgcolor: '#000',
+          ...bgGradient({
+            direction: '135deg',
+            startColor: alpha(theme.palette.primary.light, 0.2),
+            endColor: alpha(theme.palette.primary.main, 0.2),
+          }),
+
           borderRadius: 8,
-          px: 2,
           '& .MuiBottomNavigationAction-root': {
             color: '#fff',
             minWidth: 60,

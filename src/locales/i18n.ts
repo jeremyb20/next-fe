@@ -24,7 +24,7 @@ if (!i18n.isInitialized) {
         en: { translations: translationEn },
         fr: { translations: translationFr },
         vi: { translations: translationVi },
-        cn: { translations: translationCn },
+        zh: { translations: translationCn },
         ar: { translations: translationAr },
         es: { translations: translationEs },
       },

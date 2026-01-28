@@ -118,6 +118,7 @@ export const paths = {
     },
     admin: {
       panelAdmin: `${ROOTS.DASHBOARD}/admin/panel`,
+      home: `${ROOTS.DASHBOARD}/admin/home`,
       product: {
         root: `${ROOTS.DASHBOARD}/admin/product`,
         new: `${ROOTS.DASHBOARD}/admin/product/new`,

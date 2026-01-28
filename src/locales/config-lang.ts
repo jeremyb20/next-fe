@@ -91,7 +91,7 @@ export const allLangs = [
   },
   {
     label: 'Chinese',
-    value: 'cn',
+    value: 'zh',
     systemValue: merge(zhCNDate, zhCNDataGrid, zhCNCore),
     adapterLocale: zhCNAdapter,
     icon: 'flagpack:cn',
