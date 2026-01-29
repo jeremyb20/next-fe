@@ -213,7 +213,6 @@ export const LANGUAGE_NORMALIZATION_MAP: Record<string, string> = {
   // Chino (cn)
   // Chino - ¡IMPORTANTE! Convertir a 'cn' que es lo que usas en allLangs
   'zh-CN': 'zh', // Chino simplificado (China)
-  zh: 'cn', // Solo 'zh' también a 'cn'
   'zh-Hans': 'zh', // Chino simplificado
   'zh-Hans-CN': 'zh', // Chino simplificado China
   'zh-SG': 'zh',

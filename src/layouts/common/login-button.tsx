@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { useTranslation } from 'react-i18next';
 
 import Button from '@mui/material/Button';
 import { Theme, SxProps } from '@mui/material/styles';
@@ -10,6 +11,7 @@ type Props = {
 };
 
 export default function LoginButton({ sx }: Props) {
+  const { t } = useTranslation();
   return (
     <Button
       component={Link}
@@ -18,7 +20,7 @@ export default function LoginButton({ sx }: Props) {
       variant="outlined"
       sx={{ mr: 1, ...sx }}
     >
-      Login
+      {t('Sign In')}
     </Button>
   );
 }

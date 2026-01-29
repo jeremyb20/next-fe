@@ -8,7 +8,7 @@ import { defaultLang } from './config-lang';
 import translationEn from './langs/en.json';
 import translationFr from './langs/fr.json';
 import translationVi from './langs/vi.json';
-import translationCn from './langs/cn.json';
+import translationZh from './langs/zh.json';
 import translationAr from './langs/ar.json';
 import translationEs from './langs/es.json';
 
@@ -24,9 +24,9 @@ if (!i18n.isInitialized) {
         en: { translations: translationEn },
         fr: { translations: translationFr },
         vi: { translations: translationVi },
-        zh: { translations: translationCn },
         ar: { translations: translationAr },
         es: { translations: translationEs },
+        zh: { translations: translationZh }, // Asegúrate de tener este archivo}
       },
       detection: {
         order: ['localStorage', 'navigator', 'cookie'],

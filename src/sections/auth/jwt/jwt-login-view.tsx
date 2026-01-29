@@ -159,7 +159,7 @@ export default function JwtLoginView() {
 
       {!!errorMsg && (
         <Alert severity="error" sx={{ my: 3 }}>
-          {errorMsg}
+          {t(errorMsg)}
         </Alert>
       )}
     </>
