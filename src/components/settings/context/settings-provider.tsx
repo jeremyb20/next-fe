@@ -147,9 +147,9 @@ export function SettingsProvider({
       key: K,
       value: SettingsValueProps[K]
     ) => {
-      console.log(
-        `Updating setting ${key} from ${stateRef.current[key]} to ${value}`
-      );
+      // console.log(
+      //   `Updating setting ${key} from ${stateRef.current[key]} to ${value}`
+      // );
 
       // Actualizar localmente primero
       update(key, value);

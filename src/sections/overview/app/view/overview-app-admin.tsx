@@ -1,6 +1,15 @@
 'use client';
 
 import { useManagerUser } from '@/src/hooks/use-manager-user';
+import { processByMonthData } from '@/src/utils/chart-data-processor';
+import {
+  useGetPetStats,
+  useGetUserStats,
+  useGetPetGrowth,
+  useGetUserGrowth,
+  useGetProductGrowth,
+  useGetAdminProductStats,
+} from '@/src/hooks/use-fetch';
 
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
@@ -8,19 +17,11 @@ import { useTheme } from '@mui/material/styles';
 import Grid from '@mui/material/Unstable_Grid2';
 
 import { SeoIllustration } from 'src/assets/illustrations';
-import {
-  _appAuthors,
-  _appRelated,
-  _appFeatured,
-  _appInvoices,
-  _appInstalled,
-} from 'src/_mock';
+import { _appRelated, _appFeatured, _appInstalled } from 'src/_mock';
 
 import AppWidget from '../app-widget';
 import AppWelcome from '../app-welcome';
 import AppFeatured from '../app-featured';
-import AppNewInvoice from '../app-new-invoice';
-import AppTopAuthors from '../app-top-authors';
 import AppTopRelated from '../app-top-related';
 import AppAreaInstalled from '../app-area-installed';
 import AppWidgetSummary from '../app-widget-summary';
@@ -30,6 +31,25 @@ import AppTopInstalledCountries from '../app-top-installed-countries';
 export default function OverviewAppAdmin() {
   const { user } = useManagerUser();
   const theme = useTheme();
+
+  const { data: userStats, isFetching: isFetchingUserStats } =
+    useGetUserStats();
+
+  const { data: userGrowth } = useGetUserGrowth();
+
+  const { data: userPetStats } = useGetPetStats();
+
+  const { data: userPetGrowth } = useGetPetGrowth();
+
+  const { data: adminProductStats } = useGetAdminProductStats();
+
+  const { data: productGrowth } = useGetProductGrowth();
+
+  // Procesar datos para gráficos
+  const userChartData = processByMonthData(userStats?.byMonth, 6);
+  const petChartData = processByMonthData(userPetStats?.byMonth, 6);
+  const productChartData = processByMonthData(adminProductStats?.byMonth, 6);
+
   return (
     <Grid container spacing={3}>
       <Grid xs={12} md={8}>
@@ -52,106 +72,223 @@ export default function OverviewAppAdmin() {
       <Grid xs={12} md={4}>
         <AppWidgetSummary
           title="Total Active Users"
-          percent={2.6}
-          total={18765}
+          subtitle={`${userGrowth?.newThisMonth || 0} new this month`}
+          percent={userGrowth?.monthlyGrowth}
+          total={userStats?.totalUsers || 0}
           chart={{
-            series: [5, 18, 12, 51, 68, 11, 39, 37, 27, 20],
+            series: userChartData.currentYearData.slice(-6), // Últimos 6 meses
           }}
         />
       </Grid>
 
       <Grid xs={12} md={4}>
         <AppWidgetSummary
-          // title="Total Installed"
           title="Total Pets Registered"
-          percent={0.2}
-          total={4876}
+          subtitle={`${userPetGrowth?.newThisMonth || 0} new this month`}
+          percent={userPetGrowth?.monthlyGrowth}
+          total={userPetStats?.totalPets || 0}
           chart={{
             colors: [theme.palette.info.light, theme.palette.info.main],
-            series: [20, 41, 63, 33, 28, 35, 50, 46, 11, 26],
+            series: petChartData.currentYearData.slice(-6),
           }}
         />
       </Grid>
 
       <Grid xs={12} md={4}>
         <AppWidgetSummary
-          // title="Total Downloads"
           title="Total Products Registered"
-          percent={-0.1}
-          total={678}
+          subtitle={`${productGrowth?.newThisMonth || 0} new this month`}
+          percent={productGrowth?.monthlyGrowth}
+          total={adminProductStats?.totalProducts || 0}
           chart={{
             colors: [theme.palette.warning.light, theme.palette.warning.main],
-            series: [8, 9, 31, 8, 16, 37, 8, 33, 46, 31],
+            series: productChartData.currentYearData.slice(-6),
+          }}
+        />
+      </Grid>
+
+      <Grid xs={12} md={6} lg={4}>
+        {/* Gráfico de Usuarios */}
+        <AppAreaInstalled
+          title="User Registrations"
+          subheader="Last 6 months"
+          chart={{
+            categories: userChartData.categories,
+            series: [
+              {
+                year: `${new Date().getFullYear()}`,
+                data: [
+                  {
+                    name: 'Users',
+                    data: userChartData.currentYearData,
+                  },
+                ],
+              },
+              {
+                year: `${new Date().getFullYear() - 1}`,
+                data: [
+                  {
+                    name: 'Users',
+                    data: userChartData.lastYearData,
+                  },
+                ],
+              },
+            ],
+          }}
+        />
+      </Grid>
+
+      <Grid xs={12} md={6} lg={4}>
+        {/* Gráfico de Mascotas */}
+        <AppAreaInstalled
+          title="Pet Registrations"
+          subheader="Last 6 months"
+          chart={{
+            categories: petChartData.categories,
+            colors: [
+              [theme.palette.info.light, theme.palette.info.main],
+              [theme.palette.info.light, theme.palette.info.main],
+            ],
+            series: [
+              {
+                year: `${new Date().getFullYear()}`,
+                data: [
+                  {
+                    name: 'Pets',
+                    data: petChartData.currentYearData,
+                  },
+                ],
+              },
+              {
+                year: `${new Date().getFullYear() - 1}`,
+                data: [
+                  {
+                    name: 'Pets',
+                    data: petChartData.lastYearData,
+                  },
+                ],
+              },
+            ],
+          }}
+        />
+      </Grid>
+
+      <Grid xs={12} md={6} lg={4}>
+        {/* Gráfico de Productos */}
+        <AppAreaInstalled
+          title="Product Registrations"
+          subheader="Last 6 months"
+          chart={{
+            categories: productChartData.categories,
+            colors: [
+              [theme.palette.warning.light, theme.palette.warning.main],
+              [theme.palette.warning.light, theme.palette.warning.main],
+            ],
+            series: [
+              {
+                year: `${new Date().getFullYear()}`,
+                data: [
+                  {
+                    name: 'Products',
+                    data: productChartData.currentYearData,
+                  },
+                ],
+              },
+              {
+                year: `${new Date().getFullYear() - 1}`,
+                data: [
+                  {
+                    name: 'Products',
+                    data: productChartData.lastYearData,
+                  },
+                ],
+              },
+            ],
+          }}
+        />
+      </Grid>
+
+      {/* Alternativa: Gráfico combinado */}
+      <Grid xs={12} md={12} lg={8}>
+        <AppAreaInstalled
+          title="All Registrations Comparison"
+          subheader="Current Year vs Last Year"
+          initialKey="Users"
+          chart={{
+            categories: userChartData.categories,
+            colors: [
+              [theme.palette.primary.light, theme.palette.primary.main],
+              [theme.palette.info.light, theme.palette.info.main],
+              [theme.palette.warning.light, theme.palette.warning.main],
+            ],
+            series: [
+              {
+                year: 'Users',
+                data: [
+                  {
+                    name: 'Current Year',
+                    data: userChartData.currentYearData,
+                  },
+                  {
+                    name: 'Last Year',
+                    data: userChartData.lastYearData,
+                  },
+                ],
+              },
+              {
+                year: 'Pets',
+                data: [
+                  {
+                    name: 'Current Year',
+                    data: petChartData.currentYearData,
+                  },
+                  {
+                    name: 'Last Year',
+                    data: petChartData.lastYearData,
+                  },
+                ],
+              },
+              {
+                year: 'Products',
+                data: [
+                  {
+                    name: 'Current Year',
+                    data: productChartData.currentYearData,
+                  },
+                  {
+                    name: 'Last Year',
+                    data: productChartData.lastYearData,
+                  },
+                ],
+              },
+            ],
           }}
         />
       </Grid>
 
       <Grid xs={12} md={6} lg={4}>
         <AppCurrentDownload
-          title="Current Download"
+          title="All Registrations Comparison"
           chart={{
-            series: [
-              { label: 'Mac', value: 12244 },
-              { label: 'Window', value: 53345 },
-              { label: 'iOS', value: 44313 },
-              { label: 'Android', value: 78343 },
-            ],
-          }}
-        />
-      </Grid>
-
-      <Grid xs={12} md={6} lg={8}>
-        <AppAreaInstalled
-          title="Area Installed"
-          subheader="(+43%) than last year"
-          chart={{
-            categories: [
-              'Jan',
-              'Feb',
-              'Mar',
-              'Apr',
-              'May',
-              'Jun',
-              'Jul',
-              'Aug',
-              'Sep',
-              'Oct',
-              'Nov',
-              'Dec',
-            ],
             series: [
               {
-                year: '2019',
-                data: [
-                  {
-                    name: 'Asia',
-                    data: [10, 41, 35, 51, 49, 62, 69, 91, 148, 35, 51, 49],
-                  },
-                  {
-                    name: 'America',
-                    data: [10, 34, 13, 56, 77, 88, 99, 77, 45, 13, 56, 77],
-                  },
-                ],
+                label: 'Total Active Users',
+                value: userStats?.totalUsers || 0,
               },
               {
-                year: '2020',
-                data: [
-                  {
-                    name: 'Asia',
-                    data: [51, 35, 41, 10, 91, 69, 62, 148, 91, 69, 62, 49],
-                  },
-                  {
-                    name: 'America',
-                    data: [56, 13, 34, 10, 77, 99, 88, 45, 77, 99, 88, 77],
-                  },
-                ],
+                label: 'Total Pets Registered',
+                value: userPetStats?.totalPets || 0,
+              },
+              {
+                label: 'Total Products Registered',
+                value: adminProductStats?.totalProducts || 0,
               },
             ],
           }}
         />
       </Grid>
 
-      <Grid xs={12} lg={8}>
+      {/* <Grid xs={12} lg={8}>
         <AppNewInvoice
           title="New Invoice"
           tableData={_appInvoices}
@@ -163,41 +300,75 @@ export default function OverviewAppAdmin() {
             { id: '' },
           ]}
         />
-      </Grid>
+      </Grid> */}
 
       <Grid xs={12} md={6} lg={4}>
-        <AppTopRelated title="Top Related Applications" list={_appRelated} />
-      </Grid>
-
-      <Grid xs={12} md={6} lg={4}>
-        <AppTopInstalledCountries
-          title="Top Installed Countries"
-          list={_appInstalled}
+        <AppTopRelated
+          title="Products by Category"
+          list={
+            adminProductStats?.byCategory?.map((cat: any) => ({
+              id: cat._id,
+              name: cat._id,
+              system: cat._id,
+              price: cat.avgPrice,
+              rating: cat.count,
+              review: cat.totalValue,
+              coverUrl: `/assets/images/categories/${
+                cat._id?.toLowerCase() || 'default'
+              }.jpg`,
+            })) || _appRelated
+          }
         />
       </Grid>
 
       <Grid xs={12} md={6} lg={4}>
-        <AppTopAuthors title="Top Authors" list={_appAuthors} />
+        <AppTopInstalledCountries
+          title="User Types Distribution"
+          list={
+            userStats?.byType?.map((type: any) => ({
+              id: type._id,
+              name: type._id,
+              android: type.count,
+              windows: 0,
+              apple: 0,
+            })) || _appInstalled
+          }
+        />
       </Grid>
 
       <Grid xs={12} md={6} lg={4}>
-        <Stack spacing={3}>
+        <Stack spacing={2} direction="row">
           <AppWidget
-            title="Conversion"
-            total={38566}
-            icon="solar:user-rounded-bold"
+            title="Stock Alert"
+            total={adminProductStats?.lowStock || 0}
+            subtitle="Products with low stock"
+            icon="mdi:package-variant-alert"
+            color="warning"
             chart={{
-              series: 48,
+              series: adminProductStats?.totalProducts
+                ? Math.round(
+                    ((adminProductStats.lowStock || 0) /
+                      adminProductStats.totalProducts) *
+                      100
+                  )
+                : 0,
             }}
           />
 
           <AppWidget
-            title="Applications"
-            total={55566}
-            icon="fluent:mail-24-filled"
-            color="info"
+            title="Out of Stock"
+            total={adminProductStats?.outOfStock || 0}
+            subtitle="Products to restock"
+            icon="mdi:package-variant-remove"
+            color="error"
             chart={{
-              series: 75,
+              series: adminProductStats?.totalProducts
+                ? Math.round(
+                    ((adminProductStats.outOfStock || 0) /
+                      adminProductStats.totalProducts) *
+                      100
+                  )
+                : 0,
             }}
           />
         </Stack>

@@ -17,6 +17,7 @@ interface Props extends StackProps {
   icon: string;
   title: string;
   total: number;
+  subtitle?: string;
   color?: ColorSchema;
   chart: {
     color?: string[];
@@ -28,6 +29,7 @@ interface Props extends StackProps {
 export default function AppWidget({
   title,
   total,
+  subtitle,
   icon,
   color = 'primary',
   chart,

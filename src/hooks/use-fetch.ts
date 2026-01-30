@@ -100,3 +100,81 @@ export const useGetUserSettings = () => {
     }
   );
 };
+
+export const useGetUserStats = () => {
+  const { authenticated } = useAuthContext();
+  return useFetch<Partial<any>>(
+    'useGetUserStats',
+    endpoints.admin.users.getUserStats,
+    {
+      staleTime: 5 * 60 * 1000,
+      retry: 2,
+      enabled: authenticated,
+    }
+  );
+};
+
+export const useGetUserGrowth = () => {
+  const { authenticated } = useAuthContext();
+  return useFetch<Partial<any>>(
+    'useGetUserGrowth',
+    endpoints.admin.users.getUserGrowth,
+    {
+      staleTime: 5 * 60 * 1000,
+      retry: 2,
+      enabled: authenticated,
+    }
+  );
+};
+
+export const useGetPetStats = () => {
+  const { authenticated } = useAuthContext();
+  return useFetch<Partial<any>>(
+    'useGetPetStats',
+    endpoints.admin.users.getPetStats,
+    {
+      staleTime: 5 * 60 * 1000,
+      retry: 2,
+      enabled: authenticated,
+    }
+  );
+};
+
+export const useGetPetGrowth = () => {
+  const { authenticated } = useAuthContext();
+  return useFetch<Partial<any>>(
+    'useGetPetGrowth',
+    endpoints.admin.users.getPetGrowth,
+    {
+      staleTime: 5 * 60 * 1000,
+      retry: 2,
+      enabled: authenticated,
+    }
+  );
+};
+
+export const useGetAdminProductStats = () => {
+  const { authenticated } = useAuthContext();
+  return useFetch<Partial<any>>(
+    'useGetAdminProductStats',
+    endpoints.admin.product.getAdminProductStats,
+    {
+      staleTime: 5 * 60 * 1000,
+      retry: 2,
+      enabled: authenticated,
+    }
+  );
+};
+
+export const useGetProductGrowth = () => {
+  const { authenticated } = useAuthContext();
+  return useFetch<Partial<any>>(
+    'useGetProductGrowth',
+    endpoints.admin.product.getProductGrowth,
+    {
+      staleTime: 5 * 60 * 1000,
+      retry: 2,
+      enabled: authenticated,
+    }
+  );
+};

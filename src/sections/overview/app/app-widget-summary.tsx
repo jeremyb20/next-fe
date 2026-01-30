@@ -15,6 +15,7 @@ import Iconify from 'src/components/iconify';
 
 interface Props extends CardProps {
   title: string;
+  subtitle: string;
   total: number;
   percent: number;
   chart: {
@@ -27,6 +28,7 @@ interface Props extends CardProps {
 export default function AppWidgetSummary({
   title,
   percent,
+  subtitle,
   total,
   chart,
   sx,
@@ -106,8 +108,10 @@ export default function AppWidgetSummary({
             {fPercent(percent)}
           </Typography>
         </Stack>
-
-        <Typography variant="h3">{fNumber(total)}</Typography>
+        <Typography variant="h3">{fNumber(total)}</Typography>{' '}
+        <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+          {subtitle}
+        </Typography>
       </Box>
 
       <Chart

@@ -57,6 +57,10 @@ export const endpoints = {
       getAllRegisteredUsers: '/api/admin/getAllRegisteredUsers',
       updateUserById: '/api/admin/updateUserById',
       deleteUser: '/api/admin/users/delete',
+      getUserStats: '/api/admin/users/getUserStats',
+      getUserGrowth: '/api/admin/users/getUserGrowth',
+      getPetStats: '/api/admin/users/getPetStats',
+      getPetGrowth: '/api/admin/users/getPetGrowth',
     },
     product: {
       list: '/api/admin/product/list',
@@ -65,6 +69,8 @@ export const endpoints = {
       createProduct: '/api/admin/createProduct',
       updateProduct: '/api/admin/updateProduct',
       deleteProduct: '/api/admin/deleteProduct',
+      getAdminProductStats: '/api/admin/products/getAdminProductStats',
+      getProductGrowth: '/api/admin/products/getProductGrowth',
     },
     qrcode: {
       getStats: '/api/admin/getQRStats',

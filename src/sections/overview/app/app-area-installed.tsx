@@ -1,3 +1,4 @@
+import { getYear } from 'date-fns';
 import { ApexOptions } from 'apexcharts';
 import { useState, useCallback } from 'react';
 
@@ -17,6 +18,7 @@ import CustomPopover, { usePopover } from 'src/components/custom-popover';
 interface Props extends CardProps {
   title?: string;
   subheader?: string;
+  initialKey?: any;
   chart: {
     categories?: string[];
     colors?: string[][];
@@ -34,6 +36,7 @@ interface Props extends CardProps {
 export default function AppAreaInstalled({
   title,
   subheader,
+  initialKey,
   chart,
   ...other
 }: Props) {
@@ -50,8 +53,10 @@ export default function AppAreaInstalled({
   } = chart;
 
   const popover = usePopover();
-
-  const [seriesData, setSeriesData] = useState('2019');
+  const date = new Date();
+  const [seriesData, setSeriesData] = useState(
+    initialKey || getYear(date).toString()
+  );
 
   const chartOptions = useChart({
     colors: colors.map((colr) => colr[1]),
