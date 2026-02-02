@@ -67,6 +67,8 @@ const StyledTextGradient = styled(m.h1)(({ theme }) => ({
     fontSize: `${96 / 16}rem`,
     letterSpacing: 8,
   },
+  display: 'block', // ← IMPORTANTE
+  fontStyle: 'normal', // ← IMPORTANTE
 }));
 
 export default function HomeHero() {
@@ -107,11 +109,16 @@ export default function HomeHero() {
         },
       }}
     >
-      <m.div variants={varFade().in}>
+      <m.div variants={varFade().in} initial={false}>
         <Typography
-          variant="h2"
+          component="h1"
+          variant="h1"
           sx={{
             textAlign: 'center',
+            fontSize: { xs: '2rem', md: '2.5rem', lg: '3rem' },
+            fontWeight: 700,
+            mb: 1,
+            color: 'text.primary',
           }}
         >
           {t('The Complete App')} <br />
@@ -119,7 +126,7 @@ export default function HomeHero() {
         </Typography>
       </m.div>
 
-      <m.div variants={varFade().in}>
+      <m.div variants={varFade().in} initial={false}>
         <StyledTextGradient
           animate={{ backgroundPosition: '200% center' }}
           transition={{
@@ -133,7 +140,7 @@ export default function HomeHero() {
         </StyledTextGradient>
       </m.div>
 
-      <m.div variants={varFade().in}>
+      <m.div variants={varFade().in} initial={false}>
         <Typography variant="body2" sx={{ textAlign: 'center', py: 2 }}>
           {/* Registra hasta 10 mascotas, gestiona su salud, agenda citas y disfruta
           de descuentos exclusivos */}
@@ -143,7 +150,7 @@ export default function HomeHero() {
         </Typography>
       </m.div>
 
-      <m.div variants={varFade().in}>
+      <m.div variants={varFade().in} initial={false}>
         <Stack
           spacing={1.5}
           direction={{ xs: 'column-reverse', sm: 'row' }}

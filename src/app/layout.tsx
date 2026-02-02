@@ -20,7 +20,9 @@ import {
 
 import { CheckoutProvider } from 'src/sections/checkout/context';
 
+import { HOST_API } from '../config-global';
 import LocaleProvider from '../locales/provider';
+import { getServerLanguage } from '../utils/get-server-language';
 // import { AuthProvider } from 'src/auth/context/auth0';
 // import { AuthProvider } from 'src/auth/context/amplify';
 // import { AuthProvider } from 'src/auth/context/firebase';
@@ -28,49 +30,54 @@ import LocaleProvider from '../locales/provider';
 
 // ----------------------------------------------------------------------
 
-export const viewport = {
-  themeColor: '#000000',
-  width: 'device-width',
-  initialScale: 1,
-  maximumScale: 1,
-};
-
-export const metadata = {
-  title: 'Plaquitas para mascotas CR',
-  description:
-    'Gestiona perfiles de mascotas, compra productos, agenda servicios veterinarios, grooming y descubre eventos. Todo en una sola plataforma.',
-  keywords:
-    'plataforma, mascotas, veterinaria, grooming, eventos, productos para mascotas',
-  manifest: '/manifest.json',
-  icons: [
-    { rel: 'icon', url: '/favicon/favicon.ico' },
-    {
-      rel: 'icon',
-      type: 'image/png',
-      sizes: '16x16',
-      url: '/favicon/favicon-16x16.png',
-    },
-    {
-      rel: 'icon',
-      type: 'image/png',
-      sizes: '32x32',
-      url: '/favicon/favicon-32x32.png',
-    },
-    {
-      rel: 'apple-touch-icon',
-      sizes: '180x180',
-      url: '/favicon/apple-touch-icon.png',
-    },
-  ],
-};
-
 type Props = {
   children: React.ReactNode;
 };
 
-export default function RootLayout({ children }: Props) {
+export default async function RootLayout({ children }: Props) {
+  const language = await getServerLanguage();
   return (
-    <html lang="en" className={primaryFont.className} translate="no">
+    <html
+      lang={language.toLowerCase() || 'es'}
+      className={primaryFont.className}
+      translate="no"
+    >
+      <head>
+        {/* Viewport - importante para SEO móvil */}
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=1"
+        />
+
+        {/* Favicons - pueden ser estáticos */}
+        <link rel="icon" href="/favicon/favicon.ico" />
+        <link
+          rel="icon"
+          type="image/png"
+          sizes="16x16"
+          href="/favicon/favicon-16x16.png"
+        />
+        <link
+          rel="icon"
+          type="image/png"
+          sizes="32x32"
+          href="/favicon/favicon-32x32.png"
+        />
+        <link
+          rel="apple-touch-icon"
+          sizes="180x180"
+          href="/favicon/apple-touch-icon.png"
+        />
+
+        {/* Manifest */}
+        <link rel="manifest" href="/manifest.json" />
+
+        {/* Theme color */}
+        <meta name="theme-color" content="#20252e" />
+
+        {/* Preconnect para mejorar performance */}
+        <link rel="preconnect" href={HOST_API} />
+      </head>
       <body>
         <LocaleProvider>
           <QueryProvider>

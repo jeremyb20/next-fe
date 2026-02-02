@@ -1,3 +1,4 @@
+/* eslint-disable object-shorthand */
 // lib/seo-metadata.ts
 import { Metadata } from 'next';
 
@@ -54,10 +55,16 @@ function generateMetadataFromSeo(
   const baseUrl = DOMAIN || 'https://plaquitascr.com';
   const canonical = content.canonicalUrl || `${baseUrl}${route}`;
 
+  // Asegurar que keywords sea un string
+  const keywordsString = Array.isArray(content.keywords)
+    ? content.keywords.join(', ')
+    : content.keywords ||
+      'plataforma, mascotas, veterinaria, grooming, eventos, productos para mascotas plaquitas plaquitascr resina aluminio subimable identificacion digital';
+
   return {
     title: content.title,
     description: content.description,
-    keywords: content.keywords?.join(', '),
+    keywords: keywordsString,
 
     // Open Graph
     openGraph: {
@@ -83,15 +90,18 @@ function generateMetadataFromSeo(
       title: content.ogTitle || content.title,
       description: content.ogDescription || content.description,
       images: [content.ogImage || `${baseUrl}/assets/images/plaquitascr.png`],
+      creator: '@PlaquitasCR', // Agrega tu handle de Twitter si tienes
     },
 
     // Robots
     robots: {
       index: true,
       follow: true,
+      nocache: false, // Cambia a true si no quieres cache
       googleBot: {
         index: true,
         follow: true,
+        noimageindex: false,
         'max-video-preview': -1,
         'max-image-preview': 'large',
         'max-snippet': -1,
@@ -100,18 +110,49 @@ function generateMetadataFromSeo(
 
     // Alternates (para multiidioma)
     alternates: {
-      // eslint-disable-next-line object-shorthand
       canonical: canonical,
+      // Agrega aquí otros idiomas si los tienes
+      // languages: {
+      //   'es-ES': canonical,
+      //   'en-US': `${baseUrl}/en${route}`,
+      // }
     },
+
+    // Icons (importante para SEO)
+    icons: {
+      icon: [
+        { url: '/favicon/favicon.ico' },
+        {
+          url: '/favicon/favicon-16x16.png',
+          sizes: '16x16',
+          type: 'image/png',
+        },
+        {
+          url: '/favicon/favicon-32x32.png',
+          sizes: '32x32',
+          type: 'image/png',
+        },
+      ],
+      apple: [
+        {
+          url: '/favicon/apple-touch-icon.png',
+          sizes: '180x180',
+          type: 'image/png',
+        },
+      ],
+    },
+
+    // Manifest
+    manifest: '/manifest.json',
 
     // Verification (si necesitas)
     verification: {
-      // google: 'your-google-verification-code',
-      // yandex: 'your-yandex-verification-code',
-      // yahoo: 'your-yahoo-verification-code',
+      // google: 'tu-codigo-verificacion-google',
     },
 
-    // Otros metadatos
+    // Otros metadatos útiles
+    applicationName: 'PlaquitasCR',
+    referrer: 'origin-when-cross-origin',
     category: 'pets',
     classification: 'pet care platform',
   };
@@ -121,7 +162,7 @@ function generateDefaultMetadata(): Metadata {
   return {
     title: 'PlaquitasCR - Plataforma para el Cuidado de tus Mascotas',
     description:
-      'Gestiona perfiles de mascotas, compra productos, agenda servicios veterinarios, grooming y descubre eventos.',
+      'Gestiona perfiles de mascotas, plaquitas plaquitascr resina aluminio subimable identificacion digital compra productos, agenda servicios veterinarios, grooming y descubre eventos.',
     openGraph: {
       title: 'PlaquitasCR - Todo para tu Mascota 🐾',
       description: 'Plataforma integral para el cuidado de tus mascotas',
