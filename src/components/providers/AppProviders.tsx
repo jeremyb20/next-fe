@@ -9,11 +9,6 @@ import { I18nextProvider } from 'react-i18next';
 
 import ClientProviders from './client-providers';
 
-// import { AuthProvider } from 'src/auth/context/auth0';
-// import { AuthProvider } from 'src/auth/context/amplify';
-// import { AuthProvider } from 'src/auth/context/firebase';
-// import { AuthProvider } from 'src/auth/context/supabase';
-
 // ----------------------------------------------------------------------
 
 type Props = {

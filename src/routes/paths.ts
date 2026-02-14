@@ -5,53 +5,70 @@ import { _id, _postTitles } from 'src/_mock/assets';
 // ----------------------------------------------------------------------
 
 const MOCK_ID = _id[1];
-
 const MOCK_TITLE = _postTitles[2];
 
+// Función para agregar prefijo de idioma
+const withLang = (path: string, includeLang: boolean = true) => {
+  if (!includeLang) return path;
+  // Esto será reemplazado dinámicamente en runtime
+  return `/${path}`;
+};
+
+// Función para rutas dinámicas que necesitan el idioma
+export const getLocalizedPath = (path: string, lng: string) =>
+  path.replace('/:lng', `/${lng}`);
+
 const ROOTS = {
-  AUTH: '/auth',
-  AUTH_DEMO: '/auth-demo',
-  DASHBOARD: '/dashboard',
+  AUTH: withLang('/auth'),
+  AUTH_DEMO: withLang('/auth-demo'),
+  DASHBOARD: withLang('/dashboard'),
 };
 
 // ----------------------------------------------------------------------
 
 export const paths = {
-  comingSoon: '/coming-soon',
-  maintenance: '/maintenance',
-  pricing: '/pricing',
-  payment: '/payment',
-  about: '/about-us',
-  contact: '/contact-us',
-  faqs: '/faqs',
-  page403: '/error/403',
-  page404: '/error/404',
-  page500: '/error/500',
-  components: '/components',
-  docs: 'https://docs.minimals.cc',
+  comingSoon: withLang('/coming-soon'),
+  maintenance: withLang('/maintenance'),
+  pricing: withLang('/pricing'),
+  payment: withLang('/payment'),
+  about: withLang('/about-us'),
+  contact: withLang('/contact-us'),
+  faqs: withLang('/faqs'),
+  page403: withLang('/error/403'),
+  page404: withLang('/error/404'),
+  page500: withLang('/error/500'),
+  components: withLang('/components'),
+  docs: 'https://docs.minimals.cc', // URLs externas no necesitan idioma
   changelog: 'https://docs.minimals.cc/changelog',
   zoneUI: 'https://mui.com/store/items/zone-landing-page/',
   minimalUI: 'https://mui.com/store/items/minimal-dashboard/',
   freeUI: 'https://mui.com/store/items/minimal-dashboard-free/',
   figma:
     'https://www.figma.com/file/hjxMnGUJCjY7pX8lQbS7kn/%5BPreview%5D-Minimal-Web.v5.4.0?type=design&node-id=0-1&mode=design&t=2fxnS70DuiTLGzND-0',
+
+  // Product routes
   product: {
-    root: `/product`,
-    checkout: `/product/checkout`,
-    details: (id: string) => `/product/${id}`,
+    root: withLang('/product'),
+    checkout: withLang('/product/checkout'),
+    details: (id: string) => withLang(`/product/${id}`),
     demo: {
-      details: `/product/${MOCK_ID}`,
+      details: withLang(`/product/${MOCK_ID}`),
     },
   },
-  petsmarket: '/petsmarket',
+
+  // Petsmarket routes
+  petsmarket: withLang('/petsmarket'),
+
+  // Post routes
   post: {
-    root: `/post`,
-    details: (title: string) => `/post/${paramCase(title)}`,
+    root: withLang('/post'),
+    details: (title: string) => withLang(`/post/${paramCase(title)}`),
     demo: {
-      details: `/post/${paramCase(MOCK_TITLE)}`,
+      details: withLang(`/post/${paramCase(MOCK_TITLE)}`),
     },
   },
-  // AUTH
+
+  // AUTH routes
   auth: {
     amplify: {
       login: `${ROOTS.AUTH}/amplify/login`,
@@ -83,8 +100,9 @@ export const paths = {
     login: `${ROOTS.AUTH}/login`,
     register: `${ROOTS.AUTH}/register`,
     verify: `${ROOTS.AUTH}/verify`,
-    forgotPassword: `/forgot`,
+    forgotPassword: withLang('/forgot'), // Directo sin ROOTS
   },
+
   authDemo: {
     classic: {
       login: `${ROOTS.AUTH_DEMO}/classic/login`,
@@ -101,7 +119,8 @@ export const paths = {
       verify: `${ROOTS.AUTH_DEMO}/modern/verify`,
     },
   },
-  // DASHBOARD
+
+  // DASHBOARD routes
   dashboard: {
     root: ROOTS.DASHBOARD,
     mail: `${ROOTS.DASHBOARD}/mail`,
@@ -111,14 +130,17 @@ export const paths = {
     calendar: `${ROOTS.DASHBOARD}/calendar`,
     fileManager: `${ROOTS.DASHBOARD}/file-manager`,
     permission: `${ROOTS.DASHBOARD}/permission`,
+
     petsmarket: {
       root: `${ROOTS.DASHBOARD}/petsmarket`,
       details: (productId: string) =>
         `${ROOTS.DASHBOARD}/petsmarket/${productId}`,
     },
+
     admin: {
       panelAdmin: `${ROOTS.DASHBOARD}/admin/panel`,
       home: `${ROOTS.DASHBOARD}/admin/home`,
+
       product: {
         root: `${ROOTS.DASHBOARD}/admin/product`,
         new: `${ROOTS.DASHBOARD}/admin/product/new`,
@@ -131,6 +153,7 @@ export const paths = {
           edit: `${ROOTS.DASHBOARD}/product/${MOCK_ID}/edit`,
         },
       },
+
       inventory: {
         root: `${ROOTS.DASHBOARD}/admin/inventory`,
         new: `${ROOTS.DASHBOARD}/admin/inventory/new`,
@@ -141,6 +164,7 @@ export const paths = {
           edit: `${ROOTS.DASHBOARD}/inventory/${MOCK_ID}/edit`,
         },
       },
+
       usersAdmin: `${ROOTS.DASHBOARD}/admin/users`,
       groomersAdmin: `${ROOTS.DASHBOARD}/admin/groomers`,
       veterinarianAdmin: `${ROOTS.DASHBOARD}/admin/veterinarian`,
@@ -149,6 +173,7 @@ export const paths = {
       seoAdmin: `${ROOTS.DASHBOARD}/admin/seo`,
       blogPanel: `${ROOTS.DASHBOARD}/admin/blog`,
     },
+
     general: {
       app: `${ROOTS.DASHBOARD}/app`,
       ecommerce: `${ROOTS.DASHBOARD}/ecommerce`,
@@ -173,6 +198,7 @@ export const paths = {
         edit: `${ROOTS.DASHBOARD}/user/${MOCK_ID}/edit`,
       },
     },
+
     product: {
       root: `${ROOTS.DASHBOARD}/product`,
       new: `${ROOTS.DASHBOARD}/product/new`,
@@ -184,6 +210,7 @@ export const paths = {
         edit: `${ROOTS.DASHBOARD}/product/${MOCK_ID}/edit`,
       },
     },
+
     invoice: {
       root: `${ROOTS.DASHBOARD}/invoice`,
       new: `${ROOTS.DASHBOARD}/invoice/new`,
@@ -194,6 +221,7 @@ export const paths = {
         edit: `${ROOTS.DASHBOARD}/invoice/${MOCK_ID}/edit`,
       },
     },
+
     post: {
       root: `${ROOTS.DASHBOARD}/post`,
       new: `${ROOTS.DASHBOARD}/post/new`,
@@ -205,6 +233,7 @@ export const paths = {
         edit: `${ROOTS.DASHBOARD}/post/${paramCase(MOCK_TITLE)}/edit`,
       },
     },
+
     order: {
       root: `${ROOTS.DASHBOARD}/order`,
       details: (id: string) => `${ROOTS.DASHBOARD}/order/${id}`,
@@ -212,6 +241,7 @@ export const paths = {
         details: `${ROOTS.DASHBOARD}/order/${MOCK_ID}`,
       },
     },
+
     job: {
       root: `${ROOTS.DASHBOARD}/job`,
       new: `${ROOTS.DASHBOARD}/job/new`,
@@ -222,6 +252,7 @@ export const paths = {
         edit: `${ROOTS.DASHBOARD}/job/${MOCK_ID}/edit`,
       },
     },
+
     tour: {
       root: `${ROOTS.DASHBOARD}/tour`,
       new: `${ROOTS.DASHBOARD}/tour/new`,
@@ -235,6 +266,12 @@ export const paths = {
   },
 
   veterinarian: {
-    register: '/register',
+    register: withLang('/register'),
   },
+};
+
+// Helper function to get actual path with language
+export const getPath = (path: string, lng: string) => {
+  if (path.startsWith('http')) return path; // URLs externas
+  return path.replace('/:lng', `/${lng}`);
 };

@@ -10,11 +10,13 @@ import { fDate } from '@/src/utils/format-time';
 // Importaciones de react-share
 
 import { paths } from '@/src/routes/paths';
-import { useTranslation } from 'react-i18next';
+// import { useTranslation } from 'react-i18next';
 import { BreedOptions } from '@/src/utils/constants';
 import { AvatarShape } from '@/src/assets/illustrations';
+import { useTranslation } from '@/src/hooks/use-translation';
 import { useSettingsContext } from '@/src/components/settings';
 import CardComponent from '@/src/sections/_examples/card-component';
+import SplashScreen from '@/src/components/loading-screen/splash-screen';
 
 import {
   Box,
@@ -78,7 +80,7 @@ export default function PetProfileView({ petProfile, canEdit }: Props) {
   const [tabValue, setTabValue] = useState(0);
   const [shareOpen, setShareOpen] = useState(false);
   const settings = useSettingsContext();
-  const { t } = useTranslation();
+  const { t, mounted } = useTranslation();
 
   const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
     setTabValue(newValue);
@@ -151,6 +153,10 @@ export default function PetProfileView({ petProfile, canEdit }: Props) {
   }
 
   const age = calculateAge(petProfile.birthDate);
+
+  if (!mounted) {
+    return <SplashScreen />; // Placeholder durante SSR
+  }
 
   return (
     <>
