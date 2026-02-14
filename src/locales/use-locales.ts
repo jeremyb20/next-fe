@@ -3,10 +3,11 @@
 import { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 
+import { useRouter, usePathname } from 'src/routes/hooks';
+
 import { localStorageGetItem } from 'src/utils/storage-available';
 
-import { useSettingsContext } from 'src/components/settings';
-
+import { languages } from '../app/i18n/settings';
 import { allLangs, defaultLang } from './config-lang';
 import { LANGUAGE_NORMALIZATION_MAP } from '../utils/constants';
 import { getExchangeRate, DEFAULT_CURRENCY } from '../utils/currency-service';
@@ -80,22 +81,38 @@ export function useLocales() {
 // ----------------------------------------------------------------------
 
 export function useTranslate() {
-  const { t, i18n, ready } = useTranslation();
-
-  const settings = useSettingsContext();
+  const { t, i18n } = useTranslation();
+  const pathname = usePathname();
+  const router = useRouter();
 
   const onChangeLang = useCallback(
     (newlang: string) => {
+      if (newlang === i18n.language) return;
+
+      // Obtener la ruta actual sin el idioma
+      const segments = pathname.split('/').filter(Boolean);
+
+      // Si el primer segmento es un idioma, removerlo
+      if (languages.includes(segments[0] as any)) {
+        segments.shift();
+      }
+
+      // Construir la nueva ruta
+      const newPath = `/${newlang}/${segments.join('/')}`.replace(/\/+$/, '');
+
+      // Cambiar idioma
       i18n.changeLanguage(newlang);
-      settings.onChangeDirectionByLang(newlang);
+
+      // Navegar
+      router.push(newPath);
     },
-    [i18n, settings]
+    [i18n, pathname, router]
   );
 
   return {
     t,
     i18n,
-    ready,
     onChangeLang,
+    currentLanguage: i18n.language,
   };
 }
