@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { useRouter, useParams, usePathname } from 'src/routes/hooks';
 
 import { allLangs, defaultLang } from './config-lang';
+import { useSettingsContext } from '../components/settings';
 import { languages, cookieName } from '../app/i18n/settings';
 import { LANGUAGE_NORMALIZATION_MAP } from '../utils/constants';
 import { getExchangeRate, DEFAULT_CURRENCY } from '../utils/currency-service';
@@ -120,6 +121,7 @@ export function useTranslate() {
   const { t, i18n } = useTranslation();
   const pathname = usePathname();
   const router = useRouter();
+  const settings = useSettingsContext();
 
   // Sincronizar i18n con la URL (por si acaso)
   useEffect(() => {
@@ -150,11 +152,11 @@ export function useTranslate() {
 
       // Cambiar idioma en i18n
       i18n.changeLanguage(newlang);
-
+      settings.onChangeDirectionByLang(newlang);
       // Navegar - el router se encarga del prefijo
       router.push(pathWithoutLang, undefined, newlang);
     },
-    [i18n, pathname, router]
+    [i18n, pathname, router, settings]
   );
 
   return {
