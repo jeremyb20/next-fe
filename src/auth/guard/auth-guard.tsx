@@ -1,6 +1,7 @@
+import { useParams } from 'next/navigation';
 import { useState, useEffect, useCallback } from 'react';
 
-import { paths } from 'src/routes/paths';
+import { paths } from 'src/routes/paths'; // Exporta la función
 import { useRouter } from 'src/routes/hooks';
 
 import { SplashScreen } from 'src/components/loading-screen';
@@ -9,12 +10,32 @@ import { useAuthContext } from '../hooks';
 
 // ----------------------------------------------------------------------
 
+// Versión mejorada de loginPaths con rutas completas
 const loginPaths: Record<string, string> = {
-  jwt: paths.auth.login,
-  auth0: paths.auth.auth0.login,
-  amplify: paths.auth.amplify.login,
-  firebase: paths.auth.firebase.login,
-  supabase: paths.auth.supabase.login,
+  jwt: '/auth/jwt/login', // Sin el prefijo :lng
+  auth0: '/auth/auth0/login',
+  amplify: '/auth/amplify/login',
+  firebase: '/auth/firebase/login',
+  supabase: '/auth/supabase/login',
+};
+
+// O puedes mantener la estructura original pero con una función helper
+const getLoginPath = (method: string, lng: string) => {
+  const basePath = {
+    jwt: paths.auth.jwt.login,
+    auth0: paths.auth.auth0.login,
+    amplify: paths.auth.amplify.login,
+    firebase: paths.auth.firebase.login,
+    supabase: paths.auth.supabase.login,
+  }[method];
+
+  // Si la ruta ya tiene :lng, lo reemplazamos
+  if (basePath && basePath.includes('/:lng')) {
+    return basePath.replace('/:lng', `/${lng}`);
+  }
+
+  // Si no tiene prefijo, se lo agregamos
+  return basePath ? `/${lng}${basePath}` : `/${lng}/auth/login`;
 };
 
 // ----------------------------------------------------------------------
@@ -33,31 +54,43 @@ export default function AuthGuard({ children }: Props) {
 
 function Container({ children }: Props) {
   const router = useRouter();
+  const params = useParams();
+  const lng = (params?.lng as string) || 'es';
 
   const { authenticated, method } = useAuthContext();
-
   const [checked, setChecked] = useState(false);
 
   const check = useCallback(() => {
     if (!authenticated) {
+      // Obtener la ruta actual para returnTo
+      const currentPath = window.location.pathname;
+
+      // Construir returnTo sin duplicar el idioma
+      const returnTo = currentPath.startsWith(`/${lng}`)
+        ? currentPath
+        : `/${lng}${currentPath}`;
+
       const searchParams = new URLSearchParams({
-        returnTo: window.location.pathname,
+        returnTo,
       }).toString();
 
-      const loginPath = loginPaths[method];
+      // Obtener la ruta de login localizada
+      const loginPath = getLoginPath(method, lng);
 
-      const href = `${loginPath}?${searchParams}`;
+      // Asegurar que no hay duplicación de idioma
+      const cleanLoginPath = loginPath.replace(/\/{2,}/g, '/');
+
+      const href = `${cleanLoginPath}?${searchParams}`;
 
       router.replace(href);
     } else {
       setChecked(true);
     }
-  }, [authenticated, method, router]);
+  }, [authenticated, method, router, lng]);
 
   useEffect(() => {
     check();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [check]);
 
   if (!checked) {
     return null;

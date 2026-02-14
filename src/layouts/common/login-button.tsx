@@ -1,5 +1,5 @@
-import Link from 'next/link';
 import { useTranslation } from 'react-i18next';
+import RouterLink from '@/src/routes/components/router-link';
 
 import Button from '@mui/material/Button';
 import { Theme, SxProps } from '@mui/material/styles';
@@ -14,7 +14,7 @@ export default function LoginButton({ sx }: Props) {
   const { t } = useTranslation();
   return (
     <Button
-      component={Link}
+      component={RouterLink}
       href={PATH_AFTER_LOGIN}
       passHref
       variant="outlined"

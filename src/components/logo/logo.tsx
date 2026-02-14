@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import { forwardRef } from 'react';
 import { LOGO } from '@/src/config-global';
+import { useTranslate } from '@/src/locales';
 
 import Link from '@mui/material/Link';
 import Box, { BoxProps } from '@mui/material/Box';
@@ -18,7 +19,9 @@ export interface LogoProps extends BoxProps {
 const Logo = forwardRef<HTMLDivElement, LogoProps>(
   ({ disabledLink = false, sx, ...other }, ref) => {
     const { authenticated } = useAuthContext();
-
+    const { currentLanguage } = useTranslate();
+    const dashboardPath = `/${currentLanguage}/dashboard`;
+    const homePath = `/${currentLanguage}`;
     // OR using local (public folder)
     // -------------------------------------------------------
     // const logo = (
