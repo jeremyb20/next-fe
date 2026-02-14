@@ -6,7 +6,7 @@ import { IProductItem } from '@/src/types/product';
 import { DOMAIN, HOST_API } from '@/src/config-global';
 import { ProductShopDetailsView } from '@/src/sections/product/view';
 
-import NotFoundPage from '../../not-found';
+import NotFoundPage from '../../../not-found';
 
 // Tipos necesarios - ajustados según tu API
 interface ProductApiResponse {

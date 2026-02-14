@@ -10,13 +10,13 @@ import { useTranslation } from 'react-i18next';
 import { IUser, IPetProfile } from '@/src/types/api';
 import { useBoolean } from '@/src/hooks/use-boolean';
 import { useManagerUser } from '@/src/hooks/use-manager-user';
-import { PetsGrid } from '@/src/app/pet/_components/cards/pet-grid';
+import { PetsGrid } from '@/src/app/[lang]/pet/_components/cards/pet-grid';
 import {
   UserQueryParams,
   useGetAllPetsByUser,
 } from '@/src/hooks/use-fetch-paginated';
-import PetQuickEditForm from '@/src/app/dashboard/admin/users/_components/pet-quick-edit-form';
-import RegisterPetByUserModal from '@/src/app/pet/_components/modals/register-pet-by-user-modal';
+import PetQuickEditForm from '@/src/app/[lang]/dashboard/admin/users/_components/pet-quick-edit-form';
+import RegisterPetByUserModal from '@/src/app/[lang]/pet/_components/modals/register-pet-by-user-modal';
 
 import {
   Box,

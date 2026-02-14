@@ -14,12 +14,12 @@ import { useMemo, useState, useEffect, useCallback } from 'react';
 import CardComponent from '@/src/sections/_examples/card-component';
 import CustomPopover, { usePopover } from '@/src/components/custom-popover';
 import { useCreateGenericMutation } from '@/src/hooks/user-generic-mutation';
-import MedicalControlView from '@/src/app/pet/_components/view/medical-control-view';
 import {
   parseWeight,
   BreedOptions,
   GENDER_OPTIONS,
 } from '@/src/utils/constants';
+import MedicalControlView from '@/src/app/[lang]/pet/_components/view/medical-control-view';
 import {
   getPhoneHelperText,
   getPhonePlaceholder,

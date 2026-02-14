@@ -1,22 +1,9 @@
-import { Metadata } from 'next';
+import { redirect } from 'next/navigation';
 
-import { HomeView } from 'src/sections/home/view';
-
-import { getSeoMetadata } from '../utils/seo-metadata';
 import { getServerLanguage } from '../utils/get-server-language';
 
-// ----------------------------------------------------------------------
-
-export async function generateMetadata({
-  params,
-}: {
-  params: { lang: string };
-}): Promise<Metadata> {
+export default async function HomePage() {
+  // Esta página solo redirige al middleware
   const language = await getServerLanguage();
-
-  return getSeoMetadata('home-page-platform', language || 'ES');
-}
-
-export default function HomePage() {
-  return <HomeView />;
+  redirect(`/${language.toLowerCase()}` || '/es');
 }

@@ -32,8 +32,7 @@ export default function OverviewAppAdmin() {
   const { user } = useManagerUser();
   const theme = useTheme();
 
-  const { data: userStats, isFetching: isFetchingUserStats } =
-    useGetUserStats();
+  const { data: userStats } = useGetUserStats();
 
   const { data: userGrowth } = useGetUserGrowth();
 

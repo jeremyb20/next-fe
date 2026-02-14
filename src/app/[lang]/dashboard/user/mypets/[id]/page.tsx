@@ -1,10 +1,10 @@
 /* eslint-disable object-shorthand */
 import { Metadata } from 'next';
 import { endpoints } from '@/src/utils/axios';
-import NotFoundPage from '@/src/app/error/404/page';
 import { PetApiResponse } from '@/src/types/global';
 import { DOMAIN, HOST_API } from '@/src/config-global';
-import PetProfileView from '@/src/app/pet/_components/view/pet-profile-view';
+import NotFoundPage from '@/src/app/[lang]/error/404/page';
+import PetProfileView from '@/src/app/[lang]/pet/_components/view/pet-profile-view';
 
 type Props = {
   params: {

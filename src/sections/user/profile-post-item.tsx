@@ -1,4 +1,5 @@
 import { useRef, useState, useCallback } from 'react';
+import { useManagerUser } from '@/src/hooks/use-manager-user';
 
 import Box from '@mui/material/Box';
 import Link from '@mui/material/Link';
@@ -15,8 +16,6 @@ import Typography from '@mui/material/Typography';
 import InputAdornment from '@mui/material/InputAdornment';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import AvatarGroup, { avatarGroupClasses } from '@mui/material/AvatarGroup';
-
-import { useManagerUser } from '@/src/hooks/use-manager-user';
 
 import { fDate } from 'src/utils/format-time';
 import { fShortenNumber } from 'src/utils/format-number';

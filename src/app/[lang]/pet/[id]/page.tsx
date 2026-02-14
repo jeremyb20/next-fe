@@ -4,7 +4,7 @@ import { endpoints } from '@/src/utils/axios';
 import { PetApiResponse } from '@/src/types/global';
 import { DOMAIN, HOST_API } from '@/src/config-global';
 
-import NotFoundPage from '../../not-found';
+import NotFoundPage from '../../../not-found';
 import PetProfileView from '../_components/view/pet-profile-view';
 import RegistrationPetView from '../_components/view/registration-pet-view';
 

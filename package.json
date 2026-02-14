@@ -54,6 +54,7 @@
     "i18next": "^25.0.0",
     "i18next-browser-languagedetector": "^8.0.4",
     "i18next-http-backend": "^3.0.2",
+    "i18next-resources-to-backend": "^1.2.1",
     "libphonenumber-js": "^1.12.24",
     "lodash": "^4.17.21",
     "mapbox-gl": "^3.0.1",

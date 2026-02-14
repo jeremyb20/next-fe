@@ -7,8 +7,8 @@ import { useTranslation } from 'react-i18next';
 import useIPInfo from '@/src/hooks/use-ip-info';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useSettingsContext } from '@/src/components/settings';
-import PrivacyPolicyModal from '@/src/app/privacy-policy/_components/privacy-policy-modal';
-import TermsAndConditionsModal from '@/src/app/terms-and-conditions/_components/terms-and-condition-modal';
+import PrivacyPolicyModal from '@/src/app/[lang]/privacy-policy/_components/privacy-policy-modal';
+import TermsAndConditionsModal from '@/src/app/[lang]/terms-and-conditions/_components/terms-and-condition-modal';
 import {
   getPhoneHelperText,
   getPhonePlaceholder,

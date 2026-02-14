@@ -1,33 +1,6 @@
-import 'src/global.css';
-import 'src/locales/i18n';
-
-// ----------------------------------------------------------------------
-
-import ThemeProvider from 'src/theme';
-import { LocalizationProvider } from 'src/locales';
-import { primaryFont } from 'src/theme/typography';
-import { AuthProvider } from 'src/auth/context/jwt';
-import QueryProvider from 'src/query/query-provider';
-
-import ProgressBar from 'src/components/progress-bar';
-import { MotionLazy } from 'src/components/animate/motion-lazy';
-import SnackbarProvider from 'src/components/snackbar/snackbar-provider';
-import {
-  SettingsDrawer,
-  defaultSettings,
-  SettingsProvider,
-} from 'src/components/settings';
-
-import { CheckoutProvider } from 'src/sections/checkout/context';
-
-import { HOST_API } from '../config-global';
-import LocaleProvider from '../locales/provider';
+import { DOMAIN, HOST_API } from '../config-global';
+import AppProviders from '../components/providers/AppProviders';
 import { getServerLanguage } from '../utils/get-server-language';
-// import { AuthProvider } from 'src/auth/context/auth0';
-// import { AuthProvider } from 'src/auth/context/amplify';
-// import { AuthProvider } from 'src/auth/context/firebase';
-// import { AuthProvider } from 'src/auth/context/supabase';
-
 // ----------------------------------------------------------------------
 
 type Props = {
@@ -37,19 +10,24 @@ type Props = {
 export default async function RootLayout({ children }: Props) {
   const language = await getServerLanguage();
   return (
-    <html
-      lang={language.toLowerCase() || 'es'}
-      className={primaryFont.className}
-      translate="no"
-    >
+    <html lang={language.toLowerCase() || 'es'} translate="no">
       <head>
-        {/* Viewport - importante para SEO móvil */}
+        {/* Meta tags para SEO multilingüe */}
+        <link rel="alternate" hrefLang="x-default" href={DOMAIN} />
+        <link rel="alternate" hrefLang="es" href={DOMAIN} />
+        <link rel="alternate" hrefLang="en" href={`${DOMAIN}/en`} />
+        <link rel="alternate" hrefLang="fr" href={`${DOMAIN}/fr`} />
+        <link rel="alternate" hrefLang="ar" href={`${DOMAIN}/ar`} />
+        <link rel="alternate" hrefLang="vi" href={`${DOMAIN}/vi`} />
+        <link rel="alternate" hrefLang="zh" href={`${DOMAIN}/zh`} />
+
+        {/* Viewport */}
         <meta
           name="viewport"
           content="width=device-width, initial-scale=1, maximum-scale=1"
         />
 
-        {/* Favicons - pueden ser estáticos */}
+        {/* Favicons */}
         <link rel="icon" href="/favicon/favicon.ico" />
         <link
           rel="icon"
@@ -75,31 +53,11 @@ export default async function RootLayout({ children }: Props) {
         {/* Theme color */}
         <meta name="theme-color" content="#20252e" />
 
-        {/* Preconnect para mejorar performance */}
+        {/* Preconnect */}
         <link rel="preconnect" href={HOST_API} />
       </head>
       <body>
-        <LocaleProvider>
-          <QueryProvider>
-            <AuthProvider>
-              <LocalizationProvider>
-                <SettingsProvider defaultSettings={defaultSettings}>
-                  <ThemeProvider>
-                    <MotionLazy>
-                      <SnackbarProvider>
-                        <CheckoutProvider>
-                          <SettingsDrawer />
-                          <ProgressBar />
-                          {children}
-                        </CheckoutProvider>
-                      </SnackbarProvider>
-                    </MotionLazy>
-                  </ThemeProvider>
-                </SettingsProvider>
-              </LocalizationProvider>
-            </AuthProvider>
-          </QueryProvider>
-        </LocaleProvider>
+        <AppProviders>{children}</AppProviders>
       </body>
     </html>
   );

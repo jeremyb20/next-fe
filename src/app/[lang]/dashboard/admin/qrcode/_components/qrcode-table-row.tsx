@@ -1,7 +1,6 @@
 /* eslint-disable no-nested-ternary */
 import { useState } from 'react';
 import { IQrCode } from '@/src/types/api';
-import { useTranslation } from 'react-i18next';
 import { BreedOptions } from '@/src/utils/constants';
 import { QrcodeCustom } from '@/src/components/qr-generator/qr-codes';
 
@@ -56,8 +55,6 @@ export default function QrCodeTableRow({
   } = row;
 
   const confirm = useBoolean();
-
-  const { t } = useTranslation();
 
   const collapse = useBoolean();
 

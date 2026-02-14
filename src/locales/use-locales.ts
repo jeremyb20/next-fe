@@ -14,7 +14,7 @@ import { getExchangeRate, DEFAULT_CURRENCY } from '../utils/currency-service';
 // ----------------------------------------------------------------------
 
 export function useLocales() {
-  const langStorage = localStorageGetItem('i18next');
+  const langStorage = localStorageGetItem('i18nextLng');
 
   // Si no hay idioma guardado, usar español por defecto
   if (!langStorage) {

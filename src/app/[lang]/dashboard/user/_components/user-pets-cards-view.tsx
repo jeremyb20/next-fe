@@ -10,13 +10,13 @@ import { useMemo, useState, useCallback } from 'react';
 import { useManagerUser } from '@/src/hooks/use-manager-user';
 import { useSettingsContext } from '@/src/components/settings';
 import FilterToolbar from '@/src/components/filters/filter-toolbar';
-import { PetsGrid } from '@/src/app/pet/_components/cards/pet-grid';
+import { PetsGrid } from '@/src/app/[lang]/pet/_components/cards/pet-grid';
 import { PET_FILTER_TOOLBAR } from '@/src/components/filters/filter-constants';
 import {
   UserQueryParams,
   useGetAllPetsByUser,
 } from '@/src/hooks/use-fetch-paginated';
-import RegisterPetByUserModal from '@/src/app/pet/_components/modals/register-pet-by-user-modal';
+import RegisterPetByUserModal from '@/src/app/[lang]/pet/_components/modals/register-pet-by-user-modal';
 
 import { Box } from '@mui/system';
 import {
