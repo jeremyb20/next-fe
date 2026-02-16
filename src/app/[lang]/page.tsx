@@ -11,8 +11,8 @@ export async function generateMetadata({
   params: { lang: string };
 }): Promise<Metadata> {
   const language = await getServerLanguage();
-
-  return getSeoMetadata('home-page-platform', language || 'ES');
+  const lang = params.lang.toUpperCase() || language || 'ES';
+  return getSeoMetadata('home-page-platform', lang || 'ES');
 }
 
 export default function HomePage() {
