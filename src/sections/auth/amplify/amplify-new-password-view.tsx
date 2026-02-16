@@ -2,8 +2,17 @@
 
 import * as Yup from 'yup';
 import { useCallback } from 'react';
+import { paths } from '@/routes/paths';
 import { useForm } from 'react-hook-form';
+import { SentIcon } from '@/assets/icons';
+import Iconify from '@/components/iconify';
+import { useAuthContext } from '@/auth/hooks';
+import { RouterLink } from '@/routes/components';
+import { useBoolean } from '@/hooks/use-boolean';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useRouter, useSearchParams } from '@/routes/hooks';
+import { useCountdownSeconds } from '@/hooks/use-countdown';
+import FormProvider, { RHFCode, RHFTextField } from '@/components/hook-form';
 
 import Link from '@mui/material/Link';
 import Stack from '@mui/material/Stack';
@@ -11,19 +20,6 @@ import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import LoadingButton from '@mui/lab/LoadingButton';
 import InputAdornment from '@mui/material/InputAdornment';
-
-import { paths } from 'src/routes/paths';
-import { RouterLink } from 'src/routes/components';
-import { useRouter, useSearchParams } from 'src/routes/hooks';
-
-import { useBoolean } from 'src/hooks/use-boolean';
-import { useCountdownSeconds } from 'src/hooks/use-countdown';
-
-import { SentIcon } from 'src/assets/icons';
-import { useAuthContext } from 'src/auth/hooks';
-
-import Iconify from 'src/components/iconify';
-import FormProvider, { RHFCode, RHFTextField } from 'src/components/hook-form';
 
 // ----------------------------------------------------------------------
 

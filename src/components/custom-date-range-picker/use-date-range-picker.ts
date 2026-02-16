@@ -1,6 +1,5 @@
+import { fDate } from '@/utils/format-time';
 import { useState, useCallback } from 'react';
-
-import { fDate } from 'src/utils/format-time';
 
 import { shortDateLabel } from './utils';
 import { DateRangePickerProps } from './types';

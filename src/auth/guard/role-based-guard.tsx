@@ -1,13 +1,11 @@
 import { m } from 'framer-motion';
-import { useManagerUser } from '@/src/hooks/use-manager-user';
+import { useManagerUser } from '@//hooks/use-manager-user';
+import { ForbiddenIllustration } from '@/assets/illustrations';
+import { varBounce, MotionContainer } from '@/components/animate';
 
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import { Theme, SxProps } from '@mui/material/styles';
-
-import { ForbiddenIllustration } from 'src/assets/illustrations';
-
-import { varBounce, MotionContainer } from 'src/components/animate';
 
 // ----------------------------------------------------------------------
 

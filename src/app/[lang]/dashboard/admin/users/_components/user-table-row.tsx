@@ -1,14 +1,20 @@
 /* eslint-disable no-nested-ternary */
 import { useSnackbar } from 'notistack';
+import Iconify from '@/components/iconify';
 import { useState, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
-// import { IOrderItem } from 'src/types/order';
-import { IUser, IPetProfile } from '@/src/types/api';
-import { IPInfoResponse } from '@/src/hooks/use-ip-info';
-import { openLink, getUserRoleFromState } from '@/src/utils/constants';
-import { useCopyToClipboard } from '@/src/hooks/use-copy-to-clipboard';
-import { USER_STATUS_OPTIONS } from '@/src/components/filters/filter-constants';
-import { AvatarWithSkeleton } from '@/src/components/avatar/avatar-with-skeleton';
+import { useBoolean } from '@/hooks/use-boolean';
+// import { IOrderItem } from '@/types/order';
+import { IUser, IPetProfile } from '@//types/api';
+import { fDate, fTime } from '@/utils/format-time';
+import { IPInfoResponse } from '@//hooks/use-ip-info';
+import Label, { LabelColor } from '@/components/label';
+import { ConfirmDialog } from '@/components/custom-dialog';
+import { openLink, getUserRoleFromState } from '@//utils/constants';
+import { useCopyToClipboard } from '@//hooks/use-copy-to-clipboard';
+import CustomPopover, { usePopover } from '@/components/custom-popover';
+import { USER_STATUS_OPTIONS } from '@//components/filters/filter-constants';
+import { AvatarWithSkeleton } from '@//components/avatar/avatar-with-skeleton';
 
 import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
@@ -22,15 +28,6 @@ import Checkbox from '@mui/material/Checkbox';
 import TableCell from '@mui/material/TableCell';
 import IconButton from '@mui/material/IconButton';
 import ListItemText from '@mui/material/ListItemText';
-
-import { useBoolean } from 'src/hooks/use-boolean';
-
-import { fDate, fTime } from 'src/utils/format-time';
-
-import Iconify from 'src/components/iconify';
-import Label, { LabelColor } from 'src/components/label';
-import { ConfirmDialog } from 'src/components/custom-dialog';
-import CustomPopover, { usePopover } from 'src/components/custom-popover';
 
 import PetQuickEditForm from './pet-quick-edit-form';
 import UserQuickEditForm from './user-quick-edit-form';

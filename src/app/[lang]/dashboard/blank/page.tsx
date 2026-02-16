@@ -1,4 +1,4 @@
-import BlankView from 'src/sections/blank/view';
+import BlankView from '@/sections/blank/view';
 
 // ----------------------------------------------------------------------
 

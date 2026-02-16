@@ -1,17 +1,16 @@
 'use client';
 
-import Stack from '@mui/material/Stack';
-import { useTheme } from '@mui/material/styles';
-import Container from '@mui/material/Container';
-import Grid from '@mui/material/Unstable_Grid2';
-
+import { useSettingsContext } from '@/components/settings';
 import {
   _bankingContacts,
   _bankingCreditCard,
   _bankingRecentTransitions,
-} from 'src/_mock';
+} from '@/_mock';
 
-import { useSettingsContext } from 'src/components/settings';
+import Stack from '@mui/material/Stack';
+import { useTheme } from '@mui/material/styles';
+import Container from '@mui/material/Container';
+import Grid from '@mui/material/Unstable_Grid2';
 
 import BankingContacts from '../banking-contacts';
 import BankingQuickTransfer from '../banking-quick-transfer';

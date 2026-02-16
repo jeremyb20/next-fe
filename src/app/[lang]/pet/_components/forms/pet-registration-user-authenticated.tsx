@@ -2,24 +2,27 @@
 
 import * as Yup from 'yup';
 import { useSnackbar } from 'notistack';
-import { endpoints } from '@/src/utils/axios';
+import { endpoints } from '@//utils/axios';
+import { useRouter } from '@/routes/hooks';
+import { OptionType } from '@//types/global';
 import { useTranslation } from 'react-i18next';
-import { OptionType } from '@/src/types/global';
-import { useAuthContext } from '@/src/auth/hooks';
-import { fData } from '@/src/utils/format-number';
+import { useAuthContext } from '@//auth/hooks';
+import { fData } from '@//utils/format-number';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useState, useEffect, useCallback } from 'react';
-import { HOST_API, PATH_AFTER_LOGIN } from '@/src/config-global';
-import UploadAvatar from '@/src/components/upload/upload-avatar';
-import { PetAgeCalculator } from '@/src/utils/pet-age-calculator';
-import { BreedOptions, GENDER_OPTIONS } from '@/src/utils/constants';
-import useCelebrationConfetti from '@/src/hooks/use-celebration-confetti';
-import { useCreateGenericMutation } from '@/src/hooks/user-generic-mutation';
-import {
-  getDogSizeFromBreed,
-  getSpeciesFromBreed,
-} from '@/src/utils/pet-utils';
+import { HOST_API, PATH_AFTER_LOGIN } from '@//config-global';
+import UploadAvatar from '@//components/upload/upload-avatar';
+import { PetAgeCalculator } from '@//utils/pet-age-calculator';
+import { BreedOptions, GENDER_OPTIONS } from '@//utils/constants';
+import useCelebrationConfetti from '@//hooks/use-celebration-confetti';
+import { useCreateGenericMutation } from '@//hooks/user-generic-mutation';
+import { getDogSizeFromBreed, getSpeciesFromBreed } from '@//utils/pet-utils';
+import FormProvider, {
+  RHFSelect,
+  RHFTextField,
+  RHFAutocomplete,
+} from '@/components/hook-form';
 
 import Box from '@mui/material/Box';
 import Alert from '@mui/material/Alert';
@@ -35,14 +38,6 @@ import {
   ButtonGroup,
   CardContent,
 } from '@mui/material';
-
-import { useRouter } from 'src/routes/hooks';
-
-import FormProvider, {
-  RHFSelect,
-  RHFTextField,
-  RHFAutocomplete,
-} from 'src/components/hook-form';
 
 // ----------------------------------------------------------------------
 

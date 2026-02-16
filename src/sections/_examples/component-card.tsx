@@ -1,15 +1,13 @@
 import { m } from 'framer-motion';
+import Image from '@/components/image';
+import Label from '@/components/label';
+import { RouterLink } from '@/routes/components';
+import { varHover, varTranHover } from '@/components/animate';
 
 import Paper from '@mui/material/Paper';
 import { alpha } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 import CardActionArea from '@mui/material/CardActionArea';
-
-import { RouterLink } from 'src/routes/components';
-
-import Image from 'src/components/image';
-import Label from 'src/components/label';
-import { varHover, varTranHover } from 'src/components/animate';
 
 // ----------------------------------------------------------------------
 

@@ -1,18 +1,15 @@
 import { m } from 'framer-motion';
+import { paths } from '@/routes/paths';
+import Image from '@/components/image';
+import Iconify from '@/components/iconify';
+import { useResponsive } from '@/hooks/use-responsive';
+import { varFade, MotionViewport } from '@/components/animate';
 
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Unstable_Grid2';
 import Typography from '@mui/material/Typography';
-
-import { paths } from 'src/routes/paths';
-
-import { useResponsive } from 'src/hooks/use-responsive';
-
-import Image from 'src/components/image';
-import Iconify from 'src/components/iconify';
-import { varFade, MotionViewport } from 'src/components/animate';
 
 // ----------------------------------------------------------------------
 

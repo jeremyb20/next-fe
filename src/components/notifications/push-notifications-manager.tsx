@@ -2,11 +2,13 @@
 
 'use client';
 
-import { endpoints } from '@/src/utils/axios';
-import { NotificationData } from '@/src/types/api';
+import { endpoints } from '@//utils/axios';
+import { HOST_API } from '@/config-global';
+import Iconify from '@/components/iconify';
+import { NotificationData } from '@//types/api';
 import { useRef, useState, useEffect, useCallback } from 'react';
-import { getApplicationServerKey } from '@/src/utils/notifications';
-import { useCreateGenericMutation } from '@/src/hooks/user-generic-mutation';
+import { getApplicationServerKey } from '@//utils/notifications';
+import { useCreateGenericMutation } from '@//hooks/user-generic-mutation';
 
 import {
   Box,
@@ -17,10 +19,6 @@ import {
   CardContent,
   CircularProgress,
 } from '@mui/material';
-
-import { HOST_API } from 'src/config-global';
-
-import Iconify from 'src/components/iconify';
 
 interface PushNotificationProps {
   onNotificationScheduled: () => void;

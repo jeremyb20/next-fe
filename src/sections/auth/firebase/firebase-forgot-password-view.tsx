@@ -1,23 +1,20 @@
 'use client';
 
 import * as Yup from 'yup';
+import { paths } from '@/routes/paths';
 import { useForm } from 'react-hook-form';
+import { useRouter } from '@/routes/hooks';
+import Iconify from '@/components/iconify';
+import { useAuthContext } from '@/auth/hooks';
+import { PasswordIcon } from '@/assets/icons';
+import { RouterLink } from '@/routes/components';
 import { yupResolver } from '@hookform/resolvers/yup';
+import FormProvider, { RHFTextField } from '@/components/hook-form';
 
 import Link from '@mui/material/Link';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import LoadingButton from '@mui/lab/LoadingButton';
-
-import { paths } from 'src/routes/paths';
-import { useRouter } from 'src/routes/hooks';
-import { RouterLink } from 'src/routes/components';
-
-import { useAuthContext } from 'src/auth/hooks';
-import { PasswordIcon } from 'src/assets/icons';
-
-import Iconify from 'src/components/iconify';
-import FormProvider, { RHFTextField } from 'src/components/hook-form';
 
 // ----------------------------------------------------------------------
 

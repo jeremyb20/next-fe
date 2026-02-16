@@ -1,4 +1,6 @@
+import { RouterLink } from '@/routes/components';
 import { useState, useEffect, useCallback } from 'react';
+import { usePathname, useActiveLink } from '@/routes/hooks';
 
 import Box from '@mui/material/Box';
 import List from '@mui/material/List';
@@ -9,9 +11,6 @@ import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import { alpha, useTheme } from '@mui/material/styles';
 import ListItemButton from '@mui/material/ListItemButton';
-
-import { RouterLink } from 'src/routes/components';
-import { usePathname, useActiveLink } from 'src/routes/hooks';
 
 import NavItem from './nav-item';
 import Iconify from '../../iconify';

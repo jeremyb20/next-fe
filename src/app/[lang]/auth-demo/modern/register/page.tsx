@@ -1,4 +1,4 @@
-import { ModernRegisterView } from 'src/sections/auth-demo/modern';
+import { ModernRegisterView } from '@/sections/auth-demo/modern';
 
 // ----------------------------------------------------------------------
 

@@ -1,6 +1,6 @@
 import React from 'react';
-import { APP_NAME } from '@/src/config-global';
-import Iconify from '@/src/components/iconify';
+import { APP_NAME } from '@//config-global';
+import Iconify from '@//components/iconify';
 import { useTranslation } from 'react-i18next';
 
 import {

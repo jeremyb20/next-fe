@@ -1,12 +1,11 @@
+import Iconify from '@/components/iconify';
+import { IAddressItem } from '@/types/address';
+
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import CardHeader from '@mui/material/CardHeader';
-
-import Iconify from 'src/components/iconify';
-
-import { IAddressItem } from 'src/types/address';
 
 // ----------------------------------------------------------------------
 

@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import { bgGradient } from '@/theme/css';
+import Iconify from '@/components/iconify';
 
 import Box from '@mui/material/Box';
 import Step from '@mui/material/Step';
@@ -12,10 +14,6 @@ import { StepIconProps } from '@mui/material/StepIcon';
 import StepConnector, {
   stepConnectorClasses,
 } from '@mui/material/StepConnector';
-
-import { bgGradient } from 'src/theme/css';
-
-import Iconify from 'src/components/iconify';
 
 // ----------------------------------------------------------------------
 

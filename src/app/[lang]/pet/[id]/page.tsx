@@ -1,8 +1,8 @@
 /* eslint-disable object-shorthand */
 import { Metadata } from 'next';
-import { endpoints } from '@/src/utils/axios';
-import { PetApiResponse } from '@/src/types/global';
-import { DOMAIN, HOST_API } from '@/src/config-global';
+import { endpoints } from '@//utils/axios';
+import { PetApiResponse } from '@//types/global';
+import { DOMAIN, HOST_API } from '@//config-global';
 
 import NotFoundPage from '../../../not-found';
 import PetProfileView from '../_components/view/pet-profile-view';

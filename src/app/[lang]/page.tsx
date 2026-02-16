@@ -1,8 +1,7 @@
 import { Metadata } from 'next';
-import { getSeoMetadata } from '@/src/utils/seo-metadata';
-import { getServerLanguage } from '@/src/utils/get-server-language';
-
-import { HomeView } from 'src/sections/home/view';
+import { HomeView } from '@/sections/home/view';
+import { getSeoMetadata } from '@//utils/seo-metadata';
+import { getServerLanguage } from '@//utils/get-server-language';
 
 // ----------------------------------------------------------------------
 

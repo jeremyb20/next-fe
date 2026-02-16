@@ -2,21 +2,19 @@ import { useState } from 'react';
 import { isEqual } from 'lodash';
 import { m } from 'framer-motion';
 import orderBy from 'lodash/orderBy';
-import { paths } from '@/src/routes/paths';
+import { paths } from '@//routes/paths';
+import { useRouter } from '@/routes/hooks';
 import { useTranslation } from 'react-i18next';
-import EmptyContent from '@/src/components/empty-content';
-import { useGetProductsPublished } from '@/src/api/product';
-import { IProductItem, IProductFilters } from '@/src/types/product';
+import EmptyContent from '@//components/empty-content';
+import { useGetProductsPublished } from '@//api/product';
+import { varFade, MotionViewport } from '@/components/animate';
+import { IProductItem, IProductFilters } from '@//types/product';
 
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
-
-import { useRouter } from 'src/routes/hooks';
-
-import { varFade, MotionViewport } from 'src/components/animate';
 
 import ProductList from '../product/product-list';
 

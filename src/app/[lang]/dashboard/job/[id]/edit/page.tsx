@@ -1,6 +1,6 @@
-// import { _jobs } from 'src/_mock/_job';
+// import { _jobs } from '@/_mock/_job';
 
-// import { JobEditView } from 'src/sections/job/view';
+// import { JobEditView } from '@/sections/job/view';
 
 // ----------------------------------------------------------------------
 

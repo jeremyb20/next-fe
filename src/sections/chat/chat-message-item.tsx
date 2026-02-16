@@ -1,15 +1,13 @@
+import Iconify from '@/components/iconify';
 import { formatDistanceToNowStrict } from 'date-fns';
-import { useManagerUser } from '@/src/hooks/use-manager-user';
+import { useManagerUser } from '@//hooks/use-manager-user';
+import { IChatMessage, IChatParticipant } from '@/types/chat';
 
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import Avatar from '@mui/material/Avatar';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
-
-import Iconify from 'src/components/iconify';
-
-import { IChatMessage, IChatParticipant } from 'src/types/chat';
 
 import { useGetMessage } from './hooks';
 

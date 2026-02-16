@@ -1,15 +1,13 @@
 'use client';
 
+import { _userCards } from '@/_mock';
+import { paths } from '@/routes/paths';
+import Iconify from '@/components/iconify';
+import { RouterLink } from '@/routes/components';
+
 import { Box } from '@mui/system';
 import { Stack } from '@mui/material';
 import Button from '@mui/material/Button';
-
-import { paths } from 'src/routes/paths';
-import { RouterLink } from 'src/routes/components';
-
-import { _userCards } from 'src/_mock';
-
-import Iconify from 'src/components/iconify';
 
 import UserCardList from '../user-card-list';
 

@@ -1,4 +1,4 @@
-// import { ProductListView } from 'src/sections/product/view';
+// import { ProductListView } from '@/sections/product/view';
 
 // // ----------------------------------------------------------------------
 
@@ -10,7 +10,7 @@
 //   return <ProductListView />;
 // }
 
-import { ProductShopView } from 'src/sections/product/view';
+import { ProductShopView } from '@/sections/product/view';
 
 // ----------------------------------------------------------------------
 

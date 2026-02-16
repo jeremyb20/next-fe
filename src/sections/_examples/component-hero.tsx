@@ -1,8 +1,8 @@
+import { bgGradient } from '@/theme/css';
+
 import Container from '@mui/material/Container';
 import Box, { BoxProps } from '@mui/material/Box';
 import { alpha, useTheme } from '@mui/material/styles';
-
-import { bgGradient } from 'src/theme/css';
 
 // ----------------------------------------------------------------------
 

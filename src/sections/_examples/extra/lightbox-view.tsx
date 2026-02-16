@@ -1,7 +1,13 @@
 'use client';
 
+import { _mock } from '@/_mock';
 import { useState } from 'react';
+import { paths } from '@/routes/paths';
+import Image from '@/components/image';
 import { Slide, SlideImage } from 'yet-another-react-lightbox';
+import CustomBreadcrumbs from '@/components/custom-breadcrumbs';
+import ComponentHero from '@/sections/_examples/component-hero';
+import Lightbox, { SlideVideo, useLightBox } from '@/components/lightbox';
 
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
@@ -13,16 +19,6 @@ import Grid from '@mui/material/Unstable_Grid2';
 import FormLabel from '@mui/material/FormLabel';
 import FormControl from '@mui/material/FormControl';
 import FormControlLabel from '@mui/material/FormControlLabel';
-
-import { paths } from 'src/routes/paths';
-
-import { _mock } from 'src/_mock';
-
-import Image from 'src/components/image';
-import CustomBreadcrumbs from 'src/components/custom-breadcrumbs';
-import Lightbox, { SlideVideo, useLightBox } from 'src/components/lightbox';
-
-import ComponentHero from 'src/sections/_examples/component-hero';
 
 // ----------------------------------------------------------------------
 

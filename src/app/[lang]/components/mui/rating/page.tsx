@@ -1,4 +1,4 @@
-import RatingView from 'src/sections/_examples/mui/rating-view';
+import RatingView from '@/sections/_examples/mui/rating-view';
 
 // ----------------------------------------------------------------------
 

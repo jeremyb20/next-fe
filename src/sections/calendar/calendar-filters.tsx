@@ -1,5 +1,14 @@
 import { useCallback } from 'react';
 import orderBy from 'lodash/orderBy';
+import Iconify from '@/components/iconify';
+import Scrollbar from '@/components/scrollbar';
+import { fDateTime } from '@/utils/format-time';
+import { ColorPicker } from '@/components/color-utils';
+import {
+  ICalendarEvent,
+  ICalendarFilters,
+  ICalendarFilterValue,
+} from '@/types/calendar';
 
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
@@ -12,18 +21,6 @@ import Typography from '@mui/material/Typography';
 import ListItemText from '@mui/material/ListItemText';
 import ListItemButton from '@mui/material/ListItemButton';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-
-import { fDateTime } from 'src/utils/format-time';
-
-import Iconify from 'src/components/iconify';
-import Scrollbar from 'src/components/scrollbar';
-import { ColorPicker } from 'src/components/color-utils';
-
-import {
-  ICalendarEvent,
-  ICalendarFilters,
-  ICalendarFilterValue,
-} from 'src/types/calendar';
 
 // ----------------------------------------------------------------------
 

@@ -1,7 +1,6 @@
 import Map from 'react-map-gl';
 import { memo, useState, useCallback } from 'react';
-
-import { MapControl, MapBoxProps } from 'src/components/map';
+import { MapControl, MapBoxProps } from '@/components/map';
 
 import ControlPanel from './control-panel';
 

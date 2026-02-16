@@ -1,4 +1,4 @@
-import ChipView from 'src/sections/_examples/mui/chip-view';
+import ChipView from '@/sections/_examples/mui/chip-view';
 
 // ----------------------------------------------------------------------
 

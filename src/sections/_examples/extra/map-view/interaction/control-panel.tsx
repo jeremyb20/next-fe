@@ -1,15 +1,14 @@
 import { memo } from 'react';
+import {
+  MapSettings,
+  MapSettingKeys,
+  StyledControlPanel,
+} from '@/components/map';
 
 import Switch from '@mui/material/Switch';
 import InputBase from '@mui/material/InputBase';
 import Typography from '@mui/material/Typography';
 import { alpha, styled } from '@mui/material/styles';
-
-import {
-  MapSettings,
-  MapSettingKeys,
-  StyledControlPanel,
-} from 'src/components/map';
 
 // ----------------------------------------------------------------------
 

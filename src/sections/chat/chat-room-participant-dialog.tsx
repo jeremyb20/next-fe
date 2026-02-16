@@ -1,3 +1,6 @@
+import Iconify from '@/components/iconify';
+import { IChatParticipant } from '@/types/chat';
+
 import Stack from '@mui/material/Stack';
 import Avatar from '@mui/material/Avatar';
 import Dialog from '@mui/material/Dialog';
@@ -5,10 +8,6 @@ import { alpha } from '@mui/material/styles';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import DialogContent from '@mui/material/DialogContent';
-
-import Iconify from 'src/components/iconify';
-
-import { IChatParticipant } from 'src/types/chat';
 
 // ----------------------------------------------------------------------
 

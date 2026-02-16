@@ -1,16 +1,14 @@
+import Iconify from '@/components/iconify';
+import { useBoolean } from '@/hooks/use-boolean';
+import { ConfirmDialog } from '@/components/custom-dialog';
 import { useRef, useState, useEffect, useCallback } from 'react';
+import CustomPopover, { usePopover } from '@/components/custom-popover';
 
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
 import IconButton from '@mui/material/IconButton';
-
-import { useBoolean } from 'src/hooks/use-boolean';
-
-import Iconify from 'src/components/iconify';
-import { ConfirmDialog } from 'src/components/custom-dialog';
-import CustomPopover, { usePopover } from 'src/components/custom-popover';
 
 import KanbanInputName from './kanban-input-name';
 

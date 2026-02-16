@@ -1,15 +1,34 @@
 'use client';
 
-import { IUser } from '@/src/types/api';
-import useIPInfo from '@/src/hooks/use-ip-info';
+import { IUser } from '@//types/api';
+import { paths } from '@/routes/paths';
+import { useRouter } from '@/routes/hooks';
+import Iconify from '@/components/iconify';
+import useIPInfo from '@//hooks/use-ip-info';
+import Scrollbar from '@/components/scrollbar';
+import { RouterLink } from '@/routes/components';
+import { useBoolean } from '@/hooks/use-boolean';
+import { useSnackbar } from '@/components/snackbar';
 import { useMemo, useState, useCallback } from 'react';
-import EmptyContent from '@/src/components/empty-content';
-import FilterToolbar from '@/src/components/filters/filter-toolbar';
-import { ADMIN_USER_FILTER_TOOLBAR } from '@/src/components/filters/filter-constants';
+import EmptyContent from '@//components/empty-content';
+import { isAfter, isBetween } from '@/utils/format-time';
+import { ConfirmDialog } from '@/components/custom-dialog';
+import { useSettingsContext } from '@/components/settings';
+import CustomBreadcrumbs from '@/components/custom-breadcrumbs';
+import FilterToolbar from '@//components/filters/filter-toolbar';
+import { ADMIN_USER_FILTER_TOOLBAR } from '@//components/filters/filter-constants';
 import {
   UserQueryParams,
   useGetAllRegisteredUsers,
-} from '@/src/hooks/use-fetch-paginated';
+} from '@//hooks/use-fetch-paginated';
+import {
+  useTable,
+  TableNoData,
+  getComparator,
+  TableHeadCustom,
+  TableSelectedAction,
+  TablePaginationCustom,
+} from '@/components/table';
 
 import Card from '@mui/material/Card';
 import Table from '@mui/material/Table';
@@ -20,29 +39,6 @@ import TableBody from '@mui/material/TableBody';
 import IconButton from '@mui/material/IconButton';
 import { Box, LinearProgress } from '@mui/material';
 import TableContainer from '@mui/material/TableContainer';
-
-import { paths } from 'src/routes/paths';
-import { useRouter } from 'src/routes/hooks';
-import { RouterLink } from 'src/routes/components';
-
-import { useBoolean } from 'src/hooks/use-boolean';
-
-import { isAfter, isBetween } from 'src/utils/format-time';
-
-import Iconify from 'src/components/iconify';
-import Scrollbar from 'src/components/scrollbar';
-import { useSnackbar } from 'src/components/snackbar';
-import { ConfirmDialog } from 'src/components/custom-dialog';
-import { useSettingsContext } from 'src/components/settings';
-import CustomBreadcrumbs from 'src/components/custom-breadcrumbs';
-import {
-  useTable,
-  TableNoData,
-  getComparator,
-  TableHeadCustom,
-  TableSelectedAction,
-  TablePaginationCustom,
-} from 'src/components/table';
 
 import UserTableRow from '../user-table-row';
 

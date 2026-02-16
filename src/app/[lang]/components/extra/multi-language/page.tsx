@@ -1,4 +1,4 @@
-import MultiLanguageView from 'src/sections/_examples/extra/multi-language-view';
+import MultiLanguageView from '@/sections/_examples/extra/multi-language-view';
 
 // ----------------------------------------------------------------------
 

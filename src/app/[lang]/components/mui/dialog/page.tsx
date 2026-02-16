@@ -1,4 +1,4 @@
-import DialogView from 'src/sections/_examples/mui/dialog-view';
+import DialogView from '@/sections/_examples/mui/dialog-view';
 
 // ----------------------------------------------------------------------
 

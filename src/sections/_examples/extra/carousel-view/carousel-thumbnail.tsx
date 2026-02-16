@@ -1,16 +1,14 @@
 import { useEffect } from 'react';
+import Image from '@/components/image';
+import { bgGradient } from '@/theme/css';
+import Carousel, {
+  useCarousel,
+  CarouselArrowIndex,
+} from '@/components/carousel';
 
 import Box from '@mui/material/Box';
 import Avatar from '@mui/material/Avatar';
 import { alpha, styled } from '@mui/material/styles';
-
-import { bgGradient } from 'src/theme/css';
-
-import Image from 'src/components/image';
-import Carousel, {
-  useCarousel,
-  CarouselArrowIndex,
-} from 'src/components/carousel';
 
 // ----------------------------------------------------------------------
 

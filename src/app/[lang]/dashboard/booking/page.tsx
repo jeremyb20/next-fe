@@ -1,4 +1,4 @@
-import { OverviewBankingView } from 'src/sections/overview/booking/view';
+import { OverviewBankingView } from '@/sections/overview/booking/view';
 
 // ----------------------------------------------------------------------
 

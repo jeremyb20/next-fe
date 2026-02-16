@@ -1,13 +1,11 @@
+import Image from '@/components/image';
+import { fToNow } from '@/utils/format-time';
+import { IKanbanComment } from '@/types/kanban';
+import Lightbox, { useLightBox } from '@/components/lightbox';
+
 import Stack from '@mui/material/Stack';
 import Avatar from '@mui/material/Avatar';
 import Typography from '@mui/material/Typography';
-
-import { fToNow } from 'src/utils/format-time';
-
-import Image from 'src/components/image';
-import Lightbox, { useLightBox } from 'src/components/lightbox';
-
-import { IKanbanComment } from 'src/types/kanban';
 
 // ----------------------------------------------------------------------
 

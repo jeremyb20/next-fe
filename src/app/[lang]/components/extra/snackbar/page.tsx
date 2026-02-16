@@ -1,4 +1,4 @@
-import SnackbarView from 'src/sections/_examples/extra/snackbar-view';
+import SnackbarView from '@/sections/_examples/extra/snackbar-view';
 
 // ----------------------------------------------------------------------
 

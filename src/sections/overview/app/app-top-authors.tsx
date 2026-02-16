@@ -1,4 +1,6 @@
 import orderBy from 'lodash/orderBy';
+import Iconify from '@/components/iconify';
+import { fShortenNumber } from '@/utils/format-number';
 
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
@@ -7,10 +9,6 @@ import { alpha } from '@mui/material/styles';
 import CardHeader from '@mui/material/CardHeader';
 import Typography from '@mui/material/Typography';
 import Card, { CardProps } from '@mui/material/Card';
-
-import { fShortenNumber } from 'src/utils/format-number';
-
-import Iconify from 'src/components/iconify';
 
 // ----------------------------------------------------------------------
 

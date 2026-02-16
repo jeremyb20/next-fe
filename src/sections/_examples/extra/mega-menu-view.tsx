@@ -1,6 +1,20 @@
 'use client';
 
+import { _mock } from '@/_mock';
 import { useEffect } from 'react';
+import Logo from '@/components/logo';
+import { paths } from '@/routes/paths';
+import Iconify from '@/components/iconify';
+import { usePathname } from '@/routes/hooks';
+import Scrollbar from '@/components/scrollbar';
+import { useBoolean } from '@/hooks/use-boolean';
+import CustomBreadcrumbs from '@/components/custom-breadcrumbs';
+import ComponentHero from '@/sections/_examples/component-hero';
+import {
+  MegaMenuMobile,
+  MegaMenuDesktopVertical,
+  MegaMenuDesktopHorizontal,
+} from '@/components/mega-menu';
 
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
@@ -11,25 +25,6 @@ import Drawer from '@mui/material/Drawer';
 import Toolbar from '@mui/material/Toolbar';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
-
-import { paths } from 'src/routes/paths';
-import { usePathname } from 'src/routes/hooks';
-
-import { useBoolean } from 'src/hooks/use-boolean';
-
-import { _mock } from 'src/_mock';
-
-import Logo from 'src/components/logo';
-import Iconify from 'src/components/iconify';
-import Scrollbar from 'src/components/scrollbar';
-import CustomBreadcrumbs from 'src/components/custom-breadcrumbs';
-import {
-  MegaMenuMobile,
-  MegaMenuDesktopVertical,
-  MegaMenuDesktopHorizontal,
-} from 'src/components/mega-menu';
-
-import ComponentHero from 'src/sections/_examples/component-hero';
 
 // ----------------------------------------------------------------------
 

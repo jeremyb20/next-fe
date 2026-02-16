@@ -1,13 +1,11 @@
+import { IMailLabel } from '@/types/mail';
+import Iconify from '@/components/iconify';
+import Scrollbar from '@/components/scrollbar';
+import { useResponsive } from '@/hooks/use-responsive';
+
 import Stack from '@mui/material/Stack';
 import Drawer from '@mui/material/Drawer';
 import Button from '@mui/material/Button';
-
-import { useResponsive } from 'src/hooks/use-responsive';
-
-import Iconify from 'src/components/iconify';
-import Scrollbar from 'src/components/scrollbar';
-
-import { IMailLabel } from 'src/types/mail';
 
 import MailNavItem from './mail-nav-item';
 import { MailNavItemSkeleton } from './mail-skeleton';

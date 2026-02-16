@@ -1,6 +1,9 @@
 'use client';
 
 import { useState } from 'react';
+import { paths } from '@/routes/paths';
+import CustomBreadcrumbs from '@/components/custom-breadcrumbs';
+import ComponentHero from '@/sections/_examples/component-hero';
 
 import Masonry from '@mui/lab/Masonry';
 import Radio from '@mui/material/Radio';
@@ -8,12 +11,6 @@ import Container from '@mui/material/Container';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControl from '@mui/material/FormControl';
 import FormControlLabel from '@mui/material/FormControlLabel';
-
-import { paths } from 'src/routes/paths';
-
-import CustomBreadcrumbs from 'src/components/custom-breadcrumbs';
-
-import ComponentHero from 'src/sections/_examples/component-hero';
 
 import ComponentBlock from '../component-block';
 

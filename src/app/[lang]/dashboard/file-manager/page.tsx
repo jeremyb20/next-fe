@@ -1,4 +1,4 @@
-import { FileManagerView } from 'src/sections/file-manager/view';
+import { FileManagerView } from '@/sections/file-manager/view';
 
 // ----------------------------------------------------------------------
 

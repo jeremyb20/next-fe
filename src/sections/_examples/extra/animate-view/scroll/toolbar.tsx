@@ -1,7 +1,7 @@
+import Iconify from '@/components/iconify';
+
 import Paper from '@mui/material/Paper';
 import IconButton from '@mui/material/IconButton';
-
-import Iconify from 'src/components/iconify';
 
 // ----------------------------------------------------------------------
 

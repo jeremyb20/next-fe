@@ -1,12 +1,10 @@
+import { _addressBooks } from '@/_mock';
+import Iconify from '@/components/iconify';
+import { useBoolean } from '@/hooks/use-boolean';
+
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import Grid from '@mui/material/Unstable_Grid2';
-
-import { useBoolean } from 'src/hooks/use-boolean';
-
-import { _addressBooks } from 'src/_mock';
-
-import Iconify from 'src/components/iconify';
 
 import { useCheckoutContext } from './context';
 import CheckoutSummary from './checkout-summary';

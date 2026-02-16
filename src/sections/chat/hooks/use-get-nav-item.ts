@@ -1,4 +1,4 @@
-import { IChatConversation } from 'src/types/chat';
+import { IChatConversation } from '@/types/chat';
 
 // ----------------------------------------------------------------------
 

@@ -1,9 +1,12 @@
 /* eslint-disable no-nested-ternary */
 import { m } from 'framer-motion';
 import Carousel from 'react-slick';
-import { APP_NAME } from '@/src/config-global';
+import Iconify from '@/components/iconify';
+import { APP_NAME } from '@//config-global';
 import { useTranslation } from 'react-i18next';
-import useCarousel from '@/src/components/carousel/use-carousel';
+import { useResponsive } from '@/hooks/use-responsive';
+import useCarousel from '@//components/carousel/use-carousel';
+import { varFade, MotionViewport } from '@/components/animate';
 
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
@@ -14,11 +17,6 @@ import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import { alpha, useTheme } from '@mui/material/styles';
-
-import { useResponsive } from 'src/hooks/use-responsive';
-
-import Iconify from 'src/components/iconify';
-import { varFade, MotionViewport } from 'src/components/animate';
 
 // ----------------------------------------------------------------------
 

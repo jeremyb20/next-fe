@@ -1,9 +1,9 @@
+import { fCurrency } from '@/utils/format-number';
+
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Card, { CardProps } from '@mui/material/Card';
-
-import { fCurrency } from 'src/utils/format-number';
 
 // ----------------------------------------------------------------------
 

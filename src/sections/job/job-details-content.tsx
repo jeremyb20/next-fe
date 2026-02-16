@@ -1,3 +1,9 @@
+import { IJobItem } from '@/types/job';
+import Iconify from '@/components/iconify';
+import { fDate } from '@/utils/format-time';
+import Markdown from '@/components/markdown';
+import { fCurrency } from '@/utils/format-number';
+
 import Chip from '@mui/material/Chip';
 import Card from '@mui/material/Card';
 import Paper from '@mui/material/Paper';
@@ -6,14 +12,6 @@ import Avatar from '@mui/material/Avatar';
 import Grid from '@mui/material/Unstable_Grid2';
 import Typography from '@mui/material/Typography';
 import ListItemText from '@mui/material/ListItemText';
-
-import { fDate } from 'src/utils/format-time';
-import { fCurrency } from 'src/utils/format-number';
-
-import Iconify from 'src/components/iconify';
-import Markdown from 'src/components/markdown';
-
-import { IJobItem } from 'src/types/job';
 
 // ----------------------------------------------------------------------
 

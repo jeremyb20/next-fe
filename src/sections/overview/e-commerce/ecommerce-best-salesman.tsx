@@ -1,3 +1,9 @@
+import Label from '@/components/label';
+import Iconify from '@/components/iconify';
+import Scrollbar from '@/components/scrollbar';
+import { fCurrency } from '@/utils/format-number';
+import { TableHeadCustom } from '@/components/table';
+
 import Table from '@mui/material/Table';
 import Avatar from '@mui/material/Avatar';
 import TableRow from '@mui/material/TableRow';
@@ -6,13 +12,6 @@ import TableBody from '@mui/material/TableBody';
 import CardHeader from '@mui/material/CardHeader';
 import Card, { CardProps } from '@mui/material/Card';
 import TableContainer from '@mui/material/TableContainer';
-
-import { fCurrency } from 'src/utils/format-number';
-
-import Label from 'src/components/label';
-import Iconify from 'src/components/iconify';
-import Scrollbar from 'src/components/scrollbar';
-import { TableHeadCustom } from 'src/components/table';
 
 // ----------------------------------------------------------------------
 

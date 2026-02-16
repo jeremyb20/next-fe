@@ -1,4 +1,9 @@
 import { m } from 'framer-motion';
+import { paths } from '@/routes/paths';
+import Iconify from '@/components/iconify';
+import { useResponsive } from '@/hooks/use-responsive';
+import { bgGradient, textGradient } from '@/theme/css';
+import { varFade, MotionViewport } from '@/components/animate';
 
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -6,15 +11,6 @@ import Container from '@mui/material/Container';
 import Grid from '@mui/material/Unstable_Grid2';
 import Typography from '@mui/material/Typography';
 import { alpha, useTheme } from '@mui/material/styles';
-
-import { paths } from 'src/routes/paths';
-
-import { useResponsive } from 'src/hooks/use-responsive';
-
-import { bgGradient, textGradient } from 'src/theme/css';
-
-import Iconify from 'src/components/iconify';
-import { varFade, MotionViewport } from 'src/components/animate';
 
 // ----------------------------------------------------------------------
 

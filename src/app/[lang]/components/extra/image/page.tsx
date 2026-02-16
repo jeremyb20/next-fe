@@ -1,4 +1,4 @@
-import ImageView from 'src/sections/_examples/extra/image-view';
+import ImageView from '@/sections/_examples/extra/image-view';
 
 // ----------------------------------------------------------------------
 

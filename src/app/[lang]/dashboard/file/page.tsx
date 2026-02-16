@@ -1,4 +1,4 @@
-import { OverviewFileView } from 'src/sections/overview/file/view';
+import { OverviewFileView } from '@/sections/overview/file/view';
 
 // ----------------------------------------------------------------------
 

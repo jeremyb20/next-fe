@@ -1,19 +1,16 @@
 'use client';
 
+import { paths } from '@/routes/paths';
+import { useSnackbar } from '@/components/snackbar';
+import CustomBreadcrumbs from '@/components/custom-breadcrumbs';
+import ComponentHero from '@/sections/_examples/component-hero';
+import { useCopyToClipboard } from '@/hooks/use-copy-to-clipboard';
+
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import { alpha, useTheme, hexToRgb } from '@mui/material/styles';
-
-import { paths } from 'src/routes/paths';
-
-import { useCopyToClipboard } from 'src/hooks/use-copy-to-clipboard';
-
-import { useSnackbar } from 'src/components/snackbar';
-import CustomBreadcrumbs from 'src/components/custom-breadcrumbs';
-
-import ComponentHero from 'src/sections/_examples/component-hero';
 
 // ----------------------------------------------------------------------
 

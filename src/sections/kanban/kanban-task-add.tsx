@@ -1,14 +1,11 @@
+import { _mock } from '@/_mock';
+import uuidv4 from '@/utils/uuidv4';
+import { IKanbanTask } from '@/types/kanban';
 import { useMemo, useState, useCallback } from 'react';
 
 import Paper from '@mui/material/Paper';
 import ClickAwayListener from '@mui/material/ClickAwayListener';
 import InputBase, { inputBaseClasses } from '@mui/material/InputBase';
-
-import uuidv4 from 'src/utils/uuidv4';
-
-import { _mock } from 'src/_mock';
-
-import { IKanbanTask } from 'src/types/kanban';
 
 // ----------------------------------------------------------------------
 

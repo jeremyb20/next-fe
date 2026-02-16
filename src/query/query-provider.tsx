@@ -3,7 +3,7 @@
 import { QueryClientProvider } from '@tanstack/react-query';
 // import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
-import { queryClient } from 'src/query/query-client';
+import { queryClient } from '@/query/query-client';
 
 type Props = React.PropsWithChildren;
 

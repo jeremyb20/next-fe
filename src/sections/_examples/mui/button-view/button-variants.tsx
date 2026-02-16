@@ -1,9 +1,9 @@
+import Iconify from '@/components/iconify';
+
 import Box from '@mui/material/Box';
 import Masonry from '@mui/lab/Masonry';
 import LoadingButton from '@mui/lab/LoadingButton';
 import Button, { buttonClasses } from '@mui/material/Button';
-
-import Iconify from 'src/components/iconify';
 
 import ComponentBlock from '../../component-block';
 

@@ -1,3 +1,7 @@
+import Iconify from '@/components/iconify';
+import { fToNow } from '@/utils/format-time';
+import Scrollbar from '@/components/scrollbar';
+
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
@@ -5,11 +9,6 @@ import Avatar from '@mui/material/Avatar';
 import CardHeader from '@mui/material/CardHeader';
 import Card, { CardProps } from '@mui/material/Card';
 import ListItemText from '@mui/material/ListItemText';
-
-import { fToNow } from 'src/utils/format-time';
-
-import Iconify from 'src/components/iconify';
-import Scrollbar from 'src/components/scrollbar';
 
 // ----------------------------------------------------------------------
 

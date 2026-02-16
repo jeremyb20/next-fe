@@ -1,4 +1,4 @@
-import { FirebaseRegisterView } from 'src/sections/auth/firebase';
+import { FirebaseRegisterView } from '@/sections/auth/firebase';
 
 // ----------------------------------------------------------------------
 

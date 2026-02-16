@@ -1,4 +1,4 @@
-import Iconify from '@/src/components/iconify';
+import Iconify from '@//components/iconify';
 
 import { Box, Card, Button, Typography } from '@mui/material';
 

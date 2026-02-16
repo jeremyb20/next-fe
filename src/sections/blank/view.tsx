@@ -1,11 +1,11 @@
 'use client';
 
+import { useSettingsContext } from '@/components/settings';
+
 import Box from '@mui/material/Box';
 import { alpha } from '@mui/material/styles';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
-
-import { useSettingsContext } from 'src/components/settings';
 
 import MapView from '../_examples/extra/map-view';
 import CopyToClipboardView from '../_examples/extra/copy-to-clipboard-view';

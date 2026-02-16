@@ -1,10 +1,9 @@
+import { IPostItem } from '@/types/blog';
+import Iconify from '@/components/iconify';
+
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import Grid from '@mui/material/Unstable_Grid2';
-
-import Iconify from 'src/components/iconify';
-
-import { IPostItem } from 'src/types/blog';
 
 import PostItem from './post-item';
 import { PostItemSkeleton } from './post-skeleton';

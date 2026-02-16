@@ -1,4 +1,4 @@
-import { paramCase, snakeCase } from 'src/utils/change-case';
+import { paramCase, snakeCase } from '@/utils/change-case';
 
 // ----------------------------------------------------------------------
 

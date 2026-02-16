@@ -1,15 +1,13 @@
 import { useForm } from 'react-hook-form';
+import Iconify from '@/components/iconify';
+import { IUserSocialLink } from '@/types/user';
+import { useSnackbar } from '@/components/snackbar';
+import FormProvider, { RHFTextField } from '@/components/hook-form';
 
 import Card from '@mui/material/Card';
 import Stack from '@mui/material/Stack';
 import LoadingButton from '@mui/lab/LoadingButton';
 import InputAdornment from '@mui/material/InputAdornment';
-
-import Iconify from 'src/components/iconify';
-import { useSnackbar } from 'src/components/snackbar';
-import FormProvider, { RHFTextField } from 'src/components/hook-form';
-
-import { IUserSocialLink } from 'src/types/user';
 
 // ----------------------------------------------------------------------
 

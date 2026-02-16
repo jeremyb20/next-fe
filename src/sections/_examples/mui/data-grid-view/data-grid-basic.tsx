@@ -1,6 +1,6 @@
-import { DataGrid, GridColDef, GridActionsCellItem } from '@mui/x-data-grid';
+import Iconify from '@/components/iconify';
 
-import Iconify from 'src/components/iconify';
+import { DataGrid, GridColDef, GridActionsCellItem } from '@mui/x-data-grid';
 
 // ----------------------------------------------------------------------
 

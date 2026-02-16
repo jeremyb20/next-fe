@@ -1,14 +1,12 @@
 import { ApexOptions } from 'apexcharts';
+import { fData } from '@/utils/format-number';
+import Chart, { useChart } from '@/components/chart';
 
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import { useTheme } from '@mui/material/styles';
 import Card, { CardProps } from '@mui/material/Card';
 import ListItemText from '@mui/material/ListItemText';
-
-import { fData } from 'src/utils/format-number';
-
-import Chart, { useChart } from 'src/components/chart';
 
 // ----------------------------------------------------------------------
 

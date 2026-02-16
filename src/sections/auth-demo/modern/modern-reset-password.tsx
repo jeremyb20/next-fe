@@ -2,12 +2,18 @@
 
 import * as Yup from 'yup';
 import { useState } from 'react';
+import { paths } from '@/routes/paths';
 import { useForm } from 'react-hook-form';
-import { endpoints } from '@/src/utils/axios';
-import { HOST_API } from '@/src/config-global';
+import { SentIcon } from '@/assets/icons';
+import { endpoints } from '@//utils/axios';
+import Iconify from '@/components/iconify';
+import { HOST_API } from '@//config-global';
 import { useTranslation } from 'react-i18next';
+import { RouterLink } from '@/routes/components';
+import { useBoolean } from '@/hooks/use-boolean';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useCreateGenericMutation } from '@/src/hooks/user-generic-mutation';
+import FormProvider, { RHFTextField } from '@/components/hook-form';
+import { useCreateGenericMutation } from '@//hooks/user-generic-mutation';
 
 import Link from '@mui/material/Link';
 import { Alert } from '@mui/material';
@@ -16,16 +22,6 @@ import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import LoadingButton from '@mui/lab/LoadingButton';
 import InputAdornment from '@mui/material/InputAdornment';
-
-import { paths } from 'src/routes/paths';
-import { RouterLink } from 'src/routes/components';
-
-import { useBoolean } from 'src/hooks/use-boolean';
-
-import { SentIcon } from 'src/assets/icons';
-
-import Iconify from 'src/components/iconify';
-import FormProvider, { RHFTextField } from 'src/components/hook-form';
 
 // ----------------------------------------------------------------------
 

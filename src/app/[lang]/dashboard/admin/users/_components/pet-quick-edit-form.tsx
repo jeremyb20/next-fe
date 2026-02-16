@@ -1,30 +1,33 @@
 /* eslint-disable no-nested-ternary */
 import * as Yup from 'yup';
-import { endpoints } from '@/src/utils/axios';
-import { countries } from '@/src/assets/data';
-import { HOST_API } from '@/src/config-global';
-import Iconify from '@/src/components/iconify';
-import { OptionType } from '@/src/types/global';
-import { fData } from '@/src/utils/format-number';
-import { IUser, IPetProfile } from '@/src/types/api';
+import { endpoints } from '@//utils/axios';
+import { countries } from '@//assets/data';
+import { HOST_API } from '@//config-global';
+import Iconify from '@//components/iconify';
+import { OptionType } from '@//types/global';
+import { fData } from '@//utils/format-number';
+import { IUser, IPetProfile } from '@//types/api';
+import { useSnackbar } from '@/components/snackbar';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import UploadAvatar from '@/src/components/upload/upload-avatar';
+import UploadAvatar from '@//components/upload/upload-avatar';
+import CardComponent from '@//sections/_examples/card-component';
 import { useMemo, useState, useEffect, useCallback } from 'react';
-import CardComponent from '@/src/sections/_examples/card-component';
-import CustomPopover, { usePopover } from '@/src/components/custom-popover';
-import { useCreateGenericMutation } from '@/src/hooks/user-generic-mutation';
-import {
-  parseWeight,
-  BreedOptions,
-  GENDER_OPTIONS,
-} from '@/src/utils/constants';
-import MedicalControlView from '@/src/app/[lang]/pet/_components/view/medical-control-view';
+import CustomPopover, { usePopover } from '@//components/custom-popover';
+import { useCreateGenericMutation } from '@//hooks/user-generic-mutation';
+import { parseWeight, BreedOptions, GENDER_OPTIONS } from '@//utils/constants';
+import MedicalControlView from '@//app/[lang]/pet/_components/view/medical-control-view';
 import {
   getPhoneHelperText,
   getPhonePlaceholder,
   simplePhoneValidation,
-} from '@/src/utils/phone-validation';
+} from '@//utils/phone-validation';
+import FormProvider, {
+  RHFSelect,
+  RHFSwitch,
+  RHFTextField,
+  RHFAutocomplete,
+} from '@/components/hook-form';
 
 import Box from '@mui/material/Box';
 import Alert from '@mui/material/Alert';
@@ -47,14 +50,6 @@ import {
   useMediaQuery,
   InputAdornment,
 } from '@mui/material';
-
-import { useSnackbar } from 'src/components/snackbar';
-import FormProvider, {
-  RHFSelect,
-  RHFSwitch,
-  RHFTextField,
-  RHFAutocomplete,
-} from 'src/components/hook-form';
 
 // ----------------------------------------------------------------------
 

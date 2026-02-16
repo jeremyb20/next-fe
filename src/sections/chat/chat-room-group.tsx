@@ -1,4 +1,8 @@
+import Iconify from '@/components/iconify';
 import { useState, useCallback } from 'react';
+import Scrollbar from '@/components/scrollbar';
+import { IChatParticipant } from '@/types/chat';
+import { useBoolean } from '@/hooks/use-boolean';
 
 import Box from '@mui/material/Box';
 import Badge from '@mui/material/Badge';
@@ -6,13 +10,6 @@ import Avatar from '@mui/material/Avatar';
 import Collapse from '@mui/material/Collapse';
 import ListItemText from '@mui/material/ListItemText';
 import ListItemButton from '@mui/material/ListItemButton';
-
-import { useBoolean } from 'src/hooks/use-boolean';
-
-import Iconify from 'src/components/iconify';
-import Scrollbar from 'src/components/scrollbar';
-
-import { IChatParticipant } from 'src/types/chat';
 
 import ChatRoomParticipantDialog from './chat-room-participant-dialog';
 

@@ -1,10 +1,10 @@
 'use client';
 
-import 'src/global.css';
+import '@/global.css';
 
 // ----------------------------------------------------------------------
 
-import i18next from '@/src/app/i18n/i18next';
+import i18next from '@//app/i18n/i18next';
 import { I18nextProvider } from 'react-i18next';
 
 import ClientProviders from './client-providers';

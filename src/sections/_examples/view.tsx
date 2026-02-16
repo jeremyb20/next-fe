@@ -2,7 +2,8 @@
 
 import { m } from 'framer-motion';
 import orderBy from 'lodash/orderBy';
-import { RoleBasedGuard } from '@/src/auth/guard';
+import { RoleBasedGuard } from '@//auth/guard';
+import { varFade, MotionContainer } from '@/components/animate';
 
 import Link from '@mui/material/Link';
 import Stack from '@mui/material/Stack';
@@ -10,8 +11,6 @@ import Divider from '@mui/material/Divider';
 import Container from '@mui/material/Container';
 import Box, { BoxProps } from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-
-import { varFade, MotionContainer } from 'src/components/animate';
 
 import ComponentHero from './component-hero';
 import ComponentCard from './component-card';

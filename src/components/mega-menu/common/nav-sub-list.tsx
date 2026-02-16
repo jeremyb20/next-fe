@@ -1,9 +1,9 @@
+import { usePathname } from '@/routes/hooks';
+import { RouterLink } from '@/routes/components';
+
 import Link from '@mui/material/Link';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
-
-import { usePathname } from 'src/routes/hooks';
-import { RouterLink } from 'src/routes/components';
 
 import { NavSubListProps } from '../types';
 

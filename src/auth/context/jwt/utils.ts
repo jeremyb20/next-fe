@@ -1,7 +1,6 @@
-import axios from '@/src/utils/axios';
-import { STORAGE_KEY } from '@/src/config-global';
-
-import { paths } from 'src/routes/paths';
+import axios from '@//utils/axios';
+import { paths } from '@/routes/paths';
+import { STORAGE_KEY } from '@//config-global';
 
 // ----------------------------------------------------------------------
 

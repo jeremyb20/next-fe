@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { m } from 'framer-motion';
-import { EMAIL_SUPPORT } from '@/src/config-global';
+import { EMAIL_SUPPORT } from '@//config-global';
+import { varFade, MotionViewport } from '@/components/animate';
 
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
@@ -10,8 +11,6 @@ import Snackbar from '@mui/material/Snackbar';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import CircularProgress from '@mui/material/CircularProgress';
-
-import { varFade, MotionViewport } from 'src/components/animate';
 
 // ----------------------------------------------------------------------
 

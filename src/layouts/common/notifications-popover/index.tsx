@@ -1,12 +1,18 @@
 import { m } from 'framer-motion';
-import { endpoints } from '@/src/utils/axios';
-import { HOST_API } from '@/src/config-global';
-import { NotificationData } from '@/src/types/api';
-import { useManagerUser } from '@/src/hooks/use-manager-user';
-import { useFetchGetNotifications } from '@/src/hooks/use-fetch';
+import Label from '@/components/label';
+import { endpoints } from '@//utils/axios';
+import Iconify from '@/components/iconify';
+import { HOST_API } from '@//config-global';
+import Scrollbar from '@/components/scrollbar';
+import { NotificationData } from '@//types/api';
+import { varHover } from '@/components/animate';
+import { useBoolean } from '@/hooks/use-boolean';
+import { useResponsive } from '@/hooks/use-responsive';
+import { useManagerUser } from '@//hooks/use-manager-user';
+import { useFetchGetNotifications } from '@//hooks/use-fetch';
 import { useMemo, useState, useEffect, useCallback } from 'react';
-import { useCreateGenericMutation } from '@/src/hooks/user-generic-mutation';
-import PushNotificationManager from '@/src/components/notifications/push-notifications-manager';
+import { useCreateGenericMutation } from '@//hooks/user-generic-mutation';
+import PushNotificationManager from '@//components/notifications/push-notifications-manager';
 
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
@@ -20,14 +26,6 @@ import Divider from '@mui/material/Divider';
 import Tooltip from '@mui/material/Tooltip';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
-
-import { useBoolean } from 'src/hooks/use-boolean';
-import { useResponsive } from 'src/hooks/use-responsive';
-
-import Label from 'src/components/label';
-import Iconify from 'src/components/iconify';
-import Scrollbar from 'src/components/scrollbar';
-import { varHover } from 'src/components/animate';
 
 import NotificationItem from './notification-item';
 import ScheduleNotificationForm from './components/schedule-notification-form';

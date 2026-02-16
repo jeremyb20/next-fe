@@ -1,9 +1,8 @@
 import { memo } from 'react';
+import { StyledControlPanel } from '@/components/map';
 
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
-
-import { StyledControlPanel } from 'src/components/map';
 
 // ----------------------------------------------------------------------
 

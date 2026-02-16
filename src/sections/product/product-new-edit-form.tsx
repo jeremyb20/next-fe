@@ -1,7 +1,29 @@
 import * as Yup from 'yup';
+import { paths } from '@/routes/paths';
 import { useForm } from 'react-hook-form';
+import { useRouter } from '@/routes/hooks';
+import { IProductItem } from '@/types/product';
+import { useSnackbar } from '@/components/snackbar';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useResponsive } from '@/hooks/use-responsive';
 import { useMemo, useState, useEffect, useCallback } from 'react';
+import {
+  _tags,
+  PRODUCT_SIZE_OPTIONS,
+  PRODUCT_GENDER_OPTIONS,
+  PRODUCT_COLOR_NAME_OPTIONS,
+  PRODUCT_CATEGORY_GROUP_OPTIONS,
+} from '@/_mock';
+import FormProvider, {
+  RHFSelect,
+  RHFEditor,
+  RHFUpload,
+  RHFSwitch,
+  RHFTextField,
+  RHFMultiSelect,
+  RHFAutocomplete,
+  RHFMultiCheckbox,
+} from '@/components/hook-form';
 
 import Box from '@mui/material/Box';
 import Chip from '@mui/material/Chip';
@@ -15,33 +37,6 @@ import Typography from '@mui/material/Typography';
 import LoadingButton from '@mui/lab/LoadingButton';
 import InputAdornment from '@mui/material/InputAdornment';
 import FormControlLabel from '@mui/material/FormControlLabel';
-
-import { paths } from 'src/routes/paths';
-import { useRouter } from 'src/routes/hooks';
-
-import { useResponsive } from 'src/hooks/use-responsive';
-
-import {
-  _tags,
-  PRODUCT_SIZE_OPTIONS,
-  PRODUCT_GENDER_OPTIONS,
-  PRODUCT_COLOR_NAME_OPTIONS,
-  PRODUCT_CATEGORY_GROUP_OPTIONS,
-} from 'src/_mock';
-
-import { useSnackbar } from 'src/components/snackbar';
-import FormProvider, {
-  RHFSelect,
-  RHFEditor,
-  RHFUpload,
-  RHFSwitch,
-  RHFTextField,
-  RHFMultiSelect,
-  RHFAutocomplete,
-  RHFMultiCheckbox,
-} from 'src/components/hook-form';
-
-import { IProductItem } from 'src/types/product';
 
 // ----------------------------------------------------------------------
 

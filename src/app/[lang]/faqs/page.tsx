@@ -1,4 +1,4 @@
-import { FaqsView } from 'src/sections/faqs/view';
+import { FaqsView } from '@/sections/faqs/view';
 
 // ----------------------------------------------------------------------
 

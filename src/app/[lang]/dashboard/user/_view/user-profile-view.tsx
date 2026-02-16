@@ -1,16 +1,14 @@
 'use client';
 
+import { paths } from '@/routes/paths';
+import Iconify from '@/components/iconify';
 import { useState, useCallback } from 'react';
-import { AccountView } from '@/src/sections/account/view';
-import { useManagerUser } from '@/src/hooks/use-manager-user';
+import { AccountView } from '@//sections/account/view';
+import { useManagerUser } from '@//hooks/use-manager-user';
+import { useSettingsContext } from '@/components/settings';
+import CustomBreadcrumbs from '@/components/custom-breadcrumbs';
 
 import Container from '@mui/material/Container';
-
-import { paths } from 'src/routes/paths';
-
-import Iconify from 'src/components/iconify';
-import { useSettingsContext } from 'src/components/settings';
-import CustomBreadcrumbs from 'src/components/custom-breadcrumbs';
 
 // import ProfileFriends from '../_components/profile-friends';
 // import ProfileGallery from '../_components/profile-gallery';

@@ -1,4 +1,4 @@
-import TooltipView from 'src/sections/_examples/mui/tooltip-view';
+import TooltipView from '@/sections/_examples/mui/tooltip-view';
 
 // ----------------------------------------------------------------------
 

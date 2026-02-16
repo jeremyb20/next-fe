@@ -1,4 +1,8 @@
 import { Metadata } from 'next';
+import { bgBlur } from '@/theme/css';
+import Logo from '@/components/logo';
+import { useOffSetTop } from '@/hooks/use-off-set-top';
+import { useResponsive } from '@/hooks/use-responsive';
 
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
@@ -7,13 +11,6 @@ import Toolbar from '@mui/material/Toolbar';
 import { useTheme } from '@mui/material/styles';
 import Container from '@mui/material/Container';
 import Badge, { badgeClasses } from '@mui/material/Badge';
-
-import { useOffSetTop } from 'src/hooks/use-off-set-top';
-import { useResponsive } from 'src/hooks/use-responsive';
-
-import { bgBlur } from 'src/theme/css';
-
-import Logo from 'src/components/logo';
 
 import NavMobile from './nav/mobile';
 import NavDesktop from './nav/desktop';

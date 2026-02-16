@@ -1,13 +1,13 @@
+import Image from '@/components/image';
+import Carousel, {
+  useCarousel,
+  CarouselArrowIndex,
+} from '@/components/carousel';
+
 import Card from '@mui/material/Card';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import CardContent from '@mui/material/CardContent';
-
-import Image from 'src/components/image';
-import Carousel, {
-  useCarousel,
-  CarouselArrowIndex,
-} from 'src/components/carousel';
 
 // ----------------------------------------------------------------------
 

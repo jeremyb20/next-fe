@@ -1,10 +1,9 @@
 import { useTranslation } from 'react-i18next';
-import RouterLink from '@/src/routes/components/router-link';
+import { PATH_AFTER_LOGIN } from '@/config-global';
+import RouterLink from '@//routes/components/router-link';
 
 import Button from '@mui/material/Button';
 import { Theme, SxProps } from '@mui/material/styles';
-
-import { PATH_AFTER_LOGIN } from 'src/config-global';
 
 type Props = {
   sx?: SxProps<Theme>;

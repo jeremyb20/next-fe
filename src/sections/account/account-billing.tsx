@@ -1,8 +1,8 @@
-import Grid from '@mui/material/Unstable_Grid2';
+import { IPaymentCard } from '@/types/payment';
+import { IAddressItem } from '@/types/address';
+import { IUserAccountBillingHistory } from '@/types/user';
 
-import { IPaymentCard } from 'src/types/payment';
-import { IAddressItem } from 'src/types/address';
-import { IUserAccountBillingHistory } from 'src/types/user';
+import Grid from '@mui/material/Unstable_Grid2';
 
 import AccountBillingPlan from './account-billing-plan';
 import AccountBillingPayment from './account-billing-payment';

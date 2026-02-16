@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { RoleBasedGuard } from '@/src/auth/guard';
+import { RoleBasedGuard } from '@//auth/guard';
 
 import UserListView from './view/user-list-view';
 

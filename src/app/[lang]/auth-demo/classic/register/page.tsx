@@ -1,4 +1,4 @@
-import { ClassicRegisterView } from 'src/sections/auth-demo/classic';
+import { ClassicRegisterView } from '@/sections/auth-demo/classic';
 
 // ----------------------------------------------------------------------
 

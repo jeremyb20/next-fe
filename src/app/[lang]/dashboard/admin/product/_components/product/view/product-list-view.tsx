@@ -1,7 +1,24 @@
 'use client';
 
 import isEqual from 'lodash/isEqual';
+import { paths } from '@/routes/paths';
+import { useRouter } from '@/routes/hooks';
+import Iconify from '@/components/iconify';
+import { useGetProducts } from '@/api/product';
+import { PRODUCT_STOCK_OPTIONS } from '@/_mock';
+import { RouterLink } from '@/routes/components';
+import { useBoolean } from '@/hooks/use-boolean';
+import { useSnackbar } from '@/components/snackbar';
+import EmptyContent from '@/components/empty-content';
 import { useState, useEffect, useCallback } from 'react';
+import { ConfirmDialog } from '@/components/custom-dialog';
+import { useSettingsContext } from '@/components/settings';
+import CustomBreadcrumbs from '@/components/custom-breadcrumbs';
+import {
+  IProductItem,
+  IProductTableFilters,
+  IProductTableFilterValue,
+} from '@/types/product';
 
 import Card from '@mui/material/Card';
 import Stack from '@mui/material/Stack';
@@ -19,28 +36,6 @@ import {
   GridToolbarColumnsButton,
   GridColumnVisibilityModel,
 } from '@mui/x-data-grid';
-
-import { paths } from 'src/routes/paths';
-import { useRouter } from 'src/routes/hooks';
-import { RouterLink } from 'src/routes/components';
-
-import { useBoolean } from 'src/hooks/use-boolean';
-
-import { useGetProducts } from 'src/api/product';
-import { PRODUCT_STOCK_OPTIONS } from 'src/_mock';
-
-import Iconify from 'src/components/iconify';
-import { useSnackbar } from 'src/components/snackbar';
-import EmptyContent from 'src/components/empty-content';
-import { ConfirmDialog } from 'src/components/custom-dialog';
-import { useSettingsContext } from 'src/components/settings';
-import CustomBreadcrumbs from 'src/components/custom-breadcrumbs';
-
-import {
-  IProductItem,
-  IProductTableFilters,
-  IProductTableFilterValue,
-} from 'src/types/product';
 
 import ProductTableToolbar from '../product-table-toolbar';
 import ProductTableFiltersResult from '../product-table-filters-result';

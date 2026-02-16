@@ -1,9 +1,8 @@
 import { memo } from 'react';
 import dynamic from 'next/dynamic';
+import { bgBlur } from '@/theme/css';
 
 import { alpha, styled } from '@mui/material/styles';
-
-import { bgBlur } from 'src/theme/css';
 
 // ----------------------------------------------------------------------
 

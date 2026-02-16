@@ -1,4 +1,7 @@
+import Iconify from '@/components/iconify';
+import { IFileShared } from '@/types/file';
 import { useState, useCallback } from 'react';
+import CustomPopover, { usePopover } from '@/components/custom-popover';
 
 import Button from '@mui/material/Button';
 import Avatar from '@mui/material/Avatar';
@@ -7,11 +10,6 @@ import Tooltip from '@mui/material/Tooltip';
 import ListItem from '@mui/material/ListItem';
 import MenuItem from '@mui/material/MenuItem';
 import ListItemText from '@mui/material/ListItemText';
-
-import Iconify from 'src/components/iconify';
-import CustomPopover, { usePopover } from 'src/components/custom-popover';
-
-import { IFileShared } from 'src/types/file';
 
 // ----------------------------------------------------------------------
 

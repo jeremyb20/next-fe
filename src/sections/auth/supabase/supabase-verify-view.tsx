@@ -1,17 +1,15 @@
 'use client';
 
+import { paths } from '@/routes/paths';
+import Iconify from '@/components/iconify';
+import { EmailInboxIcon } from '@/assets/icons';
+import { useSearchParams } from '@/routes/hooks';
+import { RouterLink } from '@/routes/components';
+
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-
-import { paths } from 'src/routes/paths';
-import { useSearchParams } from 'src/routes/hooks';
-import { RouterLink } from 'src/routes/components';
-
-import { EmailInboxIcon } from 'src/assets/icons';
-
-import Iconify from 'src/components/iconify';
 
 // ----------------------------------------------------------------------
 

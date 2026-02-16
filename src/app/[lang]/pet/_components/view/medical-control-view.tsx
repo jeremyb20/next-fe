@@ -1,16 +1,17 @@
 import { useSnackbar } from 'notistack';
-import { IPetProfile } from '@/src/types/api';
-import Iconify from '@/src/components/iconify';
+import { IPetProfile } from '@//types/api';
+import Iconify from '@//components/iconify';
+import { isAfter } from '@/utils/format-time';
+import { useSettingsContext } from '@//components/settings';
 import React, { useMemo, useState, useCallback } from 'react';
-import { useSettingsContext } from '@/src/components/settings';
-import CardComponent from '@/src/sections/_examples/card-component';
-import FilterToolbar from '@/src/components/filters/filter-toolbar';
-import { useMedicalRecordForm } from '@/src/hooks/user-medical-record-form';
-import { MEDICAL_RECORD_FILTER_TOOLBAR } from '@/src/components/filters/filter-constants';
+import CardComponent from '@//sections/_examples/card-component';
+import FilterToolbar from '@//components/filters/filter-toolbar';
+import { useMedicalRecordForm } from '@//hooks/user-medical-record-form';
+import { MEDICAL_RECORD_FILTER_TOOLBAR } from '@//components/filters/filter-constants';
 import {
   UserQueryParams,
   useGetMedicalRecordsByPet,
-} from '@/src/hooks/use-fetch-paginated';
+} from '@//hooks/use-fetch-paginated';
 
 import { Box } from '@mui/system';
 import {
@@ -22,8 +23,6 @@ import {
   Container,
   Typography,
 } from '@mui/material';
-
-import { isAfter } from 'src/utils/format-time';
 
 import VaccinesList from './vaccines-list';
 import DewormingList from './deworming-list';

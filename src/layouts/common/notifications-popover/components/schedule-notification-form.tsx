@@ -1,8 +1,9 @@
 // schedule-notification-form.tsx
 import { useState } from 'react';
-import { endpoints } from '@/src/utils/axios';
-import { NotificationData, NotificationFormData } from '@/src/types/api';
-import { useCreateGenericMutation } from '@/src/hooks/user-generic-mutation';
+import { endpoints } from '@//utils/axios';
+import { HOST_API } from '@/config-global';
+import { NotificationData, NotificationFormData } from '@//types/api';
+import { useCreateGenericMutation } from '@//hooks/user-generic-mutation';
 
 import {
   Box,
@@ -12,8 +13,6 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
-
-import { HOST_API } from 'src/config-global';
 
 interface ScheduleNotificationFormProps {
   onNotificationScheduled: () => void;

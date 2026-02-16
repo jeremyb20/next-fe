@@ -1,7 +1,6 @@
 // use-manager-user.ts
 import { useCallback } from 'react';
-
-import { useAuthContext } from 'src/auth/hooks';
+import { useAuthContext } from '@/auth/hooks';
 
 import { LOGO } from '../config-global';
 import { useResponsive } from './use-responsive';

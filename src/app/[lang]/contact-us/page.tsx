@@ -1,4 +1,4 @@
-import { ContactView } from 'src/sections/contact/view';
+import { ContactView } from '@/sections/contact/view';
 
 // ----------------------------------------------------------------------
 

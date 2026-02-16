@@ -1,11 +1,10 @@
 import { useState } from 'react';
+import Iconify from '@/components/iconify';
 
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import IconButton from '@mui/material/IconButton';
 import CardContent from '@mui/material/CardContent';
-
-import Iconify from 'src/components/iconify';
 
 import Logo from './logo';
 import Buttons from './buttons';

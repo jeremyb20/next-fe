@@ -1,11 +1,10 @@
 import { useCallback } from 'react';
-import { IProductItem } from '@/src/types/product';
+import { paths } from '@/routes/paths';
+import { useRouter } from '@/routes/hooks';
+import { IProductItem } from '@//types/product';
 
 import Box from '@mui/material/Box';
 import Pagination, { paginationClasses } from '@mui/material/Pagination';
-
-import { paths } from 'src/routes/paths';
-import { useRouter } from 'src/routes/hooks';
 
 import PetsMarketItem from './petsmarket-item';
 

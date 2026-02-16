@@ -1,3 +1,4 @@
+import Iconify from '@/components/iconify';
 import { useState, useCallback } from 'react';
 
 import Stack from '@mui/material/Stack';
@@ -15,8 +16,6 @@ import {
   IconButton,
   FormControlLabel,
 } from '@mui/material';
-
-import Iconify from 'src/components/iconify';
 
 interface FilterToolbarProps {
   filters: any;

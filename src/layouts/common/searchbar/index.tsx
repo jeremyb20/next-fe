@@ -1,7 +1,15 @@
+import Label from '@/components/label';
+import { useRouter } from '@/routes/hooks';
+import Iconify from '@/components/iconify';
+import Scrollbar from '@/components/scrollbar';
 import parse from 'autosuggest-highlight/parse';
 import match from 'autosuggest-highlight/match';
+import { useBoolean } from '@/hooks/use-boolean';
 import { memo, useState, useCallback } from 'react';
-import { useManagerUser } from '@/src/hooks/use-manager-user';
+import { useResponsive } from '@/hooks/use-responsive';
+import { useManagerUser } from '@//hooks/use-manager-user';
+import SearchNotFound from '@/components/search-not-found';
+import { useEventListener } from '@/hooks/use-event-listener';
 
 import Box from '@mui/material/Box';
 import List from '@mui/material/List';
@@ -11,17 +19,6 @@ import InputBase from '@mui/material/InputBase';
 import IconButton from '@mui/material/IconButton';
 import InputAdornment from '@mui/material/InputAdornment';
 import Dialog, { dialogClasses } from '@mui/material/Dialog';
-
-import { useRouter } from 'src/routes/hooks';
-
-import { useBoolean } from 'src/hooks/use-boolean';
-import { useResponsive } from 'src/hooks/use-responsive';
-import { useEventListener } from 'src/hooks/use-event-listener';
-
-import Label from 'src/components/label';
-import Iconify from 'src/components/iconify';
-import Scrollbar from 'src/components/scrollbar';
-import SearchNotFound from 'src/components/search-not-found';
 
 import ResultItem from './result-item';
 import { useNavData } from '../../dashboard/config-navigation';

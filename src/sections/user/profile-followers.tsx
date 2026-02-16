@@ -1,6 +1,8 @@
 'use client';
 
+import Iconify from '@/components/iconify';
 import { useState, useCallback } from 'react';
+import { IUserProfileFollower } from '@/types/user';
 
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
@@ -8,10 +10,6 @@ import Button from '@mui/material/Button';
 import Avatar from '@mui/material/Avatar';
 import Typography from '@mui/material/Typography';
 import ListItemText from '@mui/material/ListItemText';
-
-import Iconify from 'src/components/iconify';
-
-import { IUserProfileFollower } from 'src/types/user';
 
 // ----------------------------------------------------------------------
 

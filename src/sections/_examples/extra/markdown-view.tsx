@@ -1,18 +1,16 @@
 'use client';
 
+import { paths } from '@/routes/paths';
+import Markdown from '@/components/markdown';
+import CustomBreadcrumbs from '@/components/custom-breadcrumbs';
+import ComponentHero from '@/sections/_examples/component-hero';
+
 import Card from '@mui/material/Card';
 import Stack from '@mui/material/Stack';
 import Divider from '@mui/material/Divider';
 import Container from '@mui/material/Container';
 import CardHeader from '@mui/material/CardHeader';
 import CardContent from '@mui/material/CardContent';
-
-import { paths } from 'src/routes/paths';
-
-import Markdown from 'src/components/markdown';
-import CustomBreadcrumbs from 'src/components/custom-breadcrumbs';
-
-import ComponentHero from 'src/sections/_examples/component-hero';
 
 // ----------------------------------------------------------------------
 

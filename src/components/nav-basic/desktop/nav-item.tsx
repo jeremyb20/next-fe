@@ -1,11 +1,10 @@
 import { forwardRef } from 'react';
+import { RouterLink } from '@/routes/components';
 
 import Box from '@mui/material/Box';
 import Link from '@mui/material/Link';
 import { styled } from '@mui/material/styles';
 import ListItemButton from '@mui/material/ListItemButton';
-
-import { RouterLink } from 'src/routes/components';
 
 import Iconify from '../../iconify';
 import { NavItemProps, NavItemStateProps } from '../types';

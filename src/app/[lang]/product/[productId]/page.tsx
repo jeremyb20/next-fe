@@ -1,10 +1,10 @@
 /* eslint-disable object-shorthand */
 import { Metadata } from 'next';
-import { paths } from '@/src/routes/paths';
-import { endpoints } from '@/src/utils/axios';
-import { IProductItem } from '@/src/types/product';
-import { DOMAIN, HOST_API } from '@/src/config-global';
-import { ProductShopDetailsView } from '@/src/sections/product/view';
+import { paths } from '@//routes/paths';
+import { endpoints } from '@//utils/axios';
+import { IProductItem } from '@//types/product';
+import { DOMAIN, HOST_API } from '@//config-global';
+import { ProductShopDetailsView } from '@//sections/product/view';
 
 import NotFoundPage from '../../../not-found';
 
@@ -75,9 +75,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
     // Precios formateados
     const priceFormatted = `$${product.price.toFixed(2)}`;
-    const priceSaleFormatted = product.priceSale
-      ? `$${product.priceSale.toFixed(2)}`
-      : null;
+    // const priceSaleFormatted = product.priceSale
+    //   ? `$${product.priceSale.toFixed(2)}`
+    //   : null;
 
     // Título y descripción
     const baseTitle = `${product.name} | Tu Tienda`;

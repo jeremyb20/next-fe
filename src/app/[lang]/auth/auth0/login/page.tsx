@@ -1,4 +1,4 @@
-import { Auth0LoginView } from 'src/sections/auth/auth0';
+import { Auth0LoginView } from '@/sections/auth/auth0';
 
 // ----------------------------------------------------------------------
 

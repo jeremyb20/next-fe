@@ -1,17 +1,14 @@
 'use client';
 
+import { paths } from '@/routes/paths';
 import { useState, useCallback } from 'react';
+import CustomBreadcrumbs from '@/components/custom-breadcrumbs';
+import ComponentHero from '@/sections/_examples/component-hero';
 
 import Masonry from '@mui/lab/Masonry';
 import Container from '@mui/material/Container';
 import Pagination from '@mui/material/Pagination';
 import TablePagination from '@mui/material/TablePagination';
-
-import { paths } from 'src/routes/paths';
-
-import CustomBreadcrumbs from 'src/components/custom-breadcrumbs';
-
-import ComponentHero from 'src/sections/_examples/component-hero';
 
 import ComponentBlock from '../component-block';
 

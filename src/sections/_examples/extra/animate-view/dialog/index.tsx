@@ -1,9 +1,8 @@
 import { useState, useCallback } from 'react';
+import { useBoolean } from '@/hooks/use-boolean';
 
 import Card from '@mui/material/Card';
 import Grid from '@mui/material/Unstable_Grid2';
-
-import { useBoolean } from 'src/hooks/use-boolean';
 
 import ContainerView from './container';
 import ControlPanel from '../control-panel';

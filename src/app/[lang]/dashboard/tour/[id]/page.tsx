@@ -1,6 +1,6 @@
-// import { _tours } from 'src/_mock/_tour';
+// import { _tours } from '@/_mock/_tour';
 
-import { TourDetailsView } from 'src/sections/tour/view';
+import { TourDetailsView } from '@/sections/tour/view';
 
 // ----------------------------------------------------------------------
 

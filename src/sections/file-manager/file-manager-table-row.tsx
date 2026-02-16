@@ -1,4 +1,15 @@
+import Iconify from '@/components/iconify';
+import { IFileManager } from '@/types/file';
 import { useState, useCallback } from 'react';
+import { fData } from '@/utils/format-number';
+import { useBoolean } from '@/hooks/use-boolean';
+import { fDate, fTime } from '@/utils/format-time';
+import { useSnackbar } from '@/components/snackbar';
+import FileThumbnail from '@/components/file-thumbnail';
+import { useDoubleClick } from '@/hooks/use-double-click';
+import { ConfirmDialog } from '@/components/custom-dialog';
+import { useCopyToClipboard } from '@/hooks/use-copy-to-clipboard';
+import CustomPopover, { usePopover } from '@/components/custom-popover';
 
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
@@ -13,21 +24,6 @@ import { alpha, useTheme } from '@mui/material/styles';
 import TableRow, { tableRowClasses } from '@mui/material/TableRow';
 import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 import AvatarGroup, { avatarGroupClasses } from '@mui/material/AvatarGroup';
-
-import { useBoolean } from 'src/hooks/use-boolean';
-import { useDoubleClick } from 'src/hooks/use-double-click';
-import { useCopyToClipboard } from 'src/hooks/use-copy-to-clipboard';
-
-import { fData } from 'src/utils/format-number';
-import { fDate, fTime } from 'src/utils/format-time';
-
-import Iconify from 'src/components/iconify';
-import { useSnackbar } from 'src/components/snackbar';
-import FileThumbnail from 'src/components/file-thumbnail';
-import { ConfirmDialog } from 'src/components/custom-dialog';
-import CustomPopover, { usePopover } from 'src/components/custom-popover';
-
-import { IFileManager } from 'src/types/file';
 
 import FileManagerShareDialog from './file-manager-share-dialog';
 import FileManagerFileDetails from './file-manager-file-details';

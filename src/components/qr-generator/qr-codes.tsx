@@ -1,4 +1,4 @@
-import { LOGO } from '@/src/config-global';
+import { LOGO } from '@//config-global';
 import { useState, useEffect } from 'react';
 import {
   QrcodeStyle,

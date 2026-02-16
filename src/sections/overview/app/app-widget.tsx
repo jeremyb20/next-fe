@@ -1,15 +1,12 @@
 import { ApexOptions } from 'apexcharts';
+import Iconify from '@/components/iconify';
+import { ColorSchema } from '@/theme/palette';
+import { fNumber } from '@/utils/format-number';
+import Chart, { useChart } from '@/components/chart';
 
 import { useTheme } from '@mui/material/styles';
 import ListItemText from '@mui/material/ListItemText';
 import Stack, { StackProps } from '@mui/material/Stack';
-
-import { fNumber } from 'src/utils/format-number';
-
-import { ColorSchema } from 'src/theme/palette';
-
-import Iconify from 'src/components/iconify';
-import Chart, { useChart } from 'src/components/chart';
 
 // ----------------------------------------------------------------------
 

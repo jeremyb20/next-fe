@@ -1,4 +1,8 @@
+import Iconify from '@/components/iconify';
+import { useBoolean } from '@/hooks/use-boolean';
+import { fCurrency } from '@/utils/format-number';
 import { useState, useEffect, useCallback } from 'react';
+import Carousel, { useCarousel, CarouselArrows } from '@/components/carousel';
 
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
@@ -16,13 +20,6 @@ import ListItemText from '@mui/material/ListItemText';
 import DialogActions from '@mui/material/DialogActions';
 import Dialog, { DialogProps } from '@mui/material/Dialog';
 import Input, { InputProps, inputClasses } from '@mui/material/Input';
-
-import { useBoolean } from 'src/hooks/use-boolean';
-
-import { fCurrency } from 'src/utils/format-number';
-
-import Iconify from 'src/components/iconify';
-import Carousel, { useCarousel, CarouselArrows } from 'src/components/carousel';
 
 // ----------------------------------------------------------------------
 

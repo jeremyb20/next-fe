@@ -1,13 +1,11 @@
 'use client';
 
+import { paths } from '@/routes/paths';
+import { useGetProduct } from '@/api/product';
+import { useSettingsContext } from '@/components/settings';
+import CustomBreadcrumbs from '@/components/custom-breadcrumbs';
+
 import Container from '@mui/material/Container';
-
-import { paths } from 'src/routes/paths';
-
-import { useGetProduct } from 'src/api/product';
-
-import { useSettingsContext } from 'src/components/settings';
-import CustomBreadcrumbs from 'src/components/custom-breadcrumbs';
 
 import ProductNewEditForm from '../product-new-edit-form';
 

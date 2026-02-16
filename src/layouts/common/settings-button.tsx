@@ -1,13 +1,12 @@
 import { m } from 'framer-motion';
+import Iconify from '@/components/iconify';
+import { varHover } from '@/components/animate';
+import { useSettingsContext } from '@/components/settings';
 
 import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
 import { Theme, SxProps } from '@mui/material/styles';
 import Badge, { badgeClasses } from '@mui/material/Badge';
-
-import Iconify from 'src/components/iconify';
-import { varHover } from 'src/components/animate';
-import { useSettingsContext } from 'src/components/settings';
 
 // ----------------------------------------------------------------------
 

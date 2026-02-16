@@ -1,10 +1,10 @@
 'use client';
 
 import { useState } from 'react';
-import Logo from '@/src/components/logo';
-import { PetApiResponse } from '@/src/types/global';
-import { useResponsive } from '@/src/hooks/use-responsive';
-import SettingsButton from '@/src/layouts/common/settings-button';
+import Logo from '@//components/logo';
+import { PetApiResponse } from '@//types/global';
+import { useResponsive } from '@//hooks/use-responsive';
+import SettingsButton from '@//layouts/common/settings-button';
 
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';

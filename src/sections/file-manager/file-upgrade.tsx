@@ -1,10 +1,10 @@
+import { bgGradient } from '@/theme/css';
+import { UpgradeStorageIllustration } from '@/assets/illustrations';
+
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { alpha, useTheme } from '@mui/material/styles';
 import Stack, { StackProps } from '@mui/material/Stack';
-
-import { bgGradient } from 'src/theme/css';
-import { UpgradeStorageIllustration } from 'src/assets/illustrations';
 
 // ----------------------------------------------------------------------
 

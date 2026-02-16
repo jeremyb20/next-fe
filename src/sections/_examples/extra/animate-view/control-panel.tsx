@@ -1,11 +1,11 @@
+import Scrollbar from '@/components/scrollbar';
+
 import Box from '@mui/material/Box';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import Typography from '@mui/material/Typography';
 import Paper, { PaperProps } from '@mui/material/Paper';
 import FormControlLabel from '@mui/material/FormControlLabel';
-
-import Scrollbar from 'src/components/scrollbar';
 
 // ----------------------------------------------------------------------
 

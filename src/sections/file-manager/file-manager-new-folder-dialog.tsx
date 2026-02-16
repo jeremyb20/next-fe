@@ -1,3 +1,5 @@
+import Iconify from '@/components/iconify';
+import { Upload } from '@/components/upload';
 import { useState, useEffect, useCallback } from 'react';
 
 import Stack from '@mui/material/Stack';
@@ -7,9 +9,6 @@ import DialogTitle from '@mui/material/DialogTitle';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import Dialog, { DialogProps } from '@mui/material/Dialog';
-
-import Iconify from 'src/components/iconify';
-import { Upload } from 'src/components/upload';
 
 // ----------------------------------------------------------------------
 

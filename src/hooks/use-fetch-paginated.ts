@@ -1,4 +1,4 @@
-import axiosInstance, { endpoints } from '@/src/utils/axios';
+import axiosInstance, { endpoints } from '@//utils/axios';
 import {
   useQuery,
   UseQueryOptions,
@@ -13,7 +13,7 @@ import {
   IPetProfile,
   UsePaginatedOptions,
   IMedicalRecordResponse,
-} from '@/src/types/api';
+} from '@//types/api';
 
 interface UsePaginatedQueryProps<T> {
   queryKey: string | string[];

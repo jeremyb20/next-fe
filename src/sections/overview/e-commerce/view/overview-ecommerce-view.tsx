@@ -1,21 +1,19 @@
 'use client';
 
-import { useManagerUser } from '@/src/hooks/use-manager-user';
-
-import Button from '@mui/material/Button';
-import { useTheme } from '@mui/material/styles';
-import Container from '@mui/material/Container';
-import Grid from '@mui/material/Unstable_Grid2';
-
-import { MotivationIllustration } from 'src/assets/illustrations';
+import { useManagerUser } from '@//hooks/use-manager-user';
+import { useSettingsContext } from '@/components/settings';
+import { MotivationIllustration } from '@/assets/illustrations';
 import {
   _ecommerceNewProducts,
   _ecommerceBestSalesman,
   _ecommerceSalesOverview,
   _ecommerceLatestProducts,
-} from 'src/_mock';
+} from '@/_mock';
 
-import { useSettingsContext } from 'src/components/settings';
+import Button from '@mui/material/Button';
+import { useTheme } from '@mui/material/styles';
+import Container from '@mui/material/Container';
+import Grid from '@mui/material/Unstable_Grid2';
 
 import EcommerceWelcome from '../ecommerce-welcome';
 import EcommerceNewProducts from '../ecommerce-new-products';

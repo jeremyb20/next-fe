@@ -1,4 +1,4 @@
-import { UserCreateView } from 'src/sections/user/view';
+import { UserCreateView } from '@/sections/user/view';
 
 // ----------------------------------------------------------------------
 

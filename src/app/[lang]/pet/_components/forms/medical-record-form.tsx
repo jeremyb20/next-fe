@@ -1,11 +1,17 @@
 import * as Yup from 'yup';
-import { endpoints } from '@/src/utils/axios';
+import { endpoints } from '@//utils/axios';
+import { HOST_API } from '@//config-global';
 import { useEffect, useCallback } from 'react';
-import { HOST_API } from '@/src/config-global';
+import { useSnackbar } from '@/components/snackbar';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useCreateGenericMutation } from '@/src/hooks/user-generic-mutation';
-import { FormValues, MedicalRecordType } from '@/src/interfaces/medical-record';
+import { useCreateGenericMutation } from '@//hooks/user-generic-mutation';
+import { FormValues, MedicalRecordType } from '@//interfaces/medical-record';
+import FormProvider, {
+  RHFSelect,
+  RHFTextField,
+  RHFAutocomplete,
+} from '@/components/hook-form';
 
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -16,13 +22,6 @@ import DialogTitle from '@mui/material/DialogTitle';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-
-import { useSnackbar } from 'src/components/snackbar';
-import FormProvider, {
-  RHFSelect,
-  RHFTextField,
-  RHFAutocomplete,
-} from 'src/components/hook-form';
 
 // ----------------------------------------------------------------------
 

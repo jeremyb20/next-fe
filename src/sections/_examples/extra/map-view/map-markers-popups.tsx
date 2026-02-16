@@ -1,16 +1,10 @@
 import Map from 'react-map-gl';
 import { memo, useState } from 'react';
+import Image from '@/components/image';
+import { MapPopup, MapMarker, MapControl, MapBoxProps } from '@/components/map';
 
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-
-import Image from 'src/components/image';
-import {
-  MapPopup,
-  MapMarker,
-  MapControl,
-  MapBoxProps,
-} from 'src/components/map';
 
 // ----------------------------------------------------------------------
 

@@ -1,3 +1,6 @@
+import { IOrderHistory } from '@/types/order';
+import { fDateTime } from '@/utils/format-time';
+
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import Paper from '@mui/material/Paper';
@@ -10,10 +13,6 @@ import TimelineContent from '@mui/lab/TimelineContent';
 import TimelineSeparator from '@mui/lab/TimelineSeparator';
 import TimelineConnector from '@mui/lab/TimelineConnector';
 import TimelineItem, { timelineItemClasses } from '@mui/lab/TimelineItem';
-
-import { fDateTime } from 'src/utils/format-time';
-
-import { IOrderHistory } from 'src/types/order';
 
 // ----------------------------------------------------------------------
 

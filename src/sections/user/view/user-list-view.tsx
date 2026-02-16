@@ -1,8 +1,35 @@
 'use client';
 
 import isEqual from 'lodash/isEqual';
+import { paths } from '@/routes/paths';
+import Label from '@/components/label';
+import { useRouter } from '@/routes/hooks';
+import Iconify from '@/components/iconify';
+import { _roles, _userList } from '@/_mock';
 import { useState, useCallback } from 'react';
-import { USER_STATUS_OPTIONS } from '@/src/components/filters/filter-constants';
+import Scrollbar from '@/components/scrollbar';
+import { RouterLink } from '@/routes/components';
+import { useBoolean } from '@/hooks/use-boolean';
+import { useSnackbar } from '@/components/snackbar';
+import { ConfirmDialog } from '@/components/custom-dialog';
+import { useSettingsContext } from '@/components/settings';
+import CustomBreadcrumbs from '@/components/custom-breadcrumbs';
+import { USER_STATUS_OPTIONS } from '@//components/filters/filter-constants';
+import {
+  IUserItem,
+  IUserTableFilters,
+  IUserTableFilterValue,
+} from '@/types/user';
+import {
+  useTable,
+  emptyRows,
+  TableNoData,
+  getComparator,
+  TableEmptyRows,
+  TableHeadCustom,
+  TableSelectedAction,
+  TablePaginationCustom,
+} from '@/components/table';
 
 import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
@@ -15,38 +42,6 @@ import Container from '@mui/material/Container';
 import TableBody from '@mui/material/TableBody';
 import IconButton from '@mui/material/IconButton';
 import TableContainer from '@mui/material/TableContainer';
-
-import { paths } from 'src/routes/paths';
-import { useRouter } from 'src/routes/hooks';
-import { RouterLink } from 'src/routes/components';
-
-import { useBoolean } from 'src/hooks/use-boolean';
-
-import { _roles, _userList } from 'src/_mock';
-
-import Label from 'src/components/label';
-import Iconify from 'src/components/iconify';
-import Scrollbar from 'src/components/scrollbar';
-import { useSnackbar } from 'src/components/snackbar';
-import { ConfirmDialog } from 'src/components/custom-dialog';
-import { useSettingsContext } from 'src/components/settings';
-import CustomBreadcrumbs from 'src/components/custom-breadcrumbs';
-import {
-  useTable,
-  emptyRows,
-  TableNoData,
-  getComparator,
-  TableEmptyRows,
-  TableHeadCustom,
-  TableSelectedAction,
-  TablePaginationCustom,
-} from 'src/components/table';
-
-import {
-  IUserItem,
-  IUserTableFilters,
-  IUserTableFilterValue,
-} from 'src/types/user';
 
 import UserTableRow from '../user-table-row';
 import UserTableToolbar from '../user-table-toolbar';

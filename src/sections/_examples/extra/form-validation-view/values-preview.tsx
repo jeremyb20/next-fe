@@ -1,3 +1,6 @@
+import { bgBlur } from '@/theme/css';
+import { useResponsive } from '@/hooks/use-responsive';
+import { fileData } from '@/components/file-thumbnail';
 import { FieldValues, useFormContext } from 'react-hook-form';
 
 import Stack from '@mui/material/Stack';
@@ -5,12 +8,6 @@ import Portal from '@mui/material/Portal';
 import Divider from '@mui/material/Divider';
 import { useTheme } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
-
-import { useResponsive } from 'src/hooks/use-responsive';
-
-import { bgBlur } from 'src/theme/css';
-
-import { fileData } from 'src/components/file-thumbnail';
 
 // ----------------------------------------------------------------------
 

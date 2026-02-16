@@ -1,6 +1,5 @@
-import { flattenArray } from 'src/utils/flatten-array';
-
-import { NavProps, NavItemBaseProps } from 'src/components/nav-section';
+import { flattenArray } from '@/utils/flatten-array';
+import { NavProps, NavItemBaseProps } from '@/components/nav-section';
 
 // ----------------------------------------------------------------------
 

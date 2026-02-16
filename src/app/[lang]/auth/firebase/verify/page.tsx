@@ -1,4 +1,4 @@
-import { FirebaseVerifyView } from 'src/sections/auth/firebase';
+import { FirebaseVerifyView } from '@/sections/auth/firebase';
 
 // ----------------------------------------------------------------------
 

@@ -1,12 +1,11 @@
+import Iconify from '@/components/iconify';
+import { fCurrency, fShortenNumber } from '@/utils/format-number';
+
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import { alpha } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 import CircularProgress from '@mui/material/CircularProgress';
-
-import { fCurrency, fShortenNumber } from 'src/utils/format-number';
-
-import Iconify from 'src/components/iconify';
 
 // ----------------------------------------------------------------------
 

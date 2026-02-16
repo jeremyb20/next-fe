@@ -1,4 +1,10 @@
 import { m } from 'framer-motion';
+import { paths } from '@/routes/paths';
+import { bgGradient } from '@/theme/css';
+import Iconify from '@/components/iconify';
+import { RouterLink } from '@/routes/components';
+import { useResponsive } from '@/hooks/use-responsive';
+import { varFade, MotionViewport } from '@/components/animate';
 
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
@@ -7,16 +13,6 @@ import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import { alpha, useTheme } from '@mui/material/styles';
-
-import { paths } from 'src/routes/paths';
-import { RouterLink } from 'src/routes/components';
-
-import { useResponsive } from 'src/hooks/use-responsive';
-
-import { bgGradient } from 'src/theme/css';
-
-import Iconify from 'src/components/iconify';
-import { varFade, MotionViewport } from 'src/components/animate';
 
 // ----------------------------------------------------------------------
 

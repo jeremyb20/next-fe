@@ -1,6 +1,6 @@
 'use client';
 
-import AuthClassicLayout from 'src/layouts/auth/classic';
+import AuthClassicLayout from '@/layouts/auth/classic';
 
 // ----------------------------------------------------------------------
 

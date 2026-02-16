@@ -1,7 +1,6 @@
 {
-  "compilerOptions": {
-    "baseUrl": ".",
-    "target": "es5",
+  "compilerOptions": { 
+    "target": "ES2017",
     "lib": [
       "dom",
       "dom.iterable",
@@ -21,26 +20,39 @@
     "isolatedModules": true,
     "strictNullChecks": true,
     "resolveJsonModule": true,
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "noFallthroughCasesInSwitch": true,
     "useUnknownInCatchVariables": false,
     "allowSyntheticDefaultImports": true,
     "forceConsistentCasingInFileNames": true,
-    "plugins": [
-      {
-        "name": "next"
-      }
-    ],
-     "paths": {
-      "@/*": ["./*"],
-      "@type/*": ["./src/types/*"],
-      "@utils/*": ["./src/utils/*"],
-      "@components/*": ["./src/components/*"],
-      "@hooks/*": ["./src/hooks/*"],
-      "@context/*": ["./src/context/*"], 
-      "@interfaces/*": ["./src/interfaces/*"],
-    }, 
-  },
+    "paths": {
+      "@/*": ["./src/*"],
+        "@public/*": ["./public/*"],
+        "@type/*": [
+          "./src/types/*"
+        ],
+        "@utils/*": [
+          "./src/utils/*"
+        ],
+        "@components/*": [
+          "./src/components/*"
+        ],
+        "@hooks/*": [
+          "./src/hooks/*"
+        ],
+        "@context/*": [
+          "./src/context/*"
+        ],
+        "@interfaces/*": [
+          "./src/interfaces/*"
+        ]
+      },
+      "plugins": [
+        {
+          "name": "next"
+        }
+      ]
+    },
   "include": [
     "next-env.d.ts",
     "**/*.ts",

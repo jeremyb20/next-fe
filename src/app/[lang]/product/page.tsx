@@ -1,4 +1,4 @@
-import { ProductShopView } from 'src/sections/product/view';
+import { ProductShopView } from '@/sections/product/view';
 
 // ----------------------------------------------------------------------
 

@@ -1,4 +1,4 @@
-import { PostListView } from 'src/sections/blog/view';
+import { PostListView } from '@/sections/blog/view';
 
 // ----------------------------------------------------------------------
 

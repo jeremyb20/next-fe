@@ -1,22 +1,20 @@
 import * as Yup from 'yup';
 import { useForm } from 'react-hook-form';
-import { endpoints } from '@/src/utils/axios';
-import { HOST_API } from '@/src/config-global';
+import { endpoints } from '@//utils/axios';
+import Iconify from '@/components/iconify';
+import { HOST_API } from '@//config-global';
 import { useTranslation } from 'react-i18next';
+import { useBoolean } from '@/hooks/use-boolean';
+import { useSnackbar } from '@/components/snackbar';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useCreateGenericMutation } from '@/src/hooks/user-generic-mutation';
+import FormProvider, { RHFTextField } from '@/components/hook-form';
+import { useCreateGenericMutation } from '@//hooks/user-generic-mutation';
 
 import Card from '@mui/material/Card';
 import Stack from '@mui/material/Stack';
 import IconButton from '@mui/material/IconButton';
 import LoadingButton from '@mui/lab/LoadingButton';
 import InputAdornment from '@mui/material/InputAdornment';
-
-import { useBoolean } from 'src/hooks/use-boolean';
-
-import Iconify from 'src/components/iconify';
-import { useSnackbar } from 'src/components/snackbar';
-import FormProvider, { RHFTextField } from 'src/components/hook-form';
 
 // ----------------------------------------------------------------------
 

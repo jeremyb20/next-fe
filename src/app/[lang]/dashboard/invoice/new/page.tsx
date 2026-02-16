@@ -1,4 +1,4 @@
-import { InvoiceCreateView } from 'src/sections/invoice/view';
+import { InvoiceCreateView } from '@/sections/invoice/view';
 
 // ----------------------------------------------------------------------
 

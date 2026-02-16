@@ -1,12 +1,11 @@
+import Iconify from '@/components/iconify';
+import Scrollbar from '@/components/scrollbar';
+import { fShortenNumber } from '@/utils/format-number';
+
 import Stack from '@mui/material/Stack';
 import CardHeader from '@mui/material/CardHeader';
 import Typography from '@mui/material/Typography';
 import Card, { CardProps } from '@mui/material/Card';
-
-import { fShortenNumber } from 'src/utils/format-number';
-
-import Iconify from 'src/components/iconify';
-import Scrollbar from 'src/components/scrollbar';
 
 // ----------------------------------------------------------------------
 

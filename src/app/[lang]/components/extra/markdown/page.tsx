@@ -1,4 +1,4 @@
-import MarkdownView from 'src/sections/_examples/extra/markdown-view';
+import MarkdownView from '@/sections/_examples/extra/markdown-view';
 
 // ----------------------------------------------------------------------
 

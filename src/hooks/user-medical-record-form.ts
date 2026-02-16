@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { MedicalRecordType } from '@/src/interfaces/medical-record';
+import { MedicalRecordType } from '@//interfaces/medical-record';
 
 export const useMedicalRecordForm = () => {
   const [open, setOpen] = useState(false);

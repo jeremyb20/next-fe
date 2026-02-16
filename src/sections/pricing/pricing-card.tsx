@@ -1,3 +1,7 @@
+import Label from '@/components/label';
+import Iconify from '@/components/iconify';
+import { PlanFreeIcon, PlanStarterIcon, PlanPremiumIcon } from '@/assets/icons';
+
 import Box from '@mui/material/Box';
 import Link from '@mui/material/Link';
 import Stack from '@mui/material/Stack';
@@ -6,15 +10,6 @@ import Divider from '@mui/material/Divider';
 import { alpha } from '@mui/material/styles';
 import { CardProps } from '@mui/material/Card';
 import Typography from '@mui/material/Typography';
-
-import {
-  PlanFreeIcon,
-  PlanStarterIcon,
-  PlanPremiumIcon,
-} from 'src/assets/icons';
-
-import Label from 'src/components/label';
-import Iconify from 'src/components/iconify';
 
 // ----------------------------------------------------------------------
 

@@ -1,6 +1,13 @@
 'use client';
 
+import { paths } from '@/routes/paths';
 import { useState, useCallback } from 'react';
+import CustomBreadcrumbs from '@/components/custom-breadcrumbs';
+import ComponentHero from '@/sections/_examples/component-hero';
+import CustomPopover, {
+  usePopover,
+  MenuPopoverArrowValue,
+} from '@/components/custom-popover';
 
 import Box from '@mui/material/Box';
 import Radio from '@mui/material/Radio';
@@ -12,16 +19,6 @@ import Typography from '@mui/material/Typography';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControl from '@mui/material/FormControl';
 import FormControlLabel from '@mui/material/FormControlLabel';
-
-import { paths } from 'src/routes/paths';
-
-import CustomBreadcrumbs from 'src/components/custom-breadcrumbs';
-import CustomPopover, {
-  usePopover,
-  MenuPopoverArrowValue,
-} from 'src/components/custom-popover';
-
-import ComponentHero from 'src/sections/_examples/component-hero';
 
 import ComponentBlock from '../component-block';
 

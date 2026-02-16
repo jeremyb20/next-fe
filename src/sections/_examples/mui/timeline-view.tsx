@@ -1,5 +1,10 @@
 'use client';
 
+import { paths } from '@/routes/paths';
+import Iconify from '@/components/iconify';
+import CustomBreadcrumbs from '@/components/custom-breadcrumbs';
+import ComponentHero from '@/sections/_examples/component-hero';
+
 import Masonry from '@mui/lab/Masonry';
 import Paper from '@mui/material/Paper';
 import Timeline from '@mui/lab/Timeline';
@@ -12,13 +17,6 @@ import TimelineContent from '@mui/lab/TimelineContent';
 import TimelineSeparator from '@mui/lab/TimelineSeparator';
 import TimelineConnector from '@mui/lab/TimelineConnector';
 import TimelineOppositeContent from '@mui/lab/TimelineOppositeContent';
-
-import { paths } from 'src/routes/paths';
-
-import Iconify from 'src/components/iconify';
-import CustomBreadcrumbs from 'src/components/custom-breadcrumbs';
-
-import ComponentHero from 'src/sections/_examples/component-hero';
 
 import ComponentBlock from '../component-block';
 

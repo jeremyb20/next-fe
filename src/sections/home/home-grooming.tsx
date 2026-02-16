@@ -1,13 +1,12 @@
 import { m } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
+import { varFade, MotionViewport } from '@/components/animate';
 
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
-
-import { varFade, MotionViewport } from 'src/components/animate';
 
 export default function HomeGrooming() {
   const { t } = useTranslation();

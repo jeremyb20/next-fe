@@ -1,7 +1,7 @@
-// import { paramCase } from 'src/utils/change-case';
-// import axios, { endpoints } from '@/src/utils/axios';
+// import { paramCase } from '@/utils/change-case';
+// import axios, { endpoints } from '@//utils/axios';
 
-import { PostDetailsView } from 'src/sections/blog/view';
+import { PostDetailsView } from '@/sections/blog/view';
 
 // ----------------------------------------------------------------------
 

@@ -1,6 +1,6 @@
 'use client';
 
-import { RoleBasedGuard } from '@/src/auth/guard';
+import { RoleBasedGuard } from '@//auth/guard';
 
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';

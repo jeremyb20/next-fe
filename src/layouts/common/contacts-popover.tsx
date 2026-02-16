@@ -1,4 +1,10 @@
 import { m } from 'framer-motion';
+import { _contacts } from '@/_mock';
+import Iconify from '@/components/iconify';
+import { fToNow } from '@/utils/format-time';
+import Scrollbar from '@/components/scrollbar';
+import { varHover } from '@/components/animate';
+import CustomPopover, { usePopover } from '@/components/custom-popover';
 
 import Badge from '@mui/material/Badge';
 import Avatar from '@mui/material/Avatar';
@@ -6,15 +12,6 @@ import MenuItem from '@mui/material/MenuItem';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import ListItemText from '@mui/material/ListItemText';
-
-import { fToNow } from 'src/utils/format-time';
-
-import { _contacts } from 'src/_mock';
-
-import Iconify from 'src/components/iconify';
-import Scrollbar from 'src/components/scrollbar';
-import { varHover } from 'src/components/animate';
-import CustomPopover, { usePopover } from 'src/components/custom-popover';
 
 // ----------------------------------------------------------------------
 

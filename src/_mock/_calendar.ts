@@ -5,7 +5,7 @@ import {
   success,
   warning,
   secondary,
-} from 'src/theme/palette';
+} from '@/theme/palette';
 
 // ----------------------------------------------------------------------
 

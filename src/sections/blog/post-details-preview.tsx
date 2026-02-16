@@ -1,3 +1,7 @@
+import Markdown from '@/components/markdown';
+import Scrollbar from '@/components/scrollbar';
+import EmptyContent from '@/components/empty-content';
+
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
@@ -6,10 +10,6 @@ import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import LoadingButton from '@mui/lab/LoadingButton';
 import DialogActions from '@mui/material/DialogActions';
-
-import Markdown from 'src/components/markdown';
-import Scrollbar from 'src/components/scrollbar';
-import EmptyContent from 'src/components/empty-content';
 
 import PostDetailsHero from './post-details-hero';
 

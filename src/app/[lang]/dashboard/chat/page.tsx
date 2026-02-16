@@ -1,4 +1,4 @@
-import { ChatView } from 'src/sections/chat/view';
+import { ChatView } from '@/sections/chat/view';
 
 // ----------------------------------------------------------------------
 

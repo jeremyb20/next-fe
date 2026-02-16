@@ -2,34 +2,29 @@
 
 import orderBy from 'lodash/orderBy';
 import isEqual from 'lodash/isEqual';
+import { paths } from '@/routes/paths';
 import { useState, useCallback } from 'react';
-
-import Stack from '@mui/material/Stack';
-import Container from '@mui/material/Container';
-import Typography from '@mui/material/Typography';
-
-import { paths } from 'src/routes/paths';
-
-import { useBoolean } from 'src/hooks/use-boolean';
-import { useDebounce } from 'src/hooks/use-debounce';
-
-import { useSearchProducts, useGetProductsPublished } from 'src/api/product';
+import { useBoolean } from '@/hooks/use-boolean';
+import { useDebounce } from '@/hooks/use-debounce';
+import EmptyContent from '@/components/empty-content';
+import { useSettingsContext } from '@/components/settings';
+import { useSearchProducts, useGetProductsPublished } from '@/api/product';
+import {
+  IProductItem,
+  IProductFilters,
+  IProductFilterValue,
+} from '@/types/product';
 import {
   PRODUCT_SORT_OPTIONS,
   PRODUCT_COLOR_OPTIONS,
   PRODUCT_GENDER_OPTIONS,
   PRODUCT_RATING_OPTIONS,
   PRODUCT_CATEGORY_OPTIONS,
-} from 'src/_mock';
+} from '@/_mock';
 
-import EmptyContent from 'src/components/empty-content';
-import { useSettingsContext } from 'src/components/settings';
-
-import {
-  IProductItem,
-  IProductFilters,
-  IProductFilterValue,
-} from 'src/types/product';
+import Stack from '@mui/material/Stack';
+import Container from '@mui/material/Container';
+import Typography from '@mui/material/Typography';
 
 import ProductList from '../product-list';
 import ProductSort from '../product-sort';

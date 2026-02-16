@@ -1,10 +1,9 @@
 'use client';
 
-import { useManagerUser } from '@/src/hooks/use-manager-user';
+import { useManagerUser } from '@//hooks/use-manager-user';
+import { useSettingsContext } from '@/components/settings';
 
 import { Container } from '@mui/material';
-
-import { useSettingsContext } from 'src/components/settings';
 
 import OverviewAppUser from './overview-app-user';
 import OverviewAppAdmin from './overview-app-admin';

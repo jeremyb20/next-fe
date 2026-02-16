@@ -1,8 +1,14 @@
 /* eslint-disable no-nested-ternary */
 import { useState } from 'react';
-import { IQrCode } from '@/src/types/api';
-import { BreedOptions } from '@/src/utils/constants';
-import { QrcodeCustom } from '@/src/components/qr-generator/qr-codes';
+import { IQrCode } from '@//types/api';
+import Label from '@/components/label';
+import Iconify from '@/components/iconify';
+import { useBoolean } from '@/hooks/use-boolean';
+import { BreedOptions } from '@//utils/constants';
+import { fDate, fTime } from '@/utils/format-time';
+import { ConfirmDialog } from '@/components/custom-dialog';
+import { QrcodeCustom } from '@//components/qr-generator/qr-codes';
+import CustomPopover, { usePopover } from '@/components/custom-popover';
 
 import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
@@ -15,15 +21,6 @@ import TableCell from '@mui/material/TableCell';
 import IconButton from '@mui/material/IconButton';
 import ListItemText from '@mui/material/ListItemText';
 import { Dialog, DialogTitle, DialogContent } from '@mui/material';
-
-import { useBoolean } from 'src/hooks/use-boolean';
-
-import { fDate, fTime } from 'src/utils/format-time';
-
-import Label from 'src/components/label';
-import Iconify from 'src/components/iconify';
-import { ConfirmDialog } from 'src/components/custom-dialog';
-import CustomPopover, { usePopover } from 'src/components/custom-popover';
 
 // ----------------------------------------------------------------------
 

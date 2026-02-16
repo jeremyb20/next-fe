@@ -1,16 +1,14 @@
 'use client';
 
+import { paths } from '@/routes/paths';
+import CustomBreadcrumbs from '@/components/custom-breadcrumbs';
+import ComponentHero from '@/sections/_examples/component-hero';
+
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import Container from '@mui/material/Container';
 import CardHeader from '@mui/material/CardHeader';
 import CardContent from '@mui/material/CardContent';
-
-import { paths } from 'src/routes/paths';
-
-import CustomBreadcrumbs from 'src/components/custom-breadcrumbs';
-
-import ComponentHero from 'src/sections/_examples/component-hero';
 
 import ChartPie from './chart-pie';
 import ChartBar from './chart-bar';

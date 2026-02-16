@@ -1,8 +1,14 @@
 'use client';
 
+import { paths } from '@/routes/paths';
+import Iconify from '@/components/iconify';
 import { useState, useCallback } from 'react';
-import { useAuthContext } from '@/src/auth/hooks';
-import { IProductItem } from '@/src/types/product';
+import { useAuthContext } from '@//auth/hooks';
+import { IProductItem } from '@//types/product';
+import { RouterLink } from '@/routes/components';
+import EmptyContent from '@/components/empty-content';
+import { useSettingsContext } from '@/components/settings';
+import CustomBreadcrumbs from '@/components/custom-breadcrumbs';
 
 import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
@@ -11,14 +17,6 @@ import Button from '@mui/material/Button';
 import { alpha } from '@mui/material/styles';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Unstable_Grid2';
-
-import { paths } from 'src/routes/paths';
-import { RouterLink } from 'src/routes/components';
-
-import Iconify from 'src/components/iconify';
-import EmptyContent from 'src/components/empty-content';
-import { useSettingsContext } from 'src/components/settings';
-import CustomBreadcrumbs from 'src/components/custom-breadcrumbs';
 
 import CartIcon from '../common/cart-icon';
 import { useCheckoutContext } from '../../checkout/context';

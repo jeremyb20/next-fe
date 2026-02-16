@@ -1,11 +1,9 @@
 import { useMemo } from 'react';
+import { paths } from '@/routes/paths';
+import Iconify from '@/components/iconify';
+import SvgColor from '@/components/svg-color';
 import { useTranslation } from 'react-i18next';
-import { NavItemBaseProps } from '@/src/components/nav-section';
-
-import { paths } from 'src/routes/paths';
-
-import Iconify from 'src/components/iconify';
-import SvgColor from 'src/components/svg-color';
+import { NavItemBaseProps } from '@//components/nav-section';
 
 // ----------------------------------------------------------------------
 
@@ -380,7 +378,7 @@ export function useNavData(userRole: string) {
       //       // default roles : All roles can see this entry.
       //       // roles: ['user'] Only users can see this item.
       //       // roles: ['admin'] Only admin can see this item.
-      //       // Reference from 'src/guards/RoleBasedGuard'.
+      //       // Reference from '@/guards/RoleBasedGuard'.
       //       title: t('item_by_roles'),
       //       path: paths.dashboard.permission,
       //       icon: ICONS.lock,

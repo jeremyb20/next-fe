@@ -1,4 +1,4 @@
-import { ClassicVerifyView } from 'src/sections/auth-demo/classic';
+import { ClassicVerifyView } from '@/sections/auth-demo/classic';
 
 // ----------------------------------------------------------------------
 

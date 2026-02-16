@@ -1,14 +1,13 @@
+import { bgBlur } from '@/theme/css';
+import Image from '@/components/image';
+import Iconify from '@/components/iconify';
+import Carousel, { useCarousel, CarouselArrows } from '@/components/carousel';
+
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import { alpha, styled } from '@mui/material/styles';
-
-import { bgBlur } from 'src/theme/css';
-
-import Image from 'src/components/image';
-import Iconify from 'src/components/iconify';
-import Carousel, { useCarousel, CarouselArrows } from 'src/components/carousel';
 
 // ----------------------------------------------------------------------
 

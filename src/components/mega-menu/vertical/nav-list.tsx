@@ -1,11 +1,10 @@
+import { usePathname, useActiveLink } from '@/routes/hooks';
 import { useRef, useState, useEffect, useCallback } from 'react';
 
 import Masonry from '@mui/lab/Masonry';
 import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
 import Divider from '@mui/material/Divider';
-
-import { usePathname, useActiveLink } from 'src/routes/hooks';
 
 import NavItem from './nav-item';
 import { NavListProps } from '../types';

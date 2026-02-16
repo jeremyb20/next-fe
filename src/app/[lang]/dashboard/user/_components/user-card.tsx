@@ -1,5 +1,9 @@
-import { IPetProfile } from '@/src/types/api';
-import { fDate } from '@/src/utils/format-time';
+import { _socials } from '@/_mock';
+import Image from '@/components/image';
+import { IPetProfile } from '@//types/api';
+import Iconify from '@/components/iconify';
+import { fDate } from '@//utils/format-time';
+import { AvatarShape } from '@/assets/illustrations';
 
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
@@ -10,12 +14,6 @@ import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import ListItemText from '@mui/material/ListItemText';
 import { alpha, useTheme } from '@mui/material/styles';
-
-import { _socials } from 'src/_mock';
-import { AvatarShape } from 'src/assets/illustrations';
-
-import Image from 'src/components/image';
-import Iconify from 'src/components/iconify';
 
 // ----------------------------------------------------------------------
 

@@ -1,6 +1,6 @@
-// import { _invoices } from 'src/_mock/_invoice';
+// import { _invoices } from '@/_mock/_invoice';
 
-// import { InvoiceEditView } from 'src/sections/invoice/view';
+// import { InvoiceEditView } from '@/sections/invoice/view';
 
 // ----------------------------------------------------------------------
 

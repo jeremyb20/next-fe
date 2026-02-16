@@ -1,12 +1,10 @@
 import { useCallback } from 'react';
+import { paths } from '@/routes/paths';
+import { ITourItem } from '@/types/tour';
+import { useRouter } from '@/routes/hooks';
 
 import Box from '@mui/material/Box';
 import Pagination, { paginationClasses } from '@mui/material/Pagination';
-
-import { paths } from 'src/routes/paths';
-import { useRouter } from 'src/routes/hooks';
-
-import { ITourItem } from 'src/types/tour';
 
 import TourItem from './tour-item';
 

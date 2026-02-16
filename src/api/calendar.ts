@@ -1,8 +1,7 @@
 import { useMemo } from 'react';
 import useSWR, { mutate } from 'swr';
-import { fetcher, endpoints } from '@/src/utils/axios';
-
-import { ICalendarEvent } from 'src/types/calendar';
+import { ICalendarEvent } from '@/types/calendar';
+import { fetcher, endpoints } from '@//utils/axios';
 
 // ----------------------------------------------------------------------
 

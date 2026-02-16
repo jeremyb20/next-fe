@@ -1,7 +1,14 @@
 'use client';
 
+import { paths } from '@/routes/paths';
+import Iconify from '@/components/iconify';
 import { useState, useCallback } from 'react';
-import { useCheckoutContext } from '@/src/sections/checkout/context';
+import { useGetProduct } from '@/api/product';
+import { RouterLink } from '@/routes/components';
+import EmptyContent from '@/components/empty-content';
+import { useSettingsContext } from '@/components/settings';
+import CustomBreadcrumbs from '@/components/custom-breadcrumbs';
+import { useCheckoutContext } from '@//sections/checkout/context';
 
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
@@ -12,16 +19,6 @@ import { alpha } from '@mui/material/styles';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Unstable_Grid2';
 import Typography from '@mui/material/Typography';
-
-import { paths } from 'src/routes/paths';
-import { RouterLink } from 'src/routes/components';
-
-import { useGetProduct } from 'src/api/product';
-
-import Iconify from 'src/components/iconify';
-import EmptyContent from 'src/components/empty-content';
-import { useSettingsContext } from 'src/components/settings';
-import CustomBreadcrumbs from 'src/components/custom-breadcrumbs';
 
 import ProductDetailsReview from '../product-details-review';
 import { ProductDetailsSkeleton } from '../product-skeleton';

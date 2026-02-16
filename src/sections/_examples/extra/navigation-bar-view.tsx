@@ -1,7 +1,20 @@
 'use client';
 
 import isEqual from 'lodash/isEqual';
+import Logo from '@/components/logo';
+import { paths } from '@/routes/paths';
+import Label from '@/components/label';
+import Iconify from '@/components/iconify';
 import { useState, useCallback } from 'react';
+import { useBoolean } from '@/hooks/use-boolean';
+import CustomBreadcrumbs from '@/components/custom-breadcrumbs';
+import ComponentHero from '@/sections/_examples/component-hero';
+import { NavBasicMobile, NavBasicDesktop } from '@/components/nav-basic';
+import {
+  NavSectionMini,
+  NavSectionVertical,
+  NavSectionHorizontal,
+} from '@/components/nav-section';
 
 import Paper from '@mui/material/Paper';
 import Badge from '@mui/material/Badge';
@@ -16,23 +29,6 @@ import IconButton from '@mui/material/IconButton';
 import ToggleButton from '@mui/material/ToggleButton';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
-
-import { paths } from 'src/routes/paths';
-
-import { useBoolean } from 'src/hooks/use-boolean';
-
-import Logo from 'src/components/logo';
-import Label from 'src/components/label';
-import Iconify from 'src/components/iconify';
-import CustomBreadcrumbs from 'src/components/custom-breadcrumbs';
-import { NavBasicMobile, NavBasicDesktop } from 'src/components/nav-basic';
-import {
-  NavSectionMini,
-  NavSectionVertical,
-  NavSectionHorizontal,
-} from 'src/components/nav-section';
-
-import ComponentHero from 'src/sections/_examples/component-hero';
 
 // ----------------------------------------------------------------------
 

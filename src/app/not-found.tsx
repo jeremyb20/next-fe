@@ -1,4 +1,4 @@
-import { NotFoundView } from 'src/sections/error';
+import { NotFoundView } from '@/sections/error';
 
 // ----------------------------------------------------------------------
 

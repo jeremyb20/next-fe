@@ -1,12 +1,11 @@
+import { _mock } from '@/_mock';
+import Iconify from '@/components/iconify';
+
 import Chip from '@mui/material/Chip';
 import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
 import Avatar from '@mui/material/Avatar';
 import Typography from '@mui/material/Typography';
-
-import { _mock } from 'src/_mock';
-
-import Iconify from 'src/components/iconify';
 
 // ----------------------------------------------------------------------
 

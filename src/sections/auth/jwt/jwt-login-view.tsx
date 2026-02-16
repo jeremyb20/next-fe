@@ -1,10 +1,18 @@
 'use client';
 
 import * as Yup from 'yup';
+import { paths } from '@/routes/paths';
 import { useForm } from 'react-hook-form';
+import Iconify from '@/components/iconify';
 import { useState, useEffect } from 'react';
+import { useAuthContext } from '@/auth/hooks';
 import { useTranslation } from 'react-i18next';
+import { RouterLink } from '@/routes/components';
+import { useBoolean } from '@/hooks/use-boolean';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useRouter, useSearchParams } from '@/routes/hooks';
+import { APP_NAME, PATH_AFTER_LOGIN } from '@/config-global';
+import FormProvider, { RHFTextField } from '@/components/hook-form';
 
 import Link from '@mui/material/Link';
 import Alert from '@mui/material/Alert';
@@ -13,18 +21,6 @@ import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import LoadingButton from '@mui/lab/LoadingButton';
 import InputAdornment from '@mui/material/InputAdornment';
-
-import { paths } from 'src/routes/paths';
-import { RouterLink } from 'src/routes/components';
-import { useRouter, useSearchParams } from 'src/routes/hooks';
-
-import { useBoolean } from 'src/hooks/use-boolean';
-
-import { useAuthContext } from 'src/auth/hooks';
-import { APP_NAME, PATH_AFTER_LOGIN } from 'src/config-global';
-
-import Iconify from 'src/components/iconify';
-import FormProvider, { RHFTextField } from 'src/components/hook-form';
 
 // ----------------------------------------------------------------------
 export default function JwtLoginView() {

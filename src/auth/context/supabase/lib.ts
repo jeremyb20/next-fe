@@ -1,6 +1,5 @@
+import { SUPABASE_API } from '@/config-global';
 import { createClient } from '@supabase/supabase-js';
-
-import { SUPABASE_API } from 'src/config-global';
 
 // ----------------------------------------------------------------------
 

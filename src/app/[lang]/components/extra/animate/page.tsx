@@ -1,4 +1,4 @@
-import AnimateView from 'src/sections/_examples/extra/animate-view';
+import AnimateView from '@/sections/_examples/extra/animate-view';
 
 // ----------------------------------------------------------------------
 

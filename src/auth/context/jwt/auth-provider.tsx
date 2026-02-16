@@ -1,10 +1,9 @@
 'use client';
 
-import { STORAGE_KEY } from '@/src/config-global';
-import { SettingsValueProps } from '@/src/components/settings';
+import { STORAGE_KEY } from '@//config-global';
+import axios, { endpoints } from '@/utils/axios';
+import { SettingsValueProps } from '@//components/settings';
 import { useRef, useMemo, useEffect, useReducer, useCallback } from 'react';
-
-import axios, { endpoints } from 'src/utils/axios';
 
 import { AuthContext } from './auth-context';
 import { setSession, isValidToken } from './utils';

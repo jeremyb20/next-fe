@@ -1,17 +1,14 @@
 import { useEffect } from 'react';
-import { useManagerUser } from '@/src/hooks/use-manager-user';
+import Logo from '@/components/logo';
+import { usePathname } from '@/routes/hooks';
+import Scrollbar from '@/components/scrollbar';
+import { useResponsive } from '@/hooks/use-responsive';
+import { useManagerUser } from '@//hooks/use-manager-user';
+import { NavSectionVertical } from '@/components/nav-section';
 
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import Drawer from '@mui/material/Drawer';
-
-import { usePathname } from 'src/routes/hooks';
-
-import { useResponsive } from 'src/hooks/use-responsive';
-
-import Logo from 'src/components/logo';
-import Scrollbar from 'src/components/scrollbar';
-import { NavSectionVertical } from 'src/components/nav-section';
 
 import { NAV } from '../config-layout';
 import NavUpgrade from '../common/nav-upgrade';

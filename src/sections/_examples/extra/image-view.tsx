@@ -1,20 +1,17 @@
 'use client';
 
+import { _mock } from '@/_mock';
+import { paths } from '@/routes/paths';
+import Image from '@/components/image';
+import CustomBreadcrumbs from '@/components/custom-breadcrumbs';
+import ComponentHero from '@/sections/_examples/component-hero';
+
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import Stack from '@mui/material/Stack';
 import Container from '@mui/material/Container';
 import CardHeader from '@mui/material/CardHeader';
 import Typography from '@mui/material/Typography';
-
-import { paths } from 'src/routes/paths';
-
-import { _mock } from 'src/_mock';
-
-import Image from 'src/components/image';
-import CustomBreadcrumbs from 'src/components/custom-breadcrumbs';
-
-import ComponentHero from 'src/sections/_examples/component-hero';
 
 // ----------------------------------------------------------------------
 

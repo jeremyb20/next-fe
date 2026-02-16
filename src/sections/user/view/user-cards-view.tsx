@@ -1,16 +1,14 @@
 'use client';
 
+import { _userCards } from '@/_mock';
+import { paths } from '@/routes/paths';
+import Iconify from '@/components/iconify';
+import { RouterLink } from '@/routes/components';
+import { useSettingsContext } from '@/components/settings';
+import CustomBreadcrumbs from '@/components/custom-breadcrumbs';
+
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
-
-import { paths } from 'src/routes/paths';
-import { RouterLink } from 'src/routes/components';
-
-import { _userCards } from 'src/_mock';
-
-import Iconify from 'src/components/iconify';
-import { useSettingsContext } from 'src/components/settings';
-import CustomBreadcrumbs from 'src/components/custom-breadcrumbs';
 
 import UserCardList from '../user-card-list';
 

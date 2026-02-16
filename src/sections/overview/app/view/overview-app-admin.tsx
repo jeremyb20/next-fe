@@ -1,7 +1,9 @@
 'use client';
 
-import { useManagerUser } from '@/src/hooks/use-manager-user';
-import { processByMonthData } from '@/src/utils/chart-data-processor';
+import { SeoIllustration } from '@/assets/illustrations';
+import { useManagerUser } from '@//hooks/use-manager-user';
+import { processByMonthData } from '@//utils/chart-data-processor';
+import { _appRelated, _appFeatured, _appInstalled } from '@/_mock';
 import {
   useGetPetStats,
   useGetUserStats,
@@ -9,15 +11,12 @@ import {
   useGetUserGrowth,
   useGetProductGrowth,
   useGetAdminProductStats,
-} from '@/src/hooks/use-fetch';
+} from '@//hooks/use-fetch';
 
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import { useTheme } from '@mui/material/styles';
 import Grid from '@mui/material/Unstable_Grid2';
-
-import { SeoIllustration } from 'src/assets/illustrations';
-import { _appRelated, _appFeatured, _appInstalled } from 'src/_mock';
 
 import AppWidget from '../app-widget';
 import AppWelcome from '../app-welcome';

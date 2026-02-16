@@ -1,6 +1,6 @@
 'use client';
 
-import AuthModernCompactLayout from 'src/layouts/auth/modern-compact';
+import AuthModernCompactLayout from '@/layouts/auth/modern-compact';
 
 // ----------------------------------------------------------------------
 

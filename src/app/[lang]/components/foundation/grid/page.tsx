@@ -1,4 +1,4 @@
-import { GridView } from 'src/sections/_examples/foundation';
+import { GridView } from '@/sections/_examples/foundation';
 
 // ----------------------------------------------------------------------
 

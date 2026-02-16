@@ -1,33 +1,27 @@
 'use client';
 
 import orderBy from 'lodash/orderBy';
+import { paths } from '@/routes/paths';
+import { countries } from '@/assets/data';
+import Iconify from '@/components/iconify';
 import { useState, useCallback } from 'react';
-
-import Stack from '@mui/material/Stack';
-import Button from '@mui/material/Button';
-import Container from '@mui/material/Container';
-
-import { paths } from 'src/routes/paths';
-import { RouterLink } from 'src/routes/components';
-
-import { useBoolean } from 'src/hooks/use-boolean';
-
-import { isAfter, isBetween } from 'src/utils/format-time';
-
-import { countries } from 'src/assets/data';
+import { RouterLink } from '@/routes/components';
+import { useBoolean } from '@/hooks/use-boolean';
+import EmptyContent from '@/components/empty-content';
+import { isAfter, isBetween } from '@/utils/format-time';
+import { useSettingsContext } from '@/components/settings';
+import CustomBreadcrumbs from '@/components/custom-breadcrumbs';
+import { ITourItem, ITourFilters, ITourFilterValue } from '@/types/tour';
 import {
   _tours,
   _tourGuides,
   TOUR_SORT_OPTIONS,
   TOUR_SERVICE_OPTIONS,
-} from 'src/_mock';
+} from '@/_mock';
 
-import Iconify from 'src/components/iconify';
-import EmptyContent from 'src/components/empty-content';
-import { useSettingsContext } from 'src/components/settings';
-import CustomBreadcrumbs from 'src/components/custom-breadcrumbs';
-
-import { ITourItem, ITourFilters, ITourFilterValue } from 'src/types/tour';
+import Stack from '@mui/material/Stack';
+import Button from '@mui/material/Button';
+import Container from '@mui/material/Container';
 
 import TourList from '../tour-list';
 import TourSort from '../tour-sort';

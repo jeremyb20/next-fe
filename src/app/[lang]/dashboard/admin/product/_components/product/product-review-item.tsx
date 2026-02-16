@@ -1,15 +1,13 @@
+import Iconify from '@/components/iconify';
+import { fDate } from '@/utils/format-time';
+import { IProductReview } from '@/types/product';
+
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import Rating from '@mui/material/Rating';
 import Avatar from '@mui/material/Avatar';
 import Typography from '@mui/material/Typography';
 import ListItemText from '@mui/material/ListItemText';
-
-import { fDate } from 'src/utils/format-time';
-
-import Iconify from 'src/components/iconify';
-
-import { IProductReview } from 'src/types/product';
 
 // ----------------------------------------------------------------------
 

@@ -1,15 +1,13 @@
 import sumBy from 'lodash/sumBy';
 import { ApexOptions } from 'apexcharts';
+import { fNumber } from '@/utils/format-number';
+import Chart, { useChart } from '@/components/chart';
 
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import CardHeader from '@mui/material/CardHeader';
 import Card, { CardProps } from '@mui/material/Card';
 import { alpha, useTheme } from '@mui/material/styles';
-
-import { fNumber } from 'src/utils/format-number';
-
-import Chart, { useChart } from 'src/components/chart';
 
 // ----------------------------------------------------------------------
 

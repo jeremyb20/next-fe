@@ -1,7 +1,7 @@
 // components/medical-records/medical-visits-list.tsx
 import React from 'react';
-import Iconify from '@/src/components/iconify';
-import { IMedicalVisitFormData } from '@/src/interfaces/medical-record';
+import Iconify from '@//components/iconify';
+import { IMedicalVisitFormData } from '@//interfaces/medical-record';
 
 import {
   Box,

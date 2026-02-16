@@ -1,4 +1,4 @@
-import { SupabaseVerifyView } from 'src/sections/auth/supabase';
+import { SupabaseVerifyView } from '@/sections/auth/supabase';
 
 // ----------------------------------------------------------------------
 

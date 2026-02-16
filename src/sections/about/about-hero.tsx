@@ -1,12 +1,11 @@
 import { m, MotionProps } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
+import { varFade, MotionContainer } from '@/components/animate';
 
 import Stack from '@mui/material/Stack';
 import Container from '@mui/material/Container';
 import Box, { BoxProps } from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-
-import { varFade, MotionContainer } from 'src/components/animate';
 
 // ----------------------------------------------------------------------
 

@@ -1,13 +1,11 @@
 'use client';
 
+import { paths } from '@/routes/paths';
+import { useGetPost } from '@/api/blog';
+import { useSettingsContext } from '@/components/settings';
+import CustomBreadcrumbs from '@/components/custom-breadcrumbs';
+
 import Container from '@mui/material/Container';
-
-import { paths } from 'src/routes/paths';
-
-import { useGetPost } from 'src/api/blog';
-
-import { useSettingsContext } from 'src/components/settings';
-import CustomBreadcrumbs from 'src/components/custom-breadcrumbs';
 
 import PostNewEditForm from '../post-new-edit-form';
 

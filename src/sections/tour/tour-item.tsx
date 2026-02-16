@@ -1,3 +1,13 @@
+import { paths } from '@/routes/paths';
+import Image from '@/components/image';
+import { ITourItem } from '@/types/tour';
+import Iconify from '@/components/iconify';
+import { fDateTime } from '@/utils/format-time';
+import { RouterLink } from '@/routes/components';
+import { fCurrency } from '@/utils/format-number';
+import { shortDateLabel } from '@/components/custom-date-range-picker';
+import CustomPopover, { usePopover } from '@/components/custom-popover';
+
 import Box from '@mui/material/Box';
 import Link from '@mui/material/Link';
 import Card from '@mui/material/Card';
@@ -5,19 +15,6 @@ import Stack from '@mui/material/Stack';
 import MenuItem from '@mui/material/MenuItem';
 import IconButton from '@mui/material/IconButton';
 import ListItemText from '@mui/material/ListItemText';
-
-import { paths } from 'src/routes/paths';
-import { RouterLink } from 'src/routes/components';
-
-import { fDateTime } from 'src/utils/format-time';
-import { fCurrency } from 'src/utils/format-number';
-
-import Image from 'src/components/image';
-import Iconify from 'src/components/iconify';
-import { shortDateLabel } from 'src/components/custom-date-range-picker';
-import CustomPopover, { usePopover } from 'src/components/custom-popover';
-
-import { ITourItem } from 'src/types/tour';
 
 // ----------------------------------------------------------------------
 

@@ -1,3 +1,6 @@
+import Iconify from '@/components/iconify';
+import { IJobCandidate } from '@/types/job';
+
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import Stack from '@mui/material/Stack';
@@ -6,10 +9,6 @@ import Tooltip from '@mui/material/Tooltip';
 import { alpha } from '@mui/material/styles';
 import IconButton from '@mui/material/IconButton';
 import ListItemText from '@mui/material/ListItemText';
-
-import Iconify from 'src/components/iconify';
-
-import { IJobCandidate } from 'src/types/job';
 
 // ----------------------------------------------------------------------
 

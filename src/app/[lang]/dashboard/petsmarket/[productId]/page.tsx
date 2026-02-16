@@ -1,6 +1,6 @@
-// import axios, { endpoints } from '@/src/utils/axios';
+// import axios, { endpoints } from '@//utils/axios';
 
-import { paths } from '@/src/routes/paths';
+import { paths } from '@//routes/paths';
 
 import { ProductDetailsView } from '../../admin/product/_components/product/view';
 

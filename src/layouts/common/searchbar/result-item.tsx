@@ -1,9 +1,9 @@
+import Label from '@/components/label';
+
 import Box from '@mui/material/Box';
 import { alpha } from '@mui/material/styles';
 import ListItemText from '@mui/material/ListItemText';
 import ListItemButton from '@mui/material/ListItemButton';
-
-import Label from 'src/components/label';
 
 // ----------------------------------------------------------------------
 

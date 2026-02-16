@@ -2,21 +2,22 @@
 
 'use client';
 
-import { paths } from '@/src/routes/paths';
-import { bgGradient } from '@/src/theme/css';
+import { paths } from '@//routes/paths';
+import { bgGradient } from '@//theme/css';
+import { useRouter } from '@/routes/hooks';
+import Iconify from '@//components/iconify';
 import { useState, useCallback } from 'react';
-import Iconify from '@/src/components/iconify';
 import { useTranslation } from 'react-i18next';
-import { IUser, IPetProfile } from '@/src/types/api';
-import { useBoolean } from '@/src/hooks/use-boolean';
-import { useManagerUser } from '@/src/hooks/use-manager-user';
-import { PetsGrid } from '@/src/app/[lang]/pet/_components/cards/pet-grid';
+import { IUser, IPetProfile } from '@//types/api';
+import { useBoolean } from '@//hooks/use-boolean';
+import { useManagerUser } from '@//hooks/use-manager-user';
+import { PetsGrid } from '@//app/[lang]/pet/_components/cards/pet-grid';
 import {
   UserQueryParams,
   useGetAllPetsByUser,
-} from '@/src/hooks/use-fetch-paginated';
-import PetQuickEditForm from '@/src/app/[lang]/dashboard/admin/users/_components/pet-quick-edit-form';
-import RegisterPetByUserModal from '@/src/app/[lang]/pet/_components/modals/register-pet-by-user-modal';
+} from '@//hooks/use-fetch-paginated';
+import PetQuickEditForm from '@//app/[lang]/dashboard/admin/users/_components/pet-quick-edit-form';
+import RegisterPetByUserModal from '@//app/[lang]/pet/_components/modals/register-pet-by-user-modal';
 
 import {
   Box,
@@ -31,8 +32,6 @@ import {
   BottomNavigation,
   BottomNavigationAction,
 } from '@mui/material';
-
-import { useRouter } from 'src/routes/hooks';
 
 export default function OverviewAppUser() {
   const { user } = useManagerUser();

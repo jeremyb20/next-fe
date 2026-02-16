@@ -1,3 +1,6 @@
+import { fDateTime } from '@/utils/format-time';
+import Carousel, { useCarousel, CarouselArrows } from '@/components/carousel';
+
 import Chip from '@mui/material/Chip';
 import Stack from '@mui/material/Stack';
 import Rating from '@mui/material/Rating';
@@ -8,10 +11,6 @@ import CardHeader from '@mui/material/CardHeader';
 import Typography from '@mui/material/Typography';
 import Card, { CardProps } from '@mui/material/Card';
 import ListItemText from '@mui/material/ListItemText';
-
-import { fDateTime } from 'src/utils/format-time';
-
-import Carousel, { useCarousel, CarouselArrows } from 'src/components/carousel';
 
 // ----------------------------------------------------------------------
 

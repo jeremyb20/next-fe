@@ -1,6 +1,11 @@
 import sum from 'lodash/sum';
+import Iconify from '@/components/iconify';
 import { useEffect, useCallback } from 'react';
+import { IInvoiceItem } from '@/types/invoice';
+import { fCurrency } from '@/utils/format-number';
+import { INVOICE_SERVICE_OPTIONS } from '@/_mock';
 import { useFieldArray, useFormContext } from 'react-hook-form';
+import { RHFSelect, RHFTextField } from '@/components/hook-form';
 
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
@@ -10,15 +15,6 @@ import MenuItem from '@mui/material/MenuItem';
 import Typography from '@mui/material/Typography';
 import InputAdornment from '@mui/material/InputAdornment';
 import { inputBaseClasses } from '@mui/material/InputBase';
-
-import { fCurrency } from 'src/utils/format-number';
-
-import { INVOICE_SERVICE_OPTIONS } from 'src/_mock';
-
-import Iconify from 'src/components/iconify';
-import { RHFSelect, RHFTextField } from 'src/components/hook-form';
-
-import { IInvoiceItem } from 'src/types/invoice';
 
 // ----------------------------------------------------------------------
 

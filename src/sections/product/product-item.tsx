@@ -1,5 +1,12 @@
-import { useAuthContext } from '@/src/auth/hooks';
-import { useCurrency } from '@/src/hooks/use-currency';
+import { paths } from '@/routes/paths';
+import Label from '@/components/label';
+import Image from '@/components/image';
+import Iconify from '@/components/iconify';
+import { useAuthContext } from '@//auth/hooks';
+import { IProductItem } from '@/types/product';
+import { RouterLink } from '@/routes/components';
+import { useCurrency } from '@//hooks/use-currency';
+import { ColorPreview } from '@/components/color-utils';
 
 import Fab from '@mui/material/Fab';
 import Box from '@mui/material/Box';
@@ -7,16 +14,6 @@ import Link from '@mui/material/Link';
 import Card from '@mui/material/Card';
 import Stack from '@mui/material/Stack';
 import Tooltip from '@mui/material/Tooltip';
-
-import { paths } from 'src/routes/paths';
-import { RouterLink } from 'src/routes/components';
-
-import Label from 'src/components/label';
-import Image from 'src/components/image';
-import Iconify from 'src/components/iconify';
-import { ColorPreview } from 'src/components/color-utils';
-
-import { IProductItem } from 'src/types/product';
 
 import { useCheckoutContext } from '../checkout/context';
 

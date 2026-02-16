@@ -1,13 +1,9 @@
 import { useCallback } from 'react';
+import Iconify from '@/components/iconify';
+import { useBoolean } from '@/hooks/use-boolean';
+import { useSnackbar } from '@/components/snackbar';
 import { Droppable, Draggable } from '@hello-pangea/dnd';
-
-import Paper from '@mui/material/Paper';
-import Stack from '@mui/material/Stack';
-import Button from '@mui/material/Button';
-import { alpha } from '@mui/material/styles';
-
-import { useBoolean } from 'src/hooks/use-boolean';
-
+import { IKanbanTask, IKanbanColumn } from '@/types/kanban';
 import {
   createTask,
   updateTask,
@@ -15,12 +11,12 @@ import {
   clearColumn,
   updateColumn,
   deleteColumn,
-} from 'src/api/kanban';
+} from '@/api/kanban';
 
-import Iconify from 'src/components/iconify';
-import { useSnackbar } from 'src/components/snackbar';
-
-import { IKanbanTask, IKanbanColumn } from 'src/types/kanban';
+import Paper from '@mui/material/Paper';
+import Stack from '@mui/material/Stack';
+import Button from '@mui/material/Button';
+import { alpha } from '@mui/material/styles';
 
 import KanbanTaskAdd from './kanban-task-add';
 import KanbanTaskItem from './kanban-task-item';

@@ -1,11 +1,10 @@
+import Scrollbar from '@/components/scrollbar';
+import { ICheckoutItem } from '@/types/checkout';
+import { TableHeadCustom } from '@/components/table';
+
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableContainer from '@mui/material/TableContainer';
-
-import Scrollbar from 'src/components/scrollbar';
-import { TableHeadCustom } from 'src/components/table';
-
-import { ICheckoutItem } from 'src/types/checkout';
 
 import CheckoutCartProduct from './checkout-cart-product';
 

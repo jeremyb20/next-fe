@@ -1,15 +1,13 @@
 'use client';
 
+import MainLayout from '@/layouts/main';
 import { useScroll } from 'framer-motion';
 import { useState, useEffect } from 'react';
-import { SplashScreen } from '@/src/components/loading-screen';
+import ScrollProgress from '@/components/scroll-progress';
+import { SplashScreen } from '@//components/loading-screen';
 
 import Box from '@mui/material/Box';
 import { styled } from '@mui/material/styles';
-
-import MainLayout from 'src/layouts/main';
-
-import ScrollProgress from 'src/components/scroll-progress';
 
 import HomeHero from '../home-hero';
 import HomeShop from '../home-shop';

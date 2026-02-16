@@ -1,4 +1,4 @@
-import BadgeView from 'src/sections/_examples/mui/badge-view';
+import BadgeView from '@/sections/_examples/mui/badge-view';
 
 // ----------------------------------------------------------------------
 

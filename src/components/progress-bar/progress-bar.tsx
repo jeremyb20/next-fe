@@ -2,8 +2,7 @@
 
 import NProgress from 'nprogress';
 import { Suspense, useEffect } from 'react';
-
-import { useRouter, usePathname, useSearchParams } from 'src/routes/hooks';
+import { useRouter, usePathname, useSearchParams } from '@/routes/hooks';
 
 import StyledProgressBar from './styles';
 

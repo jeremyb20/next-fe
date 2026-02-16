@@ -1,4 +1,7 @@
 import { useCallback } from 'react';
+import Iconify from '@/components/iconify';
+import CustomPopover, { usePopover } from '@/components/custom-popover';
+import { IUserTableFilters, IUserTableFilterValue } from '@/types/user';
 
 import Stack from '@mui/material/Stack';
 import MenuItem from '@mui/material/MenuItem';
@@ -10,11 +13,6 @@ import FormControl from '@mui/material/FormControl';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import InputAdornment from '@mui/material/InputAdornment';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
-
-import Iconify from 'src/components/iconify';
-import CustomPopover, { usePopover } from 'src/components/custom-popover';
-
-import { IUserTableFilters, IUserTableFilterValue } from 'src/types/user';
 
 // ----------------------------------------------------------------------
 

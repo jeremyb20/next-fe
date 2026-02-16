@@ -1,8 +1,8 @@
+import { RouterLink } from '@/routes/components';
+
 import Box from '@mui/material/Box';
 import Link from '@mui/material/Link';
 import { Theme, SxProps, useTheme } from '@mui/material/styles';
-
-import { RouterLink } from 'src/routes/components';
 
 import Image from '../../image';
 import { NavProducts } from '../types';

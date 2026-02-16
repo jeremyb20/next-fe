@@ -1,4 +1,4 @@
-import PaginationView from 'src/sections/_examples/mui/pagination-view';
+import PaginationView from '@/sections/_examples/mui/pagination-view';
 
 // ----------------------------------------------------------------------
 

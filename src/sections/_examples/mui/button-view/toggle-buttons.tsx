@@ -1,11 +1,10 @@
 import { useState } from 'react';
+import Iconify from '@/components/iconify';
 
 import Box from '@mui/material/Box';
 import Masonry from '@mui/lab/Masonry';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
-
-import Iconify from 'src/components/iconify';
 
 import ComponentBlock from '../../component-block';
 

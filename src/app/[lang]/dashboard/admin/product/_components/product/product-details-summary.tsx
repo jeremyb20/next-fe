@@ -1,6 +1,15 @@
+import { paths } from '@/routes/paths';
+import Label from '@/components/label';
+import { useRouter } from '@/routes/hooks';
+import Iconify from '@/components/iconify';
 import { useEffect, useCallback } from 'react';
+import { IProductItem } from '@/types/product';
+import { ICheckoutItem } from '@/types/checkout';
 import { useForm, Controller } from 'react-hook-form';
-import { inventoryStatusOptions } from '@/src/utils/constants';
+import { ColorPicker } from '@/components/color-utils';
+import { inventoryStatusOptions } from '@//utils/constants';
+import FormProvider, { RHFSelect } from '@/components/hook-form';
+import { fCurrency, fShortenNumber } from '@/utils/format-number';
 
 import Box from '@mui/material/Box';
 import Link from '@mui/material/Link';
@@ -11,19 +20,6 @@ import Divider from '@mui/material/Divider';
 import MenuItem from '@mui/material/MenuItem';
 import Typography from '@mui/material/Typography';
 import { formHelperTextClasses } from '@mui/material/FormHelperText';
-
-import { paths } from 'src/routes/paths';
-import { useRouter } from 'src/routes/hooks';
-
-import { fCurrency, fShortenNumber } from 'src/utils/format-number';
-
-import Label from 'src/components/label';
-import Iconify from 'src/components/iconify';
-import { ColorPicker } from 'src/components/color-utils';
-import FormProvider, { RHFSelect } from 'src/components/hook-form';
-
-import { IProductItem } from 'src/types/product';
-import { ICheckoutItem } from 'src/types/checkout';
 
 // ----------------------------------------------------------------------
 

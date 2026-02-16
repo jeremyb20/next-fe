@@ -1,3 +1,5 @@
+import Iconify from '@/components/iconify';
+import { ICheckoutDeliveryOption } from '@/types/checkout';
 import { Controller, useFormContext } from 'react-hook-form';
 
 import Box from '@mui/material/Box';
@@ -6,10 +8,6 @@ import CardHeader from '@mui/material/CardHeader';
 import Card, { CardProps } from '@mui/material/Card';
 import ListItemText from '@mui/material/ListItemText';
 import Paper, { PaperProps } from '@mui/material/Paper';
-
-import Iconify from 'src/components/iconify';
-
-import { ICheckoutDeliveryOption } from 'src/types/checkout';
 
 // ----------------------------------------------------------------------
 

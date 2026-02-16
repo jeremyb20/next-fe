@@ -1,14 +1,12 @@
 'use client';
 
+import { paths } from '@/routes/paths';
+import CustomBreadcrumbs from '@/components/custom-breadcrumbs';
+import ComponentHero from '@/sections/_examples/component-hero';
+
 import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
 import Container from '@mui/material/Container';
-
-import { paths } from 'src/routes/paths';
-
-import CustomBreadcrumbs from 'src/components/custom-breadcrumbs';
-
-import ComponentHero from 'src/sections/_examples/component-hero';
 
 import ComponentBlock from '../../component-block';
 import CustomizedStepper from './customized-steppers';

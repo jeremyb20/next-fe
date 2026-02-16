@@ -10,9 +10,9 @@
 //   ThemeProvider as MuiThemeProvider,
 // } from '@mui/material/styles';
 
-// import { useLocales } from 'src/locales';
+// import { useLocales } from '@/locales';
 
-// import { useSettingsContext } from 'src/components/settings';
+// import { useSettingsContext } from '@/components/settings';
 
 // // system
 // import { palette } from './palette';
@@ -91,6 +91,8 @@
 
 import { useMemo } from 'react';
 import merge from 'lodash/merge';
+import { useLocales } from '@/locales';
+import { useSettingsContext } from '@/components/settings';
 
 import CssBaseline from '@mui/material/CssBaseline';
 import {
@@ -98,10 +100,6 @@ import {
   ThemeOptions,
   ThemeProvider as MuiThemeProvider,
 } from '@mui/material/styles';
-
-import { useLocales } from 'src/locales';
-
-import { useSettingsContext } from 'src/components/settings';
 
 // system
 import { palette } from './palette';

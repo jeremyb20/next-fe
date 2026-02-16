@@ -1,12 +1,10 @@
 import { useState, useCallback } from 'react';
+import { NavSectionVertical } from '@/components/nav-section';
+import { useActiveLink } from '@/routes/hooks/use-active-link';
 
 import Collapse from '@mui/material/Collapse';
 import { stackClasses } from '@mui/material/Stack';
 import { listItemButtonClasses } from '@mui/material/ListItemButton';
-
-import { useActiveLink } from 'src/routes/hooks/use-active-link';
-
-import { NavSectionVertical } from 'src/components/nav-section';
 
 import { NavItem } from './nav-item';
 import { NavListProps } from '../types';

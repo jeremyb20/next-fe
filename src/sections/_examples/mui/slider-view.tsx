@@ -1,6 +1,10 @@
 'use client';
 
 import { useState } from 'react';
+import { paths } from '@/routes/paths';
+import Iconify from '@/components/iconify';
+import CustomBreadcrumbs from '@/components/custom-breadcrumbs';
+import ComponentHero from '@/sections/_examples/component-hero';
 
 import Box from '@mui/material/Box';
 import Masonry from '@mui/lab/Masonry';
@@ -9,13 +13,6 @@ import Slider from '@mui/material/Slider';
 import { alpha } from '@mui/material/styles';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
-
-import { paths } from 'src/routes/paths';
-
-import Iconify from 'src/components/iconify';
-import CustomBreadcrumbs from 'src/components/custom-breadcrumbs';
-
-import ComponentHero from 'src/sections/_examples/component-hero';
 
 import ComponentBlock from '../component-block';
 

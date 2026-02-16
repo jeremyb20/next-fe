@@ -1,4 +1,4 @@
-import { ClassicForgotPasswordView } from 'src/sections/auth-demo/classic';
+import { ClassicForgotPasswordView } from '@/sections/auth-demo/classic';
 
 // ----------------------------------------------------------------------
 

@@ -1,10 +1,9 @@
 import { memo } from 'react';
+import { StyledControlPanel } from '@/components/map';
 
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
-
-import { StyledControlPanel } from 'src/components/map';
 
 // ----------------------------------------------------------------------
 

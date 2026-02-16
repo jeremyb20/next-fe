@@ -1,8 +1,16 @@
 import * as Yup from 'yup';
 import { useMemo } from 'react';
+import { IUserItem } from '@/types/user';
 import { useForm } from 'react-hook-form';
+import { countries } from '@/assets/data';
+import { useSnackbar } from '@/components/snackbar';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { USER_STATUS_OPTIONS } from '@/src/components/filters/filter-constants';
+import { USER_STATUS_OPTIONS } from '@//components/filters/filter-constants';
+import FormProvider, {
+  RHFSelect,
+  RHFTextField,
+  RHFAutocomplete,
+} from '@/components/hook-form';
 
 import Box from '@mui/material/Box';
 import Alert from '@mui/material/Alert';
@@ -13,17 +21,6 @@ import LoadingButton from '@mui/lab/LoadingButton';
 import DialogTitle from '@mui/material/DialogTitle';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
-
-import { countries } from 'src/assets/data';
-
-import { useSnackbar } from 'src/components/snackbar';
-import FormProvider, {
-  RHFSelect,
-  RHFTextField,
-  RHFAutocomplete,
-} from 'src/components/hook-form';
-
-import { IUserItem } from 'src/types/user';
 
 // ----------------------------------------------------------------------
 

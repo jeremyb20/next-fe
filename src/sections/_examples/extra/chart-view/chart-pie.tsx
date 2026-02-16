@@ -1,4 +1,4 @@
-import Chart, { useChart } from 'src/components/chart';
+import Chart, { useChart } from '@/components/chart';
 
 // ----------------------------------------------------------------------
 

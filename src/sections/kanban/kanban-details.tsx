@@ -1,4 +1,11 @@
+import Iconify from '@/components/iconify';
+import { IKanbanTask } from '@/types/kanban';
 import { useState, useCallback } from 'react';
+import Scrollbar from '@/components/scrollbar';
+import { useBoolean } from '@/hooks/use-boolean';
+import CustomDateRangePicker, {
+  useDateRangePicker,
+} from '@/components/custom-date-range-picker';
 
 import Chip from '@mui/material/Chip';
 import Stack from '@mui/material/Stack';
@@ -10,16 +17,6 @@ import Tooltip from '@mui/material/Tooltip';
 import TextField from '@mui/material/TextField';
 import IconButton from '@mui/material/IconButton';
 import { alpha, styled } from '@mui/material/styles';
-
-import { useBoolean } from 'src/hooks/use-boolean';
-
-import Iconify from 'src/components/iconify';
-import Scrollbar from 'src/components/scrollbar';
-import CustomDateRangePicker, {
-  useDateRangePicker,
-} from 'src/components/custom-date-range-picker';
-
-import { IKanbanTask } from 'src/types/kanban';
 
 import KanbanInputName from './kanban-input-name';
 import KanbanDetailsToolbar from './kanban-details-toolbar';

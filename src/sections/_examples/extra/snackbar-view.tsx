@@ -1,19 +1,17 @@
 'use client';
 
-import Masonry from '@mui/lab/Masonry';
-import Button from '@mui/material/Button';
-import Container from '@mui/material/Container';
-
-import { paths } from 'src/routes/paths';
-
-import CustomBreadcrumbs from 'src/components/custom-breadcrumbs';
+import { paths } from '@/routes/paths';
+import CustomBreadcrumbs from '@/components/custom-breadcrumbs';
+import ComponentHero from '@/sections/_examples/component-hero';
 import {
   useSnackbar,
   VariantType,
   SnackbarOrigin,
-} from 'src/components/snackbar';
+} from '@/components/snackbar';
 
-import ComponentHero from 'src/sections/_examples/component-hero';
+import Masonry from '@mui/lab/Masonry';
+import Button from '@mui/material/Button';
+import Container from '@mui/material/Container';
 
 import ComponentBlock from '../component-block';
 

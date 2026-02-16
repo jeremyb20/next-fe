@@ -1,3 +1,5 @@
+import FormProvider from '@/components/hook-form';
+import { useSnackbar } from '@/components/snackbar';
 import { useForm, Controller } from 'react-hook-form';
 
 import Card from '@mui/material/Card';
@@ -7,9 +9,6 @@ import Grid from '@mui/material/Unstable_Grid2';
 import LoadingButton from '@mui/lab/LoadingButton';
 import ListItemText from '@mui/material/ListItemText';
 import FormControlLabel from '@mui/material/FormControlLabel';
-
-import FormProvider from 'src/components/hook-form';
-import { useSnackbar } from 'src/components/snackbar';
 
 // ----------------------------------------------------------------------
 

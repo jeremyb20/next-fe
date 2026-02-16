@@ -1,6 +1,18 @@
 'use client';
 
+import { paths } from '@/routes/paths';
+import Iconify from '@/components/iconify';
+import { useLocales, useTranslate } from '@/locales';
 import { useState, useEffect, useCallback } from 'react';
+import CustomBreadcrumbs from '@/components/custom-breadcrumbs';
+import ComponentHero from '@/sections/_examples/component-hero';
+import {
+  fData,
+  fNumber,
+  fPercent,
+  fCurrency,
+  fShortenNumber,
+} from '@/utils/format-number';
 
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
@@ -15,23 +27,6 @@ import Typography from '@mui/material/Typography';
 import RadioGroup from '@mui/material/RadioGroup';
 import TablePagination from '@mui/material/TablePagination';
 import FormControlLabel from '@mui/material/FormControlLabel';
-
-import { paths } from 'src/routes/paths';
-
-import {
-  fData,
-  fNumber,
-  fPercent,
-  fCurrency,
-  fShortenNumber,
-} from 'src/utils/format-number';
-
-import { useLocales, useTranslate } from 'src/locales';
-
-import Iconify from 'src/components/iconify';
-import CustomBreadcrumbs from 'src/components/custom-breadcrumbs';
-
-import ComponentHero from 'src/sections/_examples/component-hero';
 
 // ----------------------------------------------------------------------
 

@@ -1,13 +1,11 @@
+import Logo from '@/components/logo';
+import { usePathname } from '@/routes/hooks';
+import SvgColor from '@/components/svg-color';
+import Scrollbar from '@/components/scrollbar';
 import { useState, useEffect, useCallback } from 'react';
 
 import Drawer from '@mui/material/Drawer';
 import IconButton from '@mui/material/IconButton';
-
-import { usePathname } from 'src/routes/hooks';
-
-import Logo from 'src/components/logo';
-import SvgColor from 'src/components/svg-color';
-import Scrollbar from 'src/components/scrollbar';
 
 import NavList from './nav-list';
 import { NavProps } from '../types';

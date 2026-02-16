@@ -1,6 +1,12 @@
 'use client';
 
 import dynamic from 'next/dynamic';
+import { paths } from '@/routes/paths';
+import { MAPBOX_API } from '@/config-global';
+import { cities as CITIES } from '@/_mock/map/cities';
+import { countries as COUNTRIES } from '@/_mock/map/countries';
+import CustomBreadcrumbs from '@/components/custom-breadcrumbs';
+import ComponentHero from '@/sections/_examples/component-hero';
 
 import Card from '@mui/material/Card';
 import Stack from '@mui/material/Stack';
@@ -8,16 +14,6 @@ import { styled } from '@mui/material/styles';
 import Container from '@mui/material/Container';
 import CardHeader from '@mui/material/CardHeader';
 import CardContent from '@mui/material/CardContent';
-
-import { paths } from 'src/routes/paths';
-
-import { MAPBOX_API } from 'src/config-global';
-import { cities as CITIES } from 'src/_mock/map/cities';
-import { countries as COUNTRIES } from 'src/_mock/map/countries';
-
-import CustomBreadcrumbs from 'src/components/custom-breadcrumbs';
-
-import ComponentHero from 'src/sections/_examples/component-hero';
 //
 const MapHeatmap = dynamic(() => import('./heatmap'));
 const MapClusters = dynamic(() => import('./clusters'));

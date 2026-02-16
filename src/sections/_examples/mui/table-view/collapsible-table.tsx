@@ -1,3 +1,7 @@
+import Iconify from '@/components/iconify';
+import Scrollbar from '@/components/scrollbar';
+import { useBoolean } from '@/hooks/use-boolean';
+
 import Table from '@mui/material/Table';
 import Paper from '@mui/material/Paper';
 import TableRow from '@mui/material/TableRow';
@@ -8,11 +12,6 @@ import TableBody from '@mui/material/TableBody';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import TableContainer from '@mui/material/TableContainer';
-
-import { useBoolean } from 'src/hooks/use-boolean';
-
-import Iconify from 'src/components/iconify';
-import Scrollbar from 'src/components/scrollbar';
 
 import createData from './utils';
 

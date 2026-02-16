@@ -1,8 +1,8 @@
+import Iconify from '@/components/iconify';
+
 import Stack from '@mui/material/Stack';
 import { alpha } from '@mui/material/styles';
 import ButtonBase from '@mui/material/ButtonBase';
-
-import Iconify from 'src/components/iconify';
 
 // ----------------------------------------------------------------------
 

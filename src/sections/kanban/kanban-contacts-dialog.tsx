@@ -1,4 +1,9 @@
+import { _contacts } from '@/_mock';
+import Iconify from '@/components/iconify';
 import { useState, useCallback } from 'react';
+import Scrollbar from '@/components/scrollbar';
+import { IKanbanAssignee } from '@/types/kanban';
+import SearchNotFound from '@/components/search-not-found';
 
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -12,14 +17,6 @@ import ListItemText from '@mui/material/ListItemText';
 import DialogContent from '@mui/material/DialogContent';
 import InputAdornment from '@mui/material/InputAdornment';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
-
-import { _contacts } from 'src/_mock';
-
-import Iconify from 'src/components/iconify';
-import Scrollbar from 'src/components/scrollbar';
-import SearchNotFound from 'src/components/search-not-found';
-
-import { IKanbanAssignee } from 'src/types/kanban';
 
 // ----------------------------------------------------------------------
 

@@ -1,4 +1,4 @@
-import PermissionDeniedView from 'src/sections/permission/view';
+import PermissionDeniedView from '@/sections/permission/view';
 
 // ----------------------------------------------------------------------
 

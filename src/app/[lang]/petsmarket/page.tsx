@@ -1,4 +1,4 @@
-import { TourListView } from 'src/sections/tour/view';
+import { TourListView } from '@/sections/tour/view';
 
 // ----------------------------------------------------------------------
 

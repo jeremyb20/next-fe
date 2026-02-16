@@ -1,17 +1,14 @@
 import FullCalendar from '@fullcalendar/react';
+import { fTimestamp } from '@/utils/format-time';
 import { useRef, useState, useCallback } from 'react';
+import { useResponsive } from '@/hooks/use-responsive';
 import { EventResizeDoneArg } from '@fullcalendar/interaction';
 import { EventDropArg, DateSelectArg, EventClickArg } from '@fullcalendar/core';
-
-import { useResponsive } from 'src/hooks/use-responsive';
-
-import { fTimestamp } from 'src/utils/format-time';
-
 import {
   ICalendarView,
   ICalendarRange,
   ICalendarEvent,
-} from 'src/types/calendar';
+} from '@/types/calendar';
 
 // ----------------------------------------------------------------------
 

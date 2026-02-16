@@ -1,7 +1,7 @@
 // components/medical-records/vaccines-list.tsx
 import React from 'react';
-import Iconify from '@/src/components/iconify';
-import { IVaccineFormData } from '@/src/interfaces/medical-record';
+import Iconify from '@//components/iconify';
+import { IVaccineFormData } from '@//interfaces/medical-record';
 
 import {
   Box,

@@ -1,5 +1,7 @@
-import { IPetProfile } from '@/src/types/api';
-import { BreedOptions } from '@/src/utils/constants';
+import { IPetProfile } from '@//types/api';
+import Iconify from '@/components/iconify';
+import { BreedOptions } from '@//utils/constants';
+import CustomPopover, { usePopover } from '@/components/custom-popover';
 
 import {
   Box,
@@ -10,9 +12,6 @@ import {
   IconButton,
   CardContent,
 } from '@mui/material';
-
-import Iconify from 'src/components/iconify';
-import CustomPopover, { usePopover } from 'src/components/custom-popover';
 
 interface PetCardProps {
   pet: IPetProfile;

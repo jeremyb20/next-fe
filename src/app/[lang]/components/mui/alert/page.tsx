@@ -1,4 +1,4 @@
-import AlertView from 'src/sections/_examples/mui/alert-view';
+import AlertView from '@/sections/_examples/mui/alert-view';
 
 // ----------------------------------------------------------------------
 

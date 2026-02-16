@@ -1,7 +1,30 @@
 import * as Yup from 'yup';
+import { paths } from '@/routes/paths';
+import { IJobItem } from '@/types/job';
+import { countries } from '@/assets/data';
 import { useMemo, useEffect } from 'react';
+import { useRouter } from '@/routes/hooks';
+import Iconify from '@/components/iconify';
+import { useSnackbar } from '@/components/snackbar';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm, Controller } from 'react-hook-form';
+import { useResponsive } from '@/hooks/use-responsive';
+import FormProvider, {
+  RHFEditor,
+  RHFSwitch,
+  RHFTextField,
+  RHFRadioGroup,
+  RHFAutocomplete,
+  RHFMultiCheckbox,
+} from '@/components/hook-form';
+import {
+  _roles,
+  JOB_SKILL_OPTIONS,
+  JOB_BENEFIT_OPTIONS,
+  JOB_EXPERIENCE_OPTIONS,
+  JOB_EMPLOYMENT_TYPE_OPTIONS,
+  JOB_WORKING_SCHEDULE_OPTIONS,
+} from '@/_mock';
 
 import Box from '@mui/material/Box';
 import Chip from '@mui/material/Chip';
@@ -17,34 +40,6 @@ import LoadingButton from '@mui/lab/LoadingButton';
 import InputAdornment from '@mui/material/InputAdornment';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import FormControlLabel from '@mui/material/FormControlLabel';
-
-import { paths } from 'src/routes/paths';
-import { useRouter } from 'src/routes/hooks';
-
-import { useResponsive } from 'src/hooks/use-responsive';
-
-import { countries } from 'src/assets/data';
-import {
-  _roles,
-  JOB_SKILL_OPTIONS,
-  JOB_BENEFIT_OPTIONS,
-  JOB_EXPERIENCE_OPTIONS,
-  JOB_EMPLOYMENT_TYPE_OPTIONS,
-  JOB_WORKING_SCHEDULE_OPTIONS,
-} from 'src/_mock';
-
-import Iconify from 'src/components/iconify';
-import { useSnackbar } from 'src/components/snackbar';
-import FormProvider, {
-  RHFEditor,
-  RHFSwitch,
-  RHFTextField,
-  RHFRadioGroup,
-  RHFAutocomplete,
-  RHFMultiCheckbox,
-} from 'src/components/hook-form';
-
-import { IJobItem } from 'src/types/job';
 
 // ----------------------------------------------------------------------
 

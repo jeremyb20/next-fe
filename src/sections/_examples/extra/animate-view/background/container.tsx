@@ -1,9 +1,8 @@
+import { _mock } from '@/_mock';
 import { m } from 'framer-motion';
 
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
-
-import { _mock } from 'src/_mock';
 
 import getVariant from '../get-variant';
 

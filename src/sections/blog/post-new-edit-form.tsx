@@ -1,7 +1,21 @@
 import * as Yup from 'yup';
+import { _tags } from '@/_mock';
+import { paths } from '@/routes/paths';
+import { IPostItem } from '@/types/blog';
 import { useForm } from 'react-hook-form';
+import { useRouter } from '@/routes/hooks';
+import { useBoolean } from '@/hooks/use-boolean';
+import { CustomFile } from '@/components/upload';
+import { useSnackbar } from '@/components/snackbar';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useResponsive } from '@/hooks/use-responsive';
 import { useMemo, useEffect, useCallback } from 'react';
+import FormProvider, {
+  RHFEditor,
+  RHFUpload,
+  RHFTextField,
+  RHFAutocomplete,
+} from '@/components/hook-form';
 
 import Chip from '@mui/material/Chip';
 import Card from '@mui/material/Card';
@@ -13,25 +27,6 @@ import CardHeader from '@mui/material/CardHeader';
 import Typography from '@mui/material/Typography';
 import LoadingButton from '@mui/lab/LoadingButton';
 import FormControlLabel from '@mui/material/FormControlLabel';
-
-import { paths } from 'src/routes/paths';
-import { useRouter } from 'src/routes/hooks';
-
-import { useBoolean } from 'src/hooks/use-boolean';
-import { useResponsive } from 'src/hooks/use-responsive';
-
-import { _tags } from 'src/_mock';
-
-import { CustomFile } from 'src/components/upload';
-import { useSnackbar } from 'src/components/snackbar';
-import FormProvider, {
-  RHFEditor,
-  RHFUpload,
-  RHFTextField,
-  RHFAutocomplete,
-} from 'src/components/hook-form';
-
-import { IPostItem } from 'src/types/blog';
 
 import PostDetailsPreview from './post-details-preview';
 

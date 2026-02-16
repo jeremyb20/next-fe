@@ -1,7 +1,21 @@
 import * as Yup from 'yup';
+import { paths } from '@/routes/paths';
+import { countries } from '@/assets/data';
+import { useRouter } from '@/routes/hooks';
+import { useSnackbar } from '@/components/snackbar';
+import { ITourItem, ITourGuide } from '@/types/tour';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm, Controller } from 'react-hook-form';
+import { useResponsive } from '@/hooks/use-responsive';
 import { useMemo, useEffect, useCallback } from 'react';
+import { _tags, _tourGuides, TOUR_SERVICE_OPTIONS } from '@/_mock';
+import FormProvider, {
+  RHFEditor,
+  RHFUpload,
+  RHFTextField,
+  RHFAutocomplete,
+  RHFMultiCheckbox,
+} from '@/components/hook-form';
 
 import Chip from '@mui/material/Chip';
 import Card from '@mui/material/Card';
@@ -14,25 +28,6 @@ import Typography from '@mui/material/Typography';
 import LoadingButton from '@mui/lab/LoadingButton';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import FormControlLabel from '@mui/material/FormControlLabel';
-
-import { paths } from 'src/routes/paths';
-import { useRouter } from 'src/routes/hooks';
-
-import { useResponsive } from 'src/hooks/use-responsive';
-
-import { countries } from 'src/assets/data';
-import { _tags, _tourGuides, TOUR_SERVICE_OPTIONS } from 'src/_mock';
-
-import { useSnackbar } from 'src/components/snackbar';
-import FormProvider, {
-  RHFEditor,
-  RHFUpload,
-  RHFTextField,
-  RHFAutocomplete,
-  RHFMultiCheckbox,
-} from 'src/components/hook-form';
-
-import { ITourItem, ITourGuide } from 'src/types/tour';
 
 // ----------------------------------------------------------------------
 

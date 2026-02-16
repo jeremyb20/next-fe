@@ -1,8 +1,7 @@
 'use client';
 
+import { paths } from '@/routes/paths';
 import { useMemo, useEffect, useReducer, useCallback } from 'react';
-
-import { paths } from 'src/routes/paths';
 
 import { supabase } from './lib';
 import { AuthContext } from './auth-context';

@@ -1,4 +1,4 @@
-import { FirebaseLoginView } from 'src/sections/auth/firebase';
+import { FirebaseLoginView } from '@/sections/auth/firebase';
 
 // ----------------------------------------------------------------------
 

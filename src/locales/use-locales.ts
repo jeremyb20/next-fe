@@ -2,8 +2,7 @@
 
 import { useEffect, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
-
-import { useRouter, useParams, usePathname } from 'src/routes/hooks';
+import { useRouter, useParams, usePathname } from '@/routes/hooks';
 
 import { allLangs, defaultLang } from './config-lang';
 import { useSettingsContext } from '../components/settings';

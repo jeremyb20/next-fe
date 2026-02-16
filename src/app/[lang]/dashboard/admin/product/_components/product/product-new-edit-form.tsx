@@ -1,21 +1,42 @@
 import * as Yup from 'yup';
+import { paths } from '@//routes/paths';
 import { useForm } from 'react-hook-form';
-import { paths } from '@/src/routes/paths';
-import { endpoints } from '@/src/utils/axios';
-import { HOST_API } from '@/src/config-global';
-import Iconify from '@/src/components/iconify';
-import useIPInfo from '@/src/hooks/use-ip-info';
+import { endpoints } from '@//utils/axios';
+import { useRouter } from '@/routes/hooks';
+import { HOST_API } from '@//config-global';
+import Iconify from '@//components/iconify';
+import useIPInfo from '@//hooks/use-ip-info';
+import { IProductItem } from '@/types/product';
+import { useCurrency } from '@//hooks/use-currency';
+import { useSnackbar } from '@/components/snackbar';
+import { countries } from '@//assets/data/countries';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useCurrency } from '@/src/hooks/use-currency';
-import { countries } from '@/src/assets/data/countries';
+import { useResponsive } from '@/hooks/use-responsive';
 import { useMemo, useState, useEffect, useCallback } from 'react';
-import { fCurrency, getLocaleCode } from '@/src/utils/format-number';
-import { useCreateGenericMutation } from '@/src/hooks/user-generic-mutation';
+import { fCurrency, getLocaleCode } from '@//utils/format-number';
+import { useCreateGenericMutation } from '@//hooks/user-generic-mutation';
 import {
   getPhoneHelperText,
   getPhonePlaceholder,
   simplePhoneValidation,
-} from '@/src/utils/phone-validation';
+} from '@//utils/phone-validation';
+import {
+  _tags,
+  PRODUCT_SIZE_OPTIONS,
+  PRODUCT_GENDER_OPTIONS,
+  PRODUCT_COLOR_NAME_OPTIONS,
+  PRODUCT_CATEGORY_GROUP_OPTIONS,
+} from '@/_mock';
+import FormProvider, {
+  RHFSelect,
+  RHFEditor,
+  RHFUpload,
+  RHFSwitch,
+  RHFTextField,
+  RHFMultiSelect,
+  RHFAutocomplete,
+  RHFMultiCheckbox,
+} from '@/components/hook-form';
 
 import Box from '@mui/material/Box';
 import Chip from '@mui/material/Chip';
@@ -29,32 +50,6 @@ import Typography from '@mui/material/Typography';
 import LoadingButton from '@mui/lab/LoadingButton';
 import InputAdornment from '@mui/material/InputAdornment';
 import FormControlLabel from '@mui/material/FormControlLabel';
-
-import { useRouter } from 'src/routes/hooks';
-
-import { useResponsive } from 'src/hooks/use-responsive';
-
-import {
-  _tags,
-  PRODUCT_SIZE_OPTIONS,
-  PRODUCT_GENDER_OPTIONS,
-  PRODUCT_COLOR_NAME_OPTIONS,
-  PRODUCT_CATEGORY_GROUP_OPTIONS,
-} from 'src/_mock';
-
-import { useSnackbar } from 'src/components/snackbar';
-import FormProvider, {
-  RHFSelect,
-  RHFEditor,
-  RHFUpload,
-  RHFSwitch,
-  RHFTextField,
-  RHFMultiSelect,
-  RHFAutocomplete,
-  RHFMultiCheckbox,
-} from 'src/components/hook-form';
-
-import { IProductItem } from 'src/types/product';
 
 // ----------------------------------------------------------------------
 

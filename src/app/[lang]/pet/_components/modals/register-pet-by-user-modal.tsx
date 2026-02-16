@@ -1,6 +1,6 @@
 import React from 'react';
-import { IUser } from '@/src/types/api';
-import Iconify from '@/src/components/iconify';
+import { IUser } from '@//types/api';
+import Iconify from '@//components/iconify';
 import { useTranslation } from 'react-i18next';
 
 import { Dialog, IconButton, DialogTitle, DialogContent } from '@mui/material';

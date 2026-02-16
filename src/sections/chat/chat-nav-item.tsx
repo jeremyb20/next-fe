@@ -1,6 +1,11 @@
 import { useCallback } from 'react';
+import { paths } from '@/routes/paths';
+import { useRouter } from '@/routes/hooks';
+import { clickConversation } from '@/api/chat';
+import { IChatConversation } from '@/types/chat';
 import { formatDistanceToNowStrict } from 'date-fns';
-import { useManagerUser } from '@/src/hooks/use-manager-user';
+import { useResponsive } from '@/hooks/use-responsive';
+import { useManagerUser } from '@//hooks/use-manager-user';
 
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
@@ -10,15 +15,6 @@ import Typography from '@mui/material/Typography';
 import AvatarGroup from '@mui/material/AvatarGroup';
 import ListItemText from '@mui/material/ListItemText';
 import ListItemButton from '@mui/material/ListItemButton';
-
-import { paths } from 'src/routes/paths';
-import { useRouter } from 'src/routes/hooks';
-
-import { useResponsive } from 'src/hooks/use-responsive';
-
-import { clickConversation } from 'src/api/chat';
-
-import { IChatConversation } from 'src/types/chat';
 
 import { useGetNavItem } from './hooks';
 

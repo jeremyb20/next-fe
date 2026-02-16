@@ -1,6 +1,5 @@
 import { Metadata } from 'next';
-
-import { OrderListView } from 'src/sections/order/view';
+import { OrderListView } from '@/sections/order/view';
 
 // ----------------------------------------------------------------------
 

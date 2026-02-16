@@ -2,32 +2,36 @@
 
 import * as Yup from 'yup';
 import { useSnackbar } from 'notistack';
-import { endpoints } from '@/src/utils/axios';
-import Iconify from '@/src/components/iconify';
+import { countries } from '@/assets/data';
+import { endpoints } from '@//utils/axios';
+import { useRouter } from '@/routes/hooks';
+import Iconify from '@//components/iconify';
+import { OptionType } from '@//types/global';
+import useIPInfo from '@//hooks/use-ip-info';
 import { useTranslation } from 'react-i18next';
-import { OptionType } from '@/src/types/global';
-import useIPInfo from '@/src/hooks/use-ip-info';
-import { fData } from '@/src/utils/format-number';
-import { useBoolean } from '@/src/hooks/use-boolean';
+import { fData } from '@//utils/format-number';
+import { useBoolean } from '@//hooks/use-boolean';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { getValidationCode } from '@//hooks/use-fetch';
 import { useState, useEffect, useCallback } from 'react';
-import { getValidationCode } from '@/src/hooks/use-fetch';
-import { HOST_API, PATH_AFTER_LOGIN } from '@/src/config-global';
-import UploadAvatar from '@/src/components/upload/upload-avatar';
-import { PetAgeCalculator } from '@/src/utils/pet-age-calculator';
-import { BreedOptions, GENDER_OPTIONS } from '@/src/utils/constants';
-import useCelebrationConfetti from '@/src/hooks/use-celebration-confetti';
-import { useCreateGenericMutation } from '@/src/hooks/user-generic-mutation';
-import {
-  getDogSizeFromBreed,
-  getSpeciesFromBreed,
-} from '@/src/utils/pet-utils';
+import { HOST_API, PATH_AFTER_LOGIN } from '@//config-global';
+import UploadAvatar from '@//components/upload/upload-avatar';
+import { PetAgeCalculator } from '@//utils/pet-age-calculator';
+import { BreedOptions, GENDER_OPTIONS } from '@//utils/constants';
+import useCelebrationConfetti from '@//hooks/use-celebration-confetti';
+import { useCreateGenericMutation } from '@//hooks/user-generic-mutation';
+import { getDogSizeFromBreed, getSpeciesFromBreed } from '@//utils/pet-utils';
+import FormProvider, {
+  RHFSelect,
+  RHFTextField,
+  RHFAutocomplete,
+} from '@/components/hook-form';
 import {
   getPhoneHelperText,
   getPhonePlaceholder,
   simplePhoneValidation,
-} from '@/src/utils/phone-validation';
+} from '@//utils/phone-validation';
 
 import Box from '@mui/material/Box';
 import Step from '@mui/material/Step';
@@ -51,16 +55,6 @@ import {
   CardContent,
   InputAdornment,
 } from '@mui/material';
-
-import { useRouter } from 'src/routes/hooks';
-
-import { countries } from 'src/assets/data';
-
-import FormProvider, {
-  RHFSelect,
-  RHFTextField,
-  RHFAutocomplete,
-} from 'src/components/hook-form';
 
 // ----------------------------------------------------------------------
 

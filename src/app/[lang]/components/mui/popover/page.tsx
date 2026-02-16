@@ -1,4 +1,4 @@
-import PopoverView from 'src/sections/_examples/mui/popover-view';
+import PopoverView from '@/sections/_examples/mui/popover-view';
 
 // ----------------------------------------------------------------------
 

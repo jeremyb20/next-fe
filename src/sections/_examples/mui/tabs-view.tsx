@@ -1,6 +1,10 @@
 'use client';
 
+import { paths } from '@/routes/paths';
+import Iconify from '@/components/iconify';
 import { useState, useCallback } from 'react';
+import CustomBreadcrumbs from '@/components/custom-breadcrumbs';
+import ComponentHero from '@/sections/_examples/component-hero';
 
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
@@ -8,13 +12,6 @@ import Tabs from '@mui/material/Tabs';
 import Masonry from '@mui/lab/Masonry';
 import Stack from '@mui/material/Stack';
 import Container from '@mui/material/Container';
-
-import { paths } from 'src/routes/paths';
-
-import Iconify from 'src/components/iconify';
-import CustomBreadcrumbs from 'src/components/custom-breadcrumbs';
-
-import ComponentHero from 'src/sections/_examples/component-hero';
 
 import ComponentBlock from '../component-block';
 

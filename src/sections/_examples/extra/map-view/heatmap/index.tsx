@@ -1,7 +1,6 @@
+import { MapBoxProps } from '@/components/map';
 import Map, { Layer, Source } from 'react-map-gl';
 import { memo, useMemo, useState, useEffect } from 'react';
-
-import { MapBoxProps } from 'src/components/map';
 
 import ControlPanel from './control-panel';
 import { heatmapLayer } from './map-style';

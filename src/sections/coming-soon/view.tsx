@@ -1,5 +1,10 @@
 'use client';
 
+import { _socials } from '@/_mock';
+import Iconify from '@/components/iconify';
+import { useCountdownDate } from '@/hooks/use-countdown';
+import { ComingSoonIllustration } from '@/assets/illustrations';
+
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
@@ -9,13 +14,6 @@ import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import InputAdornment from '@mui/material/InputAdornment';
 import { outlinedInputClasses } from '@mui/material/OutlinedInput';
-
-import { useCountdownDate } from 'src/hooks/use-countdown';
-
-import { _socials } from 'src/_mock';
-import { ComingSoonIllustration } from 'src/assets/illustrations';
-
-import Iconify from 'src/components/iconify';
 
 // ----------------------------------------------------------------------
 

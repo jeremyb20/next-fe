@@ -1,18 +1,14 @@
+import uuidv4 from '@/utils/uuidv4';
+import Iconify from '@/components/iconify';
+import { createColumn } from '@/api/kanban';
 import { useState, useCallback } from 'react';
+import { useBoolean } from '@/hooks/use-boolean';
 
 import Paper from '@mui/material/Paper';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import { inputBaseClasses } from '@mui/material/InputBase';
 import ClickAwayListener from '@mui/material/ClickAwayListener';
-
-import { useBoolean } from 'src/hooks/use-boolean';
-
-import uuidv4 from 'src/utils/uuidv4';
-
-import { createColumn } from 'src/api/kanban';
-
-import Iconify from 'src/components/iconify';
 
 // ----------------------------------------------------------------------
 

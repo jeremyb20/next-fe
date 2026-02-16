@@ -1,13 +1,11 @@
+import { hideScroll } from '@/theme/css';
+import { usePathname, useActiveLink } from '@/routes/hooks';
 import { useRef, useState, useEffect, useCallback } from 'react';
 
 import Masonry from '@mui/lab/Masonry';
 import Stack from '@mui/material/Stack';
 import Popover from '@mui/material/Popover';
 import Divider from '@mui/material/Divider';
-
-import { usePathname, useActiveLink } from 'src/routes/hooks';
-
-import { hideScroll } from 'src/theme/css';
 
 import NavItem from './nav-item';
 import { NavListProps } from '../types';

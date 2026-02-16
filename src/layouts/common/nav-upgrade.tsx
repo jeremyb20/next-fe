@@ -1,8 +1,8 @@
 import { useSnackbar } from 'notistack';
-import Iconify from '@/src/components/iconify';
-import { useAuthContext } from '@/src/auth/hooks';
-import { useRouter } from '@/src/routes/hooks/use-router';
-import { useManagerUser } from '@/src/hooks/use-manager-user';
+import Iconify from '@//components/iconify';
+import { useAuthContext } from '@//auth/hooks';
+import { useRouter } from '@//routes/hooks/use-router';
+import { useManagerUser } from '@//hooks/use-manager-user';
 
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
@@ -10,7 +10,7 @@ import Button from '@mui/material/Button';
 import Avatar from '@mui/material/Avatar';
 import Typography from '@mui/material/Typography';
 
-// import Label from 'src/components/label';
+// import Label from '@/components/label';
 
 // ----------------------------------------------------------------------
 

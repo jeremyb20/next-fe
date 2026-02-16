@@ -1,4 +1,10 @@
+import Iconify from '@/components/iconify';
 import { useState, useCallback } from 'react';
+import CustomPopover, { usePopover } from '@/components/custom-popover';
+import {
+  IProductTableFilters,
+  IProductTableFilterValue,
+} from '@/types/product';
 
 import MenuItem from '@mui/material/MenuItem';
 import Checkbox from '@mui/material/Checkbox';
@@ -6,14 +12,6 @@ import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
-
-import Iconify from 'src/components/iconify';
-import CustomPopover, { usePopover } from 'src/components/custom-popover';
-
-import {
-  IProductTableFilters,
-  IProductTableFilterValue,
-} from 'src/types/product';
 
 // ----------------------------------------------------------------------
 

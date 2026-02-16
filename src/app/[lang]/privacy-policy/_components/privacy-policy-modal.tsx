@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import Iconify from '@/src/components/iconify';
-import { APP_NAME, EMAIL_SUPPORT } from '@/src/config-global';
+import Iconify from '@//components/iconify';
+import { APP_NAME, EMAIL_SUPPORT } from '@//config-global';
 
 import {
   Box,

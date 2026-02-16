@@ -1,4 +1,4 @@
-import { AmplifyNewPasswordView } from 'src/sections/auth/amplify';
+import { AmplifyNewPasswordView } from '@/sections/auth/amplify';
 
 // ----------------------------------------------------------------------
 

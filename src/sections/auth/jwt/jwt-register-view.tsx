@@ -1,19 +1,31 @@
 'use client';
 
 import * as Yup from 'yup';
+import { paths } from '@/routes/paths';
 import { useForm } from 'react-hook-form';
+import { countries } from '@/assets/data';
+import Iconify from '@/components/iconify';
 import { useState, useEffect } from 'react';
+import useIPInfo from '@//hooks/use-ip-info';
+import { useAuthContext } from '@/auth/hooks';
 import { useTranslation } from 'react-i18next';
-import useIPInfo from '@/src/hooks/use-ip-info';
+import { RouterLink } from '@/routes/components';
+import { useBoolean } from '@/hooks/use-boolean';
+import { PATH_AFTER_LOGIN } from '@/config-global';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useSettingsContext } from '@/src/components/settings';
-import PrivacyPolicyModal from '@/src/app/[lang]/privacy-policy/_components/privacy-policy-modal';
-import TermsAndConditionsModal from '@/src/app/[lang]/terms-and-conditions/_components/terms-and-condition-modal';
+import { useSettingsContext } from '@//components/settings';
+import { useRouter, useSearchParams } from '@/routes/hooks';
+import FormProvider, {
+  RHFTextField,
+  RHFAutocomplete,
+} from '@/components/hook-form';
+import PrivacyPolicyModal from '@//app/[lang]/privacy-policy/_components/privacy-policy-modal';
+import TermsAndConditionsModal from '@//app/[lang]/terms-and-conditions/_components/terms-and-condition-modal';
 import {
   getPhoneHelperText,
   getPhonePlaceholder,
   simplePhoneValidation,
-} from '@/src/utils/phone-validation';
+} from '@//utils/phone-validation';
 
 import { Box } from '@mui/material';
 import Link from '@mui/material/Link';
@@ -23,22 +35,6 @@ import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import LoadingButton from '@mui/lab/LoadingButton';
 import InputAdornment from '@mui/material/InputAdornment';
-
-import { paths } from 'src/routes/paths';
-import { RouterLink } from 'src/routes/components';
-import { useRouter, useSearchParams } from 'src/routes/hooks';
-
-import { useBoolean } from 'src/hooks/use-boolean';
-
-import { countries } from 'src/assets/data';
-import { useAuthContext } from 'src/auth/hooks';
-import { PATH_AFTER_LOGIN } from 'src/config-global';
-
-import Iconify from 'src/components/iconify';
-import FormProvider, {
-  RHFTextField,
-  RHFAutocomplete,
-} from 'src/components/hook-form';
 
 // ----------------------------------------------------------------------
 

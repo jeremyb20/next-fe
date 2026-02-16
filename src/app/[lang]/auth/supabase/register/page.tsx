@@ -1,4 +1,4 @@
-import { SupabaseRegisterView } from 'src/sections/auth/supabase';
+import { SupabaseRegisterView } from '@/sections/auth/supabase';
 
 // ----------------------------------------------------------------------
 

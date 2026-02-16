@@ -1,4 +1,4 @@
-import { SupabaseForgotPasswordView } from 'src/sections/auth/supabase';
+import { SupabaseForgotPasswordView } from '@/sections/auth/supabase';
 
 // ----------------------------------------------------------------------
 

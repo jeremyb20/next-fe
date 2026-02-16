@@ -1,4 +1,4 @@
-import { countries } from 'src/assets/data';
+import { countries } from '@/assets/data';
 
 import { _mock } from './_mock';
 

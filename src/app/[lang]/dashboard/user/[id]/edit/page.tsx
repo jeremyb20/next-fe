@@ -1,6 +1,6 @@
-// import { _userList } from 'src/_mock/_user';
+// import { _userList } from '@/_mock/_user';
 
-// import { UserEditView } from 'src/sections/user/view';
+// import { UserEditView } from '@/sections/user/view';
 
 // ----------------------------------------------------------------------
 

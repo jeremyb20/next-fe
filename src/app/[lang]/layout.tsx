@@ -1,32 +1,32 @@
-// import 'src/global.css';
-// import 'src/locales/i18n';
+// import '@/global.css';
+// import '@/locales/i18n';
 
 // // ----------------------------------------------------------------------
 
-// import ThemeProvider from 'src/theme';
-// import { LocalizationProvider } from 'src/locales';
-// import { primaryFont } from 'src/theme/typography';
-// import { AuthProvider } from 'src/auth/context/jwt';
-// import QueryProvider from 'src/query/query-provider';
+// import ThemeProvider from '@/theme';
+// import { LocalizationProvider } from '@/locales';
+// import { primaryFont } from '@/theme/typography';
+// import { AuthProvider } from '@/auth/context/jwt';
+// import QueryProvider from '@/query/query-provider';
 
-// import ProgressBar from 'src/components/progress-bar';
-// import { MotionLazy } from 'src/components/animate/motion-lazy';
-// import SnackbarProvider from 'src/components/snackbar/snackbar-provider';
+// import ProgressBar from '@/components/progress-bar';
+// import { MotionLazy } from '@/components/animate/motion-lazy';
+// import SnackbarProvider from '@/components/snackbar/snackbar-provider';
 // import {
 //   SettingsDrawer,
 //   defaultSettings,
 //   SettingsProvider,
-// } from 'src/components/settings';
+// } from '@/components/settings';
 
-// import { CheckoutProvider } from 'src/sections/checkout/context';
+// import { CheckoutProvider } from '@/sections/checkout/context';
 
 // import { HOST_API } from '../../config-global';
 // import LocaleProvider from '../../locales/provider';
 // import { getServerLanguage } from '../../utils/get-server-language';
-// // import { AuthProvider } from 'src/auth/context/auth0';
-// // import { AuthProvider } from 'src/auth/context/amplify';
-// // import { AuthProvider } from 'src/auth/context/firebase';
-// // import { AuthProvider } from 'src/auth/context/supabase';
+// // import { AuthProvider } from '@/auth/context/auth0';
+// // import { AuthProvider } from '@/auth/context/amplify';
+// // import { AuthProvider } from '@/auth/context/firebase';
+// // import { AuthProvider } from '@/auth/context/supabase';
 
 // // ----------------------------------------------------------------------
 

@@ -1,5 +1,7 @@
 'use client';
 
+import { paper } from '@/theme/css';
+
 import Stack from '@mui/material/Stack';
 import Badge from '@mui/material/Badge';
 import Divider from '@mui/material/Divider';
@@ -8,8 +10,6 @@ import { useTheme } from '@mui/material/styles';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import Drawer, { drawerClasses } from '@mui/material/Drawer';
-
-import { paper } from 'src/theme/css';
 
 import Iconify from '../../iconify';
 import Scrollbar from '../../scrollbar';

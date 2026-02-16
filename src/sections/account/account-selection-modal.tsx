@@ -1,5 +1,5 @@
 import React from 'react';
-import Iconify from '@/src/components/iconify';
+import Iconify from '@//components/iconify';
 import { useTranslation } from 'react-i18next';
 
 import {

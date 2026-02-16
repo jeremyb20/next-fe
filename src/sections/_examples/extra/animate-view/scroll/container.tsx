@@ -1,12 +1,11 @@
 import { useRef } from 'react';
 import { m } from 'framer-motion';
+import Scrollbar from '@/components/scrollbar';
+import { varContainer, MotionViewport } from '@/components/animate';
 
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
-
-import Scrollbar from 'src/components/scrollbar';
-import { varContainer, MotionViewport } from 'src/components/animate';
 
 import getVariant from '../get-variant';
 

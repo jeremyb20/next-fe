@@ -1,10 +1,10 @@
+import { bgGradient } from '@/theme/css';
+
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import { useTheme } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
 import Box, { BoxProps } from '@mui/material/Box';
-
-import { bgGradient } from 'src/theme/css';
 
 // ----------------------------------------------------------------------
 

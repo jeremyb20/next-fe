@@ -4,19 +4,21 @@
 'use client';
 
 import React, { useState } from 'react';
-import { IPetProfile } from '@/src/types/api';
-import Iconify from '@/src/components/iconify';
-import { fDate } from '@/src/utils/format-time';
+import { IPetProfile } from '@//types/api';
+import Iconify from '@//components/iconify';
+import { fDate } from '@//utils/format-time';
 // Importaciones de react-share
 
-import { paths } from '@/src/routes/paths';
+import Image from '@/components/image';
+import { paths } from '@//routes/paths';
+import { RouterLink } from '@/routes/components';
 // import { useTranslation } from 'react-i18next';
-import { BreedOptions } from '@/src/utils/constants';
-import { AvatarShape } from '@/src/assets/illustrations';
-import { useTranslation } from '@/src/hooks/use-translation';
-import { useSettingsContext } from '@/src/components/settings';
-import CardComponent from '@/src/sections/_examples/card-component';
-import SplashScreen from '@/src/components/loading-screen/splash-screen';
+import { BreedOptions } from '@//utils/constants';
+import { AvatarShape } from '@//assets/illustrations';
+import { useTranslation } from '@//hooks/use-translation';
+import { useSettingsContext } from '@//components/settings';
+import CardComponent from '@//sections/_examples/card-component';
+import SplashScreen from '@//components/loading-screen/splash-screen';
 
 import {
   Box,
@@ -39,10 +41,6 @@ import {
   useMediaQuery,
   SwipeableDrawer,
 } from '@mui/material';
-
-import { RouterLink } from 'src/routes/components';
-
-import Image from 'src/components/image';
 
 import ShareButtons from '../share/share-buttons';
 import MedicalControlView from './medical-control-view';

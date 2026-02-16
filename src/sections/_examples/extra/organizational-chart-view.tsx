@@ -1,17 +1,14 @@
 'use client';
 
+import { _mock } from '@/_mock';
+import { paths } from '@/routes/paths';
+import CustomBreadcrumbs from '@/components/custom-breadcrumbs';
+import ComponentHero from '@/sections/_examples/component-hero';
+import OrganizationalChart from '@/components/organizational-chart';
+
 import Stack from '@mui/material/Stack';
 import { useTheme } from '@mui/material/styles';
 import Container from '@mui/material/Container';
-
-import { paths } from 'src/routes/paths';
-
-import { _mock } from 'src/_mock';
-
-import CustomBreadcrumbs from 'src/components/custom-breadcrumbs';
-import OrganizationalChart from 'src/components/organizational-chart';
-
-import ComponentHero from 'src/sections/_examples/component-hero';
 
 import ComponentBlock from '../component-block';
 

@@ -1,4 +1,4 @@
-import { JobListView } from 'src/sections/job/view';
+import { JobListView } from '@/sections/job/view';
 
 // ----------------------------------------------------------------------
 

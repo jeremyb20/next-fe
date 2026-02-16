@@ -1,27 +1,34 @@
 import * as Yup from 'yup';
 import { useMemo } from 'react';
-import { IUser } from '@/src/types/api';
+import { IUser } from '@//types/api';
 import { useForm } from 'react-hook-form';
-import { endpoints } from '@/src/utils/axios';
-import Iconify from '@/src/components/iconify';
-import { HOST_API } from '@/src/config-global';
+import { countries } from '@/assets/data';
+import { endpoints } from '@//utils/axios';
+import Iconify from '@//components/iconify';
+import { HOST_API } from '@//config-global';
+import { useSnackbar } from '@/components/snackbar';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { IPInfoResponse } from '@/src/hooks/use-ip-info';
-import { useCreateGenericMutation } from '@/src/hooks/user-generic-mutation';
+import { IPInfoResponse } from '@//hooks/use-ip-info';
+import { useCreateGenericMutation } from '@//hooks/user-generic-mutation';
+import {
+  USER_ROLE_OPTIONS,
+  USER_STATUS_OPTIONS,
+} from '@//components/filters/filter-constants';
 import {
   CountryCode,
   isValidPhoneNumber,
   parsePhoneNumberFromString,
 } from 'libphonenumber-js';
-import {
-  USER_ROLE_OPTIONS,
-  USER_STATUS_OPTIONS,
-} from '@/src/components/filters/filter-constants';
+import FormProvider, {
+  RHFSelect,
+  RHFTextField,
+  RHFAutocomplete,
+} from '@/components/hook-form';
 import {
   getPhoneHelperText,
   getPhonePlaceholder,
   simplePhoneValidation,
-} from '@/src/utils/phone-validation';
+} from '@//utils/phone-validation';
 
 import Box from '@mui/material/Box';
 import { Stack } from '@mui/system';
@@ -34,15 +41,6 @@ import LoadingButton from '@mui/lab/LoadingButton';
 import DialogTitle from '@mui/material/DialogTitle';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
-
-import { countries } from 'src/assets/data';
-
-import { useSnackbar } from 'src/components/snackbar';
-import FormProvider, {
-  RHFSelect,
-  RHFTextField,
-  RHFAutocomplete,
-} from 'src/components/hook-form';
 
 // ----------------------------------------------------------------------
 

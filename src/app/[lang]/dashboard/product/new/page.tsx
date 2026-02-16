@@ -1,4 +1,4 @@
-import { ProductCreateView } from 'src/sections/product/view';
+import { ProductCreateView } from '@/sections/product/view';
 
 // ----------------------------------------------------------------------
 

@@ -2,11 +2,17 @@
 import * as Yup from 'yup';
 import { useMemo } from 'react';
 import { useForm } from 'react-hook-form';
-import { endpoints } from '@/src/utils/axios';
-import { HOST_API } from '@/src/config-global';
+import { endpoints } from '@//utils/axios';
+import { HOST_API } from '@//config-global';
+import { useSnackbar } from '@/components/snackbar';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useManagerUser } from '@/src/hooks/use-manager-user';
-import { useCreateGenericMutation } from '@/src/hooks/user-generic-mutation';
+import { useManagerUser } from '@//hooks/use-manager-user';
+import { useCreateGenericMutation } from '@//hooks/user-generic-mutation';
+import FormProvider, {
+  RHFSelect,
+  RHFTextField,
+  RHFAutocomplete,
+} from '@/components/hook-form';
 
 import Box from '@mui/material/Box';
 import { Stack } from '@mui/system';
@@ -19,13 +25,6 @@ import DialogTitle from '@mui/material/DialogTitle';
 import { Chip, InputAdornment } from '@mui/material';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
-
-import { useSnackbar } from 'src/components/snackbar';
-import FormProvider, {
-  RHFSelect,
-  RHFTextField,
-  RHFAutocomplete,
-} from 'src/components/hook-form';
 
 // ----------------------------------------------------------------------
 

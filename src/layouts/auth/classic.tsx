@@ -1,9 +1,8 @@
+import Logo from '@/components/logo';
+import { useResponsive } from '@/hooks/use-responsive';
+
 import Stack from '@mui/material/Stack';
 import { Box, Card } from '@mui/material';
-
-import { useResponsive } from 'src/hooks/use-responsive';
-
-import Logo from 'src/components/logo';
 
 import SettingsButton from '../common/settings-button';
 

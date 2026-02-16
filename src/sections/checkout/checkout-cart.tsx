@@ -1,18 +1,16 @@
-import { countries } from '@/src/assets/data';
-import { useAuthContext } from '@/src/auth/hooks';
-import { fCurrency } from '@/src/utils/format-number';
+import { paths } from '@/routes/paths';
+import { countries } from '@//assets/data';
+import Iconify from '@/components/iconify';
+import { useAuthContext } from '@//auth/hooks';
+import { RouterLink } from '@/routes/components';
+import { fCurrency } from '@//utils/format-number';
+import EmptyContent from '@/components/empty-content';
 
 import Card from '@mui/material/Card';
 import Button from '@mui/material/Button';
 import Grid from '@mui/material/Unstable_Grid2';
 import CardHeader from '@mui/material/CardHeader';
 import Typography from '@mui/material/Typography';
-
-import { paths } from 'src/routes/paths';
-import { RouterLink } from 'src/routes/components';
-
-import Iconify from 'src/components/iconify';
-import EmptyContent from 'src/components/empty-content';
 
 import { useCheckoutContext } from './context';
 import CheckoutSummary from './checkout-summary';

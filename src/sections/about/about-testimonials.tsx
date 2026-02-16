@@ -1,4 +1,10 @@
 import { m } from 'framer-motion';
+import { _testimonials } from '@/_mock';
+import Iconify from '@/components/iconify';
+import { fDate } from '@/utils/format-time';
+import { useResponsive } from '@/hooks/use-responsive';
+import { bgBlur, bgGradient, hideScroll } from '@/theme/css';
+import { varFade, MotionViewport } from '@/components/animate';
 
 import Box from '@mui/material/Box';
 import Masonry from '@mui/lab/Masonry';
@@ -11,16 +17,6 @@ import Typography from '@mui/material/Typography';
 import ListItemText from '@mui/material/ListItemText';
 import { alpha, useTheme } from '@mui/material/styles';
 import Stack, { StackProps } from '@mui/material/Stack';
-
-import { useResponsive } from 'src/hooks/use-responsive';
-
-import { fDate } from 'src/utils/format-time';
-
-import { _testimonials } from 'src/_mock';
-import { bgBlur, bgGradient, hideScroll } from 'src/theme/css';
-
-import Iconify from 'src/components/iconify';
-import { varFade, MotionViewport } from 'src/components/animate';
 
 // ----------------------------------------------------------------------
 

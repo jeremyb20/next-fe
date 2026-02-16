@@ -1,5 +1,28 @@
 'use client';
 
+import { paths } from '@/routes/paths';
+import Iconify from '@/components/iconify';
+import Walktour, { useWalktour } from '@/components/walktour';
+import { MotivationIllustration } from '@/assets/illustrations';
+import CustomBreadcrumbs from '@/components/custom-breadcrumbs';
+import ComponentHero from '@/sections/_examples/component-hero';
+import EcommerceWelcome from '@/sections/overview/e-commerce/ecommerce-welcome';
+import EcommerceNewProducts from '@/sections/overview/e-commerce/ecommerce-new-products';
+import EcommerceYearlySales from '@/sections/overview/e-commerce/ecommerce-yearly-sales';
+import EcommerceBestSalesman from '@/sections/overview/e-commerce/ecommerce-best-salesman';
+import EcommerceSaleByGender from '@/sections/overview/e-commerce/ecommerce-sale-by-gender';
+import EcommerceSalesOverview from '@/sections/overview/e-commerce/ecommerce-sales-overview';
+import EcommerceWidgetSummary from '@/sections/overview/e-commerce/ecommerce-widget-summary';
+import EcommerceLatestProducts from '@/sections/overview/e-commerce/ecommerce-latest-products';
+import EcommerceCurrentBalance from '@/sections/overview/e-commerce/ecommerce-current-balance';
+import {
+  _mock,
+  _ecommerceNewProducts,
+  _ecommerceBestSalesman,
+  _ecommerceSalesOverview,
+  _ecommerceLatestProducts,
+} from '@/_mock';
+
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import Paper from '@mui/material/Paper';
@@ -13,32 +36,6 @@ import Grid from '@mui/material/Unstable_Grid2';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import InputAdornment from '@mui/material/InputAdornment';
-
-import { paths } from 'src/routes/paths';
-
-import { MotivationIllustration } from 'src/assets/illustrations';
-import {
-  _mock,
-  _ecommerceNewProducts,
-  _ecommerceBestSalesman,
-  _ecommerceSalesOverview,
-  _ecommerceLatestProducts,
-} from 'src/_mock';
-
-import Iconify from 'src/components/iconify';
-import Walktour, { useWalktour } from 'src/components/walktour';
-import CustomBreadcrumbs from 'src/components/custom-breadcrumbs';
-
-import ComponentHero from 'src/sections/_examples/component-hero';
-import EcommerceWelcome from 'src/sections/overview/e-commerce/ecommerce-welcome';
-import EcommerceNewProducts from 'src/sections/overview/e-commerce/ecommerce-new-products';
-import EcommerceYearlySales from 'src/sections/overview/e-commerce/ecommerce-yearly-sales';
-import EcommerceBestSalesman from 'src/sections/overview/e-commerce/ecommerce-best-salesman';
-import EcommerceSaleByGender from 'src/sections/overview/e-commerce/ecommerce-sale-by-gender';
-import EcommerceSalesOverview from 'src/sections/overview/e-commerce/ecommerce-sales-overview';
-import EcommerceWidgetSummary from 'src/sections/overview/e-commerce/ecommerce-widget-summary';
-import EcommerceLatestProducts from 'src/sections/overview/e-commerce/ecommerce-latest-products';
-import EcommerceCurrentBalance from 'src/sections/overview/e-commerce/ecommerce-current-balance';
 
 // ----------------------------------------------------------------------
 

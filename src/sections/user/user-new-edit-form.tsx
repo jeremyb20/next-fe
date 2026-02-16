@@ -1,7 +1,20 @@
 import * as Yup from 'yup';
+import { paths } from '@/routes/paths';
+import Label from '@/components/label';
+import { IUserItem } from '@/types/user';
+import { countries } from '@/assets/data';
+import { useRouter } from '@/routes/hooks';
 import { useMemo, useCallback } from 'react';
+import { fData } from '@/utils/format-number';
+import { useSnackbar } from '@/components/snackbar';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
+import FormProvider, {
+  RHFSwitch,
+  RHFTextField,
+  RHFUploadAvatar,
+  RHFAutocomplete,
+} from '@/components/hook-form';
 
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
@@ -12,24 +25,6 @@ import Grid from '@mui/material/Unstable_Grid2';
 import Typography from '@mui/material/Typography';
 import LoadingButton from '@mui/lab/LoadingButton';
 import FormControlLabel from '@mui/material/FormControlLabel';
-
-import { paths } from 'src/routes/paths';
-import { useRouter } from 'src/routes/hooks';
-
-import { fData } from 'src/utils/format-number';
-
-import { countries } from 'src/assets/data';
-
-import Label from 'src/components/label';
-import { useSnackbar } from 'src/components/snackbar';
-import FormProvider, {
-  RHFSwitch,
-  RHFTextField,
-  RHFUploadAvatar,
-  RHFAutocomplete,
-} from 'src/components/hook-form';
-
-import { IUserItem } from 'src/types/user';
 
 // ----------------------------------------------------------------------
 

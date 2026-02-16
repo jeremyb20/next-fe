@@ -1,12 +1,11 @@
 // multi-file-preview.tsx
+import { fData } from '@/utils/format-number';
 import { m, AnimatePresence } from 'framer-motion';
 
 import Stack from '@mui/material/Stack';
 import { alpha } from '@mui/material/styles';
 import IconButton from '@mui/material/IconButton';
 import ListItemText from '@mui/material/ListItemText';
-
-import { fData } from 'src/utils/format-number';
 
 import Iconify from '../iconify';
 import { varFade } from '../animate';

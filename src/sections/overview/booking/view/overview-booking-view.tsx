@@ -1,22 +1,21 @@
 'use client';
 
-import { useTheme } from '@mui/material/styles';
-import Container from '@mui/material/Container';
-import Grid from '@mui/material/Unstable_Grid2';
-
+import { useSettingsContext } from '@/components/settings';
 import {
   _bookings,
   _bookingNew,
   _bookingReview,
   _bookingsOverview,
-} from 'src/_mock';
+} from '@/_mock';
 import {
   BookingIllustration,
   CheckInIllustration,
   CheckoutIllustration,
-} from 'src/assets/illustrations';
+} from '@/assets/illustrations';
 
-import { useSettingsContext } from 'src/components/settings';
+import { useTheme } from '@mui/material/styles';
+import Container from '@mui/material/Container';
+import Grid from '@mui/material/Unstable_Grid2';
 
 import BookingBooked from '../booking-booked';
 import BookingNewest from '../booking-newest';

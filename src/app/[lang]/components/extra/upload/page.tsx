@@ -1,4 +1,4 @@
-import UploadView from 'src/sections/_examples/extra/upload-view';
+import UploadView from '@/sections/_examples/extra/upload-view';
 
 // ----------------------------------------------------------------------
 

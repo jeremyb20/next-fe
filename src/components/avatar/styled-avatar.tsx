@@ -1,10 +1,10 @@
+import Image from '@/components/image';
+import Iconify from '@/components/iconify';
+
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import { alpha } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
-
-import Image from 'src/components/image';
-import Iconify from 'src/components/iconify';
 
 // ----------------------------------------------------------------------
 

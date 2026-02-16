@@ -1,6 +1,6 @@
 // reset password view
 
-import ModernResetPasswordView from '@/src/sections/auth-demo/modern/modern-reset-password';
+import ModernResetPasswordView from '@//sections/auth-demo/modern/modern-reset-password';
 
 type Props = {
   params: {

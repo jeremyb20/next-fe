@@ -1,5 +1,5 @@
 // utils/file-helpers.ts
-import { UploadFile } from 'src/components/upload/types';
+import { UploadFile } from '@/components/upload/types';
 
 export const fileData = (file: UploadFile | string | File) => {
   if (typeof file === 'string') {

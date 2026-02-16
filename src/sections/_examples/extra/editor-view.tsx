@@ -1,6 +1,11 @@
 'use client';
 
 import { useState } from 'react';
+import { paths } from '@/routes/paths';
+import Editor from '@/components/editor';
+import Markdown from '@/components/markdown';
+import CustomBreadcrumbs from '@/components/custom-breadcrumbs';
+import ComponentHero from '@/sections/_examples/component-hero';
 
 import Card from '@mui/material/Card';
 import Stack from '@mui/material/Stack';
@@ -10,14 +15,6 @@ import Grid from '@mui/material/Unstable_Grid2';
 import CardHeader from '@mui/material/CardHeader';
 import Typography from '@mui/material/Typography';
 import CardContent from '@mui/material/CardContent';
-
-import { paths } from 'src/routes/paths';
-
-import Editor from 'src/components/editor';
-import Markdown from 'src/components/markdown';
-import CustomBreadcrumbs from 'src/components/custom-breadcrumbs';
-
-import ComponentHero from 'src/sections/_examples/component-hero';
 
 // ----------------------------------------------------------------------
 

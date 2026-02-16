@@ -1,11 +1,10 @@
 import { m } from 'framer-motion';
+import Iconify from '@/components/iconify';
+import { varHover } from '@/components/animate';
 
 import Box from '@mui/material/Box';
 import Masonry from '@mui/lab/Masonry';
 import Fab, { fabClasses } from '@mui/material/Fab';
-
-import Iconify from 'src/components/iconify';
-import { varHover } from 'src/components/animate';
 
 import ComponentBlock from '../../component-block';
 

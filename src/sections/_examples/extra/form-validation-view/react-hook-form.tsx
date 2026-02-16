@@ -1,24 +1,9 @@
 import { useCallback } from 'react';
+import { countries } from '@/assets/data';
+import Iconify from '@/components/iconify';
+import { useBoolean } from '@/hooks/use-boolean';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm, Controller } from 'react-hook-form';
-
-import Box from '@mui/material/Box';
-import Divider from '@mui/material/Divider';
-import MenuItem from '@mui/material/MenuItem';
-import Backdrop from '@mui/material/Backdrop';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import LoadingButton from '@mui/lab/LoadingButton';
-import Stack, { StackProps } from '@mui/material/Stack';
-import InputAdornment from '@mui/material/InputAdornment';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import CircularProgress from '@mui/material/CircularProgress';
-
-import { useBoolean } from 'src/hooks/use-boolean';
-
-import { countries } from 'src/assets/data';
-
-import Iconify from 'src/components/iconify';
 import FormProvider, {
   RHFEditor,
   RHFSelect,
@@ -31,7 +16,19 @@ import FormProvider, {
   RHFMultiSelect,
   RHFAutocomplete,
   RHFMultiCheckbox,
-} from 'src/components/hook-form';
+} from '@/components/hook-form';
+
+import Box from '@mui/material/Box';
+import Divider from '@mui/material/Divider';
+import MenuItem from '@mui/material/MenuItem';
+import Backdrop from '@mui/material/Backdrop';
+import IconButton from '@mui/material/IconButton';
+import Typography from '@mui/material/Typography';
+import LoadingButton from '@mui/lab/LoadingButton';
+import Stack, { StackProps } from '@mui/material/Stack';
+import InputAdornment from '@mui/material/InputAdornment';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import CircularProgress from '@mui/material/CircularProgress';
 
 import { FormSchema } from './schema';
 import ValuesPreview from './values-preview';

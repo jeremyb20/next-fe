@@ -1,4 +1,4 @@
-import { TypographyView } from 'src/sections/_examples/foundation';
+import { TypographyView } from '@/sections/_examples/foundation';
 
 // ----------------------------------------------------------------------
 

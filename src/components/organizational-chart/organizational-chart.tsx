@@ -1,8 +1,7 @@
+import { flattenArray } from '@/utils/flatten-array';
 import { Tree, TreeNode } from 'react-organizational-chart';
 
 import { useTheme } from '@mui/material/styles';
-
-import { flattenArray } from 'src/utils/flatten-array';
 
 import GroupNode from './common/group-node';
 import SimpleNode from './common/simple-node';

@@ -1,15 +1,13 @@
+import Chart from '@/components/chart';
 import { ApexOptions } from 'apexcharts';
+import Iconify from '@/components/iconify';
+import { fNumber, fPercent } from '@/utils/format-number';
 
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import { useTheme } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 import Card, { CardProps } from '@mui/material/Card';
-
-import { fNumber, fPercent } from 'src/utils/format-number';
-
-import Chart from 'src/components/chart';
-import Iconify from 'src/components/iconify';
 
 // ----------------------------------------------------------------------
 
@@ -84,7 +82,6 @@ export default function AppWidgetSummary({
     >
       <Box sx={{ flexGrow: 1 }}>
         <Typography variant="subtitle2">{title}</Typography>
-
         <Stack direction="row" alignItems="center" sx={{ mt: 2, mb: 1 }}>
           <Iconify
             width={24}

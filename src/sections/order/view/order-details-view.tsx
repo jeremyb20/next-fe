@@ -1,16 +1,13 @@
 'use client';
 
+import { paths } from '@/routes/paths';
 import { useState, useCallback } from 'react';
+import { _orders, ORDER_STATUS_OPTIONS } from '@/_mock';
+import { useSettingsContext } from '@/components/settings';
 
 import Stack from '@mui/material/Stack';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Unstable_Grid2';
-
-import { paths } from 'src/routes/paths';
-
-import { _orders, ORDER_STATUS_OPTIONS } from 'src/_mock';
-
-import { useSettingsContext } from 'src/components/settings';
 
 import OrderDetailsInfo from '../order-details-info';
 import OrderDetailsItems from '../order-details-item';

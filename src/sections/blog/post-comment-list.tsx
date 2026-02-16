@@ -1,7 +1,7 @@
+import { IPostComment } from '@/types/blog';
+
 import Box from '@mui/material/Box';
 import Pagination from '@mui/material/Pagination';
-
-import { IPostComment } from 'src/types/blog';
 
 import PostCommentItem from './post-comment-item';
 

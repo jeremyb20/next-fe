@@ -1,25 +1,13 @@
+import { paths } from '@/routes/paths';
 import { useParams } from 'next/navigation';
-import { useState, useEffect, useCallback } from 'react';
-
-import { paths } from 'src/routes/paths'; // Exporta la función
-import { useRouter } from 'src/routes/hooks';
-
-import { SplashScreen } from 'src/components/loading-screen';
+import { useState, useEffect, useCallback } from 'react'; // Exporta la función
+import { useRouter } from '@/routes/hooks';
+import { SplashScreen } from '@/components/loading-screen';
 
 import { useAuthContext } from '../hooks';
 
 // ----------------------------------------------------------------------
 
-// Versión mejorada de loginPaths con rutas completas
-const loginPaths: Record<string, string> = {
-  jwt: '/auth/jwt/login', // Sin el prefijo :lng
-  auth0: '/auth/auth0/login',
-  amplify: '/auth/amplify/login',
-  firebase: '/auth/firebase/login',
-  supabase: '/auth/supabase/login',
-};
-
-// O puedes mantener la estructura original pero con una función helper
 const getLoginPath = (method: string, lng: string) => {
   const basePath = {
     jwt: paths.auth.jwt.login,

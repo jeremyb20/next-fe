@@ -1,5 +1,9 @@
+import { ITourItem } from '@/types/tour';
+import { useRouter } from '@/routes/hooks';
+import Iconify from '@/components/iconify';
 import parse from 'autosuggest-highlight/parse';
 import match from 'autosuggest-highlight/match';
+import SearchNotFound from '@/components/search-not-found';
 
 import Box from '@mui/material/Box';
 import Avatar from '@mui/material/Avatar';
@@ -7,13 +11,6 @@ import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import InputAdornment from '@mui/material/InputAdornment';
 import Autocomplete, { autocompleteClasses } from '@mui/material/Autocomplete';
-
-import { useRouter } from 'src/routes/hooks';
-
-import Iconify from 'src/components/iconify';
-import SearchNotFound from 'src/components/search-not-found';
-
-import { ITourItem } from 'src/types/tour';
 
 // ----------------------------------------------------------------------
 
