@@ -119,7 +119,6 @@ export default function UserPetCardsView() {
 
   const handlePetView = useCallback(
     (pet: IPetProfile) => {
-      console.log('Ver mascota:', pet);
       router.push(paths.dashboard.user.details(pet.memberPetId));
     },
     [router]

@@ -2,7 +2,8 @@
 
 import { useEffect, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useRouter, useParams, usePathname } from '@/routes/hooks';
+import { useRouter, usePathname } from '@/routes/hooks';
+import { localStorageGetItem } from '@/utils/storage-available';
 
 import { allLangs, defaultLang } from './config-lang';
 import { useSettingsContext } from '../components/settings';
@@ -13,9 +14,9 @@ import { getExchangeRate, DEFAULT_CURRENCY } from '../utils/currency-service';
 // ----------------------------------------------------------------------
 
 export function useLocales() {
-  // const langStorage = localStorageGetItem('i18nextLng');
-  const params = useParams();
-  const langStorage = params?.lang as string;
+  const langStorage = localStorageGetItem('i18nextLng');
+  // const params = useParams();
+  // const langStorage = params?.lang as string;
   // Si no hay idioma guardado, usar español por defecto
   if (!langStorage) {
     return {
