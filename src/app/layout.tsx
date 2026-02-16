@@ -1,16 +1,17 @@
 import { DOMAIN, HOST_API } from '../config-global';
 import AppProviders from '../components/providers/AppProviders';
-import { getServerLanguage } from '../utils/get-server-language';
 // ----------------------------------------------------------------------
 
 type Props = {
   children: React.ReactNode;
+  params: { lang: string };
 };
 
-export default async function RootLayout({ children }: Props) {
-  const language = await getServerLanguage();
+export default async function RootLayout({ children, params }: Props) {
+  const lang = params.lang?.toLowerCase() || 'es';
+  const isRTL = lang === 'ar';
   return (
-    <html lang={language.toLowerCase() || 'es'} translate="no">
+    <html lang={lang} dir={isRTL ? 'rtl' : 'ltr'} translate="no">
       <head>
         {/* Meta tags para SEO multilingüe */}
         <link rel="alternate" hrefLang="x-default" href={DOMAIN} />

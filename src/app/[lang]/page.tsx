@@ -1,7 +1,6 @@
 import { Metadata } from 'next';
 import { HomeView } from '@/sections/home/view';
 import { getSeoMetadata } from '@//utils/seo-metadata';
-import { getServerLanguage } from '@//utils/get-server-language';
 
 // ----------------------------------------------------------------------
 
@@ -10,9 +9,12 @@ export async function generateMetadata({
 }: {
   params: { lang: string };
 }): Promise<Metadata> {
-  const language = await getServerLanguage();
-  const lang = params.lang.toUpperCase() || language || 'ES';
-  return getSeoMetadata('home-page-platform', lang || 'ES');
+  // Obtener el idioma de los params, asegurando que sea válido
+  const lang = params?.lang?.toUpperCase() || 'ES';
+  const supportedLanguages = ['ES', 'EN', 'AR', 'VI', 'ZH', 'FR'];
+  const validLang = supportedLanguages.includes(lang) ? lang : 'ES';
+
+  return getSeoMetadata('home-page-platform', validLang);
 }
 
 export default function HomePage() {
