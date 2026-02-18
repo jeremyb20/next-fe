@@ -109,7 +109,7 @@ export default function HomeFeatures() {
                 sx={{ mx: 'auto', width: 64, height: 64 }}
               />
 
-              <Typography variant="h5" sx={{ mt: 8, mb: 2 }}>
+              <Typography variant="h3" sx={{ mt: 8, mb: 2 }}>
                 {t(feature.title)}
               </Typography>
 

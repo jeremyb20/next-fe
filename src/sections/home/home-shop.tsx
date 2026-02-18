@@ -52,7 +52,7 @@ export default function HomeShop() {
           <Typography variant="h2"> {t('Affiliate Store')}</Typography>
         </m.div>
         <m.div variants={varFade().inUp}>
-          <Typography variant="h6" color="text.secondary">
+          <Typography variant="h5" color="text.secondary">
             {t('Exclusive discounts on products for your pet')}
           </Typography>
         </m.div>

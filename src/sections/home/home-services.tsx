@@ -41,7 +41,7 @@ export default function HomeServices() {
           <Typography variant="h2">{t('Available Services')}</Typography>
         </m.div>
         <m.div variants={varFade().inUp}>
-          <Typography variant="h6" color="text.secondary">
+          <Typography variant="h4" color="text.secondary">
             {t('Everything you need for your well-being in one place')}
           </Typography>
         </m.div>

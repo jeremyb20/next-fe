@@ -16,7 +16,7 @@ const BLOG_POSTS = [
     excerpt:
       'Learn the basic care your new puppy needs during its first few months...',
     image:
-      'https://www.kiwoko.com/blogmundoanimal/wp-content/uploads/2020/01/cuidados-de-cachorros.jpg',
+      '/assets/images/home/Tips-and-useful-information-for-caring-for-your-pet.webp',
     date: '15 Nov 2024',
     category: 'Care',
   },
@@ -24,8 +24,7 @@ const BLOG_POSTS = [
     title: 'Healthy nutrition for adult pets',
     excerpt:
       "Discover how to choose the best diet according to your pet's breed, size and activity...",
-    image:
-      'https://es.banfield.com/-/media/Project/Banfield/Main/en/PHADO/Diet/Hub/Main-header/20190721_001_1920x400.jpeg?rev=cb2ef18b8917450d8c0804029df3f98f',
+    image: '/assets/images/home/Healthy-nutrition-for-adult-pets.webp',
     date: '12 Nov 2024',
     category: 'Nutrition',
   },
@@ -33,8 +32,7 @@ const BLOG_POSTS = [
     title: 'Signs of Alert in Your Pets Health',
     excerpt:
       'Learn the signs that indicate your pet needs immediate veterinary attention...',
-    image:
-      'https://www.infobae.com/resizer/v2/36VBXCTIG5CMDDB7OYRSNLAD7I.jpg?auth=055acf591d810d969bf439536337ae1a7fc63230a3504bc257b2354963ef2c8d&smart=true&width=992&height=558&quality=85',
+    image: '/assets/images/home/Signs-of-Alert-in-Your-Pets-Health.webp',
     date: '10 Nov 2024',
     category: 'Health',
   },
@@ -53,7 +51,7 @@ export default function HomeBlog() {
             </Typography>
           </m.div>
           <m.div variants={varFade().inUp}>
-            <Typography variant="h6" color="text.secondary">
+            <Typography variant="h3" color="text.secondary">
               {t('Tips and useful information for your pet care')}
             </Typography>
           </m.div>
@@ -82,10 +80,10 @@ export default function HomeBlog() {
                 <Box
                   component="img"
                   src={post.image}
-                  alt={post.title}
+                  alt={t(post.title)}
+                  width="100%" // Mantiene el responsive
+                  height={200} // Altura fija en píxeles
                   sx={{
-                    width: '100%',
-                    height: 200,
                     objectFit: 'cover',
                   }}
                 />
@@ -93,7 +91,7 @@ export default function HomeBlog() {
                 <Stack spacing={2} sx={{ p: 3, flexGrow: 1 }}>
                   <Stack direction="row" spacing={2} alignItems="center">
                     <Typography variant="caption" color="primary.main">
-                      {post.category}
+                      {t(post.category)}
                     </Typography>
                     <Typography variant="caption" color="text.disabled">
                       {post.date}

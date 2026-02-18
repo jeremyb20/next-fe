@@ -159,7 +159,7 @@ function TestimonialCard({ testimonial }: TestimonialCardProps) {
           />
 
           <Box>
-            <Typography variant="h6" gutterBottom>
+            <Typography variant="h5" gutterBottom>
               {testimonial.name}
             </Typography>
 
