@@ -1,13 +1,13 @@
 'use client';
 
 import { useCallback } from 'react';
-import { languages } from '@//app/i18n/settings';
+import { languages, fallbackLng } from '@//app/i18n/settings';
 import { useParams, useRouter as useNextRouter } from 'next/navigation';
 
 export function useRouter() {
   const router = useNextRouter();
   const params = useParams();
-  const currentLng = (params?.lang as string) || 'zh';
+  const currentLng = (params?.lang as string) || fallbackLng;
   const localizeHref = useCallback(
     (href: string, targetLng?: string): string => {
       if (

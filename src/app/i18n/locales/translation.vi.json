@@ -185,6 +185,7 @@
   "Already have an account?": "Đã có tài khoản?",
   "By registering, I agree to": "Bằng việc đăng ký, tôi đồng ý với",
   "Terms and Conditions": "Điều khoản và Điều kiện",
+  "Privacy Policy": "Chính sách Bảo mật",
   "and": "và",
   "First name": "Tên",
   "Last name": "Họ",
@@ -355,5 +356,8 @@
   "The message must be at least 10 characters long.": "Tin nhắn phải có ít nhất 10 ký tự.",
   "We would love to hear from you, friend": "Chúng tôi rất muốn nghe từ bạn, bạn ơi",
   "Message sent successfully! We will contact you shortly.": "Gửi tin nhắn thành công! Chúng tôi sẽ liên hệ với bạn trong thời gian ngắn.",
-  "There was an error sending the message. Please try again.": "Đã xảy ra lỗi khi gửi tin nhắn. Vui lòng thử lại."
+  "There was an error sending the message. Please try again.": "Đã xảy ra lỗi khi gửi tin nhắn. Vui lòng thử lại.",
+  "Password reset instructions.": "Hướng dẫn đặt lại mật khẩu đã được gửi đến email của bạn. Vui lòng kiểm tra thư mục spam nếu bạn không thấy email trong hộp thư đến chính.",
+  "The new password must be different from the previous one.": "Mật khẩu mới phải khác với mật khẩu trước đó.",
+  "Internal server error, please try again later.": "Lỗi máy chủ nội bộ, vui lòng thử lại sau."
 }

@@ -10,7 +10,7 @@ import { fallbackLng } from '../app/i18n/settings';
 
 export function useTranslation(ns?: string) {
   const params = useParams();
-  const lng = (params?.lng as string) || fallbackLng;
+  const lng = (params?.lang as string) || fallbackLng;
   const { t, i18n } = useTranslationOrg(ns);
   const [mounted, setMounted] = useState(false);
 

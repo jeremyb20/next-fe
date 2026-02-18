@@ -185,6 +185,7 @@
   "Already have an account?": "Already have an account?",
   "By registering, I agree to": "By registering, I agree to",
   "Terms and Conditions": "Terms and Conditions",
+  "Privacy Policy": "Privacy Policy",
   "and": "and",
   "First name": "First name",
   "Last name": "Last name",
@@ -355,5 +356,8 @@
   "The message must be at least 10 characters long.": "The message must be at least 10 characters long.",
   "We would love to hear from you, friend": "We would love to hear from you, friend",
   "Message sent successfully! We will contact you shortly.": "Message sent successfully! We will contact you shortly.",
-  "There was an error sending the message. Please try again.": "There was an error sending the message. Please try again."
+  "There was an error sending the message. Please try again.": "There was an error sending the message. Please try again.",
+  "Password reset instructions.": "Password reset instructions have been sent to your email address. Please check your spam folder if you do not see it in your inbox.",
+  "The new password must be different from the previous one.": "The new password must be different from the previous one.",
+  "Internal server error, please try again later.": "Internal server error, please try again later."
 }

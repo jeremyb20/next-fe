@@ -185,6 +185,7 @@
   "Already have an account?": "已有账户？",
   "By registering, I agree to": "注册即表示我同意",
   "Terms and Conditions": "条款和条件",
+  "Privacy Policy": "隐私政策",
   "and": "和",
   "First name": "名字",
   "Last name": "姓氏",
@@ -355,5 +356,8 @@
   "The message must be at least 10 characters long.": "消息必须至少10个字符长。",
   "We would love to hear from you, friend": "朋友，我们很乐意收到您的消息",
   "Message sent successfully! We will contact you shortly.": "消息发送成功！我们将很快与您联系。",
-  "There was an error sending the message. Please try again.": "发送消息时出错。请再试一次。"
+  "There was an error sending the message. Please try again.": "发送消息时出错。请再试一次。",
+  "Password reset instructions.": "密码重置说明已发送至您的邮箱。若未在收件箱中看到邮件，请检查垃圾邮件文件夹。",
+  "The new password must be different from the previous one.": "新密码必须与之前的密码不同。",
+  "Internal server error, please try again later.": "内部服务器错误，请稍后重试。"
 }

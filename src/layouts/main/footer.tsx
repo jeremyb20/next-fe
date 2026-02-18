@@ -32,12 +32,12 @@ const LINKS = [
   {
     headline: 'Legal',
     children: [
-      { name: 'Terms and Condition', href: '/terms-and-conditions' },
+      { name: 'Terms and Conditions', href: '/terms-and-conditions' },
       { name: 'Privacy Policy', href: '/privacy-policy' },
     ],
   },
   {
-    headline: 'Contact',
+    headline: 'Contact us',
     children: [{ name: EMAIL_SUPPORT, href: '#' }],
   },
 ];
@@ -159,7 +159,7 @@ export default function Footer() {
                   sx={{ width: 1 }}
                 >
                   <Typography component="div" variant="overline">
-                    {list.headline}
+                    {t(list.headline)}
                   </Typography>
 
                   {list.children.map((link) => (
@@ -170,7 +170,7 @@ export default function Footer() {
                       color="inherit"
                       variant="body2"
                     >
-                      {link.name}
+                      {t(link.name)}
                     </Link>
                   ))}
                 </Stack>

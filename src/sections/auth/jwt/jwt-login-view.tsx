@@ -120,6 +120,7 @@ export default function JwtLoginView() {
         }}
       />
       <Link
+        component={RouterLink}
         variant="body2"
         color="inherit"
         underline="always"

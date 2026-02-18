@@ -1,7 +1,7 @@
 import { paths } from '@/routes/paths';
-import { useParams } from 'next/navigation';
 import { useState, useEffect, useCallback } from 'react'; // Exporta la función
-import { useRouter } from '@/routes/hooks';
+import { fallbackLng } from '@/app/i18n/settings';
+import { useParams, useRouter } from '@/routes/hooks';
 import { SplashScreen } from '@/components/loading-screen';
 
 import { useAuthContext } from '../hooks';
@@ -43,7 +43,7 @@ export default function AuthGuard({ children }: Props) {
 function Container({ children }: Props) {
   const router = useRouter();
   const params = useParams();
-  const lng = (params?.lng as string) || 'es';
+  const lng = (params?.lang as string) || fallbackLng;
 
   const { authenticated, method } = useAuthContext();
   const [checked, setChecked] = useState(false);

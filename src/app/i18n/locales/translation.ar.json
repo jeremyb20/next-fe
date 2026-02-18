@@ -185,6 +185,7 @@
   "Already have an account?": "هل لديك حساب بالفعل؟",
   "By registering, I agree to": "بالتسجيل، أوافق على",
   "Terms and Conditions": "الشروط والأحكام",
+  "Privacy Policy": "سياسة الخصوصية",
   "and": "و",
   "First name": "الاسم الأول",
   "Last name": "اسم العائلة",
@@ -355,5 +356,8 @@
   "The message must be at least 10 characters long.": "يجب أن تتكون الرسالة من 10 أحرف على الأقل.",
   "We would love to hear from you, friend": "نود أن نسمع منك يا صديقي",
   "Message sent successfully! We will contact you shortly.": "تم إرسال الرسالة بنجاح! سوف نتصل بك قريباً.",
-  "There was an error sending the message. Please try again.": "حدث خطأ في إرسال الرسالة. يرجى المحاولة مرة أخرى."
+  "There was an error sending the message. Please try again.": "حدث خطأ في إرسال الرسالة. يرجى المحاولة مرة أخرى.",
+  "Password reset instructions.": "تم إرسال تعليمات إعادة تعيين كلمة المرور إلى بريدك الإلكتروني. راجع مجلد البريد العشوائي إذا لم تجدها في صندوق الوارد الرئيسي.",
+  "The new password must be different from the previous one.": "يجب أن تكون كلمة المرور الجديدة مختلفة عن السابقة.",
+  "Internal server error, please try again later.": "خطأ داخلي في الخادم، يرجى المحاولة مرة أخرى لاحقًا."
 }

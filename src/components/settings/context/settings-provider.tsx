@@ -55,7 +55,7 @@ export function SettingsProvider({
     refetch: refetchSettings,
   } = useGetUserSettings();
 
-  const isArabic = localStorageGetItem('i18next') === 'ar';
+  const isArabic = localStorageGetItem('i18nextLng') === 'ar';
 
   useEffect(() => {
     if (isArabic) {

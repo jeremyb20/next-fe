@@ -185,6 +185,7 @@
   "Already have an account?": "Vous avez déjà un compte ?",
   "By registering, I agree to": "En m'inscrivant, j'accepte les",
   "Terms and Conditions": "Conditions Générales",
+  "Privacy Policy": "Politique de Confidentialité",
   "and": "et",
   "First name": "Prénom",
   "Last name": "Nom de famille",
@@ -355,5 +356,8 @@
   "The message must be at least 10 characters long.": "Le message doit comporter au moins 10 caractères.",
   "We would love to hear from you, friend": "Nous serions ravis d'avoir de vos nouvelles, mon ami",
   "Message sent successfully! We will contact you shortly.": "Message envoyé avec succès ! Nous vous contacterons sous peu.",
-  "There was an error sending the message. Please try again.": "Une erreur s'est produite lors de l'envoi du message. Veuillez réessayer."
+  "There was an error sending the message. Please try again.": "Une erreur s'est produite lors de l'envoi du message. Veuillez réessayer.",
+  "Password reset instructions.": "Les instructions pour réinitialiser votre mot de passe ont été envoyées à votre adresse e-mail. Vérifiez votre dossier spam si vous ne les voyez pas dans votre boîte de réception principale.",
+  "The new password must be different from the previous one.": "Le nouveau mot de passe doit être différent de l'ancien.",
+  "Internal server error, please try again later.": "Erreur interne du serveur, veuillez réessayer plus tard."
 }

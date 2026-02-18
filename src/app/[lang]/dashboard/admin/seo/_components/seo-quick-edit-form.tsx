@@ -91,11 +91,9 @@ const CHANGE_FREQUENCY_OPTIONS = [
 const LANGUAGE_OPTIONS = [
   { value: 'ES', label: 'Spanish' },
   { value: 'EN', label: 'English' },
+  { value: 'AR', label: 'Arabic' },
+  { value: 'VI', label: 'Vietnamese' },
   { value: 'FR', label: 'French' },
-  { value: 'DE', label: 'German' },
-  { value: 'IT', label: 'Italian' },
-  { value: 'PT', label: 'Portuguese' },
-  { value: 'JA', label: 'Japanese' },
   { value: 'ZH', label: 'Chinese' },
 ];
 
