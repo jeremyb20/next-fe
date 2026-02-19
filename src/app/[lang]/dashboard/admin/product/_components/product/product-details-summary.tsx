@@ -7,7 +7,7 @@ import { IProductItem } from '@/types/product';
 import { ICheckoutItem } from '@/types/checkout';
 import { useForm, Controller } from 'react-hook-form';
 import { ColorPicker } from '@/components/color-utils';
-import { inventoryStatusOptions } from '@//utils/constants';
+import { inventoryStatusOptions } from '@/utils/constants';
 import FormProvider, { RHFSelect } from '@/components/hook-form';
 import { fCurrency, fShortenNumber } from '@/utils/format-number';
 

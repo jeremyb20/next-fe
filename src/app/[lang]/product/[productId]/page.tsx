@@ -1,10 +1,10 @@
 /* eslint-disable object-shorthand */
 import { Metadata } from 'next';
-import { paths } from '@//routes/paths';
-import { endpoints } from '@//utils/axios';
-import { IProductItem } from '@//types/product';
-import { DOMAIN, HOST_API } from '@//config-global';
-import { ProductShopDetailsView } from '@//sections/product/view';
+import { paths } from '@/routes/paths';
+import { endpoints } from '@/utils/axios';
+import { IProductItem } from '@/types/product';
+import { DOMAIN, HOST_API } from '@/config-global';
+import { ProductShopDetailsView } from '@/sections/product/view';
 
 import NotFoundPage from '../../../not-found';
 

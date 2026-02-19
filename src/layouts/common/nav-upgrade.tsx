@@ -1,8 +1,8 @@
 import { useSnackbar } from 'notistack';
-import Iconify from '@//components/iconify';
-import { useAuthContext } from '@//auth/hooks';
-import { useRouter } from '@//routes/hooks/use-router';
-import { useManagerUser } from '@//hooks/use-manager-user';
+import Iconify from '@/components/iconify';
+import { useAuthContext } from '@/auth/hooks';
+import { useRouter } from '@/routes/hooks/use-router';
+import { useManagerUser } from '@/hooks/use-manager-user';
 
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';

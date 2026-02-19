@@ -2,13 +2,13 @@
 
 'use client';
 
-import { endpoints } from '@//utils/axios';
+import { endpoints } from '@/utils/axios';
 import { HOST_API } from '@/config-global';
 import Iconify from '@/components/iconify';
-import { NotificationData } from '@//types/api';
+import { NotificationData } from '@/types/api';
 import { useRef, useState, useEffect, useCallback } from 'react';
-import { getApplicationServerKey } from '@//utils/notifications';
-import { useCreateGenericMutation } from '@//hooks/user-generic-mutation';
+import { getApplicationServerKey } from '@/utils/notifications';
+import { useCreateGenericMutation } from '@/hooks/user-generic-mutation';
 
 import {
   Box,

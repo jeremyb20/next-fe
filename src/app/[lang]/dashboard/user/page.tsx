@@ -1,6 +1,6 @@
 // ----------------------------------------------------------------------
 
-import { AccountView } from '@//sections/account/view';
+import { AccountView } from '@/sections/account/view';
 
 export const metadata = {
   title: 'Dashboard: User Profile',

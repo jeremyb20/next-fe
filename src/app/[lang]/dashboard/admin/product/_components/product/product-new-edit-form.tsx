@@ -1,25 +1,25 @@
 import * as Yup from 'yup';
-import { paths } from '@//routes/paths';
+import { paths } from '@/routes/paths';
 import { useForm } from 'react-hook-form';
-import { endpoints } from '@//utils/axios';
+import { endpoints } from '@/utils/axios';
 import { useRouter } from '@/routes/hooks';
-import { HOST_API } from '@//config-global';
-import Iconify from '@//components/iconify';
-import useIPInfo from '@//hooks/use-ip-info';
+import { HOST_API } from '@/config-global';
+import Iconify from '@/components/iconify';
+import useIPInfo from '@/hooks/use-ip-info';
 import { IProductItem } from '@/types/product';
-import { useCurrency } from '@//hooks/use-currency';
+import { useCurrency } from '@/hooks/use-currency';
 import { useSnackbar } from '@/components/snackbar';
-import { countries } from '@//assets/data/countries';
+import { countries } from '@/assets/data/countries';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useResponsive } from '@/hooks/use-responsive';
 import { useMemo, useState, useEffect, useCallback } from 'react';
-import { fCurrency, getLocaleCode } from '@//utils/format-number';
-import { useCreateGenericMutation } from '@//hooks/user-generic-mutation';
+import { fCurrency, getLocaleCode } from '@/utils/format-number';
+import { useCreateGenericMutation } from '@/hooks/user-generic-mutation';
 import {
   getPhoneHelperText,
   getPhonePlaceholder,
   simplePhoneValidation,
-} from '@//utils/phone-validation';
+} from '@/utils/phone-validation';
 import {
   _tags,
   PRODUCT_SIZE_OPTIONS,

@@ -19,6 +19,11 @@ export const navConfig = [
     path: paths.contact,
     icon: <Iconify icon="solar:bell-bing-bold-duotone" />,
   },
+  {
+    title: 'FAQs',
+    path: paths.faqs,
+    icon: <Iconify icon="solar:question-circle-bold-duotone" />,
+  },
   // {
   //   title: 'Components',
   //   icon: <Iconify icon="solar:atom-bold-duotone" />,

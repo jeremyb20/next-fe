@@ -1,9 +1,9 @@
 import Label from '@/components/label';
-import { paths } from '@//routes/paths';
+import { paths } from '@/routes/paths';
 import { useRouter } from '@/routes/hooks';
 import { fTime, fDate } from '@/utils/format-time';
-import { useCurrency } from '@//hooks/use-currency';
-import { inventoryStatusOptions } from '@//utils/constants';
+import { useCurrency } from '@/hooks/use-currency';
+import { inventoryStatusOptions } from '@/utils/constants';
 
 import Box from '@mui/material/Box';
 import Link from '@mui/material/Link';

@@ -1,12 +1,12 @@
 import { _socials } from '@/_mock';
 import Logo from '@/components/logo';
 import { paths } from '@/routes/paths';
-import Label from '@//components/label';
+import Label from '@/components/label';
 import Iconify from '@/components/iconify';
 import { usePathname } from '@/routes/hooks';
 import { useTranslation } from 'react-i18next';
 import { RouterLink } from '@/routes/components';
-import { APP_NAME, EMAIL_SUPPORT } from '@//config-global';
+import { APP_NAME, EMAIL_SUPPORT } from '@/config-global';
 
 import Box from '@mui/material/Box';
 import Link from '@mui/material/Link';
@@ -71,7 +71,7 @@ export default function Footer() {
             {APP_NAME}.{' '}
           </Link>
           <Link
-            href={paths.auth.jwt.login}
+            href={paths.auth.signIn}
             target="_blank"
             rel="noopener"
             underline="none"
@@ -137,6 +137,8 @@ export default function Footer() {
               {_socials.map((social) => (
                 <IconButton
                   key={social.name}
+                  aria-label={social.name}
+                  onClick={() => window.open(social.path, '_blank')}
                   sx={{
                     '&:hover': {
                       bgcolor: alpha(social.color, 0.08),
@@ -187,7 +189,7 @@ export default function Footer() {
             {APP_NAME}.{' '}
           </Link>
           <Link
-            href={paths.auth.jwt.login}
+            href={paths.auth.signIn}
             target="_blank"
             rel="noopener"
             underline="none"

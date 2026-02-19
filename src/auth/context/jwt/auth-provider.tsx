@@ -1,8 +1,8 @@
 'use client';
 
-import { STORAGE_KEY } from '@//config-global';
+import { STORAGE_KEY } from '@/config-global';
 import axios, { endpoints } from '@/utils/axios';
-import { SettingsValueProps } from '@//components/settings';
+import { SettingsValueProps } from '@/components/settings';
 import { useRef, useMemo, useEffect, useReducer, useCallback } from 'react';
 
 import { AuthContext } from './auth-context';
@@ -144,7 +144,7 @@ export function AuthProvider({ children }: Props) {
         password,
       };
 
-      const loginRes = await axios.post(endpoints.auth.login, data);
+      const loginRes = await axios.post(endpoints.auth.signIn, data);
 
       // Verificar si la respuesta es exitosa
       if (!loginRes.data.success) {

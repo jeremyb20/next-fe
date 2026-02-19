@@ -1,6 +1,6 @@
 'use client';
 
-import { useManagerUser } from '@//hooks/use-manager-user';
+import { useManagerUser } from '@/hooks/use-manager-user';
 import { useSettingsContext } from '@/components/settings';
 import { MotivationIllustration } from '@/assets/illustrations';
 import {

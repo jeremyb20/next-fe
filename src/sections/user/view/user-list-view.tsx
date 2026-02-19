@@ -14,7 +14,7 @@ import { useSnackbar } from '@/components/snackbar';
 import { ConfirmDialog } from '@/components/custom-dialog';
 import { useSettingsContext } from '@/components/settings';
 import CustomBreadcrumbs from '@/components/custom-breadcrumbs';
-import { USER_STATUS_OPTIONS } from '@//components/filters/filter-constants';
+import { USER_STATUS_OPTIONS } from '@/components/filters/filter-constants';
 import {
   IUserItem,
   IUserTableFilters,

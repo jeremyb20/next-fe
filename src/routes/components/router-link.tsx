@@ -1,7 +1,7 @@
 // import { forwardRef } from 'react';
 // import Link, { LinkProps } from 'next/link';
-// import { fallbackLng } from '@//app/i18n/settings';
-// import { localStorageGetItem } from '@//utils/storage-available';
+// import { fallbackLng } from '@/app/i18n/settings';
+// import { localStorageGetItem } from '@/utils/storage-available';
 
 // // ----------------------------------------------------------------------
 
@@ -39,7 +39,7 @@
 import { forwardRef } from 'react';
 import Link, { LinkProps } from 'next/link';
 import { useParams } from 'next/navigation';
-import { fallbackLng } from '@//app/i18n/settings';
+import { fallbackLng } from '@/app/i18n/settings';
 
 // ----------------------------------------------------------------------
 

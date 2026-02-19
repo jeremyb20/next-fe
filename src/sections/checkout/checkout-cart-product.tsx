@@ -1,7 +1,7 @@
 import Label from '@/components/label';
 import Iconify from '@/components/iconify';
 import { ICheckoutItem } from '@/types/checkout';
-import { useCurrency } from '@//hooks/use-currency';
+import { useCurrency } from '@/hooks/use-currency';
 import { ColorPreview } from '@/components/color-utils';
 
 import Box from '@mui/material/Box';

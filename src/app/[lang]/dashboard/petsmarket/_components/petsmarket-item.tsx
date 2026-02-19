@@ -1,11 +1,11 @@
 import { paths } from '@/routes/paths';
 import Image from '@/components/image';
 import Iconify from '@/components/iconify';
-import { IProductItem } from '@//types/product';
+import { IProductItem } from '@/types/product';
 import { fDateTime } from '@/utils/format-time';
 import { RouterLink } from '@/routes/components';
 import { fCurrency } from '@/utils/format-number';
-import { inventoryStatusOptions } from '@//utils/constants';
+import { inventoryStatusOptions } from '@/utils/constants';
 import CustomPopover, { usePopover } from '@/components/custom-popover';
 
 import Box from '@mui/material/Box';

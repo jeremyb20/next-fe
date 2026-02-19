@@ -1,19 +1,19 @@
 import * as Yup from 'yup';
 import { useMemo } from 'react';
-import { IUser } from '@//types/api';
+import { IUser } from '@/types/api';
 import { useForm } from 'react-hook-form';
 import { countries } from '@/assets/data';
-import { endpoints } from '@//utils/axios';
-import Iconify from '@//components/iconify';
-import { HOST_API } from '@//config-global';
+import { endpoints } from '@/utils/axios';
+import Iconify from '@/components/iconify';
+import { HOST_API } from '@/config-global';
 import { useSnackbar } from '@/components/snackbar';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { IPInfoResponse } from '@//hooks/use-ip-info';
-import { useCreateGenericMutation } from '@//hooks/user-generic-mutation';
+import { IPInfoResponse } from '@/hooks/use-ip-info';
+import { useCreateGenericMutation } from '@/hooks/user-generic-mutation';
 import {
   USER_ROLE_OPTIONS,
   USER_STATUS_OPTIONS,
-} from '@//components/filters/filter-constants';
+} from '@/components/filters/filter-constants';
 import {
   CountryCode,
   isValidPhoneNumber,
@@ -28,7 +28,7 @@ import {
   getPhoneHelperText,
   getPhonePlaceholder,
   simplePhoneValidation,
-} from '@//utils/phone-validation';
+} from '@/utils/phone-validation';
 
 import Box from '@mui/material/Box';
 import { Stack } from '@mui/system';

@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import keyBy from 'lodash/keyBy';
 import useSWR, { mutate } from 'swr';
-import axios, { fetcher, endpoints } from '@//utils/axios';
+import axios, { fetcher, endpoints } from '@/utils/axios';
 import {
   IChatMessage,
   IChatParticipant,

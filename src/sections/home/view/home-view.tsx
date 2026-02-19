@@ -4,7 +4,7 @@ import MainLayout from '@/layouts/main';
 import { useScroll } from 'framer-motion';
 import { useState, useEffect } from 'react';
 import ScrollProgress from '@/components/scroll-progress';
-import { SplashScreen } from '@//components/loading-screen';
+import { SplashScreen } from '@/components/loading-screen';
 
 import Box from '@mui/material/Box';
 import { styled } from '@mui/material/styles';

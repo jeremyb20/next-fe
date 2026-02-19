@@ -2,10 +2,10 @@
 import { m } from 'framer-motion';
 import Carousel from 'react-slick';
 import Iconify from '@/components/iconify';
-import { APP_NAME } from '@//config-global';
+import { APP_NAME } from '@/config-global';
 import { useTranslation } from 'react-i18next';
 import { useResponsive } from '@/hooks/use-responsive';
-import useCarousel from '@//components/carousel/use-carousel';
+import useCarousel from '@/components/carousel/use-carousel';
 import { varFade, MotionViewport } from '@/components/animate';
 
 import Box from '@mui/material/Box';

@@ -3,7 +3,7 @@ import Logo from '@/components/logo';
 import { usePathname } from '@/routes/hooks';
 import Scrollbar from '@/components/scrollbar';
 import { useResponsive } from '@/hooks/use-responsive';
-import { useManagerUser } from '@//hooks/use-manager-user';
+import { useManagerUser } from '@/hooks/use-manager-user';
 import { NavSectionVertical } from '@/components/nav-section';
 
 import Box from '@mui/material/Box';

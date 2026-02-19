@@ -4,7 +4,7 @@ import { fDate } from '@/utils/format-time';
 import { IUserProfilePost } from '@/types/user';
 import { useRef, useState, useCallback } from 'react';
 import { fShortenNumber } from '@/utils/format-number';
-import { useManagerUser } from '@//hooks/use-manager-user';
+import { useManagerUser } from '@/hooks/use-manager-user';
 
 import Box from '@mui/material/Box';
 import Link from '@mui/material/Link';

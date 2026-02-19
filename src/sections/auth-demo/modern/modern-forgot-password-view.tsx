@@ -5,17 +5,17 @@ import { useState } from 'react';
 import { paths } from '@/routes/paths';
 import { useSnackbar } from 'notistack';
 import { useForm } from 'react-hook-form';
-import { endpoints } from '@//utils/axios';
+import { endpoints } from '@/utils/axios';
 import Iconify from '@/components/iconify';
 import { useParams } from '@/routes/hooks';
-import { HOST_API } from '@//config-global';
+import { HOST_API } from '@/config-global';
 import { PasswordIcon } from '@/assets/icons';
 import { useTranslation } from 'react-i18next';
 import { RouterLink } from '@/routes/components';
 import { fallbackLng } from '@/app/i18n/settings';
 import { yupResolver } from '@hookform/resolvers/yup';
 import FormProvider, { RHFTextField } from '@/components/hook-form';
-import { useCreateGenericMutation } from '@//hooks/user-generic-mutation';
+import { useCreateGenericMutation } from '@/hooks/user-generic-mutation';
 
 import Link from '@mui/material/Link';
 import { Alert } from '@mui/material';
@@ -100,7 +100,7 @@ export default function ModernForgotPasswordView() {
 
       <Link
         component={RouterLink}
-        href={paths.auth.login}
+        href={paths.auth.signIn}
         color="inherit"
         variant="subtitle2"
         sx={{

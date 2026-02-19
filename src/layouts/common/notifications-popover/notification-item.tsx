@@ -1,7 +1,7 @@
 import Label from '@/components/label';
-import Iconify from '@//components/iconify';
+import Iconify from '@/components/iconify';
 import { fToNow } from '@/utils/format-time';
-import { NotificationData } from '@//types/api';
+import { NotificationData } from '@/types/api';
 import FileThumbnail from '@/components/file-thumbnail';
 
 import Box from '@mui/material/Box';

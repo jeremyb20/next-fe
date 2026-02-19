@@ -1,4 +1,4 @@
-import { BreedOptions } from '@//utils/constants';
+import { BreedOptions } from '@/utils/constants';
 
 /**
  * Determina la especie (dog o cat) basada en la raza seleccionada

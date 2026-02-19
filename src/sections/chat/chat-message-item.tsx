@@ -1,6 +1,6 @@
 import Iconify from '@/components/iconify';
 import { formatDistanceToNowStrict } from 'date-fns';
-import { useManagerUser } from '@//hooks/use-manager-user';
+import { useManagerUser } from '@/hooks/use-manager-user';
 import { IChatMessage, IChatParticipant } from '@/types/chat';
 
 import Box from '@mui/material/Box';

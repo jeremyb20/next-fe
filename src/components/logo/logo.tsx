@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import { forwardRef } from 'react';
-import { LOGO } from '@//config-global';
+import { LOGO } from '@/config-global';
 import { useAuthContext } from '@/auth/hooks';
 import { RouterLink } from '@/routes/components';
 

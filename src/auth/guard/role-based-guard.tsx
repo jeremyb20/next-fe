@@ -1,5 +1,5 @@
 import { m } from 'framer-motion';
-import { useManagerUser } from '@//hooks/use-manager-user';
+import { useManagerUser } from '@/hooks/use-manager-user';
 import { ForbiddenIllustration } from '@/assets/illustrations';
 import { varBounce, MotionContainer } from '@/components/animate';
 

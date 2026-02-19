@@ -1,4 +1,4 @@
-// import axios, { endpoints } from '@//utils/axios';
+// import axios, { endpoints } from '@/utils/axios';
 
 // import { ProductEditView } from '@/sections/product/view';
 

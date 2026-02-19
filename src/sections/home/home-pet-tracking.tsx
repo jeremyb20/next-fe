@@ -1,5 +1,5 @@
 import { m } from 'framer-motion';
-import Iconify from '@//components/iconify';
+import Iconify from '@/components/iconify';
 import { useTranslation } from 'react-i18next';
 import { varFade, MotionViewport } from '@/components/animate';
 

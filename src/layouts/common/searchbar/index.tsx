@@ -7,7 +7,7 @@ import match from 'autosuggest-highlight/match';
 import { useBoolean } from '@/hooks/use-boolean';
 import { memo, useState, useCallback } from 'react';
 import { useResponsive } from '@/hooks/use-responsive';
-import { useManagerUser } from '@//hooks/use-manager-user';
+import { useManagerUser } from '@/hooks/use-manager-user';
 import SearchNotFound from '@/components/search-not-found';
 import { useEventListener } from '@/hooks/use-event-listener';
 

@@ -124,7 +124,7 @@ export default function ContactMap({ contacts }: Props) {
 
 // import Map from 'react-map-gl';
 // import { useState } from 'react';
-// import Iconify from '@//components/iconify';
+// import Iconify from '@/components/iconify';
 
 // import Box from '@mui/material/Box';
 // import Button from '@mui/material/Button';

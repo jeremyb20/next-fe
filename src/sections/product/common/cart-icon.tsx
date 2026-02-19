@@ -1,6 +1,6 @@
 import { paths } from '@/routes/paths';
 import Iconify from '@/components/iconify';
-import { useAuthContext } from '@//auth/hooks';
+import { useAuthContext } from '@/auth/hooks';
 import { RouterLink } from '@/routes/components';
 
 import Box from '@mui/material/Box';

@@ -1,6 +1,6 @@
 import Iconify from '@/components/iconify';
 import { useState, useCallback } from 'react';
-import { useManagerUser } from '@//hooks/use-manager-user';
+import { useManagerUser } from '@/hooks/use-manager-user';
 import CustomPopover, { usePopover } from '@/components/custom-popover';
 
 import Stack from '@mui/material/Stack';

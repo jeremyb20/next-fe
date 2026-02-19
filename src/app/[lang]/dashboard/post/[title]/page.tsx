@@ -1,5 +1,5 @@
 // import { paramCase } from '@/utils/change-case';
-// import axios, { endpoints } from '@//utils/axios';
+// import axios, { endpoints } from '@/utils/axios';
 
 import { PostDetailsView } from '@/sections/blog/view';
 

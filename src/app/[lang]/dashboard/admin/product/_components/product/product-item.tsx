@@ -6,7 +6,7 @@ import { IProductItem } from '@/types/product';
 import { RouterLink } from '@/routes/components';
 import { fCurrency } from '@/utils/format-number';
 import { ColorPreview } from '@/components/color-utils';
-import { useCheckoutContext } from '@//sections/checkout/context';
+import { useCheckoutContext } from '@/sections/checkout/context';
 
 import Fab from '@mui/material/Fab';
 import Box from '@mui/material/Box';

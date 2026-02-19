@@ -2,22 +2,22 @@
 
 import * as Yup from 'yup';
 import { useSnackbar } from 'notistack';
-import { endpoints } from '@//utils/axios';
+import { endpoints } from '@/utils/axios';
 import { useRouter } from '@/routes/hooks';
-import { OptionType } from '@//types/global';
+import { OptionType } from '@/types/global';
 import { useTranslation } from 'react-i18next';
-import { useAuthContext } from '@//auth/hooks';
-import { fData } from '@//utils/format-number';
+import { useAuthContext } from '@/auth/hooks';
+import { fData } from '@/utils/format-number';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useState, useEffect, useCallback } from 'react';
-import { HOST_API, PATH_AFTER_LOGIN } from '@//config-global';
-import UploadAvatar from '@//components/upload/upload-avatar';
-import { PetAgeCalculator } from '@//utils/pet-age-calculator';
-import { BreedOptions, GENDER_OPTIONS } from '@//utils/constants';
-import useCelebrationConfetti from '@//hooks/use-celebration-confetti';
-import { useCreateGenericMutation } from '@//hooks/user-generic-mutation';
-import { getDogSizeFromBreed, getSpeciesFromBreed } from '@//utils/pet-utils';
+import { HOST_API, PATH_AFTER_LOGIN } from '@/config-global';
+import UploadAvatar from '@/components/upload/upload-avatar';
+import { PetAgeCalculator } from '@/utils/pet-age-calculator';
+import { BreedOptions, GENDER_OPTIONS } from '@/utils/constants';
+import useCelebrationConfetti from '@/hooks/use-celebration-confetti';
+import { useCreateGenericMutation } from '@/hooks/user-generic-mutation';
+import { getDogSizeFromBreed, getSpeciesFromBreed } from '@/utils/pet-utils';
 import FormProvider, {
   RHFSelect,
   RHFTextField,

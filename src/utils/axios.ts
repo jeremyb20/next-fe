@@ -40,7 +40,7 @@ export const fetcher = async (args: string | [string, AxiosRequestConfig]) => {
 export const endpoints = {
   auth: {
     me: '/api/user/me',
-    login: '/api/user/email/sign-in',
+    signIn: '/api/user/email/sign-in',
     registerAccountWithEmail: '/api/user/email/registerAccountWithEmail',
   },
   notification: {

@@ -1,7 +1,7 @@
 // components/medical-records/deworming-list.tsx
 import React from 'react';
-import Iconify from '@//components/iconify';
-import { IDewormingFormData } from '@//interfaces/medical-record';
+import Iconify from '@/components/iconify';
+import { IDewormingFormData } from '@/interfaces/medical-record';
 
 import {
   Box,

@@ -3,7 +3,7 @@
 import { paths } from '@/routes/paths';
 import Iconify from '@/components/iconify';
 import { useState, useCallback } from 'react';
-import { useManagerUser } from '@//hooks/use-manager-user';
+import { useManagerUser } from '@/hooks/use-manager-user';
 import { useSettingsContext } from '@/components/settings';
 import CustomBreadcrumbs from '@/components/custom-breadcrumbs';
 import {

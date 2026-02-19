@@ -1,17 +1,17 @@
 import * as Yup from 'yup';
 import { useMemo } from 'react';
-import { IUser } from '@//types/api';
+import { IUser } from '@/types/api';
 import { useForm } from 'react-hook-form';
-import { endpoints } from '@//utils/axios';
-import Iconify from '@//components/iconify';
-import { HOST_API } from '@//config-global';
+import { endpoints } from '@/utils/axios';
+import Iconify from '@/components/iconify';
+import { HOST_API } from '@/config-global';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useManagerUser } from '@//hooks/use-manager-user';
-import { useCreateGenericMutation } from '@//hooks/user-generic-mutation';
+import { useManagerUser } from '@/hooks/use-manager-user';
+import { useCreateGenericMutation } from '@/hooks/user-generic-mutation';
 import {
   getPhoneHelperText,
   getPhonePlaceholder,
-} from '@//utils/phone-validation';
+} from '@/utils/phone-validation';
 import {
   CountryCode,
   isValidPhoneNumber,
@@ -31,10 +31,10 @@ import LoadingButton from '@mui/lab/LoadingButton';
 
 import { countries } from '@/assets/data';
 import { useTranslation } from 'react-i18next';
-import { useAuthContext } from '@//auth/hooks';
-import { useBoolean } from '@//hooks/use-boolean';
+import { useAuthContext } from '@/auth/hooks';
+import { useBoolean } from '@/hooks/use-boolean';
 import { useSnackbar } from '@/components/snackbar';
-import StyledAvatar from '@//components/avatar/styled-avatar';
+import StyledAvatar from '@/components/avatar/styled-avatar';
 import FormProvider, {
   RHFSwitch,
   RHFTextField,

@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 import { paths } from '@/routes/paths';
 import { useRouter } from '@/routes/hooks';
-import { IProductItem } from '@//types/product';
+import { IProductItem } from '@/types/product';
 
 import Box from '@mui/material/Box';
 import Pagination, { paginationClasses } from '@mui/material/Pagination';

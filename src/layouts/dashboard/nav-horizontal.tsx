@@ -1,7 +1,7 @@
 import { memo } from 'react';
 import { bgBlur } from '@/theme/css';
 import Scrollbar from '@/components/scrollbar';
-import { useManagerUser } from '@//hooks/use-manager-user';
+import { useManagerUser } from '@/hooks/use-manager-user';
 import { NavSectionHorizontal } from '@/components/nav-section';
 
 import AppBar from '@mui/material/AppBar';

@@ -2,10 +2,10 @@ import { paths } from '@/routes/paths';
 import Label from '@/components/label';
 import Image from '@/components/image';
 import Iconify from '@/components/iconify';
-import { useAuthContext } from '@//auth/hooks';
+import { useAuthContext } from '@/auth/hooks';
 import { IProductItem } from '@/types/product';
 import { RouterLink } from '@/routes/components';
-import { useCurrency } from '@//hooks/use-currency';
+import { useCurrency } from '@/hooks/use-currency';
 import { ColorPreview } from '@/components/color-utils';
 
 import Fab from '@mui/material/Fab';

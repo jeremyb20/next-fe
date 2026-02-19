@@ -5,7 +5,7 @@ import { clickConversation } from '@/api/chat';
 import { IChatConversation } from '@/types/chat';
 import { formatDistanceToNowStrict } from 'date-fns';
 import { useResponsive } from '@/hooks/use-responsive';
-import { useManagerUser } from '@//hooks/use-manager-user';
+import { useManagerUser } from '@/hooks/use-manager-user';
 
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';

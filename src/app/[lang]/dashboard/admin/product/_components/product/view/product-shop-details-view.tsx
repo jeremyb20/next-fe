@@ -8,7 +8,7 @@ import { RouterLink } from '@/routes/components';
 import EmptyContent from '@/components/empty-content';
 import { useSettingsContext } from '@/components/settings';
 import CustomBreadcrumbs from '@/components/custom-breadcrumbs';
-import { useCheckoutContext } from '@//sections/checkout/context';
+import { useCheckoutContext } from '@/sections/checkout/context';
 
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';

@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 import { countries } from '@/assets/data';
 import { useSnackbar } from '@/components/snackbar';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { USER_STATUS_OPTIONS } from '@//components/filters/filter-constants';
+import { USER_STATUS_OPTIONS } from '@/components/filters/filter-constants';
 import FormProvider, {
   RHFSelect,
   RHFTextField,

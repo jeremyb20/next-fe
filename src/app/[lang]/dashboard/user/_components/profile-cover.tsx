@@ -1,6 +1,6 @@
-import { LOGO } from '@//config-global';
+import { LOGO } from '@/config-global';
 import { bgGradient } from '@/theme/css';
-import { fDate } from '@//utils/format-time';
+import { fDate } from '@/utils/format-time';
 import { IUserProfileCover } from '@/types/user';
 
 import Box from '@mui/material/Box';

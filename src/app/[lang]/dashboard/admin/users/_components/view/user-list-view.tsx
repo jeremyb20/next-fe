@@ -1,26 +1,26 @@
 'use client';
 
-import { IUser } from '@//types/api';
+import { IUser } from '@/types/api';
 import { paths } from '@/routes/paths';
 import { useRouter } from '@/routes/hooks';
 import Iconify from '@/components/iconify';
-import useIPInfo from '@//hooks/use-ip-info';
+import useIPInfo from '@/hooks/use-ip-info';
 import Scrollbar from '@/components/scrollbar';
 import { RouterLink } from '@/routes/components';
 import { useBoolean } from '@/hooks/use-boolean';
 import { useSnackbar } from '@/components/snackbar';
 import { useMemo, useState, useCallback } from 'react';
-import EmptyContent from '@//components/empty-content';
+import EmptyContent from '@/components/empty-content';
 import { isAfter, isBetween } from '@/utils/format-time';
 import { ConfirmDialog } from '@/components/custom-dialog';
 import { useSettingsContext } from '@/components/settings';
 import CustomBreadcrumbs from '@/components/custom-breadcrumbs';
-import FilterToolbar from '@//components/filters/filter-toolbar';
-import { ADMIN_USER_FILTER_TOOLBAR } from '@//components/filters/filter-constants';
+import FilterToolbar from '@/components/filters/filter-toolbar';
+import { ADMIN_USER_FILTER_TOOLBAR } from '@/components/filters/filter-constants';
 import {
   UserQueryParams,
   useGetAllRegisteredUsers,
-} from '@//hooks/use-fetch-paginated';
+} from '@/hooks/use-fetch-paginated';
 import {
   useTable,
   TableNoData,

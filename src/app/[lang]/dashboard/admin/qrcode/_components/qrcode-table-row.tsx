@@ -1,13 +1,13 @@
 /* eslint-disable no-nested-ternary */
 import { useState } from 'react';
-import { IQrCode } from '@//types/api';
+import { IQrCode } from '@/types/api';
 import Label from '@/components/label';
 import Iconify from '@/components/iconify';
 import { useBoolean } from '@/hooks/use-boolean';
-import { BreedOptions } from '@//utils/constants';
+import { BreedOptions } from '@/utils/constants';
 import { fDate, fTime } from '@/utils/format-time';
 import { ConfirmDialog } from '@/components/custom-dialog';
-import { QrcodeCustom } from '@//components/qr-generator/qr-codes';
+import { QrcodeCustom } from '@/components/qr-generator/qr-codes';
 import CustomPopover, { usePopover } from '@/components/custom-popover';
 
 import Paper from '@mui/material/Paper';

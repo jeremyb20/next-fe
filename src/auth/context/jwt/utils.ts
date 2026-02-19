@@ -1,6 +1,6 @@
-import axios from '@//utils/axios';
+import axios from '@/utils/axios';
 import { paths } from '@/routes/paths';
-import { STORAGE_KEY } from '@//config-global';
+import { STORAGE_KEY } from '@/config-global';
 
 // ----------------------------------------------------------------------
 
@@ -52,7 +52,7 @@ export const tokenExpired = (exp: number) => {
     // sessionStorage.removeItem(STORAGE_KEY
     localStorage.removeItem(STORAGE_KEY);
 
-    window.location.href = paths.auth.login;
+    window.location.href = paths.auth.signIn;
   }, timeLeft);
 };
 

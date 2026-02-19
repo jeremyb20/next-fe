@@ -1,5 +1,5 @@
 import Iconify from '@/components/iconify';
-import { useManagerUser } from '@//hooks/use-manager-user';
+import { useManagerUser } from '@/hooks/use-manager-user';
 
 import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';

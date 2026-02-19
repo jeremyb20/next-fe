@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { m } from 'framer-motion';
-import { EMAIL_SUPPORT } from '@//config-global';
+import { EMAIL_SUPPORT } from '@/config-global';
 import { varFade, MotionViewport } from '@/components/animate';
 
 import Box from '@mui/material/Box';

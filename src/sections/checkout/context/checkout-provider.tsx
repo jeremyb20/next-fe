@@ -3,7 +3,7 @@
 import uniq from 'lodash/uniq';
 import { paths } from '@/routes/paths';
 import { useRouter } from '@/routes/hooks';
-import { useAuthContext } from '@//auth/hooks';
+import { useAuthContext } from '@/auth/hooks';
 import { IAddressItem } from '@/types/address';
 import { ICheckoutItem } from '@/types/checkout';
 import { useMemo, useEffect, useCallback } from 'react';

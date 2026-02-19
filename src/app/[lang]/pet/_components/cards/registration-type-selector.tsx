@@ -2,8 +2,8 @@
 
 'use client';
 
-import Iconify from '@//components/iconify';
-import { APP_NAME } from '@//config-global';
+import Iconify from '@/components/iconify';
+import { APP_NAME } from '@/config-global';
 
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';

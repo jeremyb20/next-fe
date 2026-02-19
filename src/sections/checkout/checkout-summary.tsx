@@ -1,5 +1,5 @@
 import Iconify from '@/components/iconify';
-import { useCurrency } from '@//hooks/use-currency';
+import { useCurrency } from '@/hooks/use-currency';
 
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';

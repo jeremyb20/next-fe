@@ -1,13 +1,13 @@
 import * as Yup from 'yup';
-import { IQrCode } from '@//types/api';
+import { IQrCode } from '@/types/api';
 import { useForm } from 'react-hook-form';
-import { endpoints } from '@//utils/axios';
-import { HOST_API } from '@//config-global';
+import { endpoints } from '@/utils/axios';
+import { HOST_API } from '@/config-global';
 import { useSnackbar } from '@/components/snackbar';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useResponsive } from '@/hooks/use-responsive';
 import { useMemo, Dispatch, useEffect, SetStateAction } from 'react';
-import { useCreateGenericMutation } from '@//hooks/user-generic-mutation';
+import { useCreateGenericMutation } from '@/hooks/user-generic-mutation';
 import FormProvider, { RHFSelect, RHFTextField } from '@/components/hook-form';
 
 import Box from '@mui/material/Box';

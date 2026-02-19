@@ -6,26 +6,26 @@ import { useForm } from 'react-hook-form';
 import { countries } from '@/assets/data';
 import Iconify from '@/components/iconify';
 import { useState, useEffect } from 'react';
-import useIPInfo from '@//hooks/use-ip-info';
+import useIPInfo from '@/hooks/use-ip-info';
 import { useAuthContext } from '@/auth/hooks';
 import { useTranslation } from 'react-i18next';
 import { RouterLink } from '@/routes/components';
 import { useBoolean } from '@/hooks/use-boolean';
 import { PATH_AFTER_LOGIN } from '@/config-global';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useSettingsContext } from '@//components/settings';
+import { useSettingsContext } from '@/components/settings';
 import { useRouter, useSearchParams } from '@/routes/hooks';
 import FormProvider, {
   RHFTextField,
   RHFAutocomplete,
 } from '@/components/hook-form';
-import PrivacyPolicyModal from '@//app/[lang]/privacy-policy/_components/privacy-policy-modal';
-import TermsAndConditionsModal from '@//app/[lang]/terms-and-conditions/_components/terms-and-condition-modal';
+import PrivacyPolicyModal from '@/app/[lang]/privacy-policy/_components/privacy-policy-modal';
+import TermsAndConditionsModal from '@/app/[lang]/terms-and-conditions/_components/terms-and-condition-modal';
 import {
   getPhoneHelperText,
   getPhonePlaceholder,
   simplePhoneValidation,
-} from '@//utils/phone-validation';
+} from '@/utils/phone-validation';
 
 import { Box } from '@mui/material';
 import Link from '@mui/material/Link';
@@ -154,7 +154,7 @@ export default function JwtRegisterView() {
         </Typography>
 
         <Link
-          href={paths.auth.login}
+          href={paths.auth.signIn}
           component={RouterLink}
           variant="subtitle2"
         >

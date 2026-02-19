@@ -1,8 +1,8 @@
 // components/seo-table-row.tsx
-import { ISeo } from '@//types/api';
+import { ISeo } from '@/types/api';
 import Iconify from '@/components/iconify';
 import { useBoolean } from '@/hooks/use-boolean';
-import { fDate, fTime } from '@//utils/format-time';
+import { fDate, fTime } from '@/utils/format-time';
 import CustomPopover, { usePopover } from '@/components/custom-popover';
 
 import MenuItem from '@mui/material/MenuItem';

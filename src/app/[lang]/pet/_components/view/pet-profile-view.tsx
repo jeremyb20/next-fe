@@ -4,21 +4,21 @@
 'use client';
 
 import React, { useState } from 'react';
-import { IPetProfile } from '@//types/api';
-import Iconify from '@//components/iconify';
-import { fDate } from '@//utils/format-time';
+import { IPetProfile } from '@/types/api';
+import Iconify from '@/components/iconify';
+import { fDate } from '@/utils/format-time';
 // Importaciones de react-share
 
 import Image from '@/components/image';
-import { paths } from '@//routes/paths';
+import { paths } from '@/routes/paths';
 import { RouterLink } from '@/routes/components';
 // import { useTranslation } from 'react-i18next';
-import { BreedOptions } from '@//utils/constants';
-import { AvatarShape } from '@//assets/illustrations';
-import { useTranslation } from '@//hooks/use-translation';
-import { useSettingsContext } from '@//components/settings';
-import CardComponent from '@//sections/_examples/card-component';
-import SplashScreen from '@//components/loading-screen/splash-screen';
+import { BreedOptions } from '@/utils/constants';
+import { AvatarShape } from '@/assets/illustrations';
+import { useTranslation } from '@/hooks/use-translation';
+import { useSettingsContext } from '@/components/settings';
+import CardComponent from '@/sections/_examples/card-component';
+import SplashScreen from '@/components/loading-screen/splash-screen';
 
 import {
   Box,

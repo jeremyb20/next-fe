@@ -4,7 +4,7 @@ import { useRouter } from '@/routes/hooks';
 import { useAuthContext } from '@/auth/hooks';
 import { varHover } from '@/components/animate';
 import { useSnackbar } from '@/components/snackbar';
-import { useManagerUser } from '@//hooks/use-manager-user';
+import { useManagerUser } from '@/hooks/use-manager-user';
 import CustomPopover, { usePopover } from '@/components/custom-popover';
 
 import Box from '@mui/material/Box';

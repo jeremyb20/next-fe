@@ -1,4 +1,4 @@
-import axiosInstance, { endpoints } from '@//utils/axios';
+import axiosInstance, { endpoints } from '@/utils/axios';
 import { useQuery, keepPreviousData } from '@tanstack/react-query';
 import {
   IQRStats,
@@ -7,7 +7,7 @@ import {
   QueryOptions,
   NotificationData,
   IUserSettingsResponse,
-} from '@//types/api';
+} from '@/types/api';
 
 import { useAuthContext } from '../auth/hooks';
 

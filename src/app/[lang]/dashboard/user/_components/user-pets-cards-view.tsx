@@ -3,23 +3,23 @@
 'use client';
 
 import { useSnackbar } from 'notistack';
-import { paths } from '@//routes/paths';
+import { paths } from '@/routes/paths';
 import { useRouter } from '@/routes/hooks';
 import Iconify from '@/components/iconify';
 import { isAfter } from '@/utils/format-time';
-import { IUser, IPetProfile } from '@//types/api';
-import { useBoolean } from '@//hooks/use-boolean';
+import { IUser, IPetProfile } from '@/types/api';
+import { useBoolean } from '@/hooks/use-boolean';
 import { useMemo, useState, useCallback } from 'react';
-import { useManagerUser } from '@//hooks/use-manager-user';
-import { useSettingsContext } from '@//components/settings';
-import FilterToolbar from '@//components/filters/filter-toolbar';
-import { PetsGrid } from '@//app/[lang]/pet/_components/cards/pet-grid';
-import { PET_FILTER_TOOLBAR } from '@//components/filters/filter-constants';
+import { useManagerUser } from '@/hooks/use-manager-user';
+import { useSettingsContext } from '@/components/settings';
+import FilterToolbar from '@/components/filters/filter-toolbar';
+import { PetsGrid } from '@/app/[lang]/pet/_components/cards/pet-grid';
+import { PET_FILTER_TOOLBAR } from '@/components/filters/filter-constants';
 import {
   UserQueryParams,
   useGetAllPetsByUser,
-} from '@//hooks/use-fetch-paginated';
-import RegisterPetByUserModal from '@//app/[lang]/pet/_components/modals/register-pet-by-user-modal';
+} from '@/hooks/use-fetch-paginated';
+import RegisterPetByUserModal from '@/app/[lang]/pet/_components/modals/register-pet-by-user-modal';
 
 import { Box } from '@mui/system';
 import {

@@ -3,7 +3,7 @@ import { paths } from '@/routes/paths';
 import Iconify from '@/components/iconify';
 import SvgColor from '@/components/svg-color';
 import { useTranslation } from 'react-i18next';
-import { NavItemBaseProps } from '@//components/nav-section';
+import { NavItemBaseProps } from '@/components/nav-section';
 
 // ----------------------------------------------------------------------
 

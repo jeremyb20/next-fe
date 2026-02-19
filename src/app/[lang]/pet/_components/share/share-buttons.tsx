@@ -1,5 +1,5 @@
 import React from 'react';
-import { IPetProfile } from '@//types/api';
+import { IPetProfile } from '@/types/api';
 import { useTranslation } from 'react-i18next';
 import {
   EmailShareButton,

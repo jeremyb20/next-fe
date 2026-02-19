@@ -3,8 +3,8 @@
 import { paths } from '@/routes/paths';
 import Iconify from '@/components/iconify';
 import { useState, useCallback } from 'react';
-import { useAuthContext } from '@//auth/hooks';
-import { IProductItem } from '@//types/product';
+import { useAuthContext } from '@/auth/hooks';
+import { IProductItem } from '@/types/product';
 import { RouterLink } from '@/routes/components';
 import EmptyContent from '@/components/empty-content';
 import { useSettingsContext } from '@/components/settings';

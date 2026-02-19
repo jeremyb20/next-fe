@@ -1,27 +1,27 @@
 /* eslint-disable no-nested-ternary */
 import * as Yup from 'yup';
-import { endpoints } from '@//utils/axios';
-import { countries } from '@//assets/data';
-import { HOST_API } from '@//config-global';
-import Iconify from '@//components/iconify';
-import { OptionType } from '@//types/global';
-import { fData } from '@//utils/format-number';
-import { IUser, IPetProfile } from '@//types/api';
+import { endpoints } from '@/utils/axios';
+import { countries } from '@/assets/data';
+import { HOST_API } from '@/config-global';
+import Iconify from '@/components/iconify';
+import { OptionType } from '@/types/global';
+import { fData } from '@/utils/format-number';
+import { IUser, IPetProfile } from '@/types/api';
 import { useSnackbar } from '@/components/snackbar';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import UploadAvatar from '@//components/upload/upload-avatar';
-import CardComponent from '@//sections/_examples/card-component';
+import UploadAvatar from '@/components/upload/upload-avatar';
+import CardComponent from '@/sections/_examples/card-component';
 import { useMemo, useState, useEffect, useCallback } from 'react';
-import CustomPopover, { usePopover } from '@//components/custom-popover';
-import { useCreateGenericMutation } from '@//hooks/user-generic-mutation';
-import { parseWeight, BreedOptions, GENDER_OPTIONS } from '@//utils/constants';
-import MedicalControlView from '@//app/[lang]/pet/_components/view/medical-control-view';
+import CustomPopover, { usePopover } from '@/components/custom-popover';
+import { useCreateGenericMutation } from '@/hooks/user-generic-mutation';
+import { parseWeight, BreedOptions, GENDER_OPTIONS } from '@/utils/constants';
+import MedicalControlView from '@/app/[lang]/pet/_components/view/medical-control-view';
 import {
   getPhoneHelperText,
   getPhonePlaceholder,
   simplePhoneValidation,
-} from '@//utils/phone-validation';
+} from '@/utils/phone-validation';
 import FormProvider, {
   RHFSelect,
   RHFSwitch,

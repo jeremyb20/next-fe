@@ -1,14 +1,14 @@
 'use client';
 
 import isEqual from 'lodash/isEqual';
-import { endpoints } from '@//utils/axios';
-import { HOST_API } from '@//config-global';
-import { useAuthContext } from '@//auth/hooks';
-import { useGetUserSettings } from '@//hooks/use-fetch';
+import { endpoints } from '@/utils/axios';
+import { HOST_API } from '@/config-global';
+import { useAuthContext } from '@/auth/hooks';
+import { useGetUserSettings } from '@/hooks/use-fetch';
 import { useLocalStorage } from '@/hooks/use-local-storage';
 import { localStorageGetItem } from '@/utils/storage-available';
 import { useRef, useMemo, useState, useEffect, useCallback } from 'react';
-import { useCreateGenericMutation } from '@//hooks/user-generic-mutation';
+import { useCreateGenericMutation } from '@/hooks/user-generic-mutation';
 
 import { SettingsValueProps } from '../types';
 import { SettingsContext } from './settings-context';

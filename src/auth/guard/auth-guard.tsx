@@ -10,11 +10,12 @@ import { useAuthContext } from '../hooks';
 
 const getLoginPath = (method: string, lng: string) => {
   const basePath = {
-    jwt: paths.auth.jwt.login,
+    jwt: paths.auth.signIn,
     auth0: paths.auth.auth0.login,
     amplify: paths.auth.amplify.login,
     firebase: paths.auth.firebase.login,
     supabase: paths.auth.supabase.login,
+    signIn: paths.auth.signIn,
   }[method];
 
   // Si la ruta ya tiene :lng, lo reemplazamos

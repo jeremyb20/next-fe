@@ -2,7 +2,7 @@ import Box from '@mui/material/Box';
 
 // import { IUserCard } from '@/types/user';
 
-import { IPetProfile } from '@//types/api';
+import { IPetProfile } from '@/types/api';
 
 import UserCard from './user-card';
 

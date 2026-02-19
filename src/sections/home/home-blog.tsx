@@ -1,5 +1,5 @@
 import { m } from 'framer-motion';
-import { APP_NAME } from '@//config-global';
+import { APP_NAME } from '@/config-global';
 import { useTranslation } from 'react-i18next';
 import { varFade, MotionViewport } from '@/components/animate';
 

@@ -1,5 +1,5 @@
 import Iconify from '@/components/iconify';
-import { RoleBasedGuard } from '@//auth/guard';
+import { RoleBasedGuard } from '@/auth/guard';
 import { RouterLink } from '@/routes/components';
 import CustomPopover, { usePopover } from '@/components/custom-popover';
 

@@ -1,7 +1,7 @@
 'use client';
 
 import { useCallback } from 'react';
-import { languages, fallbackLng } from '@//app/i18n/settings';
+import { languages, fallbackLng } from '@/app/i18n/settings';
 import { useParams, useRouter as useNextRouter } from 'next/navigation';
 
 export function useRouter() {

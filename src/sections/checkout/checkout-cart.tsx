@@ -1,9 +1,9 @@
 import { paths } from '@/routes/paths';
-import { countries } from '@//assets/data';
+import { countries } from '@/assets/data';
 import Iconify from '@/components/iconify';
-import { useAuthContext } from '@//auth/hooks';
+import { useAuthContext } from '@/auth/hooks';
 import { RouterLink } from '@/routes/components';
-import { fCurrency } from '@//utils/format-number';
+import { fCurrency } from '@/utils/format-number';
 import EmptyContent from '@/components/empty-content';
 
 import Card from '@mui/material/Card';

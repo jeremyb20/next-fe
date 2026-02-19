@@ -2,7 +2,7 @@
 
 import { m } from 'framer-motion';
 import orderBy from 'lodash/orderBy';
-import { RoleBasedGuard } from '@//auth/guard';
+import { RoleBasedGuard } from '@/auth/guard';
 import { varFade, MotionContainer } from '@/components/animate';
 
 import Link from '@mui/material/Link';

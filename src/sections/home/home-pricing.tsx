@@ -3,7 +3,7 @@ import { _homePlans } from '@/_mock';
 import { paths } from '@/routes/paths';
 import Iconify from '@/components/iconify';
 import { useState, useCallback } from 'react';
-import { EMAIL_SUPPORT } from '@//config-global';
+import { EMAIL_SUPPORT } from '@/config-global';
 import { useResponsive } from '@/hooks/use-responsive';
 import { varFade, MotionViewport } from '@/components/animate';
 

@@ -1,17 +1,17 @@
 import { paths } from '@/routes/paths';
 import Label from '@/components/label';
-import { countries } from '@//assets/data';
+import { countries } from '@/assets/data';
 import { useRouter } from '@/routes/hooks';
 import Iconify from '@/components/iconify';
 import { useEffect, useCallback } from 'react';
-import { useAuthContext } from '@//auth/hooks';
+import { useAuthContext } from '@/auth/hooks';
 import { IProductItem } from '@/types/product';
 import { ICheckoutItem } from '@/types/checkout';
-import { useCurrency } from '@//hooks/use-currency';
+import { useCurrency } from '@/hooks/use-currency';
 import { useForm, Controller } from 'react-hook-form';
 import { fShortenNumber } from '@/utils/format-number';
 import { ColorPicker } from '@/components/color-utils';
-import { inventoryStatusOptions } from '@//utils/constants';
+import { inventoryStatusOptions } from '@/utils/constants';
 import FormProvider, { RHFSelect } from '@/components/hook-form';
 
 import Box from '@mui/material/Box';

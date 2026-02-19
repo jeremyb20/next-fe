@@ -3,25 +3,25 @@
 import * as Yup from 'yup';
 import { useSnackbar } from 'notistack';
 import { countries } from '@/assets/data';
-import { endpoints } from '@//utils/axios';
+import { endpoints } from '@/utils/axios';
 import { useRouter } from '@/routes/hooks';
-import Iconify from '@//components/iconify';
-import { OptionType } from '@//types/global';
-import useIPInfo from '@//hooks/use-ip-info';
+import Iconify from '@/components/iconify';
+import { OptionType } from '@/types/global';
+import useIPInfo from '@/hooks/use-ip-info';
+import { fData } from '@/utils/format-number';
 import { useTranslation } from 'react-i18next';
-import { fData } from '@//utils/format-number';
-import { useBoolean } from '@//hooks/use-boolean';
+import { useBoolean } from '@/hooks/use-boolean';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { getValidationCode } from '@//hooks/use-fetch';
+import { getValidationCode } from '@/hooks/use-fetch';
 import { useState, useEffect, useCallback } from 'react';
-import { HOST_API, PATH_AFTER_LOGIN } from '@//config-global';
-import UploadAvatar from '@//components/upload/upload-avatar';
-import { PetAgeCalculator } from '@//utils/pet-age-calculator';
-import { BreedOptions, GENDER_OPTIONS } from '@//utils/constants';
-import useCelebrationConfetti from '@//hooks/use-celebration-confetti';
-import { useCreateGenericMutation } from '@//hooks/user-generic-mutation';
-import { getDogSizeFromBreed, getSpeciesFromBreed } from '@//utils/pet-utils';
+import { HOST_API, PATH_AFTER_LOGIN } from '@/config-global';
+import UploadAvatar from '@/components/upload/upload-avatar';
+import { PetAgeCalculator } from '@/utils/pet-age-calculator';
+import { BreedOptions, GENDER_OPTIONS } from '@/utils/constants';
+import useCelebrationConfetti from '@/hooks/use-celebration-confetti';
+import { useCreateGenericMutation } from '@/hooks/user-generic-mutation';
+import { getDogSizeFromBreed, getSpeciesFromBreed } from '@/utils/pet-utils';
 import FormProvider, {
   RHFSelect,
   RHFTextField,
@@ -31,7 +31,7 @@ import {
   getPhoneHelperText,
   getPhonePlaceholder,
   simplePhoneValidation,
-} from '@//utils/phone-validation';
+} from '@/utils/phone-validation';
 
 import Box from '@mui/material/Box';
 import Step from '@mui/material/Step';

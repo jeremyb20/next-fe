@@ -96,7 +96,8 @@ export const paths = {
       newPassword: `${ROOTS.AUTH}/supabase/new-password`,
       forgotPassword: `${ROOTS.AUTH}/supabase/forgot-password`,
     },
-    login: `${ROOTS.AUTH}/login`,
+    signIn: withLang('/sign-in'),
+    signUp: withLang('/sign-up'),
     register: `${ROOTS.AUTH}/register`,
     verify: `${ROOTS.AUTH}/verify`,
     forgotPassword: withLang('/forgot'), // Directo sin ROOTS

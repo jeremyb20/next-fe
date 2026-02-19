@@ -3,7 +3,7 @@
 import { paths } from '@/routes/paths';
 import { IChatParticipant } from '@/types/chat';
 import { useState, useEffect, useCallback } from 'react';
-import { useManagerUser } from '@//hooks/use-manager-user';
+import { useManagerUser } from '@/hooks/use-manager-user';
 import { useSettingsContext } from '@/components/settings';
 import { useRouter, useSearchParams } from '@/routes/hooks';
 import {

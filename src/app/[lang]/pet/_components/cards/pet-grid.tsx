@@ -1,5 +1,5 @@
-import { IPetProfile } from '@//types/api';
-import Iconify from '@//components/iconify';
+import { IPetProfile } from '@/types/api';
+import Iconify from '@/components/iconify';
 
 import { Box, Button } from '@mui/material';
 

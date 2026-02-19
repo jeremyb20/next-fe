@@ -1,6 +1,6 @@
-import { IPetProfile } from '@//types/api';
+import { IPetProfile } from '@/types/api';
 import Iconify from '@/components/iconify';
-import { BreedOptions } from '@//utils/constants';
+import { BreedOptions } from '@/utils/constants';
 import CustomPopover, { usePopover } from '@/components/custom-popover';
 
 import {

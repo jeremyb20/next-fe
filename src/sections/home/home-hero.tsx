@@ -1,6 +1,6 @@
 import { paths } from '@/routes/paths';
 import Iconify from '@/components/iconify';
-import { APP_NAME } from '@//config-global';
+import { APP_NAME } from '@/config-global';
 import { m, useScroll } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { RouterLink } from '@/routes/components';
@@ -156,7 +156,7 @@ export default function HomeHero() {
           <Stack alignItems="center" spacing={2}>
             <Button
               component={RouterLink}
-              href={paths.auth.register}
+              href={paths.auth.signUp}
               color="primary"
               size="large"
               variant="contained"
@@ -164,21 +164,6 @@ export default function HomeHero() {
             >
               {t('Get Started')}
             </Button>
-
-            {/* <Link
-              component={RouterLink}
-              href={paths.auth.login}
-              variant="caption"
-              sx={{
-                color: 'common.white',
-                textDecoration: 'underline',
-                display: 'inline-flex',
-                alignItems: 'center',
-              }}
-            >
-              <Iconify icon="mdi:login" width={16} sx={{ mr: 0.5 }} />
-              Ya tengo cuenta
-            </Link> */}
           </Stack>
 
           <Button
@@ -187,7 +172,7 @@ export default function HomeHero() {
             variant="outlined"
             startIcon={<Iconify icon="mdi:vet" width={24} />}
             component={RouterLink}
-            href={paths.auth.login}
+            href={paths.auth.signIn}
           >
             {t('I have an account')}
           </Button>

@@ -2,12 +2,12 @@
 import * as Yup from 'yup';
 import { useMemo } from 'react';
 import { useForm } from 'react-hook-form';
-import { endpoints } from '@//utils/axios';
-import { HOST_API } from '@//config-global';
+import { endpoints } from '@/utils/axios';
+import { HOST_API } from '@/config-global';
 import { useSnackbar } from '@/components/snackbar';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useManagerUser } from '@//hooks/use-manager-user';
-import { useCreateGenericMutation } from '@//hooks/user-generic-mutation';
+import { useManagerUser } from '@/hooks/use-manager-user';
+import { useCreateGenericMutation } from '@/hooks/user-generic-mutation';
 import FormProvider, {
   RHFSelect,
   RHFTextField,
@@ -260,8 +260,6 @@ export default function SeoQuickEditForm({
 
   const onSubmit = handleSubmit(async (data) => {
     try {
-      console.log('Submitting data:', data);
-
       // Filtrar contenido solo para los idiomas seleccionados
       const filteredContent = data.multiLanguageContent.filter((content) =>
         data.languages.includes(content.language)

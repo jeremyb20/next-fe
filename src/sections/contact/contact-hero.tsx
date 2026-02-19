@@ -2,7 +2,7 @@ import { bgGradient } from '@/theme/css';
 import { useState, useEffect } from 'react';
 import { m, MotionProps } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
-import { SplashScreen } from '@//components/loading-screen';
+import { SplashScreen } from '@/components/loading-screen';
 import { varFade, MotionContainer } from '@/components/animate';
 
 import Stack from '@mui/material/Stack';

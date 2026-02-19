@@ -3,7 +3,7 @@ import { IInvoice } from '@/types/invoice';
 import { fDate } from '@/utils/format-time';
 import { useState, useCallback } from 'react';
 import Scrollbar from '@/components/scrollbar';
-import { EMAIL_SUPPORT } from '@//config-global';
+import { EMAIL_SUPPORT } from '@/config-global';
 import { INVOICE_STATUS_OPTIONS } from '@/_mock';
 import { fCurrency } from '@/utils/format-number';
 

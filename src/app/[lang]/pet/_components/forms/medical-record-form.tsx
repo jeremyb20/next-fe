@@ -1,12 +1,12 @@
 import * as Yup from 'yup';
-import { endpoints } from '@//utils/axios';
-import { HOST_API } from '@//config-global';
+import { endpoints } from '@/utils/axios';
+import { HOST_API } from '@/config-global';
 import { useEffect, useCallback } from 'react';
 import { useSnackbar } from '@/components/snackbar';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useCreateGenericMutation } from '@//hooks/user-generic-mutation';
-import { FormValues, MedicalRecordType } from '@//interfaces/medical-record';
+import { useCreateGenericMutation } from '@/hooks/user-generic-mutation';
+import { FormValues, MedicalRecordType } from '@/interfaces/medical-record';
 import FormProvider, {
   RHFSelect,
   RHFTextField,

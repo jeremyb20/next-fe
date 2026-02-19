@@ -26,22 +26,22 @@ import TableContainer from '@mui/material/TableContainer';
 
 // import { _invoices, INVOICE_SERVICE_OPTIONS } from '@/_mock';
 
-import { IQrCode } from '@//types/api';
+import { IQrCode } from '@/types/api';
 import Label from '@/components/label';
 import Iconify from '@/components/iconify';
 import Scrollbar from '@/components/scrollbar';
-import { useGetQRStats } from '@//hooks/use-fetch';
+import { useGetQRStats } from '@/hooks/use-fetch';
 import { useSnackbar } from '@/components/snackbar';
-import EmptyContent from '@//components/empty-content';
+import EmptyContent from '@/components/empty-content';
 import { ConfirmDialog } from '@/components/custom-dialog';
 import { useSettingsContext } from '@/components/settings';
 import CustomBreadcrumbs from '@/components/custom-breadcrumbs';
-import FilterToolbar from '@//components/filters/filter-toolbar';
-import { ADMIN_QRCODE_FILTER_TOOLBAR } from '@//components/filters/filter-constants';
+import FilterToolbar from '@/components/filters/filter-toolbar';
+import { ADMIN_QRCODE_FILTER_TOOLBAR } from '@/components/filters/filter-constants';
 import {
   UserQueryParams,
   useGetAllQrCodeList,
-} from '@//hooks/use-fetch-paginated';
+} from '@/hooks/use-fetch-paginated';
 import {
   useTable,
   TableNoData,

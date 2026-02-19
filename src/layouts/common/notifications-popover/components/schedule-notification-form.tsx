@@ -1,9 +1,9 @@
 // schedule-notification-form.tsx
 import { useState } from 'react';
-import { endpoints } from '@//utils/axios';
+import { endpoints } from '@/utils/axios';
 import { HOST_API } from '@/config-global';
-import { NotificationData, NotificationFormData } from '@//types/api';
-import { useCreateGenericMutation } from '@//hooks/user-generic-mutation';
+import { NotificationData, NotificationFormData } from '@/types/api';
+import { useCreateGenericMutation } from '@/hooks/user-generic-mutation';
 
 import {
   Box,

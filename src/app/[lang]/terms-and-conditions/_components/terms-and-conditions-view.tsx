@@ -1,5 +1,5 @@
 import React from 'react';
-import { APP_NAME, EMAIL_SUPPORT, PHONE_SUPPORT } from '@//config-global';
+import { APP_NAME, EMAIL_SUPPORT, PHONE_SUPPORT } from '@/config-global';
 
 import { Container } from '@mui/system';
 import { Box, Link, Paper, Typography } from '@mui/material';

@@ -1,5 +1,5 @@
 import { Metadata } from 'next';
-import { HomeView } from '@/sections/home/view';
+import { JwtLoginView } from '@/sections/auth/jwt';
 import { getSeoMetadata } from '@/utils/seo-metadata';
 
 // ----------------------------------------------------------------------
@@ -14,9 +14,9 @@ export async function generateMetadata({
   const supportedLanguages = ['ES', 'EN', 'AR', 'VI', 'ZH', 'FR'];
   const validLang = supportedLanguages.includes(lang) ? lang : 'ES';
 
-  return getSeoMetadata('home-page-platform', validLang);
+  return getSeoMetadata('sign-in', validLang);
 }
 
-export default function HomePage() {
-  return <HomeView />;
+export default function LoginPage() {
+  return <JwtLoginView />;
 }

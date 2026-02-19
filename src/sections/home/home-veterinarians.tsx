@@ -196,7 +196,7 @@ export default function HomeVeterinarians() {
 
           <Button
             component={RouterLink}
-            href={paths.auth.login}
+            href={paths.auth.signIn}
             color="inherit"
             size="large"
             variant="outlined"
