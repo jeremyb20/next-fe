@@ -1,3 +1,4 @@
+import { IProductItem } from '@/types/product';
 import axiosInstance, { endpoints } from '@/utils/axios';
 import {
   useQuery,
@@ -162,6 +163,40 @@ export const useGetMedicalRecordsByPet = (
   useFetchPaginated<IMedicalRecordResponse[]>({
     queryKey: ['useGetMedicalRecordsByPet'],
     endpoint: endpoints.pet.getMedicalRecordsByPet,
+    params: {
+      page: 1,
+      limit: 10,
+      ...params,
+    },
+  });
+
+export const useGetAllProductList = (params: Partial<UserQueryParams> = {}) =>
+  useFetchPaginated<IProductItem[]>({
+    queryKey: ['productList'],
+    endpoint: endpoints.admin.product.list,
+    options: {
+      refetchOnMount: true,
+      refetchOnWindowFocus: true,
+      staleTime: 30 * 1000,
+    },
+    params: {
+      page: 1,
+      limit: 10,
+      ...params,
+    },
+  });
+
+export const useGetAllPublishedProducts = (
+  params: Partial<UserQueryParams> = {}
+) =>
+  useFetchPaginated<IProductItem[]>({
+    queryKey: ['listPublishedProducts'],
+    endpoint: endpoints.petsmarket.listPublished,
+    options: {
+      refetchOnMount: true,
+      refetchOnWindowFocus: true,
+      staleTime: 30 * 1000,
+    },
     params: {
       page: 1,
       limit: 10,

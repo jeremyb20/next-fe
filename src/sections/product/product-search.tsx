@@ -41,8 +41,7 @@ export default function ProductSearch({
         const selectItem = results.filter(
           (product) => product.name === query
         )[0];
-
-        handleClick(selectItem.id);
+        handleClick(selectItem.productId);
       }
     }
   };
@@ -57,7 +56,9 @@ export default function ProductSearch({
       onInputChange={(event, newValue) => onSearch(newValue)}
       getOptionLabel={(option) => option.name}
       noOptionsText={<SearchNotFound query={query} sx={{ bgcolor: 'unset' }} />}
-      isOptionEqualToValue={(option, value) => option.id === value.id}
+      isOptionEqualToValue={(option, value) =>
+        option.productId === value.productId
+      }
       slotProps={{
         popper: {
           placement: 'bottom-start',
@@ -107,11 +108,11 @@ export default function ProductSearch({
           <Box
             component="li"
             {...props}
-            onClick={() => handleClick(product.id)}
-            key={product.id}
+            onClick={() => handleClick(product.productId)}
+            key={product.productId}
           >
             <Avatar
-              key={product.id}
+              key={product.productId}
               alt={product.name}
               src={product.coverUrl}
               variant="rounded"

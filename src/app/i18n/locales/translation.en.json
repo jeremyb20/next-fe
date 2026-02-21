@@ -359,5 +359,9 @@
   "There was an error sending the message. Please try again.": "There was an error sending the message. Please try again.",
   "Password reset instructions.": "Password reset instructions have been sent to your email address. Please check your spam folder if you do not see it in your inbox.",
   "The new password must be different from the previous one.": "The new password must be different from the previous one.",
-  "Internal server error, please try again later.": "Internal server error, please try again later."
+  "Internal server error, please try again later.": "Internal server error, please try again later.",
+  "Edit": "Edit",
+  "Update": "Update",
+  "Delete": "Delete",
+  "View": "View"
 }

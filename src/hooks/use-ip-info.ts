@@ -7,7 +7,6 @@ export interface IPInfoResponse {
   country_code: string;
 }
 
-// Hook to get IP information using ipwho.is service
 const useIPInfo = () => {
   const [ipData, setIPData] = useState<IPInfoResponse | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
@@ -17,33 +16,51 @@ const useIPInfo = () => {
     let mounted = true;
 
     const fetchIPInfo = async () => {
-      try {
-        setLoading(true);
-        setError(null);
+      const services = [
+        {
+          url: 'https://ipapi.co/json/',
+          parser: (data: any) => ({
+            ip: data.ip,
+            country: data.country_name || data.country,
+            country_code: data.country_code || data.country,
+          }),
+        },
+        {
+          url: 'https://api.ipify.org?format=json',
+          parser: (data: any) => ({
+            ip: data.ip,
+            country: 'Desconocido',
+            country_code: 'XX',
+          }),
+        },
+      ];
 
-        // Usar solo ipwho.is que funciona con CORS
-        const response = await axios.get('https://ipwho.is/');
+      const tryServices = async () => {
+        const results = await Promise.allSettled(
+          services.map((service) =>
+            axios.get(service.url).then((response) => ({
+              data: service.parser(response.data),
+              success: true,
+            }))
+          )
+        );
 
         if (!mounted) return;
 
-        if (response.data?.ip && response.data?.country_code) {
-          setIPData({
-            ip: response.data.ip,
-            country: response.data.country,
-            country_code: response.data.country_code,
-          });
+        const successfulResult = results.find(
+          (result) => result.status === 'fulfilled'
+        );
+
+        if (successfulResult && successfulResult.status === 'fulfilled') {
+          setIPData(successfulResult.value.data);
+          setLoading(false);
         } else {
-          throw new Error('No IP data received from ipwho.is');
-        }
-      } catch (err) {
-        if (!mounted) return;
-        setError('Could not retrieve IP information');
-        console.error('IP info error:', err);
-      } finally {
-        if (mounted) {
+          setError('Could not retrieve IP information from any service');
           setLoading(false);
         }
-      }
+      };
+
+      tryServices();
     };
 
     fetchIPInfo();
@@ -51,7 +68,7 @@ const useIPInfo = () => {
     return () => {
       mounted = false;
     };
-  }, []); // Empty dependency array ensures this runs only once
+  }, []);
 
   return { ipData, loading, error };
 };

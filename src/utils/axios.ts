@@ -110,6 +110,7 @@ export const endpoints = {
     updatePassword: '/api/user/updatePassword',
     forgotPassword: '/api/user/forgotPassword',
     resetPassword: '/api/user/resetPassword',
+    searchProducts: '/api/user/searchProducts',
   },
   mail: {
     list: '/api/mail/list',
@@ -125,7 +126,6 @@ export const endpoints = {
   product: {
     list: '/api/product/list',
     details: '/api/product/details',
-    search: '/api/product/search',
   },
   chat: '/api/chat',
   kanban: '/api/kanban',

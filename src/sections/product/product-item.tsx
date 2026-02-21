@@ -49,17 +49,6 @@ export default function ProductItem({ product }: Props) {
     ? paths.dashboard.product.details(productId)
     : paths.product.details(productId);
 
-  // useEffect(() => {
-  //   const currency = countries.find((c) => c.label === country)?.currency || 'USD';
-  //   convert(currency, price)
-  //     .then((result) => {
-  //       setConvertedPrice(result.convertedAmount);
-  //     })
-  //     .catch(() => {
-  //       setConvertedPrice(fCurrency(price));
-  //     });
-  // }, [country, price]);
-
   const handleAddCart = async () => {
     const newProduct = {
       id,
@@ -104,7 +93,16 @@ export default function ProductItem({ product }: Props) {
   );
 
   const renderImg = (
-    <Box sx={{ position: 'relative', p: 1 }}>
+    <Box
+      sx={{
+        position: 'relative',
+        p: {
+          xs: 0,
+          sm: 0,
+          md: 1,
+        },
+      }}
+    >
       {!!available && (
         <Fab
           color="warning"
@@ -146,7 +144,15 @@ export default function ProductItem({ product }: Props) {
   );
 
   const renderContent = (
-    <Stack spacing={2.5} sx={{ p: 3, pt: 2 }}>
+    <Stack
+      spacing={1}
+      sx={{
+        p: {
+          xs: 1.5,
+          sm: 2,
+        },
+      }}
+    >
       <Link
         component={RouterLink}
         href={linkTo}

@@ -12,8 +12,8 @@ import { useSnackbar } from '@/components/snackbar';
 import { countries } from '@/assets/data/countries';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useResponsive } from '@/hooks/use-responsive';
-import { useMemo, useState, useEffect, useCallback } from 'react';
 import { fCurrency, getLocaleCode } from '@/utils/format-number';
+import { useMemo, useState, useEffect, useCallback } from 'react';
 import { useCreateGenericMutation } from '@/hooks/user-generic-mutation';
 import {
   getPhoneHelperText,
@@ -271,6 +271,7 @@ export default function ProductNewEditForm({ currentProduct }: Props) {
       }
 
       enqueueSnackbar(currentProduct ? 'Update success!' : 'Create success!');
+
       router.push(paths.dashboard.admin.product.root);
     } catch (error) {
       console.error(error);

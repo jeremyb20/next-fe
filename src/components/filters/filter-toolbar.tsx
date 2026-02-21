@@ -214,11 +214,13 @@ export default function FilterToolbar({
           vertical: 'top',
           horizontal: 'right',
         }}
-        PaperProps={{
-          sx: {
-            p: 2,
-            width: 280,
-            borderRadius: 1,
+        slotProps={{
+          paper: {
+            sx: {
+              p: 2,
+              width: 280,
+              borderRadius: 1,
+            },
           },
         }}
       >
