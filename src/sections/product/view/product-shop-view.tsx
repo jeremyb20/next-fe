@@ -10,6 +10,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { useTranslation } from '@/hooks/use-translation';
 import { useSettingsContext } from '@/components/settings';
 import { useAuthContext } from '@/auth/hooks/use-auth-context';
+import { getSortOrder, getSortByField } from '@/utils/constants';
 import {
   IProductItem,
   IProductFilters,
@@ -125,34 +126,6 @@ export default function ProductShopView() {
   const handleSearch = useCallback((inputValue: string) => {
     setSearchQuery(inputValue);
   }, []);
-
-  // Funciones helper para mapear sort
-  function getSortByField(sortValue: string): string {
-    switch (sortValue) {
-      case 'priceAsc':
-      case 'priceDesc':
-        return 'price';
-      case 'newest':
-        return 'createdAt';
-      case 'featured':
-        return 'totalSold';
-      default:
-        return 'createdAt';
-    }
-  }
-
-  function getSortOrder(sortValue: string): 'asc' | 'desc' {
-    switch (sortValue) {
-      case 'priceAsc':
-        return 'asc';
-      case 'priceDesc':
-      case 'newest':
-      case 'featured':
-        return 'desc';
-      default:
-        return 'desc';
-    }
-  }
 
   const renderFilters = (
     <Stack

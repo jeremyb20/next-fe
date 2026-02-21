@@ -7,8 +7,10 @@ import { useRouter } from '@/routes/hooks';
 import { useTranslation } from 'react-i18next';
 import EmptyContent from '@/components/empty-content';
 import { useGetProductsPublished } from '@/api/product';
+import { UserQueryParams } from '@/hooks/use-fetch-paginated';
 import { varFade, MotionViewport } from '@/components/animate';
 import { IProductItem, IProductFilters } from '@/types/product';
+import { getSortOrder, getSortByField } from '@/utils/constants';
 
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
@@ -33,7 +35,12 @@ export default function HomeShop() {
   const [sortBy] = useState('newest');
   const router = useRouter();
   const { t } = useTranslation();
-
+  const [activeFilters, setActiveFilters] = useState<Partial<UserQueryParams>>({
+    page: 1,
+    limit: 10,
+    sortBy: getSortByField('featured'),
+    sortOrder: getSortOrder('featured'),
+  });
   const dataFiltered = applyFilter({
     inputData: products.slice(0, 4),
     filters,
@@ -66,7 +73,13 @@ export default function HomeShop() {
       >
         <m.div variants={varFade().inUp}>
           {(notFound || productsEmpty) && renderNotFound}
-          <ProductList products={dataFiltered} loading={productsLoading} />
+          <ProductList
+            products={dataFiltered}
+            loading={productsLoading}
+            activeFilters={activeFilters}
+            setActiveFilters={setActiveFilters}
+            pagination={null}
+          />
         </m.div>
       </Stack>
 

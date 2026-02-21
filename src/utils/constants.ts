@@ -239,3 +239,30 @@ export const LANGUAGE_NORMALIZATION_MAP: Record<string, string> = {
   // Vietnamita (vi)
   'vi-VN': 'vi',
 };
+
+export function getSortByField(sortValue: string): string {
+  switch (sortValue) {
+    case 'priceAsc':
+    case 'priceDesc':
+      return 'price';
+    case 'newest':
+      return 'createdAt';
+    case 'featured':
+      return 'totalSold';
+    default:
+      return 'createdAt';
+  }
+}
+
+export function getSortOrder(sortValue: string): 'asc' | 'desc' {
+  switch (sortValue) {
+    case 'priceAsc':
+      return 'asc';
+    case 'priceDesc':
+    case 'newest':
+    case 'featured':
+      return 'desc';
+    default:
+      return 'desc';
+  }
+}
