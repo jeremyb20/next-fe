@@ -2,14 +2,14 @@
 
 'use client';
 
-import { useSnackbar } from 'notistack';
 import { paths } from '@/routes/paths';
+import { useSnackbar } from 'notistack';
 import { useRouter } from '@/routes/hooks';
-import Iconify from '@/components/iconify';
 import { isAfter } from '@/utils/format-time';
 import { IUser, IPetProfile } from '@/types/api';
 import { useBoolean } from '@/hooks/use-boolean';
 import { useMemo, useState, useCallback } from 'react';
+import { useTranslation } from '@/hooks/use-translation';
 import { useManagerUser } from '@/hooks/use-manager-user';
 import { useSettingsContext } from '@/components/settings';
 import FilterToolbar from '@/components/filters/filter-toolbar';
@@ -26,27 +26,25 @@ import {
   Card,
   Alert,
   Avatar,
-  Backdrop,
   Container,
-  SpeedDial,
   Typography,
   CardContent,
-  SpeedDialAction,
   CircularProgress,
 } from '@mui/material';
 
 import PetQuickEditForm from '../../admin/users/_components/pet-quick-edit-form';
 
 // ----------------------------------------------------------------------
-const actions = [{ icon: 'tabler:paw', name: 'Pet', color: '#ffffff' }];
+// const actions = [{ icon: 'tabler:paw', name: 'Pet', color: '#ffffff' }];
 export default function UserPetCardsView() {
   const { user } = useManagerUser();
 
-  const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  // const [open, setOpen] = useState(false);
+  // const handleOpen = () => setOpen(true);
+  // const handleClose = () => setOpen(false);
 
   const { enqueueSnackbar } = useSnackbar();
+  const { t } = useTranslation();
 
   const petQuickEdit = useBoolean();
   const registerPetModal = useBoolean();
@@ -57,7 +55,7 @@ export default function UserPetCardsView() {
 
   const [activeFilters, setActiveFilters] = useState<Partial<UserQueryParams>>({
     page: 1,
-    limit: 5,
+    limit: 10,
     id: user?.id,
   });
   const [petSelected, setPetSelected] = useState<IPetProfile>();
@@ -143,18 +141,20 @@ export default function UserPetCardsView() {
     <Container maxWidth={settings.themeStretch ? false : 'lg'}>
       <Card
         sx={{
+          backgroundColor: 'backgound.paper',
           borderRadius: 4,
           mb: 3,
           position: 'relative',
-          color: 'inherit',
-          backgroundColor: 'backgound.paper',
         }}
       >
         <CardContent sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
           <Avatar src={user.photoURL} sx={{ width: 60, height: 60 }} />
           <Box>
             <Typography variant="h6" fontWeight={600}>
-              Hi, {user.displayName}
+              {t('Hi there!')}, {user.displayName}
+            </Typography>
+            <Typography variant="body2" color="text.secondary">
+              {user.email}
             </Typography>
             <Typography variant="body2" color="text.secondary">
               Pets Registered:{' '}
@@ -163,7 +163,6 @@ export default function UserPetCardsView() {
           </Box>
         </CardContent>
       </Card>
-
       <Box sx={{ my: 2 }}>
         <FilterToolbar
           filters={activeFilters}
@@ -178,7 +177,7 @@ export default function UserPetCardsView() {
       <PetsGrid
         isFetching={isFetching}
         usersData={usersData?.payload}
-        skeletonCount={(usersData && usersData.payload.length) || 2}
+        skeletonCount={10}
         onPetDelete={handlePetDelete}
         onPetView={handlePetView}
         onPetEdit={handlePetEdit}
@@ -201,7 +200,7 @@ export default function UserPetCardsView() {
         onClose={registerPetModal.onFalse}
         refetch={refetch}
       />
-      <Box
+      {/* <Box
         sx={{
           position: 'fixed',
           display: { xs: 'flex' },
@@ -232,7 +231,7 @@ export default function UserPetCardsView() {
             />
           ))}
         </SpeedDial>
-      </Box>
+      </Box> */}
     </Container>
   );
 }

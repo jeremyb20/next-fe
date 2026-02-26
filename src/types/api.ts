@@ -187,6 +187,8 @@ export interface IPetProfile {
   address: string;
   idParental: string;
   petName: string;
+  petFirstSurname?: string;
+  petSecondSurname?: string;
   phone: string;
   photo: string;
   birthDate: string;

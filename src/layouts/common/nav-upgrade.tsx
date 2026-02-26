@@ -33,11 +33,18 @@ export default function NavUpgrade() {
     <Stack
       sx={{
         px: 2,
-        py: 5,
+        pb: 5,
         textAlign: 'center',
       }}
     >
-      <Stack alignItems="center">
+      <Stack
+        alignItems="center"
+        sx={{
+          p: 2,
+          borderRadius: 1.5,
+          background: (theme) => theme.palette.background.paper,
+        }}
+      >
         <Box sx={{ position: 'relative' }}>
           <Avatar
             src={user?.photoURL}

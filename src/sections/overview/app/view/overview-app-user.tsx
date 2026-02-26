@@ -3,9 +3,7 @@
 'use client';
 
 import { paths } from '@/routes/paths';
-import { bgGradient } from '@/theme/css';
 import { useRouter } from '@/routes/hooks';
-import Iconify from '@/components/iconify';
 import { useState, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { IUser, IPetProfile } from '@/types/api';
@@ -22,31 +20,25 @@ import RegisterPetByUserModal from '@/app/[lang]/pet/_components/modals/register
 import {
   Box,
   Card,
-  alpha,
   Alert,
   Avatar,
-  useTheme,
   Container,
   Typography,
   CardContent,
-  BottomNavigation,
-  BottomNavigationAction,
 } from '@mui/material';
 
 export default function OverviewAppUser() {
   const { user } = useManagerUser();
   const { t } = useTranslation();
 
-  const theme = useTheme();
   const router = useRouter();
-
   const [petSelected, setPetSelected] = useState<IPetProfile>();
   const petQuickEdit = useBoolean();
   const registerPetModal = useBoolean();
 
   const [activeFilters] = useState<Partial<UserQueryParams>>({
     page: 1,
-    limit: 5,
+    limit: 3,
     id: user?.id,
   });
   const {
@@ -121,20 +113,14 @@ export default function OverviewAppUser() {
         pb: 8,
       }}
     >
-      <Container maxWidth="sm" sx={{ mt: 3 }}>
+      <Container maxWidth="md" sx={{ mt: 3 }}>
         {/* User Profile Card */}
         <Card
           sx={{
-            ...bgGradient({
-              direction: '135deg',
-              startColor: alpha(theme.palette.primary.light, 0.2),
-              endColor: alpha(theme.palette.primary.main, 0.2),
-            }),
+            backgroundColor: 'backgound.paper',
             borderRadius: 4,
             mb: 3,
             position: 'relative',
-            color: 'primary.darker',
-            backgroundColor: 'common.white',
           }}
         >
           <CardContent sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
@@ -176,12 +162,12 @@ export default function OverviewAppUser() {
             <PetsGrid
               isFetching={isFetching}
               usersData={usersData?.payload}
-              skeletonCount={(usersData && usersData.payload.length) || 2}
+              skeletonCount={3}
               onPetDelete={handlePetDelete}
               onPetView={handlePetView}
               onPetEdit={handlePetEdit}
               emptyMessage={t('No pets found. Add your first pet!')}
-              showAddMoreButton={usersData && usersData.payload.length <= 9}
+              showAddMoreButton={usersData && usersData.payload.length <= 2}
               onAddMore={() => registerPetModal.onTrue()}
               addMoreButtonText={t('Add New Pet')}
             />
@@ -358,41 +344,6 @@ export default function OverviewAppUser() {
           </Card>
         </Box>
       </Container>
-
-      {/* Bottom Navigation */}
-      <BottomNavigation
-        showLabels={false}
-        sx={{
-          position: 'fixed',
-          display: { xs: 'flex', md: 'none' },
-          bottom: 20,
-          left: '50%',
-          transform: 'translateX(-50%)',
-          width: 'auto',
-          ...bgGradient({
-            direction: '135deg',
-            startColor: alpha(theme.palette.primary.light, 0.2),
-            endColor: alpha(theme.palette.primary.main, 0.2),
-          }),
-
-          borderRadius: 8,
-          '& .MuiBottomNavigationAction-root': {
-            color: '#fff',
-            minWidth: 60,
-          },
-          '& .Mui-selected': {
-            bgcolor: '#fff',
-            color: '#000',
-            borderRadius: '50%',
-          },
-        }}
-      >
-        <BottomNavigationAction icon={<Iconify icon="solar:home-2-linear" />} />
-        <BottomNavigationAction
-          icon={<Iconify icon="solar:calendar-linear" />}
-        />
-        <BottomNavigationAction icon={<Iconify icon="eva:search-fill" />} />
-      </BottomNavigation>
     </Box>
   );
 }

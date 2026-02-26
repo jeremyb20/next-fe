@@ -25,8 +25,11 @@ import { useNavData } from '../../dashboard/config-navigation';
 import { applyFilter, groupedData, getAllItems } from './utils';
 
 // ----------------------------------------------------------------------
+interface Props {
+  style?: React.CSSProperties;
+}
 
-function Searchbar() {
+function Searchbar({ style }: Props) {
   const theme = useTheme();
 
   const router = useRouter();
@@ -112,7 +115,7 @@ function Searchbar() {
 
   const renderButton = (
     <Stack direction="row" alignItems="center">
-      <IconButton onClick={search.onTrue}>
+      <IconButton onClick={search.onTrue} sx={style}>
         <Iconify icon="eva:search-fill" />
       </IconButton>
 

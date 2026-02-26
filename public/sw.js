@@ -14,14 +14,14 @@ self.addEventListener('push', function (event) {
       }
     }
 
+    console.log(data, 'datadatadatadatadata');
+
     const options = {
-      body: data.body || 'Tienes una nueva notificación',
+      body: data.body || 'Tienes3 una nueva notificación',
       icon:
-        data.icon ||
-        'https://res.cloudinary.com/ensamble/image/upload/v1692285552/gw2pih5qe3vritw5xv13.png',
+        data.icon || 'https://plaquitascr.com/assets/images/plaquitascr.png',
       badge:
-        data.badge ||
-        'https://res.cloudinary.com/ensamble/image/upload/v1692285552/gw2pih5qe3vritw5xv13.png',
+        data.badge || 'https://plaquitascr.com/assets/images/plaquitascr.png',
       vibrate: [200, 100, 200],
       tag: data.tag || 'notification',
       data: data.data || {},
@@ -31,7 +31,10 @@ self.addEventListener('push', function (event) {
     };
 
     event.waitUntil(
-      self.registration.showNotification(data.title || 'Notificación', options)
+      self.registration.showNotification(
+        `${data.title || 'Notificación'}`,
+        options
+      )
     );
   } catch (error) {
     console.error('Error en push event:', error);
@@ -40,9 +43,9 @@ self.addEventListener('push', function (event) {
 
 self.addEventListener('notificationclick', function (event) {
   event.notification.close();
-
+  console.log(event, 'eventeventevent');
   const urlToOpen =
-    event.notification.data?.url || 'https://plaquitascr.com/notificaciones';
+    event.notification.data?.url || 'https://plaquitascr.com/es/notifications';
 
   event.waitUntil(
     clients

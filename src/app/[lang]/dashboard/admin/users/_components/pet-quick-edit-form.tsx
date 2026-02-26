@@ -16,6 +16,7 @@ import { useMemo, useState, useEffect, useCallback } from 'react';
 import CustomPopover, { usePopover } from '@/components/custom-popover';
 import { useCreateGenericMutation } from '@/hooks/user-generic-mutation';
 import { parseWeight, BreedOptions, GENDER_OPTIONS } from '@/utils/constants';
+import CostaRicaIDCard from '@/components/country-cards/Costa-Rica/costa-rica-card';
 import MedicalControlView from '@/app/[lang]/pet/_components/view/medical-control-view';
 import {
   getPhoneHelperText,
@@ -55,6 +56,8 @@ import {
 
 type FormValues = {
   petName: string;
+  petFirstSurname: string;
+  petSecondSurname: string;
   genderSelected: string;
   breed: string;
   weight: string;
@@ -190,6 +193,8 @@ export default function PetQuickEditForm({
 
   const NewPetSchema = Yup.object().shape({
     petName: Yup.string().required('Pet name is required'),
+    petFirstSurname: Yup.string().optional().default(''),
+    petSecondSurname: Yup.string().optional().default(''),
     petStatus: Yup.string().required('Status is required'),
     genderSelected: Yup.string().optional().default(''),
     breed: Yup.string().optional().default(''),
@@ -235,6 +240,8 @@ export default function PetQuickEditForm({
     const parsedWeight = parseWeight(currentPet?.weight);
     return {
       petName: currentPet?.petName || '',
+      petFirstSurname: currentPet?.petFirstSurname || '',
+      petSecondSurname: currentPet?.petSecondSurname || '',
       genderSelected: currentPet?.genderSelected || '',
       breed: currentPet?.breed || '',
       weight: parsedWeight.value,
@@ -290,7 +297,7 @@ export default function PetQuickEditForm({
     setWeightUnit(unit);
   };
 
-  const onSubmit = handleSubmit(async (data) => {
+  const onSubmit = async (data: FormValues) => {
     try {
       const weightWithUnit = data.weight ? `${data.weight} ${weightUnit}` : '';
       const userPetId = currentUser?._id || '';
@@ -358,7 +365,7 @@ export default function PetQuickEditForm({
       console.error(error);
       enqueueSnackbar('Error updating pet', { variant: 'error' });
     }
-  });
+  };
   // Reemplaza useMemo por useEffect para weightUnit
   useEffect(() => {
     if (currentPet?.weight) {
@@ -391,16 +398,19 @@ export default function PetQuickEditForm({
       fullWidth
       maxWidth={false}
       open={open}
-      onClose={onClose}
+      onClose={() => {
+        setPetPhotoPreview(null);
+        onClose();
+      }}
       PaperProps={{
         sx: { maxWidth: 720 },
       }}
+      fullScreen={isMobile}
       scroll="paper"
     >
-      <FormProvider methods={methods} onSubmit={onSubmit}>
-        <DialogTitle>Edit {currentPet?.petName}</DialogTitle>
-
-        <DialogContent dividers>
+      <DialogTitle>
+        <Stack direction="row" alignItems="center" spacing={2}>
+          Edit {currentPet?.petName}
           {petStatus && (
             <Alert
               variant="outlined"
@@ -411,12 +421,26 @@ export default function PetQuickEditForm({
                     ? 'warning'
                     : 'info'
               }
-              sx={{ mb: 3 }}
             >
-              Pet is currently {petStatus.label}
+              {petStatus.label}
             </Alert>
           )}
-
+        </Stack>
+      </DialogTitle>
+      <IconButton
+        aria-label="close"
+        onClick={onClose}
+        sx={(themes) => ({
+          position: 'absolute',
+          right: 8,
+          top: 8,
+          color: themes.palette.grey[500],
+        })}
+      >
+        <Iconify icon="mingcute:close-line" />
+      </IconButton>
+      <DialogContent dividers sx={{ p: 1 }}>
+        <FormProvider methods={methods}>
           <Tabs
             value={tabValue}
             onChange={handleTabChange}
@@ -456,6 +480,12 @@ export default function PetQuickEditForm({
                 label: 'Medical Control',
                 icon: 'hugeicons:injection',
               },
+              {
+                id: 4,
+                value: 'digitalCard',
+                label: 'Digital Card',
+                icon: 'solar:card-outline',
+              },
             ].map((tab) => (
               <Tab
                 key={tab.value}
@@ -469,56 +499,63 @@ export default function PetQuickEditForm({
 
           <TabPanel value={tabValue} index={0}>
             <CardComponent sx={{ p: 2 }}>
-              <Box my={3}>
-                <UploadAvatar
-                  file={petPhotoPreview}
-                  onDrop={handleDropPetPhoto}
-                  onDelete={handleRemovePetPhoto}
-                  validator={(fileData) => {
-                    // Validar tipo de archivo
-                    const allowedTypes = [
-                      'image/jpeg',
-                      'image/jpg',
-                      'image/png',
-                      'image/gif',
-                    ];
-                    if (!allowedTypes.includes(fileData.type)) {
-                      return {
-                        code: 'invalid-file-type',
-                        message:
-                          'Only JPEG, JPG, PNG or GIF images are allowed',
-                      };
-                    }
+              <Stack
+                my={1}
+                spacing={1}
+                direction="row"
+                justifyContent="space-around"
+              >
+                <Stack>
+                  <UploadAvatar
+                    file={currentPet?.photo}
+                    onDrop={handleDropPetPhoto}
+                    onDelete={handleRemovePetPhoto}
+                    validator={(fileData) => {
+                      // Validar tipo de archivo
+                      const allowedTypes = [
+                        'image/jpeg',
+                        'image/jpg',
+                        'image/png',
+                        'image/gif',
+                      ];
+                      if (!allowedTypes.includes(fileData.type)) {
+                        return {
+                          code: 'invalid-file-type',
+                          message:
+                            'Only JPEG, JPG, PNG or GIF images are allowed',
+                        };
+                      }
 
-                    // Validar tamaño (2MB máximo)
-                    if (fileData.size > 2 * 1024 * 1024) {
-                      return {
-                        code: 'file-too-large',
-                        message: `Image is too large. Maximum ${fData(
-                          2 * 1024 * 1024
-                        )}`,
-                      };
-                    }
+                      // Validar tamaño (2MB máximo)
+                      if (fileData.size > 2 * 1024 * 1024) {
+                        return {
+                          code: 'file-too-large',
+                          message: `Image is too large. Maximum ${fData(
+                            2 * 1024 * 1024
+                          )}`,
+                        };
+                      }
 
-                    return null;
-                  }}
-                  helperText={
-                    <Typography
-                      variant="caption"
-                      sx={{
-                        mt: 2,
-                        mx: 'auto',
-                        display: 'block',
-                        textAlign: 'center',
-                        color: 'text.disabled',
-                      }}
-                    >
-                      Allowed *.jpeg, *.jpg, *.png, *.gif
-                      <br /> max size of {fData(2 * 1024 * 1024)}
-                    </Typography>
-                  }
-                />
-              </Box>
+                      return null;
+                    }}
+                    helperText={
+                      <Typography
+                        variant="caption"
+                        sx={{
+                          mt: 2,
+                          mx: 'auto',
+                          display: 'block',
+                          textAlign: 'center',
+                          color: 'text.disabled',
+                        }}
+                      >
+                        Allowed *.jpeg, *.jpg, *.png, *.gif
+                        <br /> max size of {fData(2 * 1024 * 1024)}
+                      </Typography>
+                    }
+                  />
+                </Stack>
+              </Stack>
 
               <Box
                 rowGap={3}
@@ -536,7 +573,6 @@ export default function PetQuickEditForm({
                     </MenuItem>
                   ))}
                 </RHFSelect>
-
                 <RHFSelect name="genderSelected" label="Gender">
                   {GENDER_OPTIONS.map((gender) => (
                     <MenuItem key={gender.value} value={gender.value}>
@@ -544,10 +580,10 @@ export default function PetQuickEditForm({
                     </MenuItem>
                   ))}
                 </RHFSelect>
-
                 <RHFTextField name="petName" label="Pet Name" />
+                <RHFTextField name="petFirstSurname" label="First Surname" />
+                <RHFTextField name="petSecondSurname" label="Second Surname" />
                 {/* <RHFTextField name="breed" label="Breed" /> */}
-
                 <RHFAutocomplete
                   name="breed"
                   label="Raza de la mascota"
@@ -622,7 +658,6 @@ export default function PetQuickEditForm({
                     ),
                   }}
                 />
-
                 <Controller
                   name="birthDate"
                   control={control}
@@ -640,7 +675,6 @@ export default function PetQuickEditForm({
                       slotProps={{
                         textField: {
                           fullWidth: true,
-                          margin: 'normal',
                         },
                       }}
                     />
@@ -692,7 +726,6 @@ export default function PetQuickEditForm({
                     ),
                   }}
                 />
-
                 <CustomPopover
                   open={popover.open}
                   onClose={popover.onClose}
@@ -709,7 +742,6 @@ export default function PetQuickEditForm({
                     <Iconify icon="line-md:phone" />
                   </MenuItem>
                 </CustomPopover>
-
                 <RHFTextField
                   name="favoriteActivities"
                   label="Favorite Activities"
@@ -722,7 +754,6 @@ export default function PetQuickEditForm({
                   multiline
                   rows={2}
                 />
-
                 <RHFTextField
                   name="veterinarianContact"
                   label="Veterinarian Name"
@@ -767,7 +798,6 @@ export default function PetQuickEditForm({
                     ),
                   }}
                 />
-
                 <RHFTextField
                   name="address"
                   label="Address"
@@ -979,22 +1009,26 @@ export default function PetQuickEditForm({
           <TabPanel value={tabValue} index={3}>
             <MedicalControlView currentPet={currentPet} />
           </TabPanel>
-        </DialogContent>
+          <TabPanel value={tabValue} index={4}>
+            <CostaRicaIDCard data={currentPet} />
+          </TabPanel>
+        </FormProvider>
+      </DialogContent>
 
-        <DialogActions>
-          <Button variant="outlined" onClick={onClose}>
-            Cancel
-          </Button>
+      <DialogActions>
+        <Button variant="outlined" onClick={onClose}>
+          Cancel
+        </Button>
 
-          <LoadingButton
-            type="submit"
-            variant="contained"
-            loading={isSubmitting}
-          >
-            Update Pet
-          </LoadingButton>
-        </DialogActions>
-      </FormProvider>
+        <LoadingButton
+          type="submit"
+          onClick={handleSubmit(onSubmit)}
+          variant="contained"
+          loading={isSubmitting}
+        >
+          Update Pet
+        </LoadingButton>
+      </DialogActions>
     </Dialog>
   );
 }

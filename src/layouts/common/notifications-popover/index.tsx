@@ -194,11 +194,9 @@ export default function NotificationsPopover() {
         />
       </IconButton>
 
-      {!smUp && (
-        <IconButton onClick={drawer.onFalse}>
-          <Iconify icon="mingcute:close-line" />
-        </IconButton>
-      )}
+      <IconButton onClick={drawer.onFalse}>
+        <Iconify icon="mingcute:close-line" />
+      </IconButton>
     </Stack>
   );
 

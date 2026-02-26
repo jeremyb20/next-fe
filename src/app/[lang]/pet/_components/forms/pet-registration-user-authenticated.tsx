@@ -5,9 +5,9 @@ import { useSnackbar } from 'notistack';
 import { endpoints } from '@/utils/axios';
 import { useRouter } from '@/routes/hooks';
 import { OptionType } from '@/types/global';
-import { useTranslation } from 'react-i18next';
 import { useAuthContext } from '@/auth/hooks';
 import { fData } from '@/utils/format-number';
+import { useTranslation } from 'react-i18next';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useState, useEffect, useCallback } from 'react';
@@ -70,6 +70,8 @@ export function PetRegistrationUserAuthenticated({
   // Esquema de validación para la mascota
   const PetSchema = Yup.object().shape({
     petName: Yup.string().required(t('Pet name is required')),
+    petFirstSurname: Yup.string().optional().default(''),
+    petSecondSurname: Yup.string().optional().default(''),
     breed: Yup.string().required(t('Breed is required')),
     genderSelected: Yup.string().required(t('Gender is required')),
     birthDate: Yup.string().optional(),
@@ -103,6 +105,8 @@ export function PetRegistrationUserAuthenticated({
     resolver: yupResolver(PetSchema),
     defaultValues: {
       petName: '',
+      petFirstSurname: '',
+      petSecondSurname: '',
       breed: '',
       genderSelected: '',
       birthDate: '',
@@ -328,7 +332,8 @@ export function PetRegistrationUserAuthenticated({
           }}
         >
           <RHFTextField name="petName" label={t('Pet Name')} />
-
+          <RHFTextField name="petFirstSurname" label="First Surname" />
+          <RHFTextField name="petSecondSurname" label="Second Surname" />
           <RHFAutocomplete
             name="breed"
             label={t('Breed')}

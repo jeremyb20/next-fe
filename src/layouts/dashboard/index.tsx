@@ -9,6 +9,7 @@ import Header from './header';
 import NavMini from './nav-mini';
 import NavVertical from './nav-vertical';
 import NavHorizontal from './nav-horizontal';
+import NavBottomNavigation from './nav-bottom-navigation';
 
 // ----------------------------------------------------------------------
 
@@ -82,6 +83,7 @@ export default function DashboardLayout({ children }: Props) {
 
         <Main>{children}</Main>
       </Box>
+      <NavBottomNavigation />
     </>
   );
 }

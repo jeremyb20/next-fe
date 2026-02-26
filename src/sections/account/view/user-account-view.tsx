@@ -15,6 +15,7 @@ import {
 } from '@/_mock';
 
 import Tab from '@mui/material/Tab';
+import { Box } from '@mui/material';
 import Tabs from '@mui/material/Tabs';
 import Container from '@mui/material/Container';
 
@@ -71,53 +72,59 @@ export default function AccountView() {
 
   return (
     <Container maxWidth={settings.themeStretch ? false : 'lg'}>
-      <CustomBreadcrumbs
-        heading="Account"
-        links={[
-          { name: 'Dashboard', href: paths.dashboard.root },
-          { name: 'User', href: paths.dashboard.user.root },
-          { name: 'Account' },
-        ]}
+      <Box
         sx={{
-          mb: { xs: 3, md: 5 },
-        }}
-      />
-
-      <Tabs
-        value={currentTab}
-        onChange={handleChangeTab}
-        sx={{
-          mb: { xs: 3, md: 5 },
+          p: 1,
         }}
       >
-        {TABS.map((tab) => (
-          <Tab
-            key={tab.value}
-            label={t(tab.label)}
-            icon={tab.icon}
-            value={tab.value}
-          />
-        ))}
-      </Tabs>
-
-      {currentTab === 'general' && <AccountGeneral />}
-
-      {currentTab === 'billing' && (
-        <AccountBilling
-          plans={_userPlans}
-          cards={_userPayment}
-          invoices={_userInvoices}
-          addressBook={_userAddressBook}
+        <CustomBreadcrumbs
+          heading="Account"
+          links={[
+            { name: 'Dashboard', href: paths.dashboard.root },
+            { name: 'User', href: paths.dashboard.user.root },
+            { name: 'Account' },
+          ]}
+          sx={{
+            mb: { xs: 3, md: 5 },
+          }}
         />
-      )}
 
-      {currentTab === 'notifications' && <AccountNotifications />}
+        <Tabs
+          value={currentTab}
+          onChange={handleChangeTab}
+          sx={{
+            mb: { xs: 3, md: 5 },
+          }}
+        >
+          {TABS.map((tab) => (
+            <Tab
+              key={tab.value}
+              label={t(tab.label)}
+              icon={tab.icon}
+              value={tab.value}
+            />
+          ))}
+        </Tabs>
 
-      {currentTab === 'social' && (
-        <AccountSocialLinks socialLinks={_userAbout.socialLinks} />
-      )}
+        {currentTab === 'general' && <AccountGeneral />}
 
-      {currentTab === 'security' && <AccountChangePassword />}
+        {currentTab === 'billing' && (
+          <AccountBilling
+            plans={_userPlans}
+            cards={_userPayment}
+            invoices={_userInvoices}
+            addressBook={_userAddressBook}
+          />
+        )}
+
+        {currentTab === 'notifications' && <AccountNotifications />}
+
+        {currentTab === 'social' && (
+          <AccountSocialLinks socialLinks={_userAbout.socialLinks} />
+        )}
+
+        {currentTab === 'security' && <AccountChangePassword />}
+      </Box>
     </Container>
   );
 }

@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { paper } from '@/theme/css';
 import Logo from '@/components/logo';
 import { usePathname } from '@/routes/hooks';
 import Scrollbar from '@/components/scrollbar';
@@ -8,13 +9,13 @@ import { NavSectionVertical } from '@/components/nav-section';
 
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
-import Drawer from '@mui/material/Drawer';
+import { useTheme } from '@mui/material';
+import Drawer, { drawerClasses } from '@mui/material/Drawer';
 
 import { NAV } from '../config-layout';
 import NavUpgrade from '../common/nav-upgrade';
 import { useNavData } from './config-navigation';
 import NavToggleButton from '../common/nav-toggle-button';
-
 // ----------------------------------------------------------------------
 
 type Props = {
@@ -24,6 +25,7 @@ type Props = {
 
 export default function NavVertical({ openNav, onCloseNav }: Props) {
   const { user } = useManagerUser();
+  const theme = useTheme();
   const currentRole = user?.role;
 
   const pathname = usePathname();
@@ -80,7 +82,7 @@ export default function NavVertical({ openNav, onCloseNav }: Props) {
             height: 1,
             position: 'fixed',
             width: NAV.W_VERTICAL,
-            borderRight: (theme) => `dashed 1px ${theme.palette.divider}`,
+            borderRight: `dashed 1px ${theme.palette.divider}`,
           }}
         >
           {renderContent}
@@ -92,6 +94,12 @@ export default function NavVertical({ openNav, onCloseNav }: Props) {
           PaperProps={{
             sx: {
               width: NAV.W_VERTICAL,
+            },
+          }}
+          sx={{
+            [`& .${drawerClasses.paper}`]: {
+              ...paper({ theme, bgcolor: theme.palette.background.default }),
+              width: 280,
             },
           }}
         >

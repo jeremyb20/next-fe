@@ -1,8 +1,10 @@
 import { IPetProfile } from '@/types/api';
 import Iconify from '@/components/iconify';
+import { fToNow } from '@/utils/format-time';
 import { BreedOptions } from '@/utils/constants';
 import CustomPopover, { usePopover } from '@/components/custom-popover';
 
+import { Stack } from '@mui/system';
 import {
   Box,
   Card,
@@ -55,7 +57,7 @@ export function PetCard({
           position: 'relative',
         }}
       >
-        <CardContent>
+        <CardContent sx={{ p: 2 }}>
           <Box
             sx={{
               display: 'flex',
@@ -79,13 +81,25 @@ export function PetCard({
               <Iconify icon="eva:more-vertical-fill" />
             </IconButton>
           </Box>
-          <Typography variant="h6" fontWeight={600}>
-            {pet.petName || 'No name'}
-          </Typography>
-          <Typography variant="body2" sx={{ opacity: 0.8 }}>
-            {BreedOptions.todos.find((breed) => breed.value === pet.breed)
-              ?.label || 'Unknown breed'}
-          </Typography>
+          <Stack direction="row" justifyContent="space-between">
+            <Stack>
+              <Typography variant="h6" fontWeight={600}>
+                {pet.petName || 'No name'}
+              </Typography>
+              <Stack
+                spacing={{ xs: 0, md: 1 }}
+                direction={{ xs: 'column', sm: 'column', md: 'row' }}
+              >
+                <Typography variant="body2" sx={{ opacity: 0.8 }}>
+                  {BreedOptions.todos.find((breed) => breed.value === pet.breed)
+                    ?.label || 'Unknown breed'}
+                </Typography>
+                <Typography variant="body2" sx={{ opacity: 0.8 }}>
+                  Updated: {fToNow(pet.createdAt)}
+                </Typography>
+              </Stack>
+            </Stack>
+          </Stack>
         </CardContent>
       </Card>
 

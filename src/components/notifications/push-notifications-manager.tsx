@@ -2,12 +2,14 @@
 
 'use client';
 
+import { paths } from '@/routes/paths';
 import { endpoints } from '@/utils/axios';
-import { HOST_API } from '@/config-global';
 import Iconify from '@/components/iconify';
 import { NotificationData } from '@/types/api';
-import { useRef, useState, useEffect, useCallback } from 'react';
+import { LOGO, HOST_API } from '@/config-global';
+import { useLocales } from '@/locales/use-locales';
 import { getApplicationServerKey } from '@/utils/notifications';
+import { useRef, useState, useEffect, useCallback } from 'react';
 import { useCreateGenericMutation } from '@/hooks/user-generic-mutation';
 
 import {
@@ -38,6 +40,7 @@ const PushNotificationManager = ({
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [swRegistered, setSwRegistered] = useState<boolean>(false);
   const [errors, setError] = useState<string>('');
+  const { currentLang } = useLocales();
 
   const checkExistingSubscription = useCallback(async () => {
     try {
@@ -153,15 +156,23 @@ const PushNotificationManager = ({
 
       setIsSubscribed(true);
       console.log('Suscripción completada exitosamente');
-
+      console.log(window.location.href);
       // Test: Enviar notificación de prueba
+
       setTimeout(async () => {
         try {
+          const newURL = `${window.location.origin}/${currentLang.value}${paths.notifications}`;
+
           await mutateAsync({
             payload: {
               title: '¡Notificaciones activadas!',
               body: 'Ahora recibirás notificaciones importantes.',
               type: 'system',
+              icon: LOGO,
+              lang: currentLang.value,
+              data: {
+                url: newURL,
+              },
             },
             pEndpoint: `${HOST_API}${endpoints.notification.send}`,
             method: 'POST',
@@ -178,7 +189,7 @@ const PushNotificationManager = ({
     } finally {
       setIsLoading(false);
     }
-  }, [mutateAsync]);
+  }, [currentLang.value, mutateAsync]);
 
   const unsubscribeFromNotifications = useCallback(async () => {
     try {

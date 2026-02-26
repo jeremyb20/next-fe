@@ -18,25 +18,25 @@ export const getLocalizedPath = (path: string, lng: string) =>
   path.replace('/:lng', `/${lng}`);
 
 const ROOTS = {
-  AUTH: withLang('/auth'),
-  AUTH_DEMO: withLang('/auth-demo'),
-  DASHBOARD: withLang('/dashboard'),
+  AUTH: withLang('auth'),
+  AUTH_DEMO: withLang('auth-demo'),
+  DASHBOARD: withLang('dashboard'),
 };
 
 // ----------------------------------------------------------------------
 
 export const paths = {
-  comingSoon: withLang('/coming-soon'),
-  maintenance: withLang('/maintenance'),
-  pricing: withLang('/pricing'),
-  payment: withLang('/payment'),
-  about: withLang('/about-us'),
-  contact: withLang('/contact-us'),
-  faqs: withLang('/faqs'),
-  page403: withLang('/error/403'),
-  page404: withLang('/error/404'),
-  page500: withLang('/error/500'),
-  components: withLang('/components'),
+  comingSoon: withLang('coming-soon'),
+  maintenance: withLang('maintenance'),
+  pricing: withLang('pricing'),
+  payment: withLang('payment'),
+  about: withLang('about-us'),
+  contact: withLang('contact-us'),
+  faqs: withLang('faqs'),
+  page403: withLang('error/403'),
+  page404: withLang('error/404'),
+  page500: withLang('error/500'),
+  components: withLang('components'),
   docs: 'https://docs.minimals.cc', // URLs externas no necesitan idioma
   changelog: 'https://docs.minimals.cc/changelog',
   zoneUI: 'https://mui.com/store/items/zone-landing-page/',
@@ -47,8 +47,8 @@ export const paths = {
 
   // Product routes
   product: {
-    root: withLang('/product'),
-    checkout: withLang('/product/checkout'),
+    root: withLang('product'),
+    checkout: withLang('product/checkout'),
     details: (id: string) => withLang(`/product/${id}`),
     demo: {
       details: withLang(`/product/${MOCK_ID}`),
@@ -56,11 +56,11 @@ export const paths = {
   },
 
   // Petsmarket routes
-  petsmarket: withLang('/petsmarket'),
+  petsmarket: withLang('petsmarket'),
 
   // Post routes
   post: {
-    root: withLang('/post'),
+    root: withLang('post'),
     details: (title: string) => withLang(`/post/${paramCase(title)}`),
     demo: {
       details: withLang(`/post/${paramCase(MOCK_TITLE)}`),
@@ -96,11 +96,11 @@ export const paths = {
       newPassword: `${ROOTS.AUTH}/supabase/new-password`,
       forgotPassword: `${ROOTS.AUTH}/supabase/forgot-password`,
     },
-    signIn: withLang('/sign-in'),
-    signUp: withLang('/sign-up'),
+    signIn: withLang('sign-in'),
+    signUp: withLang('sign-up'),
     register: `${ROOTS.AUTH}/register`,
     verify: `${ROOTS.AUTH}/verify`,
-    forgotPassword: withLang('/forgot'), // Directo sin ROOTS
+    forgotPassword: withLang('forgot'), // Directo sin ROOTS
   },
 
   authDemo: {
@@ -119,7 +119,7 @@ export const paths = {
       verify: `${ROOTS.AUTH_DEMO}/modern/verify`,
     },
   },
-
+  notifications: withLang(`notifications`),
   // DASHBOARD routes
   dashboard: {
     root: ROOTS.DASHBOARD,
@@ -130,7 +130,6 @@ export const paths = {
     calendar: `${ROOTS.DASHBOARD}/calendar`,
     fileManager: `${ROOTS.DASHBOARD}/file-manager`,
     permission: `${ROOTS.DASHBOARD}/permission`,
-
     petsmarket: {
       root: `${ROOTS.DASHBOARD}/petsmarket`,
       details: (productId: string) =>
@@ -266,7 +265,7 @@ export const paths = {
   },
 
   veterinarian: {
-    register: withLang('/register'),
+    register: withLang('register'),
   },
 };
 
