@@ -12,9 +12,9 @@ export default function CoatOfArms() {
         top: '50%',
         left: '40%',
         transform: 'translate(-50%, -50%)',
-        width: 220,
-        height: 200,
-        opacity: 0.04,
+        width: 210,
+        height: 150,
+        opacity: 0.13,
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
@@ -24,8 +24,8 @@ export default function CoatOfArms() {
       <Image
         src="/assets/images/about/coat-of-arms.svg"
         alt="Escudo de Costa Rica"
-        width={220}
-        height={200}
+        width={210}
+        height={150}
         style={{
           width: '100%',
           height: '100%',

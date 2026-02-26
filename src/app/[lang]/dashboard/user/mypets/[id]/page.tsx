@@ -115,12 +115,6 @@ export default async function Page({ params }: Props) {
     return <PetProfileView petProfile={data.payload} canEdit />;
   }
 
-  // // Si es código QR no registrado
-  // if (data.type === 'qr_code_unregistered' && data.qrCode) {
-  //   // return <RegistrationPetView qrCode={data.qrCode} identifier={id} />;
-  //   return <RegistrationPetView />;
-  // }
-
   // Si no se encuentra nada
   return <NotFoundPage />;
 }

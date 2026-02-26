@@ -11,6 +11,7 @@ import { fDate } from '@/utils/format-time';
 
 import Image from '@/components/image';
 import { paths } from '@/routes/paths';
+import { EMAIL_SUPPORT } from '@/config-global';
 import { RouterLink } from '@/routes/components';
 // import { useTranslation } from 'react-i18next';
 import { BreedOptions } from '@/utils/constants';
@@ -33,12 +34,15 @@ import {
   Dialog,
   Button,
   Divider,
+  Tooltip,
   useTheme,
   Container,
   Typography,
   IconButton,
+  DialogTitle,
   ListItemText,
   useMediaQuery,
+  DialogContent,
   SwipeableDrawer,
 } from '@mui/material';
 
@@ -77,6 +81,7 @@ export default function PetProfileView({ petProfile, canEdit }: Props) {
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const [tabValue, setTabValue] = useState(0);
   const [shareOpen, setShareOpen] = useState(false);
+  const [openImage, setOpenImage] = useState(false);
   const settings = useSettingsContext();
   const { t, mounted } = useTranslation();
 
@@ -151,6 +156,19 @@ export default function PetProfileView({ petProfile, canEdit }: Props) {
   }
 
   const age = calculateAge(petProfile.birthDate);
+  const MAIL_SUBJECT = encodeURIComponent(
+    'Solicitud de activación de cédula digital para mascota'
+  );
+  const MAIL_BODY = encodeURIComponent(
+    'Hola,\n\n' +
+      'Me gustaría activar la cédula digital para mi mascota. Por favor, indíquenme los pasos a seguir.\n\n' +
+      'Datos de mi mascota:\n' +
+      '- Nombre: \n' +
+      '- Número de identificación: \n\n' +
+      'Quedo atento a sus indicaciones.\n\n' +
+      'Saludos cordiales.'
+  );
+  const mailtoHref = `mailto:${EMAIL_SUPPORT}?subject=${MAIL_SUBJECT}&body=${MAIL_BODY}`;
 
   if (!mounted) {
     return <SplashScreen />; // Placeholder durante SSR
@@ -189,6 +207,7 @@ export default function PetProfileView({ petProfile, canEdit }: Props) {
                   <Avatar
                     alt={petProfile.petName}
                     src={petProfile.photo}
+                    onClick={() => setOpenImage(true)}
                     sx={{
                       width: 64,
                       height: 64,
@@ -251,7 +270,7 @@ export default function PetProfileView({ petProfile, canEdit }: Props) {
                   <Image
                     src={petProfile.photo}
                     alt={petProfile.photo}
-                    ratio="16/9"
+                    ratio="6/4"
                     overlay={alpha(theme.palette.grey[900], 0.48)}
                   />
                 </Box>
@@ -556,14 +575,97 @@ export default function PetProfileView({ petProfile, canEdit }: Props) {
                                 sx={{
                                   display: 'flex',
                                   justifyContent: 'space-between',
+                                  alignItems: 'center',
                                 }}
                               >
-                                <Typography
-                                  variant="body1"
-                                  color="text.secondary"
+                                <Box
+                                  sx={{
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    gap: 0.5,
+                                  }}
                                 >
-                                  {t('Digital Identification')}
-                                </Typography>
+                                  <Typography
+                                    variant="body1"
+                                    color="text.secondary"
+                                  >
+                                    {t('Digital Identification')}
+                                  </Typography>
+
+                                  {/* Tooltip con ícono de pregunta */}
+                                  <Tooltip
+                                    title={
+                                      <span>
+                                        ¿Quieres activar la cédula digital?
+                                        Escríbenos a{' '}
+                                        <a
+                                          href={mailtoHref}
+                                          style={{
+                                            color: '#1976d2',
+                                            textDecoration: 'underline',
+                                            fontWeight: 500,
+                                            cursor: 'pointer',
+                                          }}
+                                          onClick={(e) => e.stopPropagation()}
+                                          target="_blank"
+                                          rel="noopener noreferrer"
+                                        >
+                                          {EMAIL_SUPPORT}
+                                        </a>{' '}
+                                        y te guiaremos en el proceso paso a
+                                        paso. 🐾
+                                      </span>
+                                    }
+                                    arrow
+                                    placement="top"
+                                    enterTouchDelay={0} // Para mobile: activar al tocar
+                                    leaveTouchDelay={3000} // Duración del tooltip en mobile
+                                    componentsProps={{
+                                      tooltip: {
+                                        sx: {
+                                          bgcolor: 'background.paper',
+                                          color: 'text.primary',
+                                          boxShadow: 1,
+                                          border: '1px solid',
+                                          borderColor: 'divider',
+                                          fontSize: '0.875rem',
+                                          p: 1,
+                                          maxWidth: 250,
+                                        },
+                                      },
+                                      arrow: {
+                                        sx: {
+                                          color: 'background.paper',
+                                          '&:before': {
+                                            border: '1px solid',
+                                            borderColor: 'divider',
+                                          },
+                                        },
+                                      },
+                                    }}
+                                  >
+                                    <IconButton
+                                      size="small"
+                                      sx={{
+                                        p: 0.5,
+                                        color: 'text.secondary',
+                                        '&:hover': {
+                                          color: 'primary.main',
+                                          backgroundColor: 'transparent',
+                                        },
+                                      }}
+                                      // En mobile, prevenimos que el click propague al padre
+                                      onClick={(e) => e.stopPropagation()}
+                                    >
+                                      <Iconify
+                                        icon="mdi:help-circle-outline"
+                                        width={18}
+                                        height={18}
+                                      />
+                                    </IconButton>
+                                  </Tooltip>
+                                </Box>
+
                                 <Chip
                                   label={
                                     petProfile.isDigitalIdentificationActive
@@ -924,6 +1026,44 @@ export default function PetProfileView({ petProfile, canEdit }: Props) {
           />
         </SwipeableDrawer>
       )}
+
+      <Dialog
+        open={openImage}
+        onClose={() => setOpenImage(false)}
+        maxWidth="sm"
+        fullWidth
+        PaperProps={{
+          sx: {
+            borderRadius: 3,
+          },
+        }}
+      >
+        <DialogTitle
+          sx={{
+            display: 'flex',
+            alignItems: 'flex-end',
+            justifyContent: 'flex-end',
+            p: 1,
+          }}
+        >
+          <IconButton onClick={() => setOpenImage(false)}>
+            <Iconify icon="mingcute:close-line" />
+          </IconButton>
+        </DialogTitle>
+        <DialogContent>
+          <Avatar
+            alt={petProfile.petName}
+            src={petProfile.photo}
+            sx={{
+              width: isMobile ? 200 : 300,
+              height: isMobile ? 200 : 300,
+              objectFit: 'cover',
+              mx: 'auto',
+              mb: 2,
+            }}
+          />
+        </DialogContent>
+      </Dialog>
     </>
   );
 }

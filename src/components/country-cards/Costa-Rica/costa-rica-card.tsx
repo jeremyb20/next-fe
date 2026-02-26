@@ -9,7 +9,6 @@ import { CostaRicaFlagAccurate } from '@/components/country-cards/Costa-Rica/cos
 
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
-import Divider from '@mui/material/Divider';
 import Typography from '@mui/material/Typography';
 import { Stack, useTheme, useMediaQuery } from '@mui/material';
 
@@ -45,7 +44,7 @@ export default function CostaRicaIDCard({ data }: Props) {
           width={28}
           style={{ verticalAlign: 'middle', marginRight: 8 }}
         />
-        Cedula de Identidad - Costa Rica
+        Cédula de Identidad - Costa Rica
       </Typography>
 
       <Typography
@@ -58,18 +57,19 @@ export default function CostaRicaIDCard({ data }: Props) {
         }}
       >
         <Icon icon="mdi:information-outline" width={14} />
-        Este es un diseno de referencia. No es un documento oficial.
+        Este es un diseño de referencia. No es un documento oficial.
       </Typography>
 
       {/* Card Container */}
       <Paper
         elevation={8}
         sx={{
-          width: { xs: '100%', sm: 580, md: 480 },
+          width: { xs: '100%', sm: 410, md: 410 },
           maxWidth: 580,
           aspectRatio: {
             xs: '100vw',
-            sm: '84 / 54',
+            sm: '74/42',
+            md: '74/42',
           },
           borderRadius: '16px',
           overflow: 'hidden',
@@ -90,7 +90,7 @@ export default function CostaRicaIDCard({ data }: Props) {
           sx={{
             position: 'relative',
             zIndex: 1,
-            p: { xs: 1, sm: 2.5, md: 3 },
+            p: { xs: 1, sm: 1, md: 1 },
             height: '100%',
           }}
         >
@@ -99,107 +99,127 @@ export default function CostaRicaIDCard({ data }: Props) {
             sx={{
               display: 'flex',
               alignItems: 'flex-start',
-              gap: isMobile ? 1 : 1.5,
+              justifyContent: 'space-between',
+              gap: isMobile ? 1 : 1,
               mb: 1,
             }}
           >
             <CostaRicaFlagAccurate
-              width={isMobile ? 35 : 50}
-              height={isMobile ? 25 : 40}
+              sx={{
+                width: {
+                  xs: 35,
+                  sm: 25,
+                },
+                height: isMobile ? 25 : 20,
+              }}
             />
             <Stack alignItems="end">
-              <Typography
-                sx={{
-                  fontSize: { xs: 12, sm: 16 },
-                  fontWeight: 800,
-                  color: '#1a2a3a',
-                  letterSpacing: 1.5,
-                  lineHeight: 1.2,
-                  textTransform: 'uppercase',
-                  fontFamily: 'serif',
-                }}
-              >
-                Republica de Costa Rica
-              </Typography>
-              <Typography
-                sx={{
-                  fontSize: { xs: 9, sm: 11 },
-                  color: '#3a5a7a',
-                  fontWeight: 600,
-                  letterSpacing: 0.5,
-                  lineHeight: 1.3,
-                }}
-              >
-                Tribunal Supremo de Mascotas
-              </Typography>
-              <Typography
-                sx={{
-                  fontSize: { xs: 9, sm: 12 },
-                  color: '#1a3a5c',
-                  fontWeight: 700,
-                  letterSpacing: 0.8,
-                  lineHeight: 1.3,
-                }}
-              >
-                Cédula de Identidad
-              </Typography>
-            </Stack>
-          </Box>
-
-          <Divider sx={{ borderColor: 'rgba(26,58,92,0.15)', mb: 1.5 }} />
-
-          {/* Body */}
-          <Box
-            sx={{
-              display: 'flex',
-              gap: 2,
-              alignItems: 'flex-start',
-            }}
-          >
-            {/* Left - Data Fields */}
-            <Box
-              sx={{
-                flex: 1,
-                display: 'flex',
-                flexDirection: 'column',
-                gap: 0.8,
-              }}
-            >
-              {/* Braille-like dots decoration */}
-              <Box
-                sx={{
-                  display: 'flex',
-                  gap: 0.5,
-                  mb: 0.5,
-                  flexWrap: 'wrap',
-                  maxWidth: 80,
-                }}
-              >
-                {[...Array(12)].map((_, i) => (
-                  <Box
-                    key={i}
+              <Stack direction="column">
+                <Stack
+                  sx={{
+                    alignItems: 'end',
+                    flexWrap: 'wrap', // Permite quebrar en móviles si es necesario
+                    justifyContent: 'flex-end',
+                  }}
+                >
+                  <Typography
                     sx={{
-                      width: 5,
-                      height: 5,
-                      borderRadius: '50%',
-                      bgcolor: 'rgba(26,58,92,0.2)',
+                      fontSize: {
+                        xs: 'clamp(3px, 4vw, 9px)',
+                        sm: 'clamp(8px, 3vw, 12px)',
+                        md: 'clamp(8px, 3vw, 12px)',
+                        lg: 'clamp(8px, 3vw, 12px)',
+                      },
+                      fontWeight: 800,
+                      color: '#1a2a3a',
+                      letterSpacing: 1,
+                      lineHeight: 1.2,
+                      textTransform: 'uppercase',
+                      fontFamily: 'serif',
                     }}
-                  />
-                ))}
-              </Box>
+                  >
+                    República de Costa Rica
+                  </Typography>
+                  <Typography
+                    sx={{
+                      fontSize: { xs: 9, sm: 11 },
+                      color: '#3a5a7a',
+                      fontWeight: 600,
+                      letterSpacing: 0.5,
+                      lineHeight: 1.3,
+                    }}
+                  >
+                    Tribunal Supremo de Mascotas
+                  </Typography>
+                  <Typography
+                    sx={{
+                      fontSize: { xs: 9, sm: 12 },
+                      color: '#1a3a5c',
+                      fontWeight: 700,
+                      letterSpacing: 0.8,
+                      lineHeight: 1.3,
+                    }}
+                  >
+                    Cédula de Identidad
+                  </Typography>
+                </Stack>
+                {/* Body */}
+                <Box
+                  sx={{
+                    display: 'flex',
+                    gap: 2,
+                    alignItems: 'flex-start',
+                    position: 'absolute',
+                    bottom: 6,
+                    left: 54,
+                  }}
+                >
+                  {/* Left - Data Fields */}
+                  <Box
+                    sx={{
+                      flex: 1,
+                      display: 'flex',
+                      flexDirection: 'column',
+                      gap: 0.8,
+                    }}
+                  >
+                    {/* Braille-like dots decoration */}
+                    <Box
+                      sx={{
+                        display: 'flex',
+                        gap: 0.5,
+                        mb: 0.5,
+                        flexWrap: 'wrap',
+                        maxWidth: 80,
+                      }}
+                    >
+                      {[...Array(12)].map((_, i) => (
+                        <Box
+                          key={i}
+                          sx={{
+                            width: 5,
+                            height: 5,
+                            borderRadius: '50%',
+                            bgcolor: 'rgba(26,58,92,0.2)',
+                          }}
+                        />
+                      ))}
+                    </Box>
 
-              <DataField label="Nombre" value={data?.petName || ''} />
-              <DataField
-                label="1° Apellido"
-                value={data?.petFirstSurname || 'N/A'}
-              />
-              <DataField
-                label="2° Apellido"
-                value={data?.petSecondSurname || 'N/A'}
-              />
-              <DataField label="C.C" value={data?.memberPetId || ''} />
-            </Box>
-
+                    <DataField label="Nombre" value={data?.petName || ''} />
+                    <DataField
+                      label="1° Apellido"
+                      value={data?.petFirstSurname || 'N/A'}
+                    />
+                    <DataField
+                      label="2° Apellido"
+                      value={data?.petSecondSurname || 'N/A'}
+                    />
+                    <DataField label="C.C" value={data?.memberPetId || ''} />
+                  </Box>
+                </Box>
+              </Stack>
+            </Stack>
             {/* Right - Photo */}
             <Box
               sx={{
@@ -213,7 +233,7 @@ export default function CostaRicaIDCard({ data }: Props) {
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',
-                justifyContent: 'center',
+                justifyContent: 'end',
                 flexShrink: 0,
                 backdropFilter: 'blur(4px)',
                 gap: 1,
@@ -278,6 +298,7 @@ export default function CostaRicaIDCard({ data }: Props) {
               )}
             </Box>
           </Box>
+
           <Stack
             direction="row"
             justifyContent={data?.photo ? 'space-between' : 'flex-end'}
@@ -309,7 +330,15 @@ export default function CostaRicaIDCard({ data }: Props) {
                 />
               </Box>
             )}
-            <CostaRicaFlagAccurate width={36} height={22} />
+            <CostaRicaFlagAccurate
+              sx={{
+                width: {
+                  xs: 35,
+                  sm: 30,
+                },
+                height: isMobile ? 25 : 20,
+              }}
+            />
           </Stack>
         </Box>
       </Paper>

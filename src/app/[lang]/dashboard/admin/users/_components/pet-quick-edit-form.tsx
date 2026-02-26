@@ -396,14 +396,11 @@ export default function PetQuickEditForm({
   return (
     <Dialog
       fullWidth
-      maxWidth={false}
+      maxWidth="md"
       open={open}
       onClose={() => {
         setPetPhotoPreview(null);
         onClose();
-      }}
-      PaperProps={{
-        sx: { maxWidth: 720 },
       }}
       fullScreen={isMobile}
       scroll="paper"

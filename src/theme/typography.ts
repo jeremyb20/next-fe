@@ -11,15 +11,20 @@ export function pxToRem(value: number) {
 }
 
 export function responsiveFontSizes({
+  xs,
   sm,
   md,
   lg,
 }: {
+  xs: number;
   sm: number;
   md: number;
   lg: number;
 }) {
   return {
+    '@media (min-width:0px)': {
+      fontSize: pxToRem(xs),
+    },
     '@media (min-width:600px)': {
       fontSize: pxToRem(sm),
     },
@@ -46,116 +51,188 @@ export function getScaledTypography(fontSizeScale: number = 1) {
     h1: {
       fontWeight: 800,
       lineHeight: 80 / 64,
-      fontSize: pxToRem(40 * scaleFactor),
+      fontSize: pxToRem(32 * scaleFactor), // Valor base para móviles muy pequeños
       ...responsiveFontSizes({
-        sm: 52 * scaleFactor,
-        md: 58 * scaleFactor,
+        xs: 36 * scaleFactor,
+        sm: 44 * scaleFactor,
+        md: 52 * scaleFactor,
         lg: 64 * scaleFactor,
       }),
     },
     h2: {
       fontWeight: 800,
       lineHeight: 64 / 48,
-      fontSize: pxToRem(32 * scaleFactor),
+      fontSize: pxToRem(28 * scaleFactor),
       ...responsiveFontSizes({
-        sm: 40 * scaleFactor,
-        md: 44 * scaleFactor,
+        xs: 32 * scaleFactor,
+        sm: 36 * scaleFactor,
+        md: 40 * scaleFactor,
         lg: 48 * scaleFactor,
       }),
     },
     h3: {
       fontWeight: 700,
       lineHeight: 1.5,
-      fontSize: pxToRem(24 * scaleFactor),
+      fontSize: pxToRem(22 * scaleFactor),
       ...responsiveFontSizes({
+        xs: 24 * scaleFactor,
         sm: 26 * scaleFactor,
-        md: 30 * scaleFactor,
+        md: 28 * scaleFactor,
         lg: 32 * scaleFactor,
       }),
     },
     h4: {
       fontWeight: 700,
       lineHeight: 1.5,
-      fontSize: pxToRem(20 * scaleFactor),
+      fontSize: pxToRem(18 * scaleFactor),
       ...responsiveFontSizes({
+        xs: 18 * scaleFactor,
         sm: 20 * scaleFactor,
-        md: 24 * scaleFactor,
+        md: 22 * scaleFactor,
         lg: 24 * scaleFactor,
       }),
     },
     h5: {
       fontWeight: 700,
       lineHeight: 1.5,
-      fontSize: pxToRem(18 * scaleFactor),
+      fontSize: pxToRem(16 * scaleFactor),
       ...responsiveFontSizes({
-        sm: 19 * scaleFactor,
-        md: 20 * scaleFactor,
+        xs: 16 * scaleFactor,
+        sm: 17 * scaleFactor,
+        md: 18 * scaleFactor,
         lg: 20 * scaleFactor,
       }),
     },
     h6: {
       fontWeight: 700,
       lineHeight: 28 / 18,
-      fontSize: pxToRem(17 * scaleFactor),
+      fontSize: pxToRem(15 * scaleFactor),
       ...responsiveFontSizes({
-        sm: 18 * scaleFactor,
-        md: 18 * scaleFactor,
+        xs: 15 * scaleFactor,
+        sm: 16 * scaleFactor,
+        md: 17 * scaleFactor,
         lg: 18 * scaleFactor,
       }),
     },
     subtitle1: {
       fontWeight: 600,
       lineHeight: 1.5,
-      fontSize: pxToRem(16 * scaleFactor),
+      fontSize: pxToRem(14 * scaleFactor),
+      ...responsiveFontSizes({
+        xs: 14 * scaleFactor,
+        sm: 15 * scaleFactor,
+        md: 15 * scaleFactor,
+        lg: 16 * scaleFactor,
+      }),
     },
     subtitle2: {
       fontWeight: 600,
       lineHeight: 22 / 14,
-      fontSize: pxToRem(14 * scaleFactor),
+      fontSize: pxToRem(13 * scaleFactor),
+      ...responsiveFontSizes({
+        xs: 13 * scaleFactor,
+        sm: 13 * scaleFactor,
+        md: 14 * scaleFactor,
+        lg: 14 * scaleFactor,
+      }),
     },
     body1: {
       lineHeight: 1.5,
-      fontSize: pxToRem(16 * scaleFactor),
+      fontSize: pxToRem(14 * scaleFactor),
+      ...responsiveFontSizes({
+        xs: 14 * scaleFactor,
+        sm: 15 * scaleFactor,
+        md: 15 * scaleFactor,
+        lg: 16 * scaleFactor,
+      }),
     },
     body2: {
       lineHeight: 22 / 14,
-      fontSize: pxToRem(14 * scaleFactor),
+      fontSize: pxToRem(13 * scaleFactor),
+      ...responsiveFontSizes({
+        xs: 13 * scaleFactor,
+        sm: 13 * scaleFactor,
+        md: 14 * scaleFactor,
+        lg: 14 * scaleFactor,
+      }),
     },
     caption: {
       lineHeight: 1.5,
-      fontSize: pxToRem(12 * scaleFactor),
+      fontSize: pxToRem(11 * scaleFactor),
+      ...responsiveFontSizes({
+        xs: 11 * scaleFactor,
+        sm: 11 * scaleFactor,
+        md: 12 * scaleFactor,
+        lg: 12 * scaleFactor,
+      }),
     },
     overline: {
       fontWeight: 700,
       lineHeight: 1.5,
-      fontSize: pxToRem(12 * scaleFactor),
+      fontSize: pxToRem(11 * scaleFactor),
+      ...responsiveFontSizes({
+        xs: 11 * scaleFactor,
+        sm: 11 * scaleFactor,
+        md: 12 * scaleFactor,
+        lg: 12 * scaleFactor,
+      }),
       textTransform: 'uppercase',
     },
     button: {
       fontWeight: 700,
       lineHeight: 24 / 14,
-      fontSize: pxToRem(14 * scaleFactor),
+      fontSize: pxToRem(13 * scaleFactor),
+      ...responsiveFontSizes({
+        xs: 13 * scaleFactor,
+        sm: 13 * scaleFactor,
+        md: 14 * scaleFactor,
+        lg: 14 * scaleFactor,
+      }),
       textTransform: 'unset',
     },
     inputLabel: {
       fontWeight: 500,
       lineHeight: 1.5,
-      fontSize: pxToRem(16 * scaleFactor),
+      fontSize: pxToRem(14 * scaleFactor),
+      ...responsiveFontSizes({
+        xs: 14 * scaleFactor,
+        sm: 15 * scaleFactor,
+        md: 15 * scaleFactor,
+        lg: 16 * scaleFactor,
+      }),
     },
     menuItem: {
       fontWeight: 500,
       lineHeight: 1.6,
-      fontSize: pxToRem(14 * scaleFactor),
+      fontSize: pxToRem(13 * scaleFactor),
+      ...responsiveFontSizes({
+        xs: 13 * scaleFactor,
+        sm: 13 * scaleFactor,
+        md: 14 * scaleFactor,
+        lg: 14 * scaleFactor,
+      }),
     },
     label: {
       fontWeight: 500,
       lineHeight: 1.6,
-      fontSize: pxToRem(14 * scaleFactor),
+      fontSize: pxToRem(13 * scaleFactor),
+      ...responsiveFontSizes({
+        xs: 13 * scaleFactor,
+        sm: 13 * scaleFactor,
+        md: 14 * scaleFactor,
+        lg: 14 * scaleFactor,
+      }),
     },
     span: {
       fontWeight: 500,
       lineHeight: 1.6,
-      fontSize: pxToRem(14 * scaleFactor),
+      fontSize: pxToRem(13 * scaleFactor),
+      ...responsiveFontSizes({
+        xs: 13 * scaleFactor,
+        sm: 13 * scaleFactor,
+        md: 14 * scaleFactor,
+        lg: 14 * scaleFactor,
+      }),
     },
   } as const;
 }
