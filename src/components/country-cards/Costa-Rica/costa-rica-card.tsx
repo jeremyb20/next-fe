@@ -346,7 +346,20 @@ export default function CostaRicaIDCard({ data }: Props) {
   );
 }
 
-function DataField({ label, value }: { label: string; value: string }) {
+function DataField({
+  label,
+  value,
+  maxLength = 15, // Límite de caracteres por defecto
+}: {
+  label: string;
+  value: string;
+  maxLength?: number;
+}) {
+  const displayValue =
+    value && value.length > maxLength
+      ? `${value.substring(0, maxLength)}...`
+      : value;
+
   return (
     <Box sx={{ display: 'flex', gap: 0.5, alignItems: 'baseline' }}>
       <Typography
@@ -369,9 +382,13 @@ function DataField({ label, value }: { label: string; value: string }) {
           flex: 1,
           minHeight: 16,
           lineHeight: '16px',
+          overflow: 'hidden',
+          textOverflow: 'ellipsis',
+          whiteSpace: 'nowrap',
         }}
+        title={value || ''}
       >
-        {value || '\u00A0'}
+        {displayValue || '\u00A0'}
       </Typography>
     </Box>
   );
