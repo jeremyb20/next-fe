@@ -49,7 +49,7 @@ export interface QueryOptions {
 export interface BaseApiResponse {
   status: string;
   message: string;
-  payload?: unknown; // Opcional por si incluye datos adicionales
+  payload?: any; // Opcional por si incluye datos adicionales
 }
 
 // external interfaces
@@ -99,6 +99,7 @@ export interface NotificationFormData {
   date: string;
   time: string;
   scheduledTime?: string;
+  image: string;
 }
 
 // Interface para el perfil del usuario

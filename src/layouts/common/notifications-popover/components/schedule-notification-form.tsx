@@ -1,7 +1,7 @@
 // schedule-notification-form.tsx
 import { useState } from 'react';
 import { endpoints } from '@/utils/axios';
-import { HOST_API } from '@/config-global';
+import { LOGO, HOST_API } from '@/config-global';
 import { NotificationData, NotificationFormData } from '@/types/api';
 import { useCreateGenericMutation } from '@/hooks/user-generic-mutation';
 
@@ -28,6 +28,7 @@ const ScheduleNotificationForm = ({
     body: '',
     date: '',
     time: '',
+    image: '',
   });
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [message, setMessage] = useState<{
@@ -71,6 +72,7 @@ const ScheduleNotificationForm = ({
         type: 'schedule',
         date: '',
         time: '',
+        image: formData.image || LOGO,
       };
 
       await mutateAsync<NotificationFormData>({
@@ -100,6 +102,7 @@ const ScheduleNotificationForm = ({
         body: '',
         date: '',
         time: '',
+        image: '',
       });
 
       // Notificar al componente padre para actualizar la lista
@@ -189,6 +192,15 @@ const ScheduleNotificationForm = ({
             inputProps={{
               min: getMinTime(), // Si la fecha es hoy, establecer hora mínima
             }}
+            fullWidth
+            required
+            variant="outlined"
+          />
+
+          <TextField
+            label="Image URL (Optional)"
+            value={formData.image}
+            onChange={handleFormChange('image')}
             fullWidth
             required
             variant="outlined"

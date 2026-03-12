@@ -50,6 +50,7 @@ export const endpoints = {
     unsubscribe: '/api/notifications/unsubscribe',
     delete: '/api/notifications/delete',
     send: '/api/notifications/send',
+    sendToAdmin: '/api/notifications/sendToAdmin',
   },
   admin: {
     users: {

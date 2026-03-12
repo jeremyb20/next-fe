@@ -20,8 +20,9 @@ self.addEventListener('push', function (event) {
       body: data.body || 'Tienes3 una nueva notificación',
       icon:
         data.icon || 'https://plaquitascr.com/assets/images/plaquitascr.png',
-      badge:
-        data.badge || 'https://plaquitascr.com/assets/images/plaquitascr.png',
+      badge: data.badge || 'https://plaquitascr.com/favicon/favicon-32x32.png',
+      image:
+        data.image || 'https://plaquitascr.com/assets/images/plaquitascr.png',
       vibrate: [200, 100, 200],
       tag: data.tag || 'notification',
       data: data.data || {},
