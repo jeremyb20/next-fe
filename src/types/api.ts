@@ -54,6 +54,7 @@ export interface BaseApiResponse {
 
 // external interfaces
 export interface NotificationData {
+  image: string;
   _id: string;
   user: string;
   type: string;

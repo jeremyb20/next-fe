@@ -7,7 +7,6 @@ import Scrollbar from '@/components/scrollbar';
 import { NotificationData } from '@/types/api';
 import { varHover } from '@/components/animate';
 import { useBoolean } from '@/hooks/use-boolean';
-import { useResponsive } from '@/hooks/use-responsive';
 import { useManagerUser } from '@/hooks/use-manager-user';
 import { useFetchGetNotifications } from '@/hooks/use-fetch';
 import { useMemo, useState, useEffect, useCallback } from 'react';
@@ -42,7 +41,6 @@ interface TabType {
 
 export default function NotificationsPopover() {
   const drawer = useBoolean();
-  const smUp = useResponsive('up', 'sm');
   const [currentTab, setCurrentTab] = useState<string>('all');
   const [showSettings, setShowSettings] = useState(false);
   const { user } = useManagerUser();
@@ -146,7 +144,7 @@ export default function NotificationsPopover() {
     setNotifications(updatedNotifications);
   };
 
-  const deleteScheduledNotification = async (notificationId: string) => {
+  const deleteNotification = async (notificationId: string) => {
     try {
       await mutateAsync<{ id: string }>({
         payload: { id: notificationId },
@@ -160,6 +158,25 @@ export default function NotificationsPopover() {
       );
     } catch (error) {
       console.error('Error al eliminar la notificación:', error);
+    }
+  };
+
+  const markAsRead = async (notificationId: string) => {
+    try {
+      await mutateAsync({
+        payload: { id: notificationId },
+        pEndpoint: `${HOST_API}${endpoints.notification.markAsRead}/${notificationId}`,
+        method: 'PUT',
+      });
+      setNotifications((prevNotifications) =>
+        prevNotifications.map((notification) =>
+          notification._id === notificationId
+            ? { ...notification, read: true }
+            : notification
+        )
+      );
+    } catch (error) {
+      console.error('Error marking notification as read:', error);
     }
   };
 
@@ -245,7 +262,8 @@ export default function NotificationsPopover() {
           <NotificationItem
             key={notification._id}
             notification={notification}
-            deleteScheduledNotification={deleteScheduledNotification}
+            deleteNotification={deleteNotification}
+            markAsRead={markAsRead}
           />
         ))}
       </List>

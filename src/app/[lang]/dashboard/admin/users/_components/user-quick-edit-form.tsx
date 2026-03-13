@@ -7,8 +7,8 @@ import { endpoints } from '@/utils/axios';
 import Iconify from '@/components/iconify';
 import { HOST_API } from '@/config-global';
 import { useSnackbar } from '@/components/snackbar';
-import { yupResolver } from '@hookform/resolvers/yup';
 import { IPInfoResponse } from '@/hooks/use-ip-info';
+import { yupResolver } from '@hookform/resolvers/yup';
 import { useCreateGenericMutation } from '@/hooks/user-generic-mutation';
 import {
   USER_ROLE_OPTIONS,

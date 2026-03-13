@@ -1,4 +1,278 @@
+// import Label from '@/components/label';
+// import Iconify from '@/components/iconify';
+// import { fToNow } from '@/utils/format-time';
+// import { NotificationData } from '@/types/api';
+// import FileThumbnail from '@/components/file-thumbnail';
+
+// import Box from '@mui/material/Box';
+// import Stack from '@mui/material/Stack';
+// import Button from '@mui/material/Button';
+// import Avatar from '@mui/material/Avatar';
+// import { IconButton } from '@mui/material';
+// import Typography from '@mui/material/Typography';
+// import ListItemText from '@mui/material/ListItemText';
+// import ListItemAvatar from '@mui/material/ListItemAvatar';
+// import ListItemButton from '@mui/material/ListItemButton';
+
+// // ----------------------------------------------------------------------
+
+// type NotificationItemProps = {
+//   notification: NotificationData;
+//   deleteScheduledNotification: (id: string) => void;
+// };
+
+// export default function NotificationItem({
+//   notification,
+//   deleteScheduledNotification,
+// }: NotificationItemProps) {
+//   const renderAvatar = (
+//     <ListItemAvatar>
+//       {notification.avatarUrl ? (
+//         <Avatar
+//           src={notification.avatarUrl}
+//           sx={{ bgcolor: 'background.neutral' }}
+//         />
+//       ) : (
+//         <Stack
+//           alignItems="center"
+//           justifyContent="center"
+//           sx={{
+//             width: 40,
+//             height: 40,
+//             borderRadius: '50%',
+//             bgcolor: 'background.neutral',
+//           }}
+//         >
+//           <Iconify
+//             icon={
+//               (notification.type === 'system' &&
+//                 'solar:bell-bing-bold-duotone') ||
+//               (notification.type === 'schedule' && 'lets-icons:clock') ||
+//               (notification.type === 'order' && 'ic_order') ||
+//               (notification.type === 'chat' && 'ic_chat') ||
+//               (notification.type === 'mail' && 'ic_mail') ||
+//               (notification.type === 'delivery' && 'ic_delivery') ||
+//               ''
+//             }
+//           />
+//         </Stack>
+//       )}
+//     </ListItemAvatar>
+//   );
+
+//   const renderText = (
+//     <ListItemText
+//       disableTypography
+//       primary={reader(notification.title)}
+//       secondary={
+//         <Stack
+//           direction="row"
+//           alignItems="center"
+//           justifyContent="space-between"
+//           sx={{ typography: 'caption', color: 'text.disabled' }}
+//           divider={
+//             <Box
+//               sx={{
+//                 width: 2,
+//                 height: 2,
+//                 bgcolor: 'currentColor',
+//                 mx: 0.5,
+//                 borderRadius: '50%',
+//               }}
+//             />
+//           }
+//         >
+//           {fToNow(notification.createdAt)}
+//           {notification.category}
+//           <IconButton
+//             edge="end"
+//             onClick={() => deleteScheduledNotification(notification._id)}
+//           >
+//             <Iconify width={24} icon="tabler:trash" />
+//           </IconButton>
+//         </Stack>
+//       }
+//     />
+//   );
+
+//   const renderUnReadBadge = notification.read && (
+//     <Box
+//       sx={{
+//         top: 26,
+//         width: 8,
+//         height: 8,
+//         right: 20,
+//         borderRadius: '50%',
+//         bgcolor: 'info.main',
+//         position: 'absolute',
+//       }}
+//     />
+//   );
+
+//   const friendAction = (
+//     <Stack spacing={1} direction="row" sx={{ mt: 1.5 }}>
+//       <Button size="small" variant="contained">
+//         Accept
+//       </Button>
+//       <Button size="small" variant="outlined">
+//         Decline
+//       </Button>
+//     </Stack>
+//   );
+
+//   const projectAction = (
+//     <Stack alignItems="flex-start">
+//       <Box
+//         sx={{
+//           p: 1.5,
+//           my: 1.5,
+//           borderRadius: 1.5,
+//           color: 'text.secondary',
+//           bgcolor: 'background.neutral',
+//         }}
+//       >
+//         {reader(
+//           `<p><strong>@Jaydon Frankie</strong> feedback by asking questions or just leave a note of appreciation.</p>`
+//         )}
+//       </Box>
+
+//       <Button size="small" variant="contained">
+//         Reply
+//       </Button>
+//     </Stack>
+//   );
+
+//   const fileAction = (
+//     <Stack
+//       spacing={1}
+//       direction="row"
+//       sx={{
+//         pl: 1,
+//         p: 1.5,
+//         mt: 1.5,
+//         borderRadius: 1.5,
+//         bgcolor: 'background.neutral',
+//       }}
+//     >
+//       <FileThumbnail
+//         file="http://localhost:8080/httpsdesign-suriname-2015.mp3"
+//         sx={{ width: 40, height: 40 }}
+//       />
+
+//       <Stack
+//         spacing={1}
+//         direction={{ xs: 'column', sm: 'row' }}
+//         flexGrow={1}
+//         sx={{ minWidth: 0 }}
+//       >
+//         <ListItemText
+//           disableTypography
+//           primary={
+//             <Typography
+//               variant="subtitle2"
+//               component="div"
+//               sx={{ color: 'text.secondary' }}
+//               noWrap
+//             >
+//               design-suriname-2015.mp3
+//             </Typography>
+//           }
+//           secondary={
+//             <Stack
+//               direction="row"
+//               alignItems="center"
+//               sx={{ typography: 'caption', color: 'text.disabled' }}
+//               divider={
+//                 <Box
+//                   sx={{
+//                     mx: 0.5,
+//                     width: 2,
+//                     height: 2,
+//                     borderRadius: '50%',
+//                     bgcolor: 'currentColor',
+//                   }}
+//                 />
+//               }
+//             >
+//               <span>2.3 GB</span>
+//               <span>30 min ago</span>
+//             </Stack>
+//           }
+//         />
+
+//         <Button size="small" variant="outlined">
+//           Download
+//         </Button>
+//       </Stack>
+//     </Stack>
+//   );
+
+//   const tagsAction = (
+//     <Stack direction="row" spacing={0.75} flexWrap="wrap" sx={{ mt: 1.5 }}>
+//       <Label variant="outlined" color="info">
+//         Design
+//       </Label>
+//       <Label variant="outlined" color="warning">
+//         Dashboard
+//       </Label>
+//       <Label variant="outlined">Design system</Label>
+//     </Stack>
+//   );
+
+//   const paymentAction = (
+//     <Stack direction="row" spacing={1} sx={{ mt: 1.5 }}>
+//       <Button size="small" variant="contained">
+//         Pay
+//       </Button>
+//       <Button size="small" variant="outlined">
+//         Decline
+//       </Button>
+//     </Stack>
+//   );
+
+//   return (
+//     <ListItemButton
+//       disableRipple
+//       sx={{
+//         p: 2.5,
+//         alignItems: 'flex-start',
+//         borderBottom: (theme) => `dashed 1px ${theme.palette.divider}`,
+//       }}
+//     >
+//       {renderUnReadBadge}
+
+//       {renderAvatar}
+
+//       <Stack sx={{ flexGrow: 1 }}>
+//         {renderText}
+//         {notification.type === 'friend' && friendAction}
+//         {notification.type === 'project' && projectAction}
+//         {notification.type === 'file' && fileAction}
+//         {notification.type === 'tags' && tagsAction}
+//         {notification.type === 'payment' && paymentAction}
+//       </Stack>
+//     </ListItemButton>
+//   );
+// }
+
+// // ----------------------------------------------------------------------
+
+// function reader(data: string) {
+//   return (
+//     <Box
+//       dangerouslySetInnerHTML={{ __html: data }}
+//       sx={{
+//         mb: 0.5,
+//         '& p': { typography: 'body2', m: 0 },
+//         '& a': { color: 'inherit', textDecoration: 'none' },
+//         '& strong': { typography: 'subtitle2' },
+//       }}
+//     />
+//   );
+// }
+
 import Label from '@/components/label';
+import Image from '@/components/image';
 import Iconify from '@/components/iconify';
 import { fToNow } from '@/utils/format-time';
 import { NotificationData } from '@/types/api';
@@ -7,8 +281,6 @@ import FileThumbnail from '@/components/file-thumbnail';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
-import Avatar from '@mui/material/Avatar';
-import { IconButton } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import ListItemText from '@mui/material/ListItemText';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
@@ -18,84 +290,95 @@ import ListItemButton from '@mui/material/ListItemButton';
 
 type NotificationItemProps = {
   notification: NotificationData;
-  deleteScheduledNotification: (id: string) => void;
+  deleteNotification: (id: string) => void;
+  markAsRead: (id: string) => void;
 };
 
 export default function NotificationItem({
   notification,
-  deleteScheduledNotification,
+  deleteNotification,
+  markAsRead,
 }: NotificationItemProps) {
   const renderAvatar = (
     <ListItemAvatar>
-      {notification.avatarUrl ? (
-        <Avatar
-          src={notification.avatarUrl}
-          sx={{ bgcolor: 'background.neutral' }}
+      <Stack
+        alignItems="center"
+        justifyContent="center"
+        sx={{
+          width: 40,
+          height: 40,
+          borderRadius: '50%',
+          bgcolor: 'background.neutral',
+        }}
+      >
+        <Iconify
+          icon={
+            (notification.type === 'system' &&
+              'solar:bell-bing-bold-duotone') ||
+            (notification.type === 'schedule' && 'lets-icons:clock') ||
+            (notification.type === 'order' && 'ic_order') ||
+            (notification.type === 'chat' && 'ic_chat') ||
+            (notification.type === 'alert' && 'heroicons:user-plus-solid') ||
+            (notification.type === 'mail' && 'ic_mail') ||
+            (notification.type === 'delivery' && 'ic_delivery') ||
+            ''
+          }
         />
-      ) : (
-        <Stack
-          alignItems="center"
-          justifyContent="center"
-          sx={{
-            width: 40,
-            height: 40,
-            borderRadius: '50%',
-            bgcolor: 'background.neutral',
-          }}
-        >
-          <Iconify
-            icon={
-              (notification.type === 'system' &&
-                'solar:bell-bing-bold-duotone') ||
-              (notification.type === 'schedule' && 'lets-icons:clock') ||
-              (notification.type === 'order' && 'ic_order') ||
-              (notification.type === 'chat' && 'ic_chat') ||
-              (notification.type === 'mail' && 'ic_mail') ||
-              (notification.type === 'delivery' && 'ic_delivery') ||
-              ''
-            }
-          />
-        </Stack>
-      )}
+      </Stack>
     </ListItemAvatar>
   );
 
   const renderText = (
     <ListItemText
       disableTypography
-      primary={reader(notification.title)}
+      primary={
+        <Stack direction="column" justifyContent="space-between">
+          <Typography
+            variant="subtitle2"
+            component="div"
+            sx={{ color: 'text.primary' }}
+            noWrap
+          >
+            {notification.title}
+          </Typography>
+          <Typography
+            variant="caption"
+            component="div"
+            sx={{ color: 'text.disabled', mr: 2 }}
+            noWrap
+          >
+            {fToNow(notification.createdAt)}
+          </Typography>
+        </Stack>
+      }
       secondary={
-        <Stack
-          direction="row"
-          alignItems="center"
-          justifyContent="space-between"
-          sx={{ typography: 'caption', color: 'text.disabled' }}
-          divider={
+        <Stack direction="column">
+          {notification.body && (
             <Box
               sx={{
-                width: 2,
-                height: 2,
-                bgcolor: 'currentColor',
-                mx: 0.5,
-                borderRadius: '50%',
+                my: 0.5,
+                borderRadius: 1.5,
+                color: 'text.secondary',
               }}
+            >
+              {reader(notification.body)}
+            </Box>
+          )}
+
+          {notification.image && (
+            <Image
+              alt={notification.title}
+              src={notification.image}
+              ratio="16/9"
+              sx={{ cursor: 'zoom-in', borderRadius: 2 }}
             />
-          }
-        >
-          {fToNow(notification.createdAt)}
-          {notification.category}
-          <IconButton
-            edge="end"
-            onClick={() => deleteScheduledNotification(notification._id)}
-          >
-            <Iconify width={24} icon="tabler:trash" />
-          </IconButton>
+          )}
         </Stack>
       }
     />
   );
 
-  const renderUnReadBadge = notification.read && (
+  const renderUnReadBadge = !notification.read && (
     <Box
       sx={{
         top: 26,
@@ -109,13 +392,21 @@ export default function NotificationItem({
     />
   );
 
-  const friendAction = (
+  const buttonActions = (
     <Stack spacing={1} direction="row" sx={{ mt: 1.5 }}>
-      <Button size="small" variant="contained">
-        Accept
+      <Button
+        size="small"
+        variant="contained"
+        onClick={() => markAsRead(notification._id)}
+      >
+        Mark as read
       </Button>
-      <Button size="small" variant="outlined">
-        Decline
+      <Button
+        size="small"
+        variant="outlined"
+        onClick={() => deleteNotification(notification._id)}
+      >
+        Delete
       </Button>
     </Stack>
   );
@@ -232,6 +523,7 @@ export default function NotificationItem({
 
   return (
     <ListItemButton
+      selected={!notification.read}
       disableRipple
       sx={{
         p: 2.5,
@@ -245,7 +537,7 @@ export default function NotificationItem({
 
       <Stack sx={{ flexGrow: 1 }}>
         {renderText}
-        {notification.type === 'friend' && friendAction}
+        {buttonActions}
         {notification.type === 'project' && projectAction}
         {notification.type === 'file' && fileAction}
         {notification.type === 'tags' && tagsAction}

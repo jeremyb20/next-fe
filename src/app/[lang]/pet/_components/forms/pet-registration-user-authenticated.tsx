@@ -1,7 +1,6 @@
 'use client';
 
 import * as Yup from 'yup';
-import { paths } from '@/routes/paths';
 import { useSnackbar } from 'notistack';
 import { endpoints } from '@/utils/axios';
 import { useRouter } from '@/routes/hooks';
@@ -9,14 +8,13 @@ import { OptionType } from '@/types/global';
 import { useAuthContext } from '@/auth/hooks';
 import { fData } from '@/utils/format-number';
 import { useTranslation } from 'react-i18next';
-import { useLocales } from '@/locales/use-locales';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useState, useEffect, useCallback } from 'react';
 import UploadAvatar from '@/components/upload/upload-avatar';
+import { HOST_API, PATH_AFTER_LOGIN } from '@/config-global';
 import { PetAgeCalculator } from '@/utils/pet-age-calculator';
 import { BreedOptions, GENDER_OPTIONS } from '@/utils/constants';
-import { LOGO, HOST_API, PATH_AFTER_LOGIN } from '@/config-global';
 import useCelebrationConfetti from '@/hooks/use-celebration-confetti';
 import { useCreateGenericMutation } from '@/hooks/user-generic-mutation';
 import { getDogSizeFromBreed, getSpeciesFromBreed } from '@/utils/pet-utils';
@@ -68,7 +66,6 @@ export function PetRegistrationUserAuthenticated({
   const [petPhotoPreview, setPetPhotoPreview] = useState<string | null>(null);
 
   const router = useRouter();
-  const { currentLang } = useLocales();
   // Esquema de validación para la mascota
   const PetSchema = Yup.object().shape({
     petName: Yup.string().required(t('Pet name is required')),
@@ -181,7 +178,7 @@ export function PetRegistrationUserAuthenticated({
 
       const weightWithUnit = data.weight ? `${data.weight} ${weightUnit}` : '';
 
-      const response = await mutateAsync<any>({
+      await mutateAsync<any>({
         payload: {
           petData: {
             ...data,
@@ -193,27 +190,6 @@ export function PetRegistrationUserAuthenticated({
         pEndpoint: `${HOST_API}${endpoints.user.addPetToAuthenticatedUser}`,
         method: 'POST',
         isFormData: !!petPhoto,
-      });
-      console.log(response, 'responseresponse');
-      const newURL = `${window.location.origin}/${currentLang.value}${paths.notifications}`;
-      await mutateAsync({
-        payload: {
-          title: '¡Nuevo registro!',
-          body: `La cuenta con el correo ${
-            response.payload?.user?.email || 'N/A'
-          } ha registrado una nueva mascota con el nombre de: ${
-            response.payload?.pet?.petName || 'N/A'
-          }`,
-          type: 'system',
-          icon: LOGO,
-          image: response.payload?.pet?.photo || null,
-          lang: currentLang.value,
-          data: {
-            url: newURL,
-          },
-        },
-        pEndpoint: `${HOST_API}${endpoints.notification.sendToAdmin}`,
-        method: 'POST',
       });
 
       celebrate({

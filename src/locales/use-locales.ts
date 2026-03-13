@@ -80,43 +80,6 @@ export function useLocales() {
 }
 // ----------------------------------------------------------------------
 
-// export function useTranslate() {
-//   const { t, i18n } = useTranslation();
-//   const pathname = usePathname();
-//   const router = useRouter();
-
-//   const onChangeLang = useCallback(
-//     (newlang: string) => {
-//       if (newlang === i18n.language) return;
-
-//       // Obtener la ruta actual sin el idioma
-//       const segments = pathname.split('/').filter(Boolean);
-
-//       // Si el primer segmento es un idioma, removerlo
-//       if (languages.includes(segments[0] as any)) {
-//         segments.shift();
-//       }
-
-//       // Construir la nueva ruta
-//       const newPath = `/${newlang}/${segments.join('/')}`.replace(/\/+$/, '');
-
-//       // Cambiar idioma
-//       i18n.changeLanguage(newlang);
-
-//       // Navegar
-//       router.push(newPath);
-//     },
-//     [i18n, pathname, router]
-//   );
-
-//   return {
-//     t,
-//     i18n,
-//     onChangeLang,
-//     currentLanguage: i18n.language,
-//   };
-// }
-
 export function useTranslate() {
   const { t, i18n } = useTranslation();
   const pathname = usePathname();
