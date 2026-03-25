@@ -85,6 +85,13 @@ export const endpoints = {
       deleteSeo: '/api/admin/deleteSeo',
       updateSeoById: '/api/admin/updateSeoById',
     },
+    promotions: {
+      getAllPromotions: '/api/admin/getAllPromotions',
+      createPromotion: '/api/admin/createPromotion',
+      updatePromotion: '/api/admin/updatePromotion',
+      deletePromotion: '/api/admin/deletePromotion',
+      getPromotionById: '/api/admin/getPromotionById',
+    },
   },
   pet: {
     getProfileById: '/api/pet/getProfileById',
@@ -95,6 +102,10 @@ export const endpoints = {
     getMedicalRecordsByPet: '/api/pet/getMedicalRecordsByPet',
     updateMedicalRecord: '/api/pet/updateMedicalRecord',
     createMedicalRecord: '/api/pet/createMedicalRecord',
+    getUserPetStats: '/api/pet/getUserPetStats',
+    getUserUpcomingAppointments: '/api/pet/upcoming-appointments',
+    getUserUpcomingAppointmentsGrouped:
+      '/api/pet/upcoming-appointments/grouped',
   },
   user: {
     getAllPetsByUser: '/api/user/getAllPetsByUser',
@@ -113,6 +124,12 @@ export const endpoints = {
     forgotPassword: '/api/user/forgotPassword',
     resetPassword: '/api/user/resetPassword',
     searchProducts: '/api/user/searchProducts',
+    promotions: {
+      getActivePromotions: '/api/user/getActivePromotions',
+      getFeaturedPromotion: '/api/user/getFeaturedPromotion',
+      validatePromoCode: '/api/user/validatePromoCode',
+      usePromoCode: '/api/user/usePromoCode',
+    },
   },
   mail: {
     list: '/api/mail/list',

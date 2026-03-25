@@ -170,7 +170,7 @@ export default function TourListView() {
       <CustomBreadcrumbs
         heading="List"
         links={[
-          { name: 'Dashboard', href: paths.dashboard.root },
+          { name: 'Inicio', href: paths.dashboard.root },
           {
             name: 'Tour',
             href: paths.dashboard.tour.root,

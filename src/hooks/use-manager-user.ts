@@ -20,6 +20,7 @@ export function useManagerUser() {
 
   const user = {
     id: authUser?._id,
+    _id: authUser?.id,
     displayName: fullName,
     email: authUser?.email,
     photoURL: `/assets/images/avatars/avatar-${avatarProfile}.webp` || LOGO,

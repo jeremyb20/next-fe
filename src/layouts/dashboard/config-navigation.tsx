@@ -73,6 +73,7 @@ const ICONS = {
   QR_code: icon('lucide:qr-code'),
   catalogs: icon('carbon:catalog-publish'),
   seo: icon('hugeicons:seo'),
+  promotions: icon('lsicon:badge-promotion-filled'),
   blogPanel: icon('meteor-icons:blogger'),
   inventory: icon('material-symbols:inventory'),
   home: icon('solar:home-2-linear'),
@@ -142,6 +143,12 @@ export function useNavData(userRole: string) {
             title: t('Seo Panel'),
             path: paths.dashboard.admin.seoAdmin,
             icon: ICONS.seo,
+            roles: ['admin'],
+          },
+          {
+            title: t('Promotions'),
+            path: paths.dashboard.admin.promotions,
+            icon: ICONS.promotions,
             roles: ['admin'],
           },
           // {
@@ -232,7 +239,7 @@ export function useNavData(userRole: string) {
           {
             // title: t('app'),
             title: t('My Pets'),
-            path: paths.dashboard.user.myPets,
+            path: paths.dashboard.user.pets,
             icon: ICONS.paw,
             roles: ['admin', 'client'],
           },

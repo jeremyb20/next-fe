@@ -1,64 +1,115 @@
-/* eslint-disable no-nested-ternary */
-
 'use client';
 
 import { paths } from '@/routes/paths';
 import { useRouter } from '@/routes/hooks';
 import { useState, useCallback } from 'react';
-import { useTranslation } from 'react-i18next';
 import { IUser, IPetProfile } from '@/types/api';
 import { useBoolean } from '@/hooks/use-boolean';
+import { useGetUserPetStats } from '@/hooks/use-fetch';
+import { useTranslation } from '@/hooks/use-translation';
 import { useManagerUser } from '@/hooks/use-manager-user';
-import { PetsGrid } from '@/app/[lang]/pet/_components/cards/pet-grid';
+import RegisterPetByUserModal from '@/app/[lang]/pet/_components/modals/register-pet-by-user-modal';
 import {
   UserQueryParams,
-  useGetAllPetsByUser,
+  useGetActivePromotions,
+  useGetUserUpcomingAppointments,
 } from '@/hooks/use-fetch-paginated';
-import PetQuickEditForm from '@/app/[lang]/dashboard/admin/users/_components/pet-quick-edit-form';
-import RegisterPetByUserModal from '@/app/[lang]/pet/_components/modals/register-pet-by-user-modal';
 
 import {
   Box,
   Card,
+  Grid,
   Alert,
+  Paper,
   Avatar,
+  useTheme,
   Container,
   Typography,
   CardContent,
+  useMediaQuery,
 } from '@mui/material';
 
+import { QuickActions } from './components/quick-actions';
+import { StatisticsCards } from './components/statistics-cards';
+import { PromotionsCardCaroussell } from './components/promotions-carousell';
+import { UpcomingAppointmentsCard } from './components/upcoming-appointments-card';
+
+// Datos de ejemplo para próximas citas veterinarias
+const mockAppointments = [
+  {
+    id: '1',
+    title: 'Annual Vaccination',
+    date: 'Mar 25, 2026',
+    time: '10:30 AM',
+    petName: 'Max',
+    petId: 'pet1',
+    type: 'vaccine' as const,
+    location: 'Animal Wellness Center',
+    veterinarian: 'Sarah Johnson',
+  },
+  {
+    id: '2',
+    title: 'Wellness Checkup',
+    date: 'Apr 5, 2026',
+    time: '2:00 PM',
+    petName: 'Luna',
+    petId: 'pet2',
+    type: 'checkup' as const,
+    location: 'Happy Paws Clinic',
+    veterinarian: 'Michael Chen',
+  },
+  {
+    id: '3',
+    title: 'Grooming Session',
+    date: 'Apr 12, 2026',
+    time: '11:00 AM',
+    petName: 'Charlie',
+    petId: 'pet3',
+    type: 'grooming' as const,
+    location: 'Pampered Pets Spa',
+  },
+];
+
+// Datos de ejemplo para promociones de servicios para mascotas
+
 export default function OverviewAppUser() {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const isTablet = useMediaQuery(theme.breakpoints.between('sm', 'md'));
   const { user } = useManagerUser();
   const { t } = useTranslation();
-
   const router = useRouter();
-  const [petSelected, setPetSelected] = useState<IPetProfile>();
-  const petQuickEdit = useBoolean();
   const registerPetModal = useBoolean();
-
   const [activeFilters] = useState<Partial<UserQueryParams>>({
     page: 1,
-    limit: 3,
+    limit: Number(process.env.NEXT_PUBLIC_ALLOW_MAX_PETS_BY_USER) || 10,
     id: user?.id,
   });
+
   const {
-    data: usersData,
+    data: appointments,
+    isFetching: isLoading,
+    isError: isMedicalError,
+    error: medicalError,
+    refetch: medicalRefetch,
+  } = useGetUserUpcomingAppointments(activeFilters);
+
+  const { data: promotionsData } = useGetActivePromotions();
+
+  const {
+    data: statsData,
     isFetching,
     isError,
     error,
     refetch,
-  } = useGetAllPetsByUser(activeFilters);
+  } = useGetUserPetStats();
 
-  const HandleRedirect = useCallback(
+  const handleRedirect = useCallback(
     (redirectTo: string) => {
       router.push(redirectTo);
     },
     [router]
   );
-
-  const handlePetDelete = (pet: IPetProfile) => {
-    console.log('Eliminar mascota:', pet);
-  };
 
   const handlePetView = useCallback(
     (pet: IPetProfile) => {
@@ -67,282 +118,198 @@ export default function OverviewAppUser() {
     [router]
   );
 
-  const handlePetEdit = (pet: IPetProfile) => {
-    setPetSelected(pet);
-    petQuickEdit.onTrue();
+  const handleAddPet = () => {
+    registerPetModal.onTrue();
   };
+
+  const handleAddAppointment = useCallback(() => {
+    handleRedirect(paths.dashboard.user.pets);
+  }, [handleRedirect]);
 
   if (!user) {
     return (
       <Box sx={{ p: 3 }}>
-        <Alert
-          severity="error"
-          onClose={() => {
-            window.location.reload();
-          }}
-        >
-          {t('Error loading user data')}
-        </Alert>
-      </Box>
-    );
-  }
-
-  if (isError) {
-    return (
-      <Box sx={{ p: 3 }}>
-        <Alert severity="error">{t(error.message)}</Alert>
+        <Alert severity="error">{t('Error loading user data')}</Alert>
       </Box>
     );
   }
 
   const comingSoon = (
-    <CardContent>
-      <Typography variant="h3" sx={{ mb: 2 }}>
-        {t('Coming Soon!')}
+    <CardContent sx={{ textAlign: 'center', py: 3 }}>
+      <Typography variant="body1" sx={{ mb: 0.5, fontWeight: 500 }}>
+        🐕 {t('Coming Soon!')}
       </Typography>
-
-      <Typography sx={{ color: 'text.secondary' }}>
-        {t('We are currently working hard on this page!')}
+      <Typography variant="caption" sx={{ color: 'text.secondary' }}>
+        {t('We are currently working hard on this feature!')}
       </Typography>
     </CardContent>
   );
 
+  // Determinar el espaciado según el tamaño de pantalla
+  const getSpacing = () => {
+    if (isMobile) return 1.5;
+    if (isTablet) return 2;
+    return 2.5;
+  };
+
   return (
-    <Box
-      sx={{
-        pb: 8,
-      }}
-    >
-      <Container maxWidth="md" sx={{ mt: 3 }}>
-        {/* User Profile Card */}
-        <Card
-          sx={{
-            backgroundColor: 'backgound.paper',
-            borderRadius: 4,
-            mb: 3,
-            position: 'relative',
-          }}
-        >
-          <CardContent sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-            <Avatar src={user.photoURL} sx={{ width: 60, height: 60 }} />
-            <Box>
-              <Typography variant="h6" fontWeight={600}>
-                {t('Hi there!')}, {user.displayName}
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                {user.email}
-              </Typography>
-            </Box>
-          </CardContent>
-        </Card>
-
-        {/* Your Pets Section */}
-        <Box sx={{ mb: 3 }}>
-          <Box
-            sx={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              mb: 2,
-            }}
-          >
-            <Typography variant="h6" fontWeight={600}>
-              {t('Your pets')}
-            </Typography>
-            <Typography
-              variant="body2"
-              sx={{ color: 'inherit', cursor: 'pointer' }}
-              onClick={() => HandleRedirect(paths.dashboard.user.myPets)}
+    <Box sx={{ bgcolor: 'background.default', minHeight: '100vh' }}>
+      <Container maxWidth="sm" sx={{ py: { xs: 2, md: 3 } }}>
+        <Grid container spacing={getSpacing()}>
+          {/* Fila 1: Perfil de Usuario + App Featured */}
+          <Grid item xs={12}>
+            <Card
+              sx={{
+                borderRadius: 3,
+                boxShadow: '0 1px 3px rgba(0,0,0,0.05)',
+              }}
             >
-              {t('View all')}
-            </Typography>
-          </Box>
-
-          <Box>
-            <PetsGrid
-              isFetching={isFetching}
-              usersData={usersData?.payload}
-              skeletonCount={3}
-              onPetDelete={handlePetDelete}
-              onPetView={handlePetView}
-              onPetEdit={handlePetEdit}
-              emptyMessage={t('No pets found. Add your first pet!')}
-              showAddMoreButton={usersData && usersData.payload.length <= 2}
-              onAddMore={() => registerPetModal.onTrue()}
-              addMoreButtonText={t('Add New Pet')}
-            />
-
-            <PetQuickEditForm
-              currentUser={user as unknown as IUser}
-              currentPet={petSelected}
-              open={petQuickEdit.value}
-              onClose={petQuickEdit.onFalse}
-              refetch={refetch}
-            />
-
-            <RegisterPetByUserModal
-              currentUser={user as unknown as IUser}
-              open={registerPetModal.value}
-              onClose={registerPetModal.onFalse}
-              refetch={refetch}
-            />
-          </Box>
-        </Box>
-
-        {/* Pet Care Nearby Section */}
-        <Box>
-          <Box
-            sx={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              mb: 2,
-            }}
-          >
-            <Typography variant="h6" fontWeight={600}>
-              {t('Pet Care Nearby')}
-            </Typography>
-            <Typography
-              variant="body2"
-              sx={{ color: 'inherit', cursor: 'pointer' }}
-            >
-              {t('View all')}
-            </Typography>
-          </Box>
-
-          <Card
-            sx={{
-              borderRadius: 4,
-              bgcolor: 'background.paper',
-              color: '#fff',
-            }}
-          >
-            {/* <CardContent>
-              <Box
+              <CardContent
                 sx={{
+                  py: 2,
+                  px: 3,
                   display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'flex-start',
-                  mb: 2,
+                  alignItems: 'center',
+                  gap: 2,
                 }}
               >
-                <Box sx={{ display: 'flex', gap: 2, alignItems: 'center' }}>
-                  
-                  <Logo />
-                  <Box>
-                    <Typography variant="h6" fontWeight={600}>
-                      Animal Pet Care
-                    </Typography>
-                    <Box sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
-                      <Iconify icon="eva:location-fill" />
-                      <Typography variant="body2">1.3 km</Typography>
-                      <Iconify icon="eva:star-fill" />
-                      <Typography variant="body2">4.2</Typography>
-                    </Box>
-                  </Box>
+                <Avatar
+                  src={user.photoURL}
+                  sx={{
+                    width: 52,
+                    height: 52,
+                    border: `2px solid ${theme.palette.primary.main}`,
+                  }}
+                />
+                <Box>
+                  <Typography variant="subtitle1" fontWeight={600}>
+                    👋 {t('Hi there!')}, {user.displayName}
+                  </Typography>
+                  <Typography
+                    variant="body2"
+                    color="text.secondary"
+                    sx={{ fontSize: '0.75rem' }}
+                  >
+                    {user.email}
+                  </Typography>
                 </Box>
-                <IconButton size="small" sx={{ color: '#fff' }}>
-                  <Iconify icon="eva:more-vertical-fill" />
-                </IconButton>
+              </CardContent>
+            </Card>
+          </Grid>
+
+          <Grid item xs={12}>
+            {isError ? (
+              <Box sx={{ p: 3 }}>
+                <Alert severity="error">
+                  {t(error?.message || 'Error loading pets')}
+                </Alert>
               </Box>
+            ) : (
+              <StatisticsCards
+                petsCount={statsData?.petsCount || 0}
+                vaccinationsCount={statsData?.vaccinationsCount || 0}
+                appointmentsCount={statsData?.appointmentsCount || 0}
+                vetVisitsCount={statsData?.vetVisitsCount || 0}
+                petsNeedingVaccination={statsData?.petsNeedingVaccination || 0}
+                upcomingAppointments={statsData?.upcomingAppointments || 0}
+                isLoading={isFetching}
+              />
+            )}
+          </Grid>
 
-              <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap' }}>
-                <Chip
-                  label="Bathing"
-                  sx={{
-                    bgcolor: 'rgba(255, 255, 255, 0.2)',
-                    color: '#fff',
-                    borderRadius: 8,
-                    border: '1px solid rgba(255, 255, 255, 0.3)',
-                  }}
-                />
-                <Chip
-                  label="Nail"
-                  sx={{
-                    bgcolor: 'rgba(255, 255, 255, 0.2)',
-                    color: '#fff',
-                    borderRadius: 8,
-                    border: '1px solid rgba(255, 255, 255, 0.3)',
-                  }}
-                />
-                <Chip
-                  label="Teeth"
-                  sx={{
-                    bgcolor: 'rgba(255, 255, 255, 0.2)',
-                    color: '#fff',
-                    borderRadius: 8,
-                    border: '1px solid rgba(255, 255, 255, 0.3)',
-                  }}
-                />
+          {/* Fila 2: Quick Actions + Promotions */}
+          <Grid item xs={12}>
+            <QuickActions
+              onAddPet={handleAddPet}
+              onMyPets={() => handleRedirect(paths.dashboard.user.pets)}
+              onFindVet={() => handleRedirect(paths.dashboard.user.pets)}
+              onShare={() => console.log('Share app')}
+            />
+          </Grid>
+
+          <Grid item xs={12}>
+            <PromotionsCardCaroussell
+              promotions={promotionsData?.payload || []}
+              onViewOffer={(promotion) => {
+                console.log('View offer:', promotion);
+                handleRedirect(promotion.link);
+              }}
+              autoplay
+              autoplaySpeed={5000}
+            />
+          </Grid>
+
+          {/* Fila 4: Upcoming Appointments - Ocupa todo el ancho */}
+          <Grid item xs={12}>
+            {isMedicalError ? (
+              <Box sx={{ p: 3 }}>
+                <Alert severity="error">
+                  {t(medicalError?.message || 'Error loading appointments')}
+                </Alert>
               </Box>
-            </CardContent> */}
-
-            {comingSoon}
-          </Card>
-        </Box>
-
-        {/* Next Dates */}
-        <Box>
-          <Box
-            sx={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              my: 2,
-            }}
-          >
-            <Typography variant="h6" fontWeight={600}>
-              {t('Next Dates')}
-            </Typography>
-            <Typography
-              variant="body2"
-              sx={{ color: 'inherit', cursor: 'pointer' }}
-            >
-              {t('View all')}
-            </Typography>
-          </Box>
-
-          <Card
-            sx={{
-              borderRadius: 4,
-              bgcolor: 'background.paper',
-              color: '#fff',
-            }}
-          >
-            {/* <CardContent>
-              <Box
-                sx={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'flex-start',
+            ) : (
+              <UpcomingAppointmentsCard
+                appointments={appointments?.payload?.appointments || []}
+                onViewAll={() => handleRedirect(paths.dashboard.user.pets)}
+                onAppointmentClick={(appointment) => {
+                  console.log('Appointment clicked:', appointment);
                 }}
+                onAddAppointment={handleAddAppointment}
+              />
+            )}
+          </Grid>
+          <Grid item xs={12}>
+            <Paper
+              elevation={0}
+              sx={{
+                borderRadius: 3,
+                bgcolor: 'background.paper',
+                overflow: 'hidden',
+                border: '1px solid',
+                borderColor: 'divider',
+              }}
+            >
+              <Box
+                sx={{ p: 2, borderBottom: '1px solid', borderColor: 'divider' }}
               >
-                <Box sx={{ display: 'flex', gap: 2, alignItems: 'center' }}>
-                  <Iconify icon="mdi:needle" sx={{ width: 50, height: 50 }} />
-                  <Box>
-                    <Typography variant="h6" fontWeight={600}>
-                      Reminder For Vaccination
-                    </Typography>
-                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                      <Iconify icon="eva:location-fill" />
-                      <Typography
-                        variant="body2"
-                        sx={{ color: 'text.secondary' }}
-                      >
-                        {new Date().toLocaleDateString()}
-                      </Typography>
-                    </Box>
-                  </Box>
+                <Box
+                  sx={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                  }}
+                >
+                  <Typography
+                    variant="subtitle1"
+                    fontWeight={600}
+                    sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}
+                  >
+                    🏥 {t('Pet Care Nearby')}
+                  </Typography>
+                  <Typography
+                    variant="caption"
+                    sx={{
+                      color: 'primary.main',
+                      cursor: 'pointer',
+                      fontWeight: 500,
+                    }}
+                    onClick={() => handleRedirect(paths.dashboard.user.pets)}
+                  >
+                    {t('View all')} →
+                  </Typography>
                 </Box>
-                <IconButton size="small" sx={{ color: '#fff' }}>
-                  <Iconify icon="eva:more-vertical-fill" />
-                </IconButton>
               </Box>
-            </CardContent> */}
+              {comingSoon}
+            </Paper>
+          </Grid>
+        </Grid>
 
-            {comingSoon}
-          </Card>
-        </Box>
+        <RegisterPetByUserModal
+          currentUser={user as unknown as IUser}
+          open={registerPetModal.value}
+          onClose={registerPetModal.onFalse}
+          refetch={refetch}
+        />
       </Container>
     </Box>
   );

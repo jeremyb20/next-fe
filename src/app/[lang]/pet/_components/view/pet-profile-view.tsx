@@ -180,7 +180,7 @@ export default function PetProfileView({ petProfile, canEdit }: Props) {
         <Stack spacing={3} direction="row" justifyContent="flex-start" mb={3}>
           <Button
             component={RouterLink}
-            href={paths.dashboard.user.myPets}
+            href={paths.dashboard.user.pets}
             startIcon={<Iconify icon="eva:arrow-ios-back-fill" width={16} />}
           >
             {t('Back')}
@@ -931,7 +931,10 @@ export default function PetProfileView({ petProfile, canEdit }: Props) {
 
                 <TabPanel value={tabValue} index={2}>
                   <Box px={1}>
-                    <MedicalControlView currentPet={petProfile} />
+                    <MedicalControlView
+                      currentPet={petProfile}
+                      memberPetId={petProfile?.memberPetId || ''}
+                    />
                   </Box>
                 </TabPanel>
 

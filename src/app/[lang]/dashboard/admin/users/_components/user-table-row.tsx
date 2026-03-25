@@ -30,7 +30,7 @@ import IconButton from '@mui/material/IconButton';
 import ListItemText from '@mui/material/ListItemText';
 
 import PetQuickEditForm from './pet-quick-edit-form';
-import UserQuickEditForm from './user-quick-edit-form';
+import UserQuickEditModalForm from './user-quick-edit-form';
 
 // ----------------------------------------------------------------------
 
@@ -216,8 +216,8 @@ export default function UserTableRow({
         </IconButton>
       </TableCell>
 
-      {/* UserQuickEditForm dentro del TableRow está bien porque usa useBoolean */}
-      <UserQuickEditForm
+      {/* UserQuickEditModalForm dentro del TableRow está bien porque usa useBoolean */}
+      <UserQuickEditModalForm
         currentUser={row}
         open={quickEdit.value}
         onClose={quickEdit.onFalse}

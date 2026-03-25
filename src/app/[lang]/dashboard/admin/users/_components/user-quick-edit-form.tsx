@@ -62,7 +62,7 @@ type FormValues = {
   status?: string;
 };
 
-export default function UserQuickEditForm({
+export default function UserQuickEditModalForm({
   currentUser,
   open,
   onClose,

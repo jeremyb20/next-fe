@@ -1004,7 +1004,10 @@ export default function PetQuickEditForm({
             </Box>
           </TabPanel>
           <TabPanel value={tabValue} index={3}>
-            <MedicalControlView currentPet={currentPet} />
+            <MedicalControlView
+              currentPet={currentPet}
+              memberPetId={currentPet?.memberPetId || ''}
+            />
           </TabPanel>
           <TabPanel value={tabValue} index={4}>
             <CostaRicaIDCard data={currentPet} />

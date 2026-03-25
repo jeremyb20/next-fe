@@ -168,7 +168,7 @@ export default function JobListView() {
       <CustomBreadcrumbs
         heading="List"
         links={[
-          { name: 'Dashboard', href: paths.dashboard.root },
+          { name: 'Inicio', href: paths.dashboard.root },
           {
             name: 'Job',
             href: paths.dashboard.job.root,

@@ -248,7 +248,7 @@ export default function ProductListView() {
         <CustomBreadcrumbs
           heading="List"
           links={[
-            { name: 'Dashboard', href: paths.dashboard.root },
+            { name: 'Inicio', href: paths.dashboard.root },
             {
               name: 'Product',
               href: paths.dashboard.product.root,

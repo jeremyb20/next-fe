@@ -15,7 +15,7 @@ import TableCell from '@mui/material/TableCell';
 import IconButton from '@mui/material/IconButton';
 import ListItemText from '@mui/material/ListItemText';
 
-import UserQuickEditForm from './user-quick-edit-form';
+import UserQuickEditModalForm from './user-quick-edit-modal-form';
 
 // ----------------------------------------------------------------------
 
@@ -102,7 +102,7 @@ export default function UserTableRow({
         </TableCell>
       </TableRow>
 
-      <UserQuickEditForm
+      <UserQuickEditModalForm
         currentUser={row}
         open={quickEdit.value}
         onClose={quickEdit.onFalse}

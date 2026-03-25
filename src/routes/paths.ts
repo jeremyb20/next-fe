@@ -171,6 +171,7 @@ export const paths = {
       blogAdmin: `${ROOTS.DASHBOARD}/admin/blog`,
       seoAdmin: `${ROOTS.DASHBOARD}/admin/seo`,
       blogPanel: `${ROOTS.DASHBOARD}/admin/blog`,
+      promotions: `${ROOTS.DASHBOARD}/admin/promotions`,
     },
 
     general: {
@@ -183,16 +184,16 @@ export const paths = {
     },
 
     user: {
-      myPets: `${ROOTS.DASHBOARD}/user/mypets`,
+      pets: `${ROOTS.DASHBOARD}/user/pets`,
       addPet: `${ROOTS.DASHBOARD}/user/add-pet`,
-      details: (id: string) => `${ROOTS.DASHBOARD}/user/mypets/${id}`,
+      details: (id: string) => `${ROOTS.DASHBOARD}/user/pets/${id}`,
       root: `${ROOTS.DASHBOARD}/user`,
       new: `${ROOTS.DASHBOARD}/user/new`,
       list: `${ROOTS.DASHBOARD}/user/list`,
       cards: `${ROOTS.DASHBOARD}/user/cards`,
       profile: `${ROOTS.DASHBOARD}/user/profile`,
       account: `${ROOTS.DASHBOARD}/user/account`,
-      edit: (id: string) => `${ROOTS.DASHBOARD}/user/${id}/edit`,
+      edit: (id: string) => `${ROOTS.DASHBOARD}/user/pets/edit/${id}`,
       demo: {
         edit: `${ROOTS.DASHBOARD}/user/${MOCK_ID}/edit`,
       },

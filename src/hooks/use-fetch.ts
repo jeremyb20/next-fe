@@ -2,6 +2,7 @@ import axiosInstance, { endpoints } from '@/utils/axios';
 import { useQuery, keepPreviousData } from '@tanstack/react-query';
 import {
   IQRStats,
+  IPetStats,
   ApiResponse,
   IPetProfile,
   QueryOptions,
@@ -71,8 +72,17 @@ export const useGetQRStats = () => {
   );
 };
 
+export const useGetUserPetStats = () => {
+  const { authenticated } = useAuthContext();
+  return useFetch<IPetStats>('useGetQRStats', endpoints.pet.getUserPetStats, {
+    staleTime: 5 * 60 * 1000,
+    retry: 2,
+    enabled: authenticated,
+  });
+};
+
 export const useGetPetProfileById = (identifier: string | undefined) =>
-  useFetch<IPetProfile[]>(
+  useFetch<IPetProfile>(
     'useGetPetProfileById',
     `${endpoints.pet.getProfileById}/${identifier}`,
     {

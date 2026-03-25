@@ -22,7 +22,7 @@ export default function UserCardsView() {
       <CustomBreadcrumbs
         heading="User Cards"
         links={[
-          { name: 'Dashboard', href: paths.dashboard.root },
+          { name: 'Inicio', href: paths.dashboard.root },
           { name: 'User', href: paths.dashboard.user.root },
           { name: 'Cards' },
         ]}

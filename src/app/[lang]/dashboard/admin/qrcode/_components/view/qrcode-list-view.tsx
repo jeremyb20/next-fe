@@ -94,7 +94,7 @@ const defaultFilters: IQRcodeTableFilters = {
 
 // ----------------------------------------------------------------------
 
-export default function QrCodeListView() {
+export default function PromotionsListView() {
   const { enqueueSnackbar } = useSnackbar();
   const table = useTable({ defaultOrderBy: 'createdAt' });
   const settings = useSettingsContext();

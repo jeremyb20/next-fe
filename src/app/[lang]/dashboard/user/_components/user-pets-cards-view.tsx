@@ -13,6 +13,7 @@ import { useTranslation } from '@/hooks/use-translation';
 import { useManagerUser } from '@/hooks/use-manager-user';
 import { useSettingsContext } from '@/components/settings';
 import FilterToolbar from '@/components/filters/filter-toolbar';
+import CustomBreadcrumbs from '@/components/custom-breadcrumbs';
 import { PetsGrid } from '@/app/[lang]/pet/_components/cards/pet-grid';
 import { PET_FILTER_TOOLBAR } from '@/components/filters/filter-constants';
 import {
@@ -26,6 +27,7 @@ import {
   Card,
   Alert,
   Avatar,
+  Button,
   Container,
   Typography,
   CardContent,
@@ -122,10 +124,16 @@ export default function UserPetCardsView() {
     [router]
   );
 
-  const handlePetEdit = (pet: IPetProfile) => {
-    setPetSelected(pet);
-    petQuickEdit.onTrue();
-  };
+  // const handlePetEdit = (pet: IPetProfile) => {
+  //   setPetSelected(pet);
+  //   petQuickEdit.onTrue();
+  // };
+  const handlePetEdit = useCallback(
+    (pet: IPetProfile) => {
+      router.push(paths.dashboard.user.edit(pet.memberPetId));
+    },
+    [router]
+  );
 
   if (isError) {
     return (
@@ -138,7 +146,32 @@ export default function UserPetCardsView() {
   }
 
   return (
-    <Container maxWidth={settings.themeStretch ? false : 'lg'}>
+    <Container maxWidth={settings.themeStretch ? false : 'md'}>
+      <CustomBreadcrumbs
+        heading="List"
+        links={[
+          { name: 'Inicio', href: paths.dashboard.root },
+          {
+            name: 'Pets',
+            href: paths.dashboard.user.pets,
+          },
+        ]}
+        action={
+          <Button
+            type="submit"
+            onClick={() => registerPetModal.onTrue()}
+            variant="contained"
+          >
+            Add Pet
+          </Button>
+        }
+        sx={{
+          mb: {
+            xs: 3,
+            md: 5,
+          },
+        }}
+      />
       <Card
         sx={{
           backgroundColor: 'backgound.paper',

@@ -171,7 +171,7 @@ export default function PetsMarketView() {
       <CustomBreadcrumbs
         heading="List"
         links={[
-          { name: 'Dashboard', href: paths.dashboard.root },
+          { name: 'Inicio', href: paths.dashboard.root },
           {
             name: 'PetsMarket',
             href: paths.dashboard.petsmarket.root,

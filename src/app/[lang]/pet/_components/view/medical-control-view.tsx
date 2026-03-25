@@ -22,6 +22,8 @@ import {
   Button,
   Container,
   Typography,
+  CardContent,
+  CircularProgress,
 } from '@mui/material';
 
 import VaccinesList from './vaccines-list';
@@ -33,14 +35,15 @@ type MedicalRecordType = 'vaccine' | 'deworming' | 'medical_visit';
 
 export default function MedicalControlView({
   currentPet,
+  memberPetId,
 }: {
   currentPet: IPetProfile | undefined;
+  memberPetId: string;
 }) {
   const [currentTab, setCurrentTab] = useState(0);
   const [refetchTrigger, setRefetchTrigger] = useState(0);
   const settings = useSettingsContext();
   const { enqueueSnackbar } = useSnackbar();
-
   const {
     open,
     currentType,
@@ -54,7 +57,7 @@ export default function MedicalControlView({
   const [activeFilters, setActiveFilters] = useState<Partial<UserQueryParams>>({
     page: 1,
     limit: 10,
-    petId: currentPet?.memberPetId,
+    petId: memberPetId,
   });
 
   const dateError = useMemo(() => {
@@ -113,7 +116,7 @@ export default function MedicalControlView({
     type: 'vaccine' | 'deworming' | 'medical_visit',
     record: any
   ) => {
-    editRecord(type, record, currentPet?.memberPetId || '');
+    editRecord(type, record, memberPetId || '');
   };
 
   const handleFiltersChange = useCallback(
@@ -140,13 +143,13 @@ export default function MedicalControlView({
     const clearedFilters = {
       page: 1,
       limit: 10,
-      petId: currentPet?.memberPetId,
+      petId: memberPetId,
       type: getTypeFromTab(currentTab),
     };
 
     setActiveFilters(clearedFilters);
     enqueueSnackbar('Filtros limpiados', { variant: 'info' });
-  }, [currentTab, enqueueSnackbar, currentPet?.memberPetId]);
+  }, [currentTab, enqueueSnackbar, memberPetId]);
 
   // Filtrar datos según la pestaña actual
   const getFilteredData = () => {
@@ -336,7 +339,16 @@ export default function MedicalControlView({
 
       <Box sx={{ py: 3 }}>
         {isFetching ? (
-          <Alert severity="info">Cargando registros médicos...</Alert>
+          <Card>
+            <CardContent>
+              <Box textAlign="center" py={5}>
+                <CircularProgress />
+                <Typography variant="h6" color="text.secondary" sx={{ mt: 2 }}>
+                  Cargando registros médicos...
+                </Typography>
+              </Box>
+            </CardContent>
+          </Card>
         ) : (
           React.cloneElement(TABS[currentTab].component, {
             onEdit: handleEditRecord,
