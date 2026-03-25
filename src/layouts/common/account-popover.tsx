@@ -25,11 +25,11 @@ const OPTIONS = [
   },
   {
     label: 'Profile',
-    linkTo: paths.dashboard.user.profile,
+    linkTo: `${paths.dashboard.user.account}?tab=general`,
   },
   {
-    label: 'Settings',
-    linkTo: paths.dashboard.user.account,
+    label: 'Security',
+    linkTo: `${paths.dashboard.user.account}?tab=security`,
   },
 ];
 

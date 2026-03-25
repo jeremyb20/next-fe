@@ -2,9 +2,10 @@
 
 import { paths } from '@/routes/paths';
 import Iconify from '@/components/iconify';
-import { useState, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useState, useEffect, useCallback } from 'react';
 import { useSettingsContext } from '@/components/settings';
+import { useRouter, useSearchParams } from 'next/navigation';
 import CustomBreadcrumbs from '@/components/custom-breadcrumbs';
 import {
   _userAbout,
@@ -27,48 +28,98 @@ import AccountChangePassword from '../account-change-password';
 
 // ----------------------------------------------------------------------
 
-const TABS = [
+// Configuración de tabs con sus parámetros de URL
+const TABS_CONFIG = [
   {
     value: 'general',
     label: 'General',
     icon: <Iconify icon="solar:user-id-bold" width={24} />,
+    param: 'general',
   },
   // {
   //   value: 'billing',
   //   label: 'Billing',
   //   icon: <Iconify icon="solar:bill-list-bold" width={24} />,
+  //   param: 'billing',
   // },
   // {
   //   value: 'notifications',
   //   label: 'Notifications',
   //   icon: <Iconify icon="solar:bell-bing-bold" width={24} />,
+  //   param: 'notifications',
   // },
   // {
   //   value: 'social',
   //   label: 'Social links',
   //   icon: <Iconify icon="solar:share-bold" width={24} />,
+  //   param: 'social',
   // },
   {
     value: 'security',
     label: 'Security',
     icon: <Iconify icon="ic:round-vpn-key" width={24} />,
+    param: 'security',
   },
 ];
+
+// Mapeo de parámetros a valores de tabs
+const PARAM_TO_TAB_VALUE: Record<string, string> = {
+  general: 'general',
+  billing: 'billing',
+  notifications: 'notifications',
+  social: 'social',
+  security: 'security',
+};
 
 // ----------------------------------------------------------------------
 
 export default function AccountView() {
   const settings = useSettingsContext();
+  const router = useRouter();
+  const searchParams = useSearchParams();
   const { t } = useTranslation();
 
-  const [currentTab, setCurrentTab] = useState('general');
+  // Obtener el parámetro 'tab' de la URL
+  const tabParam = searchParams.get('tab');
 
+  // Determinar el tab inicial basado en el parámetro de URL
+  const getInitialTab = useCallback(() => {
+    if (tabParam && PARAM_TO_TAB_VALUE[tabParam]) {
+      return PARAM_TO_TAB_VALUE[tabParam];
+    }
+    return 'general'; // Default a general
+  }, [tabParam]);
+
+  const [currentTab, setCurrentTab] = useState(getInitialTab());
+
+  // Manejador de cambio de tab con actualización de URL
   const handleChangeTab = useCallback(
     (event: React.SyntheticEvent, newValue: string) => {
       setCurrentTab(newValue);
+
+      // Obtener el parámetro correspondiente al nuevo tab
+      const selectedTab = TABS_CONFIG.find((tab) => tab.value === newValue);
+      if (selectedTab) {
+        // Crear nuevos parámetros de URL
+        const params = new URLSearchParams(searchParams.toString());
+        params.set('tab', selectedTab.param);
+
+        // Actualizar la URL sin recargar la página
+        router.replace(`${window.location.pathname}?${params.toString()}`, {
+          scroll: false,
+        });
+      }
     },
-    []
+    [router, searchParams]
   );
+
+  // Sincronizar el currentTab con el parámetro de URL cuando cambia
+  useEffect(() => {
+    const newTabValue = getInitialTab();
+    if (newTabValue !== currentTab) {
+      setCurrentTab(newTabValue);
+    }
+  }, [tabParam, getInitialTab, currentTab]);
 
   return (
     <Container maxWidth={settings.themeStretch ? false : 'lg'}>
@@ -96,7 +147,7 @@ export default function AccountView() {
             mb: { xs: 3, md: 5 },
           }}
         >
-          {TABS.map((tab) => (
+          {TABS_CONFIG.map((tab) => (
             <Tab
               key={tab.value}
               label={t(tab.label)}
