@@ -133,6 +133,7 @@ export function PetCard({
   const popover = usePopover();
   const medicalStats = getMedicalStats(pet);
   const lastVaccine = getLastVaccine(pet);
+  console.log(lastVaccine);
   const nextVaccine = getNextVaccine(pet);
   const age = calculateAge(pet.birthDate);
 

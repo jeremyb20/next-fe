@@ -194,7 +194,6 @@ export default function PromotionEditForm({
     formState: { isSubmitting, errors },
   } = methods;
 
-  const watchType = watch('type');
   const watchCode = watch('code');
   const watchHasImage = watch('urlImage');
 

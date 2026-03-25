@@ -1,9 +1,9 @@
 'use client';
 
+import { IUser } from '@/types/api';
 import { paths } from '@/routes/paths';
 import { useRouter } from '@/routes/hooks';
 import { useState, useCallback } from 'react';
-import { IUser, IPetProfile } from '@/types/api';
 import { useBoolean } from '@/hooks/use-boolean';
 import { useGetUserPetStats } from '@/hooks/use-fetch';
 import { useTranslation } from '@/hooks/use-translation';
@@ -34,44 +34,6 @@ import { StatisticsCards } from './components/statistics-cards';
 import { PromotionsCardCaroussell } from './components/promotions-carousell';
 import { UpcomingAppointmentsCard } from './components/upcoming-appointments-card';
 
-// Datos de ejemplo para próximas citas veterinarias
-const mockAppointments = [
-  {
-    id: '1',
-    title: 'Annual Vaccination',
-    date: 'Mar 25, 2026',
-    time: '10:30 AM',
-    petName: 'Max',
-    petId: 'pet1',
-    type: 'vaccine' as const,
-    location: 'Animal Wellness Center',
-    veterinarian: 'Sarah Johnson',
-  },
-  {
-    id: '2',
-    title: 'Wellness Checkup',
-    date: 'Apr 5, 2026',
-    time: '2:00 PM',
-    petName: 'Luna',
-    petId: 'pet2',
-    type: 'checkup' as const,
-    location: 'Happy Paws Clinic',
-    veterinarian: 'Michael Chen',
-  },
-  {
-    id: '3',
-    title: 'Grooming Session',
-    date: 'Apr 12, 2026',
-    time: '11:00 AM',
-    petName: 'Charlie',
-    petId: 'pet3',
-    type: 'grooming' as const,
-    location: 'Pampered Pets Spa',
-  },
-];
-
-// Datos de ejemplo para promociones de servicios para mascotas
-
 export default function OverviewAppUser() {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
@@ -91,7 +53,6 @@ export default function OverviewAppUser() {
     isFetching: isLoading,
     isError: isMedicalError,
     error: medicalError,
-    refetch: medicalRefetch,
   } = useGetUserUpcomingAppointments(activeFilters);
 
   const { data: promotionsData } = useGetActivePromotions();
@@ -107,13 +68,6 @@ export default function OverviewAppUser() {
   const handleRedirect = useCallback(
     (redirectTo: string) => {
       router.push(redirectTo);
-    },
-    [router]
-  );
-
-  const handlePetView = useCallback(
-    (pet: IPetProfile) => {
-      router.push(paths.dashboard.user.details(pet.memberPetId));
     },
     [router]
   );
@@ -255,6 +209,7 @@ export default function OverviewAppUser() {
                   console.log('Appointment clicked:', appointment);
                 }}
                 onAddAppointment={handleAddAppointment}
+                isLoading={isLoading}
               />
             )}
           </Grid>

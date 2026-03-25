@@ -1,8 +1,7 @@
 'use client';
 
+import { useState } from 'react';
 import { paths } from '@/routes/paths';
-import Iconify from '@/components/iconify';
-import { useState, useCallback } from 'react';
 import { AccountView } from '@/sections/account/view';
 import { useManagerUser } from '@/hooks/use-manager-user';
 import { useSettingsContext } from '@/components/settings';
@@ -17,33 +16,33 @@ import UserPetCardsView from '../_components/user-pets-cards-view';
 
 // ----------------------------------------------------------------------
 
-const TABS = [
-  {
-    value: 'myPets',
-    label: 'My Pets',
-    icon: <Iconify icon="tabler:paw" width={24} />,
-  },
-  {
-    value: 'profile',
-    label: 'Profile',
-    icon: <Iconify icon="solar:user-id-bold" width={24} />,
-  },
-  // {
-  //   value: 'followers',
-  //   label: 'Followers',
-  //   icon: <Iconify icon="solar:heart-bold" width={24} />,
-  // },
-  // {
-  //   value: 'friends',
-  //   label: 'Friends',
-  //   icon: <Iconify icon="solar:users-group-rounded-bold" width={24} />,
-  // },
-  // {
-  //   value: 'gallery',
-  //   label: 'Gallery',
-  //   icon: <Iconify icon="solar:gallery-wide-bold" width={24} />,
-  // },
-];
+// const TABS = [
+//   {
+//     value: 'myPets',
+//     label: 'My Pets',
+//     icon: <Iconify icon="tabler:paw" width={24} />,
+//   },
+//   {
+//     value: 'profile',
+//     label: 'Profile',
+//     icon: <Iconify icon="solar:user-id-bold" width={24} />,
+//   },
+//   // {
+//   //   value: 'followers',
+//   //   label: 'Followers',
+//   //   icon: <Iconify icon="solar:heart-bold" width={24} />,
+//   // },
+//   // {
+//   //   value: 'friends',
+//   //   label: 'Friends',
+//   //   icon: <Iconify icon="solar:users-group-rounded-bold" width={24} />,
+//   // },
+//   // {
+//   //   value: 'gallery',
+//   //   label: 'Gallery',
+//   //   icon: <Iconify icon="solar:gallery-wide-bold" width={24} />,
+//   // },
+// ];
 
 // ----------------------------------------------------------------------
 
@@ -52,23 +51,23 @@ export default function UserProfileView() {
 
   const { user } = useManagerUser();
 
-  const [searchFriends, setSearchFriends] = useState('');
+  // const [searchFriends, setSearchFriends] = useState('');
 
-  const [currentTab, setCurrentTab] = useState('myPets');
+  const [currentTab] = useState('myPets');
 
-  const handleChangeTab = useCallback(
-    (event: React.SyntheticEvent, newValue: string) => {
-      setCurrentTab(newValue);
-    },
-    []
-  );
+  // const handleChangeTab = useCallback(
+  //   (event: React.SyntheticEvent, newValue: string) => {
+  //     setCurrentTab(newValue);
+  //   },
+  //   []
+  // );
 
-  const handleSearchFriends = useCallback(
-    (event: React.ChangeEvent<HTMLInputElement>) => {
-      setSearchFriends(event.target.value);
-    },
-    []
-  );
+  // const handleSearchFriends = useCallback(
+  //   (event: React.ChangeEvent<HTMLInputElement>) => {
+  //     setSearchFriends(event.target.value);
+  //   },
+  //   []
+  // );
 
   return (
     <Container maxWidth={settings.themeStretch ? false : 'lg'}>

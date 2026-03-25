@@ -60,7 +60,7 @@ export default function UserPetCardsView() {
     limit: 10,
     id: user?.id,
   });
-  const [petSelected, setPetSelected] = useState<IPetProfile>();
+  const [petSelected] = useState<IPetProfile>();
 
   const dateError = useMemo(() => {
     const startDate = activeFilters.startDate

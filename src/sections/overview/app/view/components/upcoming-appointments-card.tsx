@@ -7,10 +7,12 @@ import {
   Box,
   Card,
   Chip,
+  Grid,
   alpha,
   Button,
   Divider,
   useTheme,
+  Skeleton,
   Typography,
   IconButton,
   CardContent,
@@ -22,6 +24,7 @@ interface UpcomingAppointmentsCardProps {
   onAppointmentClick?: (appointment: IUpcomingAppointment) => void;
   onAddAppointment?: () => void;
   maxItems?: number; // Número máximo de citas a mostrar
+  isLoading: boolean;
 }
 
 // Mapeo de iconos por tipo de cita
@@ -87,6 +90,7 @@ export function UpcomingAppointmentsCard({
   onAppointmentClick,
   onAddAppointment,
   maxItems = 3,
+  isLoading,
 }: UpcomingAppointmentsCardProps) {
   const { t } = useTranslation();
   const theme = useTheme();
@@ -111,7 +115,34 @@ export function UpcomingAppointmentsCard({
   const overdueCount = appointments.filter(
     (a) => a.status === 'overdue'
   ).length;
-
+  if (isLoading) {
+    return (
+      <Box sx={{ mb: 3 }}>
+        <Grid container spacing={2}>
+          {[1, 2, 3, 4].map((_, index) => (
+            <Grid item xs={6} sm={6} md={3} key={index}>
+              <Card sx={{ borderRadius: 3, height: '100%' }}>
+                <CardContent sx={{ p: 2, textAlign: 'center' }}>
+                  <Skeleton
+                    variant="circular"
+                    width={48}
+                    height={48}
+                    sx={{ mx: 'auto', mb: 1.5 }}
+                  />
+                  <Skeleton
+                    variant="text"
+                    width="60%"
+                    sx={{ mx: 'auto', mb: 0.5 }}
+                  />
+                  <Skeleton variant="text" width="40%" sx={{ mx: 'auto' }} />
+                </CardContent>
+              </Card>
+            </Grid>
+          ))}
+        </Grid>
+      </Box>
+    );
+  }
   return (
     <Card
       sx={{
