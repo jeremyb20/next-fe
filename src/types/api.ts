@@ -42,6 +42,8 @@ export interface Ipagination {
 export interface QueryOptions {
   refetchOnMount?: boolean;
   refetchOnWindowFocus?: boolean;
+  refetchOnReconnect?: boolean;
+  gcTime?: number;
   staleTime?: number;
   retry?: number;
   enabled?: boolean;

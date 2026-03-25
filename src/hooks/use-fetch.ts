@@ -86,8 +86,11 @@ export const useGetPetProfileById = (identifier: string | undefined) =>
     'useGetPetProfileById',
     `${endpoints.pet.getProfileById}/${identifier}`,
     {
-      staleTime: 5 * 60 * 1000,
-      retry: 2,
+      refetchOnMount: true,
+      refetchOnWindowFocus: true,
+      refetchOnReconnect: true,
+      staleTime: 0, // Siempre refrescar al volver
+      gcTime: 5 * 60 * 1000, // Mantener en caché 5 minutos
     }
   );
 
