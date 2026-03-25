@@ -94,15 +94,15 @@ const getMedicalStats = (pet: IPetProfile) => {
 };
 
 // Función para obtener la última vacuna
-const getLastVaccine = (pet: IPetProfile) => {
-  if (!pet.medicalRecord?.vaccines?.length) return null;
-  const sorted = [...pet.medicalRecord.vaccines].sort(
-    (a, b) =>
-      new Date(b.dateOfApplication).getTime() -
-      new Date(a.dateOfApplication).getTime()
-  );
-  return sorted[0];
-};
+// const getLastVaccine = (pet: IPetProfile) => {
+//   if (!pet.medicalRecord?.vaccines?.length) return null;
+//   const sorted = [...pet.medicalRecord.vaccines].sort(
+//     (a, b) =>
+//       new Date(b.dateOfApplication).getTime() -
+//       new Date(a.dateOfApplication).getTime()
+//   );
+//   return sorted[0];
+// };
 
 // Función para obtener la próxima vacuna
 const getNextVaccine = (pet: IPetProfile) => {
@@ -132,8 +132,7 @@ export function PetCard({
 }: PetCardProps) {
   const popover = usePopover();
   const medicalStats = getMedicalStats(pet);
-  const lastVaccine = getLastVaccine(pet);
-  console.log(lastVaccine);
+
   const nextVaccine = getNextVaccine(pet);
   const age = calculateAge(pet.birthDate);
 
