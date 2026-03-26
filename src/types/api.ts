@@ -235,6 +235,7 @@ export interface IPetProfile {
   type?: string;
   owner?: IUserProfile;
   medicalRecord?: IMedicalRecord;
+  notes?: string;
 }
 
 interface ILocation {
@@ -427,4 +428,5 @@ export interface IPromotions {
   createdAt: string;
   updatedAt: string;
   link: string;
+  customIMG?: string;
 }

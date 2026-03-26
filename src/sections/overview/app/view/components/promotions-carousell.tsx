@@ -6,12 +6,8 @@ import { m } from 'framer-motion';
 import { IPromotions } from '@/types/api';
 import Iconify from '@/components/iconify';
 import { useTranslation } from 'react-i18next';
+import Carousel, { useCarousel } from '@/components/carousel';
 import { varFade, MotionContainer } from '@/components/animate';
-import Carousel, {
-  useCarousel,
-  CarouselDots,
-  CarouselArrows,
-} from '@/components/carousel';
 
 import {
   Box,
@@ -20,6 +16,7 @@ import {
   Stack,
   alpha,
   Button,
+  Divider,
   useTheme,
   Typography,
 } from '@mui/material';
@@ -43,21 +40,6 @@ export function PromotionsCardCaroussell({
     speed: 800,
     autoplay,
     autoplaySpeed,
-    ...CarouselDots({
-      sx: {
-        bottom: 16,
-        left: 0,
-        right: 0,
-        position: 'absolute',
-        color: 'primary.main',
-        '& .slick-active': {
-          '& .MuiBox-root': {
-            bgcolor: 'primary.main',
-            width: 24,
-          },
-        },
-      },
-    }),
   });
 
   if (promotions.length === 0) return null;
@@ -72,14 +54,10 @@ export function PromotionsCardCaroussell({
   return (
     <Card
       sx={{
-        borderRadius: 3,
+        borderRadius: 2,
         overflow: 'hidden',
         position: 'relative',
-        '&:hover': {
-          '& .carousel-arrows': {
-            opacity: 1,
-          },
-        },
+        boxShadow: theme.shadows[2],
       }}
     >
       <Carousel ref={carousel.carouselRef} {...carousel.carouselSettings}>
@@ -94,28 +72,84 @@ export function PromotionsCardCaroussell({
         ))}
       </Carousel>
 
-      <CarouselArrows
-        onNext={carousel.onNext}
-        onPrev={carousel.onPrev}
-        className="carousel-arrows"
+      {/* Controles personalizados: Puntos con barra de progreso */}
+      <Box
         sx={{
-          top: '50%',
-          transform: 'translateY(-50%)',
           position: 'absolute',
-          left: 8,
-          right: 8,
-          justifyContent: 'space-between',
-          opacity: 0,
-          transition: 'opacity 0.3s',
-          '& .MuiIconButton-root': {
-            bgcolor: alpha(theme.palette.common.white, 0.8),
-            backdropFilter: 'blur(4px)',
-            '&:hover': {
-              bgcolor: alpha(theme.palette.common.white, 0.9),
-            },
-          },
+          bottom: 12,
+          left: 0,
+          right: 0,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          gap: 1,
+          zIndex: 10,
         }}
-      />
+      >
+        {/* Puntos indicadores */}
+        <Stack
+          direction="row"
+          spacing={0.75}
+          sx={{
+            '& .dot': {
+              width: 6,
+              height: 6,
+              borderRadius: '50%',
+              bgcolor: alpha(theme.palette.common.white, 0.5),
+              cursor: 'pointer',
+              transition: 'all 0.2s ease',
+              '&.active': {
+                width: 20,
+                borderRadius: 3,
+                bgcolor: 'primary.main',
+              },
+              '&:hover': {
+                bgcolor: alpha(theme.palette.common.white, 0.8),
+              },
+            },
+          }}
+        >
+          {promotions.map((_, index) => (
+            <Box
+              key={index}
+              className={`dot ${
+                index === carousel.currentIndex ? 'active' : ''
+              }`}
+              onClick={() => carousel.carouselRef?.current?.slickGoTo(index)}
+            />
+          ))}
+        </Stack>
+
+        {/* Barra de progreso (timing) */}
+        {autoplay && (
+          <Box
+            sx={{
+              width: { xs: 80, md: 100 },
+              height: 2,
+              bgcolor: alpha(theme.palette.common.white, 0.3),
+              borderRadius: 1,
+              overflow: 'hidden',
+              cursor: 'pointer',
+            }}
+            onClick={() => carousel.carouselRef?.current?.slickPause()}
+          >
+            <Box
+              key={carousel.currentIndex}
+              sx={{
+                width: '0%',
+                height: '100%',
+                bgcolor: 'primary.main',
+                borderRadius: 1,
+                animation: `progress ${autoplaySpeed}ms linear forwards`,
+                '@keyframes progress': {
+                  '0%': { width: '0%' },
+                  '100%': { width: '100%' },
+                },
+              }}
+            />
+          </Box>
+        )}
+      </Box>
     </Card>
   );
 }
@@ -143,164 +177,195 @@ function CarouselItem({
     discount,
     validUntil,
     urlImage,
-    icon = 'mdi:tag',
     type,
+    customIMG,
   } = promotion;
 
-  // Renderizar con imagen si existe, sino con gradiente
-  const renderWithImage = urlImage ? (
-    <Box
-      sx={{
-        position: 'relative',
-        width: '100%',
-        height: {
-          xs: 280,
-          md: 320,
-        },
-        backgroundImage: `linear-gradient(to bottom, ${alpha(
-          theme.palette.grey[900],
-          0
-        )} 0%, ${alpha(theme.palette.grey[900], 0.7)} 100%), url(${urlImage})`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-      }}
-    />
-  ) : (
-    <Box
-      sx={{
-        position: 'relative',
-        width: '100%',
-        height: {
-          xs: 220,
-          md: 220,
-        },
-        background: `linear-gradient(135deg, background.paper 0%, background.paper 100%)`,
-      }}
-    />
-  );
+  const hasImage = customIMG || urlImage;
+  const imageUrl = customIMG || urlImage;
 
   return (
     <MotionContainer action animate={active} sx={{ position: 'relative' }}>
-      {/* Contenido superpuesto */}
-      <Stack
-        spacing={1.5}
-        sx={{
-          p: 3,
-          width: 1,
-          bottom: 0,
-          zIndex: 9,
-          textAlign: 'left',
-          position: 'absolute',
-          color: 'common.white',
-        }}
-      >
-        {/* Badge de descuento */}
-        <m.div variants={varFade().inUp}>
-          <Chip
-            label={`${discount}% OFF`}
-            size="small"
+      <Box sx={{ position: 'relative', minHeight: { xs: 240, md: 280 } }}>
+        {/* Imagen de fondo */}
+        {hasImage && (
+          <Box
             sx={{
-              width: 'fit-content',
-              bgcolor: alpha(theme.palette.error.main, 0.9),
-              color: '#fff',
-              fontWeight: 700,
-              fontSize: '0.75rem',
-              backdropFilter: 'blur(4px)',
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              backgroundImage: `url(${imageUrl})`,
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
             }}
           />
-        </m.div>
-
-        {/* Título */}
-        <m.div variants={varFade().inUp}>
-          <Typography
-            variant="h5"
-            fontWeight={700}
-            sx={{
-              textShadow: '0 2px 4px rgba(0,0,0,0.3)',
-              display: 'flex',
-              alignItems: 'center',
-              gap: 1,
-            }}
-          >
-            <Iconify icon={icon} width={28} />
-            {title}
-          </Typography>
-        </m.div>
-
-        {/* Descripción */}
-        <m.div variants={varFade().inUp}>
-          <Typography
-            variant="body2"
-            sx={{
-              opacity: 0.9,
-              textShadow: '0 1px 2px rgba(0,0,0,0.2)',
-              display: '-webkit-box',
-              WebkitLineClamp: 2,
-              WebkitBoxOrient: 'vertical',
-              overflow: 'hidden',
-            }}
-          >
-            {description}
-          </Typography>
-        </m.div>
-
-        {/* Tipo de promoción (opcional) */}
-        {type && (
-          <m.div variants={varFade().inUp}>
-            <Chip
-              label={type.toUpperCase()}
-              size="small"
-              variant="outlined"
-              sx={{
-                width: 'fit-content',
-                borderColor: alpha(theme.palette.common.white, 0.5),
-                color: 'common.white',
-                fontSize: '0.65rem',
-              }}
-            />
-          </m.div>
         )}
 
-        {/* Footer con fecha y botón */}
-        <m.div variants={varFade().inUp}>
-          <Stack
-            direction="row"
-            justifyContent="space-between"
-            alignItems="center"
-            sx={{ mt: 1 }}
-          >
-            <Chip
-              label={`📅 ${formatDate(validUntil)}`}
-              size="small"
-              sx={{
-                bgcolor: alpha(theme.palette.common.white, 0.2),
-                color: '#fff',
-                backdropFilter: 'blur(4px)',
-              }}
-            />
-            <Button
-              variant="contained"
-              size="small"
-              sx={{
-                bgcolor: '#fff',
-                color: theme.palette.primary.main,
-                '&:hover': {
-                  bgcolor: alpha(theme.palette.common.white, 0.9),
-                },
-                borderRadius: 2,
-                textTransform: 'none',
-                fontWeight: 600,
-              }}
-              onClick={() => onViewOffer?.(promotion)}
-            >
-              {t('View offer')} →
-            </Button>
-          </Stack>
-        </m.div>
-      </Stack>
+        {/* Capa oscura sobre la imagen */}
+        <Box
+          sx={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            bgcolor: alpha(theme.palette.background.paper, 0.65),
+          }}
+        />
 
-      {/* Imagen de fondo */}
-      {renderWithImage}
+        {/* Contenedor principal con diseño editorial compacto */}
+        <Box
+          sx={{
+            position: 'absolute',
+            height: '100%',
+            width: '100%',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'space-between',
+            px: { xs: 2.5, md: 4 },
+            py: { xs: 3, md: 4 },
+          }}
+        >
+          {/* Sección superior: contenido principal */}
+          <Stack
+            spacing={2}
+            sx={{
+              width: { xs: '100%', md: '75%' },
+              maxWidth: 520,
+              color: 'common.white',
+            }}
+          >
+            {/* Badge de descuento */}
+            <m.div variants={varFade().inUp}>
+              <Chip
+                label={`${discount}% OFF`}
+                size="small"
+                sx={{
+                  width: 'fit-content',
+                  bgcolor: alpha(theme.palette.error.main, 0.95),
+                  color: '#fff',
+                  fontWeight: 700,
+                  fontSize: '0.7rem',
+                  px: 0.75,
+                  py: 1.5,
+                  letterSpacing: '0.5px',
+                  borderRadius: 1,
+                }}
+              />
+            </m.div>
+
+            {/* Categoría/Type */}
+            {type && (
+              <m.div variants={varFade().inUp}>
+                <Typography
+                  variant="caption"
+                  sx={{
+                    fontWeight: 600,
+                    letterSpacing: 1,
+                    color: alpha(theme.palette.common.white, 0.7),
+                    fontSize: '0.7rem',
+                  }}
+                >
+                  {type.toUpperCase()}
+                </Typography>
+              </m.div>
+            )}
+
+            {/* Título principal */}
+            <m.div variants={varFade().inUp}>
+              <Typography
+                fontWeight={800}
+                sx={{
+                  fontSize: { xs: '1.5rem', md: '2rem' },
+                  lineHeight: 1.2,
+                  textTransform: 'uppercase',
+                  letterSpacing: '-0.01em',
+                  textShadow: '0 1px 4px rgba(0,0,0,0.3)',
+                }}
+              >
+                {title}
+              </Typography>
+            </m.div>
+
+            {/* Descripción */}
+            <m.div variants={varFade().inUp}>
+              <Typography
+                variant="body2"
+                sx={{
+                  fontSize: '0.85rem',
+                  lineHeight: 1.4,
+                  opacity: 0.85,
+                  maxWidth: '95%',
+                }}
+              >
+                {description}
+              </Typography>
+            </m.div>
+
+            {/* Línea divisoria decorativa */}
+            <m.div variants={varFade().inUp}>
+              <Divider
+                sx={{
+                  width: 50,
+                  borderColor: alpha(theme.palette.common.white, 0.3),
+                  borderWidth: 1.5,
+                }}
+              />
+            </m.div>
+          </Stack>
+
+          {/* Sección inferior: footer con fecha y botón separados al 100% */}
+          <m.div variants={varFade().inUp}>
+            <Stack
+              direction="row"
+              justifyContent="space-between"
+              alignItems="center"
+              sx={{
+                width: '100%',
+                mt: 2,
+              }}
+            >
+              <Typography
+                variant="caption"
+                sx={{
+                  opacity: 0.75,
+                  letterSpacing: 0.3,
+                  fontSize: '0.7rem',
+                }}
+              >
+                📅 {formatDate(validUntil).toUpperCase()}
+              </Typography>
+              <Button
+                variant="contained"
+                size="small"
+                sx={{
+                  bgcolor: '#fff',
+                  color: theme.palette.primary.main,
+                  '&:hover': {
+                    bgcolor: alpha(theme.palette.common.white, 0.9),
+                    transform: 'translateX(2px)',
+                  },
+                  borderRadius: 1.5,
+                  textTransform: 'uppercase',
+                  fontWeight: 600,
+                  letterSpacing: '0.3px',
+                  px: 2,
+                  py: 0.75,
+                  fontSize: '0.7rem',
+                  minWidth: 'auto',
+                  transition: 'all 0.2s ease',
+                }}
+                onClick={() => onViewOffer?.(promotion)}
+                endIcon={<Iconify icon="mdi:arrow-right" width={14} />}
+              >
+                {t('View offer')}
+              </Button>
+            </Stack>
+          </m.div>
+        </Box>
+      </Box>
     </MotionContainer>
   );
 }

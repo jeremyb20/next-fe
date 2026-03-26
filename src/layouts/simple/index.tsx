@@ -1,3 +1,4 @@
+import Footer from '../main/footer';
 import Header from '../common/header-simple';
 
 // ----------------------------------------------------------------------
@@ -12,6 +13,7 @@ export default function SimpleLayout({ children }: Props) {
       <Header />
 
       {children}
+      <Footer />
     </>
   );
 }

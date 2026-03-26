@@ -124,6 +124,7 @@ export const endpoints = {
     forgotPassword: '/api/user/forgotPassword',
     resetPassword: '/api/user/resetPassword',
     searchProducts: '/api/user/searchProducts',
+    registerPetView: '/api/user/registerPetView',
     promotions: {
       getActivePromotions: '/api/user/getActivePromotions',
       getFeaturedPromotion: '/api/user/getFeaturedPromotion',

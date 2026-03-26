@@ -52,6 +52,7 @@ type FormValues = {
   code?: string;
   usageLimit?: number;
   link?: string;
+  customIMG?: string;
 };
 
 // Opciones para selects
@@ -153,6 +154,7 @@ export default function PromotionEditForm({
       .min(1, 'Usage limit must be at least 1')
       .nullable(),
     link: Yup.string().optional().url('Must be a valid URL'),
+    customIMG: Yup.string().optional().url('Must be a valid URL'),
   });
 
   const defaultValues = useMemo(
@@ -177,6 +179,7 @@ export default function PromotionEditForm({
       code: currentPromotion?.code || '',
       usageLimit: currentPromotion?.usageLimit || undefined,
       link: currentPromotion?.link || '',
+      customIMG: currentPromotion?.customIMG || '',
     }),
     [currentPromotion]
   );
@@ -394,6 +397,8 @@ export default function PromotionEditForm({
                 ))}
               </RHFSelect>
             </Box>
+
+            <RHFTextField name="customIMG" label="Custom Image" multiline />
 
             <Box>
               <Typography variant="subtitle2" sx={{ mb: 1 }}>

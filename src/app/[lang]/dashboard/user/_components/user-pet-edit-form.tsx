@@ -88,6 +88,7 @@ type FormValues = {
   showHealthAndRequirements: boolean;
   showFavoriteActivities: boolean;
   showLocationInfo: boolean;
+  notes: string;
 };
 
 interface TabPanelProps {
@@ -306,6 +307,7 @@ export default function PetEditForm({ petId }: Props) {
     showHealthAndRequirements: Yup.boolean().optional().default(true),
     showFavoriteActivities: Yup.boolean().optional().default(true),
     showLocationInfo: Yup.boolean().optional().default(true),
+    notes: Yup.string().optional().default(''),
   });
 
   const defaultValues: FormValues = useMemo(() => {
@@ -346,6 +348,7 @@ export default function PetEditForm({ petId }: Props) {
       showFavoriteActivities:
         currentPet?.permissions?.showFavoriteActivities ?? true,
       showLocationInfo: currentPet?.permissions?.showLocationInfo ?? true,
+      notes: currentPet?.notes || '',
     };
   }, [currentPet]);
 
@@ -872,6 +875,13 @@ export default function PetEditForm({ petId }: Props) {
               <RHFTextField
                 name="address"
                 label="Address"
+                multiline
+                rows={2}
+                sx={{ gridColumn: '1 / -1' }}
+              />
+              <RHFTextField
+                name="notes"
+                label="Notes"
                 multiline
                 rows={2}
                 sx={{ gridColumn: '1 / -1' }}
