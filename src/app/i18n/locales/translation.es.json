@@ -423,5 +423,13 @@
   "Show Consent Location Information": "Mostrar información de ubicación con consentimiento",
   "Show Veterinarian Name": "Mostrar nombre del veterinario",
   "Show Veterinarian Phone": "Mostrar teléfono del veterinario",
-  "Enter phone number for {{country}}": "Ingrese un número válido de {{country}}"
+  "Lets Get Started": "¡Comencemos!",
+  "Create an account": "Crear una cuenta",
+  "Create an account and manage your pets profile": "Crea una cuenta y administra el perfil de tu mascota",
+  "By registering, I agree to the": "Al registrarme, acepto los",
+  "Select a country first": "Selecciona un país primero",
+  "Invalid country": "País inválido",
+  "Enter phone number for {{country}}": "Ingresa el número de teléfono para {{country}}",
+  "Valid {{country}} number": "Número válido de {{country}}",
+  "Enter valid phone number for {{country}}": "Ingresa un número de teléfono válido para {{country}}"
 }

@@ -1,5 +1,5 @@
-import { useTranslation } from '@/hooks/use-translation';
 import { PATH_AFTER_LOGIN } from '@/config-global';
+import { useTranslation } from '@/hooks/use-translation';
 import RouterLink from '@/routes/components/router-link';
 
 import Button from '@mui/material/Button';

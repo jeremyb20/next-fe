@@ -1,8 +1,8 @@
 // components/dashboard/user/registered-pets-card.tsx
 import { IPetProfile } from '@/types/api';
 import Iconify from '@/components/iconify';
-import { useTranslation } from '@/hooks/use-translation';
 import { BreedOptions } from '@/utils/constants';
+import { useTranslation } from '@/hooks/use-translation';
 
 import {
   Box,

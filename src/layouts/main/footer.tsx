@@ -4,8 +4,8 @@ import { paths } from '@/routes/paths';
 import Label from '@/components/label';
 import Iconify from '@/components/iconify';
 import { usePathname } from '@/routes/hooks';
-import { useTranslation } from '@/hooks/use-translation';
 import { RouterLink } from '@/routes/components';
+import { useTranslation } from '@/hooks/use-translation';
 import { APP_NAME, EMAIL_SUPPORT } from '@/config-global';
 
 import Box from '@mui/material/Box';

@@ -422,5 +422,14 @@
   "Show Location Information": "Afficher les informations de localisation",
   "Show Consent Location Information": "Afficher les informations de localisation avec consentement",
   "Show Veterinarian Name": "Afficher le nom du vétérinaire",
-  "Show Veterinarian Phone": "Afficher le téléphone du vétérinaire"
+  "Show Veterinarian Phone": "Afficher le téléphone du vétérinaire",
+  "Lets Get Started": "Commençons !",
+  "Create an account": "Créer un compte",
+  "Create an account and manage your pets profile": "Créez un compte et gérez le profil de votre animal",
+  "By registering, I agree to the": "En m'inscrivant, j'accepte les",
+  "Select a country first": "Sélectionnez d'abord un pays",
+  "Invalid country": "Pays invalide",
+  "Enter phone number for {{country}}": "Entrez le numéro de téléphone pour {{country}}",
+  "Valid {{country}} number": "Numéro {{country}} valide",
+  "Enter valid phone number for {{country}}": "Entrez un numéro de téléphone valide pour {{country}}"
 }

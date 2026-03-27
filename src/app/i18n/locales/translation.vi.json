@@ -422,5 +422,14 @@
   "Show Location Information": "Hiển thị thông tin vị trí",
   "Show Consent Location Information": "Hiển thị thông tin vị trí đã đồng ý",
   "Show Veterinarian Name": "Hiển thị tên bác sĩ thú y",
-  "Show Veterinarian Phone": "Hiển thị số điện thoại bác sĩ thú y"
+  "Show Veterinarian Phone": "Hiển thị số điện thoại bác sĩ thú y",
+  "Lets Get Started": "Hãy bắt đầu!",
+  "Create an account": "Tạo tài khoản",
+  "Create an account and manage your pets profile": "Tạo tài khoản và quản lý hồ sơ thú cưng của bạn",
+  "By registering, I agree to the": "Khi đăng ký, tôi đồng ý với",
+  "Select a country first": "Chọn quốc gia trước",
+  "Invalid country": "Quốc gia không hợp lệ",
+  "Enter phone number for {{country}}": "Nhập số điện thoại cho {{country}}",
+  "Valid {{country}} number": "Số {{country}} hợp lệ",
+  "Enter valid phone number for {{country}}": "Nhập số điện thoại hợp lệ cho {{country}}"
 }

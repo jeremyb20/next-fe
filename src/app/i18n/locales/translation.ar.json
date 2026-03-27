@@ -422,5 +422,14 @@
   "Show Location Information": "إظهار معلومات الموقع",
   "Show Consent Location Information": "إظهار معلومات موقع الموافقة",
   "Show Veterinarian Name": "إظهار اسم الطبيب البيطري",
-  "Show Veterinarian Phone": "إظهار هاتف الطبيب البيطري"
+  "Show Veterinarian Phone": "إظهار هاتف الطبيب البيطري",
+  "Lets Get Started": "لنبدأ!",
+  "Create an account": "إنشاء حساب",
+  "Create an account and manage your pets profile": "أنشئ حسابًا وأدر ملف حيوانك الأليف",
+  "By registering, I agree to the": "بالتسجيل، أوافق على",
+  "Select a country first": "اختر الدولة أولاً",
+  "Invalid country": "دولة غير صالحة",
+  "Enter phone number for {{country}}": "أدخل رقم الهاتف لـ {{country}}",
+  "Valid {{country}} number": "رقم {{country}} صالح",
+  "Enter valid phone number for {{country}}": "أدخل رقم هاتف صالح لـ {{country}}"
 }

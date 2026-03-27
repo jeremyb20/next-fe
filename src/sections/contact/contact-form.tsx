@@ -1,7 +1,7 @@
 import { m } from 'framer-motion';
 import { useState, useEffect } from 'react';
-import { useTranslation } from '@/hooks/use-translation';
 import { EMAIL_SUPPORT } from '@/config-global';
+import { useTranslation } from '@/hooks/use-translation';
 import { varFade, MotionViewport } from '@/components/animate';
 
 import Box from '@mui/material/Box';

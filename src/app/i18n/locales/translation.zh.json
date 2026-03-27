@@ -422,5 +422,14 @@
   "Show Location Information": "显示位置信息",
   "Show Consent Location Information": "显示同意后的位置信息",
   "Show Veterinarian Name": "显示兽医姓名",
-  "Show Veterinarian Phone": "显示兽医电话"
+  "Show Veterinarian Phone": "显示兽医电话",
+  "Lets Get Started": "开始吧！",
+  "Create an account": "创建账户",
+  "Create an account and manage your pets profile": "创建账户并管理您的宠物档案",
+  "By registering, I agree to the": "注册即表示我同意",
+  "Select a country first": "请先选择国家",
+  "Invalid country": "无效的国家",
+  "Enter phone number for {{country}}": "输入{{country}}的电话号码",
+  "Valid {{country}} number": "有效的{{country}}号码",
+  "Enter valid phone number for {{country}}": "请输入有效的{{country}}电话号码"
 }

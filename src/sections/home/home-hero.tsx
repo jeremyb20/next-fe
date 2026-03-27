@@ -2,10 +2,10 @@ import { paths } from '@/routes/paths';
 import Iconify from '@/components/iconify';
 import { APP_NAME } from '@/config-global';
 import { m, useScroll } from 'framer-motion';
-import { useTranslation } from '@/hooks/use-translation';
 import { RouterLink } from '@/routes/components';
 import { HEADER } from '@/layouts/config-layout';
 import { bgGradient, textGradient } from '@/theme/css';
+import { useTranslation } from '@/hooks/use-translation';
 import { varFade, MotionContainer } from '@/components/animate';
 import { useRef, useState, useEffect, useCallback } from 'react';
 

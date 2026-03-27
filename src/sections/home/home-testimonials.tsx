@@ -3,8 +3,8 @@ import { m } from 'framer-motion';
 import Carousel from 'react-slick';
 import Iconify from '@/components/iconify';
 import { APP_NAME } from '@/config-global';
-import { useTranslation } from '@/hooks/use-translation';
 import { useResponsive } from '@/hooks/use-responsive';
+import { useTranslation } from '@/hooks/use-translation';
 import useCarousel from '@/components/carousel/use-carousel';
 import { varFade, MotionViewport } from '@/components/animate';
 

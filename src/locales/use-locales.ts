@@ -1,8 +1,8 @@
 'use client';
 
 import { useEffect, useCallback } from 'react';
-import { useTranslation } from '@/hooks/use-translation';
 import { useRouter, usePathname } from '@/routes/hooks';
+import { useTranslation } from '@/hooks/use-translation';
 import { localStorageGetItem } from '@/utils/storage-available';
 
 import { allLangs, defaultLang } from './config-lang';
