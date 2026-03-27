@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 import { paths } from '@/routes/paths';
 import Iconify from '@/components/iconify';
 import SvgColor from '@/components/svg-color';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from '@/hooks/use-translation';
 import { NavItemBaseProps } from '@/components/nav-section';
 
 // ----------------------------------------------------------------------

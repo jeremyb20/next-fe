@@ -1,6 +1,6 @@
 import { m } from 'framer-motion';
 import { useState, useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from '@/hooks/use-translation';
 import { EMAIL_SUPPORT } from '@/config-global';
 import { varFade, MotionViewport } from '@/components/animate';
 

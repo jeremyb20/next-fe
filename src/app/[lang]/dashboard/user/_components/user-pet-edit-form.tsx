@@ -16,6 +16,7 @@ import { useSnackbar } from '@/components/snackbar';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useGetPetProfileById } from '@/hooks/use-fetch';
+import { useTranslation } from '@/hooks/use-translation';
 import { useManagerUser } from '@/hooks/use-manager-user';
 import UploadAvatar from '@/components/upload/upload-avatar';
 import CardComponent from '@/sections/_examples/card-component';
@@ -75,12 +76,11 @@ type FormValues = {
   healthAndRequirements: string;
   phoneVeterinarian: string;
   veterinarianContact: string;
+  notes: string;
   // Permissions fields
   showPhoneInfo: boolean;
-  showLinkTwitter: boolean;
-  showLinkFacebook: boolean;
-  showLinkInstagram: boolean;
   showOwnerPetName: boolean;
+  showEmailInfo: boolean;
   showBirthDate: boolean;
   showAddressInfo: boolean;
   showVeterinarianContact: boolean;
@@ -88,7 +88,7 @@ type FormValues = {
   showHealthAndRequirements: boolean;
   showFavoriteActivities: boolean;
   showLocationInfo: boolean;
-  notes: string;
+  showLocationConsent: boolean;
 };
 
 interface TabPanelProps {
@@ -121,44 +121,6 @@ const PET_STATUS_OPTIONS = [
   { value: 'deceased', label: 'Deceased' },
 ];
 
-const TABS_CONFIG = [
-  {
-    id: 0,
-    value: 'information',
-    label: 'Information',
-    icon: 'solar:user-rounded-linear',
-    param: 'info',
-  },
-  {
-    id: 1,
-    value: 'permissions',
-    label: 'Permissions',
-    icon: 'solar:shield-keyhole-linear',
-    param: 'permissions',
-  },
-  {
-    id: 2,
-    value: 'location',
-    label: 'Location',
-    icon: 'solar:point-on-map-outline',
-    param: 'location',
-  },
-  {
-    id: 3,
-    value: 'medicalControl',
-    label: 'Medical Control',
-    icon: 'hugeicons:injection',
-    param: 'medical',
-  },
-  {
-    id: 4,
-    value: 'digitalCard',
-    label: 'Digital Card',
-    icon: 'solar:card-outline',
-    param: 'card',
-  },
-];
-
 // Mapeo de parámetros a IDs
 const PARAM_TO_TAB_ID: Record<string, number> = {
   info: 0,
@@ -174,6 +136,7 @@ type Props = {
 
 export default function PetEditForm({ petId }: Props) {
   const theme = useTheme();
+  const { t } = useTranslation();
   const { user: currentUser } = useManagerUser();
   const { data: currentPet, refetch } = useGetPetProfileById(petId);
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
@@ -194,6 +157,50 @@ export default function PetEditForm({ petId }: Props) {
     currentPet?.photo || null
   );
   const [photoIdToDelete, setPhotoIdToDelete] = useState<string | null>(null);
+  const TABS_CONFIG = useMemo(
+    () => [
+      {
+        id: 0,
+        value: 'information',
+        label: 'Information',
+        icon: 'solar:user-rounded-linear',
+        param: 'info',
+      },
+      {
+        id: 1,
+        value: 'permissions',
+        label: 'Permissions',
+        icon: 'solar:shield-keyhole-linear',
+        param: 'permissions',
+      },
+      {
+        id: 2,
+        value: 'location',
+        label: 'Pet Location',
+        icon: 'solar:point-on-map-outline',
+        param: 'location',
+      },
+      {
+        id: 3,
+        value: 'medicalControl',
+        label: 'Medical Control',
+        icon: 'hugeicons:injection',
+        param: 'medical',
+      },
+      ...(currentPet?.isDigitalIdentificationActive
+        ? [
+            {
+              id: 4,
+              value: 'digitalCard',
+              label: 'Digital Card',
+              icon: 'solar:card-outline',
+              param: 'card',
+            },
+          ]
+        : []),
+    ],
+    [currentPet?.isDigitalIdentificationActive]
+  );
   // Obtener el parámetro 'tab' de la URL
   const searchParams = useSearchParams();
   const tabParam = searchParams.get('tab');
@@ -223,7 +230,7 @@ export default function PetEditForm({ petId }: Props) {
         });
       }
     },
-    [router, searchParams]
+    [TABS_CONFIG, router, searchParams]
   );
   // Función para manejar la subida de foto
   const handleDropPetPhoto = useCallback(
@@ -296,17 +303,17 @@ export default function PetEditForm({ petId }: Props) {
     ownerPetName: Yup.string().optional().default(''),
     // Permissions fields - todos son booleanos opcionales
     showPhoneInfo: Yup.boolean().optional().default(true),
-    showLinkTwitter: Yup.boolean().optional().default(true),
-    showLinkFacebook: Yup.boolean().optional().default(true),
-    showLinkInstagram: Yup.boolean().optional().default(true),
+
     showOwnerPetName: Yup.boolean().optional().default(true),
     showBirthDate: Yup.boolean().optional().default(true),
     showAddressInfo: Yup.boolean().optional().default(true),
+    showEmailInfo: Yup.boolean().optional().default(true),
     showVeterinarianContact: Yup.boolean().optional().default(true),
     showPhoneVeterinarian: Yup.boolean().optional().default(true),
     showHealthAndRequirements: Yup.boolean().optional().default(true),
     showFavoriteActivities: Yup.boolean().optional().default(true),
     showLocationInfo: Yup.boolean().optional().default(true),
+    showLocationConsent: Yup.boolean().optional().default(true),
     notes: Yup.string().optional().default(''),
   });
 
@@ -333,9 +340,7 @@ export default function PetEditForm({ petId }: Props) {
       petStatus: currentPet?.petStatus || 'active',
       // Permissions defaults
       showPhoneInfo: currentPet?.permissions?.showPhoneInfo ?? true,
-      showLinkTwitter: currentPet?.permissions?.showLinkTwitter ?? true,
-      showLinkFacebook: currentPet?.permissions?.showLinkFacebook ?? true,
-      showLinkInstagram: currentPet?.permissions?.showLinkInstagram ?? true,
+      showEmailInfo: currentPet?.permissions?.showEmailInfo ?? true,
       showOwnerPetName: currentPet?.permissions?.showOwnerPetName ?? true,
       showBirthDate: currentPet?.permissions?.showBirthDate ?? true,
       showAddressInfo: currentPet?.permissions?.showAddressInfo ?? true,
@@ -348,6 +353,7 @@ export default function PetEditForm({ petId }: Props) {
       showFavoriteActivities:
         currentPet?.permissions?.showFavoriteActivities ?? true,
       showLocationInfo: currentPet?.permissions?.showLocationInfo ?? true,
+      showLocationConsent: currentPet?.permissions?.showLocationConsent ?? true,
       notes: currentPet?.notes || '',
     };
   }, [currentPet]);
@@ -382,7 +388,7 @@ export default function PetEditForm({ petId }: Props) {
         weight: weightWithUnit,
         lat: petLocation.lat,
         lng: petLocation.lng,
-        address: petLocation.address,
+        address: data.address,
         genderSelected: data.genderSelected,
         // Si el usuario eliminó la foto, agregar flag para eliminar
         ...(photoIdToDelete &&
@@ -393,10 +399,8 @@ export default function PetEditForm({ petId }: Props) {
         // Estructura para las permissions
         permissions: {
           showPhoneInfo: data.showPhoneInfo,
-          showLinkTwitter: data.showLinkTwitter,
-          showLinkFacebook: data.showLinkFacebook,
-          showLinkInstagram: data.showLinkInstagram,
           showOwnerPetName: data.showOwnerPetName,
+          showEmailInfo: data.showEmailInfo,
           showBirthDate: data.showBirthDate,
           showAddressInfo: data.showAddressInfo,
           showVeterinarianContact: data.showVeterinarianContact,
@@ -404,6 +408,7 @@ export default function PetEditForm({ petId }: Props) {
           showHealthAndRequirements: data.showHealthAndRequirements,
           showFavoriteActivities: data.showFavoriteActivities,
           showLocationInfo: data.showLocationInfo,
+          showLocationConsent: data.showLocationConsent,
         },
       };
 
@@ -523,12 +528,12 @@ export default function PetEditForm({ petId }: Props) {
         <CustomBreadcrumbs
           heading="List"
           links={[
-            { name: 'Inicio', href: paths.dashboard.root },
+            { name: t('Home'), href: paths.dashboard.root },
             {
-              name: 'Pets',
+              name: t('My Pets'),
               href: paths.dashboard.user.pets,
             },
-            { name: `Edit ${currentPet?.petName || 'Pet'}` },
+            { name: `${t('Edit')} ${currentPet?.petName || 'Pet'}` },
           ]}
           action={
             <LoadingButton
@@ -537,7 +542,7 @@ export default function PetEditForm({ petId }: Props) {
               variant="contained"
               loading={isSubmitting}
             >
-              Update Pet
+              {t('Update Pet')}
             </LoadingButton>
           }
           sx={{
@@ -568,7 +573,7 @@ export default function PetEditForm({ petId }: Props) {
             <Tab
               key={tab.value}
               value={tab.id}
-              label={tab.label}
+              label={t(tab.label)}
               icon={<Iconify icon={tab.icon} />}
               iconPosition="start"
             />
@@ -905,13 +910,23 @@ export default function PetEditForm({ petId }: Props) {
               sx={{ p: 3, borderRadius: 2, bgcolor: 'background.neutral' }}
             >
               <Typography variant="h6" sx={{ mb: 2 }}>
-                Contact Information
+                {t('Owner Information')}
               </Typography>
-
               <RHFSwitch
                 name="showPhoneInfo"
                 labelPlacement="start"
                 label="Show Phone Number"
+                sx={{
+                  justifyContent: 'space-between',
+                  flexDirection: 'row-reverse',
+                  width: '100%',
+                  mx: 0,
+                }}
+              />
+              <RHFSwitch
+                name="showEmailInfo"
+                labelPlacement="start"
+                label="Show Email Info"
                 sx={{
                   justifyContent: 'space-between',
                   flexDirection: 'row-reverse',
@@ -931,30 +946,6 @@ export default function PetEditForm({ petId }: Props) {
                   mx: 0,
                 }}
               />
-
-              <RHFSwitch
-                name="showAddressInfo"
-                labelPlacement="start"
-                label="Show Address Information"
-                sx={{
-                  justifyContent: 'space-between',
-                  flexDirection: 'row-reverse',
-                  width: '100%',
-                  mx: 0,
-                }}
-              />
-
-              <RHFSwitch
-                name="showLocationInfo"
-                labelPlacement="start"
-                label="Show Location Information"
-                sx={{
-                  justifyContent: 'space-between',
-                  flexDirection: 'row-reverse',
-                  width: '100%',
-                  mx: 0,
-                }}
-              />
             </Stack>
 
             <Stack
@@ -962,7 +953,7 @@ export default function PetEditForm({ petId }: Props) {
               sx={{ p: 3, borderRadius: 2, bgcolor: 'background.neutral' }}
             >
               <Typography variant="h6" sx={{ mb: 2 }}>
-                Pet Information
+                {t('Pet Information')}
               </Typography>
 
               <RHFSwitch
@@ -1000,6 +991,39 @@ export default function PetEditForm({ petId }: Props) {
                   mx: 0,
                 }}
               />
+              <RHFSwitch
+                name="showAddressInfo"
+                labelPlacement="start"
+                label="Show Address Information"
+                sx={{
+                  justifyContent: 'space-between',
+                  flexDirection: 'row-reverse',
+                  width: '100%',
+                  mx: 0,
+                }}
+              />
+              <RHFSwitch
+                name="showLocationInfo"
+                labelPlacement="start"
+                label="Show Location Information"
+                sx={{
+                  justifyContent: 'space-between',
+                  flexDirection: 'row-reverse',
+                  width: '100%',
+                  mx: 0,
+                }}
+              />
+              <RHFSwitch
+                name="showLocationConsent"
+                labelPlacement="start"
+                label="Show Consent Location Information"
+                sx={{
+                  justifyContent: 'space-between',
+                  flexDirection: 'row-reverse',
+                  width: '100%',
+                  mx: 0,
+                }}
+              />
             </Stack>
 
             <Stack
@@ -1007,7 +1031,7 @@ export default function PetEditForm({ petId }: Props) {
               sx={{ p: 3, borderRadius: 2, bgcolor: 'background.neutral' }}
             >
               <Typography variant="h6" sx={{ mb: 2 }}>
-                Veterinarian Information
+                {t('Veterinarian Information')}
               </Typography>
 
               <RHFSwitch
@@ -1034,51 +1058,6 @@ export default function PetEditForm({ petId }: Props) {
                 }}
               />
             </Stack>
-
-            <Stack
-              spacing={1.5}
-              sx={{ p: 3, borderRadius: 2, bgcolor: 'background.neutral' }}
-            >
-              <Typography variant="h6" sx={{ mb: 2 }}>
-                Social Media
-              </Typography>
-
-              <RHFSwitch
-                name="showLinkTwitter"
-                labelPlacement="start"
-                label="Show Twitter Link"
-                sx={{
-                  justifyContent: 'space-between',
-                  flexDirection: 'row-reverse',
-                  width: '100%',
-                  mx: 0,
-                }}
-              />
-
-              <RHFSwitch
-                name="showLinkFacebook"
-                labelPlacement="start"
-                label="Show Facebook Link"
-                sx={{
-                  justifyContent: 'space-between',
-                  flexDirection: 'row-reverse',
-                  width: '100%',
-                  mx: 0,
-                }}
-              />
-
-              <RHFSwitch
-                name="showLinkInstagram"
-                labelPlacement="start"
-                label="Show Instagram Link"
-                sx={{
-                  justifyContent: 'space-between',
-                  flexDirection: 'row-reverse',
-                  width: '100%',
-                  mx: 0,
-                }}
-              />
-            </Stack>
           </Box>
         </TabPanel>
         <TabPanel value={tabValue} index={2}>
@@ -1086,8 +1065,9 @@ export default function PetEditForm({ petId }: Props) {
             <Stack spacing={3}>
               <Typography variant="h6">📍 Pet Location</Typography>
               <Typography variant="body2" color="text.secondary">
-                Click on the map to set your pet&apos;s location or search for
-                an address
+                {t(
+                  'Click on the map to set your pet location or search for an address'
+                )}
               </Typography>
 
               <PetLocationMap
@@ -1129,7 +1109,7 @@ export default function PetEditForm({ petId }: Props) {
             size="large"
             loading={isSubmitting}
           >
-            Update Pet
+            {t('Update Pet')}
           </LoadingButton>
         </Stack>
       </FormProvider>

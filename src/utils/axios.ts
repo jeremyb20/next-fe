@@ -95,6 +95,7 @@ export const endpoints = {
   },
   pet: {
     getProfileById: '/api/pet/getProfileById',
+    getPublicProfileById: '/api/pet/getPublicProfileById',
     updatePetById: '/api/pet/updatePetById',
     createPet: '/api/pet/createPet',
     deletePet: '/api/pet/deletePet',

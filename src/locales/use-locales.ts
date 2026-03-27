@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useCallback } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from '@/hooks/use-translation';
 import { useRouter, usePathname } from '@/routes/hooks';
 import { localStorageGetItem } from '@/utils/storage-available';
 

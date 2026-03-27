@@ -22,6 +22,7 @@ export function useTranslation(ns?: string) {
     t,
     i18n,
     mounted,
+    lng,
     // Versión segura para SSR
     tSafe: (key: string, options?: any) => {
       if (!mounted) return key; // Placeholder durante SSR

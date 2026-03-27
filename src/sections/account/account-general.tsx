@@ -31,7 +31,7 @@ import LoadingButton from '@mui/lab/LoadingButton';
 
 import { countries } from '@/assets/data';
 import { useAuthContext } from '@/auth/hooks';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from '@/hooks/use-translation';
 import { useBoolean } from '@/hooks/use-boolean';
 import { useSnackbar } from '@/components/snackbar';
 import StyledAvatar from '@/components/avatar/styled-avatar';

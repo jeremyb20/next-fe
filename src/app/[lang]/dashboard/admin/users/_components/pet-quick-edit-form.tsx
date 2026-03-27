@@ -83,6 +83,7 @@ type FormValues = {
   showHealthAndRequirements: boolean;
   showFavoriteActivities: boolean;
   showLocationInfo: boolean;
+  isDigitalIdentificationActive?: boolean;
 };
 
 interface TabPanelProps {
@@ -121,6 +122,7 @@ type Props = {
   currentPet?: IPetProfile;
   currentUser?: IUser;
   refetch: () => void;
+  isAdmin?: boolean;
 };
 
 export default function PetQuickEditForm({
@@ -129,6 +131,7 @@ export default function PetQuickEditForm({
   open,
   onClose,
   refetch,
+  isAdmin,
 }: Props) {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
@@ -234,6 +237,7 @@ export default function PetQuickEditForm({
     showHealthAndRequirements: Yup.boolean().optional().default(true),
     showFavoriteActivities: Yup.boolean().optional().default(true),
     showLocationInfo: Yup.boolean().optional().default(true),
+    isDigitalIdentificationActive: Yup.boolean().optional(),
   });
 
   const defaultValues: FormValues = useMemo(() => {
@@ -274,6 +278,8 @@ export default function PetQuickEditForm({
       showFavoriteActivities:
         currentPet?.permissions?.showFavoriteActivities ?? true,
       showLocationInfo: currentPet?.permissions?.showLocationInfo ?? true,
+      isDigitalIdentificationActive:
+        currentPet?.isDigitalIdentificationActive || false,
     };
   }, [currentPet]);
 
@@ -306,6 +312,9 @@ export default function PetQuickEditForm({
         id: currentPet?._id,
         weight: weightWithUnit,
         genderSelected: data.genderSelected,
+        ...(isAdmin && {
+          isDigitalIdentificationActive: data.isDigitalIdentificationActive,
+        }),
         // Si el usuario eliminó la foto, agregar flag para eliminar
         ...(photoIdToDelete &&
           !petPhoto &&
@@ -563,6 +572,19 @@ export default function PetQuickEditForm({
                   sm: 'repeat(2, 1fr)',
                 }}
               >
+                {isAdmin && (
+                  <RHFSwitch
+                    name="isDigitalIdentificationActive"
+                    labelPlacement="start"
+                    label="Digital ID Active"
+                    sx={{
+                      justifyContent: 'space-between',
+                      flexDirection: 'row-reverse',
+                      width: '100%',
+                      mx: 0,
+                    }}
+                  />
+                )}
                 <RHFSelect name="petStatus" label="Status">
                   {PET_STATUS_OPTIONS.map((status) => (
                     <MenuItem key={status.value} value={status.value}>
@@ -795,6 +817,7 @@ export default function PetQuickEditForm({
                     ),
                   }}
                 />
+
                 <RHFTextField
                   name="address"
                   label="Address"

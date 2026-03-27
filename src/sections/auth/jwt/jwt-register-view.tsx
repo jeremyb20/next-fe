@@ -8,7 +8,7 @@ import Iconify from '@/components/iconify';
 import { useState, useEffect } from 'react';
 import useIPInfo from '@/hooks/use-ip-info';
 import { useAuthContext } from '@/auth/hooks';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from '@/hooks/use-translation';
 import { RouterLink } from '@/routes/components';
 import { useBoolean } from '@/hooks/use-boolean';
 import { PATH_AFTER_LOGIN } from '@/config-global';

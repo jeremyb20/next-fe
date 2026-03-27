@@ -4,7 +4,7 @@ import { m } from 'framer-motion';
 import orderBy from 'lodash/orderBy';
 import { paths } from '@/routes/paths';
 import { useRouter } from '@/routes/hooks';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from '@/hooks/use-translation';
 import EmptyContent from '@/components/empty-content';
 import { useGetProductsPublished } from '@/api/product';
 import { UserQueryParams } from '@/hooks/use-fetch-paginated';

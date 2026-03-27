@@ -4,7 +4,7 @@ import { endpoints } from '@/utils/axios';
 import { PetApiResponse } from '@/types/global';
 import { DOMAIN, HOST_API } from '@/config-global';
 import NotFoundPage from '@/app/[lang]/error/404/page';
-import PetProfileView from '@/app/[lang]/pet/_components/view/pet-profile-view';
+import PetPublickProfileView from '@/app/[lang]/pet/_components/view/pet-public-profile-view';
 
 type Props = {
   params: {
@@ -15,7 +15,7 @@ type Props = {
 async function getPetData(identifier: string): Promise<PetApiResponse> {
   try {
     const response = await fetch(
-      `${HOST_API}${endpoints.pet.getProfileById}/${identifier}`,
+      `${HOST_API}${endpoints.pet.getPublicProfileById}/${identifier}`,
       {
         cache: 'no-store', // ← Esto es clave
         headers: {
@@ -112,7 +112,7 @@ export default async function Page({ params }: Props) {
 
   // Si es perfil de mascota (QR ya convertido)
   if (data.type === 'pet_profile' && data.payload) {
-    return <PetProfileView petProfile={data.payload} canEdit />;
+    return <PetPublickProfileView petProfile={data.payload} canEdit />;
   }
 
   // Si no se encuentra nada

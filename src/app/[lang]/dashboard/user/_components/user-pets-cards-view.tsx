@@ -190,8 +190,12 @@ export default function UserPetCardsView() {
               {user.email}
             </Typography>
             <Typography variant="body2" color="text.secondary">
-              Pets Registered:{' '}
-              {isFetching ? <CircularProgress /> : usersData?.payload.length}{' '}
+              {t('Pets Registered')}:{' '}
+              {isFetching ? (
+                <CircularProgress size={6} />
+              ) : (
+                usersData?.payload.length
+              )}{' '}
             </Typography>
           </Box>
         </CardContent>

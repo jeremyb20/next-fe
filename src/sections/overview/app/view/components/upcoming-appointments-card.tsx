@@ -47,16 +47,6 @@ const getAppointmentColor = (type: IUpcomingAppointment['type']) => {
   return colors[type] || '#6C5CE7';
 };
 
-// Mapeo de etiquetas por tipo de cita
-const getAppointmentLabel = (type: IUpcomingAppointment['type'], t: any) => {
-  const labels = {
-    vaccine: t('Vaccination'),
-    deworming: t('Deworming'),
-    medical_visit: t('Medical Visit'),
-  };
-  return labels[type] || t('Appointment');
-};
-
 // Obtener color de estado
 const getStatusColor = (status: IUpcomingAppointment['status'], theme: any) => {
   const colors = {
@@ -94,7 +84,15 @@ export function UpcomingAppointmentsCard({
 }: UpcomingAppointmentsCardProps) {
   const { t } = useTranslation();
   const theme = useTheme();
-
+  // Mapeo de etiquetas por tipo de cita
+  const getAppointmentLabel = (type: IUpcomingAppointment['type']) => {
+    const labels = {
+      vaccine: t('Vaccination'),
+      deworming: t('Deworming'),
+      medical_visit: t('Medical Visit'),
+    };
+    return labels[type] || t('Appointment');
+  };
   // Ordenar citas: hoy primero, luego próximas, luego vencidas
   const sortedAppointments = [...appointments].sort((a, b) => {
     const order = { today: 0, upcoming: 1, overdue: 2 };
@@ -318,7 +316,7 @@ export function UpcomingAppointmentsCard({
                             textDecoration: isOverdue ? 'line-through' : 'none',
                           }}
                         >
-                          {getAppointmentLabel(appointment.type, t)}
+                          {getAppointmentLabel(appointment.type)}
                         </Typography>
                         <Chip
                           label={getStatusLabel(
@@ -345,7 +343,7 @@ export function UpcomingAppointmentsCard({
                         color="text.secondary"
                         sx={{ display: 'block', mb: 0.5 }}
                       >
-                        {appointment.title}
+                        {t(appointment.title)}
                       </Typography>
 
                       <Box

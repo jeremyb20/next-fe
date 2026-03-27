@@ -5,8 +5,8 @@ import { PetApiResponse } from '@/types/global';
 import { DOMAIN, HOST_API } from '@/config-global';
 
 import NotFoundPage from '../../../not-found';
-import PetProfileView from '../_components/view/pet-profile-view';
 import RegistrationPetView from '../_components/view/registration-pet-view';
+import PetPublickProfileView from '../_components/view/pet-public-profile-view';
 
 type Props = {
   params: {
@@ -17,7 +17,7 @@ type Props = {
 async function getPetData(identifier: string): Promise<PetApiResponse> {
   try {
     const response = await fetch(
-      `${HOST_API}${endpoints.pet.getProfileById}/${identifier}`,
+      `${HOST_API}${endpoints.pet.getPublicProfileById}/${identifier}`,
       {
         cache: 'no-store', // ← Esto es clave
         headers: {
@@ -114,7 +114,7 @@ export default async function Page({ params }: Props) {
 
   // Si es perfil de mascota (QR ya convertido)
   if (data.type === 'pet_profile' && data.payload) {
-    return <PetProfileView petProfile={data.payload} />;
+    return <PetPublickProfileView petProfile={data.payload} />;
   }
 
   // Si es código QR no registrado

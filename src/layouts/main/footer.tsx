@@ -4,7 +4,7 @@ import { paths } from '@/routes/paths';
 import Label from '@/components/label';
 import Iconify from '@/components/iconify';
 import { usePathname } from '@/routes/hooks';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from '@/hooks/use-translation';
 import { RouterLink } from '@/routes/components';
 import { APP_NAME, EMAIL_SUPPORT } from '@/config-global';
 

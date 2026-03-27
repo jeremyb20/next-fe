@@ -4,6 +4,7 @@ import React from 'react';
 import { Icon } from '@iconify/react';
 import { IPetProfile } from '@/types/api';
 import Iconify from '@/components/iconify';
+import { useTranslation } from '@/hooks/use-translation';
 import CoatOfArms from '@/components/country-cards/Costa-Rica/coat-of-arms';
 import { CostaRicaFlagAccurate } from '@/components/country-cards/Costa-Rica/costa-rica-flag';
 
@@ -19,6 +20,7 @@ interface Props {
 export default function CostaRicaIDCard({ data }: Props) {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const { t } = useTranslation();
 
   return (
     <Box
@@ -57,7 +59,7 @@ export default function CostaRicaIDCard({ data }: Props) {
         }}
       >
         <Icon icon="mdi:information-outline" width={14} />
-        Este es un diseño de referencia. No es un documento oficial.
+        {t('This is a sample design. It is not an official document.')}
       </Typography>
 
       {/* Card Container */}

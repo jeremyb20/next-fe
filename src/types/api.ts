@@ -202,6 +202,7 @@ interface IPetPermissions {
   showHealthAndRequirements: boolean;
   showFavoriteActivities: boolean;
   showLocationInfo: boolean;
+  showLocationConsent: boolean;
 }
 
 export interface IPetProfile {

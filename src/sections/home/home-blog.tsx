@@ -1,6 +1,6 @@
 import { m } from 'framer-motion';
 import { APP_NAME } from '@/config-global';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from '@/hooks/use-translation';
 import { varFade, MotionViewport } from '@/components/animate';
 
 import Box from '@mui/material/Box';

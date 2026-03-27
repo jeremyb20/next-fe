@@ -7,7 +7,7 @@ import { useRouter } from '@/routes/hooks';
 import { OptionType } from '@/types/global';
 import { useAuthContext } from '@/auth/hooks';
 import { fData } from '@/utils/format-number';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from '@/hooks/use-translation';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useState, useEffect, useCallback } from 'react';

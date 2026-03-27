@@ -6,7 +6,7 @@ import { useForm } from 'react-hook-form';
 import Iconify from '@/components/iconify';
 import { useState, useEffect } from 'react';
 import { useAuthContext } from '@/auth/hooks';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from '@/hooks/use-translation';
 import { RouterLink } from '@/routes/components';
 import { useBoolean } from '@/hooks/use-boolean';
 import { yupResolver } from '@hookform/resolvers/yup';

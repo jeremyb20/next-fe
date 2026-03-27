@@ -1,5 +1,5 @@
 import { m, MotionProps } from 'framer-motion';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from '@/hooks/use-translation';
 import { varFade, MotionContainer } from '@/components/animate';
 
 import Stack from '@mui/material/Stack';

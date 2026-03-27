@@ -52,7 +52,7 @@ export default async function RootLayout({ children, params }: Props) {
         <link rel="manifest" href="/manifest.json" />
 
         {/* Theme color */}
-        <meta name="theme-color" content="#20252e" />
+        <meta name="theme-color" content="#161C24" />
 
         {/* Preconnect */}
         <link rel="preconnect" href={HOST_API} />

@@ -130,6 +130,10 @@ export function PromotionsCardCaroussell({
               borderRadius: 1,
               overflow: 'hidden',
               cursor: 'pointer',
+              display: {
+                xs: 'none',
+                md: 'flex',
+              },
             }}
             onClick={() => carousel.carouselRef?.current?.slickPause()}
           >

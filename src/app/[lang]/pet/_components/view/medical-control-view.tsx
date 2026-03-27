@@ -319,7 +319,6 @@ export default function MedicalControlView({
         currentRecord={currentRecord}
         refetch={refetchMedicalRecords}
         onSubmitSuccess={(data) => {
-          console.log('Registro guardado:', data);
           refetchMedicalRecords();
         }}
       />

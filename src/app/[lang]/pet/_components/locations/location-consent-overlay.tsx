@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Iconify from '@/components/iconify';
+import { useTranslation } from '@/hooks/use-translation';
 
 import {
   Box,
@@ -29,7 +30,7 @@ export default function LocationConsentOverlay({
   const theme = useTheme();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-
+  const { t } = useTranslation();
   if (!isVisible) return null;
 
   const handleAccept = () => {
@@ -152,12 +153,12 @@ export default function LocationConsentOverlay({
           </Box>
 
           <Typography variant="h4" fontWeight={700}>
-            Location Required
+            {t('Location Required')}
           </Typography>
 
           <Typography variant="body1" color="text.secondary">
-            To view <strong>{petName}</strong>&apos;s profile and help track pet
-            safety, we need your location.
+            {t('To view')} <strong>{petName}</strong>{' '}
+            {t(`profile and help track pet safety, we need your location.`)}
           </Typography>
 
           <Alert
@@ -169,15 +170,13 @@ export default function LocationConsentOverlay({
             }}
           >
             <Typography variant="body2" fontWeight={600} gutterBottom>
-              Why do we need this?
+              {t('Why do we need this?')}
             </Typography>
             <Typography variant="caption" component="div">
-              • Records where pets are being viewed
-              <br />
-              • Helps locate lost pets faster
-              <br />
-              • Creates a safer community
-              <br />• Your location is only stored for this view
+              • {t('Records where pets are being viewed')}
+              <br />• {t('Helps locate lost pets faster')}
+              <br />• {t('Creates a safer community')}
+              <br />• {t('Your location is only stored for this view')}
             </Typography>
           </Alert>
 
@@ -187,7 +186,7 @@ export default function LocationConsentOverlay({
               sx={{ width: '100%', borderRadius: 2 }}
               onClose={() => setError(null)}
             >
-              {error}
+              {t(error)}
             </Alert>
           )}
 
@@ -208,21 +207,23 @@ export default function LocationConsentOverlay({
             {loading ? (
               <>
                 <CircularProgress size={24} sx={{ mr: 1 }} />
-                Getting your location...
+                {t('Getting your location...')}
               </>
             ) : (
               <>
                 <Iconify icon="mdi:map-marker" width={20} sx={{ mr: 1 }} />
-                Share My Location
+                {t('Share My Location')}
               </>
             )}
           </Button>
 
           <Typography variant="caption" color="text.secondary">
-            🔒 Your privacy matters. Location is only used to register this
-            view.
+            🔒{' '}
+            {t(
+              'Your privacy matters. Location is only used to register this view.'
+            )}
             <br />
-            You can revoke access anytime in your browser settings.
+            {t('You can revoke access anytime in your browser settings.')}
           </Typography>
         </Stack>
       </Paper>

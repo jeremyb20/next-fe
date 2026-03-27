@@ -1,10 +1,10 @@
 import Label from '@/components/label';
 import Iconify from '@/components/iconify';
-import { useTranslation } from 'react-i18next';
 import { IProductItem } from '@/types/product';
 import { useBoolean } from '@/hooks/use-boolean';
 import { fDate, fTime } from '@/utils/format-time';
 import { useCurrency } from '@/hooks/use-currency';
+import { useTranslation } from '@/hooks/use-translation';
 import { ConfirmDialog } from '@/components/custom-dialog';
 import { inventoryStatusOptions } from '@/utils/constants';
 import CustomPopover, { usePopover } from '@/components/custom-popover';

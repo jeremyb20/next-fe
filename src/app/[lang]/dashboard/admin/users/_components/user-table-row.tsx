@@ -1,14 +1,16 @@
 /* eslint-disable no-nested-ternary */
 import { useSnackbar } from 'notistack';
+import { DOMAIN } from '@/config-global';
 import Iconify from '@/components/iconify';
 import { useState, useCallback } from 'react';
-import { useTranslation } from 'react-i18next';
 import { useBoolean } from '@/hooks/use-boolean';
 // import { IOrderItem } from '@/types/order';
 import { IUser, IPetProfile } from '@/types/api';
 import { fDate, fTime } from '@/utils/format-time';
 import { IPInfoResponse } from '@/hooks/use-ip-info';
 import Label, { LabelColor } from '@/components/label';
+import { useTranslation } from '@/hooks/use-translation';
+import { useManagerUser } from '@/hooks/use-manager-user';
 import { ConfirmDialog } from '@/components/custom-dialog';
 import { openLink, getUserRoleFromState } from '@/utils/constants';
 import { useCopyToClipboard } from '@/hooks/use-copy-to-clipboard';
@@ -57,8 +59,8 @@ export default function UserTableRow({
     row;
 
   const confirm = useBoolean();
-
-  const { t } = useTranslation();
+  const { user } = useManagerUser();
+  const { t, lng: currentLang } = useTranslation();
 
   const collapse = useBoolean();
 
@@ -83,7 +85,6 @@ export default function UserTableRow({
 
   // Función para abrir el modal con la mascota seleccionada
   const handleOpenPetEdit = (pet: IPetProfile) => {
-    console.log('Opening pet edit for:', pet);
     setPetSelected(pet);
     petQuickEdit.onTrue();
   };
@@ -389,7 +390,9 @@ export default function UserTableRow({
                       <IconButton
                         color="default"
                         onClick={() => {
-                          openLink(`/pet/${item.memberPetId}`);
+                          openLink(
+                            `${DOMAIN}/${currentLang}/pet/${item.memberPetId}`
+                          );
                         }}
                       >
                         <Iconify icon="solar:eye-bold" />
@@ -425,6 +428,7 @@ export default function UserTableRow({
         open={petQuickEdit.value}
         onClose={petQuickEdit.onFalse}
         refetch={refetch}
+        isAdmin={user.role === 'admin'}
       />
 
       <CustomPopover

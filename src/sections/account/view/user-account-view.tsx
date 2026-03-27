@@ -2,7 +2,7 @@
 
 import { paths } from '@/routes/paths';
 import Iconify from '@/components/iconify';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from '@/hooks/use-translation';
 import { useState, useEffect, useCallback } from 'react';
 import { useSettingsContext } from '@/components/settings';
 import { useRouter, useSearchParams } from 'next/navigation';

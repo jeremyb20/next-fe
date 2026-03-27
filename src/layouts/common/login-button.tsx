@@ -1,4 +1,4 @@
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from '@/hooks/use-translation';
 import { PATH_AFTER_LOGIN } from '@/config-global';
 import RouterLink from '@/routes/components/router-link';
 

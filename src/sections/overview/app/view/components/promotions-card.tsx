@@ -1,6 +1,6 @@
 // components/dashboard/user/promotions-card.tsx
 import Iconify from '@/components/iconify';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from '@/hooks/use-translation';
 
 import {
   Box,

@@ -44,9 +44,9 @@ export default function PetStickyNote({
 
       case 'red':
         return {
-          start: '#FFCDD2',
-          mid: '#EF9A9A',
-          end: '#E57373',
+          start: '#f1969f',
+          mid: '#db4444',
+          end: '#d34e4e',
         };
 
       default:

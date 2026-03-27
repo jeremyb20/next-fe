@@ -1,7 +1,7 @@
 import { m } from 'framer-motion';
 import { forwardRef } from 'react';
 import Iconify from '@/components/iconify';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from '@/hooks/use-translation';
 import { RouterLink } from '@/routes/components';
 
 import Box from '@mui/material/Box';
