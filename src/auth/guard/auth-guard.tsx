@@ -12,7 +12,6 @@ const getLoginPath = (method: string, lng: string) => {
   const basePath = {
     jwt: paths.auth.signIn,
     auth0: paths.auth.auth0.login,
-    amplify: paths.auth.amplify.login,
     firebase: paths.auth.firebase.login,
     supabase: paths.auth.supabase.login,
     signIn: paths.auth.signIn,

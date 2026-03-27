@@ -14,6 +14,7 @@ import FormProvider, {
   RHFSelect,
   RHFEditor,
   RHFUpload,
+  RHFSwitch,
   RHFTextField,
 } from '@/components/hook-form';
 
@@ -53,6 +54,8 @@ type FormValues = {
   usageLimit?: number;
   link?: string;
   customIMG?: string;
+  isExternalLink?: boolean;
+  buttonTextRedirect?: string;
 };
 
 // Opciones para selects
@@ -155,6 +158,8 @@ export default function PromotionEditForm({
       .nullable(),
     link: Yup.string().optional().url('Must be a valid URL'),
     customIMG: Yup.string().optional().url('Must be a valid URL'),
+    isExternalLink: Yup.boolean().default(false),
+    buttonTextRedirect: Yup.string().optional(),
   });
 
   const defaultValues = useMemo(
@@ -180,6 +185,8 @@ export default function PromotionEditForm({
       usageLimit: currentPromotion?.usageLimit || undefined,
       link: currentPromotion?.link || '',
       customIMG: currentPromotion?.customIMG || '',
+      isExternalLink: currentPromotion?.isExternalLink,
+      buttonTextRedirect: currentPromotion?.buttonTextRedirect || 'View Offer',
     }),
     [currentPromotion]
   );
@@ -289,7 +296,34 @@ export default function PromotionEditForm({
             />
 
             {/* Link opcion */}
-            <RHFTextField name="link" label="URL link" multiline required />
+            <Box
+              columnGap={2}
+              rowGap={3}
+              display="grid"
+              gridTemplateColumns={{
+                xs: 'repeat(1, 1fr)',
+                md: 'repeat(2, 1fr)',
+              }}
+            >
+              <RHFTextField name="link" label="URL link" multiline required />
+              <RHFSwitch
+                name="isExternalLink"
+                labelPlacement="start"
+                label="Is External Link"
+                sx={{
+                  justifyContent: 'space-between',
+                  flexDirection: 'row-reverse',
+                  width: '100%',
+                  mx: 0,
+                }}
+              />
+            </Box>
+            <RHFTextField
+              name="buttonTextRedirect"
+              label="Button Text"
+              multiline
+              required
+            />
 
             <Box
               columnGap={2}

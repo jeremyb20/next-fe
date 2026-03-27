@@ -19,6 +19,7 @@ import {
   Divider,
   useTheme,
   Typography,
+  useMediaQuery,
 } from '@mui/material';
 
 interface PromotionsCardProps {
@@ -183,14 +184,16 @@ function CarouselItem({
     urlImage,
     type,
     customIMG,
+    buttonTextRedirect = 'View Offer',
   } = promotion;
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   const hasImage = customIMG || urlImage;
   const imageUrl = customIMG || urlImage;
 
   return (
     <MotionContainer action animate={active} sx={{ position: 'relative' }}>
-      <Box sx={{ position: 'relative', minHeight: { xs: 240, md: 280 } }}>
+      <Box sx={{ position: 'relative', minHeight: { xs: 210, md: 310 } }}>
         {/* Imagen de fondo */}
         {hasImage && (
           <Box
@@ -228,13 +231,13 @@ function CarouselItem({
             display: 'flex',
             flexDirection: 'column',
             justifyContent: 'space-between',
-            px: { xs: 2.5, md: 4 },
-            py: { xs: 3, md: 4 },
+            px: { xs: 1.5, md: 4 },
+            py: { xs: 2, md: 4 },
           }}
         >
           {/* Sección superior: contenido principal */}
           <Stack
-            spacing={2}
+            spacing={isMobile ? 1 : 2}
             sx={{
               width: { xs: '100%', md: '75%' },
               maxWidth: 520,
@@ -251,7 +254,10 @@ function CarouselItem({
                   bgcolor: alpha(theme.palette.error.main, 0.95),
                   color: '#fff',
                   fontWeight: 700,
-                  fontSize: '0.7rem',
+                  fontSize: {
+                    xs: '0.5rem',
+                    md: '0.8rem',
+                  },
                   px: 0.75,
                   py: 1.5,
                   letterSpacing: '0.5px',
@@ -328,7 +334,10 @@ function CarouselItem({
               alignItems="center"
               sx={{
                 width: '100%',
-                mt: 2,
+                mt: {
+                  xs: 1,
+                  md: 2,
+                },
               }}
             >
               <Typography
@@ -364,7 +373,7 @@ function CarouselItem({
                 onClick={() => onViewOffer?.(promotion)}
                 endIcon={<Iconify icon="mdi:arrow-right" width={14} />}
               >
-                {t('View offer')}
+                {t(buttonTextRedirect) || t('View offer')}
               </Button>
             </Stack>
           </m.div>

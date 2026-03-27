@@ -51,3 +51,10 @@ export const ALLOW_MAX_PETS_BY_USER =
   process.env.NEXT_PUBLIC_ALLOW_MAX_PETS_BY_USER || 10;
 export const EMAIL_SUPPORT = process.env.NEXT_PUBLIC_EMAIL_SUPPORT || '';
 export const PHONE_SUPPORT = process.env.NEXT_PUBLIC_PHONE_SUPPORT || '';
+export const RECAPTCHA_SITE_KEY =
+  process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || '';
+// Determinar qué site key usar (test key para desarrollo)
+export const SITEKEY =
+  process.env.NODE_ENV === 'development'
+    ? '1x00000000000000000000AA' // Test key de Cloudflare
+    : RECAPTCHA_SITE_KEY || '';

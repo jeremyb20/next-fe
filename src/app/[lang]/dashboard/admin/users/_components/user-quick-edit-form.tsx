@@ -9,6 +9,7 @@ import { HOST_API } from '@/config-global';
 import { useSnackbar } from '@/components/snackbar';
 import { IPInfoResponse } from '@/hooks/use-ip-info';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useTranslation } from '@/hooks/use-translation';
 import { useCreateGenericMutation } from '@/hooks/user-generic-mutation';
 import {
   USER_ROLE_OPTIONS,
@@ -71,6 +72,7 @@ export default function UserQuickEditModalForm({
 }: Props) {
   const { enqueueSnackbar } = useSnackbar();
   const { mutateAsync } = useCreateGenericMutation();
+  const { t } = useTranslation();
 
   const userStatus = USER_STATUS_OPTIONS.find(
     (option) => option.value === currentUser?.userStatus.toString()
@@ -238,7 +240,7 @@ export default function UserQuickEditModalForm({
               name="phone"
               label="Phone Number"
               placeholder={getPhonePlaceholder(watchCountry, 'Phone number')}
-              helperText={getPhoneHelperText(watchCountry, watchPhone)}
+              helperText={getPhoneHelperText(watchCountry, watchPhone, t)}
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">

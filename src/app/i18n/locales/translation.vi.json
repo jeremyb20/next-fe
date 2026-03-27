@@ -410,5 +410,17 @@
   "View {{count}} more": "Xem thêm {{count}}",
   "Deworming": "Tẩy giun",
   "Medical Visit": "Khám sức khỏe",
-  "Vaccination": "Tiêm chủng"
+  "Vaccination": "Tiêm chủng",
+  "Need Vaccination": "Cần tiêm phòng",
+  "Show Phone Number": "Hiển thị số điện thoại",
+  "Show Email Info": "Hiển thị thông tin email",
+  "Show Owner Name": "Hiển thị tên chủ sở hữu",
+  "Show Birth Date": "Hiển thị ngày sinh",
+  "Show Favorite Activities": "Hiển thị hoạt động yêu thích",
+  "Show Health & Requirements": "Hiển thị sức khỏe và yêu cầu",
+  "Show Address Information": "Hiển thị thông tin địa chỉ",
+  "Show Location Information": "Hiển thị thông tin vị trí",
+  "Show Consent Location Information": "Hiển thị thông tin vị trí đã đồng ý",
+  "Show Veterinarian Name": "Hiển thị tên bác sĩ thú y",
+  "Show Veterinarian Phone": "Hiển thị số điện thoại bác sĩ thú y"
 }

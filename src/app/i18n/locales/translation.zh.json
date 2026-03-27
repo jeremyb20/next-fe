@@ -410,5 +410,17 @@
   "View {{count}} more": "查看更多 ({{count}})",
   "Deworming": "驱虫",
   "Medical Visit": "体检",
-  "Vaccination": "疫苗接种"
+  "Vaccination": "疫苗接种",
+  "Need Vaccination": "需要接种疫苗",
+  "Show Phone Number": "显示电话号码",
+  "Show Email Info": "显示电子邮件信息",
+  "Show Owner Name": "显示主人姓名",
+  "Show Birth Date": "显示出生日期",
+  "Show Favorite Activities": "显示喜爱活动",
+  "Show Health & Requirements": "显示健康状况与需求",
+  "Show Address Information": "显示地址信息",
+  "Show Location Information": "显示位置信息",
+  "Show Consent Location Information": "显示同意后的位置信息",
+  "Show Veterinarian Name": "显示兽医姓名",
+  "Show Veterinarian Phone": "显示兽医电话"
 }

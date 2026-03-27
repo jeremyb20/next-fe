@@ -137,53 +137,57 @@ export function AuthProvider({ children }: Props) {
 
   // LOGIN
   // LOGIN
-  const login = useCallback(async (email: string, password: string) => {
-    try {
-      const data = {
-        email,
-        password,
-      };
+  const login = useCallback(
+    async (email: string, password: string, turnstileToken: string | null) => {
+      try {
+        const data = {
+          email,
+          password,
+          turnstileToken,
+        };
 
-      const loginRes = await axios.post(endpoints.auth.signIn, data);
+        const loginRes = await axios.post(endpoints.auth.signIn, data);
 
-      // Verificar si la respuesta es exitosa
-      if (!loginRes.data.success) {
-        throw new Error(loginRes.data.message || 'Login failed');
-      }
+        // Verificar si la respuesta es exitosa
+        if (!loginRes.data.success) {
+          throw new Error(loginRes.data.message || 'Login failed');
+        }
 
-      const { token: accessToken } = loginRes.data;
+        const { token: accessToken } = loginRes.data;
 
-      setSession(accessToken);
+        setSession(accessToken);
 
-      const meRes = await axios.get(endpoints.auth.me);
-      const { payload: user } = meRes.data;
+        const meRes = await axios.get(endpoints.auth.me);
+        const { payload: user } = meRes.data;
 
-      dispatch({
-        type: Types.LOGIN,
-        payload: {
-          user: {
-            ...user,
-            accessToken,
+        dispatch({
+          type: Types.LOGIN,
+          payload: {
+            user: {
+              ...user,
+              accessToken,
+            },
           },
-        },
-      });
+        });
 
-      return loginRes.data; // Retornar la respuesta para verificación adicional
-    } catch (error: any) {
-      // Manejar errores de axios o del servidor
-      if (error.response) {
-        // El servidor respondió con un código de error
-        const errorMessage = error.response.data?.message || 'Login failed';
-        throw new Error(errorMessage);
-      } else if (error.request) {
-        // La petición fue hecha pero no se recibió respuesta
-        throw new Error('Network error. Please try again.');
-      } else {
-        // Algo pasó al configurar la petición
-        throw new Error(error.message || 'An error occurred');
+        return loginRes.data; // Retornar la respuesta para verificación adicional
+      } catch (error: any) {
+        // Manejar errores de axios o del servidor
+        if (error.response) {
+          // El servidor respondió con un código de error
+          const errorMessage = error.response.data?.message || 'Login failed';
+          throw new Error(errorMessage);
+        } else if (error.request) {
+          // La petición fue hecha pero no se recibió respuesta
+          throw new Error('Network error. Please try again.');
+        } else {
+          // Algo pasó al configurar la petición
+          throw new Error(error.message || 'An error occurred');
+        }
       }
-    }
-  }, []);
+    },
+    []
+  );
 
   // REGISTER
   const register = useCallback(

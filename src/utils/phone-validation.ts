@@ -1,3 +1,4 @@
+import { TFunction } from 'i18next';
 import parsePhoneNumberFromString, {
   CountryCode,
   isValidPhoneNumber,
@@ -49,26 +50,32 @@ export const getPhonePlaceholder = (
 // Función para obtener el mensaje de ayuda
 export const getPhoneHelperText = (
   watchCountry: string,
-  watchPhone: string
+  watchPhone: string,
+  t: TFunction<string, undefined>
 ) => {
-  if (!watchCountry) return 'Select a country first';
+  if (!watchCountry) return t('Select a country first');
 
   const countryData = countries.find((c) => c.label === watchCountry);
-  if (!countryData) return 'Invalid country';
+  if (!countryData) return t('Invalid country');
 
   const countryCode = countryData.code as CountryCode;
   const phoneValue = watchPhone;
 
-  if (!phoneValue) return `Enter phone number for ${watchCountry}`;
+  if (!phoneValue)
+    return t(`Enter phone number for {{country}}`, {
+      country: watchCountry,
+    });
 
   try {
     const phoneNumber = parsePhoneNumberFromString(phoneValue, countryCode);
     if (phoneNumber && isValidPhoneNumber(phoneValue, countryCode)) {
-      return `✓ Valid ${watchCountry} number`;
+      return `✓ ${t(`Valid {{country}} number`, { country: watchCountry })}`;
     }
   } catch (error) {
     // Ignorar errores de parsing
   }
 
-  return `Enter valid phone number for ${watchCountry}`;
+  return t('Enter valid phone number for {{country}}', {
+    country: watchCountry,
+  });
 };

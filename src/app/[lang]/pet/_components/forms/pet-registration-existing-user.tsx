@@ -3,6 +3,7 @@
 'use client';
 
 import * as Yup from 'yup';
+import dynamic from 'next/dynamic';
 import { useSnackbar } from 'notistack';
 import { endpoints } from '@/utils/axios';
 import { useRouter } from '@/routes/hooks';
@@ -10,16 +11,16 @@ import Iconify from '@/components/iconify';
 import { OptionType } from '@/types/global';
 import { useAuthContext } from '@/auth/hooks';
 import { fData } from '@/utils/format-number';
-import { useTranslation } from '@/hooks/use-translation';
 import { useBoolean } from '@/hooks/use-boolean';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { getValidationCode } from '@/hooks/use-fetch';
-import { useState, useEffect, useCallback } from 'react';
-import { HOST_API, PATH_AFTER_LOGIN } from '@/config-global';
+import { useTranslation } from '@/hooks/use-translation';
 import UploadAvatar from '@/components/upload/upload-avatar';
 import { PetAgeCalculator } from '@/utils/pet-age-calculator';
+import { useRef, useState, useEffect, useCallback } from 'react';
 import { BreedOptions, GENDER_OPTIONS } from '@/utils/constants';
+import { SITEKEY, HOST_API, PATH_AFTER_LOGIN } from '@/config-global';
 import useCelebrationConfetti from '@/hooks/use-celebration-confetti';
 import { useCreateGenericMutation } from '@/hooks/user-generic-mutation';
 import { getDogSizeFromBreed, getSpeciesFromBreed } from '@/utils/pet-utils';
@@ -49,6 +50,7 @@ import {
   ButtonGroup,
   CardContent,
   InputAdornment,
+  CircularProgress,
 } from '@mui/material';
 
 // ----------------------------------------------------------------------
@@ -71,6 +73,30 @@ const steps = [
     description: 'Review all information before completing registration',
   },
 ];
+
+// Importar Turnstile dinámicamente para evitar errores de hidratación
+const Turnstile = dynamic(
+  () => import('@marsidev/react-turnstile').then((mod) => mod.Turnstile),
+  {
+    ssr: false,
+    loading: () => (
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          gap: 1,
+          minHeight: '65px',
+        }}
+      >
+        <CircularProgress size={20} />
+        <Typography variant="caption" color="text.secondary">
+          Loading security verification...
+        </Typography>
+      </Box>
+    ),
+  }
+);
 
 interface PetRegistrationExistingUserProps {
   code?: string;
@@ -101,6 +127,8 @@ export function PetRegistrationExistingUser({
 
   const [petPhoto, setPetPhoto] = useState<File | null>(null);
   const [petPhotoPreview, setPetPhotoPreview] = useState<string | null>(null);
+  const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
+  const turnstileRef = useRef<any>(null);
 
   // Esquema de validación para el código - 6 dígitos
   const CodeSchema = Yup.object().shape({
@@ -291,12 +319,16 @@ export function PetRegistrationExistingUser({
   const onLoginSubmit = handleLoginSubmit(async (data) => {
     try {
       setErrorMsg('');
-      await login?.(data.email, data.password);
+      await login?.(data.email, data.password, turnstileToken);
       setUserData(data);
       handleNext();
     } catch (error: any) {
       console.error('Login error:', error);
       setErrorMsg(error.message || 'Invalid email or password');
+      if (turnstileRef.current) {
+        turnstileRef.current.reset();
+      }
+      setTurnstileToken(null);
     }
   });
 
@@ -453,8 +485,49 @@ export function PetRegistrationExistingUser({
             ),
           }}
         />
+        {/* Widget de Cloudflare Turnstile */}
+        {SITEKEY && (
+          <Box sx={{ display: 'flex', justifyContent: 'center', my: 1 }}>
+            <Turnstile
+              ref={turnstileRef}
+              siteKey={SITEKEY}
+              onSuccess={(token) => {
+                console.log('✅ Turnstile verification successful');
+                setTurnstileToken(token);
+              }}
+              onExpire={() => {
+                console.log('⏰ Turnstile token expired');
+                setTurnstileToken(null);
+              }}
+              onError={() => {
+                console.error('❌ Turnstile error');
+                setErrorMsg(
+                  t('Security verification failed. Please refresh the page.')
+                );
+                setTurnstileToken(null);
+              }}
+              options={{
+                theme: 'light',
+                size: 'normal',
+                action: 'login_submit',
+              }}
+            />
+          </Box>
+        )}
 
-        <Box sx={{ mt: 3 }}>
+        <LoadingButton
+          fullWidth
+          color="inherit"
+          size="large"
+          type="submit"
+          variant="contained"
+          loading={isLoginSubmitting}
+          disabled={!turnstileToken} // Deshabilitar hasta que se complete el captcha
+        >
+          {t('Sign In')}
+        </LoadingButton>
+
+        {/* <Box sx={{ mt: 3 }}>
           <LoadingButton
             type="submit"
             variant="contained"
@@ -462,7 +535,7 @@ export function PetRegistrationExistingUser({
           >
             Sign In
           </LoadingButton>
-        </Box>
+        </Box> */}
       </Box>
     </FormProvider>
   );

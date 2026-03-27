@@ -155,4 +155,5 @@ export const endpoints = {
     listPublished: '/api/user/getAllPublishedProductList',
     getProductPublishedById: '/api/user/getProductPublishedById',
   },
+  getIpInfo: '/api/public/ip-info',
 };

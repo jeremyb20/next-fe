@@ -410,5 +410,17 @@
   "View {{count}} more": "عرض {{count}} أكثر",
   "Deworming": "التخلص من الديدان",
   "Medical Visit": "زيارة طبية",
-  "Vaccination": "التطعيم"
+  "Vaccination": "التطعيم",
+  "Need Vaccination": "بحاجة إلى تطعيم",
+  "Show Phone Number": "إظهار رقم الهاتف",
+  "Show Email Info": "إظهار معلومات البريد الإلكتروني",
+  "Show Owner Name": "إظهار اسم المالك",
+  "Show Birth Date": "إظهار تاريخ الميلاد",
+  "Show Favorite Activities": "إظهار الأنشطة المفضلة",
+  "Show Health & Requirements": "إظهار الصحة والمتطلبات",
+  "Show Address Information": "إظهار معلومات العنوان",
+  "Show Location Information": "إظهار معلومات الموقع",
+  "Show Consent Location Information": "إظهار معلومات موقع الموافقة",
+  "Show Veterinarian Name": "إظهار اسم الطبيب البيطري",
+  "Show Veterinarian Phone": "إظهار هاتف الطبيب البيطري"
 }

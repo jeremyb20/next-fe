@@ -12,6 +12,7 @@ import { useSnackbar } from '@/components/snackbar';
 import { countries } from '@/assets/data/countries';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useResponsive } from '@/hooks/use-responsive';
+import { useTranslation } from '@/hooks/use-translation';
 import { fCurrency, getLocaleCode } from '@/utils/format-number';
 import { useMemo, useState, useEffect, useCallback } from 'react';
 import { useCreateGenericMutation } from '@/hooks/user-generic-mutation';
@@ -75,6 +76,8 @@ export default function ProductNewEditForm({ currentProduct }: Props) {
   const [includeTaxes, setIncludeTaxes] = useState(false);
 
   const { ipData } = useIPInfo();
+
+  const { t } = useTranslation();
 
   const NewProductSchema = Yup.object().shape({
     name: Yup.string().required('Name is required'),
@@ -674,7 +677,7 @@ export default function ProductNewEditForm({ currentProduct }: Props) {
                 name="sellerWhatsApp"
                 label="Phone Number"
                 placeholder={getPhonePlaceholder(watchCountry, 'Phone number')}
-                helperText={getPhoneHelperText(watchCountry, sellerWhatsApp)}
+                helperText={getPhoneHelperText(watchCountry, sellerWhatsApp, t)}
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position="start">

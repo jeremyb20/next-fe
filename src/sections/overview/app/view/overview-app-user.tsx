@@ -185,10 +185,13 @@ export default function OverviewAppUser() {
             <PromotionsCardCaroussell
               promotions={promotionsData?.payload || []}
               onViewOffer={(promotion) => {
-                console.log('View offer:', promotion);
-                handleRedirect(promotion.link);
+                if (promotion.isExternalLink) {
+                  window.open(promotion.link, '_blank');
+                } else {
+                  handleRedirect(promotion.link);
+                }
               }}
-              autoplay
+              autoplay={false}
               autoplaySpeed={5000}
             />
           </Grid>

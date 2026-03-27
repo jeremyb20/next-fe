@@ -69,13 +69,6 @@ export const paths = {
 
   // AUTH routes
   auth: {
-    amplify: {
-      login: `${ROOTS.AUTH}/amplify/login`,
-      verify: `${ROOTS.AUTH}/amplify/verify`,
-      register: `${ROOTS.AUTH}/amplify/register`,
-      newPassword: `${ROOTS.AUTH}/amplify/new-password`,
-      forgotPassword: `${ROOTS.AUTH}/amplify/forgot-password`,
-    },
     jwt: {
       login: `${ROOTS.AUTH}/jwt/login`,
       register: `${ROOTS.AUTH}/jwt/register`,

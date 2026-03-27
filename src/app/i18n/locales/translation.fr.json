@@ -410,5 +410,17 @@
   "View {{count}} more": "Voir {{count}} de plus",
   "Deworming": "Déparasitage",
   "Medical Visit": "Visite médicale",
-  "Vaccination": "Vaccination"
+  "Vaccination": "Vaccination",
+  "Need Vaccination": "Vaccination nécessaire",
+  "Show Phone Number": "Afficher le numéro de téléphone",
+  "Show Email Info": "Afficher les informations d'e-mail",
+  "Show Owner Name": "Afficher le nom du propriétaire",
+  "Show Birth Date": "Afficher la date de naissance",
+  "Show Favorite Activities": "Afficher les activités favorites",
+  "Show Health & Requirements": "Afficher la santé et les exigences",
+  "Show Address Information": "Afficher les informations d'adresse",
+  "Show Location Information": "Afficher les informations de localisation",
+  "Show Consent Location Information": "Afficher les informations de localisation avec consentement",
+  "Show Veterinarian Name": "Afficher le nom du vétérinaire",
+  "Show Veterinarian Phone": "Afficher le téléphone du vétérinaire"
 }

@@ -769,7 +769,8 @@ export default function PetEditForm({ petId }: Props) {
                 )}
                 helperText={getPhoneHelperText(
                   currentUser?.profile?.country || '',
-                  watchPhone
+                  watchPhone,
+                  t
                 )}
                 InputProps={{
                   startAdornment: (
@@ -846,7 +847,8 @@ export default function PetEditForm({ petId }: Props) {
                 )}
                 helperText={getPhoneHelperText(
                   currentUser?.profile?.country || '',
-                  watchPhoneVeterinarian
+                  watchPhoneVeterinarian,
+                  t
                 )}
                 InputProps={{
                   startAdornment: (
@@ -915,7 +917,7 @@ export default function PetEditForm({ petId }: Props) {
               <RHFSwitch
                 name="showPhoneInfo"
                 labelPlacement="start"
-                label="Show Phone Number"
+                label={t('Show Phone Number')}
                 sx={{
                   justifyContent: 'space-between',
                   flexDirection: 'row-reverse',
@@ -926,7 +928,7 @@ export default function PetEditForm({ petId }: Props) {
               <RHFSwitch
                 name="showEmailInfo"
                 labelPlacement="start"
-                label="Show Email Info"
+                label={t('Show Email Info')}
                 sx={{
                   justifyContent: 'space-between',
                   flexDirection: 'row-reverse',
@@ -938,7 +940,7 @@ export default function PetEditForm({ petId }: Props) {
               <RHFSwitch
                 name="showOwnerPetName"
                 labelPlacement="start"
-                label="Show Owner Name"
+                label={t('Show Owner Name')}
                 sx={{
                   justifyContent: 'space-between',
                   flexDirection: 'row-reverse',
@@ -959,7 +961,7 @@ export default function PetEditForm({ petId }: Props) {
               <RHFSwitch
                 name="showBirthDate"
                 labelPlacement="start"
-                label="Show Birth Date"
+                label={t('Show Birth Date')}
                 sx={{
                   justifyContent: 'space-between',
                   flexDirection: 'row-reverse',
@@ -971,7 +973,7 @@ export default function PetEditForm({ petId }: Props) {
               <RHFSwitch
                 name="showFavoriteActivities"
                 labelPlacement="start"
-                label="Show Favorite Activities"
+                label={t('Show Favorite Activities')}
                 sx={{
                   justifyContent: 'space-between',
                   flexDirection: 'row-reverse',
@@ -983,7 +985,7 @@ export default function PetEditForm({ petId }: Props) {
               <RHFSwitch
                 name="showHealthAndRequirements"
                 labelPlacement="start"
-                label="Show Health & Requirements"
+                label={t('Show Health & Requirements')}
                 sx={{
                   justifyContent: 'space-between',
                   flexDirection: 'row-reverse',
@@ -994,7 +996,7 @@ export default function PetEditForm({ petId }: Props) {
               <RHFSwitch
                 name="showAddressInfo"
                 labelPlacement="start"
-                label="Show Address Information"
+                label={t('Show Address Information')}
                 sx={{
                   justifyContent: 'space-between',
                   flexDirection: 'row-reverse',
@@ -1005,7 +1007,7 @@ export default function PetEditForm({ petId }: Props) {
               <RHFSwitch
                 name="showLocationInfo"
                 labelPlacement="start"
-                label="Show Location Information"
+                label={t('Show Location Information')}
                 sx={{
                   justifyContent: 'space-between',
                   flexDirection: 'row-reverse',
@@ -1016,7 +1018,7 @@ export default function PetEditForm({ petId }: Props) {
               <RHFSwitch
                 name="showLocationConsent"
                 labelPlacement="start"
-                label="Show Consent Location Information"
+                label={t('Show Consent Location Information')}
                 sx={{
                   justifyContent: 'space-between',
                   flexDirection: 'row-reverse',
@@ -1037,7 +1039,7 @@ export default function PetEditForm({ petId }: Props) {
               <RHFSwitch
                 name="showVeterinarianContact"
                 labelPlacement="start"
-                label="Show Veterinarian Name"
+                label={t('Show Veterinarian Name')}
                 sx={{
                   justifyContent: 'space-between',
                   flexDirection: 'row-reverse',
@@ -1049,7 +1051,7 @@ export default function PetEditForm({ petId }: Props) {
               <RHFSwitch
                 name="showPhoneVeterinarian"
                 labelPlacement="start"
-                label="Show Veterinarian Phone"
+                label={t('Show Veterinarian Phone')}
                 sx={{
                   justifyContent: 'space-between',
                   flexDirection: 'row-reverse',
@@ -1063,7 +1065,7 @@ export default function PetEditForm({ petId }: Props) {
         <TabPanel value={tabValue} index={2}>
           <Box sx={{ maxHeight: isMobile ? '85vh' : '55vh', overflow: 'auto' }}>
             <Stack spacing={3}>
-              <Typography variant="h6">📍 Pet Location</Typography>
+              <Typography variant="h6">📍 {t('Pet Location')}</Typography>
               <Typography variant="body2" color="text.secondary">
                 {t(
                   'Click on the map to set your pet location or search for an address'

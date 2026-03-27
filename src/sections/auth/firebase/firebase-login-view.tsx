@@ -63,7 +63,7 @@ export default function FirebaseLoginView() {
 
   const onSubmit = handleSubmit(async (data) => {
     try {
-      await login?.(data.email, data.password);
+      await login?.(data.email, data.password, '');
 
       router.push(returnTo || PATH_AFTER_LOGIN);
     } catch (error) {

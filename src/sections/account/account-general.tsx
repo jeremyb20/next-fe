@@ -31,9 +31,9 @@ import LoadingButton from '@mui/lab/LoadingButton';
 
 import { countries } from '@/assets/data';
 import { useAuthContext } from '@/auth/hooks';
-import { useTranslation } from '@/hooks/use-translation';
 import { useBoolean } from '@/hooks/use-boolean';
 import { useSnackbar } from '@/components/snackbar';
+import { useTranslation } from '@/hooks/use-translation';
 import StyledAvatar from '@/components/avatar/styled-avatar';
 import FormProvider, {
   RHFSwitch,
@@ -324,7 +324,7 @@ export default function AccountGeneral() {
                     watchCountry,
                     'Phone number'
                   )}
-                  helperText={getPhoneHelperText(watchCountry, watchPhone)}
+                  helperText={getPhoneHelperText(watchCountry, watchPhone, t)}
                   InputProps={{
                     startAdornment: (
                       <InputAdornment position="start">

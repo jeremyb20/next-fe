@@ -1,7 +1,7 @@
 'use client';
 
-import { GuestGuard } from '@/auth/guard';
-import AuthClassicLayout from '@/layouts/auth/classic';
+import SimpleLayout from '@/layouts/simple';
+import GuestGuard from '@/auth/guard/guest-guard';
 
 // ----------------------------------------------------------------------
 
@@ -12,9 +12,7 @@ type Props = {
 export default function Layout({ children }: Props) {
   return (
     <GuestGuard>
-      <AuthClassicLayout title="Manage the job more effectively with Minimal">
-        {children}
-      </AuthClassicLayout>
+      <SimpleLayout>{children}</SimpleLayout>;
     </GuestGuard>
   );
 }

@@ -28,7 +28,11 @@ export type AuthStateType = {
 // ----------------------------------------------------------------------
 
 type CanRemove = {
-  login?: (email: string, password: string) => Promise<void>;
+  login?: (
+    email: string,
+    password: string,
+    turnstileToken: string | null
+  ) => Promise<void>;
   register?: (
     email: string,
     password: string,
@@ -36,7 +40,8 @@ type CanRemove = {
     lastName: string,
     country: string,
     phone: string,
-    settings: Record<string, any>
+    settings: Record<string, any>,
+    turnstileToken: string | null
   ) => Promise<void>;
   //
   loginWithGoogle?: () => Promise<void>;
@@ -63,7 +68,11 @@ export type JWTContextType = CanRemove & {
   loading: boolean;
   authenticated: boolean;
   unauthenticated: boolean;
-  login: (email: string, password: string) => Promise<void>;
+  login: (
+    email: string,
+    password: string,
+    turnstileToken: string | null
+  ) => Promise<void>;
   register: (
     email: string,
     password: string,
@@ -71,7 +80,8 @@ export type JWTContextType = CanRemove & {
     lastName: string,
     country: string,
     phone: string,
-    settings: Record<string, any>
+    settings: Record<string, any>,
+    turnstileToken: string | null
   ) => Promise<void>;
   logout: () => Promise<void>;
   updateUser: (userData: Partial<AuthUserType>) => void;

@@ -1,7 +1,7 @@
 {
   "name": "plaquitascr",
   "author": "JeremyBarquero",
-  "version": "5.1.0",
+  "version": "5.1.1",
   "description": "Frontend para sistema para mascotas y mas - TypeScrip",
   "private": true,
   "scripts": {
@@ -34,6 +34,7 @@
     "@hello-pangea/dnd": "^16.5.0",
     "@hookform/resolvers": "^3.3.2",
     "@iconify/react": "^4.1.1",
+    "@marsidev/react-turnstile": "^1.4.2",
     "@mui/lab": "^5.0.0-alpha.155",
     "@mui/material": "^5.14.20",
     "@mui/system": "^5.14.20",
@@ -45,7 +46,6 @@
     "accept-language": "^3.0.20",
     "apexcharts": "^3.44.2",
     "autosuggest-highlight": "^3.3.4",
-    "aws-amplify": "^6.0.6",
     "axios": "^1.6.2",
     "canvas-confetti": "^1.9.4",
     "date-fns": "^2.30.0",

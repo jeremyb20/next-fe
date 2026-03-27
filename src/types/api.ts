@@ -430,4 +430,6 @@ export interface IPromotions {
   updatedAt: string;
   link: string;
   customIMG?: string;
+  isExternalLink: boolean;
+  buttonTextRedirect: string;
 }

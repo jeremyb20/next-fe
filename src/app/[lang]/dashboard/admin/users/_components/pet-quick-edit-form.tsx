@@ -10,6 +10,7 @@ import { IUser, IPetProfile } from '@/types/api';
 import { useSnackbar } from '@/components/snackbar';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useTranslation } from '@/hooks/use-translation';
 import UploadAvatar from '@/components/upload/upload-avatar';
 import CardComponent from '@/sections/_examples/card-component';
 import { useMemo, useState, useEffect, useCallback } from 'react';
@@ -140,6 +141,7 @@ export default function PetQuickEditForm({
   const [tabValue, setTabValue] = useState(0);
   const [weightUnit, setWeightUnit] = useState<'kg' | 'lb'>('kg');
   const popover = usePopover();
+  const { t } = useTranslation();
 
   const [petPhoto, setPetPhoto] = useState<File | null>(null);
   const [petPhotoPreview, setPetPhotoPreview] = useState<string | null>(
@@ -709,7 +711,8 @@ export default function PetQuickEditForm({
                   )}
                   helperText={getPhoneHelperText(
                     currentUser?.profile?.country || '',
-                    watchPhone
+                    watchPhone,
+                    t
                   )}
                   InputProps={{
                     startAdornment: (
@@ -786,7 +789,8 @@ export default function PetQuickEditForm({
                   )}
                   helperText={getPhoneHelperText(
                     currentUser?.profile?.country || '',
-                    watchPhoneVeterinarian
+                    watchPhoneVeterinarian,
+                    t
                   )}
                   InputProps={{
                     startAdornment: (

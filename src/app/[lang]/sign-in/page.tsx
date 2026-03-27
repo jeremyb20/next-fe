@@ -1,6 +1,9 @@
 import { Metadata } from 'next';
+import { Suspense } from 'react';
 import { JwtLoginView } from '@/sections/auth/jwt';
 import { getSeoMetadata } from '@/utils/seo-metadata';
+
+import { Box, Container, CircularProgress } from '@mui/material';
 
 // ----------------------------------------------------------------------
 
@@ -17,6 +20,29 @@ export async function generateMetadata({
   return getSeoMetadata('sign-in', validLang);
 }
 
+// Componente de carga para Suspense
+function LoginPageLoading() {
+  return (
+    <Container maxWidth="xs">
+      <Box
+        sx={{
+          py: 4,
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          minHeight: '100vh',
+        }}
+      >
+        <CircularProgress />
+      </Box>
+    </Container>
+  );
+}
+
 export default function LoginPage() {
-  return <JwtLoginView />;
+  return (
+    <Suspense fallback={<LoginPageLoading />}>
+      <JwtLoginView />
+    </Suspense>
+  );
 }

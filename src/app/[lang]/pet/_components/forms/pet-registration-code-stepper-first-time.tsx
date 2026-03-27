@@ -9,11 +9,11 @@ import Iconify from '@/components/iconify';
 import { OptionType } from '@/types/global';
 import useIPInfo from '@/hooks/use-ip-info';
 import { fData } from '@/utils/format-number';
-import { useTranslation } from '@/hooks/use-translation';
 import { useBoolean } from '@/hooks/use-boolean';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { getValidationCode } from '@/hooks/use-fetch';
+import { useTranslation } from '@/hooks/use-translation';
 import { useState, useEffect, useCallback } from 'react';
 import { HOST_API, PATH_AFTER_LOGIN } from '@/config-global';
 import UploadAvatar from '@/components/upload/upload-avatar';
@@ -549,7 +549,7 @@ export default function PetRegistrationCodeStepperFirstTime({
             name="phone"
             label={t('Phone Number')}
             placeholder={getPhonePlaceholder(watchCountry, 'Phone number')}
-            helperText={getPhoneHelperText(watchCountry, watchPhone)}
+            helperText={getPhoneHelperText(watchCountry, watchPhone, t)}
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
