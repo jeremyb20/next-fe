@@ -104,8 +104,6 @@ export default function JwtLoginView() {
         return;
       }
 
-      debugger;
-
       // Enviar el token junto con las credenciales
       await login?.(data.email, data.password, turnstileToken);
 
