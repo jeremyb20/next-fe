@@ -111,6 +111,9 @@ export default function UserPetCardsView() {
 
   const handlePetDelete = (pet: IPetProfile) => {
     console.log('Eliminar mascota:', pet);
+    enqueueSnackbar(t('Coming Soon!'), {
+      variant: 'info',
+    });
   };
 
   // const handlePetView = (pet: IPetProfile) => {
@@ -119,7 +122,8 @@ export default function UserPetCardsView() {
 
   const handlePetView = useCallback(
     (pet: IPetProfile) => {
-      router.push(paths.dashboard.user.details(pet.memberPetId));
+      // Forzar la recarga del componente agregando un timestamp o key único
+      router.push(`${paths.dashboard.user.details(pet.memberPetId)}`);
     },
     [router]
   );
@@ -130,7 +134,7 @@ export default function UserPetCardsView() {
   // };
   const handlePetEdit = useCallback(
     (pet: IPetProfile) => {
-      router.push(paths.dashboard.user.edit(pet.memberPetId));
+      router.push(`${paths.dashboard.user.edit(pet.memberPetId)}`);
     },
     [router]
   );

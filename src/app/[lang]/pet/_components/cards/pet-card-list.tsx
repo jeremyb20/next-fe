@@ -1,8 +1,12 @@
 // components/dashboard/user/pet-card.tsx
+import { useState } from 'react';
+import { DOMAIN } from '@/config-global';
 import { IPetProfile } from '@/types/api';
 import Iconify from '@/components/iconify';
 import { fToNow } from '@/utils/format-time';
 import { BreedOptions } from '@/utils/constants';
+import { useTranslation } from '@/hooks/use-translation';
+import ShareDrawerDialog from '@/components/share/share-drawer-dialog';
 import CustomPopover, { usePopover } from '@/components/custom-popover';
 
 import { Stack } from '@mui/system';
@@ -132,9 +136,11 @@ export function PetCard({
 }: PetCardProps) {
   const popover = usePopover();
   const medicalStats = getMedicalStats(pet);
+  const { t, lng: currentLang } = useTranslation();
 
   const nextVaccine = getNextVaccine(pet);
   const age = calculateAge(pet.birthDate);
+  const [shareOpen, setShareOpen] = useState(false);
 
   // Determinar color según estado de salud
   const getHealthStatusColor = () => {
@@ -146,10 +152,10 @@ export function PetCard({
 
   // Determinar texto de estado
   const getHealthStatusText = () => {
-    if (medicalStats.upcomingVaccines > 0) return 'Vaccination due soon';
-    if (medicalStats.upcomingDeworming > 0) return 'Deworming due soon';
-    if (medicalStats.totalRecords === 0) return 'No medical records';
-    return 'Up to date';
+    if (medicalStats.upcomingVaccines > 0) return t('Vaccination due soon');
+    if (medicalStats.upcomingDeworming > 0) return t('Deworming due soon');
+    if (medicalStats.totalRecords === 0) return t('No medical records');
+    return t('Up to date');
   };
 
   const handleDelete = () => {
@@ -166,6 +172,24 @@ export function PetCard({
     popover.onClose();
     onEdit?.(pet);
   };
+
+  const handleShareOpen = () => {
+    setShareOpen(true);
+    popover.onClose();
+  };
+
+  const handleShareClose = () => {
+    setShareOpen(false);
+  };
+
+  // Datos para compartir
+  const shareUrl = `${DOMAIN}/${currentLang}/pet/${pet?.memberPetId}`;
+  const shareTitle = `${t('View the profile of')} ${
+    pet?.petName || t('this pet')
+  }`;
+  const shareDescription = `${t('Meet')} ${pet?.petName}, ${t(
+    'a pet who needs your attention.'
+  )}`;
 
   return (
     <>
@@ -218,7 +242,7 @@ export function PetCard({
           <Stack direction="row" spacing={1} sx={{ mb: 1.5 }}>
             <Typography variant="caption" color="text.secondary">
               {BreedOptions.todos.find((breed) => breed.value === pet.breed)
-                ?.label || 'Unknown breed'}
+                ?.label || t('Unknown breed')}
             </Typography>
             {age && (
               <>
@@ -384,23 +408,35 @@ export function PetCard({
         open={popover.open}
         onClose={popover.onClose}
         arrow="right-top"
-        sx={{ width: 140 }}
+        sx={{ width: 'auto' }}
       >
         <MenuItem onClick={handleView}>
           <Iconify icon="solar:eye-bold" />
-          View
+          {t('View')}
         </MenuItem>
 
         <MenuItem onClick={handleEdit}>
           <Iconify icon="solar:pen-bold" />
-          Edit
+          {t('Edit')}
         </MenuItem>
-
+        <MenuItem onClick={handleShareOpen}>
+          <Iconify icon="solar:share-bold" />
+          {t('Share')}
+        </MenuItem>
         <MenuItem onClick={handleDelete} sx={{ color: 'error.main' }}>
           <Iconify icon="solar:trash-bin-trash-bold" />
-          Delete
+          {t('Delete')}
         </MenuItem>
       </CustomPopover>
+
+      <ShareDrawerDialog
+        open={shareOpen}
+        onClose={handleShareClose}
+        shareUrl={shareUrl}
+        shareTitle={shareTitle}
+        shareDescription={shareDescription}
+        petProfile={pet || ''}
+      />
     </>
   );
 }

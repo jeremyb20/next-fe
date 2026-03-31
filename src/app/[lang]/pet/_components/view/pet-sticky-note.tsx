@@ -182,7 +182,7 @@ export default function PetStickyNote({
                 variant="body1"
                 sx={{
                   fontFamily: '"Kalam", cursive',
-                  fontSize: { xs: '0.9rem', sm: '1rem', md: '1.25rem' },
+                  fontSize: { xs: '1.25rem', sm: '1.25rem', md: '1.25rem' },
                   fontWeight: 500,
                   lineHeight: 1.4,
                   wordBreak: 'break-word',

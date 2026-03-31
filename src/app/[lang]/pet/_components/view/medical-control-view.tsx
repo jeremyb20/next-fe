@@ -2,6 +2,7 @@ import { useSnackbar } from 'notistack';
 import { IPetProfile } from '@/types/api';
 import Iconify from '@/components/iconify';
 import { isAfter } from '@/utils/format-time';
+import { useTranslation } from '@/hooks/use-translation';
 import { useSettingsContext } from '@/components/settings';
 import React, { useMemo, useState, useCallback } from 'react';
 import CardComponent from '@/sections/_examples/card-component';
@@ -40,6 +41,8 @@ export default function MedicalControlView({
   currentPet: IPetProfile | undefined;
   memberPetId: string;
 }) {
+  const { t } = useTranslation();
+
   const [currentTab, setCurrentTab] = useState(0);
   const [refetchTrigger, setRefetchTrigger] = useState(0);
   const settings = useSettingsContext();
@@ -259,7 +262,7 @@ export default function MedicalControlView({
   }
 
   return (
-    <CardComponent title="Medical Control">
+    <CardComponent title={t('Medical Control')}>
       <Box sx={{ mb: 3, display: 'flex', gap: 1, flexWrap: 'wrap' }}>
         <Button
           variant="contained"

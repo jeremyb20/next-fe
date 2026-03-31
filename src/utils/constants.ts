@@ -159,6 +159,14 @@ export const GENDER_OPTIONS = [
   { value: 'unknown', label: 'Unknown' },
 ];
 
+// Opciones para los selects
+export const PET_STATUS_OPTIONS = [
+  { value: 'active', label: 'Active' },
+  { value: 'inactive', label: 'Inactive' },
+  { value: 'lost', label: 'Lost' },
+  { value: 'deceased', label: 'Deceased' },
+];
+
 export const inventoryStatusOptions = [
   { value: 'in_stock', label: 'In Stock' },
   { value: 'out_of_stock', label: 'Out of Stock' },

@@ -600,8 +600,8 @@ export function PetRegistrationExistingUser({
                     color: 'text.disabled',
                   }}
                 >
-                  Allowed *.jpeg, *.jpg, *.png, *.gif
-                  <br /> max size of {fData(2 * 1024 * 1024)}
+                  {t('Allowed *.jpeg, *.jpg, *.png, *.gif')}
+                  <br /> {t('max size of')} {fData(2 * 1024 * 1024)}
                 </Typography>
               }
             />

@@ -181,7 +181,7 @@ export default function OverviewAppUser() {
             />
           </Grid>
 
-          <Grid item xs={12}>
+          <Grid item xs={12} my={2}>
             <PromotionsCardCaroussell
               promotions={promotionsData?.payload || []}
               onViewOffer={(promotion) => {
@@ -191,7 +191,7 @@ export default function OverviewAppUser() {
                   handleRedirect(promotion.link);
                 }
               }}
-              autoplay={false}
+              autoplay
               autoplaySpeed={5000}
             />
           </Grid>

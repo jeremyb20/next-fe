@@ -15,19 +15,27 @@ import { useSearchParams } from 'next/navigation';
 import { useSnackbar } from '@/components/snackbar';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useQueryClient } from '@tanstack/react-query';
 import { useGetPetProfileById } from '@/hooks/use-fetch';
 import { useTranslation } from '@/hooks/use-translation';
+import RouterLink from '@/routes/components/router-link';
 import { useManagerUser } from '@/hooks/use-manager-user';
 import UploadAvatar from '@/components/upload/upload-avatar';
 import CardComponent from '@/sections/_examples/card-component';
 import CustomBreadcrumbs from '@/components/custom-breadcrumbs';
 import { useMemo, useState, useEffect, useCallback } from 'react';
+import SplashScreen from '@/components/loading-screen/splash-screen';
 import CustomPopover, { usePopover } from '@/components/custom-popover';
 import { useCreateGenericMutation } from '@/hooks/user-generic-mutation';
-import { parseWeight, BreedOptions, GENDER_OPTIONS } from '@/utils/constants';
 import CostaRicaIDCard from '@/components/country-cards/Costa-Rica/costa-rica-card';
 import PetLocationMap from '@/app/[lang]/pet/_components/locations/pet-location-map';
 import MedicalControlView from '@/app/[lang]/pet/_components/view/medical-control-view';
+import {
+  parseWeight,
+  BreedOptions,
+  GENDER_OPTIONS,
+  PET_STATUS_OPTIONS,
+} from '@/utils/constants';
 import {
   getPhoneHelperText,
   getPhonePlaceholder,
@@ -113,14 +121,6 @@ function TabPanel(props: TabPanelProps) {
   );
 }
 
-// Opciones para los selects
-const PET_STATUS_OPTIONS = [
-  { value: 'active', label: 'Active' },
-  { value: 'inactive', label: 'Inactive' },
-  { value: 'lost', label: 'Lost' },
-  { value: 'deceased', label: 'Deceased' },
-];
-
 // Mapeo de parámetros a IDs
 const PARAM_TO_TAB_ID: Record<string, number> = {
   info: 0,
@@ -137,8 +137,9 @@ type Props = {
 export default function PetEditForm({ petId }: Props) {
   const theme = useTheme();
   const { t } = useTranslation();
+
   const { user: currentUser } = useManagerUser();
-  const { data: currentPet, refetch } = useGetPetProfileById(petId);
+
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const router = useRouter();
   const { enqueueSnackbar } = useSnackbar();
@@ -153,10 +154,20 @@ export default function PetEditForm({ petId }: Props) {
   const [isScrolled, setIsScrolled] = useState(false);
 
   const [petPhoto, setPetPhoto] = useState<File | null>(null);
-  const [petPhotoPreview, setPetPhotoPreview] = useState<string | null>(
-    currentPet?.photo || null
-  );
+  const [petPhotoPreview, setPetPhotoPreview] = useState<string | null>(null);
   const [photoIdToDelete, setPhotoIdToDelete] = useState<string | null>(null);
+  const queryClient = useQueryClient();
+  // Obtener el parámetro 'tab' de la URL
+  const searchParams = useSearchParams();
+  const tabParam = searchParams.get('tab');
+
+  const {
+    data: currentPet,
+    refetch,
+    isFetching: isLoading,
+    error,
+    isError,
+  } = useGetPetProfileById(petId);
   const TABS_CONFIG = useMemo(
     () => [
       {
@@ -201,9 +212,6 @@ export default function PetEditForm({ petId }: Props) {
     ],
     [currentPet?.isDigitalIdentificationActive]
   );
-  // Obtener el parámetro 'tab' de la URL
-  const searchParams = useSearchParams();
-  const tabParam = searchParams.get('tab');
 
   const getInitialTab = useCallback(() => {
     if (tabParam && PARAM_TO_TAB_ID[tabParam] !== undefined) {
@@ -211,65 +219,8 @@ export default function PetEditForm({ petId }: Props) {
     }
     return 0; // Default a información
   }, [tabParam]);
+
   const [tabValue, setTabValue] = useState(getInitialTab());
-
-  const handleTabChange = useCallback(
-    (event: React.SyntheticEvent, newValue: number) => {
-      setTabValue(newValue);
-
-      // Obtener el parámetro correspondiente al nuevo tab
-      const selectedTab = TABS_CONFIG.find((tab) => tab.id === newValue);
-      if (selectedTab) {
-        // Crear nuevos parámetros de URL
-        const params = new URLSearchParams(searchParams.toString());
-        params.set('tab', selectedTab.param);
-
-        // Actualizar la URL sin recargar la página
-        router.replace(`${window.location.pathname}?${params.toString()}`, {
-          scroll: false,
-        });
-      }
-    },
-    [TABS_CONFIG, router, searchParams]
-  );
-  // Función para manejar la subida de foto
-  const handleDropPetPhoto = useCallback(
-    (acceptedFiles: File[]) => {
-      const newFile = acceptedFiles[0];
-      if (newFile) {
-        setPetPhoto(newFile);
-
-        // Si hay una foto existente, guardar su photo_id para eliminarla después
-        if (currentPet?.photo_id) {
-          setPhotoIdToDelete(currentPet.photo_id);
-        }
-
-        // Crear preview para mostrar
-        const previewUrl = URL.createObjectURL(newFile);
-        setPetPhotoPreview(previewUrl);
-      }
-    },
-    [currentPet?.photo_id]
-  );
-
-  // Función para eliminar la foto
-  const handleRemovePetPhoto = useCallback(() => {
-    setPetPhoto(null);
-
-    // Si hay una foto existente, guardar su photo_id para eliminarla
-    if (currentPet?.photo_id) {
-      setPhotoIdToDelete(currentPet.photo_id);
-    }
-
-    if (petPhotoPreview) {
-      // Si es una URL creada con createObjectURL, revócala
-      if (petPhotoPreview.startsWith('blob:')) {
-        URL.revokeObjectURL(petPhotoPreview);
-      }
-    }
-
-    setPetPhotoPreview(null);
-  }, [currentPet?.photo_id, petPhotoPreview]);
 
   const NewPetSchema = Yup.object().shape({
     petName: Yup.string().required('Pet name is required'),
@@ -303,7 +254,6 @@ export default function PetEditForm({ petId }: Props) {
     ownerPetName: Yup.string().optional().default(''),
     // Permissions fields - todos son booleanos opcionales
     showPhoneInfo: Yup.boolean().optional().default(true),
-
     showOwnerPetName: Yup.boolean().optional().default(true),
     showBirthDate: Yup.boolean().optional().default(true),
     showAddressInfo: Yup.boolean().optional().default(true),
@@ -317,50 +267,37 @@ export default function PetEditForm({ petId }: Props) {
     notes: Yup.string().optional().default(''),
   });
 
-  const defaultValues: FormValues = useMemo(() => {
-    const parsedWeight = parseWeight(currentPet?.weight);
-    return {
-      petName: currentPet?.petName || '',
-      petFirstSurname: currentPet?.petFirstSurname || '',
-      petSecondSurname: currentPet?.petSecondSurname || '',
-      genderSelected: currentPet?.genderSelected || '',
-      breed: currentPet?.breed || '',
-      weight: parsedWeight.value,
-      birthDate: currentPet?.birthDate
-        ? new Date(currentPet.birthDate).toISOString() // Convertir a ISO
-        : '',
-      // birthDate: currentPet?.birthDate || '',
-      favoriteActivities: currentPet?.favoriteActivities || '',
-      healthAndRequirements: currentPet?.healthAndRequirements || '',
-      phoneVeterinarian: currentPet?.phoneVeterinarian || '',
-      veterinarianContact: currentPet?.veterinarianContact || '',
-      address: currentPet?.address || '',
-      phone: currentPet?.phone || '',
-      ownerPetName: currentPet?.ownerPetName || '',
-      petStatus: currentPet?.petStatus || 'active',
-      // Permissions defaults
-      showPhoneInfo: currentPet?.permissions?.showPhoneInfo ?? true,
-      showEmailInfo: currentPet?.permissions?.showEmailInfo ?? true,
-      showOwnerPetName: currentPet?.permissions?.showOwnerPetName ?? true,
-      showBirthDate: currentPet?.permissions?.showBirthDate ?? true,
-      showAddressInfo: currentPet?.permissions?.showAddressInfo ?? true,
-      showVeterinarianContact:
-        currentPet?.permissions?.showVeterinarianContact ?? true,
-      showPhoneVeterinarian:
-        currentPet?.permissions?.showPhoneVeterinarian ?? true,
-      showHealthAndRequirements:
-        currentPet?.permissions?.showHealthAndRequirements ?? true,
-      showFavoriteActivities:
-        currentPet?.permissions?.showFavoriteActivities ?? true,
-      showLocationInfo: currentPet?.permissions?.showLocationInfo ?? true,
-      showLocationConsent: currentPet?.permissions?.showLocationConsent ?? true,
-      notes: currentPet?.notes || '',
-    };
-  }, [currentPet]);
-
   const methods = useForm<FormValues>({
     resolver: yupResolver(NewPetSchema),
-    defaultValues,
+    defaultValues: {
+      petName: '',
+      petFirstSurname: '',
+      petSecondSurname: '',
+      genderSelected: '',
+      breed: '',
+      weight: '',
+      birthDate: '',
+      favoriteActivities: '',
+      healthAndRequirements: '',
+      phoneVeterinarian: '',
+      veterinarianContact: '',
+      address: '',
+      phone: '',
+      ownerPetName: '',
+      petStatus: 'active',
+      showPhoneInfo: true,
+      showEmailInfo: true,
+      showOwnerPetName: true,
+      showBirthDate: true,
+      showAddressInfo: true,
+      showVeterinarianContact: true,
+      showPhoneVeterinarian: true,
+      showHealthAndRequirements: true,
+      showFavoriteActivities: true,
+      showLocationInfo: true,
+      showLocationConsent: true,
+      notes: '',
+    },
   });
 
   const {
@@ -373,6 +310,83 @@ export default function PetEditForm({ petId }: Props) {
 
   const watchPhone = watch('phone');
   const watchPhoneVeterinarian = watch('phoneVeterinarian');
+
+  // Manejar errores de permisos
+  useEffect(() => {
+    if (isError && error) {
+      const status = (error as any)?.response?.status;
+      if (status === 403 || status === 404) {
+        enqueueSnackbar(
+          t('You do not have permission to view this pet profile'),
+          { variant: 'error' }
+        );
+
+        // Redirigir después de 2 segundos
+        const timeout = setTimeout(() => {
+          router.push(paths.dashboard.user.pets);
+        }, 2000);
+
+        return () => clearTimeout(timeout);
+      }
+    }
+    return undefined;
+  }, [isError, error, router, enqueueSnackbar, t]);
+
+  const handleTabChange = useCallback(
+    (event: React.SyntheticEvent, newValue: number) => {
+      setTabValue(newValue);
+
+      // Obtener el parámetro correspondiente al nuevo tab
+      const selectedTab = TABS_CONFIG.find((tab) => tab.id === newValue);
+      if (selectedTab) {
+        // Crear nuevos parámetros de URL
+        const params = new URLSearchParams(searchParams.toString());
+        params.set('tab', selectedTab.param);
+
+        // Actualizar la URL sin recargar la página
+        router.replace(`${window.location.pathname}?${params.toString()}`, {
+          scroll: false,
+        });
+      }
+    },
+    [TABS_CONFIG, router, searchParams]
+  );
+
+  // Función para manejar la subida de foto
+  const handleDropPetPhoto = useCallback(
+    (acceptedFiles: File[]) => {
+      const newFile = acceptedFiles[0];
+      if (newFile) {
+        setPetPhoto(newFile);
+
+        // Si hay una foto existente, guardar su photo_id para eliminarla después
+        if (currentPet?.photo_id) {
+          setPhotoIdToDelete(currentPet.photo_id);
+        }
+
+        // Crear preview para mostrar
+        const previewUrl = URL.createObjectURL(newFile);
+        setPetPhotoPreview(previewUrl);
+      }
+    },
+    [currentPet?.photo_id]
+  );
+
+  // Función para eliminar la foto
+  const handleRemovePetPhoto = useCallback(() => {
+    setPetPhoto(null);
+
+    // Si hay una foto existente, guardar su photo_id para eliminarla
+    if (currentPet?.photo_id) {
+      setPhotoIdToDelete(currentPet.photo_id);
+    }
+
+    if (petPhotoPreview && petPhotoPreview.startsWith('blob:')) {
+      URL.revokeObjectURL(petPhotoPreview);
+    }
+
+    setPetPhotoPreview(null);
+  }, [currentPet?.photo_id, petPhotoPreview]);
 
   const handleWeightUnitChange = (unit: 'kg' | 'lb') => {
     setWeightUnit(unit);
@@ -414,8 +428,7 @@ export default function PetEditForm({ petId }: Props) {
 
       // Crear el payload según el formato que espera tu API
       const payload = {
-        // eslint-disable-next-line object-shorthand
-        petData: petData,
+        petData,
         userId: userPetId,
         // Solo agregar la imagen si existe
         ...(petPhoto && { image: petPhoto }),
@@ -449,6 +462,91 @@ export default function PetEditForm({ petId }: Props) {
     }
   };
 
+  // Resetear el formulario cuando currentPet cambia
+  useEffect(() => {
+    if (currentPet) {
+      const parsedWeight = parseWeight(currentPet?.weight);
+      methods.reset({
+        petName: currentPet?.petName || '',
+        petFirstSurname: currentPet?.petFirstSurname || '',
+        petSecondSurname: currentPet?.petSecondSurname || '',
+        genderSelected: currentPet?.genderSelected || '',
+        breed: currentPet?.breed || '',
+        weight: parsedWeight.value,
+        birthDate: currentPet?.birthDate
+          ? new Date(currentPet.birthDate).toISOString()
+          : '',
+        favoriteActivities: currentPet?.favoriteActivities || '',
+        healthAndRequirements: currentPet?.healthAndRequirements || '',
+        phoneVeterinarian: currentPet?.phoneVeterinarian || '',
+        veterinarianContact: currentPet?.veterinarianContact || '',
+        address: currentPet?.address || '',
+        phone: currentPet?.phone || '',
+        ownerPetName: currentPet?.ownerPetName || '',
+        petStatus: currentPet?.petStatus || 'active',
+        showPhoneInfo: currentPet?.permissions?.showPhoneInfo ?? true,
+        showEmailInfo: currentPet?.permissions?.showEmailInfo ?? true,
+        showOwnerPetName: currentPet?.permissions?.showOwnerPetName ?? true,
+        showBirthDate: currentPet?.permissions?.showBirthDate ?? true,
+        showAddressInfo: currentPet?.permissions?.showAddressInfo ?? true,
+        showVeterinarianContact:
+          currentPet?.permissions?.showVeterinarianContact ?? true,
+        showPhoneVeterinarian:
+          currentPet?.permissions?.showPhoneVeterinarian ?? true,
+        showHealthAndRequirements:
+          currentPet?.permissions?.showHealthAndRequirements ?? true,
+        showFavoriteActivities:
+          currentPet?.permissions?.showFavoriteActivities ?? true,
+        showLocationInfo: currentPet?.permissions?.showLocationInfo ?? true,
+        showLocationConsent:
+          currentPet?.permissions?.showLocationConsent ?? true,
+        notes: currentPet?.notes || '',
+      });
+
+      setPetLocation({
+        lat: currentPet.lat || '',
+        lng: currentPet.lng || '',
+        address: currentPet.address || '',
+      });
+
+      setPetPhotoPreview(currentPet.photo || null);
+    } else if (!isLoading && petId) {
+      // Resetear a valores por defecto cuando no hay datos
+      methods.reset({
+        petName: '',
+        petFirstSurname: '',
+        petSecondSurname: '',
+        genderSelected: '',
+        breed: '',
+        weight: '',
+        birthDate: '',
+        favoriteActivities: '',
+        healthAndRequirements: '',
+        phoneVeterinarian: '',
+        veterinarianContact: '',
+        address: '',
+        phone: '',
+        ownerPetName: '',
+        petStatus: 'active',
+        showPhoneInfo: true,
+        showEmailInfo: true,
+        showOwnerPetName: true,
+        showBirthDate: true,
+        showAddressInfo: true,
+        showVeterinarianContact: true,
+        showPhoneVeterinarian: true,
+        showHealthAndRequirements: true,
+        showFavoriteActivities: true,
+        showLocationInfo: true,
+        showLocationConsent: true,
+        notes: '',
+      });
+
+      setPetLocation({ lat: '', lng: '', address: '' });
+      setPetPhotoPreview(null);
+    }
+  }, [currentPet, isLoading, petId, methods]);
+
   // Reemplaza useMemo por useEffect para weightUnit
   useEffect(() => {
     if (currentPet?.weight) {
@@ -459,14 +557,7 @@ export default function PetEditForm({ petId }: Props) {
     }
   }, [currentPet]);
 
-  // Agrega este useEffect para resetear el formulario
-  useEffect(() => {
-    if (currentPet) {
-      methods.reset(defaultValues);
-    }
-  }, [currentPet, methods, defaultValues]);
-
-  // Agrega un useEffect para limpiar las URLs
+  // Limpiar URLs de fotos
   useEffect(
     () => () => {
       if (petPhotoPreview && petPhotoPreview.startsWith('blob:')) {
@@ -486,27 +577,53 @@ export default function PetEditForm({ petId }: Props) {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  useEffect(() => {
-    if (currentPet) {
-      setPetLocation({
-        lat: currentPet.lat || '',
-        lng: currentPet.lng || '',
-        address: currentPet.address || '',
-      });
-
-      // También actualizar la preview de la foto
-      if (currentPet.photo) {
-        setPetPhotoPreview(currentPet.photo);
-      }
-    }
-  }, [currentPet]);
-
+  // Sincronizar tabValue con URL
   useEffect(() => {
     const newTabValue = getInitialTab();
     if (newTabValue !== tabValue) {
       setTabValue(newTabValue);
     }
   }, [tabParam, getInitialTab, tabValue]);
+
+  if (isLoading) {
+    return <SplashScreen />;
+  }
+
+  // Si no hay datos de mascota
+  if (!currentPet) {
+    return (
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: 'center',
+          minHeight: '50vh',
+          padding: 3,
+          gap: 2,
+        }}
+      >
+        <Typography variant="h6" color="text.secondary">
+          {t('No information was found about the pet.')}
+        </Typography>
+        {currentUser?.email && (
+          <Button
+            component={RouterLink}
+            href={paths.dashboard.user.pets}
+            onClick={() =>
+              queryClient.removeQueries({ queryKey: ['useGetPetProfileById'] })
+            }
+            variant="contained"
+            sx={{ mb: 0.5 }}
+          >
+            <Typography variant="h4" fontWeight={700}>
+              {t('Back')}
+            </Typography>
+          </Button>
+        )}
+      </Box>
+    );
+  }
 
   return (
     <Container maxWidth="md">
@@ -604,8 +721,9 @@ export default function PetEditForm({ petId }: Props) {
                     if (!allowedTypes.includes(fileData.type)) {
                       return {
                         code: 'invalid-file-type',
-                        message:
-                          'Only JPEG, JPG, PNG or GIF images are allowed',
+                        message: t(
+                          'Only JPEG, JPG, PNG or GIF images are allowed'
+                        ),
                       };
                     }
 
@@ -613,7 +731,7 @@ export default function PetEditForm({ petId }: Props) {
                     if (fileData.size > 2 * 1024 * 1024) {
                       return {
                         code: 'file-too-large',
-                        message: `Image is too large. Maximum ${fData(
+                        message: `${t('Image is too large. Maximum')} ${fData(
                           2 * 1024 * 1024
                         )}`,
                       };
@@ -632,8 +750,8 @@ export default function PetEditForm({ petId }: Props) {
                         color: 'text.disabled',
                       }}
                     >
-                      Allowed *.jpeg, *.jpg, *.png, *.gif
-                      <br /> max size of {fData(2 * 1024 * 1024)}
+                      {t('Allowed *.jpeg, *.jpg, *.png, *.gif')}
+                      <br /> {t('max size of')} {fData(2 * 1024 * 1024)}
                     </Typography>
                   }
                 />
@@ -649,31 +767,32 @@ export default function PetEditForm({ petId }: Props) {
                 sm: 'repeat(2, 1fr)',
               }}
             >
-              <RHFSelect name="petStatus" label="Status">
+              <RHFSelect name="petStatus" label={t('Current Status')}>
                 {PET_STATUS_OPTIONS.map((status) => (
                   <MenuItem key={status.value} value={status.value}>
-                    {status.label}
+                    {t(status.label)}
                   </MenuItem>
                 ))}
               </RHFSelect>
-              <RHFSelect name="genderSelected" label="Gender">
+              <RHFSelect name="genderSelected" label={t('Gender')}>
                 {GENDER_OPTIONS.map((gender) => (
                   <MenuItem key={gender.value} value={gender.value}>
-                    {gender.label}
+                    {t(gender.label)}
                   </MenuItem>
                 ))}
               </RHFSelect>
-              <RHFTextField name="petName" label="Pet Name" />
-              <RHFTextField name="petFirstSurname" label="First Surname" />
-              <RHFTextField name="petSecondSurname" label="Second Surname" />
-              {/* <RHFTextField name="breed" label="Breed" /> */}
+              <RHFTextField name="petName" label={t('Pet Name')} />
+              <RHFTextField name="petFirstSurname" label={t('First Surname')} />
+              <RHFTextField
+                name="petSecondSurname"
+                label={t('Second Surname')}
+              />
               <RHFAutocomplete
                 name="breed"
-                label="Raza de la mascota"
+                label={t('Breed')}
                 options={BreedOptions.todos}
                 getOptionLabel={(option: OptionType | string) => {
                   if (typeof option === 'string') {
-                    // Buscar la opción por el value string
                     const foundOption = BreedOptions.todos.find(
                       (opt) => opt.value === option
                     );
@@ -688,7 +807,6 @@ export default function PetEditForm({ petId }: Props) {
                   return option.value === value?.value;
                 }}
                 onChange={(event, newValue) => {
-                  // Asegurar que solo se guarde el value como string
                   let stringValue = '';
                   if (newValue) {
                     if (typeof newValue === 'string') {
@@ -700,7 +818,6 @@ export default function PetEditForm({ petId }: Props) {
                       stringValue = newValue.value;
                     }
                   }
-                  // Actualizar el valor del formulario
                   setValue('breed', stringValue, { shouldValidate: true });
                 }}
                 renderOption={(props, option) => (
@@ -711,9 +828,9 @@ export default function PetEditForm({ petId }: Props) {
               />
               <RHFTextField
                 name="weight"
-                label="Weight"
+                label={t('Weight')}
                 type="number"
-                inputProps={{ step: '0.1' }} // Para permitir decimales
+                inputProps={{ step: '0.1' }}
                 InputProps={{
                   endAdornment: (
                     <ButtonGroup
@@ -740,11 +857,10 @@ export default function PetEditForm({ petId }: Props) {
               <Controller
                 name="birthDate"
                 control={control}
-                defaultValue={defaultValues.birthDate}
                 render={({ field }) => (
                   <DatePicker
                     views={['year', 'month', 'day']}
-                    label="Year and Month"
+                    label={t('Birth Date')}
                     minDate={new Date('2000-03-01')}
                     maxDate={new Date()}
                     value={field.value ? new Date(field.value) : null}
@@ -759,10 +875,10 @@ export default function PetEditForm({ petId }: Props) {
                   />
                 )}
               />
-              <RHFTextField name="ownerPetName" label="Owner Name" />
+              <RHFTextField name="ownerPetName" label={t('Owner Name')} />
               <RHFTextField
                 name="phone"
-                label="Phone"
+                label={t('Phone Number')}
                 placeholder={getPhonePlaceholder(
                   currentUser?.profile?.country || '',
                   'Phone number'
@@ -824,23 +940,23 @@ export default function PetEditForm({ petId }: Props) {
               </CustomPopover>
               <RHFTextField
                 name="favoriteActivities"
-                label="Favorite Activities"
+                label={t('Favorite Activities')}
                 multiline
                 rows={2}
               />
               <RHFTextField
                 name="healthAndRequirements"
-                label="Health & Requirements"
+                label={t('Health & Requirements')}
                 multiline
                 rows={2}
               />
               <RHFTextField
                 name="veterinarianContact"
-                label="Veterinarian Name"
+                label={t('Veterinarian Name')}
               />
               <RHFTextField
                 name="phoneVeterinarian"
-                label="Veterinarian Phone"
+                label={t('Veterinarian Phone')}
                 placeholder={getPhonePlaceholder(
                   currentUser?.profile?.country || '',
                   'Veterinanrian Phone'
@@ -881,14 +997,14 @@ export default function PetEditForm({ petId }: Props) {
               />
               <RHFTextField
                 name="address"
-                label="Address"
+                label={t('Address')}
                 multiline
                 rows={2}
                 sx={{ gridColumn: '1 / -1' }}
               />
               <RHFTextField
                 name="notes"
-                label="Notes"
+                label={t('Notes')}
                 multiline
                 rows={2}
                 sx={{ gridColumn: '1 / -1' }}
@@ -1062,6 +1178,7 @@ export default function PetEditForm({ petId }: Props) {
             </Stack>
           </Box>
         </TabPanel>
+
         <TabPanel value={tabValue} index={2}>
           <Box sx={{ maxHeight: isMobile ? '85vh' : '55vh', overflow: 'auto' }}>
             <Stack spacing={3}>
@@ -1086,15 +1203,20 @@ export default function PetEditForm({ petId }: Props) {
             </Stack>
           </Box>
         </TabPanel>
+
         <TabPanel value={tabValue} index={3}>
           <MedicalControlView
             currentPet={currentPet}
             memberPetId={petId || ''}
           />
         </TabPanel>
-        <TabPanel value={tabValue} index={4}>
-          <CostaRicaIDCard data={currentPet} />
-        </TabPanel>
+
+        {currentPet?.isDigitalIdentificationActive && (
+          <TabPanel value={tabValue} index={4}>
+            <CostaRicaIDCard data={currentPet} />
+          </TabPanel>
+        )}
+
         <Stack
           pb={5}
           sx={{

@@ -538,7 +538,7 @@ export default function PetQuickEditForm({
                       if (fileData.size > 2 * 1024 * 1024) {
                         return {
                           code: 'file-too-large',
-                          message: `Image is too large. Maximum ${fData(
+                          message: `${t('Image is too large. Maximum')} ${fData(
                             2 * 1024 * 1024
                           )}`,
                         };
@@ -557,8 +557,8 @@ export default function PetQuickEditForm({
                           color: 'text.disabled',
                         }}
                       >
-                        Allowed *.jpeg, *.jpg, *.png, *.gif
-                        <br /> max size of {fData(2 * 1024 * 1024)}
+                        {t('Allowed *.jpeg, *.jpg, *.png, *.gif')}
+                        <br /> {t('max size of')} {fData(2 * 1024 * 1024)}
                       </Typography>
                     }
                   />

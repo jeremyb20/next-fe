@@ -90,7 +90,8 @@ export const useGetPetProfileById = (identifier: string | undefined) =>
       refetchOnWindowFocus: true,
       refetchOnReconnect: true,
       staleTime: 0, // Siempre refrescar al volver
-      gcTime: 5 * 60 * 1000, // Mantener en caché 5 minutos
+      gcTime: 0, // Mantener en caché 5 minutos
+      retry: 0,
     }
   );
 

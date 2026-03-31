@@ -1,5 +1,3 @@
-/* eslint-disable object-shorthand */
-
 import PetEditForm from '../../../_components/user-pet-edit-form';
 
 type Props = {
