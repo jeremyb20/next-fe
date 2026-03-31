@@ -88,6 +88,7 @@ export default function JwtLoginView() {
   const {
     handleSubmit,
     watch,
+    setValue,
     formState: { isSubmitting },
   } = methods;
 
@@ -111,18 +112,20 @@ export default function JwtLoginView() {
     } catch (error) {
       console.error(error);
       setErrorMsg(t(typeof error === 'string' ? error : error.message));
+      setValue('password', ''); // Limpiar el campo de contraseña en caso de error
 
-      // Resetear Turnstile en caso de error
-      if (turnstileRef.current) {
-        turnstileRef.current.reset();
+      if (error.message !== 'Wrong password') {
+        if (turnstileRef.current) {
+          turnstileRef.current.reset();
+        }
+        setTurnstileToken(null);
       }
-      setTurnstileToken(null);
     }
   });
 
   useEffect(() => {
     setErrorMsg('');
-  }, [watchedEmail, watchedPassword]);
+  }, [watchedEmail]);
 
   const renderHead = (
     <Stack spacing={2} sx={{ mb: 5 }}>
@@ -215,6 +218,7 @@ export default function JwtLoginView() {
               theme: 'light',
               size: 'normal',
               action: 'login_submit',
+              retry: 'auto',
             }}
           />
         </Box>
@@ -227,7 +231,7 @@ export default function JwtLoginView() {
         type="submit"
         variant="contained"
         loading={isSubmitting}
-        disabled={!turnstileToken} // Deshabilitar hasta que se complete el captcha
+        disabled={!turnstileToken || !watchedPassword}
       >
         {t('Sign In')}
       </LoadingButton>
@@ -248,7 +252,11 @@ export default function JwtLoginView() {
         </FormProvider>
 
         {!!errorMsg && (
-          <Alert severity="error" sx={{ my: 3 }}>
+          <Alert
+            severity="error"
+            sx={{ my: 3 }}
+            onClose={() => setErrorMsg('')}
+          >
             {t(errorMsg)}
           </Alert>
         )}

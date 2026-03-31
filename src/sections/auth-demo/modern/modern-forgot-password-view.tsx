@@ -1,30 +1,52 @@
 'use client';
 
 import * as Yup from 'yup';
-import { useState } from 'react';
+import dynamic from 'next/dynamic';
 import { paths } from '@/routes/paths';
 import { useSnackbar } from 'notistack';
+import { useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { endpoints } from '@/utils/axios';
 import Iconify from '@/components/iconify';
 import { useParams } from '@/routes/hooks';
-import { HOST_API } from '@/config-global';
 import { PasswordIcon } from '@/assets/icons';
 import { RouterLink } from '@/routes/components';
 import { fallbackLng } from '@/app/i18n/settings';
+import { SITEKEY, HOST_API } from '@/config-global';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useTranslation } from '@/hooks/use-translation';
 import FormProvider, { RHFTextField } from '@/components/hook-form';
 import { useCreateGenericMutation } from '@/hooks/user-generic-mutation';
 
 import Link from '@mui/material/Link';
-import { Alert } from '@mui/material';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import LoadingButton from '@mui/lab/LoadingButton';
+import { Box, Alert, CircularProgress } from '@mui/material';
 
 // ----------------------------------------------------------------------
-
+const Turnstile = dynamic(
+  () => import('@marsidev/react-turnstile').then((mod) => mod.Turnstile),
+  {
+    ssr: false,
+    loading: () => (
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          gap: 1,
+          minHeight: '65px',
+        }}
+      >
+        <CircularProgress size={20} />
+        <Typography variant="caption" color="text.secondary">
+          Loading security verification...
+        </Typography>
+      </Box>
+    ),
+  }
+);
 export default function ModernForgotPasswordView() {
   const { mutateAsync } = useCreateGenericMutation();
   const { enqueueSnackbar } = useSnackbar();
@@ -35,7 +57,9 @@ export default function ModernForgotPasswordView() {
     status: '',
     message: '',
   });
+  const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
 
+  const turnstileRef = useRef<any>(null);
   const ForgotPasswordSchema = Yup.object().shape({
     email: Yup.string()
       .required(t('Email is required'))
@@ -53,8 +77,11 @@ export default function ModernForgotPasswordView() {
 
   const {
     handleSubmit,
+    watch,
     formState: { isSubmitting },
   } = methods;
+
+  const watchEmail = watch('email');
 
   const onSubmit = handleSubmit(async (data) => {
     try {
@@ -62,6 +89,7 @@ export default function ModernForgotPasswordView() {
         payload: {
           ...data,
           lang: lng,
+          turnstileToken,
         },
         pEndpoint: `${HOST_API}${endpoints.user.forgotPassword}`,
         method: 'POST',
@@ -85,13 +113,45 @@ export default function ModernForgotPasswordView() {
   const renderForm = (
     <Stack spacing={3} alignItems="center">
       <RHFTextField name="email" label={t('Email address')} />
-
+      {/* Widget de Cloudflare Turnstile */}
+      {SITEKEY && (
+        <Box sx={{ display: 'flex', justifyContent: 'center', my: 1 }}>
+          <Turnstile
+            ref={turnstileRef}
+            siteKey={SITEKEY}
+            onSuccess={(token) => {
+              console.log('✅ Turnstile verification successful');
+              setTurnstileToken(token);
+            }}
+            onExpire={() => {
+              console.log('⏰ Turnstile token expired');
+              setTurnstileToken(null);
+            }}
+            onError={() => {
+              console.error('❌ Turnstile error');
+              setMessageResponse({
+                status: 'error',
+                message: t(
+                  'Security verification failed. Please refresh the page.'
+                ),
+              });
+              setTurnstileToken(null);
+            }}
+            options={{
+              theme: 'light',
+              size: 'flexible',
+              action: 'login_submit',
+            }}
+          />
+        </Box>
+      )}
       <LoadingButton
         fullWidth
         size="large"
         type="submit"
         variant="contained"
         loading={isSubmitting}
+        disabled={!turnstileToken || !watchEmail}
         endIcon={<Iconify icon="eva:arrow-ios-forward-fill" />}
         sx={{ justifyContent: 'space-between', pl: 2, pr: 1.5 }}
       >

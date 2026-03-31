@@ -113,6 +113,8 @@ export default function JwtRegisterView() {
   } = methods;
   const watchCountry = watch('country');
   const watchPhone = watch('phone');
+  const watchedPassword = watch('password');
+
   const [openTerms, setOpenTerms] = useState(false);
   const [openPrivacyPolicy, setOpenPrivacyPolicy] = useState(false);
 
@@ -163,10 +165,11 @@ export default function JwtRegisterView() {
       console.error(error);
       setErrorMsg(typeof error === 'string' ? error : error.message);
       // Resetear Turnstile en caso de error
-      if (turnstileRef.current) {
-        turnstileRef.current.reset();
-      }
-      setTurnstileToken(null);
+      setValue('password', '');
+      // if (turnstileRef.current) {
+      //   turnstileRef.current.reset();
+      // }
+      // setTurnstileToken(null);
     }
   });
 
@@ -346,7 +349,7 @@ export default function JwtRegisterView() {
         type="submit"
         variant="contained"
         loading={isSubmitting}
-        disabled={!turnstileToken} // Deshabilitar hasta que se complete el captcha
+        disabled={!turnstileToken || !watchedPassword} // Deshabilitar hasta que se complete el captcha
         endIcon={<Iconify icon="eva:arrow-ios-forward-fill" />}
         sx={{ justifyContent: 'space-between', pl: 2, pr: 1.5 }}
       >

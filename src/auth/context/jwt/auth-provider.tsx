@@ -198,7 +198,8 @@ export function AuthProvider({ children }: Props) {
       lastName: string,
       country: string,
       phone: string,
-      settings: Record<string, any>
+      settings: Record<string, any>,
+      turnstileToken: string | null
     ) => {
       try {
         const defaultTheme: SettingsValueProps = {
@@ -219,6 +220,7 @@ export function AuthProvider({ children }: Props) {
           phone,
           country,
           settings: defaultTheme,
+          turnstileToken,
         };
 
         const registerRes = await axios.post(
