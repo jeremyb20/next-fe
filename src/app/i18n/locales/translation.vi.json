@@ -452,5 +452,8 @@
   "First Surname": "Họ thứ nhất",
   "Second Surname": "Họ thứ hai",
   "Veterinarian Name": "Tên bác sĩ thú y",
-  "Veterinarian Phone": "Số điện thoại bác sĩ thú y"
+  "Veterinarian Phone": "Số điện thoại bác sĩ thú y",
+  "Show Breed Information": "Hiển thị thông tin giống",
+  "Show Weight Information": "Hiển thị thông tin cân nặng",
+  "Show Gender Information": "Hiển thị thông tin giới tính"
 }

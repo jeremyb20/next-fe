@@ -452,5 +452,8 @@
   "First Surname": "Premier nom de famille",
   "Second Surname": "Deuxième nom de famille",
   "Veterinarian Name": "Nom du vétérinaire",
-  "Veterinarian Phone": "Téléphone du vétérinaire"
+  "Veterinarian Phone": "Téléphone du vétérinaire",
+  "Show Breed Information": "Afficher les informations de race",
+  "Show Weight Information": "Afficher les informations de poids",
+  "Show Gender Information": "Afficher les informations de sexe"
 }

@@ -452,5 +452,8 @@
   "First Surname": "اللقب الأول",
   "Second Surname": "اللقب الثاني",
   "Veterinarian Name": "اسم الطبيب البيطري",
-  "Veterinarian Phone": "هاتف الطبيب البيطري"
+  "Veterinarian Phone": "هاتف الطبيب البيطري",
+  "Show Breed Information": "إظهار معلومات السلالة",
+  "Show Weight Information": "إظهار معلومات الوزن",
+  "Show Gender Information": "إظهار معلومات الجنس"
 }

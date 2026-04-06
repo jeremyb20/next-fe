@@ -452,5 +452,8 @@
   "First Surname": "第一姓氏",
   "Second Surname": "第二姓氏",
   "Veterinarian Name": "兽医姓名",
-  "Veterinarian Phone": "兽医电话"
+  "Veterinarian Phone": "兽医电话",
+  "Show Breed Information": "显示品种信息",
+  "Show Weight Information": "显示体重信息",
+  "Show Gender Information": "显示性别信息"
 }
