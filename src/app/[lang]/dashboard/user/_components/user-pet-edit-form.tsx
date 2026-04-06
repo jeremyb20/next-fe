@@ -10,6 +10,7 @@ import { HOST_API } from '@/config-global';
 import Iconify from '@/components/iconify';
 import { useRouter } from '@/routes/hooks';
 import { OptionType } from '@/types/global';
+import { PetFormValues } from '@/types/pet';
 import { fData } from '@/utils/format-number';
 import { useSearchParams } from 'next/navigation';
 import { useSnackbar } from '@/components/snackbar';
@@ -68,37 +69,6 @@ import {
 
 // ----------------------------------------------------------------------
 
-type FormValues = {
-  petName: string;
-  petFirstSurname: string;
-  petSecondSurname: string;
-  genderSelected: string;
-  breed: string;
-  weight: string;
-  address: string;
-  phone: string;
-  ownerPetName: string;
-  petStatus: string;
-  birthDate: string;
-  favoriteActivities: string;
-  healthAndRequirements: string;
-  phoneVeterinarian: string;
-  veterinarianContact: string;
-  notes: string;
-  // Permissions fields
-  showPhoneInfo: boolean;
-  showOwnerPetName: boolean;
-  showEmailInfo: boolean;
-  showBirthDate: boolean;
-  showAddressInfo: boolean;
-  showVeterinarianContact: boolean;
-  showPhoneVeterinarian: boolean;
-  showHealthAndRequirements: boolean;
-  showFavoriteActivities: boolean;
-  showLocationInfo: boolean;
-  showLocationConsent: boolean;
-};
-
 interface TabPanelProps {
   children?: React.ReactNode;
   index: number;
@@ -152,6 +122,12 @@ export default function PetEditForm({ petId }: Props) {
     address: '',
   });
   const [isScrolled, setIsScrolled] = useState(false);
+
+  const [selectAllPermissions, setSelectAllPermissions] = useState({
+    owner: false,
+    pet: false,
+    veterinarian: false,
+  });
 
   const [petPhoto, setPetPhoto] = useState<File | null>(null);
   const [petPhotoPreview, setPetPhotoPreview] = useState<string | null>(null);
@@ -264,10 +240,13 @@ export default function PetEditForm({ petId }: Props) {
     showFavoriteActivities: Yup.boolean().optional().default(true),
     showLocationInfo: Yup.boolean().optional().default(true),
     showLocationConsent: Yup.boolean().optional().default(true),
+    showBreedInfo: Yup.boolean().optional().default(true),
+    showWeightInfo: Yup.boolean().optional().default(true),
+    showGenderInfo: Yup.boolean().optional().default(true),
     notes: Yup.string().optional().default(''),
   });
 
-  const methods = useForm<FormValues>({
+  const methods = useForm<PetFormValues>({
     resolver: yupResolver(NewPetSchema),
     defaultValues: {
       petName: '',
@@ -296,6 +275,9 @@ export default function PetEditForm({ petId }: Props) {
       showFavoriteActivities: true,
       showLocationInfo: true,
       showLocationConsent: true,
+      showBreedInfo: true,
+      showWeightInfo: true,
+      showGenderInfo: true,
       notes: '',
     },
   });
@@ -392,7 +374,35 @@ export default function PetEditForm({ petId }: Props) {
     setWeightUnit(unit);
   };
 
-  const onSubmit = async (data: FormValues) => {
+  const handleSelectAll = (
+    section: 'owner' | 'pet' | 'veterinarian',
+    isChecked: boolean
+  ) => {
+    // Actualizar estado visual
+    setSelectAllPermissions((prev) => ({ ...prev, [section]: isChecked }));
+
+    // Actualizar los campos según la sección
+    if (section === 'owner') {
+      setValue('showPhoneInfo', isChecked);
+      setValue('showEmailInfo', isChecked);
+      setValue('showOwnerPetName', isChecked);
+    } else if (section === 'pet') {
+      setValue('showBirthDate', isChecked);
+      setValue('showFavoriteActivities', isChecked);
+      setValue('showHealthAndRequirements', isChecked);
+      setValue('showAddressInfo', isChecked);
+      setValue('showLocationInfo', isChecked);
+      setValue('showLocationConsent', isChecked);
+      setValue('showBreedInfo', isChecked);
+      setValue('showWeightInfo', isChecked);
+      setValue('showGenderInfo', isChecked);
+    } else if (section === 'veterinarian') {
+      setValue('showVeterinarianContact', isChecked);
+      setValue('showPhoneVeterinarian', isChecked);
+    }
+  };
+
+  const onSubmit = async (data: PetFormValues) => {
     try {
       const weightWithUnit = data.weight ? `${data.weight} ${weightUnit}` : '';
       const userPetId = currentUser?._id || '';
@@ -423,6 +433,9 @@ export default function PetEditForm({ petId }: Props) {
           showFavoriteActivities: data.showFavoriteActivities,
           showLocationInfo: data.showLocationInfo,
           showLocationConsent: data.showLocationConsent,
+          showBreedInfo: data.showBreedInfo,
+          showWeightInfo: data.showWeightInfo,
+          showGenderInfo: data.showGenderInfo,
         },
       };
 
@@ -500,6 +513,9 @@ export default function PetEditForm({ petId }: Props) {
         showLocationInfo: currentPet?.permissions?.showLocationInfo ?? true,
         showLocationConsent:
           currentPet?.permissions?.showLocationConsent ?? true,
+        showBreedInfo: currentPet?.permissions?.showBreedInfo ?? true,
+        showWeightInfo: currentPet?.permissions?.showWeightInfo ?? true,
+        showGenderInfo: currentPet?.permissions?.showGenderInfo ?? true,
         notes: currentPet?.notes || '',
       });
 
@@ -539,6 +555,9 @@ export default function PetEditForm({ petId }: Props) {
         showFavoriteActivities: true,
         showLocationInfo: true,
         showLocationConsent: true,
+        showBreedInfo: true,
+        showWeightInfo: true,
+        showGenderInfo: true,
         notes: '',
       });
 
@@ -584,6 +603,40 @@ export default function PetEditForm({ petId }: Props) {
       setTabValue(newTabValue);
     }
   }, [tabParam, getInitialTab, tabValue]);
+
+  useEffect(() => {
+    const watchOwnerFields = watch([
+      'showPhoneInfo',
+      'showEmailInfo',
+      'showOwnerPetName',
+    ]);
+    const allOwnerChecked = watchOwnerFields.every((val) => val === true);
+    setSelectAllPermissions((prev) => ({ ...prev, owner: allOwnerChecked }));
+
+    const watchPetFields = watch([
+      'showBirthDate',
+      'showFavoriteActivities',
+      'showHealthAndRequirements',
+      'showAddressInfo',
+      'showLocationInfo',
+      'showLocationConsent',
+      'showBreedInfo',
+      'showWeightInfo',
+      'showGenderInfo',
+    ]);
+    const allPetChecked = watchPetFields.every((val) => val === true);
+    setSelectAllPermissions((prev) => ({ ...prev, pet: allPetChecked }));
+
+    const watchVetFields = watch([
+      'showVeterinarianContact',
+      'showPhoneVeterinarian',
+    ]);
+    const allVetChecked = watchVetFields.every((val) => val === true);
+    setSelectAllPermissions((prev) => ({
+      ...prev,
+      veterinarian: allVetChecked,
+    }));
+  }, [watch]);
 
   if (isLoading) {
     return <SplashScreen />;
@@ -1027,9 +1080,34 @@ export default function PetEditForm({ petId }: Props) {
               spacing={1.5}
               sx={{ p: 3, borderRadius: 2, bgcolor: 'background.neutral' }}
             >
-              <Typography variant="h6" sx={{ mb: 2 }}>
-                {t('Owner Information')}
-              </Typography>
+              <Stack
+                direction="row"
+                justifyContent="space-between"
+                alignItems="center"
+                sx={{ mb: 2 }}
+              >
+                <Typography variant="h6">{t('Owner Information')}</Typography>
+                <Button
+                  size="small"
+                  variant="outlined"
+                  onClick={() =>
+                    handleSelectAll('owner', !selectAllPermissions.owner)
+                  }
+                  startIcon={
+                    <Iconify
+                      icon={
+                        selectAllPermissions.owner
+                          ? 'mdi:checkbox-marked'
+                          : 'mdi:checkbox-blank-outline'
+                      }
+                    />
+                  }
+                >
+                  {selectAllPermissions.owner
+                    ? t('Unselect All')
+                    : t('Select All')}
+                </Button>
+              </Stack>
               <RHFSwitch
                 name="showPhoneInfo"
                 labelPlacement="start"
@@ -1070,9 +1148,34 @@ export default function PetEditForm({ petId }: Props) {
               spacing={1.5}
               sx={{ p: 3, borderRadius: 2, bgcolor: 'background.neutral' }}
             >
-              <Typography variant="h6" sx={{ mb: 2 }}>
-                {t('Pet Information')}
-              </Typography>
+              <Stack
+                direction="row"
+                justifyContent="space-between"
+                alignItems="center"
+                sx={{ mb: 2 }}
+              >
+                <Typography variant="h6">{t('Pet Information')}</Typography>
+                <Button
+                  size="small"
+                  variant="outlined"
+                  onClick={() =>
+                    handleSelectAll('pet', !selectAllPermissions.pet)
+                  }
+                  startIcon={
+                    <Iconify
+                      icon={
+                        selectAllPermissions.pet
+                          ? 'mdi:checkbox-marked'
+                          : 'mdi:checkbox-blank-outline'
+                      }
+                    />
+                  }
+                >
+                  {selectAllPermissions.pet
+                    ? t('Unselect All')
+                    : t('Select All')}
+                </Button>
+              </Stack>
 
               <RHFSwitch
                 name="showBirthDate"
@@ -1142,15 +1245,78 @@ export default function PetEditForm({ petId }: Props) {
                   mx: 0,
                 }}
               />
+              <RHFSwitch
+                name="showBreedInfo"
+                labelPlacement="start"
+                label={t('Show Breed Information')}
+                sx={{
+                  justifyContent: 'space-between',
+                  flexDirection: 'row-reverse',
+                  width: '100%',
+                  mx: 0,
+                }}
+              />
+              <RHFSwitch
+                name="showWeightInfo"
+                labelPlacement="start"
+                label={t('Show Weight Information')}
+                sx={{
+                  justifyContent: 'space-between',
+                  flexDirection: 'row-reverse',
+                  width: '100%',
+                  mx: 0,
+                }}
+              />
+              <RHFSwitch
+                name="showGenderInfo"
+                labelPlacement="start"
+                label={t('Show Gender Information')}
+                sx={{
+                  justifyContent: 'space-between',
+                  flexDirection: 'row-reverse',
+                  width: '100%',
+                  mx: 0,
+                }}
+              />
             </Stack>
 
             <Stack
               spacing={1.5}
               sx={{ p: 3, borderRadius: 2, bgcolor: 'background.neutral' }}
             >
-              <Typography variant="h6" sx={{ mb: 2 }}>
-                {t('Veterinarian Information')}
-              </Typography>
+              <Stack
+                direction="row"
+                justifyContent="space-between"
+                alignItems="center"
+                sx={{ mb: 2 }}
+              >
+                <Typography variant="h6">
+                  {t('Veterinarian Information')}
+                </Typography>
+                <Button
+                  size="small"
+                  variant="outlined"
+                  onClick={() =>
+                    handleSelectAll(
+                      'veterinarian',
+                      !selectAllPermissions.veterinarian
+                    )
+                  }
+                  startIcon={
+                    <Iconify
+                      icon={
+                        selectAllPermissions.veterinarian
+                          ? 'mdi:checkbox-marked'
+                          : 'mdi:checkbox-blank-outline'
+                      }
+                    />
+                  }
+                >
+                  {selectAllPermissions.veterinarian
+                    ? t('Unselect All')
+                    : t('Select All')}
+                </Button>
+              </Stack>
 
               <RHFSwitch
                 name="showVeterinarianContact"

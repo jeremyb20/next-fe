@@ -5,6 +5,7 @@ import { countries } from '@/assets/data';
 import { HOST_API } from '@/config-global';
 import Iconify from '@/components/iconify';
 import { OptionType } from '@/types/global';
+import { PetFormValues } from '@/types/pet';
 import { fData } from '@/utils/format-number';
 import { IUser, IPetProfile } from '@/types/api';
 import { useSnackbar } from '@/components/snackbar';
@@ -17,8 +18,6 @@ import { useMemo, useState, useEffect, useCallback } from 'react';
 import CustomPopover, { usePopover } from '@/components/custom-popover';
 import { useCreateGenericMutation } from '@/hooks/user-generic-mutation';
 import { parseWeight, BreedOptions, GENDER_OPTIONS } from '@/utils/constants';
-import CostaRicaIDCard from '@/components/country-cards/Costa-Rica/costa-rica-card';
-import MedicalControlView from '@/app/[lang]/pet/_components/view/medical-control-view';
 import {
   getPhoneHelperText,
   getPhonePlaceholder,
@@ -54,38 +53,6 @@ import {
 } from '@mui/material';
 
 // ----------------------------------------------------------------------
-
-type FormValues = {
-  petName: string;
-  petFirstSurname: string;
-  petSecondSurname: string;
-  genderSelected: string;
-  breed: string;
-  weight: string;
-  address: string;
-  phone: string;
-  ownerPetName: string;
-  petStatus: string;
-  birthDate: string;
-  favoriteActivities: string;
-  healthAndRequirements: string;
-  phoneVeterinarian: string;
-  veterinarianContact: string;
-  // Permissions fields
-  showPhoneInfo: boolean;
-  showLinkTwitter: boolean;
-  showLinkFacebook: boolean;
-  showLinkInstagram: boolean;
-  showOwnerPetName: boolean;
-  showBirthDate: boolean;
-  showAddressInfo: boolean;
-  showVeterinarianContact: boolean;
-  showPhoneVeterinarian: boolean;
-  showHealthAndRequirements: boolean;
-  showFavoriteActivities: boolean;
-  showLocationInfo: boolean;
-  isDigitalIdentificationActive?: boolean;
-};
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -228,21 +195,23 @@ export default function PetQuickEditForm({
     ownerPetName: Yup.string().optional().default(''),
     // Permissions fields - todos son booleanos opcionales
     showPhoneInfo: Yup.boolean().optional().default(true),
-    showLinkTwitter: Yup.boolean().optional().default(true),
-    showLinkFacebook: Yup.boolean().optional().default(true),
-    showLinkInstagram: Yup.boolean().optional().default(true),
     showOwnerPetName: Yup.boolean().optional().default(true),
     showBirthDate: Yup.boolean().optional().default(true),
     showAddressInfo: Yup.boolean().optional().default(true),
+    showEmailInfo: Yup.boolean().optional().default(true),
     showVeterinarianContact: Yup.boolean().optional().default(true),
     showPhoneVeterinarian: Yup.boolean().optional().default(true),
     showHealthAndRequirements: Yup.boolean().optional().default(true),
     showFavoriteActivities: Yup.boolean().optional().default(true),
     showLocationInfo: Yup.boolean().optional().default(true),
-    isDigitalIdentificationActive: Yup.boolean().optional(),
+    showLocationConsent: Yup.boolean().optional().default(true),
+    showBreedInfo: Yup.boolean().optional().default(true),
+    showWeightInfo: Yup.boolean().optional().default(true),
+    showGenderInfo: Yup.boolean().optional().default(true),
+    notes: Yup.string().optional().default(''),
   });
 
-  const defaultValues: FormValues = useMemo(() => {
+  const defaultValues: PetFormValues = useMemo(() => {
     const parsedWeight = parseWeight(currentPet?.weight);
     return {
       petName: currentPet?.petName || '',
@@ -265,9 +234,7 @@ export default function PetQuickEditForm({
       petStatus: currentPet?.petStatus || 'active',
       // Permissions defaults
       showPhoneInfo: currentPet?.permissions?.showPhoneInfo ?? true,
-      showLinkTwitter: currentPet?.permissions?.showLinkTwitter ?? true,
-      showLinkFacebook: currentPet?.permissions?.showLinkFacebook ?? true,
-      showLinkInstagram: currentPet?.permissions?.showLinkInstagram ?? true,
+      showEmailInfo: currentPet?.permissions?.showEmailInfo ?? true,
       showOwnerPetName: currentPet?.permissions?.showOwnerPetName ?? true,
       showBirthDate: currentPet?.permissions?.showBirthDate ?? true,
       showAddressInfo: currentPet?.permissions?.showAddressInfo ?? true,
@@ -282,10 +249,15 @@ export default function PetQuickEditForm({
       showLocationInfo: currentPet?.permissions?.showLocationInfo ?? true,
       isDigitalIdentificationActive:
         currentPet?.isDigitalIdentificationActive || false,
+      notes: currentPet?.notes || '',
+      showLocationConsent: currentPet?.permissions?.showLocationConsent ?? true,
+      showBreedInfo: currentPet?.permissions?.showBreedInfo ?? true,
+      showWeightInfo: currentPet?.permissions?.showWeightInfo ?? true,
+      showGenderInfo: currentPet?.permissions?.showGenderInfo ?? true,
     };
   }, [currentPet]);
 
-  const methods = useForm<FormValues>({
+  const methods = useForm<PetFormValues>({
     resolver: yupResolver(NewPetSchema),
     defaultValues,
   });
@@ -305,7 +277,7 @@ export default function PetQuickEditForm({
     setWeightUnit(unit);
   };
 
-  const onSubmit = async (data: FormValues) => {
+  const onSubmit = async (data: PetFormValues) => {
     try {
       const weightWithUnit = data.weight ? `${data.weight} ${weightUnit}` : '';
       const userPetId = currentUser?._id || '';
@@ -314,9 +286,7 @@ export default function PetQuickEditForm({
         id: currentPet?._id,
         weight: weightWithUnit,
         genderSelected: data.genderSelected,
-        ...(isAdmin && {
-          isDigitalIdentificationActive: data.isDigitalIdentificationActive,
-        }),
+
         // Si el usuario eliminó la foto, agregar flag para eliminar
         ...(photoIdToDelete &&
           !petPhoto &&
@@ -326,9 +296,6 @@ export default function PetQuickEditForm({
         // Estructura para las permissions
         permissions: {
           showPhoneInfo: data.showPhoneInfo,
-          showLinkTwitter: data.showLinkTwitter,
-          showLinkFacebook: data.showLinkFacebook,
-          showLinkInstagram: data.showLinkInstagram,
           showOwnerPetName: data.showOwnerPetName,
           showBirthDate: data.showBirthDate,
           showAddressInfo: data.showAddressInfo,
@@ -337,6 +304,9 @@ export default function PetQuickEditForm({
           showHealthAndRequirements: data.showHealthAndRequirements,
           showFavoriteActivities: data.showFavoriteActivities,
           showLocationInfo: data.showLocationInfo,
+          showLocationConsent: data.showLocationConsent,
+          showBreedInfo: data.showBreedInfo,
+          showWeightInfo: data.showWeightInfo,
         },
       };
 
@@ -481,18 +451,6 @@ export default function PetQuickEditForm({
                 value: 'location',
                 label: 'Location',
                 icon: 'solar:point-on-map-outline',
-              },
-              {
-                id: 3,
-                value: 'medicalControl',
-                label: 'Medical Control',
-                icon: 'hugeicons:injection',
-              },
-              {
-                id: 4,
-                value: 'digitalCard',
-                label: 'Digital Card',
-                icon: 'solar:card-outline',
               },
             ].map((tab) => (
               <Tab
@@ -1023,21 +981,6 @@ export default function PetQuickEditForm({
                 />
               </Stack>
             </Box>
-          </TabPanel>
-          <TabPanel value={tabValue} index={2}>
-            <Box sx={{ maxHeight: '55vh', overflow: 'auto' }}>
-              Location Goes here
-              {/* <MapView />; */}
-            </Box>
-          </TabPanel>
-          <TabPanel value={tabValue} index={3}>
-            <MedicalControlView
-              currentPet={currentPet}
-              memberPetId={currentPet?.memberPetId || ''}
-            />
-          </TabPanel>
-          <TabPanel value={tabValue} index={4}>
-            <CostaRicaIDCard data={currentPet} />
           </TabPanel>
         </FormProvider>
       </DialogContent>

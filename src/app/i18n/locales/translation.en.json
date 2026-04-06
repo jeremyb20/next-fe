@@ -452,5 +452,8 @@
   "First Surname": "First Surname",
   "Second Surname": "Second Surname",
   "Veterinarian Name": "Veterinarian Name",
-  "Veterinarian Phone": "Veterinarian Phone"
+  "Veterinarian Phone": "Veterinarian Phone",
+  "Show Breed Information": "Show Breed Information",
+  "Show Weight Information": "Show Weight Information",
+  "Show Gender Information": "Show Gender Information"
 }

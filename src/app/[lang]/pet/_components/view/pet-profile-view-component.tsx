@@ -9,13 +9,13 @@ import { IPetProfile } from '@/types/api';
 import Iconify from '@/components/iconify';
 import { fDate } from '@/utils/format-time';
 import { RouterLink } from '@/routes/components';
-import { BreedOptions } from '@/utils/constants';
 import axios, { endpoints } from '@/utils/axios';
 import { useSnackbar } from '@/components/snackbar';
 import { useQueryClient } from '@tanstack/react-query';
 import { useTranslation } from '@/hooks/use-translation';
 import { useManagerUser } from '@/hooks/use-manager-user';
 import { useSettingsContext } from '@/components/settings';
+import { BreedOptions, GENDER_OPTIONS } from '@/utils/constants';
 import React, { useRef, useMemo, useState, useEffect } from 'react';
 import SplashScreen from '@/components/loading-screen/splash-screen';
 import { DOMAIN, EMAIL_SUPPORT, PHONE_SUPPORT } from '@/config-global';
@@ -390,45 +390,84 @@ export default function PetProfileViewComponent({
                         flexWrap="wrap"
                         useFlexGap
                       >
-                        <Box
-                          sx={{
-                            display: 'flex',
-                            alignItems: 'center',
-                            gap: 0.5,
-                          }}
-                        >
-                          <Iconify
-                            icon="mdi:cake-variant"
-                            width={13}
-                            sx={{ color: 'text.secondary' }}
-                          />
-                          <Typography variant="caption" color="text.secondary">
-                            {fDate(petProfile.birthDate)} ({age.years}{' '}
-                            {t('years')}{' '}
-                            {age.months > 0 && `${age.months} ${t('months')}`})
-                          </Typography>
-                        </Box>
-
-                        <Box
-                          sx={{
-                            display: 'flex',
-                            alignItems: 'center',
-                            gap: 0.5,
-                          }}
-                        >
-                          <Iconify
-                            icon="mdi:dog"
-                            width={13}
-                            sx={{ color: 'text.secondary' }}
-                          />
-                          <Box>
-                            <Typography variant="body1" fontWeight={600}>
-                              {BreedOptions.todos.find(
-                                (breed) => breed.value === petProfile?.breed
-                              )?.label || 'Unknown breed'}
+                        {petProfile.birthDate && (
+                          <Box
+                            sx={{
+                              display: 'flex',
+                              alignItems: 'center',
+                              gap: 0.5,
+                            }}
+                          >
+                            <Iconify
+                              icon="mdi:cake-variant"
+                              width={13}
+                              sx={{ color: 'text.secondary' }}
+                            />
+                            <Typography
+                              variant="caption"
+                              color="text.secondary"
+                            >
+                              {fDate(petProfile.birthDate)} ({age.years}{' '}
+                              {t('years')}{' '}
+                              {age.months > 0 && `${age.months} ${t('months')}`}
+                              )
                             </Typography>
                           </Box>
-                        </Box>
+                        )}
+
+                        <Stack
+                          direction="row"
+                          spacing={1}
+                          alignItems="center"
+                          justifyContent="space-between"
+                          width="100%"
+                        >
+                          {petProfile.breed && (
+                            <Box
+                              sx={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: 0.5,
+                              }}
+                            >
+                              <Iconify
+                                icon="mdi:dog"
+                                width={13}
+                                sx={{ color: 'text.secondary' }}
+                              />
+                              <Box>
+                                <Typography variant="body1" fontWeight={600}>
+                                  {BreedOptions.todos.find(
+                                    (breed) => breed.value === petProfile?.breed
+                                  )?.label || 'Unknown breed'}
+                                </Typography>
+                              </Box>
+                            </Box>
+                          )}
+                          {/* peso  */}
+                          {petProfile.weight && (
+                            <Box
+                              sx={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: 0.5,
+                              }}
+                            >
+                              <Iconify
+                                icon="mdi:weight-kilogram"
+                                width={13}
+                                sx={{ color: 'text.secondary', mt: -0.5 }}
+                              />
+                              <Box>
+                                <Typography variant="body1" fontWeight={600}>
+                                  {petProfile.weight
+                                    ? `${petProfile.weight}`
+                                    : 'N/A'}
+                                </Typography>
+                              </Box>
+                            </Box>
+                          )}
+                        </Stack>
                       </Stack>
                     </Box>
                   </Box>
@@ -569,36 +608,44 @@ export default function PetProfileViewComponent({
                             </Box>
                           </Box>
 
-                          <Box
-                            sx={{
-                              display: 'flex',
-                              alignItems: 'flex-start',
-                              gap: 1.5,
-                            }}
-                          >
-                            <Iconify
-                              icon={
-                                petProfile.genderSelected === 'Male'
-                                  ? 'mdi:gender-male'
-                                  : 'mdi:gender-female'
-                              }
-                              width={20}
-                              height={20}
-                              sx={{ color: 'text.secondary', mt: 0.5 }}
-                            />
-                            <Box>
-                              <Typography
-                                variant="caption"
-                                color="text.secondary"
-                                display="block"
-                              >
-                                {t('Gender')}
-                              </Typography>
-                              <Typography variant="body1" fontWeight={600}>
-                                {t(petProfile.genderSelected) || 'N/A'}
-                              </Typography>
+                          {petProfile.genderSelected && (
+                            <Box
+                              sx={{
+                                display: 'flex',
+                                alignItems: 'flex-start',
+                                gap: 1.5,
+                              }}
+                            >
+                              <Iconify
+                                icon={
+                                  petProfile.genderSelected === 'Male'
+                                    ? 'mdi:gender-male'
+                                    : 'mdi:gender-female'
+                                }
+                                width={20}
+                                height={20}
+                                sx={{ color: 'text.secondary', mt: 0.5 }}
+                              />
+                              <Box>
+                                <Typography
+                                  variant="caption"
+                                  color="text.secondary"
+                                  display="block"
+                                >
+                                  {t('Gender')}
+                                </Typography>
+                                <Typography variant="body1" fontWeight={600}>
+                                  {t(
+                                    GENDER_OPTIONS.find(
+                                      (gender) =>
+                                        gender.value ===
+                                        petProfile.genderSelected
+                                    )?.label || 'N/A'
+                                  )}
+                                </Typography>
+                              </Box>
                             </Box>
-                          </Box>
+                          )}
 
                           {/* Favorite Activities */}
                           {canShowFavoriteActivities &&
@@ -720,35 +767,36 @@ export default function PetProfileViewComponent({
                               </Box>
                             </Box>
                           )}
-
-                          <Box
-                            sx={{
-                              display: 'flex',
-                              alignItems: 'flex-start',
-                              gap: 1.5,
-                            }}
-                          >
-                            <Iconify
-                              icon="mdi:dog"
-                              width={20}
-                              height={20}
-                              sx={{ color: 'text.secondary', mt: 0.5 }}
-                            />
-                            <Box>
-                              <Typography
-                                variant="caption"
-                                color="text.secondary"
-                                display="block"
-                              >
-                                {t('Breed')}
-                              </Typography>
-                              <Typography variant="body1" fontWeight={600}>
-                                {BreedOptions.todos.find(
-                                  (breed) => breed.value === petProfile?.breed
-                                )?.label || 'Unknown breed'}
-                              </Typography>
+                          {petProfile.breed && (
+                            <Box
+                              sx={{
+                                display: 'flex',
+                                alignItems: 'flex-start',
+                                gap: 1.5,
+                              }}
+                            >
+                              <Iconify
+                                icon="mdi:dog"
+                                width={20}
+                                height={20}
+                                sx={{ color: 'text.secondary', mt: 0.5 }}
+                              />
+                              <Box>
+                                <Typography
+                                  variant="caption"
+                                  color="text.secondary"
+                                  display="block"
+                                >
+                                  {t('Breed')}
+                                </Typography>
+                                <Typography variant="body1" fontWeight={600}>
+                                  {BreedOptions.todos.find(
+                                    (breed) => breed.value === petProfile?.breed
+                                  )?.label || 'Unknown breed'}
+                                </Typography>
+                              </Box>
                             </Box>
-                          </Box>
+                          )}
 
                           {/* Health & Requirements */}
                           {canShowHealthAndRequirements &&

@@ -94,6 +94,19 @@ export const useGetPetProfileById = (identifier: string | undefined) =>
       retry: 0,
     }
   );
+export const useGetPublicProfilebById = (identifier: string | undefined) =>
+  useFetch<IPetProfile>(
+    'useGetPublicProfilebById',
+    `${endpoints.pet.getPublicProfileById}/${identifier}`,
+    {
+      refetchOnMount: true,
+      refetchOnWindowFocus: true,
+      refetchOnReconnect: true,
+      staleTime: 0, // Siempre refrescar al volver
+      gcTime: 0, // Mantener en caché 5 minutos
+      retry: 0,
+    }
+  );
 
 export const getValidationCode = async (code: string) => {
   const response = await axiosInstance.get(

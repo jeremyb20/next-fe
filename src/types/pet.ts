@@ -1,0 +1,33 @@
+export type PetFormValues = {
+  petName: string;
+  petFirstSurname: string;
+  petSecondSurname: string;
+  genderSelected: string;
+  breed: string;
+  weight: string;
+  address: string;
+  phone: string;
+  ownerPetName: string;
+  petStatus: string;
+  birthDate: string;
+  favoriteActivities: string;
+  healthAndRequirements: string;
+  phoneVeterinarian: string;
+  veterinarianContact: string;
+  notes: string;
+  // Permissions fields
+  showPhoneInfo: boolean;
+  showOwnerPetName: boolean;
+  showEmailInfo: boolean;
+  showBirthDate: boolean;
+  showAddressInfo: boolean;
+  showVeterinarianContact: boolean;
+  showPhoneVeterinarian: boolean;
+  showHealthAndRequirements: boolean;
+  showFavoriteActivities: boolean;
+  showLocationInfo: boolean;
+  showLocationConsent: boolean;
+  showBreedInfo: boolean;
+  showWeightInfo: boolean;
+  showGenderInfo: boolean;
+};

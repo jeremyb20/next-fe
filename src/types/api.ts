@@ -190,9 +190,6 @@ export interface IMedicalRecord {
 interface IPetPermissions {
   showPhoneInfo: boolean;
   showEmailInfo: boolean;
-  showLinkTwitter: boolean;
-  showLinkFacebook: boolean;
-  showLinkInstagram: boolean;
   showOwnerPetName: boolean;
   showBirthDate: boolean;
   showAddressInfo: boolean;
@@ -203,6 +200,9 @@ interface IPetPermissions {
   showFavoriteActivities: boolean;
   showLocationInfo: boolean;
   showLocationConsent: boolean;
+  showBreedInfo: boolean;
+  showWeightInfo: boolean;
+  showGenderInfo: boolean;
 }
 
 export interface IPetProfile {
