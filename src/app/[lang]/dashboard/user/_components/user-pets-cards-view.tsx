@@ -152,11 +152,11 @@ export default function UserPetCardsView() {
   return (
     <Container maxWidth={settings.themeStretch ? false : 'md'}>
       <CustomBreadcrumbs
-        heading="List"
+        heading={t('My Pets')}
         links={[
-          { name: 'Inicio', href: paths.dashboard.root },
+          { name: t('Home'), href: paths.dashboard.root },
           {
-            name: 'Pets',
+            name: t('My Pets'),
             href: paths.dashboard.user.pets,
           },
         ]}
@@ -166,7 +166,7 @@ export default function UserPetCardsView() {
             onClick={() => registerPetModal.onTrue()}
             variant="contained"
           >
-            Add Pet
+            {t('Add New Pet')}
           </Button>
         }
         sx={{
@@ -178,31 +178,51 @@ export default function UserPetCardsView() {
       />
       <Card
         sx={{
-          backgroundColor: 'backgound.paper',
+          backgroundColor: 'background.paper',
           borderRadius: 4,
           mb: 3,
           position: 'relative',
+          overflow: 'hidden',
         }}
       >
-        <CardContent sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-          <Avatar src={user.photoURL} sx={{ width: 60, height: 60 }} />
-          <Box>
-            <Typography variant="h6" fontWeight={600}>
-              {t('Hi there!')}, {user.displayName}
-            </Typography>
-            <Typography variant="body2" color="text.secondary">
-              {user.email}
-            </Typography>
-            <Typography variant="body2" color="text.secondary">
-              {t('Pets Registered')}:{' '}
-              {isFetching ? (
-                <CircularProgress size={6} />
-              ) : (
-                usersData?.payload.length
-              )}{' '}
-            </Typography>
+        <CardContent sx={{ position: 'relative', zIndex: 1 }}>
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+            <Avatar src={user.photoURL} sx={{ width: 60, height: 60 }} />
+            <Box>
+              <Typography variant="h6" fontWeight={600}>
+                {t('Hi there!')}, {user.displayName}
+              </Typography>
+              <Typography variant="body2" color="text.secondary">
+                {user.email}
+              </Typography>
+              <Typography variant="body2" color="text.secondary">
+                {t('Pets Registered')}:{' '}
+                {isFetching ? (
+                  <CircularProgress size={6} />
+                ) : (
+                  usersData?.payload.length
+                )}{' '}
+              </Typography>
+            </Box>
           </Box>
         </CardContent>
+
+        {/* Imagen decorativa en esquina superior derecha */}
+        <Box
+          component="img"
+          src="/assets/images/paw-cat.png"
+          alt="Paw cat"
+          sx={{
+            position: 'absolute',
+            top: -10,
+            right: -10,
+            width: 140,
+            height: 'auto',
+            objectFit: 'contain',
+            zIndex: 0,
+            opacity: 0.3,
+          }}
+        />
       </Card>
       <Box sx={{ my: 2 }}>
         <FilterToolbar

@@ -4,6 +4,7 @@ import { useRouter } from '@/routes/hooks';
 import { useAuthContext } from '@/auth/hooks';
 import { varHover } from '@/components/animate';
 import { useSnackbar } from '@/components/snackbar';
+import { useTranslation } from '@/hooks/use-translation';
 import { useManagerUser } from '@/hooks/use-manager-user';
 import CustomPopover, { usePopover } from '@/components/custom-popover';
 
@@ -24,7 +25,7 @@ const OPTIONS = [
     linkTo: '/',
   },
   {
-    label: 'Profile',
+    label: 'profile',
     linkTo: `${paths.dashboard.user.account}?tab=general`,
   },
   {
@@ -37,6 +38,7 @@ const OPTIONS = [
 
 export default function AccountPopover() {
   const router = useRouter();
+  const { t } = useTranslation();
 
   const { user } = useManagerUser();
 
@@ -114,9 +116,12 @@ export default function AccountPopover() {
           {OPTIONS.map((option) => (
             <MenuItem
               key={option.label}
+              sx={{
+                textTransform: 'capitalize',
+              }}
               onClick={() => handleClickItem(option.linkTo)}
             >
-              {option.label}
+              {t(option.label)}
             </MenuItem>
           ))}
         </Stack>
@@ -127,7 +132,7 @@ export default function AccountPopover() {
           onClick={handleLogout}
           sx={{ m: 1, fontWeight: 'fontWeightBold', color: 'error.main' }}
         >
-          Logout
+          {t('Logout')}
         </MenuItem>
       </CustomPopover>
     </>

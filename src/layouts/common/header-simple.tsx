@@ -3,6 +3,7 @@ import Logo from '@/components/logo';
 import { paths } from '@/routes/paths';
 import { RouterLink } from '@/routes/components';
 import { useOffSetTop } from '@/hooks/use-off-set-top';
+import { useTranslation } from '@/hooks/use-translation';
 
 import Link from '@mui/material/Link';
 import Stack from '@mui/material/Stack';
@@ -13,6 +14,7 @@ import { useTheme } from '@mui/material/styles';
 import { HEADER } from '../config-layout';
 import HeaderShadow from './header-shadow';
 import SettingsButton from './settings-button';
+import LanguagePopover from './language-popover';
 
 // ----------------------------------------------------------------------
 
@@ -20,6 +22,7 @@ export default function HeaderSimple() {
   const theme = useTheme();
 
   const offsetTop = useOffSetTop(HEADER.H_DESKTOP);
+  const { t } = useTranslation();
 
   return (
     <AppBar>
@@ -48,6 +51,7 @@ export default function HeaderSimple() {
 
         <Stack direction="row" alignItems="center" spacing={1}>
           <SettingsButton />
+          <LanguagePopover />
 
           <Link
             href={paths.faqs}
@@ -55,7 +59,7 @@ export default function HeaderSimple() {
             color="inherit"
             sx={{ typography: 'subtitle2' }}
           >
-            Need help?
+            {t('Need help?')}
           </Link>
         </Stack>
       </Toolbar>

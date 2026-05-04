@@ -696,7 +696,7 @@ export default function PetEditForm({ petId }: Props) {
         }}
       >
         <CustomBreadcrumbs
-          heading="List"
+          heading={t('My Pets')}
           links={[
             { name: t('Home'), href: paths.dashboard.root },
             {
@@ -843,8 +843,10 @@ export default function PetEditForm({ petId }: Props) {
               <RHFAutocomplete
                 name="breed"
                 label={t('Breed')}
+                placeholder={t('Choose breed')}
                 options={BreedOptions.todos}
                 getOptionLabel={(option: OptionType | string) => {
+                  if (!option) return t('Choose breed');
                   if (typeof option === 'string') {
                     const foundOption = BreedOptions.todos.find(
                       (opt) => opt.value === option
@@ -875,7 +877,7 @@ export default function PetEditForm({ petId }: Props) {
                 }}
                 renderOption={(props, option) => (
                   <li {...props} key={option.value}>
-                    {option.label}
+                    {t(option.label)}
                   </li>
                 )}
               />

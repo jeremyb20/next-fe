@@ -10,8 +10,9 @@ export interface PetAgeResult {
   months: number;
   humanYears: number;
   petYears: number;
-  ageCategory: 'cachorro' | 'joven' | 'adulto' | 'senior';
+  ageCategory: 'puppy' | 'young' | 'adult' | 'senior'
   description: string;
+  // 'cachorro' | 'joven' | 'adulto' | 'senior'
 }
 
 export interface AgeCalculationOptions {

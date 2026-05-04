@@ -88,34 +88,34 @@ export class PetAgeCalculator {
 
     if (species === 'dog') {
       if (totalHumanMonths < 6) {
-        ageCategory = 'cachorro';
-        description = 'Cachorro - Necesita cuidados especiales y socialización';
+        ageCategory = 'puppy';
+        description = 'Puppy - Needs special care and socialization';
       } else if (totalHumanMonths < 24) {
-        ageCategory = 'joven';
-        description = 'Adulto joven - Muy activo y enérgico';
+        ageCategory = 'young';
+        description = 'Young adult - Very active and energetic';
       } else if (totalHumanMonths < 84) {
         // 7 años
-        ageCategory = 'adulto';
-        description = 'Adulto - En su mejor etapa';
+        ageCategory = 'adult';
+        description = 'Adult - In the prime of life';
       } else {
         ageCategory = 'senior';
-        description = 'Senior - Necesita cuidados geriátricos';
+        description = 'Senior - Needs geriatric care';
       }
     } else {
       // cat
       if (totalHumanMonths < 6) {
-        ageCategory = 'cachorro';
-        description = 'Gatito - En etapa de crecimiento y desarrollo';
+        ageCategory = 'puppy';
+        description = 'Kitten - In the growth and development stage';
       } else if (totalHumanMonths < 24) {
-        ageCategory = 'joven';
-        description = 'Gato joven - Muy juguetón y activo';
+        ageCategory = 'young';
+        description = 'Young cat - Very playful and active';
       } else if (totalHumanMonths < 96) {
         // 8 años
-        ageCategory = 'adulto';
-        description = 'Gato adulto - Comportamiento estable';
+        ageCategory = 'adult';
+        description = 'Adult cat - Stable behavior';
       } else {
         ageCategory = 'senior';
-        description = 'Gato senior - Cuidados especiales recomendados';
+        description = 'Senior Cats - Recommended Special Care';
       }
     }
 
@@ -186,36 +186,36 @@ export class PetAgeCalculator {
     const recommendations: string[] = [];
     const { ageCategory, petYears, species } = ageResult;
 
-    if (ageCategory === 'cachorro') {
-      recommendations.push('Vacunación completa requerida');
-      recommendations.push('Alimento para cachorros');
-      recommendations.push('Socialización temprana');
-      recommendations.push('Entrenamiento básico');
-    } else if (ageCategory === 'joven') {
-      recommendations.push('Ejercicio regular importante');
-      recommendations.push('Alimento para adultos jóvenes');
-      recommendations.push('Controles veterinarios anuales');
-    } else if (ageCategory === 'adulto') {
-      recommendations.push('Mantenimiento de peso ideal');
-      recommendations.push('Ejercicio moderado diario');
-      recommendations.push('Chequeos veterinarios cada 6-12 meses');
+    if (ageCategory === 'puppy') {
+      recommendations.push('Full vaccination required');
+      recommendations.push('Puppy food');
+      recommendations.push('Early socialization');
+      recommendations.push('Basic training');
+    } else if (ageCategory === 'young') {
+      recommendations.push('Regular exercise is important');
+      recommendations.push('Food for young adults');
+      recommendations.push('Annual veterinary checkups');
+    } else if (ageCategory === 'adult') {
+      recommendations.push('Maintaining a healthy weight');
+      recommendations.push('Moderate daily exercise');
+      recommendations.push('Veterinary checkups every 6–12 months');
     } else {
       // senior
-      recommendations.push('Chequeos geriátricos cada 6 meses');
-      recommendations.push('Alimento senior especializado');
-      recommendations.push('Monitoreo de articulaciones y movilidad');
-      recommendations.push('Exámenes de sangre regulares');
+      recommendations.push('Geriatric checkups every 6 months');
+      recommendations.push('Specialized senior food');
+      recommendations.push('Joint and Mobility Monitoring');
+      recommendations.push('Regular blood tests');
     }
 
     // Recomendaciones específicas por especie
     if (species === 'dog') {
       if (petYears > 7) {
-        recommendations.push('Evaluación dental regular');
+        recommendations.push('Regular dental checkup');
       }
     } else {
       // cat
       if (petYears > 8) {
-        recommendations.push('Monitoreo de función renal');
+        recommendations.push('Monitoring of kidney function');
         recommendations.push('Control de peso cuidadoso');
       }
     }

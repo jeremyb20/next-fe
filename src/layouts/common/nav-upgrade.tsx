@@ -2,6 +2,7 @@ import { useSnackbar } from 'notistack';
 import Iconify from '@/components/iconify';
 import { useAuthContext } from '@/auth/hooks';
 import { useRouter } from '@/routes/hooks/use-router';
+import { useTranslation } from '@/hooks/use-translation';
 import { useManagerUser } from '@/hooks/use-manager-user';
 
 import Box from '@mui/material/Box';
@@ -19,6 +20,7 @@ export default function NavUpgrade() {
   const { logout } = useAuthContext();
   const router = useRouter();
   const { enqueueSnackbar } = useSnackbar();
+  const { t } = useTranslation();
 
   const handleLogout = async () => {
     try {
@@ -85,7 +87,7 @@ export default function NavUpgrade() {
           rel="noopener"
           onClick={() => handleLogout()}
         >
-          Logout{' '}
+          {t('Logout')}
           <Iconify icon="solar:login-2-linear" width={20} sx={{ ml: 1 }} />
         </Button>
       </Stack>

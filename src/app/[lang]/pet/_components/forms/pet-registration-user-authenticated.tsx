@@ -237,6 +237,45 @@ export function PetRegistrationUserAuthenticated({
     router.push(PATH_AFTER_LOGIN);
   };
 
+  const renderAgeResult = (
+    <>
+      {ageResult && (
+        <Paper sx={{ p: 2, mb: 3 }}>
+          <Typography variant="h6" gutterBottom>
+            {t('Pet Age Information')}
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
+            <strong>{t('Species')}:</strong> {t(ageResult.species)}
+            {ageResult.size &&
+              ageResult.species === 'dog' &&
+              ` (${ageResult.size})`}
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
+            {ageResult.years} {t('years and')} {ageResult.months} {t('months')}
+          </Typography>
+          <Typography variant="body2" sx={{ mt: 1 }}>
+            {t(ageResult.description)}
+          </Typography>
+
+          {recommendations.length > 0 && (
+            <Box sx={{ mt: 2 }}>
+              <Typography variant="subtitle2" gutterBottom>
+                {t('Recommendations')}:
+              </Typography>
+              <ul style={{ margin: 0, paddingLeft: '20px' }}>
+                {recommendations.map((rec, index) => (
+                  <li key={index}>
+                    <Typography variant="body2">{t(rec)}</Typography>
+                  </li>
+                ))}
+              </ul>
+            </Box>
+          )}
+        </Paper>
+      )}
+    </>
+  );
+
   // Efecto para calcular edad cuando cambia la raza o fecha de nacimiento
   useEffect(() => {
     const currentBreed = watchPetForm('breed');
@@ -331,13 +370,14 @@ export function PetRegistrationUserAuthenticated({
           }}
         >
           <RHFTextField name="petName" label={t('Pet Name')} />
-          <RHFTextField name="petFirstSurname" label="First Surname" />
-          <RHFTextField name="petSecondSurname" label="Second Surname" />
+          <RHFTextField name="petFirstSurname" label={t('First Surname')} />
+          <RHFTextField name="petSecondSurname" label={t('Second Surname')} />
           <RHFAutocomplete
             name="breed"
             label={t('Breed')}
             options={BreedOptions.todos}
             getOptionLabel={(option: OptionType | string) => {
+              if (!option) return t('Choose breed');
               if (typeof option === 'string') {
                 const foundOption = BreedOptions.todos.find(
                   (opt) => opt.value === option
@@ -446,42 +486,7 @@ export function PetRegistrationUserAuthenticated({
         </Box>
 
         {/* Mostrar resultado de edad */}
-        {ageResult && (
-          <Paper sx={{ p: 2, mb: 3 }}>
-            <Typography variant="h6" gutterBottom>
-              {t('Pet Age Information')}
-            </Typography>
-            <Typography variant="body2" color="text.secondary">
-              <strong>{t('Species')}:</strong>{' '}
-              {ageResult.species === 'dog' ? 'Dog' : 'Cat'}
-              {ageResult.size &&
-                ageResult.species === 'dog' &&
-                ` (${ageResult.size})`}
-            </Typography>
-            <Typography variant="body2" color="text.secondary">
-              {ageResult.years} {t('years and')} {ageResult.months}{' '}
-              {t('months')}
-            </Typography>
-            <Typography variant="body2" sx={{ mt: 1 }}>
-              {t(ageResult.description)}
-            </Typography>
-
-            {recommendations.length > 0 && (
-              <Box sx={{ mt: 2 }}>
-                <Typography variant="subtitle2" gutterBottom>
-                  {t('Recommendations')}:
-                </Typography>
-                <ul style={{ margin: 0, paddingLeft: '20px' }}>
-                  {recommendations.map((rec, index) => (
-                    <li key={index}>
-                      <Typography variant="body2">{t(rec)}</Typography>
-                    </li>
-                  ))}
-                </ul>
-              </Box>
-            )}
-          </Paper>
-        )}
+        {renderAgeResult}
 
         <RHFTextField
           name="favoriteActivities"

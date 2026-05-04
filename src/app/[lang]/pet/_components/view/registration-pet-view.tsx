@@ -1,13 +1,13 @@
 'use client';
 
 import { useState } from 'react';
-import Logo from '@/components/logo';
+import Iconify from '@/components/iconify';
 import { PetApiResponse } from '@/types/global';
-import { useResponsive } from '@/hooks/use-responsive';
-import SettingsButton from '@/layouts/common/settings-button';
+import { useTranslation } from '@/hooks/use-translation';
 
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
+import { Button } from '@mui/material';
 import Stack from '@mui/material/Stack';
 
 import { RegistrationTypeSelector } from '../cards/registration-type-selector';
@@ -24,11 +24,10 @@ export default function RegistrationPetView({
   const [registrationType, setRegistrationType] = useState<
     'new' | 'existing' | null
   >(null);
-
+  const { t } = useTranslation();
   const handleBackToSelection = () => {
     setRegistrationType(null);
   };
-  const mdUp = useResponsive('up', 'md');
 
   const renderContent = (
     <Stack
@@ -39,14 +38,6 @@ export default function RegistrationPetView({
         px: { xs: 2 },
       }}
     >
-      {mdUp && (
-        <Logo
-          sx={{
-            mt: 8,
-            mb: 8,
-          }}
-        />
-      )}
       <Card
         sx={{
           py: { xs: 3, md: 5 },
@@ -54,20 +45,24 @@ export default function RegistrationPetView({
           boxShadow: 'none',
           bgcolor: 'background.default',
           overflow: 'unset',
-          my: 3,
+          my: 8,
         }}
       >
-        {' '}
-        {!mdUp && <Logo sx={{ mb: 2 }} />}
-        <SettingsButton
-          sx={{
-            ml: { xs: 1, md: 0 },
-            mr: { md: 2 },
-            position: 'absolute',
-            top: 16,
-            right: 16,
-          }}
-        />
+        <Stack
+          direction="row"
+          justifyContent="space-between"
+          alignItems="center"
+        >
+          {registrationType !== null && (
+            <Button
+              onClick={handleBackToSelection}
+              variant="outlined"
+              startIcon={<Iconify icon="eva:arrow-ios-back-fill" width={16} />}
+            >
+              {t('Back to selection')}
+            </Button>
+          )}
+        </Stack>
         {registrationType === null && (
           <RegistrationTypeSelector onSelect={setRegistrationType} />
         )}

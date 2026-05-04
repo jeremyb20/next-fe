@@ -131,9 +131,9 @@ export default function AccountView() {
         <CustomBreadcrumbs
           heading="Account"
           links={[
-            { name: 'Inicio', href: paths.dashboard.root },
-            { name: 'User', href: paths.dashboard.user.root },
-            { name: 'Account' },
+            { name: t('Home'), href: paths.dashboard.root },
+            { name: t('Account'), href: paths.dashboard.user.root },
+            { name: t('User Information') },
           ]}
           sx={{
             mb: { xs: 3, md: 5 },

@@ -108,7 +108,18 @@ export default function QrCodeTableRow({
       </TableCell>
 
       <TableCell align="center">{randomCode}</TableCell>
-      <TableCell align="center">{hostName}</TableCell>
+      <TableCell align="center">
+        <ListItemText
+          primary={hostName || 'N/A'}
+          secondary={`${hostName}es/pet/${randomCode}` || 'N/A'}
+          primaryTypographyProps={{ typography: 'body2', noWrap: true }}
+          secondaryTypographyProps={{
+            mt: 0.5,
+            component: 'span',
+            typography: 'caption',
+          }}
+        />
+      </TableCell>
 
       <TableCell>
         <Label
@@ -160,7 +171,7 @@ export default function QrCodeTableRow({
         >
           <Stack direction="row" component={Paper} sx={{ m: 1.5, p: 2 }}>
             <QrcodeCustom
-              value={`${hostName}pet/${randomCode}`}
+              value={`${hostName}es/pet/${randomCode}`}
               fileName={randomCode}
             />
           </Stack>
@@ -181,7 +192,7 @@ export default function QrCodeTableRow({
         arrow="right-top"
         sx={{ width: 140 }}
       >
-        <MenuItem
+        {/* <MenuItem
           onClick={() => {
             onViewRow();
             popover.onClose();
@@ -189,7 +200,7 @@ export default function QrCodeTableRow({
         >
           <Iconify icon="solar:eye-bold" />
           View
-        </MenuItem>
+        </MenuItem> */}
         <MenuItem
           onClick={() => {
             onEditRow();
@@ -247,7 +258,7 @@ export default function QrCodeTableRow({
         </DialogTitle>
         <DialogContent>
           <QrcodeCustom
-            value={`${hostName}pet/${randomCode}`}
+            value={`${hostName}es/pet/${randomCode}`}
             fileName={randomCode}
           />
         </DialogContent>

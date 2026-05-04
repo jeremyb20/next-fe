@@ -4,6 +4,7 @@
 
 import Iconify from '@/components/iconify';
 import { APP_NAME } from '@/config-global';
+import { useTranslation } from '@/hooks/use-translation';
 
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
@@ -20,13 +21,15 @@ interface RegistrationTypeSelectorProps {
 export function RegistrationTypeSelector({
   onSelect,
 }: RegistrationTypeSelectorProps) {
+  const { t } = useTranslation();
+
   return (
     <Box sx={{ textAlign: 'center', py: 4 }}>
       <Typography variant="h4" gutterBottom>
-        Register Your Pet
+        {t('Register Your Pet')}
       </Typography>
       <Typography variant="body1" color="text.secondary" sx={{ mb: 4 }}>
-        Choose how you want to register your new pet
+        {t('Choose how you want to register your new pet')}
       </Typography>
 
       <Stack
@@ -55,17 +58,17 @@ export function RegistrationTypeSelector({
             <Iconify icon="mdi:account-plus" width={48} />
           </Box>
           <Typography variant="h6" gutterBottom>
-            New to {APP_NAME}
+            {t('New to')} {APP_NAME}
           </Typography>
           <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-            Create a new account and register your first pet
+            {t('Create a new account and register your first pet')}
           </Typography>
           <Button
             variant="contained"
             sx={{ mt: 2 }}
             onClick={() => onSelect('new')}
           >
-            Get Started
+            {t('Get Started')}
           </Button>
         </Paper>
 
@@ -90,17 +93,17 @@ export function RegistrationTypeSelector({
             <Iconify icon="mdi:account-check" width={48} />
           </Box>
           <Typography variant="h6" gutterBottom>
-            Existing Account
+            {t('Existing Account')}
           </Typography>
           <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-            Already have an account? Add a new pet to your profile
+            {t('Already have an account? Add a new pet to your profile')}
           </Typography>
           <Button
             variant="outlined"
             sx={{ mt: 2 }}
             onClick={() => onSelect('existing')}
           >
-            Add Pet
+            {t('Add Pet')}
           </Button>
         </Paper>
       </Stack>

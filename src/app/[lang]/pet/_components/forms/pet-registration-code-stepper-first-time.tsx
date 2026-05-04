@@ -307,6 +307,8 @@ export default function PetRegistrationCodeStepperFirstTime({
 
         setAgeResult({
           ...result,
+          description: t(result.description),
+          ageCategory: t(result.ageCategory),
           species, // agregar la especie al resultado para mostrarla
           size, // agregar el tamaño al resultado
         });
@@ -317,7 +319,7 @@ export default function PetRegistrationCodeStepperFirstTime({
         setRecommendations([]);
       }
     },
-    []
+    [t]
   );
 
   // Paso 2: Registro de usuario
@@ -438,8 +440,7 @@ export default function PetRegistrationCodeStepperFirstTime({
             {t('Pet Age Information')}
           </Typography>
           <Typography variant="body2" color="text.secondary">
-            <strong>{t('Species')}:</strong>{' '}
-            {ageResult.species === 'dog' ? 'Dog' : 'Cat'}
+            <strong>{t('Species')}:</strong> {t(ageResult.species)}
             {ageResult.size &&
               ageResult.species === 'dog' &&
               ` (${ageResult.size})`}
@@ -495,8 +496,7 @@ export default function PetRegistrationCodeStepperFirstTime({
 
         {code && (
           <Typography variant="body2" color="text.secondary" sx={{ mt: 2 }}>
-            {t('Code provided: ')}
-            {code}
+            {t('Code provided:')} {code}
           </Typography>
         )}
       </Box>
@@ -583,7 +583,7 @@ export default function PetRegistrationCodeStepperFirstTime({
           />
         </Box>
 
-        <RHFTextField name="email" label="Email address" sx={{ mt: 2 }} />
+        <RHFTextField name="email" label={t('Email address')} sx={{ mt: 2 }} />
 
         <RHFTextField
           name="password"
@@ -697,8 +697,10 @@ export default function PetRegistrationCodeStepperFirstTime({
           <RHFAutocomplete
             name="breed"
             label={t('Breed')}
+            placeholder={t('Choose breed')}
             options={BreedOptions.todos}
             getOptionLabel={(option: OptionType | string) => {
+              if (!option) return t('Choose breed');
               if (typeof option === 'string') {
                 const foundOption = BreedOptions.todos.find(
                   (opt) => opt.value === option
@@ -733,7 +735,7 @@ export default function PetRegistrationCodeStepperFirstTime({
               </li>
             )}
           />
-          <RHFSelect name="genderSelected" label="Gender">
+          <RHFSelect name="genderSelected" label={t('Gender')}>
             {GENDER_OPTIONS.map((gender) => (
               <MenuItem key={gender.value} value={gender.value}>
                 {t(gender.label)}
@@ -905,7 +907,12 @@ export default function PetRegistrationCodeStepperFirstTime({
             ?.label || 'Unknown breed'}
         </Typography>
         <Typography variant="body2" color="text.secondary">
-          <strong>{t('Gender')}:</strong> {petData?.genderSelected}
+          <strong>{t('Gender')}:</strong>{' '}
+          {t(
+            GENDER_OPTIONS.find(
+              (gender) => gender.value === petData?.genderSelected
+            )?.label || ''
+          )}
         </Typography>
         <Typography variant="body2" color="text.secondary">
           <strong>{t('Weight')}:</strong> {petData?.weight} {weightUnit}
@@ -943,10 +950,10 @@ export default function PetRegistrationCodeStepperFirstTime({
             <strong>{t('Pet age')}:</strong> {ageResult.petYears} {t('years')}
           </Typography>
           <Typography variant="body2">
-            <strong>{t('Category')}:</strong> {ageResult.ageCategory}
+            <strong>{t('Category')}:</strong> {t(ageResult.ageCategory)}
           </Typography>
           <Typography variant="body2" sx={{ mt: 1 }}>
-            {ageResult.description}
+            {t(ageResult.description)}
           </Typography>
 
           {recommendations.length > 0 && (

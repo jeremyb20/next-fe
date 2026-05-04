@@ -114,12 +114,12 @@ export default function JwtLoginView() {
       setErrorMsg(t(typeof error === 'string' ? error : error.message));
       setValue('password', ''); // Limpiar el campo de contraseña en caso de error
 
-      if (error.message !== 'Wrong password') {
-        if (turnstileRef.current) {
-          turnstileRef.current.reset();
-        }
-        setTurnstileToken(null);
-      }
+      // if (error.message !== 'Wrong password') {
+      //   if (turnstileRef.current) {
+      //     turnstileRef.current.reset();
+      //   }
+      //   setTurnstileToken(null);
+      // }
     }
   });
 

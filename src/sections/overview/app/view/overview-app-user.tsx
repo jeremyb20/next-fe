@@ -5,6 +5,7 @@ import { paths } from '@/routes/paths';
 import { useRouter } from '@/routes/hooks';
 import { useState, useCallback } from 'react';
 import { useBoolean } from '@/hooks/use-boolean';
+import { useSnackbar } from '@/components/snackbar';
 import { useGetUserPetStats } from '@/hooks/use-fetch';
 import { useTranslation } from '@/hooks/use-translation';
 import { useManagerUser } from '@/hooks/use-manager-user';
@@ -42,6 +43,8 @@ export default function OverviewAppUser() {
   const { t } = useTranslation();
   const router = useRouter();
   const registerPetModal = useBoolean();
+  const { enqueueSnackbar } = useSnackbar();
+
   const [activeFilters] = useState<Partial<UserQueryParams>>({
     page: 1,
     limit: Number(process.env.NEXT_PUBLIC_ALLOW_MAX_PETS_BY_USER) || 10,
@@ -114,41 +117,73 @@ export default function OverviewAppUser() {
           <Grid item xs={12}>
             <Card
               sx={{
-                borderRadius: 3,
-                boxShadow: '0 1px 3px rgba(0,0,0,0.05)',
+                backgroundColor: 'background.paper',
+                borderRadius: 4,
+                mb: 3,
+                position: 'relative',
+                overflow: 'hidden',
               }}
             >
-              <CardContent
-                sx={{
-                  py: 2,
-                  px: 3,
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: 2,
-                }}
-              >
-                <Avatar
-                  src={user.photoURL}
-                  sx={{
-                    width: 52,
-                    height: 52,
-                    border: `2px solid ${theme.palette.primary.main}`,
-                  }}
-                />
-                <Box>
-                  <Typography variant="subtitle1" fontWeight={600}>
-                    👋 {t('Hi there!')}, {user.displayName}
-                  </Typography>
-                  <Typography
-                    variant="body2"
-                    color="text.secondary"
-                    sx={{ fontSize: '0.75rem' }}
-                  >
-                    {user.email}
-                  </Typography>
+              <CardContent sx={{ position: 'relative', zIndex: 1 }}>
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+                  <Avatar src={user.photoURL} sx={{ width: 60, height: 60 }} />
+                  <Box>
+                    <Typography variant="h6" fontWeight={600}>
+                      {t('Hi there!')}, {user.displayName}
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      {user.email}
+                    </Typography>
+                  </Box>
                 </Box>
               </CardContent>
+
+              {/* Imagen decorativa en esquina superior derecha */}
+              <Box
+                component="img"
+                src="/assets/images/paw-cat.png"
+                alt="Paw cat"
+                sx={{
+                  position: 'absolute',
+                  top: -10,
+                  right: -10,
+                  width: 140,
+                  height: 'auto',
+                  objectFit: 'contain',
+                  zIndex: 0,
+                  opacity: 0.3,
+                }}
+              />
             </Card>
+          </Grid>
+
+          {/* Fila 2: Quick Actions + Promotions */}
+          <Grid item xs={12}>
+            <QuickActions
+              onAddPet={handleAddPet}
+              onMyPets={() => handleRedirect(paths.dashboard.user.pets)}
+              onFindVet={() =>
+                enqueueSnackbar(t('Coming Soon!'), { variant: 'info' })
+              }
+              onShare={() =>
+                enqueueSnackbar(t('Coming Soon!'), { variant: 'info' })
+              }
+            />
+          </Grid>
+
+          <Grid item xs={12} my={2}>
+            <PromotionsCardCaroussell
+              promotions={promotionsData?.payload || []}
+              onViewOffer={(promotion) => {
+                if (promotion.isExternalLink) {
+                  window.open(promotion.link, '_blank');
+                } else {
+                  handleRedirect(promotion.link);
+                }
+              }}
+              autoplay
+              autoplaySpeed={5000}
+            />
           </Grid>
 
           <Grid item xs={12}>
@@ -169,31 +204,6 @@ export default function OverviewAppUser() {
                 isLoading={isFetching}
               />
             )}
-          </Grid>
-
-          {/* Fila 2: Quick Actions + Promotions */}
-          <Grid item xs={12}>
-            <QuickActions
-              onAddPet={handleAddPet}
-              onMyPets={() => handleRedirect(paths.dashboard.user.pets)}
-              onFindVet={() => handleRedirect(paths.dashboard.user.pets)}
-              onShare={() => console.log('Share app')}
-            />
-          </Grid>
-
-          <Grid item xs={12} my={2}>
-            <PromotionsCardCaroussell
-              promotions={promotionsData?.payload || []}
-              onViewOffer={(promotion) => {
-                if (promotion.isExternalLink) {
-                  window.open(promotion.link, '_blank');
-                } else {
-                  handleRedirect(promotion.link);
-                }
-              }}
-              autoplay
-              autoplaySpeed={5000}
-            />
           </Grid>
 
           {/* Fila 4: Upcoming Appointments - Ocupa todo el ancho */}
