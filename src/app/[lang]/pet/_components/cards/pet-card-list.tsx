@@ -6,6 +6,7 @@ import Iconify from '@/components/iconify';
 import { fToNow } from '@/utils/format-time';
 import { BreedOptions } from '@/utils/constants';
 import { useTranslation } from '@/hooks/use-translation';
+import { calculateAnimalAge } from '@/utils/pet-age-calculator';
 import ShareDrawerDialog from '@/components/share/share-drawer-dialog';
 import CustomPopover, { usePopover } from '@/components/custom-popover';
 
@@ -30,28 +31,6 @@ interface PetCardProps {
   onView?: (pet: IPetProfile) => void;
   onEdit?: (pet: IPetProfile) => void;
 }
-
-// Función para calcular la edad
-const calculateAge = (birthDate: string) => {
-  if (!birthDate) return null;
-  const birth = new Date(birthDate);
-  const today = new Date();
-  let years = today.getFullYear() - birth.getFullYear();
-  let months = today.getMonth() - birth.getMonth();
-
-  if (months < 0 || (months === 0 && today.getDate() < birth.getDate())) {
-    years -= 1;
-    months += 12;
-  }
-
-  if (years > 0) {
-    return `${years} ${years === 1 ? 'year' : 'years'}`;
-  }
-  if (months > 0) {
-    return `${months} ${months === 1 ? 'month' : 'months'}`;
-  }
-  return 'Less than 1 month';
-};
 
 // Función para obtener estadísticas del medicalRecord
 const getMedicalStats = (pet: IPetProfile) => {
@@ -139,7 +118,7 @@ export function PetCard({
   const { t, lng: currentLang } = useTranslation();
 
   const nextVaccine = getNextVaccine(pet);
-  const age = calculateAge(pet.birthDate);
+  const age = calculateAnimalAge(pet.birthDate);
   const [shareOpen, setShareOpen] = useState(false);
 
   // Determinar color según estado de salud

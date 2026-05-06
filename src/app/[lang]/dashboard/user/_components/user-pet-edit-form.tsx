@@ -679,7 +679,7 @@ export default function PetEditForm({ petId }: Props) {
   }
 
   return (
-    <Container maxWidth="md">
+    <Container maxWidth="sm">
       <Box
         sx={{
           position: 'sticky',

@@ -1,49 +1,30 @@
-/* eslint-disable no-nested-ternary */
-
 'use client';
 
 import { paths } from '@/routes/paths';
 import { useSnackbar } from 'notistack';
 import { useRouter } from '@/routes/hooks';
-import { isAfter } from '@/utils/format-time';
+import { useState, useCallback } from 'react';
 import { IUser, IPetProfile } from '@/types/api';
 import { useBoolean } from '@/hooks/use-boolean';
-import { useMemo, useState, useCallback } from 'react';
 import { useTranslation } from '@/hooks/use-translation';
+import { ALLOW_MAX_PETS_BY_USER } from '@/config-global';
 import { useManagerUser } from '@/hooks/use-manager-user';
 import { useSettingsContext } from '@/components/settings';
-import FilterToolbar from '@/components/filters/filter-toolbar';
-import CustomBreadcrumbs from '@/components/custom-breadcrumbs';
-import { PetsGrid } from '@/app/[lang]/pet/_components/cards/pet-grid';
-import { PET_FILTER_TOOLBAR } from '@/components/filters/filter-constants';
+import { UserProfileCard } from '@/components/cards/user-profile-card';
 import {
   UserQueryParams,
   useGetAllPetsByUser,
 } from '@/hooks/use-fetch-paginated';
 import RegisterPetByUserModal from '@/app/[lang]/pet/_components/modals/register-pet-by-user-modal';
 
-import { Box } from '@mui/system';
-import {
-  Card,
-  Alert,
-  Avatar,
-  Button,
-  Container,
-  Typography,
-  CardContent,
-  CircularProgress,
-} from '@mui/material';
+import { Card, Alert, Container } from '@mui/material';
 
+import { PetDashboard } from './pet-dashboard';
 import PetQuickEditForm from '../../admin/users/_components/pet-quick-edit-form';
 
 // ----------------------------------------------------------------------
-// const actions = [{ icon: 'tabler:paw', name: 'Pet', color: '#ffffff' }];
 export default function UserPetCardsView() {
   const { user } = useManagerUser();
-
-  // const [open, setOpen] = useState(false);
-  // const handleOpen = () => setOpen(true);
-  // const handleClose = () => setOpen(false);
 
   const { enqueueSnackbar } = useSnackbar();
   const { t } = useTranslation();
@@ -55,22 +36,12 @@ export default function UserPetCardsView() {
 
   const settings = useSettingsContext();
 
-  const [activeFilters, setActiveFilters] = useState<Partial<UserQueryParams>>({
+  const [activeFilters] = useState<Partial<UserQueryParams>>({
     page: 1,
     limit: 10,
     id: user?.id,
   });
   const [petSelected] = useState<IPetProfile>();
-
-  const dateError = useMemo(() => {
-    const startDate = activeFilters.startDate
-      ? new Date(activeFilters.startDate)
-      : null;
-    const endDate = activeFilters.endDate
-      ? new Date(activeFilters.endDate)
-      : null;
-    return isAfter(startDate, endDate);
-  }, [activeFilters.startDate, activeFilters.endDate]);
 
   const {
     data: usersData,
@@ -80,45 +51,11 @@ export default function UserPetCardsView() {
     refetch,
   } = useGetAllPetsByUser(activeFilters);
 
-  const handleFiltersChange = useCallback(
-    (newFilters: Partial<UserQueryParams>) => {
-      setActiveFilters((prev) => ({
-        ...prev,
-        ...newFilters,
-      }));
-    },
-    []
-  );
-
-  const handleClear = useCallback(() => {
-    const clearedFilters = {
-      page: 1,
-      limit: activeFilters.limit || 5,
-      id: user?.id,
-    };
-
-    setActiveFilters(clearedFilters);
-    enqueueSnackbar('Filtros limpiados', { variant: 'info' });
-  }, [activeFilters.limit, enqueueSnackbar, user?.id]);
-
-  const handleSearch = useCallback(() => {
-    setActiveFilters((prev) => ({
-      ...prev,
-      page: 1,
-    }));
-    enqueueSnackbar('Búsqueda realizada', { variant: 'success' });
-  }, [enqueueSnackbar]);
-
   const handlePetDelete = (pet: IPetProfile) => {
-    console.log('Eliminar mascota:', pet);
     enqueueSnackbar(t('Coming Soon!'), {
       variant: 'info',
     });
   };
-
-  // const handlePetView = (pet: IPetProfile) => {
-  //   console.log('Ver mascota:', pet);
-  // };
 
   const handlePetView = useCallback(
     (pet: IPetProfile) => {
@@ -128,10 +65,6 @@ export default function UserPetCardsView() {
     [router]
   );
 
-  // const handlePetEdit = (pet: IPetProfile) => {
-  //   setPetSelected(pet);
-  //   petQuickEdit.onTrue();
-  // };
   const handlePetEdit = useCallback(
     (pet: IPetProfile) => {
       router.push(`${paths.dashboard.user.edit(pet.memberPetId)}`);
@@ -143,109 +76,38 @@ export default function UserPetCardsView() {
     return (
       <Container maxWidth={settings.themeStretch ? false : 'lg'}>
         <Card sx={{ p: 3 }}>
-          <Alert severity="error">Error loading pets: {error?.message}</Alert>
+          <Alert severity="error"> {t(error?.message)}</Alert>
         </Card>
       </Container>
     );
   }
 
   return (
-    <Container maxWidth={settings.themeStretch ? false : 'md'}>
-      <CustomBreadcrumbs
-        heading={t('My Pets')}
-        links={[
-          { name: t('Home'), href: paths.dashboard.root },
-          {
-            name: t('My Pets'),
-            href: paths.dashboard.user.pets,
-          },
-        ]}
-        action={
-          <Button
-            type="submit"
-            onClick={() => registerPetModal.onTrue()}
-            variant="contained"
-          >
-            {t('Add New Pet')}
-          </Button>
-        }
-        sx={{
-          mb: {
-            xs: 3,
-            md: 5,
-          },
+    <Container maxWidth={settings.themeStretch ? false : 'sm'}>
+      <UserProfileCard
+        petCount={`${
+          usersData?.payload.length || 0
+        } / ${ALLOW_MAX_PETS_BY_USER}`}
+        isFetching={isFetching}
+        greetingText="My Pets"
+        decorativeImage="/assets/images/paw-cat.png"
+        decorativeImageSx={{
+          zIndex: 0,
+          opacity: 0.3,
         }}
+        cardSx={{ mb: 4 }}
+        onAvatarClick={() => router.push(paths.dashboard.user.account)}
       />
-      <Card
-        sx={{
-          backgroundColor: 'background.paper',
-          borderRadius: 4,
-          mb: 3,
-          position: 'relative',
-          overflow: 'hidden',
-        }}
-      >
-        <CardContent sx={{ position: 'relative', zIndex: 1 }}>
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-            <Avatar src={user.photoURL} sx={{ width: 60, height: 60 }} />
-            <Box>
-              <Typography variant="h6" fontWeight={600}>
-                {t('Hi there!')}, {user.displayName}
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                {user.email}
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                {t('Pets Registered')}:{' '}
-                {isFetching ? (
-                  <CircularProgress size={6} />
-                ) : (
-                  usersData?.payload.length
-                )}{' '}
-              </Typography>
-            </Box>
-          </Box>
-        </CardContent>
 
-        {/* Imagen decorativa en esquina superior derecha */}
-        <Box
-          component="img"
-          src="/assets/images/paw-cat.png"
-          alt="Paw cat"
-          sx={{
-            position: 'absolute',
-            top: -10,
-            right: -10,
-            width: 140,
-            height: 'auto',
-            objectFit: 'contain',
-            zIndex: 0,
-            opacity: 0.3,
-          }}
-        />
-      </Card>
-      <Box sx={{ my: 2 }}>
-        <FilterToolbar
-          filters={activeFilters}
-          onFilters={handleFiltersChange}
-          filterConfig={PET_FILTER_TOOLBAR}
-          dateError={dateError}
-          onSearch={handleSearch}
-          onClear={handleClear}
-        />
-      </Box>
-
-      <PetsGrid
+      <PetDashboard
         isFetching={isFetching}
         usersData={usersData?.payload}
-        skeletonCount={10}
         onPetDelete={handlePetDelete}
         onPetView={handlePetView}
         onPetEdit={handlePetEdit}
-        emptyMessage="No se encontraron mascotas"
-        showAddMoreButton={usersData && usersData.payload.length <= 9}
         onAddMore={() => registerPetModal.onTrue()}
-        addMoreButtonText="Add Pet"
+        emptyMessage="No se encontraron mascotas"
+        refetch={refetch}
       />
 
       <PetQuickEditForm
@@ -261,38 +123,6 @@ export default function UserPetCardsView() {
         onClose={registerPetModal.onFalse}
         refetch={refetch}
       />
-      {/* <Box
-        sx={{
-          position: 'fixed',
-          display: { xs: 'flex' },
-          bottom: 20,
-          right: 20,
-          transform: 'translateZ(0px)',
-          width: 'auto',
-          bgcolor: '#000',
-        }}
-      >
-        <Backdrop open={open} />
-        <SpeedDial
-          ariaLabel="SpeedDial tooltip example"
-          sx={{ position: 'absolute', bottom: 16, right: 16 }}
-          icon={<Iconify icon="mingcute:add-line" />}
-          onClose={handleClose}
-          onOpen={handleOpen}
-          open={open}
-        >
-          {actions.map((action) => (
-            <SpeedDialAction
-              key={action.name}
-              icon={<Iconify icon={action.icon} sx={{ color: action.color }} />}
-              tooltipTitle={action.name}
-              tooltipOpen
-              FabProps={{ color: 'default' }}
-              onClick={handleClose}
-            />
-          ))}
-        </SpeedDial>
-      </Box> */}
     </Container>
   );
 }

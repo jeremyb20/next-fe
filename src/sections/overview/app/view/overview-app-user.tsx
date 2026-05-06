@@ -8,6 +8,7 @@ import { useBoolean } from '@/hooks/use-boolean';
 import { useSnackbar } from '@/components/snackbar';
 import { useGetUserPetStats } from '@/hooks/use-fetch';
 import { useTranslation } from '@/hooks/use-translation';
+import { ALLOW_MAX_PETS_BY_USER } from '@/config-global';
 import { useManagerUser } from '@/hooks/use-manager-user';
 import RegisterPetByUserModal from '@/app/[lang]/pet/_components/modals/register-pet-by-user-modal';
 import {
@@ -47,7 +48,7 @@ export default function OverviewAppUser() {
 
   const [activeFilters] = useState<Partial<UserQueryParams>>({
     page: 1,
-    limit: Number(process.env.NEXT_PUBLIC_ALLOW_MAX_PETS_BY_USER) || 10,
+    limit: Number(ALLOW_MAX_PETS_BY_USER),
     id: user?.id,
   });
 

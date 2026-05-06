@@ -1,8 +1,8 @@
 {
   "name": "plaquitascr",
-  "author": "JeremyBarquero",
-  "version": "5.1.1",
-  "description": "Frontend para sistema para mascotas y mas - TypeScrip",
+  "author": "jeremybb20",
+  "version": "5.2.1",
+  "description": "Frontend para sistema para mascotas y mas - TypeScript",
   "private": true,
   "scripts": {
     "dev": "next dev -p 8083",

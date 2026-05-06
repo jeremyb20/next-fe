@@ -93,7 +93,10 @@ export default function MedicalVisitsList({
   return (
     <Stack spacing={2}>
       {data.map((visit, index) => (
-        <Card key={visit._id || index}>
+        <Card
+          key={visit._id || index}
+          sx={{ position: 'relative', backgroundColor: 'background.neutral' }}
+        >
           <CardContent>
             <Stack
               direction="row"

@@ -85,7 +85,10 @@ export default function VaccinesList({
   return (
     <Stack spacing={2}>
       {data.map((vaccine, index) => (
-        <Card key={vaccine._id || index} sx={{ position: 'relative' }}>
+        <Card
+          key={vaccine._id || index}
+          sx={{ position: 'relative', backgroundColor: 'background.neutral' }}
+        >
           <CardContent>
             <Stack
               direction="row"

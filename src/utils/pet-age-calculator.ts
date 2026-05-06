@@ -223,3 +223,25 @@ export class PetAgeCalculator {
     return recommendations;
   }
 }
+
+
+export const calculateAnimalAge = (birthDate: string, t?: (key: string) => string) => {
+  if (!birthDate) return null;
+  const birth = new Date(birthDate);
+  const today = new Date();
+  let years = today.getFullYear() - birth.getFullYear();
+  let months = today.getMonth() - birth.getMonth();
+
+  if (months < 0 || (months === 0 && today.getDate() < birth.getDate())) {
+    years -= 1;
+    months += 12;
+  }
+
+  if (years > 0) {
+    return `${years} ${years === 1 ? 'year' : 'years'}`;
+  }
+  if (months > 0) {
+    return `${months} ${months === 1 ? 'month' : 'months'}`;
+  }
+  return 'Less than 1 month';
+};

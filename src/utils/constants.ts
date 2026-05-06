@@ -138,11 +138,11 @@ export const BreedCatsOptions = [
 // export const BreedOptions = [...BreedDogsOptions, ...BreedCatsOptions];
 export const groupedOptions = [
   {
-    group: 'Perros',
+    group: 'dog',
     options: BreedDogsOptions,
   },
   {
-    group: 'Gatos',
+    group: 'cat',
     options: BreedCatsOptions,
   },
 ];

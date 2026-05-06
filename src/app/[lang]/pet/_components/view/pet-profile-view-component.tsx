@@ -15,6 +15,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { useTranslation } from '@/hooks/use-translation';
 import { useManagerUser } from '@/hooks/use-manager-user';
 import { useSettingsContext } from '@/components/settings';
+import { calculateAnimalAge } from '@/utils/pet-age-calculator';
 import { BreedOptions, GENDER_OPTIONS } from '@/utils/constants';
 import React, { useRef, useMemo, useState, useEffect } from 'react';
 import SplashScreen from '@/components/loading-screen/splash-screen';
@@ -125,21 +126,6 @@ export default function PetProfileViewComponent({
   const shareDescription = `${t('Meet')} ${petProfile?.petName}, ${t(
     'a pet who needs your attention.'
   )}`;
-
-  // Función para calcular la edad
-  const calculateAge = (birthDate: string) => {
-    const birth = new Date(birthDate);
-    const today = new Date();
-    let years = today.getFullYear() - birth.getFullYear();
-    let months = today.getMonth() - birth.getMonth();
-
-    if (months < 0) {
-      years--;
-      months += 12;
-    }
-
-    return { years, months };
-  };
 
   // Función para registrar la vista con ubicación
   const registerPetViewWithLocation = async (position: GeolocationPosition) => {
@@ -253,7 +239,6 @@ export default function PetProfileViewComponent({
     );
   }
 
-  const age = calculateAge(petProfile.birthDate);
   const MAIL_SUBJECT = encodeURIComponent(
     'Solicitud de activación de cédula digital para mascota'
   );
@@ -407,10 +392,11 @@ export default function PetProfileViewComponent({
                               variant="caption"
                               color="text.secondary"
                             >
-                              {fDate(petProfile.birthDate)} ({age.years}{' '}
+                              {/* {fDate(petProfile.birthDate)} ({age.years}{' '}
                               {t('years')}{' '}
                               {age.months > 0 && `${age.months} ${t('months')}`}
-                              )
+                              ) */}
+                              {fDate(petProfile.birthDate)}
                             </Typography>
                           </Box>
                         )}
@@ -760,9 +746,10 @@ export default function PetProfileViewComponent({
                                   {t('Age')}
                                 </Typography>
                                 <Typography variant="body1" fontWeight={600}>
-                                  {age.years} {t('years')}{' '}
+                                  {/* {age.years} {t('years')}{' '}
                                   {age.months > 0 &&
-                                    `${age.months} ${t('months')}`}
+                                    `${age.months} ${t('months')}`} */}
+                                  {calculateAnimalAge(petProfile.birthDate)}
                                 </Typography>
                               </Box>
                             </Box>

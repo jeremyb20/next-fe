@@ -85,7 +85,10 @@ export default function DewormingList({
   return (
     <Stack spacing={2}>
       {data.map((deworming, index) => (
-        <Card key={deworming._id || index} sx={{ position: 'relative' }}>
+        <Card
+          key={deworming._id || index}
+          sx={{ position: 'relative', backgroundColor: 'background.neutral' }}
+        >
           <CardContent>
             <Stack
               direction="row"
