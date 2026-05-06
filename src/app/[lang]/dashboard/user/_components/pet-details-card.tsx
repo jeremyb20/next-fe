@@ -10,6 +10,7 @@ import { formatPetAge, getSpeciesFromBreed } from '@/utils/pet-age.utils';
 
 // Importar los componentes reutilizables
 
+import { PetAvatarWithBadge } from '@/components/badge/PetAvatarWithBage';
 import VaccinesList from '@/app/[lang]/pet/_components/view/vaccines-list';
 import DewormingList from '@/app/[lang]/pet/_components/view/deworming-list';
 import MedicalVisitsList from '@/app/[lang]/pet/_components/view/medical-visits-list';
@@ -21,9 +22,7 @@ import {
   Grid,
   List,
   Stack,
-  Badge,
   Button,
-  Avatar,
   Divider,
   Tooltip,
   ListItem,
@@ -106,29 +105,6 @@ export function PetDetailsCard({
     petId: string
   ) => {
     onCreateRecord?.(type, petId);
-  };
-
-  const getBadgeContent = (pPet: IPetProfile) => {
-    if (pPet.petStatus === 'deceased') {
-      return (
-        <Iconify
-          icon="entypo:awareness-ribbon"
-          width={25}
-          sx={{
-            position: 'absolute',
-            bottom: -10,
-            right: -9,
-            color: 'error.main',
-            bgcolor: 'background.paper',
-            borderRadius: '50%',
-            p: '2px',
-            fontSize: '1rem',
-            border: '2px solid white',
-          }}
-        />
-      );
-    }
-    return undefined;
   };
 
   // Transformar datos para los componentes específicos
@@ -434,39 +410,7 @@ export function PetDetailsCard({
             gap: 3,
           }}
         >
-          <Badge
-            overlap="circular"
-            anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-            variant={pet.petStatus === 'deceased' ? 'standard' : 'dot'}
-            color={pet.petStatus === 'active' ? 'success' : 'default'}
-            badgeContent={getBadgeContent(pet)}
-            sx={{
-              '& .MuiBadge-badge': {
-                border: '2px solid white',
-                ...(pet.petStatus === 'deceased' && {
-                  bgcolor: 'transparent',
-                  p: 0,
-                  minWidth: 'auto',
-                  height: 'auto',
-                }),
-              },
-            }}
-          >
-            <Avatar
-              src={pet.photo}
-              sx={{
-                width: 100,
-                height: 100,
-                border: '3px solid',
-                borderColor: 'primary.main',
-                opacity: pet.petStatus === 'deceased' ? 0.7 : 1,
-                filter:
-                  pet.petStatus === 'deceased' ? 'grayscale(0.3)' : 'none',
-              }}
-            >
-              {pet.petName?.charAt(0).toUpperCase()}
-            </Avatar>
-          </Badge>
+          <PetAvatarWithBadge pet={pet} size={100} />
           <Box>
             <Typography variant="h4" fontWeight={700}>
               {pet.petName} ({pet.memberPetId})
