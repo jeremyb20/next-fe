@@ -518,5 +518,12 @@
   "records": "bản ghi",
   "Add Vaccine": "Thêm vắc xin",
   "Add Deworming": "Thêm tẩy giun",
-  "Add Medical Visit": "Thêm lượt khám"
+  "Add Medical Visit": "Thêm lượt khám",
+  "Please enter an address": "Vui lòng nhập địa chỉ",
+  "Location found!": "Đã tìm thấy vị trí!",
+  "Address not found": "Không tìm thấy địa chỉ",
+  "Error searching location": "Lỗi khi tìm kiếm vị trí",
+  "Geolocation not supported": "Định vị địa lý không được hỗ trợ",
+  "Current location set!": "Đã đặt vị trí hiện tại!",
+  "Error getting location": "Lỗi khi lấy vị trí"
 }

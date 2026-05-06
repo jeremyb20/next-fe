@@ -3,12 +3,12 @@ import Map from 'react-map-gl';
 import Iconify from '@/components/iconify';
 import { MAPBOX_API } from '@/config-global';
 import { useState, useCallback } from 'react';
+import { useSnackbar } from '@/components/snackbar';
 import { MapMarker, MapControl } from '@/components/map';
+import { useTranslation } from '@/hooks/use-translation';
 
 import Box from '@mui/material/Box';
-import Alert from '@mui/material/Alert';
 import Button from '@mui/material/Button';
-import Snackbar from '@mui/material/Snackbar';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import { styled, useTheme } from '@mui/material/styles';
@@ -76,8 +76,10 @@ export default function PetLocationMap({
   readOnly = false,
 }: PetLocationMapProps) {
   const theme = useTheme();
-  const lightMode = theme.palette.mode === 'light';
+  const { enqueueSnackbar } = useSnackbar();
 
+  const lightMode = theme.palette.mode === 'light';
+  const { t } = useTranslation();
   const [viewState, setViewState] = useState({
     latitude: initialLocation?.lat ? parseFloat(initialLocation.lat) : 9.9281,
     longitude: initialLocation?.lng
@@ -95,19 +97,12 @@ export default function PetLocationMap({
   const [searchAddress, setSearchAddress] = useState('');
   const [isSearching, setIsSearching] = useState(false);
   const [address, setAddress] = useState(initialLocation?.address || '');
-  const [snackbar, setSnackbar] = useState({
-    open: false,
-    message: '',
-    severity: 'success' as 'success' | 'error',
-  });
 
   // Geocoding: buscar dirección y obtener coordenadas
   const searchLocation = useCallback(async () => {
     if (!searchAddress.trim()) {
-      setSnackbar({
-        open: true,
-        message: 'Please enter an address',
-        severity: 'error',
+      enqueueSnackbar(t('Please enter an address'), {
+        variant: 'error',
       });
       return;
     }
@@ -139,29 +134,24 @@ export default function PetLocationMap({
           address: formattedAddress,
         });
 
-        setSnackbar({
-          open: true,
-          message: 'Location found!',
-          severity: 'success',
+        enqueueSnackbar(t('Location found!'), {
+          variant: 'success',
         });
       } else {
-        setSnackbar({
-          open: true,
-          message: 'Address not found',
-          severity: 'error',
+        enqueueSnackbar(t('Address not found'), {
+          variant: 'error',
         });
       }
     } catch (error) {
       console.error('Error searching location:', error);
-      setSnackbar({
-        open: true,
-        message: 'Error searching location',
-        severity: 'error',
+
+      enqueueSnackbar(t('Error searching location'), {
+        variant: 'error',
       });
     } finally {
       setIsSearching(false);
     }
-  }, [searchAddress, onLocationChange]);
+  }, [searchAddress, enqueueSnackbar, t, onLocationChange]);
 
   // Obtener dirección a partir de coordenadas (reverse geocoding)
   const getAddressFromCoords = useCallback(
@@ -215,22 +205,18 @@ export default function PetLocationMap({
         });
       }
 
-      setSnackbar({
-        open: true,
-        message: 'Location saved!',
-        severity: 'success',
+      enqueueSnackbar(t('Update success!'), {
+        variant: 'success',
       });
     },
-    [readOnly, getAddressFromCoords, onLocationChange]
+    [readOnly, getAddressFromCoords, enqueueSnackbar, t, onLocationChange]
   );
 
   // Usar ubicación actual del dispositivo
   const useCurrentLocation = useCallback(() => {
     if (!navigator.geolocation) {
-      setSnackbar({
-        open: true,
-        message: 'Geolocation not supported',
-        severity: 'error',
+      enqueueSnackbar(t('Geolocation not supported'), {
+        variant: 'error',
       });
       return;
     }
@@ -262,22 +248,19 @@ export default function PetLocationMap({
           });
         }
 
-        setSnackbar({
-          open: true,
-          message: 'Current location set!',
-          severity: 'success',
+        enqueueSnackbar(t('Current location set!'), {
+          variant: 'success',
         });
       },
       (error) => {
         console.error('Error getting location:', error);
-        setSnackbar({
-          open: true,
-          message: 'Error getting location',
-          severity: 'error',
+
+        enqueueSnackbar(t('Error getting location'), {
+          variant: 'error',
         });
       }
     );
-  }, [getAddressFromCoords, onLocationChange]);
+  }, [enqueueSnackbar, getAddressFromCoords, onLocationChange, t]);
 
   // Limpiar ubicación
   const clearLocation = useCallback(() => {
@@ -289,17 +272,7 @@ export default function PetLocationMap({
       lng: '',
       address: '',
     });
-    setSnackbar({
-      open: true,
-      message: 'Location cleared',
-      severity: 'success',
-    });
   }, [onLocationChange]);
-
-  // Cerrar snackbar
-  const handleCloseSnackbar = () => {
-    setSnackbar({ ...snackbar, open: false });
-  };
 
   return (
     <Box sx={{ position: 'relative' }}>
@@ -466,21 +439,6 @@ export default function PetLocationMap({
           </ControlsBox>
         )}
       </StyledRoot>
-
-      <Snackbar
-        open={snackbar.open}
-        autoHideDuration={3000}
-        onClose={handleCloseSnackbar}
-        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-      >
-        <Alert
-          onClose={handleCloseSnackbar}
-          severity={snackbar.severity}
-          sx={{ width: '100%' }}
-        >
-          {snackbar.message}
-        </Alert>
-      </Snackbar>
     </Box>
   );
 }

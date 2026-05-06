@@ -518,5 +518,12 @@
   "records": "records",
   "Add Vaccine": "Add Vaccine",
   "Add Deworming": "Add Deworming",
-  "Add Medical Visit": "Add Medical Visit"
+  "Add Medical Visit": "Add Medical Visit",
+  "Please enter an address": "Please enter an address",
+  "Location found!": "Location found!",
+  "Address not found": "Address not found",
+  "Error searching location": "Error searching location",
+  "Geolocation not supported": "Geolocation not supported",
+  "Current location set!": "Current location set!",
+  "Error getting location": "Error getting location"
 }

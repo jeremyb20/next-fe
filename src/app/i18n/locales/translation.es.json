@@ -518,5 +518,12 @@
   "records": "registros",
   "Add Vaccine": "Agregar vacuna",
   "Add Deworming": "Agregar desparasitación",
-  "Add Medical Visit": "Agregar visita médica"
+  "Add Medical Visit": "Agregar visita médica",
+  "Please enter an address": "Por favor ingresa una dirección",
+  "Location found!": "¡Ubicación encontrada!",
+  "Address not found": "Dirección no encontrada",
+  "Error searching location": "Error al buscar la ubicación",
+  "Geolocation not supported": "Geolocalización no soportada",
+  "Current location set!": "¡Ubicación actual establecida!",
+  "Error getting location": "Error al obtener la ubicación"
 }

@@ -13,6 +13,7 @@ import { OptionType } from '@/types/global';
 import { PetFormValues } from '@/types/pet';
 import { fData } from '@/utils/format-number';
 import { useSearchParams } from 'next/navigation';
+import { useRedirect } from '@/hooks/use-redirect';
 import { useSnackbar } from '@/components/snackbar';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -21,13 +22,14 @@ import { useGetPetProfileById } from '@/hooks/use-fetch';
 import { useTranslation } from '@/hooks/use-translation';
 import RouterLink from '@/routes/components/router-link';
 import { useManagerUser } from '@/hooks/use-manager-user';
+import { getSpeciesFromBreed } from '@/utils/pet-age.utils';
 import UploadAvatar from '@/components/upload/upload-avatar';
 import CardComponent from '@/sections/_examples/card-component';
-import CustomBreadcrumbs from '@/components/custom-breadcrumbs';
 import { useMemo, useState, useEffect, useCallback } from 'react';
 import SplashScreen from '@/components/loading-screen/splash-screen';
 import CustomPopover, { usePopover } from '@/components/custom-popover';
 import { useCreateGenericMutation } from '@/hooks/user-generic-mutation';
+import { PetAvatarWithBadge } from '@/components/badge/PetAvatarWithBage';
 import CostaRicaIDCard from '@/components/country-cards/Costa-Rica/costa-rica-card';
 import PetLocationMap from '@/app/[lang]/pet/_components/locations/pet-location-map';
 import MedicalControlView from '@/app/[lang]/pet/_components/view/medical-control-view';
@@ -58,11 +60,13 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import {
   Tab,
   Tabs,
+  Card,
   Stack,
   useTheme,
   Typography,
   IconButton,
   ButtonGroup,
+  CardContent,
   useMediaQuery,
   InputAdornment,
 } from '@mui/material';
@@ -107,7 +111,7 @@ type Props = {
 export default function PetEditForm({ petId }: Props) {
   const theme = useTheme();
   const { t } = useTranslation();
-
+  const { redirectBack } = useRedirect();
   const { user: currentUser } = useManagerUser();
 
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
@@ -144,6 +148,9 @@ export default function PetEditForm({ petId }: Props) {
     error,
     isError,
   } = useGetPetProfileById(petId);
+  const detectedSpecies = currentPet?.breed
+    ? getSpeciesFromBreed(currentPet.breed)
+    : null;
   const TABS_CONFIG = useMemo(
     () => [
       {
@@ -341,33 +348,39 @@ export default function PetEditForm({ petId }: Props) {
       if (newFile) {
         setPetPhoto(newFile);
 
-        // Si hay una foto existente, guardar su photo_id para eliminarla después
-        if (currentPet?.photo_id) {
-          setPhotoIdToDelete(currentPet.photo_id);
+        // Limpiar preview anterior si existe
+        if (petPhotoPreview && petPhotoPreview.startsWith('blob:')) {
+          URL.revokeObjectURL(petPhotoPreview);
         }
 
-        // Crear preview para mostrar
+        // Crear nuevo preview
         const previewUrl = URL.createObjectURL(newFile);
         setPetPhotoPreview(previewUrl);
+
+        // Marcar la foto anterior para eliminar si existe
+        if (currentPet?.photo_id && !photoIdToDelete) {
+          setPhotoIdToDelete(currentPet.photo_id);
+        }
       }
     },
-    [currentPet?.photo_id]
+    [currentPet?.photo_id, petPhotoPreview, photoIdToDelete]
   );
 
   // Función para eliminar la foto
   const handleRemovePetPhoto = useCallback(() => {
+    // Limpiar la foto actual
     setPetPhoto(null);
 
-    // Si hay una foto existente, guardar su photo_id para eliminarla
-    if (currentPet?.photo_id) {
-      setPhotoIdToDelete(currentPet.photo_id);
-    }
-
+    // Limpiar el preview
     if (petPhotoPreview && petPhotoPreview.startsWith('blob:')) {
       URL.revokeObjectURL(petPhotoPreview);
     }
-
     setPetPhotoPreview(null);
+
+    // Marcar la foto para eliminar si existe
+    if (currentPet?.photo_id) {
+      setPhotoIdToDelete(currentPet.photo_id);
+    }
   }, [currentPet?.photo_id, petPhotoPreview]);
 
   const handleWeightUnitChange = (unit: 'kg' | 'lb') => {
@@ -525,45 +538,32 @@ export default function PetEditForm({ petId }: Props) {
         address: currentPet.address || '',
       });
 
-      setPetPhotoPreview(currentPet.photo || null);
-    } else if (!isLoading && petId) {
-      // Resetear a valores por defecto cuando no hay datos
-      methods.reset({
-        petName: '',
-        petFirstSurname: '',
-        petSecondSurname: '',
-        genderSelected: '',
-        breed: '',
-        weight: '',
-        birthDate: '',
-        favoriteActivities: '',
-        healthAndRequirements: '',
-        phoneVeterinarian: '',
-        veterinarianContact: '',
-        address: '',
-        phone: '',
-        ownerPetName: '',
-        petStatus: 'active',
-        showPhoneInfo: true,
-        showEmailInfo: true,
-        showOwnerPetName: true,
-        showBirthDate: true,
-        showAddressInfo: true,
-        showVeterinarianContact: true,
-        showPhoneVeterinarian: true,
-        showHealthAndRequirements: true,
-        showFavoriteActivities: true,
-        showLocationInfo: true,
-        showLocationConsent: true,
-        showBreedInfo: true,
-        showWeightInfo: true,
-        showGenderInfo: true,
-        notes: '',
-      });
+      // Limpiar cualquier preview anterior si existe
+      if (petPhotoPreview && petPhotoPreview.startsWith('blob:')) {
+        URL.revokeObjectURL(petPhotoPreview);
+      }
 
+      // IMPORTANTE: Establecer la preview con la URL de la foto existente
+      // Si currentPet.photo es una URL válida, usarla
+      setPetPhotoPreview(currentPet.photo || null);
+      setPetPhoto(null);
+      setPhotoIdToDelete(null);
+    } else if (!isLoading && petId) {
+      // Resetear a valores por defecto
+      methods.reset({
+        // ... tus valores por defecto
+      });
       setPetLocation({ lat: '', lng: '', address: '' });
+
+      // Limpiar todo
+      if (petPhotoPreview && petPhotoPreview.startsWith('blob:')) {
+        URL.revokeObjectURL(petPhotoPreview);
+      }
       setPetPhotoPreview(null);
+      setPetPhoto(null);
+      setPhotoIdToDelete(null);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentPet, isLoading, petId, methods]);
 
   // Reemplaza useMemo por useEffect para weightUnit
@@ -695,33 +695,65 @@ export default function PetEditForm({ petId }: Props) {
           }),
         }}
       >
-        <CustomBreadcrumbs
-          heading={t('My Pets')}
-          links={[
-            { name: t('Home'), href: paths.dashboard.root },
-            {
-              name: t('My Pets'),
-              href: paths.dashboard.user.pets,
-            },
-            { name: `${t('Edit')} ${currentPet?.petName || 'Pet'}` },
-          ]}
-          action={
-            <LoadingButton
-              type="submit"
-              onClick={handleSubmit(onSubmit)}
-              variant="contained"
-              loading={isSubmitting}
-            >
-              {t('Update Pet')}
-            </LoadingButton>
-          }
+        <Card
           sx={{
-            mb: {
-              xs: 3,
-              md: 5,
-            },
+            backgroundColor: 'background.paper',
+            borderRadius: 4,
+            mb: 3,
+            position: 'relative',
+            overflow: 'hidden',
           }}
-        />
+        >
+          <CardContent sx={{ position: 'relative', zIndex: 1, p: 2, pt: 0 }}>
+            <Button onClick={redirectBack}>
+              <Iconify icon="eva:arrow-ios-back-fill" width={24} />
+              <Typography variant="subtitle2" ml={1}>
+                {t('Back')}
+              </Typography>
+            </Button>
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+              <PetAvatarWithBadge pet={currentPet} size={60} />
+              <Box>
+                <Typography variant="h6" fontWeight={600}>
+                  {t('My Pets')}
+                </Typography>
+                <Typography variant="body2" color="text.secondary">
+                  {`${t('Edit')} ${currentPet?.petName || 'Pet'}`}
+                </Typography>
+              </Box>
+              <LoadingButton
+                type="submit"
+                onClick={handleSubmit(onSubmit)}
+                variant="contained"
+                loading={isSubmitting}
+              >
+                {t('Update Pet')}
+              </LoadingButton>
+            </Box>
+          </CardContent>
+
+          {/* Imagen decorativa */}
+          <Box
+            component="img"
+            src={
+              currentPet.petStatus === 'deceased'
+                ? '/assets/images/ribbon.png'
+                : `/assets/images/paw-${detectedSpecies}.png`
+            }
+            alt="Decorative"
+            sx={{
+              position: 'absolute',
+              top: -3,
+              right: -10,
+              width: 140,
+              height: 'auto',
+              objectFit: 'contain',
+              zIndex: 0,
+              opacity: 0.3,
+              pointerEvents: 'none',
+            }}
+          />
+        </Card>
       </Box>
 
       <FormProvider methods={methods}>
@@ -760,7 +792,7 @@ export default function PetEditForm({ petId }: Props) {
             >
               <Stack>
                 <UploadAvatar
-                  file={currentPet?.photo}
+                  file={petPhotoPreview || currentPet?.photo || null} // Cambiar de currentPet?.photo a petPhotoPreview
                   onDrop={handleDropPetPhoto}
                   onDelete={handleRemovePetPhoto}
                   validator={(fileData) => {

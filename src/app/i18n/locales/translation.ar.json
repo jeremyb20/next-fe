@@ -518,5 +518,12 @@
   "records": "سجلات",
   "Add Vaccine": "إضافة تطعيم",
   "Add Deworming": "إضافة علاج للديدان",
-  "Add Medical Visit": "إضافة زيارة طبية"
+  "Add Medical Visit": "إضافة زيارة طبية",
+  "Please enter an address": "الرجاء إدخال عنوان",
+  "Location found!": "تم العثور على الموقع!",
+  "Address not found": "لم يتم العثور على العنوان",
+  "Error searching location": "خطأ في البحث عن الموقع",
+  "Geolocation not supported": "تحديد الموقع الجغرافي غير مدعوم",
+  "Current location set!": "تم تعيين الموقع الحالي!",
+  "Error getting location": "خطأ في الحصول على الموقع"
 }

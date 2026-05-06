@@ -518,5 +518,12 @@
   "records": "条记录",
   "Add Vaccine": "添加疫苗",
   "Add Deworming": "添加驱虫",
-  "Add Medical Visit": "添加就诊记录"
+  "Add Medical Visit": "添加就诊记录",
+  "Please enter an address": "请输入地址",
+  "Location found!": "找到位置！",
+  "Address not found": "未找到地址",
+  "Error searching location": "搜索位置时出错",
+  "Geolocation not supported": "不支持地理定位",
+  "Current location set!": "当前位置已设置！",
+  "Error getting location": "获取位置时出错"
 }
