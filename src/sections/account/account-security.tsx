@@ -638,7 +638,7 @@ export default function AccountSecurity() {
           direction="row"
           justifyContent="space-between"
           alignItems="flex-start"
-          sx={{ mb: 3 }}
+          sx={{ my: 3 }}
         >
           <Stack>
             <Typography variant="h6">{t('Devices')}</Typography>
