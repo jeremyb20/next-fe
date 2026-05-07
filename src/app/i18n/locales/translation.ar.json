@@ -565,5 +565,6 @@
   "Please enter the 6-digit code from your authenticator app": "الرجاء إدخال الرمز المكون من 6 أرقام من تطبيق المصادقة",
   "Please enter the verification code sent to your email": "الرجاء إدخال رمز التحقق المرسل إلى بريدك الإلكتروني",
   "Resend code": "إعادة إرسال الرمز",
-  "Verify & Sign In": "تحقق وتسجيل الدخول"
+  "Verify & Sign In": "تحقق وتسجيل الدخول",
+  "Devices": "الأجهزة"
 }

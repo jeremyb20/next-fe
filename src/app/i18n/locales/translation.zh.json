@@ -565,5 +565,6 @@
   "Please enter the 6-digit code from your authenticator app": "请输入来自您身份验证器应用的6位验证码",
   "Please enter the verification code sent to your email": "请输入发送到您电子邮件的验证码",
   "Resend code": "重新发送验证码",
-  "Verify & Sign In": "验证并登录"
+  "Verify & Sign In": "验证并登录",
+  "Devices": "设备"
 }

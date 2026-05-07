@@ -565,5 +565,6 @@
   "Please enter the 6-digit code from your authenticator app": "Por favor ingresa el código de 6 dígitos de tu aplicación de autenticación",
   "Please enter the verification code sent to your email": "Por favor ingresa el código de verificación enviado a tu correo electrónico",
   "Resend code": "Reenviar código",
-  "Verify & Sign In": "Verificar e iniciar sesión"
+  "Verify & Sign In": "Verificar e iniciar sesión",
+  "Devices": "Dispositivos"
 }

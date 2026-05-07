@@ -625,6 +625,15 @@ export default function AccountSecurity() {
 
       {/* Devices Section */}
       <Card sx={{ p: 3 }}>
+        <Button
+          variant="contained"
+          size="small"
+          onClick={handleSignOutFromAllDevices}
+          startIcon={<Iconify icon="solar:logout-2-bold" />}
+          color="error"
+        >
+          {t('Sign out from all devices')}
+        </Button>
         <Stack
           direction="row"
           justifyContent="space-between"
@@ -637,15 +646,6 @@ export default function AccountSecurity() {
               {t('Manage devices connected to your account')}
             </Typography>
           </Stack>
-          <Button
-            variant="contained"
-            size="small"
-            onClick={handleSignOutFromAllDevices}
-            startIcon={<Iconify icon="solar:logout-2-bold" />}
-            color="error"
-          >
-            {t('Sign out from all devices')}
-          </Button>
         </Stack>
 
         {devices.length > 0 ? (
