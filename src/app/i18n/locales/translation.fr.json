@@ -566,5 +566,7 @@
   "Please enter the verification code sent to your email": "Veuillez entrer le code de vérification envoyé à votre e-mail",
   "Resend code": "Renvoyer le code",
   "Verify & Sign In": "Vérifier et se connecter",
-  "Devices": "Appareils"
+  "Devices": "Appareils",
+  "Backup Email": "E-mail de secours",
+  "Add a backup email address to recover your account": "Ajoutez une adresse e-mail de secours pour récupérer votre compte"
 }

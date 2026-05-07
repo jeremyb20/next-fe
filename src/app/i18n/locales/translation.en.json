@@ -566,5 +566,7 @@
   "Please enter the verification code sent to your email": "Please enter the verification code sent to your email",
   "Resend code": "Resend code",
   "Verify & Sign In": "Verify & Sign In",
-  "Devices": "Devices"
+  "Devices": "Devices",
+  "Backup Email": "Backup Email",
+  "Add a backup email address to recover your account": "Add a backup email address to recover your account"
 }

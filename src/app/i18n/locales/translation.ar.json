@@ -566,5 +566,7 @@
   "Please enter the verification code sent to your email": "الرجاء إدخال رمز التحقق المرسل إلى بريدك الإلكتروني",
   "Resend code": "إعادة إرسال الرمز",
   "Verify & Sign In": "تحقق وتسجيل الدخول",
-  "Devices": "الأجهزة"
+  "Devices": "الأجهزة",
+  "Backup Email": "البريد الإلكتروني الاحتياطي",
+  "Add a backup email address to recover your account": "أضف عنوان بريد إلكتروني احتياطي لاستعادة حسابك"
 }

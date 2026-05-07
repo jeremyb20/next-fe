@@ -566,5 +566,7 @@
   "Please enter the verification code sent to your email": "Vui lòng nhập mã xác minh được gửi đến email của bạn",
   "Resend code": "Gửi lại mã",
   "Verify & Sign In": "Xác minh và đăng nhập",
-  "Devices": "Thiết bị"
+  "Devices": "Thiết bị",
+  "Backup Email": "Email dự phòng",
+  "Add a backup email address to recover your account": "Thêm địa chỉ email dự phòng để khôi phục tài khoản của bạn"
 }
