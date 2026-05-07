@@ -43,6 +43,7 @@ import FormProvider, {
 } from '@/components/hook-form';
 
 import AccountSelectionModal from './account-selection-modal';
+import AccountChangePassword from './account-change-password';
 
 // ----------------------------------------------------------------------
 
@@ -238,9 +239,9 @@ export default function AccountGeneral() {
 
   return (
     <>
-      <FormProvider methods={methods} onSubmit={onSubmit}>
-        <Grid container spacing={3}>
-          <Grid xs={12} md={4}>
+      <Grid container spacing={3}>
+        <FormProvider methods={methods} onSubmit={onSubmit}>
+          <Grid xs={12} md={12}>
             <Card
               sx={{
                 pt: 10,
@@ -252,26 +253,6 @@ export default function AccountGeneral() {
                 flexDirection: 'column',
               }}
             >
-              {/* <RHFUploadAvatar
-              name="photoURL"
-              maxSize={3145728}
-              onDrop={handleDrop}
-              helperText={
-                <Typography
-                  variant="caption"
-                  sx={{
-                    mt: 3,
-                    mx: 'auto',
-                    display: 'block',
-                    textAlign: 'center',
-                    color: 'text.disabled',
-                  }}
-                >
-                  Allowed *.jpeg, *.jpg, *.png, *.gif
-                  <br /> max size of {fData(3145728)}
-                </Typography>
-              }
-            /> */}
               <StyledAvatar
                 src={user?.photoURL}
                 alt={user?.displayName}
@@ -295,7 +276,7 @@ export default function AccountGeneral() {
             </Card>
           </Grid>
 
-          <Grid xs={12} md={8}>
+          <Grid xs={12} md={12}>
             <Card sx={{ p: 3 }}>
               <Box
                 rowGap={3}
@@ -307,7 +288,11 @@ export default function AccountGeneral() {
                 }}
               >
                 <RHFTextField name="displayName" label={t('Name')} />
-                <RHFTextField name="email" label={t('Email address')} />
+                <RHFTextField
+                  name="email"
+                  disabled
+                  label={t('Email address')}
+                />
                 <RHFAutocomplete
                   name="country"
                   type="country"
@@ -381,8 +366,12 @@ export default function AccountGeneral() {
               </Stack>
             </Card>
           </Grid>
+        </FormProvider>
+
+        <Grid xs={12} md={12}>
+          <AccountChangePassword />
         </Grid>
-      </FormProvider>
+      </Grid>
 
       <AccountSelectionModal
         avatarDialog={avatarDialog}

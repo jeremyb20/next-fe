@@ -19,6 +19,7 @@ interface PetDashboardProps {
   onPetDelete?: (pet: IPetProfile) => void;
   onPetView?: (pet: IPetProfile) => void;
   onPetEdit?: (pet: IPetProfile) => void;
+  onViewDetails?: (pet: IPetProfile) => void;
   onAddMore?: () => void;
   emptyMessage?: string;
   maxPets?: number;
@@ -32,6 +33,7 @@ export function PetDashboard({
   onPetView,
   onPetEdit,
   onAddMore,
+  onViewDetails,
   emptyMessage = 'No pets found',
   maxPets = Number(ALLOW_MAX_PETS_BY_USER),
   refetch: refetchPets,
@@ -141,6 +143,7 @@ export function PetDashboard({
             key={`${selectedPet._id}-${refreshKey}`}
             pet={selectedPet}
             onEdit={onPetEdit}
+            onViewDetails={onViewDetails}
             onDelete={onPetDelete}
             onViewMedicalRecords={onPetView}
             isFetching={isFetching}

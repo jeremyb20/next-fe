@@ -525,5 +525,10 @@
   "Error searching location": "خطأ في البحث عن الموقع",
   "Geolocation not supported": "تحديد الموقع الجغرافي غير مدعوم",
   "Current location set!": "تم تعيين الموقع الحالي!",
-  "Error getting location": "خطأ في الحصول على الموقع"
+  "Error getting location": "خطأ في الحصول على الموقع",
+  "View details": "عرض التفاصيل",
+  "No location information available for this pet.": "لا تتوفر معلومات الموقع لهذا الحيوان الأليف.",
+  "In memory of {{petName}}": "تخليدًا لذكرى {{petName}}",
+  "We are deeply saddened by the passing of {{petName}} Our deepest condolences to the family. May they find comfort in the beautiful memories they shared.": "نحن حزينون جدًا لرحيل {{petName}}. أحر التعازي للعائلة. ليجدوا عزاءهم في الذكريات الجميلة التي جمعتهم به.",
+  "There is no love purer than the love our pets give us. They will always live on in our hearts.": "لا يوجد حب أنقى من الحب الذي تمنحنا إياه حيواناتنا الأليفة. ستعيش دائمًا في قلوبنا."
 }

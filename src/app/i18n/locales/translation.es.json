@@ -525,5 +525,10 @@
   "Error searching location": "Error al buscar la ubicación",
   "Geolocation not supported": "Geolocalización no soportada",
   "Current location set!": "¡Ubicación actual establecida!",
-  "Error getting location": "Error al obtener la ubicación"
+  "Error getting location": "Error al obtener la ubicación",
+  "View details": "Ver detalles",
+  "No location information available for this pet.": "No hay información de ubicación disponible para esta mascota.",
+  "In memory of {{petName}}": "En memoria de {{petName}}",
+  "We are deeply saddened by the passing of {{petName}} Our deepest condolences to the family. May they find comfort in the beautiful memories they shared.": "Estamos profundamente entristecidos por el fallecimiento de {{petName}}. Nuestro más sentido pésame a la familia. Que encuentren consuelo en los hermosos recuerdos que compartieron.",
+  "There is no love purer than the love our pets give us. They will always live on in our hearts.": "No hay amor más puro que el amor que nos dan nuestras mascotas. Siempre vivirán en nuestros corazones."
 }

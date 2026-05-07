@@ -10,6 +10,7 @@ import Iconify from '@/components/iconify';
 import { fDate } from '@/utils/format-time';
 import { RouterLink } from '@/routes/components';
 import axios, { endpoints } from '@/utils/axios';
+import { useRedirect } from '@/hooks/use-redirect';
 import { useSnackbar } from '@/components/snackbar';
 import { useQueryClient } from '@tanstack/react-query';
 import { useTranslation } from '@/hooks/use-translation';
@@ -21,6 +22,8 @@ import React, { useRef, useMemo, useState, useEffect } from 'react';
 import SplashScreen from '@/components/loading-screen/splash-screen';
 import { DOMAIN, EMAIL_SUPPORT, PHONE_SUPPORT } from '@/config-global';
 import ShareDrawerDialog from '@/components/share/share-drawer-dialog';
+import { PetAvatarWithBadge } from '@/components/badge/PetAvatarWithBage';
+import { PetCondolenceMessage } from '@/components/pet/PetCondolenceMessage';
 import PetStickyNote from '@/app/[lang]/pet/_components/view/pet-sticky-note';
 import CostaRicaIDCard from '@/components/country-cards/Costa-Rica/costa-rica-card';
 import PetLocationMap from '@/app/[lang]/pet/_components/locations/pet-location-map';
@@ -73,7 +76,7 @@ export default function PetProfileViewComponent({
   const settings = useSettingsContext();
   const { t, lng: currentLang, mounted } = useTranslation();
   const { user } = useManagerUser();
-
+  const { redirectBack } = useRedirect();
   // Estados para el consentimiento de ubicación (solo para vistas públicas)
   const [locationConsent, setLocationConsent] = useState<
     'pending' | 'accepted' | 'rejected' | 'error'
@@ -257,6 +260,8 @@ export default function PetProfileViewComponent({
   const showMainContent =
     locationConsent === 'accepted' || !requireLocationConsent;
 
+  const deceasedNote = petProfile.petStatus === 'deceased';
+
   return (
     <>
       {/* Overlay de consentimiento */}
@@ -275,18 +280,6 @@ export default function PetProfileViewComponent({
           sx={{ pb: 4 }}
         >
           {/* Botón de retroceso */}
-          {user?.email && (
-            <Button
-              component={RouterLink}
-              href={paths.dashboard.user.pets}
-              sx={{ mb: 0.5 }}
-              startIcon={<Iconify icon="eva:arrow-ios-back-fill" width={26} />}
-            >
-              <Typography variant="h4" fontWeight={700}>
-                {t('Pet profile')}
-              </Typography>
-            </Button>
-          )}
 
           <Grid container spacing={3}>
             {/* Columna izquierda - Foto e información básica */}
@@ -313,42 +306,61 @@ export default function PetProfileViewComponent({
                     }}
                     overlay={alpha(theme.palette.grey[900], 0.48)}
                   />
-                  <IconButton
-                    onClick={handleShareOpen}
+
+                  <Box
                     sx={{
-                      position: 'absolute',
-                      top: 16,
-                      right: 16,
-                      backgroundColor: 'rgba(0,0,0,0.6)',
-                      color: 'white',
-                      '&:hover': {
-                        backgroundColor: 'rgba(0,0,0,0.8)',
-                      },
-                      zIndex: 2,
+                      display: 'flex',
                     }}
                   >
-                    <Iconify icon="solar:share-bold" width={20} />
-                  </IconButton>
+                    {user?.email && (
+                      <IconButton
+                        onClick={redirectBack}
+                        sx={{
+                          position: 'absolute',
+                          top: 16,
+                          left: 16,
+                          backgroundColor: 'background.neutral',
+                          color: 'white',
+                          '&:hover': {
+                            backgroundColor: 'rgba(0,0,0,0.8)',
+                          },
+                          zIndex: 2,
+                        }}
+                      >
+                        <Iconify icon="eva:arrow-ios-back-fill" width={20} />
+                      </IconButton>
+                    )}
+                    <IconButton
+                      onClick={handleShareOpen}
+                      sx={{
+                        position: 'absolute',
+                        top: 16,
+                        right: 16,
+                        backgroundColor: 'rgba(0,0,0,0.6)',
+                        color: 'white',
+                        '&:hover': {
+                          backgroundColor: 'rgba(0,0,0,0.8)',
+                        },
+                        zIndex: 2,
+                      }}
+                    >
+                      <Iconify icon="solar:share-bold" width={20} />
+                    </IconButton>
+                  </Box>
                 </Box>
 
                 {/* Contenedor principal con avatar e información */}
                 <Box sx={{ px: 1.5, pb: 3 }}>
                   <Box sx={{ display: 'flex', gap: 1, mt: -3 }}>
                     {/* Avatar */}
-                    <Avatar
-                      alt={petProfile.petName}
-                      src={petProfile.photo}
-                      onClick={() => setOpenImage(true)}
-                      sx={{
-                        width: 110,
-                        height: 110,
-                        cursor: 'pointer',
-                        border: `4px solid ${theme.palette.background.paper}`,
-                        boxShadow: 2,
-                        zIndex: 10,
-                      }}
-                    />
 
+                    <PetAvatarWithBadge
+                      pet={petProfile}
+                      size={115}
+                      avatarSx={{ zIndex: 1, boxShadow: 2 }}
+                      onClick={() => setOpenImage(true)}
+                      allowOpacity={false}
+                    />
                     {/* Información */}
                     <Box sx={{ flex: 1, pt: 5 }}>
                       <Stack direction="row" justifyContent="space-between">
@@ -360,11 +372,11 @@ export default function PetProfileViewComponent({
                           size="small"
                           sx={{ textTransform: 'capitalize', fontWeight: 100 }}
                           color={
-                            petProfile.petStatus === 'Perdido'
+                            petProfile.petStatus === 'lost'
                               ? 'error'
-                              : petProfile.petStatus === 'Encontrado'
+                              : petProfile.petStatus === 'active'
                                 ? 'success'
-                                : 'primary'
+                                : 'warning'
                           }
                         />
                       </Stack>
@@ -524,6 +536,12 @@ export default function PetProfileViewComponent({
                       </Typography>
                     </div>
                   </Box>
+
+                  {deceasedNote && (
+                    <Box mt={2}>
+                      <PetCondolenceMessage pet={petProfile} variant="card" />
+                    </Box>
+                  )}
 
                   {/* Notes section */}
                   {petProfile.notes && (

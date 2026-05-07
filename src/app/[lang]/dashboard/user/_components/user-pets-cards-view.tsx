@@ -72,6 +72,13 @@ export default function UserPetCardsView() {
     [router]
   );
 
+  const handlePetViewDetails = useCallback(
+    (pet: IPetProfile) => {
+      router.push(`${paths.dashboard.user.details(pet.memberPetId)}`);
+    },
+    [router]
+  );
+
   if (isError) {
     return (
       <Container maxWidth={settings.themeStretch ? false : 'lg'}>
@@ -83,7 +90,7 @@ export default function UserPetCardsView() {
   }
 
   return (
-    <Container maxWidth={settings.themeStretch ? false : 'sm'}>
+    <Container maxWidth={settings.themeStretch ? false : 'sm'} sx={{ pb: 6 }}>
       <UserProfileCard
         petCount={`${
           usersData?.payload.length || 0
@@ -105,6 +112,7 @@ export default function UserPetCardsView() {
         onPetDelete={handlePetDelete}
         onPetView={handlePetView}
         onPetEdit={handlePetEdit}
+        onViewDetails={handlePetViewDetails}
         onAddMore={() => registerPetModal.onTrue()}
         emptyMessage="No se encontraron mascotas"
         refetch={refetch}

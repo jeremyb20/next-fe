@@ -525,5 +525,10 @@
   "Error searching location": "Lỗi khi tìm kiếm vị trí",
   "Geolocation not supported": "Định vị địa lý không được hỗ trợ",
   "Current location set!": "Đã đặt vị trí hiện tại!",
-  "Error getting location": "Lỗi khi lấy vị trí"
+  "Error getting location": "Lỗi khi lấy vị trí",
+  "View details": "Xem chi tiết",
+  "No location information available for this pet.": "Không có thông tin vị trí cho thú cưng này.",
+  "In memory of {{petName}}": "Tưởng nhớ {{petName}}",
+  "We are deeply saddened by the passing of {{petName}} Our deepest condolences to the family. May they find comfort in the beautiful memories they shared.": "Chúng tôi vô cùng thương tiếc sự ra đi của {{petName}}. Xin gửi lời chia buồn sâu sắc nhất đến gia đình. Cầu mong họ tìm thấy niềm an ủi trong những kỷ niệm đẹp đã chia sẻ.",
+  "There is no love purer than the love our pets give us. They will always live on in our hearts.": "Không có tình yêu nào trong sáng hơn tình yêu mà thú cưng dành cho chúng ta. Chúng sẽ mãi sống trong trái tim chúng ta."
 }

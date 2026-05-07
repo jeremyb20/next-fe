@@ -10,6 +10,7 @@ import { formatPetAge, getSpeciesFromBreed } from '@/utils/pet-age.utils';
 
 // Importar los componentes reutilizables
 
+import CustomPopover, { usePopover } from '@/components/custom-popover';
 import { PetAvatarWithBadge } from '@/components/badge/PetAvatarWithBage';
 import VaccinesList from '@/app/[lang]/pet/_components/view/vaccines-list';
 import DewormingList from '@/app/[lang]/pet/_components/view/deworming-list';
@@ -26,6 +27,7 @@ import {
   Divider,
   Tooltip,
   ListItem,
+  MenuItem,
   Typography,
   IconButton,
   ListItemText,
@@ -38,6 +40,7 @@ import PetDetailsSkeleton from './pet-details-skeleton';
 interface PetDetailsCardProps {
   pet?: IPetProfile;
   onEdit?: (pet: IPetProfile) => void;
+  onViewDetails?: (pet: IPetProfile) => void;
   onDelete?: (pet: IPetProfile) => void;
   onViewMedicalRecords?: (pet: IPetProfile) => void;
   isFetching?: boolean;
@@ -57,6 +60,7 @@ type MedicalSection = 'summary' | 'vaccines' | 'deworming' | 'visits';
 export function PetDetailsCard({
   pet,
   onEdit,
+  onViewDetails,
   onDelete,
   onViewMedicalRecords,
   isFetching,
@@ -69,6 +73,7 @@ export function PetDetailsCard({
   const [selectedSection, setSelectedSection] =
     useState<MedicalSection>('summary');
   const [localRefreshTrigger, setLocalRefreshTrigger] = useState(0);
+  const popover = usePopover();
   const detectedSpecies = pet?.breed ? getSpeciesFromBreed(pet.breed) : null;
   useEffect(() => {
     // Solo refrescar cuando los datos médicos realmente cambien
@@ -165,12 +170,14 @@ export function PetDetailsCard({
                 <IconButton onClick={handleBackToSummary} size="small">
                   <Iconify icon="mdi:arrow-left" width={20} />
                 </IconButton>
-                <Typography variant="subtitle1" fontWeight={600}>
-                  {t('Vaccination')}
-                </Typography>
-                <Typography variant="caption" color="text.secondary">
-                  ({pet?.medicalRecord?.vaccines?.length || 0} {t('records')})
-                </Typography>
+                <Box>
+                  <Typography variant="subtitle1" fontWeight={600}>
+                    {t('Vaccination')}
+                  </Typography>
+                  <Typography variant="caption" color="text.secondary">
+                    ({pet?.medicalRecord?.vaccines?.length || 0} {t('records')})
+                  </Typography>
+                </Box>
               </Box>
               <Button
                 variant="contained"
@@ -214,12 +221,15 @@ export function PetDetailsCard({
                 <IconButton onClick={handleBackToSummary} size="small">
                   <Iconify icon="mdi:arrow-left" width={20} />
                 </IconButton>
-                <Typography variant="subtitle1" fontWeight={600}>
-                  {t('Deworming')}
-                </Typography>
-                <Typography variant="caption" color="text.secondary">
-                  ({pet?.medicalRecord?.deworming?.length || 0} {t('records')})
-                </Typography>
+                <Box>
+                  <Typography variant="subtitle1" fontWeight={600}>
+                    {t('Deworming')}
+                  </Typography>
+                  <Typography variant="caption" color="text.secondary">
+                    ({pet?.medicalRecord?.deworming?.length || 0} {t('records')}
+                    )
+                  </Typography>
+                </Box>
               </Box>
 
               <Button
@@ -264,13 +274,15 @@ export function PetDetailsCard({
                 <IconButton onClick={handleBackToSummary} size="small">
                   <Iconify icon="mdi:arrow-left" width={20} />
                 </IconButton>
-                <Typography variant="subtitle1" fontWeight={600}>
-                  {t('Medical Visits')}
-                </Typography>
-                <Typography variant="caption" color="text.secondary">
-                  ({pet?.medicalRecord?.datesOfMedicalVisits?.length || 0}{' '}
-                  {t('records')})
-                </Typography>
+                <Box>
+                  <Typography variant="subtitle1" fontWeight={600}>
+                    {t('Medical Visits')}
+                  </Typography>
+                  <Typography variant="caption" color="text.secondary">
+                    ({pet?.medicalRecord?.datesOfMedicalVisits?.length || 0}{' '}
+                    {t('records')})
+                  </Typography>
+                </Box>
               </Box>
               <Button
                 variant="contained"
@@ -401,62 +413,104 @@ export function PetDetailsCard({
 
   return (
     <Box sx={{ position: 'relative', overflow: 'hidden' }}>
-      <Card sx={{ p: 2, borderRadius: 3 }}>
+      <Card sx={{ py: 2, px: 1, borderRadius: 3 }}>
         {/* Header con foto y nombre */}
         <Box
           sx={{
             display: 'flex',
             alignItems: 'center',
-            gap: 3,
+            gap: 1,
+            flexDirection: 'row',
+            justifyContent: 'space-between',
           }}
         >
-          <PetAvatarWithBadge pet={pet} size={100} />
-          <Box>
-            <Typography variant="h4" fontWeight={700}>
-              {pet.petName} ({pet.memberPetId})
-            </Typography>
-            <Box sx={{ display: 'flex', gap: 1, mt: 1 }}>
-              <Chip
-                label={t(
-                  GENDER_OPTIONS.find(
-                    (gender) => gender.value === pet.genderSelected
-                  )?.label || 'N/A'
-                )}
-                size="small"
-                icon={
-                  <Iconify
-                    icon={
-                      pet.genderSelected === 'male'
-                        ? 'tabler:male'
-                        : 'tabler:female'
-                    }
-                  />
-                }
-              />
-              <Chip
-                label={
-                  BreedOptions.todos.find((breed) => breed.value === pet.breed)
-                    ?.label || t('Unknown breed')
-                }
-                size="small"
-                icon={<Iconify icon="tabler:paw" />}
-              />
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+            <PetAvatarWithBadge pet={pet} size={100} />
+            <Box>
+              <Typography variant="h4" fontWeight={700}>
+                {pet.petName} ({pet.memberPetId})
+              </Typography>
+              <Box sx={{ display: 'flex', gap: 1, mt: 1 }}>
+                <Chip
+                  label={t(
+                    GENDER_OPTIONS.find(
+                      (gender) => gender.value === pet.genderSelected
+                    )?.label || 'N/A'
+                  )}
+                  size="small"
+                  icon={
+                    <Iconify
+                      icon={
+                        pet.genderSelected === 'male'
+                          ? 'tabler:male'
+                          : 'tabler:female'
+                      }
+                    />
+                  }
+                />
+                <Chip
+                  label={
+                    BreedOptions.todos.find(
+                      (breed) => breed.value === pet.breed
+                    )?.label || t('Unknown breed')
+                  }
+                  size="small"
+                  icon={<Iconify icon="tabler:paw" />}
+                />
+              </Box>
             </Box>
           </Box>
+          <Box>
+            <IconButton
+              color={popover.open ? 'inherit' : 'default'}
+              onClick={popover.onOpen}
+            >
+              <Iconify icon="eva:more-vertical-fill" />
+            </IconButton>
+          </Box>
         </Box>
+        <CustomPopover
+          open={popover.open}
+          onClose={popover.onClose}
+          arrow="right-top"
+          sx={{ width: 140 }}
+        >
+          <MenuItem
+            onClick={() => {
+              // onViewRow();
+              onViewDetails?.(pet);
+              popover.onClose();
+            }}
+          >
+            <Iconify icon="solar:eye-bold" />
+            {t('View details')}
+          </MenuItem>
+          <MenuItem
+            onClick={() => {
+              // onEditRow();
+              onEdit?.(pet);
+              popover.onClose();
+            }}
+          >
+            <Iconify icon="solar:pen-bold" />
+            {t('Edit')}
+          </MenuItem>
 
+          <MenuItem
+            onClick={() => {
+              // confirm.onTrue();
+              popover.onClose();
+            }}
+            sx={{ color: 'error.main' }}
+          >
+            <Iconify icon="solar:trash-bin-trash-bold" />
+            {t('Delete')}
+          </MenuItem>
+        </CustomPopover>
         <Divider sx={{ my: 1 }} />
 
         {/* Información detallada */}
-        <Stack spacing={1} direction="row" justifyContent="flex-end">
-          <Button
-            variant="text"
-            onClick={() => onEdit?.(pet)}
-            endIcon={<Iconify icon="weui:arrow-outlined" />}
-          >
-            {t('Edit')}
-          </Button>
-        </Stack>
+
         <Grid container spacing={3}>
           {/* Columna izquierda */}
           <Grid item xs={6} sm={6}>
