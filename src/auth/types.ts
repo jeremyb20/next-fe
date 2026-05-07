@@ -1,3 +1,4 @@
+import { DeviceInfo } from '@/types/api';
 import {
   LogoutOptions,
   PopupLoginOptions,
@@ -8,13 +9,13 @@ import {
 
 export type ActionMapType<M extends { [index: string]: any }> = {
   [Key in keyof M]: M[Key] extends undefined
-    ? {
-        type: Key;
-      }
-    : {
-        type: Key;
-        payload: M[Key];
-      };
+  ? {
+    type: Key;
+  }
+  : {
+    type: Key;
+    payload: M[Key];
+  };
 };
 
 export type AuthUserType = null | Record<string, any>;
@@ -27,12 +28,12 @@ export type AuthStateType = {
 
 // ----------------------------------------------------------------------
 
+export type LoginResult =
+  | { requiresTwoFactor: boolean; method: any; tempToken: any; message: any }
+  | { success: boolean; user: any; accessToken: any };
+
 type CanRemove = {
-  login?: (
-    email: string,
-    password: string,
-    turnstileToken: string | null
-  ) => Promise<void>;
+  login?: (...args: any[]) => Promise<any>;
   register?: (
     email: string,
     password: string,
@@ -71,8 +72,10 @@ export type JWTContextType = CanRemove & {
   login: (
     email: string,
     password: string,
-    turnstileToken: string | null
-  ) => Promise<void>;
+    turnstileToken: string | null,
+    twoFactorCode?: string,
+    deviceInfo?: DeviceInfo
+  ) => Promise<LoginResult>;
   register: (
     email: string,
     password: string,
@@ -82,7 +85,7 @@ export type JWTContextType = CanRemove & {
     phone: string,
     settings: Record<string, any>,
     turnstileToken: string | null
-  ) => Promise<void>;
+  ) => Promise<any>;
   logout: () => Promise<void>;
   updateUser: (userData: Partial<AuthUserType>) => void;
 };

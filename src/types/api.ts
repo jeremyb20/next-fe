@@ -434,3 +434,12 @@ export interface IPromotions {
   isExternalLink: boolean;
   buttonTextRedirect: string;
 }
+
+
+export interface DeviceInfo {
+  name: string;
+  deviceType: 'mobile' | 'desktop' | 'tablet';
+  location: string;
+  userAgent: string;
+  ipAddress?: string;
+}

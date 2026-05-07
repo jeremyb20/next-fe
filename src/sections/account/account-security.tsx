@@ -13,6 +13,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import EmptyContent from '@/components/empty-content';
 import { useTranslation } from '@/hooks/use-translation';
 import { useGetSecurityConfig } from '@/hooks/use-fetch';
+import OtpInput from '@/components/custom-inputs/otp-input';
 import { useCreateGenericMutation } from '@/hooks/user-generic-mutation';
 
 import Box from '@mui/material/Box';
@@ -243,28 +244,6 @@ export default function AccountSecurity() {
       );
     }
   };
-
-  // const handleDisable2FA = async () => {
-  //   try {
-  //     const response = await mutateAsync({
-  //       pEndpoint: `${HOST_API}${endpoints.user.disable2FA}`,
-  //       method: 'POST',
-  //       payload: {},
-  //     });
-
-  //     if (response.success) {
-  //       // Refrescar datos de seguridad
-  //       await refetchSecurity();
-
-  //       enqueueSnackbar(t('Two-factor authentication disabled'), {
-  //         variant: 'success',
-  //       });
-  //     }
-  //   } catch (error) {
-  //     console.error(error);
-  //     enqueueSnackbar(t('Error disabling 2FA'), { variant: 'error' });
-  //   }
-  // };
 
   const handleDisable2FA = async () => {
     // Mostrar diálogo para ingresar el código
@@ -761,13 +740,16 @@ export default function AccountSecurity() {
               </Box>
             )}
 
-            <TextField
-              fullWidth
-              label={t('Verification Code')}
-              value={verificationCode}
-              onChange={(e) => setVerificationCode(e.target.value)}
-              placeholder={t('Enter 6-digit code')}
-              autoFocus
+            <OtpInput
+              onChange={(code) => {
+                setVerificationCode(code);
+              }}
+              onEnter={() => {
+                // Solo ejecutar si el código tiene 6 dígitos
+                if (verificationCode.length === 6) {
+                  handleVerify2FA();
+                }
+              }}
             />
 
             {pendingMethod === 'email' && (
@@ -814,17 +796,15 @@ export default function AccountSecurity() {
               )}
             </Typography>
 
-            <TextField
-              fullWidth
-              label={t('Verification Code')}
-              value={disable2FACode}
-              onChange={(e) => setDisable2FACode(e.target.value)}
-              placeholder={t('Enter 6-digit code')}
-              autoFocus
-              type="text"
-              inputProps={{
-                maxLength: 6,
-                pattern: '[0-9]*',
+            <OtpInput
+              onChange={(code) => {
+                setDisable2FACode(code);
+              }}
+              onEnter={() => {
+                // Solo ejecutar si el código tiene 6 dígitos
+                if (disable2FACode.length === 6) {
+                  handleConfirmDisable2FA();
+                }
               }}
             />
 

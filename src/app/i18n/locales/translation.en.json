@@ -560,5 +560,10 @@
   "No devices found": "No devices found",
   "User not found": "User not found",
   "Updated security settings": "Updated security settings",
-  "Back to dashboard": "Back to dashboard"
+  "Back to dashboard": "Back to dashboard",
+  "Two-Factor Authentication Required": "Two-Factor Authentication Required",
+  "Please enter the 6-digit code from your authenticator app": "Please enter the 6-digit code from your authenticator app",
+  "Please enter the verification code sent to your email": "Please enter the verification code sent to your email",
+  "Resend code": "Resend code",
+  "Verify & Sign In": "Verify & Sign In"
 }

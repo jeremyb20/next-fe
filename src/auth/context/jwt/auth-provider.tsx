@@ -1,5 +1,6 @@
 'use client';
 
+import { DeviceInfo } from '@/types/api';
 import { STORAGE_KEY } from '@/config-global';
 import axios, { endpoints } from '@/utils/axios';
 import { SettingsValueProps } from '@/components/settings';
@@ -136,17 +137,40 @@ export function AuthProvider({ children }: Props) {
   }, [initialize]);
 
   // LOGIN
-  // LOGIN
+
   const login = useCallback(
-    async (email: string, password: string, turnstileToken: string | null) => {
+    async (
+      email: string,
+      password: string,
+      turnstileToken: string | null,
+      twoFactorCode?: string,
+      deviceInfo?: DeviceInfo | undefined
+    ) => {
       try {
-        const data = {
+        const data: any = {
           email,
           password,
           turnstileToken,
+          deviceInfo,
         };
 
+        // Si se proporciona código 2FA, incluirlo en la petición
+        if (twoFactorCode) {
+          data.twoFactorCode = twoFactorCode;
+        }
+
         const loginRes = await axios.post(endpoints.auth.signIn, data);
+
+        // Verificar si se requiere 2FA
+        if (loginRes.data.requiresTwoFactor) {
+          // Retornar información de 2FA para que el componente la maneje
+          return {
+            requiresTwoFactor: true,
+            method: loginRes.data.method,
+            tempToken: loginRes.data.tempToken,
+            message: loginRes.data.message,
+          };
+        }
 
         // Verificar si la respuesta es exitosa
         if (!loginRes.data.success) {
@@ -170,7 +194,11 @@ export function AuthProvider({ children }: Props) {
           },
         });
 
-        return loginRes.data; // Retornar la respuesta para verificación adicional
+        return {
+          success: true,
+          user,
+          accessToken,
+        };
       } catch (error: any) {
         // Manejar errores de axios o del servidor
         if (error.response) {
