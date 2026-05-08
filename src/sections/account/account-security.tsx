@@ -6,13 +6,15 @@ import { useForm } from 'react-hook-form';
 import { endpoints } from '@/utils/axios';
 import Iconify from '@/components/iconify';
 import { HOST_API } from '@/config-global';
-import { useState, useEffect } from 'react';
 import { RouterLink } from '@/routes/components';
+import { useRef, useState, useEffect } from 'react';
 import { useSnackbar } from '@/components/snackbar';
+import { fToNowRefactor } from '@/utils/format-time';
 import { yupResolver } from '@hookform/resolvers/yup';
 import EmptyContent from '@/components/empty-content';
 import { useTranslation } from '@/hooks/use-translation';
 import { useGetSecurityConfig } from '@/hooks/use-fetch';
+import { useManagerUser } from '@/hooks/use-manager-user';
 import OtpInput from '@/components/custom-inputs/otp-input';
 import { useCreateGenericMutation } from '@/hooks/user-generic-mutation';
 
@@ -27,6 +29,7 @@ import { LinearProgress } from '@mui/material';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
+import LoadingButton from '@mui/lab/LoadingButton';
 import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
@@ -48,12 +51,22 @@ interface TwoFactorStatus {
   phone: string;
 }
 
+interface SecurityLevel {
+  level: number;
+  items: {
+    emailVerified: boolean;
+    twoFactorEnabled: boolean;
+    backupEmailSet: boolean;
+  };
+}
+
 // ----------------------------------------------------------------------
 
 export default function AccountSecurity() {
   const { enqueueSnackbar } = useSnackbar();
   const { mutateAsync } = useCreateGenericMutation();
   const { t } = useTranslation();
+  const { user } = useManagerUser();
 
   // Usar el custom hook para obtener datos de seguridad
   const {
@@ -79,8 +92,16 @@ export default function AccountSecurity() {
   const [disable2FACode, setDisable2FACode] = useState('');
   const [isDisabling2FA, setIsDisabling2FA] = useState(false);
 
-  // Extraer datos del securityData - CORREGIDO
-  // Como los datos vienen en securityData.payload directamente
+  // Estados para verificación de email
+  const [showEmailVerificationDialog, setShowEmailVerificationDialog] =
+    useState(false);
+  const [emailVerificationCode, setEmailVerificationCode] = useState('');
+  const [isSendingEmailCode, setIsSendingEmailCode] = useState(false);
+  const [isVerifyingEmail, setIsVerifyingEmail] = useState(false);
+  const [emailVerificationCooldown, setEmailVerificationCooldown] = useState(0);
+  const emailCooldownTimerRef = useRef<NodeJS.Timeout | null>(null);
+
+  // Extraer datos del securityData
   const twoFactorStatus: TwoFactorStatus = {
     enabled: securityData?.twoFactor?.enabled || false,
     method: securityData?.twoFactor?.method || null,
@@ -88,7 +109,74 @@ export default function AccountSecurity() {
     phone: securityData?.twoFactor?.phone || '',
   };
 
+  // ✅ Obtener estado de verificación de email directamente de securityData
+  const isEmailVerified = securityData?.twoFactor?.isEmailVerified || false;
+  const userEmail = user.email || '';
+  const hasBackupEmail = !!securityData?.twoFactor?.email;
+
   const devices: Device[] = securityData?.devices || [];
+
+  // ✅ Calcular nivel de seguridad
+  const securityLevel: SecurityLevel = {
+    level: 0,
+    items: {
+      emailVerified: isEmailVerified,
+      twoFactorEnabled: twoFactorStatus.enabled,
+      backupEmailSet: hasBackupEmail,
+    },
+  };
+
+  // Contar medidas activadas
+  const activeSecurityItems = Object.values(securityLevel.items).filter(
+    Boolean
+  ).length;
+  const securityPercentage = (activeSecurityItems / 3) * 100;
+
+  // Determinar color según nivel de seguridad
+  const getSecurityColor = (percentage: number) => {
+    if (percentage >= 80) return '#4caf50';
+    if (percentage >= 50) return '#ff9800';
+    return '#f44336';
+  };
+
+  // Determinar texto del nivel
+  const getSecurityLevelText = (percentage: number) => {
+    if (percentage >= 80) return t('High Security');
+    if (percentage >= 50) return t('Medium Security');
+    return t('Low Security');
+  };
+
+  // Limpiar timer de cooldown
+  useEffect(
+    () => () => {
+      if (emailCooldownTimerRef.current) {
+        clearInterval(emailCooldownTimerRef.current);
+      }
+    },
+    []
+  );
+
+  // Efecto para manejar el cooldown del email
+  useEffect(() => {
+    if (emailVerificationCooldown > 0) {
+      emailCooldownTimerRef.current = setInterval(() => {
+        setEmailVerificationCooldown((prev) => {
+          if (prev <= 1) {
+            if (emailCooldownTimerRef.current) {
+              clearInterval(emailCooldownTimerRef.current);
+            }
+            return 0;
+          }
+          return prev - 1;
+        });
+      }, 1000);
+    }
+    return () => {
+      if (emailCooldownTimerRef.current) {
+        clearInterval(emailCooldownTimerRef.current);
+      }
+    };
+  }, [emailVerificationCooldown]);
 
   const twoFactorSchema = Yup.object().shape({
     backupEmail: Yup.string().email(t('Invalid email')),
@@ -130,7 +218,6 @@ export default function AccountSecurity() {
         enqueueSnackbar(t('Security settings updated successfully!'), {
           variant: 'success',
         });
-        // Refrescar datos
         await refetchSecurity();
       }
     } catch (error) {
@@ -141,7 +228,129 @@ export default function AccountSecurity() {
     }
   });
 
+  // Enviar código de verificación de email
+  const handleSendEmailVerification = async () => {
+    if (emailVerificationCooldown > 0) {
+      enqueueSnackbar(
+        t(
+          `Please wait ${emailVerificationCooldown} seconds before requesting another code`
+        ),
+        { variant: 'warning' }
+      );
+      return;
+    }
+
+    try {
+      setIsSendingEmailCode(true);
+
+      const response = await mutateAsync({
+        payload: { email: user.email },
+        pEndpoint: `${HOST_API}${endpoints.user.sendEmailVerification}`,
+        method: 'POST',
+      });
+
+      if (response.success) {
+        setShowEmailVerificationDialog(true);
+        setEmailVerificationCooldown(60);
+        enqueueSnackbar(t('Verification code sent to your email'), {
+          variant: 'success',
+        });
+      }
+    } catch (error: any) {
+      console.error(error);
+      enqueueSnackbar(
+        error.response?.data?.message || t('Error sending verification code'),
+        { variant: 'error' }
+      );
+    } finally {
+      setIsSendingEmailCode(false);
+    }
+  };
+
+  // Verificar código de email
+  const handleVerifyEmailCode = async () => {
+    if (!emailVerificationCode || emailVerificationCode.length !== 6) {
+      enqueueSnackbar(t('Please enter a valid 6-digit verification code'), {
+        variant: 'warning',
+      });
+      return;
+    }
+
+    try {
+      setIsVerifyingEmail(true);
+      const response = await mutateAsync({
+        payload: { code: emailVerificationCode },
+        pEndpoint: `${HOST_API}${endpoints.user.verifyEmailCode}`,
+        method: 'POST',
+      });
+
+      if (response.success) {
+        setShowEmailVerificationDialog(false);
+        setEmailVerificationCode('');
+        enqueueSnackbar(t('Email verified successfully!'), {
+          variant: 'success',
+        });
+
+        await refetchSecurity();
+
+        if (pendingMethod) {
+          setShowVerificationDialog(true);
+        }
+      }
+    } catch (error: any) {
+      console.error(error);
+      enqueueSnackbar(
+        error.response?.data?.message || t('Invalid verification code'),
+        { variant: 'error' }
+      );
+    } finally {
+      setIsVerifyingEmail(false);
+    }
+  };
+
+  // Reenviar código de verificación de email
+  const handleResendEmailCode = async () => {
+    if (emailVerificationCooldown > 0) {
+      enqueueSnackbar(
+        t(
+          `Please wait {{emailVerificationCooldown}} seconds before requesting another code`,
+          { emailVerificationCooldown }
+        ),
+        { variant: 'warning' }
+      );
+      return;
+    }
+
+    try {
+      const response = await mutateAsync({
+        payload: {},
+        pEndpoint: `${HOST_API}${endpoints.user.resendEmailVerification}`,
+        method: 'POST',
+      });
+
+      if (response.success) {
+        setEmailVerificationCooldown(60);
+        enqueueSnackbar(t('New verification code sent to your email'), {
+          variant: 'success',
+        });
+      }
+    } catch (error: any) {
+      console.error(error);
+      enqueueSnackbar(
+        error.response?.data?.message || t('Error sending verification code'),
+        { variant: 'error' }
+      );
+    }
+  };
+
   const handleEnable2FA = async (method: 'app' | 'email') => {
+    if (!isEmailVerified) {
+      setPendingMethod(method);
+      setShowEmailVerificationDialog(true);
+      await handleSendEmailVerification();
+      return;
+    }
+
     try {
       setIsEnabling2FA(true);
       setPendingMethod(method);
@@ -154,10 +363,8 @@ export default function AccountSecurity() {
 
       if (response.success) {
         if (response.payload.requiresVerification) {
-          // Para email, mostrar diálogo de verificación
           setShowVerificationDialog(true);
         } else if (response.payload.qrCode && response.payload.secret) {
-          // Para app, mostrar QR y luego solicitar verificación
           setQrCode(response.payload.qrCode);
           setTwoFactorSecret(response.payload.secret);
           setShowVerificationDialog(true);
@@ -167,9 +374,7 @@ export default function AccountSecurity() {
       console.error(error);
       enqueueSnackbar(
         error.response?.data?.message || t('Error enabling 2FA'),
-        {
-          variant: 'error',
-        }
+        { variant: 'error' }
       );
       setPendingMethod(null);
     } finally {
@@ -195,7 +400,6 @@ export default function AccountSecurity() {
         payload.secret = twoFactorSecret;
       }
 
-      // Primero verificar el código
       const verifyResponse = await mutateAsync({
         payload,
         pEndpoint: `${HOST_API}${endpoints.user.verify2FACode}`,
@@ -203,7 +407,6 @@ export default function AccountSecurity() {
       });
 
       if (verifyResponse.success) {
-        // Si la verificación es exitosa, completar la habilitación
         const enableResponse = await mutateAsync({
           payload: {
             method: pendingMethod,
@@ -215,7 +418,6 @@ export default function AccountSecurity() {
         });
 
         if (enableResponse.success) {
-          // Refrescar datos de seguridad
           await refetchSecurity();
 
           setShowVerificationDialog(false);
@@ -238,15 +440,12 @@ export default function AccountSecurity() {
       console.error(error);
       enqueueSnackbar(
         error.response?.data?.message || t('Invalid verification code'),
-        {
-          variant: 'error',
-        }
+        { variant: 'error' }
       );
     }
   };
 
   const handleDisable2FA = async () => {
-    // Mostrar diálogo para ingresar el código
     setShowDisable2FADialog(true);
   };
 
@@ -264,21 +463,19 @@ export default function AccountSecurity() {
       const response = await mutateAsync({
         payload: {
           verificationCode: disable2FACode,
-          method: twoFactorStatus.method, // 'app' o 'email'
+          method: twoFactorStatus.method,
         },
         pEndpoint: `${HOST_API}${endpoints.user.disable2FA}`,
         method: 'POST',
       });
 
       if (response.success) {
-        // Refrescar datos de seguridad
         await refetchSecurity();
 
         enqueueSnackbar(t('Two-factor authentication disabled'), {
           variant: 'success',
         });
 
-        // Limpiar y cerrar diálogo
         setShowDisable2FADialog(false);
         setDisable2FACode('');
       }
@@ -302,9 +499,7 @@ export default function AccountSecurity() {
       });
 
       if (response.success) {
-        // Refrescar datos de seguridad
         await refetchSecurity();
-
         enqueueSnackbar(t('Signed out from all devices'), {
           variant: 'success',
         });
@@ -326,9 +521,7 @@ export default function AccountSecurity() {
       });
 
       if (response.success) {
-        // Refrescar datos de seguridad
         await refetchSecurity();
-
         enqueueSnackbar(t('Device removed successfully'), {
           variant: 'success',
         });
@@ -339,7 +532,7 @@ export default function AccountSecurity() {
     }
   };
 
-  const handleResendCode = async () => {
+  const handleResend2FACode = async () => {
     try {
       const response = await mutateAsync({
         pEndpoint: `${HOST_API}${endpoints.user.resend2FACode}`,
@@ -377,17 +570,6 @@ export default function AccountSecurity() {
     }
   };
 
-  // Formatear fecha
-  const formatDate = (dateString: string | Date) => {
-    const date = new Date(dateString);
-    return date.toLocaleDateString('en-US', {
-      month: 'short',
-      day: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit',
-    });
-  };
-
   if (isFetching) {
     return <LinearProgress />;
   }
@@ -414,8 +596,178 @@ export default function AccountSecurity() {
 
   return (
     <Stack spacing={3}>
+      {/* ✅ Security Level Card */}
+      <Card
+        sx={{
+          p: {
+            xs: 1,
+            sm: 2,
+            md: 3,
+          },
+          background: `linear-gradient(135deg, ${getSecurityColor(
+            securityPercentage
+          )}10 0%, transparent 100%)`,
+        }}
+      >
+        <Stack spacing={2}>
+          <Stack
+            direction="row"
+            justifyContent="space-between"
+            alignItems="center"
+          >
+            <Stack direction="row" spacing={1} alignItems="center">
+              <Iconify
+                icon="solar:shield-keyhole-bold"
+                width={32}
+                sx={{ color: getSecurityColor(securityPercentage) }}
+              />
+              <Typography variant="h6">{t('Security Level')}</Typography>
+            </Stack>
+            <Typography
+              variant="subtitle1"
+              sx={{
+                color: getSecurityColor(securityPercentage),
+                fontWeight: 'bold',
+              }}
+            >
+              {getSecurityLevelText(securityPercentage)}
+            </Typography>
+          </Stack>
+
+          {/* Progress Bar */}
+          <Box sx={{ position: 'relative', mt: 1 }}>
+            <LinearProgress
+              variant="determinate"
+              value={securityPercentage}
+              sx={{
+                height: 12,
+                borderRadius: 6,
+                backgroundColor: '#e0e0e0',
+                '& .MuiLinearProgress-bar': {
+                  borderRadius: 6,
+                  backgroundColor: getSecurityColor(securityPercentage),
+                },
+              }}
+            />
+            <Typography
+              variant="caption"
+              sx={{
+                position: 'absolute',
+                right: 0,
+                top: -20,
+                color: getSecurityColor(securityPercentage),
+                fontWeight: 'bold',
+              }}
+            >
+              {activeSecurityItems}/3
+            </Typography>
+          </Box>
+
+          {/* Security Items Checklist */}
+          <Stack spacing={1.5} sx={{ mt: 2 }}>
+            <Stack direction="row" spacing={1} alignItems="center">
+              <Iconify
+                icon={
+                  isEmailVerified
+                    ? 'solar:check-circle-bold'
+                    : 'solar:close-circle-bold'
+                }
+                width={20}
+                sx={{ color: isEmailVerified ? '#4caf50' : '#f44336' }}
+              />
+              <Typography variant="body2">
+                {t('Email address verified')}
+              </Typography>
+              {!isEmailVerified && (
+                <LoadingButton
+                  size="small"
+                  loading={isSendingEmailCode}
+                  variant="outlined"
+                  onClick={() => handleSendEmailVerification()}
+                  sx={{ ml: 'auto' }}
+                >
+                  {t('Verify now')}
+                </LoadingButton>
+              )}
+            </Stack>
+
+            <Stack direction="row" spacing={1} alignItems="center">
+              <Iconify
+                icon={
+                  twoFactorStatus.enabled
+                    ? 'solar:check-circle-bold'
+                    : 'solar:close-circle-bold'
+                }
+                width={20}
+                sx={{ color: twoFactorStatus.enabled ? '#4caf50' : '#f44336' }}
+              />
+              <Typography variant="body2">
+                {t('Two-Factor Authentication')}
+              </Typography>
+              {!twoFactorStatus.enabled && isEmailVerified && (
+                <Button
+                  size="small"
+                  variant="outlined"
+                  onClick={() => setShowAuthAppSetup(true)}
+                  sx={{ ml: 'auto' }}
+                  disabled={!twoFactorStatus.enabled && !isEmailVerified}
+                >
+                  {t('Enable now')}
+                </Button>
+              )}
+            </Stack>
+
+            <Stack direction="row" spacing={1} alignItems="center">
+              <Iconify
+                icon={
+                  hasBackupEmail
+                    ? 'solar:check-circle-bold'
+                    : 'solar:close-circle-bold'
+                }
+                width={20}
+                sx={{ color: hasBackupEmail ? '#4caf50' : '#f44336' }}
+              />
+              <Typography variant="body2">
+                {t('Backup email configured')}
+              </Typography>
+              {!hasBackupEmail && (
+                <Button
+                  size="small"
+                  variant="outlined"
+                  onClick={() => {
+                    document
+                      .getElementById('backup-email-section')
+                      ?.scrollIntoView({ behavior: 'smooth' });
+                  }}
+                  sx={{ ml: 'auto' }}
+                >
+                  {t('Add now')}
+                </Button>
+              )}
+            </Stack>
+          </Stack>
+
+          {/* Security Recommendation */}
+          {securityPercentage < 100 && (
+            <Alert severity="info" sx={{ mt: 2 }}>
+              {t(
+                'Complete all security measures to achieve maximum protection'
+              )}
+            </Alert>
+          )}
+        </Stack>
+      </Card>
+
+      {isEmailVerified && !twoFactorStatus.enabled && (
+        <Alert severity="success" sx={{ mb: 3 }}>
+          {t(
+            'Your email is verified. You can now enable Two-Factor Authentication.'
+          )}
+        </Alert>
+      )}
+
       {/* 2FA Section */}
-      <Card sx={{ p: 3 }}>
+      <Card sx={{ p: 3 }} id="2fa-section">
         <Stack
           direction="row"
           justifyContent="space-between"
@@ -434,7 +786,7 @@ export default function AccountSecurity() {
             <Button
               variant="contained"
               color="error"
-              onClick={handleDisable2FA} // ← Esto ahora abre el diálogo
+              onClick={handleDisable2FA}
               startIcon={<Iconify icon="solar:shield-off-bold" />}
             >
               {t('Disable')}
@@ -444,11 +796,20 @@ export default function AccountSecurity() {
               variant="contained"
               onClick={() => setShowAuthAppSetup(true)}
               startIcon={<Iconify icon="solar:shield-bold" />}
+              disabled={!isEmailVerified}
             >
               {t('Enable')}
             </Button>
           )}
         </Stack>
+
+        {!isEmailVerified && !twoFactorStatus.enabled && (
+          <Alert severity="info" sx={{ mb: 3 }}>
+            {t(
+              'You need to verify your email address before you can enable Two-Factor Authentication'
+            )}
+          </Alert>
+        )}
 
         {twoFactorStatus.enabled && (
           <Alert severity="success" sx={{ mb: 3 }}>
@@ -479,7 +840,7 @@ export default function AccountSecurity() {
                   variant="soft"
                   size="small"
                   onClick={() => setShowAuthAppSetup(!showAuthAppSetup)}
-                  disabled={isEnabling2FA}
+                  disabled={isEnabling2FA || !isEmailVerified}
                 >
                   {t('Setup')}
                 </Button>
@@ -500,7 +861,7 @@ export default function AccountSecurity() {
                       color="text.secondary"
                       textAlign="center"
                     >
-                      {t('Click "Set up" to generate QR code and enable 2FA')}
+                      {t('Click (Set up) to generate QR code and enable 2FA')}
                     </Typography>
                     <Stack direction="row" spacing={2}>
                       <Button
@@ -525,7 +886,7 @@ export default function AccountSecurity() {
               )}
             </Paper>
 
-            {/* Email Setup - CORREGIDO: Ahora muestra el email correctamente */}
+            {/* Email Setup */}
             <Paper variant="outlined" sx={{ p: 2 }}>
               <Stack
                 direction="row"
@@ -544,7 +905,7 @@ export default function AccountSecurity() {
                   variant="soft"
                   size="small"
                   onClick={() => setShowEmailSetup(!showEmailSetup)}
-                  disabled={isEnabling2FA}
+                  disabled={isEnabling2FA || !isEmailVerified}
                 >
                   {t('Setup')}
                 </Button>
@@ -593,7 +954,7 @@ export default function AccountSecurity() {
       </Card>
 
       {/* Backup Email Section */}
-      <Card sx={{ p: 3 }}>
+      <Card sx={{ p: 3 }} id="backup-email-section">
         <Typography variant="h6" sx={{ mb: 2 }}>
           {t('Backup Email')}
         </Typography>
@@ -677,7 +1038,8 @@ export default function AccountSecurity() {
                     <Stack>
                       <Typography variant="subtitle2">{device.name}</Typography>
                       <Typography variant="caption" color="text.secondary">
-                        {device.location} • {formatDate(device.lastActive)}
+                        {t(device.location)} •{' '}
+                        {fToNowRefactor(device.lastActive)}
                       </Typography>
                     </Stack>
                   </Stack>
@@ -703,7 +1065,93 @@ export default function AccountSecurity() {
         )}
       </Card>
 
-      {/* Verification Dialog */}
+      {/* Email Verification Dialog */}
+      <Dialog
+        open={showEmailVerificationDialog}
+        onClose={() => {
+          setShowEmailVerificationDialog(false);
+          setEmailVerificationCode('');
+          setPendingMethod(null);
+        }}
+        maxWidth="xs"
+        fullWidth
+      >
+        <DialogTitle>
+          <Stack direction="row" alignItems="center" spacing={1}>
+            <Iconify icon="solar:shield-keyhole-bold" width={28} />
+            <Typography variant="h6">
+              {t('Email Verification Required')}
+            </Typography>
+          </Stack>
+        </DialogTitle>
+        <DialogContent>
+          <Stack spacing={2} sx={{ mt: 1 }}>
+            <Alert severity="info">
+              {t(
+                'Please verify your email address before enabling Two-Factor Authentication'
+              )}
+            </Alert>
+            <Typography variant="body2" color="text.secondary">
+              {t('A verification code has been sent to:')}{' '}
+              <strong>{userEmail}</strong>
+            </Typography>
+
+            <OtpInput
+              onChange={(code) => {
+                setEmailVerificationCode(code);
+              }}
+              onEnter={() => {
+                if (emailVerificationCode.length === 6) {
+                  handleVerifyEmailCode();
+                }
+              }}
+            />
+
+            <Stack
+              direction="row"
+              justifyContent="space-between"
+              alignItems="center"
+            >
+              <Button
+                size="small"
+                onClick={handleResendEmailCode}
+                disabled={isSendingEmailCode || emailVerificationCooldown > 0}
+                startIcon={
+                  emailVerificationCooldown > 0 ? (
+                    <Iconify icon="solar:clock-circle-bold" width={16} />
+                  ) : (
+                    <Iconify icon="solar:refresh-bold" width={16} />
+                  )
+                }
+              >
+                {emailVerificationCooldown > 0
+                  ? `${t('Resend code')} (${emailVerificationCooldown}s)`
+                  : t('Resend code')}
+              </Button>
+            </Stack>
+          </Stack>
+        </DialogContent>
+        <DialogActions>
+          <Button
+            onClick={() => {
+              setShowEmailVerificationDialog(false);
+              setEmailVerificationCode('');
+              setPendingMethod(null);
+            }}
+          >
+            {t('Cancel')}
+          </Button>
+          <Button
+            onClick={handleVerifyEmailCode}
+            variant="contained"
+            disabled={isVerifyingEmail || !emailVerificationCode}
+          >
+            {isVerifyingEmail ? t('Verifying...') : t('Verify email')}
+          </Button>
+        </DialogActions>
+      </Dialog>
+
+      {/* 2FA Verification Dialog */}
       <Dialog
         open={showVerificationDialog}
         onClose={() => setShowVerificationDialog(false)}
@@ -745,7 +1193,6 @@ export default function AccountSecurity() {
                 setVerificationCode(code);
               }}
               onEnter={() => {
-                // Solo ejecutar si el código tiene 6 dígitos
                 if (verificationCode.length === 6) {
                   handleVerify2FA();
                 }
@@ -755,7 +1202,7 @@ export default function AccountSecurity() {
             {pendingMethod === 'email' && (
               <Button
                 size="small"
-                onClick={handleResendCode}
+                onClick={handleResend2FACode}
                 sx={{ alignSelf: 'flex-start' }}
               >
                 {t('Resend code')}
@@ -779,7 +1226,7 @@ export default function AccountSecurity() {
         </DialogActions>
       </Dialog>
 
-      {/* Dialog para deshabilitar 2FA */}
+      {/* Disable 2FA Dialog */}
       <Dialog
         open={showDisable2FADialog}
         onClose={() => {
@@ -801,7 +1248,6 @@ export default function AccountSecurity() {
                 setDisable2FACode(code);
               }}
               onEnter={() => {
-                // Solo ejecutar si el código tiene 6 dígitos
                 if (disable2FACode.length === 6) {
                   handleConfirmDisable2FA();
                 }
@@ -811,7 +1257,7 @@ export default function AccountSecurity() {
             {twoFactorStatus.method === 'email' && (
               <Button
                 size="small"
-                onClick={handleResendCode}
+                onClick={handleResend2FACode}
                 sx={{ alignSelf: 'flex-start' }}
               >
                 {t('Resend code')}

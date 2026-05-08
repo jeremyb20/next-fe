@@ -142,6 +142,9 @@ export const endpoints = {
     registerDevice: '/api/user/registerDevice',
     removeDevice: '/api/user/removeDevice',
     signOutAllDevices: '/api/user/signOutAllDevices',
+    sendEmailVerification: '/api/user/sendEmailVerification',
+    verifyEmailCode: '/api/user/verifyEmailCode',
+    resendEmailVerification: '/api/user/resendEmailVerification'
   },
   mail: {
     list: '/api/mail/list',

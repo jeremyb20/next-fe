@@ -206,21 +206,6 @@ export default function AccountGeneral() {
     }
   });
 
-  // const handleDrop = useCallback(
-  //   (acceptedFiles: File[]) => {
-  //     const file = acceptedFiles[0];
-
-  //     const newFile = Object.assign(file, {
-  //       preview: URL.createObjectURL(file),
-  //     });
-
-  //     if (file) {
-  //       setValue('photoURL', newFile, { shouldValidate: true });
-  //     }
-  //   },
-  //   [setValue]
-  // );
-
   const handleSelectAvatar = async (avatarSrc: string) => {
     setValue('avatarProfile', avatarSrc, { shouldValidate: true });
     try {
@@ -239,8 +224,8 @@ export default function AccountGeneral() {
 
   return (
     <>
-      <Grid container spacing={3}>
-        <FormProvider methods={methods} onSubmit={onSubmit}>
+      <FormProvider methods={methods} onSubmit={onSubmit}>
+        <Grid container spacing={3}>
           <Grid xs={12} md={12}>
             <Card
               sx={{
@@ -366,8 +351,9 @@ export default function AccountGeneral() {
               </Stack>
             </Card>
           </Grid>
-        </FormProvider>
-
+        </Grid>
+      </FormProvider>
+      <Grid container spacing={3}>
         <Grid xs={12} md={12}>
           <AccountChangePassword />
         </Grid>

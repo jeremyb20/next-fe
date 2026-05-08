@@ -1,13 +1,13 @@
 'use client';
 
-import { paths } from '@/routes/paths';
 import Iconify from '@/components/iconify';
+import { useRedirect } from '@/hooks/use-redirect';
 import { useTranslation } from '@/hooks/use-translation';
 import { useState, useEffect, useCallback } from 'react';
 import { useSettingsContext } from '@/components/settings';
 import { useRouter, useSearchParams } from 'next/navigation';
 import StickyHeader from '@/components/header/sticky-header';
-import CustomBreadcrumbs from '@/components/custom-breadcrumbs';
+import { UserProfileCard } from '@/components/cards/user-profile-card';
 import {
   _userAbout,
   _userPlans,
@@ -17,9 +17,9 @@ import {
 } from '@/_mock';
 
 import Tab from '@mui/material/Tab';
-import { Box } from '@mui/material';
 import Tabs from '@mui/material/Tabs';
 import Container from '@mui/material/Container';
+import { Box, IconButton } from '@mui/material';
 
 import AccountGeneral from '../account-general';
 import AccountBilling from '../account-billing';
@@ -79,7 +79,7 @@ export default function AccountView() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const { t } = useTranslation();
-
+  const { redirectBack } = useRedirect();
   // Obtener el parámetro 'tab' de la URL
   const tabParam = searchParams.get('tab');
 
@@ -126,20 +126,39 @@ export default function AccountView() {
     <Container maxWidth={settings.themeStretch ? false : 'sm'}>
       <Box
         sx={{
-          p: 1,
+          p: 0,
         }}
       >
         <StickyHeader>
-          <CustomBreadcrumbs
-            heading="Account"
-            links={[
-              { name: t('Home'), href: paths.dashboard.root },
-              { name: t('Account'), href: paths.dashboard.user.root },
-              { name: t('User Information') },
-            ]}
-            sx={{
-              mb: { xs: 3, md: 5 },
+          <UserProfileCard
+            petCount={0}
+            isFetching={false}
+            greetingText="Account"
+            decorativeImage={`/assets/images/account-${currentTab}.png`}
+            decorativeImageSx={{
+              zIndex: 0,
+              opacity: 0.3,
             }}
+            petRegisteredText=""
+            cardSx={{ mb: 4, pt: 3, px: 0 }}
+            actions={
+              <IconButton
+                onClick={redirectBack}
+                sx={{
+                  position: 'absolute',
+                  top: -20,
+                  left: 16,
+                  backgroundColor: 'background.neutral',
+                  color: 'white',
+                  '&:hover': {
+                    backgroundColor: 'rgba(0,0,0,0.8)',
+                  },
+                  zIndex: 2,
+                }}
+              >
+                <Iconify icon="eva:arrow-ios-back-fill" width={20} />
+              </IconButton>
+            }
           />
 
           <Tabs

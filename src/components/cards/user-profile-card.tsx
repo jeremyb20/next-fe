@@ -35,6 +35,7 @@ interface UserProfileCardProps {
 
   // Eventos
   onAvatarClick?: () => void;
+  actions?: React.ReactNode;
 }
 
 export function UserProfileCard({
@@ -50,6 +51,7 @@ export function UserProfileCard({
   greetingText = 'Hi there!',
   petRegisteredText = 'Pets Registered',
   onAvatarClick,
+  actions,
 }: UserProfileCardProps) {
   const { t } = useTranslation();
   const { user } = useManagerUser();
@@ -68,6 +70,7 @@ export function UserProfileCard({
         <Box
           sx={{ display: 'flex', alignItems: 'center', gap: 2, ...containerSx }}
         >
+          {actions}
           <Avatar
             src={user?.photoURL}
             sx={{
@@ -85,10 +88,12 @@ export function UserProfileCard({
             <Typography variant="body2" color="text.secondary">
               {user?.email}
             </Typography>
-            <Typography variant="body2" color="text.secondary">
-              {t(petRegisteredText)}:{' '}
-              {isFetching ? <CircularProgress size={12} /> : petCount}
-            </Typography>
+            {petRegisteredText && (
+              <Typography variant="body2" color="text.secondary">
+                {t(petRegisteredText)}:{' '}
+                {isFetching ? <CircularProgress size={12} /> : petCount}
+              </Typography>
+            )}
           </Box>
         </Box>
       </CardContent>
