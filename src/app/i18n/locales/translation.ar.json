@@ -568,5 +568,6 @@
   "Verify & Sign In": "تحقق وتسجيل الدخول",
   "Devices": "الأجهزة",
   "Backup Email": "البريد الإلكتروني الاحتياطي",
-  "Add a backup email address to recover your account": "أضف عنوان بريد إلكتروني احتياطي لاستعادة حسابك"
+  "Add a backup email address to recover your account": "أضف عنوان بريد إلكتروني احتياطي لاستعادة حسابك",
+  "Security verification expired. Please try again.": "انتهت صلاحية التحقق الأمني. يرجى المحاولة مرة أخرى."
 }

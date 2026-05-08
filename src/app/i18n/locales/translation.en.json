@@ -568,5 +568,6 @@
   "Verify & Sign In": "Verify & Sign In",
   "Devices": "Devices",
   "Backup Email": "Backup Email",
-  "Add a backup email address to recover your account": "Add a backup email address to recover your account"
+  "Add a backup email address to recover your account": "Add a backup email address to recover your account",
+  "Security verification expired. Please try again.": "Security verification expired. Please try again."
 }

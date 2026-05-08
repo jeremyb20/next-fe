@@ -568,5 +568,6 @@
   "Verify & Sign In": "Vérifier et se connecter",
   "Devices": "Appareils",
   "Backup Email": "E-mail de secours",
-  "Add a backup email address to recover your account": "Ajoutez une adresse e-mail de secours pour récupérer votre compte"
+  "Add a backup email address to recover your account": "Ajoutez une adresse e-mail de secours pour récupérer votre compte",
+  "Security verification expired. Please try again.": "La vérification de sécurité a expiré. Veuillez réessayer."
 }

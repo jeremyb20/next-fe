@@ -568,5 +568,6 @@
   "Verify & Sign In": "Xác minh và đăng nhập",
   "Devices": "Thiết bị",
   "Backup Email": "Email dự phòng",
-  "Add a backup email address to recover your account": "Thêm địa chỉ email dự phòng để khôi phục tài khoản của bạn"
+  "Add a backup email address to recover your account": "Thêm địa chỉ email dự phòng để khôi phục tài khoản của bạn",
+  "Security verification expired. Please try again.": "Xác minh bảo mật đã hết hạn. Vui lòng thử lại."
 }

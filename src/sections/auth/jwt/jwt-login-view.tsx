@@ -81,6 +81,7 @@ export default function JwtLoginView() {
   const [loginCredentials, setLoginCredentials] = useState<{
     email: string;
     password: string;
+    turnstileToken: string;
   } | null>(null);
 
   // Estados para cooldown del botón de reenvío
@@ -118,6 +119,7 @@ export default function JwtLoginView() {
   } = methods;
 
   const watchedPassword = watch('password');
+  const watchedEmail = watch('email');
 
   // Limpiar timer al desmontar
   useEffect(
@@ -128,6 +130,13 @@ export default function JwtLoginView() {
     },
     []
   );
+
+  // Resetear error cuando el usuario escribe
+  useEffect(() => {
+    if (requiresTwoFactor) {
+      // No mostrar error de Turnstile mientras se espera 2FA
+    }
+  }, [watchedEmail, watchedPassword, requiresTwoFactor]);
 
   // Efecto para manejar el cooldown
   useEffect(() => {
@@ -152,6 +161,14 @@ export default function JwtLoginView() {
     };
   }, [resendCooldown]);
 
+  // Función para resetear Turnstile
+  const resetTurnstile = () => {
+    if (turnstileRef.current) {
+      turnstileRef.current.reset();
+      setTurnstileToken(null);
+    }
+  };
+
   const onSubmit = handleSubmit(async (data) => {
     try {
       setIsVerifying2FA(false);
@@ -164,61 +181,59 @@ export default function JwtLoginView() {
         return;
       }
 
+      // ✅ Guardar el token para reutilizarlo si es necesario
+      const savedTurnstileToken = turnstileToken;
+
       // Intentar login - SIN código 2FA primero
       const result = await login?.(
         data.email,
         data.password,
-        turnstileToken,
+        savedTurnstileToken,
         undefined,
         deviceInfo
       );
 
-      // Caso 1: Login exitoso (sin 2FA o con 2FA ya verificado)
+      // ✅ ESCENARIO 1: Login exitoso (sin 2FA)
       if (result?.success) {
+        // Login exitoso, resetear Turnstile para futuros intentos
+        resetTurnstile();
         router.push(returnTo || PATH_AFTER_LOGIN);
         return;
       }
 
-      // Caso 2: Se requiere 2FA
+      // ✅ ESCENARIO 2: Se requiere 2FA
       if (result?.requiresTwoFactor) {
+        // Guardamos las credenciales incluyendo el token de Turnstile
+        setLoginCredentials({
+          email: data.email,
+          password: data.password,
+          turnstileToken: savedTurnstileToken, // ✅ Guardamos el token
+        });
         setRequiresTwoFactor(true);
         setTempToken(result.tempToken);
         setTwoFactorMethod(result.method);
-        setLoginCredentials({ email: data.email, password: data.password });
 
         // Si es 2FA por email, iniciar cooldown para el botón de reenvío
         if (result.method === 'email') {
-          setResendCooldown(30); // 30 segundos de cooldown
+          setResendCooldown(30);
         }
 
         return;
       }
 
-      // Caso 3: Error de credenciales (si llegó aquí sin success)
+      // Caso 3: Error de credenciales
       enqueueSnackbar(t(result?.message || 'Invalid credentials'), {
         variant: 'warning',
       });
       setValue('password', '');
-
-      // Resetear Turnstile
-      if (turnstileRef.current) {
-        turnstileRef.current.reset();
-        setTurnstileToken(null);
-      }
+      resetTurnstile();
     } catch (error: any) {
       console.error(error);
-
       enqueueSnackbar(t(error?.message || 'An error occurred during login'), {
         variant: 'warning',
       });
-
       setValue('password', '');
-
-      // Resetear Turnstile
-      if (turnstileRef.current) {
-        turnstileRef.current.reset();
-        setTurnstileToken(null);
-      }
+      resetTurnstile();
     }
   });
 
@@ -235,28 +250,32 @@ export default function JwtLoginView() {
         variant: 'warning',
       });
       setRequiresTwoFactor(false);
+      resetTurnstile();
       return;
     }
 
     try {
       setIsVerifying2FA(true);
 
-      // Intentar login CON código 2FA
+      // ✅ Usar el MISMO token que guardamos del primer intento
       const result = await login?.(
         loginCredentials.email,
         loginCredentials.password,
-        turnstileToken,
+        loginCredentials.turnstileToken, // ✅ Reutilizamos el token
         twoFactorCode,
         deviceInfo
       );
 
       if (result?.success) {
+        // Login exitoso, resetear Turnstile para futuros intentos
+        resetTurnstile();
         router.push(returnTo || PATH_AFTER_LOGIN);
       } else {
         enqueueSnackbar(t(result?.message || 'Invalid verification code'), {
           variant: 'warning',
         });
         setTwoFactorCode('');
+        // No resetear Turnstile aquí, el usuario puede reintentar con el mismo token
       }
     } catch (error: any) {
       console.error(error);
@@ -288,6 +307,7 @@ export default function JwtLoginView() {
         variant: 'warning',
       });
       setRequiresTwoFactor(false);
+      resetTurnstile();
       return;
     }
 
@@ -316,7 +336,7 @@ export default function JwtLoginView() {
         // Limpiar el código anterior para que el usuario ingrese el nuevo
         setTwoFactorCode('');
 
-        // Resetear los campos del OTP si es posible
+        // Resetear los campos del OTP
         const otpInputs = document.querySelectorAll('input[type="tel"]');
         otpInputs.forEach((input) => {
           (input as HTMLInputElement).value = '';
@@ -338,13 +358,15 @@ export default function JwtLoginView() {
 
   const getResendIcon = () => {
     if (isResending) return <CircularProgress size={16} />;
-    if (resendCooldown > 0) return <Iconify icon="solar:clock-circle-bold" width={16} />;
+    if (resendCooldown > 0)
+      return <Iconify icon="solar:clock-circle-bold" width={16} />;
     return <Iconify icon="solar:refresh-bold" width={16} />;
   };
 
   const getResendLabel = () => {
     if (isResending) return t('Sending...');
-    if (resendCooldown > 0) return `${t('Resend code')} (${formatCooldownTime(resendCooldown)})`;
+    if (resendCooldown > 0)
+      return `${t('Resend code')} (${formatCooldownTime(resendCooldown)})`;
     return t('Resend code');
   };
 
@@ -436,15 +458,19 @@ export default function JwtLoginView() {
             onExpire={() => {
               console.log('⏰ Turnstile token expired');
               setTurnstileToken(null);
+              // Si estaba en proceso de 2FA, mostrar mensaje
+              if (requiresTwoFactor) {
+                enqueueSnackbar(
+                  t('Security verification expired. Please try again.'),
+                  { variant: 'warning' }
+                );
+              }
             }}
             onError={() => {
               console.error('❌ Turnstile error');
-
               enqueueSnackbar(
                 t('Security verification failed. Please refresh the page.'),
-                {
-                  variant: 'warning',
-                }
+                { variant: 'error' }
               );
               setTurnstileToken(null);
             }}
@@ -485,6 +511,7 @@ export default function JwtLoginView() {
         if (resendTimerRef.current) {
           clearInterval(resendTimerRef.current);
         }
+        // No resetear Turnstile al cerrar, el token sigue siendo válido
       }}
       maxWidth="xs"
       fullWidth

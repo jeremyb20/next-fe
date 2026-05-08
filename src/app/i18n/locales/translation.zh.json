@@ -568,5 +568,6 @@
   "Verify & Sign In": "验证并登录",
   "Devices": "设备",
   "Backup Email": "备用电子邮件",
-  "Add a backup email address to recover your account": "添加备用电子邮件地址以恢复您的账户"
+  "Add a backup email address to recover your account": "添加备用电子邮件地址以恢复您的账户",
+  "Security verification expired. Please try again.": "安全验证已过期。请重试。"
 }
