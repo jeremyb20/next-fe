@@ -24,6 +24,7 @@ import RouterLink from '@/routes/components/router-link';
 import { useManagerUser } from '@/hooks/use-manager-user';
 import { getSpeciesFromBreed } from '@/utils/pet-age.utils';
 import UploadAvatar from '@/components/upload/upload-avatar';
+import StickyHeader from '@/components/header/sticky-header';
 import CardComponent from '@/sections/_examples/card-component';
 import { useMemo, useState, useEffect, useCallback } from 'react';
 import SplashScreen from '@/components/loading-screen/splash-screen';
@@ -125,7 +126,6 @@ export default function PetEditForm({ petId }: Props) {
     lng: '',
     address: '',
   });
-  const [isScrolled, setIsScrolled] = useState(false);
 
   const [selectAllPermissions, setSelectAllPermissions] = useState({
     owner: false,
@@ -586,16 +586,6 @@ export default function PetEditForm({ petId }: Props) {
     [petPhotoPreview]
   );
 
-  // Detectar el scroll
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 10);
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
   // Sincronizar tabValue con URL
   useEffect(() => {
     const newTabValue = getInitialTab();
@@ -680,21 +670,7 @@ export default function PetEditForm({ petId }: Props) {
 
   return (
     <Container maxWidth="sm">
-      <Box
-        sx={{
-          position: 'sticky',
-          top: 0,
-          zIndex: 1100,
-          bgcolor: 'background.default',
-          transition: 'padding 0.3s ease-in-out, box-shadow 0.3s ease-in-out',
-          pt: isScrolled ? 8 : 2,
-          ...(isScrolled && {
-            boxShadow: theme.shadows[2],
-            borderBottom: '1px solid',
-            borderColor: 'divider',
-          }),
-        }}
-      >
+      <StickyHeader>
         <Card
           sx={{
             backgroundColor: 'background.paper',
@@ -754,7 +730,7 @@ export default function PetEditForm({ petId }: Props) {
             }}
           />
         </Card>
-      </Box>
+      </StickyHeader>
 
       <FormProvider methods={methods}>
         <Tabs

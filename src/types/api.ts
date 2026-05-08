@@ -9,7 +9,7 @@ export interface FilterParams {
   [key: string]: any;
 }
 
-export interface QueryParams extends PaginationParams, FilterParams {}
+export interface QueryParams extends PaginationParams, FilterParams { }
 export interface UsePaginatedOptions {
   refetchOnMount?: boolean;
   refetchOnWindowFocus?: boolean;
@@ -53,6 +53,7 @@ export interface QueryOptions {
 export interface BaseApiResponse {
   status: string;
   message: string;
+  success?: boolean;
   payload?: any; // Opcional por si incluye datos adicionales
 }
 
@@ -432,4 +433,13 @@ export interface IPromotions {
   customIMG?: string;
   isExternalLink: boolean;
   buttonTextRedirect: string;
+}
+
+
+export interface DeviceInfo {
+  name: string;
+  deviceType: 'mobile' | 'desktop' | 'tablet';
+  location: string;
+  userAgent: string;
+  ipAddress?: string;
 }

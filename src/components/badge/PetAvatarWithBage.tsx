@@ -11,6 +11,7 @@ interface PetAvatarWithBadgeProps {
   avatarSx?: SxProps<Theme>;
   badgeSx?: SxProps<Theme>;
   onClick?: () => void;
+  allowOpacity?: boolean;
 }
 
 export const PetAvatarWithBadge = ({
@@ -19,6 +20,7 @@ export const PetAvatarWithBadge = ({
   avatarSx,
   badgeSx,
   onClick,
+  allowOpacity = true,
 }: PetAvatarWithBadgeProps) => {
   // Determinar configuración según estado
   const getBadgeConfig = () => {
@@ -44,7 +46,7 @@ export const PetAvatarWithBadge = ({
               }}
             />
           ),
-          avatarOpacity: 0.7,
+          avatarOpacity: allowOpacity ? 0.7 : 1,
           avatarFilter: 'grayscale(0.3)',
         };
 

@@ -6,6 +6,7 @@ import { useTranslation } from '@/hooks/use-translation';
 import { useState, useEffect, useCallback } from 'react';
 import { useSettingsContext } from '@/components/settings';
 import { useRouter, useSearchParams } from 'next/navigation';
+import StickyHeader from '@/components/header/sticky-header';
 import CustomBreadcrumbs from '@/components/custom-breadcrumbs';
 import {
   _userAbout,
@@ -22,9 +23,9 @@ import Container from '@mui/material/Container';
 
 import AccountGeneral from '../account-general';
 import AccountBilling from '../account-billing';
+import AccountSecurity from '../account-security';
 import AccountSocialLinks from '../account-social-links';
 import AccountNotifications from '../account-notifications';
-import AccountChangePassword from '../account-change-password';
 
 // ----------------------------------------------------------------------
 
@@ -122,40 +123,42 @@ export default function AccountView() {
   }, [tabParam, getInitialTab, currentTab]);
 
   return (
-    <Container maxWidth={settings.themeStretch ? false : 'lg'}>
+    <Container maxWidth={settings.themeStretch ? false : 'sm'}>
       <Box
         sx={{
           p: 1,
         }}
       >
-        <CustomBreadcrumbs
-          heading="Account"
-          links={[
-            { name: t('Home'), href: paths.dashboard.root },
-            { name: t('Account'), href: paths.dashboard.user.root },
-            { name: t('User Information') },
-          ]}
-          sx={{
-            mb: { xs: 3, md: 5 },
-          }}
-        />
+        <StickyHeader>
+          <CustomBreadcrumbs
+            heading="Account"
+            links={[
+              { name: t('Home'), href: paths.dashboard.root },
+              { name: t('Account'), href: paths.dashboard.user.root },
+              { name: t('User Information') },
+            ]}
+            sx={{
+              mb: { xs: 3, md: 5 },
+            }}
+          />
 
-        <Tabs
-          value={currentTab}
-          onChange={handleChangeTab}
-          sx={{
-            mb: { xs: 3, md: 5 },
-          }}
-        >
-          {TABS_CONFIG.map((tab) => (
-            <Tab
-              key={tab.value}
-              label={t(tab.label)}
-              icon={tab.icon}
-              value={tab.value}
-            />
-          ))}
-        </Tabs>
+          <Tabs
+            value={currentTab}
+            onChange={handleChangeTab}
+            sx={{
+              mb: { xs: 3, md: 5 },
+            }}
+          >
+            {TABS_CONFIG.map((tab) => (
+              <Tab
+                key={tab.value}
+                label={t(tab.label)}
+                icon={tab.icon}
+                value={tab.value}
+              />
+            ))}
+          </Tabs>
+        </StickyHeader>
 
         {currentTab === 'general' && <AccountGeneral />}
 
@@ -174,7 +177,7 @@ export default function AccountView() {
           <AccountSocialLinks socialLinks={_userAbout.socialLinks} />
         )}
 
-        {currentTab === 'security' && <AccountChangePassword />}
+        {currentTab === 'security' && <AccountSecurity />}
       </Box>
     </Container>
   );

@@ -205,3 +205,18 @@ export const useGetProductGrowth = () => {
     }
   );
 };
+
+export const useGetSecurityConfig = () => {
+  const { authenticated } = useAuthContext();
+  return useFetch<Partial<any>>(
+    'useGetSecurityConfig',
+    endpoints.user.getSecurityConfig,
+    {
+      staleTime: 5 * 60 * 1000,
+      retry: 2,
+      enabled: authenticated,
+    }
+  );
+};
+
+
