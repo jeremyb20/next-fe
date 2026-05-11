@@ -1,5 +1,7 @@
 'use client';
 
+import { useTranslation } from '@/hooks/use-translation';
+
 import { Box, Stack, Slider, Typography } from '@mui/material';
 
 import { useSettingsContext } from '../context';
@@ -10,16 +12,16 @@ interface Props {
 
 export function FontSizeSlider({ sx }: Props) {
   const settings = useSettingsContext();
-
+  const { t } = useTranslation();
   const handleChange = (event: Event, newValue: number | number[]) => {
     settings.onUpdate('fontSizeScale', newValue as number);
   };
 
   const marks = [
-    { value: 0.75, label: 'Small' },
-    { value: 1, label: 'Normal' },
-    { value: 1.25, label: 'Large' },
-    { value: 1.5, label: 'X-Large' },
+    { value: 0.75, label: t('Small') },
+    { value: 1, label: t('Normal') },
+    { value: 1.25, label: t('Large') },
+    { value: 1.5, label: t('X-Large') },
   ];
 
   return (
@@ -32,7 +34,7 @@ export function FontSizeSlider({ sx }: Props) {
         sx={{ mb: 1 }}
       >
         <Typography variant="caption" component="div" sx={{ ...sx }}>
-          Font Size
+          {t('Font Size')}
         </Typography>
         <Typography
           variant="caption"

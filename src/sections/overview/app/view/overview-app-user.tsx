@@ -10,6 +10,7 @@ import { useGetUserPetStats } from '@/hooks/use-fetch';
 import { useTranslation } from '@/hooks/use-translation';
 import { ALLOW_MAX_PETS_BY_USER } from '@/config-global';
 import { useManagerUser } from '@/hooks/use-manager-user';
+import UserSecurityLevel from '@/components/security/user-security-level';
 import RegisterPetByUserModal from '@/app/[lang]/pet/_components/modals/register-pet-by-user-modal';
 import {
   UserQueryParams,
@@ -156,6 +157,9 @@ export default function OverviewAppUser() {
                 }}
               />
             </Card>
+          </Grid>
+          <Grid item xs={12}>
+            <UserSecurityLevel />
           </Grid>
 
           {/* Fila 2: Quick Actions + Promotions */}

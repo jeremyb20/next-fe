@@ -1,4 +1,5 @@
 import axiosInstance, { endpoints } from '@/utils/axios';
+import { DeviceSuscriptions } from '@/types/service-worker';
 import { useQuery, keepPreviousData } from '@tanstack/react-query';
 import {
   IQRStats,
@@ -211,6 +212,19 @@ export const useGetSecurityConfig = () => {
   return useFetch<Partial<any>>(
     'useGetSecurityConfig',
     endpoints.user.getSecurityConfig,
+    {
+      staleTime: 5 * 60 * 1000,
+      retry: 2,
+      enabled: authenticated,
+    }
+  );
+};
+
+export const useGetSubscriptionDevices = () => {
+  const { authenticated } = useAuthContext();
+  return useFetch<Partial<DeviceSuscriptions[]>>(
+    'useGetSubscriptionDevices',
+    endpoints.notification.getSubscriptionDevices,
     {
       staleTime: 5 * 60 * 1000,
       retry: 2,

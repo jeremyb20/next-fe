@@ -185,6 +185,8 @@ export default function MedicalControlView({
       nextVaccineDate: record.nextDate,
       vaccineName: record.name,
       observations: record.observations,
+      emailNotificationEnabled: record.emailNotificationEnabled,
+      notificationDaysBefore: record.notificationDaysBefore,
     }));
 
   const transformToDewormingData = (records: any[]) =>
@@ -194,6 +196,8 @@ export default function MedicalControlView({
       nextDewormingDate: record.nextDate,
       dewormerName: record.name,
       observations: record.observations,
+      emailNotificationEnabled: record.emailNotificationEnabled,
+      notificationDaysBefore: record.notificationDaysBefore,
     }));
 
   const transformToMedicalVisitData = (records: any[]) =>
@@ -203,6 +207,8 @@ export default function MedicalControlView({
       reasonForVisit: record.name,
       veterinarianName: record.veterinarianName,
       observations: record.observations,
+      emailNotificationEnabled: record.emailNotificationEnabled,
+      notificationDaysBefore: record.notificationDaysBefore,
     }));
 
   const filteredData = getFilteredData();

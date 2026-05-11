@@ -159,27 +159,37 @@ export interface IUser {
   profile: IUserProfile;
   // [key: string]: any; // Para permitir propiedades adicionales
 }
-export interface IVaccinesControl {
-  dateOfApplication: string;
-  nextVaccineDate: string;
-  vaccineName: string;
-  observations: string;
-  _id?: string;
+export interface INotificationSettings {
+  emailNotificationEnabled: boolean;
+  lastNotificationSent: Date | null;
+  notificationDaysBefore: number;
 }
-export interface IDewormingControl {
-  dateOfApplication: string;
-  nextDewormingDate: string;
-  dewormerName: string;
+
+// Interfaz base para registros médicos
+export interface IBaseMedicalRecord {
   observations: string;
   _id?: string;
 }
 
-export interface IMedicalVisits {
+// Vacunas con notificaciones
+export interface IVaccinesControl extends IBaseMedicalRecord, INotificationSettings {
+  dateOfApplication: string;
+  nextVaccineDate: string;
+  vaccineName: string;
+}
+
+// Desparasitaciones con notificaciones
+export interface IDewormingControl extends IBaseMedicalRecord, INotificationSettings {
+  dateOfApplication: string;
+  nextDewormingDate: string;
+  dewormerName: string;
+}
+
+// Visitas médicas con notificaciones
+export interface IMedicalVisits extends IBaseMedicalRecord, INotificationSettings {
   visitDate: string;
   reasonForVisit: string;
   veterinarianName: string;
-  observations: string;
-  _id?: string;
 }
 
 export interface IMedicalRecord {

@@ -1,6 +1,7 @@
 'use client';
 
 import { paper } from '@/theme/css';
+import { useTranslation } from '@/hooks/use-translation';
 
 import Stack from '@mui/material/Stack';
 import Badge from '@mui/material/Badge';
@@ -25,7 +26,7 @@ import { FontSizeSlider } from './fontSize-slider';
 
 export default function SettingsDrawer() {
   const theme = useTheme();
-
+  const { t } = useTranslation();
   const settings = useSettingsContext();
 
   const labelStyles = {
@@ -42,7 +43,7 @@ export default function SettingsDrawer() {
       sx={{ py: 2, pr: 1, pl: 2.5 }}
     >
       <Typography variant="h6" sx={{ flexGrow: 1 }}>
-        Settings
+        {t('Settings')}
       </Typography>
 
       <Tooltip title="Reset">
@@ -62,7 +63,7 @@ export default function SettingsDrawer() {
   const renderMode = (
     <div>
       <Typography variant="caption" component="div" sx={{ ...labelStyles }}>
-        Mode
+        {t('Theme')}
       </Typography>
 
       <BaseOptions
@@ -79,7 +80,7 @@ export default function SettingsDrawer() {
   const renderContrast = (
     <div>
       <Typography variant="caption" component="div" sx={{ ...labelStyles }}>
-        Contrast
+        {t('Contrast')}
       </Typography>
 
       <BaseOptions
@@ -96,7 +97,7 @@ export default function SettingsDrawer() {
   const renderDirection = (
     <div>
       <Typography variant="caption" component="div" sx={{ ...labelStyles }}>
-        Direction
+        {t('Direction')}
       </Typography>
 
       <BaseOptions
@@ -113,7 +114,7 @@ export default function SettingsDrawer() {
   const renderLayout = (
     <div>
       <Typography variant="caption" component="div" sx={{ ...labelStyles }}>
-        Layout
+        {t('Layout')}
       </Typography>
 
       <LayoutOptions
@@ -137,8 +138,8 @@ export default function SettingsDrawer() {
           alignItems: 'center',
         }}
       >
-        Stretch
-        <Tooltip title="Only available at large resolutions > 1600px (xl)">
+        {t('Stretch')}
+        <Tooltip title={t('Only available at large resolutions > 1600px (xl)')}>
           <Iconify icon="eva:info-outline" width={16} sx={{ ml: 0.5 }} />
         </Tooltip>
       </Typography>
@@ -155,7 +156,7 @@ export default function SettingsDrawer() {
   const renderPresets = (
     <div>
       <Typography variant="caption" component="div" sx={{ ...labelStyles }}>
-        Presets
+        {t('Presets')}
       </Typography>
 
       <PresetsOptions

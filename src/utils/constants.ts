@@ -274,3 +274,17 @@ export function getSortOrder(sortValue: string): 'asc' | 'desc' {
       return 'desc';
   }
 }
+
+// Determinar color según nivel de seguridad
+export const getSecurityColor = (percentage: number) => {
+  if (percentage >= 80) return '#4caf50';
+  if (percentage >= 50) return '#ff9800';
+  return '#f44336';
+};
+
+// Determinar texto del nivel
+export const getSecurityLevelText = (percentage: number, t: (key: string) => string) => {
+  if (percentage >= 80) return t('High Security');
+  if (percentage >= 50) return t('Medium Security');
+  return t('Low Security');
+};

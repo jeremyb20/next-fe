@@ -52,6 +52,8 @@ export const endpoints = {
     send: '/api/notifications/send',
     sendToAdmin: '/api/notifications/sendToAdmin',
     markAsRead: '/api/notifications/markAsRead',
+    getSubscriptionDevices: '/api/notifications/getSubscriptionDevices',
+    deleteAllSubscriptions: '/api/notifications/deleteAllSubscriptions'
   },
   admin: {
     users: {
@@ -144,7 +146,8 @@ export const endpoints = {
     signOutAllDevices: '/api/user/signOutAllDevices',
     sendEmailVerification: '/api/user/sendEmailVerification',
     verifyEmailCode: '/api/user/verifyEmailCode',
-    resendEmailVerification: '/api/user/resendEmailVerification'
+    resendEmailVerification: '/api/user/resendEmailVerification',
+    resend2FACodeForReset: '/api/user/resend2FACodeForReset'
   },
   mail: {
     list: '/api/mail/list',

@@ -322,6 +322,7 @@ export default function ModernResetPasswordView({
   };
 
   const handleResend2FACode = async () => {
+    // ✅ Verificar cooldown
     if (resendCooldown > 0) {
       setMessageResponse({
         status: 'warning',
@@ -332,31 +333,26 @@ export default function ModernResetPasswordView({
       return;
     }
 
+    // ✅ Verificar que tenemos tempToken
     if (!tempToken) {
       setMessageResponse({
         status: 'error',
         message: t('Session expired. Please try again'),
       });
-      setRequiresTwoFactor(false);
-      resetTurnstile();
+      // ✅ NO cerrar el diálogo automáticamente
+      // setRequiresTwoFactor(false); // ❌ NO hacer esto
+      // resetTurnstile(); // ❌ NO hacer esto
       return;
     }
 
     try {
       setIsResending(true);
 
-      const response = await fetch(
-        `${HOST_API}/api/user/resend2FACodeForReset`,
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ tempToken }),
-        }
-      );
-
-      const result = await response.json();
+      const result = await mutateAsync({
+        payload: { tempToken },
+        pEndpoint: `${HOST_API}${endpoints.user.resend2FACodeForReset}`,
+        method: 'POST',
+      });
 
       if (result.success) {
         setResendCooldown(30);
@@ -364,8 +360,9 @@ export default function ModernResetPasswordView({
           status: 'success',
           message: t('New verification code sent to your email'),
         });
+        // ✅ Limpiar el código anterior pero mantener el diálogo abierto
         setTwoFactorCode('');
-        // Resetear campos OTP
+        // Resetear campos OTP visualmente
         const otpInputs = document.querySelectorAll('input[type="tel"]');
         otpInputs.forEach((input) => {
           (input as HTMLInputElement).value = '';
@@ -384,9 +381,18 @@ export default function ModernResetPasswordView({
       });
     } finally {
       setIsResending(false);
+
+      // ✅ Limpiar el mensaje después de 3 segundos para mejorar UX
+      setTimeout(() => {
+        if (
+          messageResponse.status === 'success' ||
+          messageResponse.status === 'error'
+        ) {
+          setMessageResponse({ status: '', message: '' });
+        }
+      }, 3000);
     }
   };
-
   const formatCooldownTime = (seconds: number): string => {
     if (seconds <= 0) return '';
     if (seconds < 60) return `${seconds}s`;
@@ -535,7 +541,6 @@ export default function ModernResetPasswordView({
     <Dialog
       open={requiresTwoFactor}
       onClose={(event, reason) => {
-        // ✅ Solo permitir cerrar si la razón no es 'backdropClick' o 'escapeKeyDown'
         if (reason !== 'backdropClick' && reason !== 'escapeKeyDown') {
           setRequiresTwoFactor(false);
           setTwoFactorCode('');
