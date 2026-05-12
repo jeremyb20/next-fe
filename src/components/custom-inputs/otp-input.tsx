@@ -11,11 +11,13 @@ const OtpInput: React.FC<Props> = ({ onChange, onEnter }) => {
   const inputsRef = useRef<Array<HTMLInputElement>>([]);
 
   useEffect(() => {
-    inputsRef.current[0].focus();
+    if (inputsRef.current[0]) {
+      inputsRef.current[0].focus();
+    }
   }, []);
 
   const sendResult = () => {
-    const res = inputsRef.current.map((input) => input.value).join('');
+    const res = inputsRef.current.map((input) => input?.value || '').join('');
     if (onChange) onChange(res);
   };
 
@@ -38,7 +40,9 @@ const OtpInput: React.FC<Props> = ({ onChange, onEnter }) => {
     sendResult();
   };
 
-  const handleOnKeyDown = (e: React.KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleOnKeyDown = (
+    e: React.KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const { key } = e;
     const target = e.target as HTMLInputElement;
     const previousElementSibling =
@@ -58,7 +62,7 @@ const OtpInput: React.FC<Props> = ({ onChange, onEnter }) => {
     // Si presiona Enter en cualquier campo
     if (key === 'Enter') {
       const currentValue = inputsRef.current
-        .map((input) => input.value)
+        .map((input) => input?.value || '')
         .join('');
       // Si todos los campos están llenos (6 dígitos)
       if (currentValue.length === 6 && onEnter) {
@@ -92,7 +96,7 @@ const OtpInput: React.FC<Props> = ({ onChange, onEnter }) => {
     // Si es el último campo y presiona Enter
     if (key === 'Enter' && index === 5) {
       const currentValue = inputsRef.current
-        .map((input) => input.value)
+        .map((input) => input?.value || '')
         .join('');
       if (currentValue.length === 6 && onEnter) {
         onEnter();
@@ -106,36 +110,40 @@ const OtpInput: React.FC<Props> = ({ onChange, onEnter }) => {
   };
 
   const handleOnPaste = (e: React.ClipboardEvent<HTMLInputElement>) => {
+    e.preventDefault();
     const pastedValue = e.clipboardData.getData('Text');
 
-    let currentInput = 0;
+    // Filtrar solo dígitos
+    const digits = pastedValue.replace(/\D/g, '').slice(0, 6);
 
-    for (let i = 0; i < pastedValue.length; i += 1) {
-      const pastedCharacter = pastedValue.charAt(i);
-      const currentInputElement = inputsRef.current[currentInput];
-      const currentValue = currentInputElement.value;
-      if (pastedCharacter.match('[0-9]{1}')) {
-        if (!currentValue) {
-          currentInputElement.value = pastedCharacter;
-          const nextElementSibling =
-            currentInputElement.parentElement?.nextElementSibling?.firstChild;
+    // Limpiar todos los inputs primero
+    inputsRef.current.forEach((input) => {
+      if (input) input.value = '';
+    });
 
-          if (nextElementSibling !== null) {
-            (nextElementSibling as HTMLInputElement).focus();
-            currentInput += 1;
-          }
-        }
+    // Distribuir los dígitos
+    for (let i = 0; i < digits.length; i += 1) {
+      const currentInputElement = inputsRef.current[i];
+      // ✅ Verificar que el elemento existe antes de usarlo
+      if (currentInputElement) {
+        currentInputElement.value = digits[i];
       }
     }
-    sendResult();
 
-    // Si después de pegar todos los campos están llenos, auto-verificar
-    const finalValue = inputsRef.current.map((input) => input.value).join('');
-    if (finalValue.length === 6 && onEnter) {
-      setTimeout(() => onEnter(), 100); // Pequeño delay para mejor UX
+    // Enfocar el siguiente campo después del último dígito pegado
+    const nextIndex = digits.length;
+    if (nextIndex < 6 && inputsRef.current[nextIndex]) {
+      inputsRef.current[nextIndex].focus();
+    } else if (nextIndex === 6 && inputsRef.current[5]) {
+      inputsRef.current[5].focus();
     }
 
-    e.preventDefault();
+    sendResult();
+
+    // Auto-verificar si se pegaron 6 dígitos
+    if (digits.length === 6 && onEnter) {
+      setTimeout(() => onEnter(), 100);
+    }
   };
 
   return (

@@ -502,16 +502,16 @@ export default function JwtLoginView() {
   const render2FADialog = (
     <Dialog
       open={requiresTwoFactor}
-      onClose={() => {
-        setRequiresTwoFactor(false);
-        setTwoFactorCode('');
-        setTempToken('');
-        setLoginCredentials(null);
-        setResendCooldown(0);
-        if (resendTimerRef.current) {
-          clearInterval(resendTimerRef.current);
+      onClose={(event, reason) => {
+        if (reason !== 'backdropClick' && reason !== 'escapeKeyDown') {
+          setRequiresTwoFactor(false);
+          setTwoFactorCode('');
+          setTempToken('');
+          setResendCooldown(0);
+          if (resendTimerRef.current) {
+            clearInterval(resendTimerRef.current);
+          }
         }
-        // No resetear Turnstile al cerrar, el token sigue siendo válido
       }}
       maxWidth="xs"
       fullWidth

@@ -1,10 +1,14 @@
 import * as Yup from 'yup';
+import { paths } from '@/routes/paths';
 import { endpoints } from '@/utils/axios';
 import { HOST_API } from '@/config-global';
 import { useEffect, useCallback } from 'react';
+import { useRedirect } from '@/hooks/use-redirect';
 import { useSnackbar } from '@/components/snackbar';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useTranslation } from '@/hooks/use-translation';
+import { useManagerUser } from '@/hooks/use-manager-user';
 import { useCreateGenericMutation } from '@/hooks/user-generic-mutation';
 import { FormValues, MedicalRecordType } from '@/interfaces/medical-record';
 import FormProvider, {
@@ -22,10 +26,17 @@ import DialogTitle from '@mui/material/DialogTitle';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import {
+  Chip,
+  Alert,
+  Switch,
+  Slider,
+  Divider,
+  Typography,
+  FormControlLabel,
+} from '@mui/material';
 
 // ----------------------------------------------------------------------
-
-// Tipos para los registros médicos
 
 type Props = {
   open: boolean;
@@ -78,49 +89,49 @@ const VISIT_REASONS = [
   { value: 'other', label: 'Otro' },
 ];
 
-// Títulos del formulario según el tipo
 const getFormTitle = (type: MedicalRecordType, isEdit: boolean) => {
   switch (type) {
     case 'vaccine':
-      return isEdit ? 'Editar Vacuna' : 'Registrar Vacuna';
+      return isEdit ? 'Edit Vaccine' : 'Register Vaccine';
     case 'deworming':
-      return isEdit ? 'Editar Desparasitación' : 'Registrar Desparasitación';
+      return isEdit ? 'Edit Deworming' : 'Register Deworming';
     case 'medical_visit':
-      return isEdit ? 'Editar Visita Médica' : 'Registrar Visita Médica';
+      return isEdit
+        ? 'Edit Medical Appointment'
+        : 'Register Medical Appointment';
     default:
-      return 'Registro Médico';
+      return 'Medical Record';
   }
 };
 
-// Labels específicos para cada tipo
 const getFieldLabels = (type: MedicalRecordType) => {
   switch (type) {
     case 'vaccine':
       return {
-        dateLabel: 'Fecha de aplicación',
-        nextDateLabel: 'Próxima vacuna',
-        nameLabel: 'Nombre de la vacuna',
+        dateLabel: 'Application date',
+        nextDateLabel: 'Next vaccine',
+        nameLabel: 'Vaccine name',
         nameOptions: COMMON_VACCINES,
       };
     case 'deworming':
       return {
-        dateLabel: 'Fecha de aplicación',
-        nextDateLabel: 'Próxima desparasitación',
-        nameLabel: 'Nombre del desparasitante',
+        dateLabel: 'Application date',
+        nextDateLabel: 'Next deworming',
+        nameLabel: 'Name of the deworming agent',
         nameOptions: COMMON_DEWORMERS,
       };
     case 'medical_visit':
       return {
-        dateLabel: 'Fecha de visita',
-        nextDateLabel: 'Próxima cita',
-        nameLabel: 'Motivo de la visita',
+        dateLabel: 'Date of visit',
+        nextDateLabel: 'Next date',
+        nameLabel: 'Reason for the visit',
         nameOptions: VISIT_REASONS,
       };
     default:
       return {
-        dateLabel: 'Fecha',
-        nextDateLabel: 'Próxima fecha',
-        nameLabel: 'Nombre',
+        dateLabel: 'Date',
+        nextDateLabel: 'Next date',
+        nameLabel: 'Name',
         nameOptions: [],
       };
   }
@@ -137,50 +148,95 @@ export default function MedicalRecordForm({
 }: Props) {
   const { enqueueSnackbar } = useSnackbar();
   const { mutateAsync } = useCreateGenericMutation();
+  const { user } = useManagerUser();
+  const { redirect } = useRedirect();
+  const { t } = useTranslation();
+  // Verificar si el email está verificado
+  const isEmailVerified = user?.security?.isEmailVerified || false;
 
-  // Esquemas de validación específicos para cada tipo
   const getValidationSchema = (recordType: MedicalRecordType) => {
     const baseSchema = {
       observations: Yup.string().optional(),
+      // Campos de notificaciones
+      emailNotificationEnabled: Yup.boolean().optional(),
+      notificationDaysBefore: Yup.number()
+        .min(1, t('At least 1 day in advance'))
+        .max(30, t('No more than 30 days in advance'))
+        .optional(),
     };
 
     switch (recordType) {
       case 'vaccine':
         return Yup.object().shape({
           dateOfApplication: Yup.string().required(
-            'Fecha de aplicación es requerida'
+            t('Application date is required')
           ),
-          nextVaccineDate: Yup.string().required(
-            'Próxima fecha de vacuna es requerida'
-          ),
-          vaccineName: Yup.string().required(
-            'Nombre de la vacuna es requerido'
-          ),
+          nextVaccineDate: Yup.string()
+            .required(t('Next vaccination appointment required'))
+            .test(
+              'is-future',
+              t(
+                'The next vaccine should be available at some point in the future'
+              ),
+              (value) => {
+                if (!value) return true;
+                const today = new Date();
+                today.setHours(0, 0, 0, 0);
+                const nextDate = new Date(value);
+                nextDate.setHours(0, 0, 0, 0);
+                return nextDate > today;
+              }
+            ),
+          vaccineName: Yup.string().required(t('The vaccine name is required')),
           ...baseSchema,
         });
 
       case 'deworming':
         return Yup.object().shape({
           dateOfApplication: Yup.string().required(
-            'Fecha de aplicación es requerida'
+            t('Application date is required')
           ),
-          nextDewormingDate: Yup.string().required(
-            'Próxima fecha de desparasitación es requerida'
-          ),
+          nextDewormingDate: Yup.string()
+            .required(t('The next deworming appointment is required'))
+            .test(
+              'is-future',
+              'The next deworming should be scheduled for a future date',
+              (value) => {
+                if (!value) return true;
+                const today = new Date();
+                today.setHours(0, 0, 0, 0);
+                const nextDate = new Date(value);
+                nextDate.setHours(0, 0, 0, 0);
+                return nextDate > today;
+              }
+            ),
           dewormerName: Yup.string().required(
-            'Nombre del desparasitante es requerido'
+            t('The name of the deworming medication is required')
           ),
           ...baseSchema,
         });
 
       case 'medical_visit':
         return Yup.object().shape({
-          visitDate: Yup.string().required('Fecha de visita es requerida'),
+          visitDate: Yup.string()
+            .required(t('Date of visit is required'))
+            .test(
+              'is-future',
+              t('The visit date must be in the future'),
+              (value) => {
+                if (!value) return true;
+                const today = new Date();
+                today.setHours(0, 0, 0, 0);
+                const visitDate = new Date(value);
+                visitDate.setHours(0, 0, 0, 0);
+                return visitDate > today;
+              }
+            ),
           reasonForVisit: Yup.string().required(
-            'Motivo de la visita es requerido'
+            t('The reason for the visit is required')
           ),
           veterinarianName: Yup.string().required(
-            'Nombre del veterinario es requerido'
+            t('The veterinarians name is required')
           ),
           ...baseSchema,
         });
@@ -191,6 +247,12 @@ export default function MedicalRecordForm({
   };
 
   const getDefaultValues = useCallback((): FormValues => {
+    const baseNotificationValues = {
+      emailNotificationEnabled:
+        currentRecord?.emailNotificationEnabled || false,
+      notificationDaysBefore: currentRecord?.notificationDaysBefore || 7,
+    };
+
     if (currentRecord) {
       switch (type) {
         case 'vaccine':
@@ -199,6 +261,7 @@ export default function MedicalRecordForm({
             nextVaccineDate: currentRecord.nextVaccineDate || '',
             vaccineName: currentRecord.vaccineName || '',
             observations: currentRecord.observations || '',
+            ...baseNotificationValues,
           };
         case 'deworming':
           return {
@@ -206,6 +269,7 @@ export default function MedicalRecordForm({
             nextDewormingDate: currentRecord.nextDewormingDate || '',
             dewormerName: currentRecord.dewormerName || '',
             observations: currentRecord.observations || '',
+            ...baseNotificationValues,
           };
         case 'medical_visit':
           return {
@@ -213,6 +277,7 @@ export default function MedicalRecordForm({
             reasonForVisit: currentRecord.reasonForVisit || '',
             veterinarianName: currentRecord.veterinarianName || '',
             observations: currentRecord.observations || '',
+            ...baseNotificationValues,
           };
         default:
           return {
@@ -220,11 +285,16 @@ export default function MedicalRecordForm({
             reasonForVisit: currentRecord.reasonForVisit || '',
             veterinarianName: currentRecord.veterinarianName || '',
             observations: currentRecord.observations || '',
+            ...baseNotificationValues,
           };
       }
     }
 
-    // Valores por defecto para nuevo registro
+    const defaultNotificationValues = {
+      emailNotificationEnabled: false,
+      notificationDaysBefore: 7,
+    };
+
     switch (type) {
       case 'vaccine':
         return {
@@ -232,6 +302,7 @@ export default function MedicalRecordForm({
           nextVaccineDate: '',
           vaccineName: '',
           observations: '',
+          ...defaultNotificationValues,
         };
       case 'deworming':
         return {
@@ -239,6 +310,7 @@ export default function MedicalRecordForm({
           nextDewormingDate: '',
           dewormerName: '',
           observations: '',
+          ...defaultNotificationValues,
         };
       case 'medical_visit':
         return {
@@ -246,6 +318,7 @@ export default function MedicalRecordForm({
           reasonForVisit: '',
           veterinarianName: '',
           observations: '',
+          ...defaultNotificationValues,
         };
       default:
         return {
@@ -253,6 +326,7 @@ export default function MedicalRecordForm({
           reasonForVisit: '',
           veterinarianName: '',
           observations: '',
+          ...defaultNotificationValues,
         };
     }
   }, [currentRecord, type]);
@@ -266,10 +340,26 @@ export default function MedicalRecordForm({
     handleSubmit,
     control,
     reset,
+    watch,
+    setValue,
     formState: { isSubmitting },
   } = methods;
 
-  // Efecto para resetear el formulario cuando cambia currentRecord o se abre/cierra
+  const emailNotificationEnabled = watch('emailNotificationEnabled');
+
+  // Si el email no está verificado y se intenta activar, desactivar automáticamente
+  useEffect(() => {
+    if (!isEmailVerified && emailNotificationEnabled) {
+      setValue('emailNotificationEnabled', false);
+      enqueueSnackbar(
+        t(
+          'Debes verificar tu correo electrónico para activar las notificaciones'
+        ),
+        { variant: 'warning' }
+      );
+    }
+  }, [isEmailVerified, emailNotificationEnabled, setValue, enqueueSnackbar, t]);
+
   useEffect(() => {
     if (open) {
       reset(getDefaultValues());
@@ -279,13 +369,18 @@ export default function MedicalRecordForm({
   const fieldLabels = getFieldLabels(type);
 
   const onSubmit = handleSubmit(async (data) => {
-    try {
-      console.log('Datos del registro médico:', {
-        petId,
-        type,
-        data,
-      });
+    // Si el email no está verificado, asegurar que las notificaciones estén desactivadas
+    if (!isEmailVerified && data.emailNotificationEnabled) {
+      data.emailNotificationEnabled = false;
+      enqueueSnackbar(
+        t(
+          'Las notificaciones han sido desactivadas porque tu correo no está verificado'
+        ),
+        { variant: 'warning' }
+      );
+    }
 
+    try {
       const payloadData = {
         data,
         petId,
@@ -303,18 +398,17 @@ export default function MedicalRecordForm({
 
       enqueueSnackbar(
         currentRecord
-          ? 'Registro actualizado exitosamente'
-          : 'Registro creado exitosamente',
+          ? t('Registro actualizado exitosamente')
+          : t('Registro creado exitosamente'),
         { variant: 'success' }
       );
 
       refetch();
       onSubmitSuccess?.(data);
-      // onClose();
       reset();
     } catch (error) {
       console.error(error);
-      enqueueSnackbar('Error al guardar el registro', { variant: 'error' });
+      enqueueSnackbar(t('Error saving the record'), { variant: 'error' });
     }
   });
 
@@ -324,6 +418,37 @@ export default function MedicalRecordForm({
   };
 
   const isEditMode = Boolean(currentRecord);
+
+  const getNotificationLabel = (enabled: boolean, emailVerified: boolean) => {
+    if (enabled && emailVerified) return `🔔 ${t('Notifications enabled')}`;
+    if (!emailVerified) return `🔒 ${t('Check your email to activate')}`;
+    return `🔕 ${t('Notifications turned off')}`;
+  };
+
+  const getTargetDate = () => {
+    if (type === 'medical_visit') {
+      return watch('visitDate');
+    }
+    if (type === 'vaccine') {
+      return watch('nextVaccineDate');
+    }
+    if (type === 'deworming') {
+      return watch('nextDewormingDate');
+    }
+    return null;
+  };
+
+  const targetDate = getTargetDate();
+  const notificationDays = watch('notificationDaysBefore') || 7;
+
+  const getEstimatedNotificationDate = () => {
+    if (!targetDate) return null;
+    const date = new Date(targetDate);
+    date.setDate(date.getDate() - notificationDays);
+    return date;
+  };
+
+  const estimatedNotificationDate = getEstimatedNotificationDate();
 
   return (
     <Dialog
@@ -336,7 +461,7 @@ export default function MedicalRecordForm({
       }}
     >
       <FormProvider methods={methods} onSubmit={onSubmit}>
-        <DialogTitle>{getFormTitle(type, isEditMode)}</DialogTitle>
+        <DialogTitle>{t(getFormTitle(type, isEditMode))}</DialogTitle>
 
         <DialogContent>
           <Box
@@ -348,7 +473,6 @@ export default function MedicalRecordForm({
             }}
             sx={{ mt: 1 }}
           >
-            {/* Fecha principal según el tipo */}
             <Controller
               name={
                 type === 'medical_visit' ? 'visitDate' : 'dateOfApplication'
@@ -372,7 +496,6 @@ export default function MedicalRecordForm({
               )}
             />
 
-            {/* Fecha próxima (no aplica para visitas médicas) */}
             {(type === 'vaccine' || type === 'deworming') && (
               <Controller
                 name={
@@ -398,7 +521,6 @@ export default function MedicalRecordForm({
               />
             )}
 
-            {/* Campo de nombre según el tipo */}
             {type === 'medical_visit' ? (
               <RHFSelect name="reasonForVisit" label={fieldLabels.nameLabel}>
                 {fieldLabels.nameOptions.map((option) => (
@@ -421,23 +543,238 @@ export default function MedicalRecordForm({
               />
             )}
 
-            {/* Veterinario solo para visitas médicas */}
             {type === 'medical_visit' && (
               <RHFTextField
                 name="veterinarianName"
-                label="Nombre del veterinario"
+                label={t('Veterinarians name')}
                 fullWidth
               />
             )}
 
-            {/* Observaciones */}
             <RHFTextField
               name="observations"
-              label="Observaciones"
+              label={t('Observations')}
               multiline
               rows={3}
               fullWidth
             />
+
+            <Divider sx={{ my: 1 }}>
+              <Chip label={t('Notification Settings')} size="small" />
+            </Divider>
+
+            <Box
+              sx={{
+                p: 2,
+                bgcolor: 'background.neutral',
+                borderRadius: 2,
+                border: '1px solid',
+                borderColor: 'divider',
+              }}
+            >
+              <Typography
+                variant="subtitle2"
+                gutterBottom
+                sx={{ display: 'flex', alignItems: 'center', gap: 1 }}
+              >
+                📧 {t('Email notifications')}
+              </Typography>
+
+              <Typography
+                variant="caption"
+                color="text.secondary"
+                display="block"
+                sx={{ mb: 2 }}
+              >
+                {t('Get reminders when this date is approaching')}
+              </Typography>
+
+              {/* Alerta si el email no está verificado */}
+              {!isEmailVerified && (
+                <Alert severity="warning" sx={{ mb: 2 }}>
+                  <Typography variant="body2" fontWeight="bold">
+                    ⚠️ {t('Email address not verified')}
+                  </Typography>
+                  <Typography variant="caption">
+                    {t(
+                      'To enable email notifications, you must first verify your email address. Please check your inbox and follow the instructions in the verification email.'
+                    )}
+                  </Typography>
+                  <Button
+                    variant="outlined"
+                    sx={{ ml: 1 }}
+                    onClick={() =>
+                      redirect(`${paths.dashboard.user.account}?tab=security`)
+                    }
+                  >
+                    {t('Verify email')}
+                  </Button>
+                </Alert>
+              )}
+
+              <Controller
+                name="emailNotificationEnabled"
+                control={control}
+                render={({ field }) => (
+                  <FormControlLabel
+                    control={
+                      <Switch
+                        checked={field.value && isEmailVerified}
+                        onChange={(e) => {
+                          if (!isEmailVerified) {
+                            enqueueSnackbar(
+                              t(
+                                'You need to check your email to enable notifications'
+                              ),
+                              { variant: 'warning' }
+                            );
+                            return;
+                          }
+                          field.onChange(e.target.checked);
+                        }}
+                        color="primary"
+                        disabled={!isEmailVerified}
+                      />
+                    }
+                    label={
+                      <Box>
+                        <Typography variant="body2">
+                          {getNotificationLabel(field.value, isEmailVerified)}
+                        </Typography>
+                        {field.value && isEmailVerified && (
+                          <Typography variant="caption" color="success.main">
+                            {t('You will receive email reminders')}
+                          </Typography>
+                        )}
+                        {!isEmailVerified && (
+                          <Typography variant="caption" color="warning.main">
+                            {t('You need to verify your email address')}
+                          </Typography>
+                        )}
+                      </Box>
+                    }
+                    sx={{ mb: 2, width: '100%', alignItems: 'flex-start' }}
+                  />
+                )}
+              />
+
+              {emailNotificationEnabled && isEmailVerified && (
+                <Box sx={{ mt: 2, pl: 2, pr: 2 }}>
+                  <Typography gutterBottom variant="body2">
+                    ⏰ {t('Number of days notice required')}
+                  </Typography>
+
+                  <Controller
+                    name="notificationDaysBefore"
+                    control={control}
+                    render={({ field }) => (
+                      <>
+                        <Slider
+                          value={field.value || 7}
+                          onChange={(_, value) => field.onChange(value)}
+                          min={1}
+                          max={30}
+                          valueLabelDisplay="auto"
+                          valueLabelFormat={(value) => `${value} días`}
+                          marks={[
+                            { value: 1, label: '1 día' },
+                            { value: 7, label: '7 días' },
+                            { value: 14, label: '14 días' },
+                            { value: 30, label: '30 días' },
+                          ]}
+                          sx={{ mt: 2, mb: 3 }}
+                        />
+                        <Typography
+                          variant="caption"
+                          color="text.secondary"
+                          display="block"
+                          sx={{ mb: 2 }}
+                        >
+                          {t(
+                            'You will be notified {{days}} days before the scheduled date',
+                            {
+                              days: field.value || 7,
+                            }
+                          )}
+                        </Typography>
+                      </>
+                    )}
+                  />
+
+                  {targetDate && estimatedNotificationDate && (
+                    <Alert severity="info" sx={{ mt: 2 }}>
+                      <Typography variant="subtitle2">
+                        📅 {t('Notification summary:')}
+                      </Typography>
+                      <Typography variant="body2">
+                        • {t('Event date:')}:{' '}
+                        <strong>
+                          {new Date(targetDate).toLocaleDateString('es-CR')}
+                        </strong>
+                        <br />• {t('We will notify you:')}{' '}
+                        <strong>
+                          {estimatedNotificationDate.toLocaleDateString(
+                            'es-CR'
+                          )}
+                        </strong>
+                        <br />• {t('Frequency: Every 3 days until the event')}
+                      </Typography>
+                    </Alert>
+                  )}
+
+                  {!targetDate && (
+                    <Alert severity="warning" sx={{ mt: 2 }}>
+                      <Typography variant="body2">
+                        ⚠️{' '}
+                        {t(
+                          'Enter the event date to view the notification summary'
+                        )}
+                      </Typography>
+                    </Alert>
+                  )}
+
+                  <Alert severity="info" sx={{ mt: 2 }}>
+                    <Typography variant="caption" display="block">
+                      💡 <strong>{t('How does it work?')}</strong>
+                      <br />•{' '}
+                      {t(
+                        'You will receive a reminder email based on the days you have set'
+                      )}
+                      <br />•{' '}
+                      {t(
+                        'The system will send reminders every 3 days until the event date'
+                      )}
+                      <br />•{' '}
+                      {t(
+                        'You can modify these settings at any time in your profile'
+                      )}
+                    </Typography>
+                  </Alert>
+                </Box>
+              )}
+
+              {/* Mensaje de email no verificado para usuarios que ya tenían notificaciones */}
+              {currentRecord?.emailNotificationEnabled && !isEmailVerified && (
+                <Alert severity="error" sx={{ mt: 2 }}>
+                  <Typography variant="body2">
+                    ⚠️ {t('Notifications have been automatically turned off')}
+                  </Typography>
+                  <Typography variant="caption">
+                    {t(
+                      'Your email address has not been verified. Please verify your email address to reactivate notifications.'
+                    )}
+                  </Typography>
+                  <Button
+                    variant="outlined"
+                    onClick={() =>
+                      redirect(`${paths.dashboard.user.account}?tab=security`)
+                    }
+                  >
+                    {t('Verify email')}
+                  </Button>
+                </Alert>
+              )}
+            </Box>
           </Box>
         </DialogContent>
 
@@ -451,7 +788,7 @@ export default function MedicalRecordForm({
             variant="contained"
             loading={isSubmitting}
           >
-            {currentRecord ? 'Actualizar' : 'Crear'}
+            {t(currentRecord ? 'Update' : 'Create')}
           </LoadingButton>
         </DialogActions>
       </FormProvider>

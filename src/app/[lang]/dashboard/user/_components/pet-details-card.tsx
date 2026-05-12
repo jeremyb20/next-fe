@@ -121,6 +121,8 @@ export function PetDetailsCard({
       nextVaccineDate: vaccine.nextVaccineDate,
       vaccineName: vaccine.vaccineName,
       observations: vaccine.observations,
+      emailNotificationEnabled: vaccine.emailNotificationEnabled ?? false,
+      notificationDaysBefore: vaccine.notificationDaysBefore ?? 7,
     }));
   };
 
@@ -132,6 +134,8 @@ export function PetDetailsCard({
       nextDewormingDate: deworming.nextDewormingDate,
       dewormerName: deworming.dewormerName,
       observations: deworming.observations,
+      emailNotificationEnabled: deworming.emailNotificationEnabled ?? false,
+      notificationDaysBefore: deworming.notificationDaysBefore ?? 7,
     }));
   };
 
@@ -143,6 +147,8 @@ export function PetDetailsCard({
       reasonForVisit: visit.reasonForVisit,
       veterinarianName: visit.veterinarianName,
       observations: visit.observations,
+      emailNotificationEnabled: visit.emailNotificationEnabled ?? false,
+      notificationDaysBefore: visit.notificationDaysBefore ?? 7,
     }));
   };
 

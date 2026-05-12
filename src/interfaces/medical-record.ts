@@ -1,6 +1,14 @@
+// interfaces/medical-record.ts
 export type MedicalRecordType = 'vaccine' | 'deworming' | 'medical_visit';
 
-export interface IVaccineFormData {
+// Interfaz base para notificaciones
+export interface INotificationSettings {
+  emailNotificationEnabled: boolean;
+  notificationDaysBefore: number;
+}
+
+// Vacuna con notificaciones
+export interface IVaccineFormData extends INotificationSettings {
   dateOfApplication: string;
   nextVaccineDate: string;
   vaccineName: string;
@@ -8,7 +16,8 @@ export interface IVaccineFormData {
   _id?: string;
 }
 
-export interface IDewormingFormData {
+// Desparasitación con notificaciones
+export interface IDewormingFormData extends INotificationSettings {
   dateOfApplication: string;
   nextDewormingDate: string;
   dewormerName: string;
@@ -16,7 +25,8 @@ export interface IDewormingFormData {
   _id?: string;
 }
 
-export interface IMedicalVisitFormData {
+// Visita médica con notificaciones
+export interface IMedicalVisitFormData extends INotificationSettings {
   visitDate: string;
   reasonForVisit: string;
   veterinarianName: string;
@@ -45,3 +55,9 @@ export const isMedicalVisitRecord = (
   record: FormValues,
   type: MedicalRecordType
 ): record is IMedicalVisitFormData => type === 'medical_visit';
+
+// Helper para obtener valores por defecto de notificaciones
+export const getDefaultNotificationSettings = (): INotificationSettings => ({
+  emailNotificationEnabled: false,
+  notificationDaysBefore: 7,
+});

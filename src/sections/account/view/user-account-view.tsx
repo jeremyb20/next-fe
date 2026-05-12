@@ -44,12 +44,6 @@ const TABS_CONFIG = [
   //   param: 'billing',
   // },
   // {
-  //   value: 'notifications',
-  //   label: 'Notifications',
-  //   icon: <Iconify icon="solar:bell-bing-bold" width={24} />,
-  //   param: 'notifications',
-  // },
-  // {
   //   value: 'social',
   //   label: 'Social links',
   //   icon: <Iconify icon="solar:share-bold" width={24} />,
@@ -60,6 +54,12 @@ const TABS_CONFIG = [
     label: 'Security',
     icon: <Iconify icon="ic:round-vpn-key" width={24} />,
     param: 'security',
+  },
+  {
+    value: 'notifications',
+    label: 'Notifications',
+    icon: <Iconify icon="solar:bell-bing-bold" width={24} />,
+    param: 'notifications',
   },
 ];
 

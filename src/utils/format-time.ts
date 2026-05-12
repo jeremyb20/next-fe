@@ -29,8 +29,8 @@ export function fTimestamp(date: InputValue) {
 export function fToNow(date: InputValue) {
   return date
     ? formatDistanceToNow(new Date(date), {
-        addSuffix: true,
-      })
+      addSuffix: true,
+    })
     : '';
 }
 
@@ -91,3 +91,10 @@ export function fToNowRefactor(date: InputValue) {
   const diffInYears = Math.floor(diffInMonths / 12);
   return `${diffInYears}y`;
 }
+
+export const formatDate = (dateString: string) =>
+  new Date(dateString).toLocaleDateString('es-ES', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });

@@ -9,7 +9,6 @@ import { HOST_API } from '@/config-global';
 import { RouterLink } from '@/routes/components';
 import { useRef, useState, useEffect } from 'react';
 import { useSnackbar } from '@/components/snackbar';
-import { fToNowRefactor } from '@/utils/format-time';
 import { yupResolver } from '@hookform/resolvers/yup';
 import EmptyContent from '@/components/empty-content';
 import { useTranslation } from '@/hooks/use-translation';
@@ -17,6 +16,8 @@ import { useGetSecurityConfig } from '@/hooks/use-fetch';
 import { useManagerUser } from '@/hooks/use-manager-user';
 import OtpInput from '@/components/custom-inputs/otp-input';
 import { useCreateGenericMutation } from '@/hooks/user-generic-mutation';
+import { Device, SecurityLevel, TwoFactorStatus } from '@/types/security';
+import { getSecurityColor, getSecurityLevelText } from '@/utils/constants';
 
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
@@ -28,37 +29,12 @@ import Dialog from '@mui/material/Dialog';
 import { LinearProgress } from '@mui/material';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
-import IconButton from '@mui/material/IconButton';
 import LoadingButton from '@mui/lab/LoadingButton';
 import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
 
-// ----------------------------------------------------------------------
-
-interface Device {
-  id: string;
-  name: string;
-  location: string;
-  lastActive: string;
-  deviceType: 'mobile' | 'desktop' | 'tablet';
-}
-
-interface TwoFactorStatus {
-  enabled: boolean;
-  method: 'app' | 'email' | null;
-  email: string;
-  phone: string;
-}
-
-interface SecurityLevel {
-  level: number;
-  items: {
-    emailVerified: boolean;
-    twoFactorEnabled: boolean;
-    backupEmailSet: boolean;
-  };
-}
+import AccountDevice from './account-device';
 
 // ----------------------------------------------------------------------
 
@@ -131,20 +107,6 @@ export default function AccountSecurity() {
     Boolean
   ).length;
   const securityPercentage = (activeSecurityItems / 3) * 100;
-
-  // Determinar color según nivel de seguridad
-  const getSecurityColor = (percentage: number) => {
-    if (percentage >= 80) return '#4caf50';
-    if (percentage >= 50) return '#ff9800';
-    return '#f44336';
-  };
-
-  // Determinar texto del nivel
-  const getSecurityLevelText = (percentage: number) => {
-    if (percentage >= 80) return t('High Security');
-    if (percentage >= 50) return t('Medium Security');
-    return t('Low Security');
-  };
 
   // Limpiar timer de cooldown
   useEffect(
@@ -559,17 +521,6 @@ export default function AccountSecurity() {
     return '';
   };
 
-  const getDeviceIcon = (type: string) => {
-    switch (type) {
-      case 'mobile':
-        return 'solar:smartphone-bold';
-      case 'tablet':
-        return 'solar:tablet-bold';
-      default:
-        return 'solar:laptop-bold';
-    }
-  };
-
   if (isFetching) {
     return <LinearProgress />;
   }
@@ -630,7 +581,7 @@ export default function AccountSecurity() {
                 fontWeight: 'bold',
               }}
             >
-              {getSecurityLevelText(securityPercentage)}
+              {getSecurityLevelText(securityPercentage, t)}
             </Typography>
           </Stack>
 
@@ -984,86 +935,11 @@ export default function AccountSecurity() {
         </form>
       </Card>
 
-      {/* Devices Section */}
-      <Card sx={{ p: 3 }}>
-        <Button
-          variant="contained"
-          size="small"
-          onClick={handleSignOutFromAllDevices}
-          startIcon={<Iconify icon="solar:logout-2-bold" />}
-          color="error"
-        >
-          {t('Sign out from all devices')}
-        </Button>
-        <Stack
-          direction="row"
-          justifyContent="space-between"
-          alignItems="flex-start"
-          sx={{ my: 3 }}
-        >
-          <Stack>
-            <Typography variant="h6">{t('Devices')}</Typography>
-            <Typography variant="body2" color="text.secondary">
-              {t('Manage devices connected to your account')}
-            </Typography>
-          </Stack>
-        </Stack>
-
-        {devices.length > 0 ? (
-          <Stack spacing={2}>
-            {devices.map((device) => (
-              <Paper key={device.id} variant="outlined" sx={{ p: 2 }}>
-                <Stack
-                  direction="row"
-                  alignItems="center"
-                  justifyContent="space-between"
-                >
-                  <Stack direction="row" alignItems="center" spacing={2}>
-                    <Box
-                      sx={{
-                        width: 40,
-                        height: 40,
-                        borderRadius: 1,
-                        bgcolor: 'background.neutral',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                      }}
-                    >
-                      <Iconify
-                        icon={getDeviceIcon(device.deviceType)}
-                        width={24}
-                      />
-                    </Box>
-                    <Stack>
-                      <Typography variant="subtitle2">{device.name}</Typography>
-                      <Typography variant="caption" color="text.secondary">
-                        {t(device.location)} •{' '}
-                        {fToNowRefactor(device.lastActive)}
-                      </Typography>
-                    </Stack>
-                  </Stack>
-                  <IconButton
-                    size="small"
-                    onClick={() => handleRemoveDevice(device.id)}
-                    color="error"
-                  >
-                    <Iconify icon="solar:trash-bin-trash-bold" width={20} />
-                  </IconButton>
-                </Stack>
-              </Paper>
-            ))}
-          </Stack>
-        ) : (
-          <Typography
-            variant="body2"
-            color="text.secondary"
-            sx={{ textAlign: 'center', py: 3 }}
-          >
-            {t('No devices found')}
-          </Typography>
-        )}
-      </Card>
+      <AccountDevice
+        devices={devices}
+        handleRemoveDevice={handleRemoveDevice}
+        handleSignOutFromAllDevices={handleSignOutFromAllDevices}
+      />
 
       {/* Email Verification Dialog */}
       <Dialog

@@ -1,12 +1,24 @@
 // components/medical-records/vaccines-list.tsx
 import React from 'react';
 import Iconify from '@/components/iconify';
+import { formatDate } from '@/utils/format-time';
+import { useTranslation } from '@/hooks/use-translation';
 import { IVaccineFormData } from '@/interfaces/medical-record';
+import {
+  isOverdue,
+  isUpcoming,
+  getDateColor,
+  getDaysLabel,
+  getDaysUntil,
+  getProgressBarColor,
+} from '@/utils/constants';
 
 import {
   Box,
   Card,
+  Chip,
   Stack,
+  Tooltip,
   Typography,
   IconButton,
   CardContent,
@@ -29,6 +41,7 @@ export default function VaccinesList({
   refetchTrigger,
   isLoading,
 }: VaccinesListProps) {
+  const { t } = useTranslation();
   if (isLoading) {
     return (
       <Card>
@@ -36,29 +49,64 @@ export default function VaccinesList({
           <Box textAlign="center" py={3}>
             <CircularProgress />
             <Typography variant="h6" color="text.secondary" sx={{ mt: 2 }}>
-              Cargando vacunas...
+              {t('Loading vaccines...')}
             </Typography>
           </Box>
         </CardContent>
       </Card>
     );
   }
-  const formatDate = (dateString: string) =>
-    new Date(dateString).toLocaleDateString('es-ES', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-    });
 
-  const isUpcoming = (dateString: string) => {
-    const date = new Date(dateString);
-    const today = new Date();
-    const next30Days = new Date();
-    next30Days.setDate(today.getDate() + 30);
-    return date >= today && date <= next30Days;
+  // Verificar si la notificación está activa y próxima a enviarse
+  const getNotificationStatus = (vaccine: IVaccineFormData) => {
+    if (!vaccine.emailNotificationEnabled) {
+      return {
+        active: false,
+        message: 'Notifications turned off',
+        icon: 'mdi:bell-off-outline',
+        color: 'default',
+      };
+    }
+
+    const daysUntil = getDaysUntil(vaccine.nextVaccineDate);
+    const notificationDays = vaccine.notificationDaysBefore || 7;
+
+    if (daysUntil <= notificationDays && daysUntil >= 0) {
+      return {
+        active: true,
+        message: t(
+          `We'll notify you in {{daysUntil}} days (set to {{notificationDays}} days in advance)`,
+          {
+            daysUntil,
+            notificationDays,
+          }
+        ),
+        icon: 'mdi:bell-ring-outline',
+        color: 'warning',
+      };
+    }
+
+    if (daysUntil < 0) {
+      return {
+        active: false,
+        message: 'Overdue - notifications are paused',
+        icon: 'mdi:bell-off-outline',
+        color: 'error',
+      };
+    }
+
+    return {
+      active: true,
+      message: t(
+        'Active notifications - Well notify you {{notificationDays}} days in advance',
+        {
+          notificationDays,
+        }
+      ),
+      icon: 'mdi:bell-outline',
+      color: 'info',
+    };
   };
-
-  const isOverdue = (dateString: string) => new Date(dateString) < new Date();
 
   if (data.length === 0) {
     return (
@@ -71,10 +119,10 @@ export default function VaccinesList({
               sx={{ opacity: 0.5, mb: 2 }}
             />
             <Typography variant="h6" color="text.secondary">
-              No hay vacunas registradas
+              {t('There are no registered vaccines')}
             </Typography>
             <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
-              Comienza agregando la primera vacuna de tu mascota
+              {t('Start by adding your pets first vaccine')}
             </Typography>
           </Box>
         </CardContent>
@@ -84,115 +132,245 @@ export default function VaccinesList({
 
   return (
     <Stack spacing={2}>
-      {data.map((vaccine, index) => (
-        <Card
-          key={vaccine._id || index}
-          sx={{ position: 'relative', backgroundColor: 'background.neutral' }}
-        >
-          <CardContent>
-            <Stack
-              direction="row"
-              justifyContent="space-between"
-              alignItems="flex-start"
-            >
-              <Box sx={{ flex: 1 }}>
-                <Stack
-                  direction="row"
-                  alignItems="center"
-                  spacing={1}
-                  sx={{ mb: 1 }}
-                >
-                  <Typography variant="h6" component="div">
-                    {vaccine.vaccineName}
-                  </Typography>
-                  {isUpcoming(vaccine.nextVaccineDate) && (
-                    <Box
-                      sx={{
-                        px: 1,
-                        py: 0.5,
-                        bgcolor: 'warning.light',
-                        color: 'warning.contrastText',
-                        borderRadius: 1,
-                        fontSize: '0.75rem',
-                        fontWeight: 'bold',
-                      }}
-                    >
-                      PRÓXIMA
-                    </Box>
-                  )}
-                  {isOverdue(vaccine.nextVaccineDate) && (
-                    <Box
-                      sx={{
-                        px: 1,
-                        py: 0.5,
-                        bgcolor: 'error.light',
-                        color: 'error.contrastText',
-                        borderRadius: 1,
-                        fontSize: '0.75rem',
-                        fontWeight: 'bold',
-                      }}
-                    >
-                      VENCIDA
-                    </Box>
-                  )}
-                </Stack>
+      {data.map((vaccine, index) => {
+        const notificationStatus = getNotificationStatus(vaccine);
+        const daysUntil = getDaysUntil(vaccine.nextVaccineDate);
+        const notificationDays = vaccine.notificationDaysBefore || 7;
 
-                <Stack spacing={1}>
-                  <Stack direction="row" spacing={2}>
-                    <Box>
-                      <Typography variant="caption" color="text.secondary">
-                        Fecha de aplicación:
-                      </Typography>
-                      <Typography variant="body2">
-                        {formatDate(vaccine.dateOfApplication)}
-                      </Typography>
-                    </Box>
-                    <Box>
-                      <Typography variant="caption" color="text.secondary">
-                        Próxima vacuna:
-                      </Typography>
-                      <Typography
-                        variant="body2"
-                        sx={{
-                          fontWeight:
-                            isUpcoming(vaccine.nextVaccineDate) ||
-                            isOverdue(vaccine.nextVaccineDate)
-                              ? 'bold'
-                              : 'normal',
-                          color: isOverdue(vaccine.nextVaccineDate)
-                            ? 'error.main'
-                            : 'inherit',
-                        }}
-                      >
-                        {formatDate(vaccine.nextVaccineDate)}
-                      </Typography>
-                    </Box>
+        return (
+          <Card
+            key={vaccine._id || index}
+            sx={{
+              position: 'relative',
+              backgroundColor: 'background.neutral',
+              borderLeft: notificationStatus.active
+                ? `4px solid ${
+                    notificationStatus.color === 'warning'
+                      ? '#ed6c02'
+                      : '#0288d1'
+                  }`
+                : 'none',
+            }}
+          >
+            <CardContent>
+              <Stack
+                direction="row"
+                justifyContent="space-between"
+                alignItems="flex-start"
+              >
+                <Box sx={{ flex: 1 }}>
+                  <Stack
+                    direction="row"
+                    alignItems="center"
+                    spacing={1}
+                    sx={{ mb: 1, flexWrap: 'wrap', gap: 1 }}
+                  >
+                    <Typography variant="h6" component="div">
+                      {vaccine.vaccineName}
+                    </Typography>
+
+                    {isUpcoming(vaccine.nextVaccineDate) && (
+                      <Chip
+                        label={t('NEXT')}
+                        size="small"
+                        color="warning"
+                        sx={{ fontWeight: 'bold' }}
+                      />
+                    )}
+
+                    {isOverdue(vaccine.nextVaccineDate) && (
+                      <Chip
+                        label={t('EXPIRED')}
+                        size="small"
+                        color="error"
+                        sx={{ fontWeight: 'bold' }}
+                      />
+                    )}
+
+                    {/* Badge de notificaciones */}
+                    <Tooltip title={t(notificationStatus.message)}>
+                      <Chip
+                        icon={
+                          <Iconify icon={notificationStatus.icon} width={16} />
+                        }
+                        label={
+                          vaccine.emailNotificationEnabled
+                            ? t('Notifications ON')
+                            : t('Notifications OFF')
+                        }
+                        size="small"
+                        color={notificationStatus.color as any}
+                        variant="outlined"
+                        sx={{ fontWeight: 'medium' }}
+                      />
+                    </Tooltip>
+
+                    {/* Indicador de días de anticipación */}
+                    {vaccine.emailNotificationEnabled &&
+                      !isOverdue(vaccine.nextVaccineDate) && (
+                        <Chip
+                          icon={
+                            <Iconify icon="mdi:calendar-clock" width={16} />
+                          }
+                          label={t(
+                            'Reminder: {{notificationDays}} days in advance',
+                            { notificationDays }
+                          )}
+                          size="small"
+                          variant="outlined"
+                          color="info"
+                        />
+                      )}
                   </Stack>
 
-                  {vaccine.observations && (
-                    <Box>
-                      <Typography variant="caption" color="text.secondary">
-                        Observaciones:
-                      </Typography>
-                      <Typography variant="body2">
-                        {vaccine.observations}
-                      </Typography>
-                    </Box>
-                  )}
-                </Stack>
-              </Box>
+                  <Stack spacing={1}>
+                    <Stack direction="row" spacing={3} flexWrap="wrap" gap={2}>
+                      <Box>
+                        <Typography variant="caption" color="text.secondary">
+                          {t('Application date')}:
+                        </Typography>
+                        <Typography variant="body2">
+                          {formatDate(vaccine.dateOfApplication)}
+                        </Typography>
+                      </Box>
 
-              <IconButton
-                onClick={() => onEdit('vaccine', vaccine)}
-                sx={{ ml: 1 }}
-                size="small"
-              >
-                <Iconify icon="mdi:pencil" />
-              </IconButton>
-            </Stack>
-          </CardContent>
-        </Card>
-      ))}
+                      <Box>
+                        <Typography variant="caption" color="text.secondary">
+                          {t('Next vaccine date')}:
+                        </Typography>
+                        <Typography
+                          variant="body2"
+                          sx={{
+                            fontWeight:
+                              isUpcoming(vaccine.nextVaccineDate) ||
+                              isOverdue(vaccine.nextVaccineDate)
+                                ? 'bold'
+                                : 'normal',
+                            color: getDateColor(vaccine.nextVaccineDate),
+                          }}
+                        >
+                          {formatDate(vaccine.nextVaccineDate)}
+                          {!isOverdue(vaccine.nextVaccineDate) && (
+                            <Typography
+                              component="span"
+                              variant="caption"
+                              sx={{ ml: 1, color: 'text.secondary' }}
+                            >
+                              ({getDaysLabel(daysUntil, t)})
+                            </Typography>
+                          )}
+                        </Typography>
+                      </Box>
+
+                      {/* Información de notificación */}
+                      {vaccine.emailNotificationEnabled &&
+                        !isOverdue(vaccine.nextVaccineDate) && (
+                          <Box>
+                            <Typography
+                              variant="caption"
+                              color="text.secondary"
+                            >
+                              📧 {t('Next notification')}
+                            </Typography>
+                            <Typography variant="body2" color="info.main">
+                              {daysUntil <= notificationDays && daysUntil >= 0
+                                ? t(
+                                    'Will be sent soon (in {{daysUntil}} days)',
+                                    {
+                                      daysUntil,
+                                    }
+                                  )
+                                : t(
+                                    '{{notificationDays}} days before the event',
+                                    {
+                                      notificationDays,
+                                    }
+                                  )}
+                            </Typography>
+                          </Box>
+                        )}
+                    </Stack>
+
+                    {vaccine.observations && (
+                      <Box>
+                        <Typography variant="caption" color="text.secondary">
+                          {t('Remarks')}:
+                        </Typography>
+                        <Typography variant="body2">
+                          {vaccine.observations}
+                        </Typography>
+                      </Box>
+                    )}
+                  </Stack>
+
+                  {/* Barra de progreso de notificación */}
+                  {vaccine.emailNotificationEnabled &&
+                    !isOverdue(vaccine.nextVaccineDate) && (
+                      <Box sx={{ mt: 2 }}>
+                        <Box
+                          sx={{ display: 'flex', alignItems: 'center', gap: 1 }}
+                        >
+                          <Typography variant="caption" color="text.secondary">
+                            📅 {t('Scheduled alert')}:
+                          </Typography>
+                          <Box sx={{ flex: 1 }}>
+                            <Box
+                              sx={{
+                                width: '100%',
+                                height: 4,
+                                bgcolor: 'action.hover',
+                                borderRadius: 2,
+                                overflow: 'hidden',
+                              }}
+                            >
+                              <Box
+                                sx={{
+                                  width: `${Math.min(
+                                    100,
+                                    Math.max(
+                                      0,
+                                      ((notificationDays -
+                                        Math.min(daysUntil, notificationDays)) /
+                                        notificationDays) *
+                                        100
+                                    )
+                                  )}%`,
+                                  height: '100%',
+                                  bgcolor: getProgressBarColor(
+                                    daysUntil,
+                                    notificationDays
+                                  ),
+                                  transition: 'width 0.3s ease',
+                                }}
+                              />
+                            </Box>
+                          </Box>
+                          <Typography variant="caption" color="text.secondary">
+                            {daysUntil <= notificationDays
+                              ? `${Math.round(
+                                  ((notificationDays - daysUntil) /
+                                    notificationDays) *
+                                    100
+                                )}%`
+                              : t('Waiting...')}
+                          </Typography>
+                        </Box>
+                      </Box>
+                    )}
+                </Box>
+
+                <IconButton
+                  onClick={() => onEdit('vaccine', vaccine)}
+                  sx={{ ml: 1 }}
+                  size="small"
+                >
+                  <Iconify icon="mdi:pencil" />
+                </IconButton>
+              </Stack>
+            </CardContent>
+          </Card>
+        );
+      })}
     </Stack>
   );
 }
