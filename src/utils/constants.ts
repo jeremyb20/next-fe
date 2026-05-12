@@ -288,3 +288,40 @@ export const getSecurityLevelText = (percentage: number, t: (key: string) => str
   if (percentage >= 50) return t('Medium Security');
   return t('Low Security');
 };
+
+export const isUpcoming = (dateString: string) => {
+  const date = new Date(dateString);
+  const today = new Date();
+  const next30Days = new Date();
+  next30Days.setDate(today.getDate() + 30);
+  return date >= today && date <= next30Days;
+};
+
+export const isOverdue = (dateString: string) => new Date(dateString) < new Date();
+
+export const getDateColor = (dateString: string) => {
+  if (isOverdue(dateString)) return 'error.main';
+  if (isUpcoming(dateString)) return 'warning.main';
+  return 'inherit';
+};
+
+export const getDaysLabel = (days: number, t: (key: string, params?: Record<string, unknown>) => string) => {
+  if (days === 0) return t('Today');
+  if (days === 1) return t('Tomorrow');
+  return t('in {{days}} days', { days });
+};
+
+export const getDaysUntil = (dateString: string) => {
+  const date = new Date(dateString);
+  const today = new Date();
+  const diffTime = date.getTime() - today.getTime();
+  const diffDays = Math.ceil(diffTime / (1000 * 3600 * 24));
+  return diffDays;
+};
+
+
+export const getProgressBarColor = (days: number, notifDays: number) => {
+  if (days > notifDays) return 'info.main';
+  if (days <= 3) return 'error.main';
+  return 'warning.main';
+};

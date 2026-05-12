@@ -1,7 +1,17 @@
 // components/medical-records/vaccines-list.tsx
 import React from 'react';
 import Iconify from '@/components/iconify';
+import { formatDate } from '@/utils/format-time';
+import { useTranslation } from '@/hooks/use-translation';
 import { IVaccineFormData } from '@/interfaces/medical-record';
+import {
+  isOverdue,
+  isUpcoming,
+  getDateColor,
+  getDaysLabel,
+  getDaysUntil,
+  getProgressBarColor,
+} from '@/utils/constants';
 
 import {
   Box,
@@ -31,6 +41,7 @@ export default function VaccinesList({
   refetchTrigger,
   isLoading,
 }: VaccinesListProps) {
+  const { t } = useTranslation();
   if (isLoading) {
     return (
       <Card>
@@ -38,7 +49,7 @@ export default function VaccinesList({
           <Box textAlign="center" py={3}>
             <CircularProgress />
             <Typography variant="h6" color="text.secondary" sx={{ mt: 2 }}>
-              Cargando vacunas...
+              {t('Loading vaccines...')}
             </Typography>
           </Box>
         </CardContent>
@@ -46,56 +57,12 @@ export default function VaccinesList({
     );
   }
 
-  const formatDate = (dateString: string) =>
-    new Date(dateString).toLocaleDateString('es-ES', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-    });
-
-  const isUpcoming = (dateString: string) => {
-    const date = new Date(dateString);
-    const today = new Date();
-    const next30Days = new Date();
-    next30Days.setDate(today.getDate() + 30);
-    return date >= today && date <= next30Days;
-  };
-
-  const isOverdue = (dateString: string) => new Date(dateString) < new Date();
-
-  const getProgressBarColor = (days: number, notifDays: number) => {
-    if (days > notifDays) return 'info.main';
-    if (days <= 3) return 'error.main';
-    return 'warning.main';
-  };
-
-  const getNextVaccineDateColor = (dateString: string) => {
-    if (isOverdue(dateString)) return 'error.main';
-    if (isUpcoming(dateString)) return 'warning.main';
-    return 'inherit';
-  };
-
-  const getDaysLabel = (days: number) => {
-    if (days === 0) return 'Hoy';
-    if (days === 1) return 'Mañana';
-    return `en ${days} días`;
-  };
-
-  // Calcular días hasta la próxima vacuna
-  const getDaysUntil = (dateString: string) => {
-    const date = new Date(dateString);
-    const today = new Date();
-    const diffTime = date.getTime() - today.getTime();
-    const diffDays = Math.ceil(diffTime / (1000 * 3600 * 24));
-    return diffDays;
-  };
-
   // Verificar si la notificación está activa y próxima a enviarse
   const getNotificationStatus = (vaccine: IVaccineFormData) => {
     if (!vaccine.emailNotificationEnabled) {
       return {
         active: false,
-        message: 'Notificaciones desactivadas',
+        message: 'Notifications turned off',
         icon: 'mdi:bell-off-outline',
         color: 'default',
       };
@@ -107,7 +74,13 @@ export default function VaccinesList({
     if (daysUntil <= notificationDays && daysUntil >= 0) {
       return {
         active: true,
-        message: `Te notificaremos en ${daysUntil} días (configurado para ${notificationDays} días antes)`,
+        message: t(
+          `We'll notify you in {{daysUntil}} days (set to {{notificationDays}} days in advance)`,
+          {
+            daysUntil,
+            notificationDays,
+          }
+        ),
         icon: 'mdi:bell-ring-outline',
         color: 'warning',
       };
@@ -116,7 +89,7 @@ export default function VaccinesList({
     if (daysUntil < 0) {
       return {
         active: false,
-        message: 'Fecha vencida - las notificaciones están pausadas',
+        message: 'Overdue - notifications are paused',
         icon: 'mdi:bell-off-outline',
         color: 'error',
       };
@@ -124,7 +97,12 @@ export default function VaccinesList({
 
     return {
       active: true,
-      message: `Notificaciones activas - Te avisaremos ${notificationDays} días antes`,
+      message: t(
+        'Active notifications - Well notify you {{notificationDays}} days in advance',
+        {
+          notificationDays,
+        }
+      ),
       icon: 'mdi:bell-outline',
       color: 'info',
     };
@@ -141,10 +119,10 @@ export default function VaccinesList({
               sx={{ opacity: 0.5, mb: 2 }}
             />
             <Typography variant="h6" color="text.secondary">
-              No hay vacunas registradas
+              {t('There are no registered vaccines')}
             </Typography>
             <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
-              Comienza agregando la primera vacuna de tu mascota
+              {t('Start by adding your pets first vaccine')}
             </Typography>
           </Box>
         </CardContent>
@@ -193,7 +171,7 @@ export default function VaccinesList({
 
                     {isUpcoming(vaccine.nextVaccineDate) && (
                       <Chip
-                        label="PRÓXIMA"
+                        label={t('NEXT')}
                         size="small"
                         color="warning"
                         sx={{ fontWeight: 'bold' }}
@@ -202,7 +180,7 @@ export default function VaccinesList({
 
                     {isOverdue(vaccine.nextVaccineDate) && (
                       <Chip
-                        label="VENCIDA"
+                        label={t('EXPIRED')}
                         size="small"
                         color="error"
                         sx={{ fontWeight: 'bold' }}
@@ -210,15 +188,15 @@ export default function VaccinesList({
                     )}
 
                     {/* Badge de notificaciones */}
-                    <Tooltip title={notificationStatus.message}>
+                    <Tooltip title={t(notificationStatus.message)}>
                       <Chip
                         icon={
                           <Iconify icon={notificationStatus.icon} width={16} />
                         }
                         label={
                           vaccine.emailNotificationEnabled
-                            ? 'Notificaciones ON'
-                            : 'Notificaciones OFF'
+                            ? t('Notifications ON')
+                            : t('Notifications OFF')
                         }
                         size="small"
                         color={notificationStatus.color as any}
@@ -234,7 +212,10 @@ export default function VaccinesList({
                           icon={
                             <Iconify icon="mdi:calendar-clock" width={16} />
                           }
-                          label={`Alerta: ${notificationDays} días antes`}
+                          label={t(
+                            'Reminder: {{notificationDays}} days in advance',
+                            { notificationDays }
+                          )}
                           size="small"
                           variant="outlined"
                           color="info"
@@ -246,7 +227,7 @@ export default function VaccinesList({
                     <Stack direction="row" spacing={3} flexWrap="wrap" gap={2}>
                       <Box>
                         <Typography variant="caption" color="text.secondary">
-                          Fecha de aplicación:
+                          {t('Application date')}:
                         </Typography>
                         <Typography variant="body2">
                           {formatDate(vaccine.dateOfApplication)}
@@ -255,7 +236,7 @@ export default function VaccinesList({
 
                       <Box>
                         <Typography variant="caption" color="text.secondary">
-                          Próxima vacuna:
+                          {t('Next vaccine date')}:
                         </Typography>
                         <Typography
                           variant="body2"
@@ -265,9 +246,7 @@ export default function VaccinesList({
                               isOverdue(vaccine.nextVaccineDate)
                                 ? 'bold'
                                 : 'normal',
-                            color: getNextVaccineDateColor(
-                              vaccine.nextVaccineDate
-                            ),
+                            color: getDateColor(vaccine.nextVaccineDate),
                           }}
                         >
                           {formatDate(vaccine.nextVaccineDate)}
@@ -277,7 +256,7 @@ export default function VaccinesList({
                               variant="caption"
                               sx={{ ml: 1, color: 'text.secondary' }}
                             >
-                              ({getDaysLabel(daysUntil)})
+                              ({getDaysLabel(daysUntil, t)})
                             </Typography>
                           )}
                         </Typography>
@@ -291,12 +270,22 @@ export default function VaccinesList({
                               variant="caption"
                               color="text.secondary"
                             >
-                              📧 Próxima notificación:
+                              📧 {t('Next notification')}
                             </Typography>
                             <Typography variant="body2" color="info.main">
                               {daysUntil <= notificationDays && daysUntil >= 0
-                                ? `Se enviará pronto (faltan ${daysUntil} días)`
-                                : `${notificationDays} días antes del evento`}
+                                ? t(
+                                    'Will be sent soon (in {{daysUntil}} days)',
+                                    {
+                                      daysUntil,
+                                    }
+                                  )
+                                : t(
+                                    '{{notificationDays}} days before the event',
+                                    {
+                                      notificationDays,
+                                    }
+                                  )}
                             </Typography>
                           </Box>
                         )}
@@ -305,7 +294,7 @@ export default function VaccinesList({
                     {vaccine.observations && (
                       <Box>
                         <Typography variant="caption" color="text.secondary">
-                          Observaciones:
+                          {t('Remarks')}:
                         </Typography>
                         <Typography variant="body2">
                           {vaccine.observations}
@@ -322,7 +311,7 @@ export default function VaccinesList({
                           sx={{ display: 'flex', alignItems: 'center', gap: 1 }}
                         >
                           <Typography variant="caption" color="text.secondary">
-                            📅 Alerta programada:
+                            📅 {t('Scheduled alert')}:
                           </Typography>
                           <Box sx={{ flex: 1 }}>
                             <Box
@@ -347,7 +336,10 @@ export default function VaccinesList({
                                     )
                                   )}%`,
                                   height: '100%',
-                                  bgcolor: getProgressBarColor(daysUntil, notificationDays),
+                                  bgcolor: getProgressBarColor(
+                                    daysUntil,
+                                    notificationDays
+                                  ),
                                   transition: 'width 0.3s ease',
                                 }}
                               />
@@ -360,7 +352,7 @@ export default function VaccinesList({
                                     notificationDays) *
                                     100
                                 )}%`
-                              : 'Esperando...'}
+                              : t('Waiting...')}
                           </Typography>
                         </Box>
                       </Box>

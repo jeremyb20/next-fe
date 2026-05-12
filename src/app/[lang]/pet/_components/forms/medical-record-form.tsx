@@ -7,6 +7,7 @@ import { useRedirect } from '@/hooks/use-redirect';
 import { useSnackbar } from '@/components/snackbar';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useTranslation } from '@/hooks/use-translation';
 import { useManagerUser } from '@/hooks/use-manager-user';
 import { useCreateGenericMutation } from '@/hooks/user-generic-mutation';
 import { FormValues, MedicalRecordType } from '@/interfaces/medical-record';
@@ -91,13 +92,15 @@ const VISIT_REASONS = [
 const getFormTitle = (type: MedicalRecordType, isEdit: boolean) => {
   switch (type) {
     case 'vaccine':
-      return isEdit ? 'Editar Vacuna' : 'Registrar Vacuna';
+      return isEdit ? 'Edit Vaccine' : 'Register Vaccine';
     case 'deworming':
-      return isEdit ? 'Editar Desparasitación' : 'Registrar Desparasitación';
+      return isEdit ? 'Edit Deworming' : 'Register Deworming';
     case 'medical_visit':
-      return isEdit ? 'Editar Visita Médica' : 'Registrar Visita Médica';
+      return isEdit
+        ? 'Edit Medical Appointment'
+        : 'Register Medical Appointment';
     default:
-      return 'Registro Médico';
+      return 'Medical Record';
   }
 };
 
@@ -105,30 +108,30 @@ const getFieldLabels = (type: MedicalRecordType) => {
   switch (type) {
     case 'vaccine':
       return {
-        dateLabel: 'Fecha de aplicación',
-        nextDateLabel: 'Próxima vacuna',
-        nameLabel: 'Nombre de la vacuna',
+        dateLabel: 'Application date',
+        nextDateLabel: 'Next vaccine',
+        nameLabel: 'Vaccine name',
         nameOptions: COMMON_VACCINES,
       };
     case 'deworming':
       return {
-        dateLabel: 'Fecha de aplicación',
-        nextDateLabel: 'Próxima desparasitación',
-        nameLabel: 'Nombre del desparasitante',
+        dateLabel: 'Application date',
+        nextDateLabel: 'Next deworming',
+        nameLabel: 'Name of the deworming agent',
         nameOptions: COMMON_DEWORMERS,
       };
     case 'medical_visit':
       return {
-        dateLabel: 'Fecha de visita',
-        nextDateLabel: 'Próxima cita',
-        nameLabel: 'Motivo de la visita',
+        dateLabel: 'Date of visit',
+        nextDateLabel: 'Next date',
+        nameLabel: 'Reason for the visit',
         nameOptions: VISIT_REASONS,
       };
     default:
       return {
-        dateLabel: 'Fecha',
-        nextDateLabel: 'Próxima fecha',
-        nameLabel: 'Nombre',
+        dateLabel: 'Date',
+        nextDateLabel: 'Next date',
+        nameLabel: 'Name',
         nameOptions: [],
       };
   }
@@ -147,6 +150,7 @@ export default function MedicalRecordForm({
   const { mutateAsync } = useCreateGenericMutation();
   const { user } = useManagerUser();
   const { redirect } = useRedirect();
+  const { t } = useTranslation();
   // Verificar si el email está verificado
   const isEmailVerified = user?.security?.isEmailVerified || false;
 
@@ -156,8 +160,8 @@ export default function MedicalRecordForm({
       // Campos de notificaciones
       emailNotificationEnabled: Yup.boolean().optional(),
       notificationDaysBefore: Yup.number()
-        .min(1, 'Mínimo 1 día de anticipación')
-        .max(30, 'Máximo 30 días de anticipación')
+        .min(1, t('At least 1 day in advance'))
+        .max(30, t('No more than 30 days in advance'))
         .optional(),
     };
 
@@ -165,13 +169,15 @@ export default function MedicalRecordForm({
       case 'vaccine':
         return Yup.object().shape({
           dateOfApplication: Yup.string().required(
-            'Fecha de aplicación es requerida'
+            t('Application date is required')
           ),
           nextVaccineDate: Yup.string()
-            .required('Próxima fecha de vacuna es requerida')
+            .required(t('Next vaccination appointment required'))
             .test(
               'is-future',
-              'La próxima vacuna debe ser una fecha futura',
+              t(
+                'The next vaccine should be available at some point in the future'
+              ),
               (value) => {
                 if (!value) return true;
                 const today = new Date();
@@ -181,22 +187,20 @@ export default function MedicalRecordForm({
                 return nextDate > today;
               }
             ),
-          vaccineName: Yup.string().required(
-            'Nombre de la vacuna es requerido'
-          ),
+          vaccineName: Yup.string().required(t('The vaccine name is required')),
           ...baseSchema,
         });
 
       case 'deworming':
         return Yup.object().shape({
           dateOfApplication: Yup.string().required(
-            'Fecha de aplicación es requerida'
+            t('Application date is required')
           ),
           nextDewormingDate: Yup.string()
-            .required('Próxima fecha de desparasitación es requerida')
+            .required(t('The next deworming appointment is required'))
             .test(
               'is-future',
-              'La próxima desparasitación debe ser una fecha futura',
+              'The next deworming should be scheduled for a future date',
               (value) => {
                 if (!value) return true;
                 const today = new Date();
@@ -207,7 +211,7 @@ export default function MedicalRecordForm({
               }
             ),
           dewormerName: Yup.string().required(
-            'Nombre del desparasitante es requerido'
+            t('The name of the deworming medication is required')
           ),
           ...baseSchema,
         });
@@ -215,10 +219,10 @@ export default function MedicalRecordForm({
       case 'medical_visit':
         return Yup.object().shape({
           visitDate: Yup.string()
-            .required('Fecha de visita es requerida')
+            .required(t('Date of visit is required'))
             .test(
               'is-future',
-              'La fecha de visita debe ser futura',
+              t('The visit date must be in the future'),
               (value) => {
                 if (!value) return true;
                 const today = new Date();
@@ -229,10 +233,10 @@ export default function MedicalRecordForm({
               }
             ),
           reasonForVisit: Yup.string().required(
-            'Motivo de la visita es requerido'
+            t('The reason for the visit is required')
           ),
           veterinarianName: Yup.string().required(
-            'Nombre del veterinario es requerido'
+            t('The veterinarians name is required')
           ),
           ...baseSchema,
         });
@@ -348,11 +352,13 @@ export default function MedicalRecordForm({
     if (!isEmailVerified && emailNotificationEnabled) {
       setValue('emailNotificationEnabled', false);
       enqueueSnackbar(
-        'Debes verificar tu correo electrónico para activar las notificaciones',
+        t(
+          'Debes verificar tu correo electrónico para activar las notificaciones'
+        ),
         { variant: 'warning' }
       );
     }
-  }, [isEmailVerified, emailNotificationEnabled, setValue, enqueueSnackbar]);
+  }, [isEmailVerified, emailNotificationEnabled, setValue, enqueueSnackbar, t]);
 
   useEffect(() => {
     if (open) {
@@ -367,18 +373,14 @@ export default function MedicalRecordForm({
     if (!isEmailVerified && data.emailNotificationEnabled) {
       data.emailNotificationEnabled = false;
       enqueueSnackbar(
-        'Las notificaciones han sido desactivadas porque tu correo no está verificado',
+        t(
+          'Las notificaciones han sido desactivadas porque tu correo no está verificado'
+        ),
         { variant: 'warning' }
       );
     }
 
     try {
-      console.log('Datos del registro médico:', {
-        petId,
-        type,
-        data,
-      });
-
       const payloadData = {
         data,
         petId,
@@ -396,8 +398,8 @@ export default function MedicalRecordForm({
 
       enqueueSnackbar(
         currentRecord
-          ? 'Registro actualizado exitosamente'
-          : 'Registro creado exitosamente',
+          ? t('Registro actualizado exitosamente')
+          : t('Registro creado exitosamente'),
         { variant: 'success' }
       );
 
@@ -406,7 +408,7 @@ export default function MedicalRecordForm({
       reset();
     } catch (error) {
       console.error(error);
-      enqueueSnackbar('Error al guardar el registro', { variant: 'error' });
+      enqueueSnackbar(t('Error saving the record'), { variant: 'error' });
     }
   });
 
@@ -418,9 +420,9 @@ export default function MedicalRecordForm({
   const isEditMode = Boolean(currentRecord);
 
   const getNotificationLabel = (enabled: boolean, emailVerified: boolean) => {
-    if (enabled && emailVerified) return '🔔 Notificaciones activadas';
-    if (!emailVerified) return '🔒 Verifica tu email para activar';
-    return '🔕 Notificaciones desactivadas';
+    if (enabled && emailVerified) return `🔔 ${t('Notifications enabled')}`;
+    if (!emailVerified) return `🔒 ${t('Check your email to activate')}`;
+    return `🔕 ${t('Notifications turned off')}`;
   };
 
   const getTargetDate = () => {
@@ -459,7 +461,7 @@ export default function MedicalRecordForm({
       }}
     >
       <FormProvider methods={methods} onSubmit={onSubmit}>
-        <DialogTitle>{getFormTitle(type, isEditMode)}</DialogTitle>
+        <DialogTitle>{t(getFormTitle(type, isEditMode))}</DialogTitle>
 
         <DialogContent>
           <Box
@@ -544,21 +546,21 @@ export default function MedicalRecordForm({
             {type === 'medical_visit' && (
               <RHFTextField
                 name="veterinarianName"
-                label="Nombre del veterinario"
+                label={t('Veterinarians name')}
                 fullWidth
               />
             )}
 
             <RHFTextField
               name="observations"
-              label="Observaciones"
+              label={t('Observations')}
               multiline
               rows={3}
               fullWidth
             />
 
             <Divider sx={{ my: 1 }}>
-              <Chip label="Configuración de Notificaciones" size="small" />
+              <Chip label={t('Notification Settings')} size="small" />
             </Divider>
 
             <Box
@@ -575,7 +577,7 @@ export default function MedicalRecordForm({
                 gutterBottom
                 sx={{ display: 'flex', alignItems: 'center', gap: 1 }}
               >
-                📧 Notificaciones por correo electrónico
+                📧 {t('Email notifications')}
               </Typography>
 
               <Typography
@@ -584,28 +586,28 @@ export default function MedicalRecordForm({
                 display="block"
                 sx={{ mb: 2 }}
               >
-                Recibe recordatorios cuando esta fecha esté próxima a vencer
+                {t('Get reminders when this date is approaching')}
               </Typography>
 
               {/* Alerta si el email no está verificado */}
               {!isEmailVerified && (
                 <Alert severity="warning" sx={{ mb: 2 }}>
                   <Typography variant="body2" fontWeight="bold">
-                    ⚠️ Correo electrónico no verificado
+                    ⚠️ {t('Email address not verified')}
                   </Typography>
                   <Typography variant="caption">
-                    Para activar las notificaciones por email, primero debes
-                    verificar tu dirección de correo electrónico. Por favor,
-                    revisa tu bandeja de entrada y sigue las instrucciones del
-                    correo de verificación.
+                    {t(
+                      'To enable email notifications, you must first verify your email address. Please check your inbox and follow the instructions in the verification email.'
+                    )}
                   </Typography>
                   <Button
                     variant="outlined"
+                    sx={{ ml: 1 }}
                     onClick={() =>
                       redirect(`${paths.dashboard.user.account}?tab=security`)
                     }
                   >
-                    Verificar correo
+                    {t('Verify email')}
                   </Button>
                 </Alert>
               )}
@@ -621,7 +623,9 @@ export default function MedicalRecordForm({
                         onChange={(e) => {
                           if (!isEmailVerified) {
                             enqueueSnackbar(
-                              'Debes verificar tu correo electrónico para activar las notificaciones',
+                              t(
+                                'You need to check your email to enable notifications'
+                              ),
                               { variant: 'warning' }
                             );
                             return;
@@ -639,12 +643,12 @@ export default function MedicalRecordForm({
                         </Typography>
                         {field.value && isEmailVerified && (
                           <Typography variant="caption" color="success.main">
-                            Recibirás recordatorios por email
+                            {t('You will receive email reminders')}
                           </Typography>
                         )}
                         {!isEmailVerified && (
                           <Typography variant="caption" color="warning.main">
-                            Necesitas verificar tu correo electrónico
+                            {t('You need to verify your email address')}
                           </Typography>
                         )}
                       </Box>
@@ -657,7 +661,7 @@ export default function MedicalRecordForm({
               {emailNotificationEnabled && isEmailVerified && (
                 <Box sx={{ mt: 2, pl: 2, pr: 2 }}>
                   <Typography gutterBottom variant="body2">
-                    ⏰ Días de anticipación para notificar
+                    ⏰ {t('Number of days notice required')}
                   </Typography>
 
                   <Controller
@@ -686,8 +690,12 @@ export default function MedicalRecordForm({
                           display="block"
                           sx={{ mb: 2 }}
                         >
-                          Recibirás una notificación {field.value || 7} días
-                          antes de la fecha programada
+                          {t(
+                            'You will be notified {{days}} days before the scheduled date',
+                            {
+                              days: field.value || 7,
+                            }
+                          )}
                         </Typography>
                       </>
                     )}
@@ -696,20 +704,20 @@ export default function MedicalRecordForm({
                   {targetDate && estimatedNotificationDate && (
                     <Alert severity="info" sx={{ mt: 2 }}>
                       <Typography variant="subtitle2">
-                        📅 Resumen de notificaciones:
+                        📅 {t('Notification summary:')}
                       </Typography>
                       <Typography variant="body2">
-                        • Fecha del evento:{' '}
+                        • {t('Event date:')}:{' '}
                         <strong>
                           {new Date(targetDate).toLocaleDateString('es-CR')}
                         </strong>
-                        <br />• Te notificaremos:{' '}
+                        <br />• {t('We will notify you:')}{' '}
                         <strong>
                           {estimatedNotificationDate.toLocaleDateString(
                             'es-CR'
                           )}
                         </strong>
-                        <br />• Frecuencia: Cada 3 días hasta el evento
+                        <br />• {t('Frequency: Every 3 days until the event')}
                       </Typography>
                     </Alert>
                   )}
@@ -717,23 +725,29 @@ export default function MedicalRecordForm({
                   {!targetDate && (
                     <Alert severity="warning" sx={{ mt: 2 }}>
                       <Typography variant="body2">
-                        ⚠️ Completa la fecha del evento para ver el resumen de
-                        notificaciones
+                        ⚠️{' '}
+                        {t(
+                          'Enter the event date to view the notification summary'
+                        )}
                       </Typography>
                     </Alert>
                   )}
 
                   <Alert severity="info" sx={{ mt: 2 }}>
                     <Typography variant="caption" display="block">
-                      💡 <strong>¿Cómo funciona?</strong>
-                      <br />
-                      • Recibirás un correo de recordatorio según los días
-                      configurados
-                      <br />
-                      • Si no se realiza la acción, recibirás recordatorios cada
-                      3 días
-                      <br />• Puedes desactivar esta opción en cualquier momento
-                      editando el registro
+                      💡 <strong>{t('How does it work?')}</strong>
+                      <br />•{' '}
+                      {t(
+                        'You will receive a reminder email based on the days you have set'
+                      )}
+                      <br />•{' '}
+                      {t(
+                        'The system will send reminders every 3 days until the event date'
+                      )}
+                      <br />•{' '}
+                      {t(
+                        'You can modify these settings at any time in your profile'
+                      )}
                     </Typography>
                   </Alert>
                 </Box>
@@ -743,12 +757,21 @@ export default function MedicalRecordForm({
               {currentRecord?.emailNotificationEnabled && !isEmailVerified && (
                 <Alert severity="error" sx={{ mt: 2 }}>
                   <Typography variant="body2">
-                    ⚠️ Las notificaciones han sido desactivadas automáticamente
+                    ⚠️ {t('Notifications have been automatically turned off')}
                   </Typography>
                   <Typography variant="caption">
-                    Tu correo electrónico no está verificado. Por favor,
-                    verifica tu email para volver a activar las notificaciones.
+                    {t(
+                      'Your email address has not been verified. Please verify your email address to reactivate notifications.'
+                    )}
                   </Typography>
+                  <Button
+                    variant="outlined"
+                    onClick={() =>
+                      redirect(`${paths.dashboard.user.account}?tab=security`)
+                    }
+                  >
+                    {t('Verify email')}
+                  </Button>
                 </Alert>
               )}
             </Box>
@@ -765,7 +788,7 @@ export default function MedicalRecordForm({
             variant="contained"
             loading={isSubmitting}
           >
-            {currentRecord ? 'Actualizar' : 'Crear'}
+            {t(currentRecord ? 'Update' : 'Create')}
           </LoadingButton>
         </DialogActions>
       </FormProvider>

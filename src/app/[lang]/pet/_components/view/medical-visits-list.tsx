@@ -1,7 +1,17 @@
 // components/medical-records/medical-visits-list.tsx
 import React from 'react';
 import Iconify from '@/components/iconify';
+import { formatDate } from '@/utils/format-time';
+import { useTranslation } from '@/hooks/use-translation';
 import { IMedicalVisitFormData } from '@/interfaces/medical-record';
+import {
+  isOverdue,
+  isUpcoming,
+  getDaysLabel,
+  getDaysUntil,
+  getDateColor,
+  getProgressBarColor,
+} from '@/utils/constants';
 
 import {
   Box,
@@ -49,6 +59,8 @@ export default function MedicalVisitsList({
   refetchTrigger,
   isLoading,
 }: MedicalVisitsListProps) {
+  const { t } = useTranslation();
+
   if (isLoading) {
     return (
       <Card>
@@ -56,7 +68,7 @@ export default function MedicalVisitsList({
           <Box textAlign="center" py={3}>
             <CircularProgress />
             <Typography variant="h6" color="text.secondary" sx={{ mt: 2 }}>
-              Cargando visitas médicas...
+              {t('Loading medical appointments...')}
             </Typography>
           </Box>
         </CardContent>
@@ -64,54 +76,11 @@ export default function MedicalVisitsList({
     );
   }
 
-  const formatDate = (dateString: string) =>
-    new Date(dateString).toLocaleDateString('es-ES', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-    });
-
-  const isUpcoming = (dateString: string) => {
-    const date = new Date(dateString);
-    const today = new Date();
-    const next30Days = new Date();
-    next30Days.setDate(today.getDate() + 30);
-    return date >= today && date <= next30Days;
-  };
-
-  const isOverdue = (dateString: string) => new Date(dateString) < new Date();
-
-  const getProgressBarColor = (days: number, notifDays: number) => {
-    if (days > notifDays) return 'info.main';
-    if (days <= 3) return 'error.main';
-    return 'warning.main';
-  };
-
-  const getVisitDateColor = (dateString: string) => {
-    if (isOverdue(dateString)) return 'error.main';
-    if (isUpcoming(dateString)) return 'warning.main';
-    return 'inherit';
-  };
-
-  const getDaysLabel = (days: number) => {
-    if (days === 0) return 'Hoy';
-    if (days === 1) return 'Mañana';
-    return `en ${days} días`;
-  };
-
-  const getDaysUntil = (dateString: string) => {
-    const date = new Date(dateString);
-    const today = new Date();
-    const diffTime = date.getTime() - today.getTime();
-    const diffDays = Math.ceil(diffTime / (1000 * 3600 * 24));
-    return diffDays;
-  };
-
   const getNotificationStatus = (visit: IMedicalVisitFormData) => {
     if (!visit.emailNotificationEnabled) {
       return {
         active: false,
-        message: 'Notificaciones desactivadas',
+        message: 'Notifications turned off',
         icon: 'mdi:bell-off-outline',
         color: 'default',
       };
@@ -123,7 +92,13 @@ export default function MedicalVisitsList({
     if (daysUntil <= notificationDays && daysUntil >= 0) {
       return {
         active: true,
-        message: `Te notificaremos en ${daysUntil} días (configurado para ${notificationDays} días antes)`,
+        message: t(
+          `We'll notify you in {{daysUntil}} days (set to {{notificationDays}} days in advance)`,
+          {
+            daysUntil,
+            notificationDays,
+          }
+        ),
         icon: 'mdi:bell-ring-outline',
         color: 'warning',
       };
@@ -132,7 +107,7 @@ export default function MedicalVisitsList({
     if (daysUntil < 0) {
       return {
         active: false,
-        message: 'Fecha vencida - las notificaciones están pausadas',
+        message: 'Overdue - notifications are paused',
         icon: 'mdi:bell-off-outline',
         color: 'error',
       };
@@ -140,7 +115,12 @@ export default function MedicalVisitsList({
 
     return {
       active: true,
-      message: `Notificaciones activas - Te avisaremos ${notificationDays} días antes`,
+      message: t(
+        'Active notifications - Well notify you {{notificationDays}} days in advance',
+        {
+          notificationDays,
+        }
+      ),
       icon: 'mdi:bell-outline',
       color: 'info',
     };
@@ -157,10 +137,10 @@ export default function MedicalVisitsList({
               sx={{ opacity: 0.5, mb: 2 }}
             />
             <Typography variant="h6" color="text.secondary">
-              No hay visitas médicas registradas
+              {t('There are no medical appointments on record')}
             </Typography>
             <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
-              Comienza agregando la primera visita médica de tu mascota
+              {t('Start by adding your pets first vet visit')}
             </Typography>
           </Box>
         </CardContent>
@@ -209,7 +189,7 @@ export default function MedicalVisitsList({
 
                     {isUpcoming(visit.visitDate) && (
                       <Chip
-                        label="PRÓXIMA"
+                        label={t('NEXT')}
                         size="small"
                         color="warning"
                         sx={{ fontWeight: 'bold' }}
@@ -218,22 +198,22 @@ export default function MedicalVisitsList({
 
                     {isOverdue(visit.visitDate) && (
                       <Chip
-                        label="VENCIDA"
+                        label={t('EXPIRED')}
                         size="small"
                         color="error"
                         sx={{ fontWeight: 'bold' }}
                       />
                     )}
 
-                    <Tooltip title={notificationStatus.message}>
+                    <Tooltip title={t(notificationStatus.message)}>
                       <Chip
                         icon={
                           <Iconify icon={notificationStatus.icon} width={16} />
                         }
                         label={
                           visit.emailNotificationEnabled
-                            ? 'Notificaciones ON'
-                            : 'Notificaciones OFF'
+                            ? t('Notifications ON')
+                            : t('Notifications OFF')
                         }
                         size="small"
                         color={notificationStatus.color as any}
@@ -248,7 +228,10 @@ export default function MedicalVisitsList({
                           icon={
                             <Iconify icon="mdi:calendar-clock" width={16} />
                           }
-                          label={`Alerta: ${notificationDays} días antes`}
+                          label={t(
+                            'Reminder: {{notificationDays}} days in advance',
+                            { notificationDays }
+                          )}
                           size="small"
                           variant="outlined"
                           color="info"
@@ -270,7 +253,7 @@ export default function MedicalVisitsList({
                               isOverdue(visit.visitDate)
                                 ? 'bold'
                                 : 'normal',
-                            color: getVisitDateColor(visit.visitDate),
+                            color: getDateColor(visit.visitDate),
                           }}
                         >
                           {formatDate(visit.visitDate)}
@@ -280,7 +263,7 @@ export default function MedicalVisitsList({
                               variant="caption"
                               sx={{ ml: 1, color: 'text.secondary' }}
                             >
-                              ({getDaysLabel(daysUntil)})
+                              ({getDaysLabel(daysUntil, t)})
                             </Typography>
                           )}
                         </Typography>
@@ -288,7 +271,7 @@ export default function MedicalVisitsList({
 
                       <Box>
                         <Typography variant="caption" color="text.secondary">
-                          Veterinario:
+                          {t('Veterinarian Name')}:
                         </Typography>
                         <Typography variant="body2">
                           {visit.veterinarianName}
@@ -302,12 +285,22 @@ export default function MedicalVisitsList({
                               variant="caption"
                               color="text.secondary"
                             >
-                              📧 Próxima notificación:
+                              📧 {t('Next notification')}
                             </Typography>
                             <Typography variant="body2" color="info.main">
                               {daysUntil <= notificationDays && daysUntil >= 0
-                                ? `Se enviará pronto (faltan ${daysUntil} días)`
-                                : `${notificationDays} días antes del evento`}
+                                ? t(
+                                    'Will be sent soon (in {{daysUntil}} days)',
+                                    {
+                                      daysUntil,
+                                    }
+                                  )
+                                : t(
+                                    '{{notificationDays}} days before the event',
+                                    {
+                                      notificationDays,
+                                    }
+                                  )}
                             </Typography>
                           </Box>
                         )}
@@ -316,7 +309,7 @@ export default function MedicalVisitsList({
                     {visit.observations && (
                       <Box>
                         <Typography variant="caption" color="text.secondary">
-                          Observaciones:
+                          {t('Remarks')}:
                         </Typography>
                         <Typography variant="body2">
                           {visit.observations}
@@ -332,7 +325,7 @@ export default function MedicalVisitsList({
                           sx={{ display: 'flex', alignItems: 'center', gap: 1 }}
                         >
                           <Typography variant="caption" color="text.secondary">
-                            📅 Alerta programada:
+                            📅 {t('Scheduled alert')}:
                           </Typography>
                           <Box sx={{ flex: 1 }}>
                             <Box
@@ -373,7 +366,7 @@ export default function MedicalVisitsList({
                                     notificationDays) *
                                     100
                                 )}%`
-                              : 'Esperando...'}
+                              : t('Waiting...')}
                           </Typography>
                         </Box>
                       </Box>
