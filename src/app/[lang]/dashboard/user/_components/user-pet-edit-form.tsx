@@ -714,7 +714,7 @@ export default function PetEditForm({ petId }: Props) {
             src={
               currentPet.petStatus === 'deceased'
                 ? '/assets/images/ribbon.png'
-                : `/assets/images/paw-${detectedSpecies}.png`
+                : `/assets/images/paw-${detectedSpecies || 'dog'}.png`
             }
             alt="Decorative"
             sx={{

@@ -720,5 +720,17 @@
   "No deworming treatments have been recorded": "没有驱虫记录",
   "Start by scheduling your pets first deworming": "从安排您宠物的第一次驱虫开始",
   "There are no medical appointments on record": "没有医疗预约记录",
-  "Start by adding your pets first vet visit": "从添加您宠物的第一次兽医就诊开始"
+  "Start by adding your pets first vet visit": "从添加您宠物的第一次兽医就诊开始",
+  "View offer": "查看优惠",
+  "No upcoming birthdays": "没有即将到来的生日",
+  "Upcoming Birthdays in the next 30 days": "未来30天内的生日",
+  "Stadistics": "统计",
+  "🎉 It's {{name}}'s birthday today!": "🎉 今天是 {{name}} 的生日！",
+  "Don't forget to celebrate! 🎂": "别忘了庆祝！🎂",
+  "Birthday Reminder": "生日提醒",
+  "Tomorrow is {{name}}'s birthday! 🎈": "明天是 {{name}} 的生日！🎈",
+  "In {{days}} days - {{date}}": "{{days}}天后 - {{date}}",
+  "Upcoming Birthday": "即将到来的生日",
+  "Birthday": "生日",
+  "Birthday: {{date}}": "生日：{{date}}"
 }

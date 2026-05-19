@@ -12,14 +12,15 @@ import { RouterLink } from '@/routes/components';
 import axios, { endpoints } from '@/utils/axios';
 import { useRedirect } from '@/hooks/use-redirect';
 import { useSnackbar } from '@/components/snackbar';
+import { formatPetAge } from '@/utils/pet-age.utils';
 import { useQueryClient } from '@tanstack/react-query';
 import { useTranslation } from '@/hooks/use-translation';
 import { useManagerUser } from '@/hooks/use-manager-user';
 import { useSettingsContext } from '@/components/settings';
-import { calculateAnimalAge } from '@/utils/pet-age-calculator';
 import { BreedOptions, GENDER_OPTIONS } from '@/utils/constants';
 import React, { useRef, useMemo, useState, useEffect } from 'react';
 import SplashScreen from '@/components/loading-screen/splash-screen';
+import { usePetAgeCalculator } from '@/hooks/use-pet-age-calculator';
 import { DOMAIN, EMAIL_SUPPORT, PHONE_SUPPORT } from '@/config-global';
 import ShareDrawerDialog from '@/components/share/share-drawer-dialog';
 import { PetAvatarWithBadge } from '@/components/badge/PetAvatarWithBage';
@@ -68,7 +69,7 @@ export default function PetProfileViewComponent({
 }: Props) {
   const { enqueueSnackbar } = useSnackbar();
   const queryClient = useQueryClient();
-
+  const { ageResult, calculateAge } = usePetAgeCalculator();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const [shareOpen, setShareOpen] = useState(false);
@@ -184,6 +185,12 @@ export default function PetProfileViewComponent({
   const canShowLocationConsent =
     petProfile?.permissions?.showLocationConsent ?? true;
 
+  useEffect(() => {
+    if (petProfile?.birthDate) {
+      calculateAge(petProfile.birthDate, petProfile.breed);
+    }
+  }, [petProfile?.birthDate, petProfile?.breed, calculateAge]);
+
   // Efecto para manejar el consentimiento de ubicación
   useEffect(() => {
     if (!requireLocationConsent) return;
@@ -261,6 +268,10 @@ export default function PetProfileViewComponent({
     locationConsent === 'accepted' || !requireLocationConsent;
 
   const deceasedNote = petProfile.petStatus === 'deceased';
+
+  const formattedAge = ageResult
+    ? formatPetAge(ageResult, 'detailed', t)
+    : 'Not available';
 
   return (
     <>
@@ -368,7 +379,7 @@ export default function PetProfileViewComponent({
                           {petProfile.petName}
                         </Typography>
                         <Chip
-                          label={petProfile.petStatus}
+                          label={t(petProfile.petStatus)}
                           size="small"
                           sx={{ textTransform: 'capitalize', fontWeight: 100 }}
                           color={
@@ -576,7 +587,7 @@ export default function PetProfileViewComponent({
                   <Divider sx={{ borderStyle: 'dashed', my: 3 }} />
 
                   {/* Información básica de la mascota */}
-                  <Box sx={{ pt: 2, pb: 3, px: 3 }}>
+                  <Box sx={{ pt: 2, pb: 3, px: 0 }}>
                     <Typography variant="h6" sx={{ mb: 3, fontWeight: 600 }}>
                       {t('Basic Information')}
                     </Typography>
@@ -767,7 +778,7 @@ export default function PetProfileViewComponent({
                                   {/* {age.years} {t('years')}{' '}
                                   {age.months > 0 &&
                                     `${age.months} ${t('months')}`} */}
-                                  {calculateAnimalAge(petProfile.birthDate)}
+                                  {formattedAge}
                                 </Typography>
                               </Box>
                             </Box>

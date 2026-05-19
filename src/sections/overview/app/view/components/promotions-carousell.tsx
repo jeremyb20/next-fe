@@ -118,7 +118,7 @@ function CarouselItem({
     urlImage,
     type,
     customIMG,
-    buttonTextRedirect = 'View Offer',
+    buttonTextRedirect = 'View details',
   } = promotion;
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
@@ -181,14 +181,23 @@ function CarouselItem({
             py: { xs: 2, md: 4 },
           }}
         >
-          <Stack
-            spacing={isMobile ? 1 : 2}
-            sx={{
-              width: { xs: '100%', md: '75%' },
-              maxWidth: 520,
-              color: 'common.white',
-            }}
-          >
+          <Stack direction="row" justifyContent="space-between">
+            {type && (
+              <m.div variants={varFade().inUp}>
+                <Typography
+                  variant="caption"
+                  sx={{
+                    fontWeight: 600,
+                    letterSpacing: 1,
+                    color: alpha(theme.palette.common.white, 0.7),
+                    fontSize: '0.7rem',
+                  }}
+                >
+                  {type.toUpperCase()}
+                </Typography>
+              </m.div>
+            )}
+
             <m.div variants={varFade().inUp}>
               <Chip
                 label={`${discount}% OFF`}
@@ -206,23 +215,15 @@ function CarouselItem({
                 }}
               />
             </m.div>
-
-            {type && (
-              <m.div variants={varFade().inUp}>
-                <Typography
-                  variant="caption"
-                  sx={{
-                    fontWeight: 600,
-                    letterSpacing: 1,
-                    color: alpha(theme.palette.common.white, 0.7),
-                    fontSize: '0.7rem',
-                  }}
-                >
-                  {type.toUpperCase()}
-                </Typography>
-              </m.div>
-            )}
-
+          </Stack>
+          <Stack
+            spacing={isMobile ? 1 : 2}
+            sx={{
+              width: { xs: '100%', md: '75%' },
+              maxWidth: 520,
+              color: 'common.white',
+            }}
+          >
             <m.div variants={varFade().inUp}>
               <Typography
                 fontWeight={800}
@@ -303,7 +304,7 @@ function CarouselItem({
                 onClick={() => onViewOffer?.(promotion)}
                 endIcon={<Iconify icon="mdi:arrow-right" width={14} />}
               >
-                {t(buttonTextRedirect) || t('View offer')}
+                {t(buttonTextRedirect) || t('View details')}
               </Button>
             </Stack>
           </m.div>

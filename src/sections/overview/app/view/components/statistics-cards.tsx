@@ -127,7 +127,7 @@ export const StatisticsCards = ({
     );
   }
   return (
-    <Box sx={{ mb: 3 }}>
+    <Box>
       <Grid container spacing={2}>
         {allStats.map((stat) => (
           <Grid item xs={6} sm={6} md={4} key={stat.id}>
@@ -143,6 +143,7 @@ export const StatisticsCards = ({
                 cursor: 'pointer',
                 border: '1px solid',
                 borderColor: 'divider',
+                bgcolor: 'background.neutral',
               }}
             >
               <CardContent

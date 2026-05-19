@@ -1,4 +1,5 @@
 import axiosInstance, { endpoints } from '@/utils/axios';
+import { IUserCalendarResponse } from '@/types/calendar';
 import { DeviceSuscriptions } from '@/types/service-worker';
 import { useQuery, keepPreviousData } from '@tanstack/react-query';
 import {
@@ -232,5 +233,18 @@ export const useGetSubscriptionDevices = () => {
     }
   );
 };
+
+export const useGetCalendarEvents = (userId: string | undefined) => {
+  const { authenticated } = useAuthContext();
+  return useFetch<Partial<IUserCalendarResponse>>(
+    'useGetSubscriptionDevices',
+    `${endpoints.calendarEvents.getAllMedicalAppointmentsByUser}/${userId}`,
+    {
+      staleTime: 5 * 60 * 1000,
+      retry: 2,
+      enabled: authenticated,
+    }
+  );
+}
 
 

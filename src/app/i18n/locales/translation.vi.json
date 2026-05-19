@@ -720,5 +720,17 @@
   "No deworming treatments have been recorded": "Chưa có lần tẩy giun nào được ghi nhận",
   "Start by scheduling your pets first deworming": "Bắt đầu bằng cách lên lịch tẩy giun đầu tiên cho thú cưng của bạn",
   "There are no medical appointments on record": "Không có lịch khám nào trong hồ sơ",
-  "Start by adding your pets first vet visit": "Bắt đầu bằng cách thêm lần khám thú y đầu tiên cho thú cưng của bạn"
+  "Start by adding your pets first vet visit": "Bắt đầu bằng cách thêm lần khám thú y đầu tiên cho thú cưng của bạn",
+  "View offer": "Xem ưu đãi",
+  "No upcoming birthdays": "Không có sinh nhật sắp tới",
+  "Upcoming Birthdays in the next 30 days": "Sinh nhật sắp tới trong 30 ngày tới",
+  "Stadistics": "Thống kê",
+  "🎉 It's {{name}}'s birthday today!": "🎉 Hôm nay là sinh nhật của {{name}}!",
+  "Don't forget to celebrate! 🎂": "Đừng quên chúc mừng nhé! 🎂",
+  "Birthday Reminder": "Nhắc nhở sinh nhật",
+  "Tomorrow is {{name}}'s birthday! 🎈": "Ngày mai là sinh nhật của {{name}}! 🎈",
+  "In {{days}} days - {{date}}": "Trong {{days}} ngày nữa - {{date}}",
+  "Upcoming Birthday": "Sinh nhật sắp tới",
+  "Birthday": "Sinh nhật",
+  "Birthday: {{date}}": "Sinh nhật: {{date}}"
 }

@@ -1,4 +1,4 @@
-import { CalendarView } from '@/sections/calendar/view';
+import { MedicalPetCalendarView } from '@/sections/medical-pet-calendar/view';
 
 // ----------------------------------------------------------------------
 
@@ -7,5 +7,5 @@ export const metadata = {
 };
 
 export default function CalendarPage() {
-  return <CalendarView />;
+  return <MedicalPetCalendarView />;
 }

@@ -5,11 +5,13 @@ import { paths } from '@/routes/paths';
 import { useRouter } from '@/routes/hooks';
 import { useState, useCallback } from 'react';
 import { useBoolean } from '@/hooks/use-boolean';
+import { useRedirect } from '@/hooks/use-redirect';
 import { useSnackbar } from '@/components/snackbar';
 import { useGetUserPetStats } from '@/hooks/use-fetch';
 import { useTranslation } from '@/hooks/use-translation';
 import { ALLOW_MAX_PETS_BY_USER } from '@/config-global';
 import { useManagerUser } from '@/hooks/use-manager-user';
+import { BirthdayReminder } from '@/components/pet/BirthdayReminder';
 import UserSecurityLevel from '@/components/security/user-security-level';
 import RegisterPetByUserModal from '@/app/[lang]/pet/_components/modals/register-pet-by-user-modal';
 import {
@@ -24,6 +26,7 @@ import {
   Grid,
   Alert,
   Paper,
+  alpha,
   Avatar,
   useTheme,
   Container,
@@ -46,6 +49,7 @@ export default function OverviewAppUser() {
   const router = useRouter();
   const registerPetModal = useBoolean();
   const { enqueueSnackbar } = useSnackbar();
+  const { redirect } = useRedirect();
 
   const [activeFilters] = useState<Partial<UserQueryParams>>({
     page: 1,
@@ -175,6 +179,86 @@ export default function OverviewAppUser() {
               }
             />
           </Grid>
+          <Grid item xs={12}>
+            <Card>
+              <CardContent>
+                <Typography
+                  variant="subtitle1"
+                  fontWeight={600}
+                  sx={{ mb: 1.5 }}
+                >
+                  🎂 {t('Upcoming Birthdays in the next 30 days')}
+                </Typography>
+                {statsData?.upcomingBirthdaysNext30Days &&
+                statsData.upcomingBirthdaysNext30Days.length > 0 ? (
+                  <Box
+                    sx={{
+                      maxHeight: 400, // Altura máxima del contenedor
+                      overflowY: 'auto', // Scroll vertical
+                      overflowX: 'hidden', // Ocultar scroll horizontal
+                      pr: 1, // Padding right para espacio del scroll
+                      '&::-webkit-scrollbar': {
+                        height: '8px',
+                      },
+                      '&::-webkit-scrollbar-track': {
+                        background: alpha(theme.palette.grey[500], 0.1),
+                        borderRadius: '10px',
+                      },
+                      '&::-webkit-scrollbar-thumb': {
+                        background: alpha(theme.palette.grey[500], 0.3),
+                        borderRadius: '10px',
+                        '&:hover': {
+                          background: alpha(theme.palette.grey[500], 0.5),
+                        },
+                      },
+                      // Soporte para Firefox
+                      scrollbarWidth: 'thin',
+                      scrollbarColor: `${alpha(
+                        theme.palette.grey[500],
+                        0.3
+                      )} ${alpha(theme.palette.grey[500], 0.1)}`,
+                    }}
+                  >
+                    {statsData.upcomingBirthdaysNext30Days.map((pet, index) => (
+                      <Box
+                        key={pet.memberPetId}
+                        sx={{
+                          mb:
+                            index ===
+                            statsData.upcomingBirthdaysNext30Days.length - 1
+                              ? 0
+                              : 1,
+                        }}
+                      >
+                        <BirthdayReminder
+                          birthDate={pet.birthDate}
+                          petName={pet.petName}
+                          photo={pet.photo}
+                          petStatus={pet.petStatus}
+                          showPetNameTitle
+                          variant="alert"
+                          showAlways
+                          onClose={() =>
+                            redirect(
+                              paths.dashboard.user.details(pet.memberPetId)
+                            )
+                          }
+                        />
+                      </Box>
+                    ))}
+                  </Box>
+                ) : (
+                  <Typography
+                    variant="body2"
+                    color="text.secondary"
+                    textAlign="center"
+                  >
+                    {t('No upcoming birthdays')}
+                  </Typography>
+                )}
+              </CardContent>
+            </Card>
+          </Grid>
 
           <Grid item xs={12} my={2}>
             <PromotionsCardCaroussell
@@ -199,15 +283,28 @@ export default function OverviewAppUser() {
                 </Alert>
               </Box>
             ) : (
-              <StatisticsCards
-                petsCount={statsData?.petsCount || 0}
-                vaccinationsCount={statsData?.vaccinationsCount || 0}
-                appointmentsCount={statsData?.appointmentsCount || 0}
-                vetVisitsCount={statsData?.vetVisitsCount || 0}
-                petsNeedingVaccination={statsData?.petsNeedingVaccination || 0}
-                upcomingAppointments={statsData?.upcomingAppointments || 0}
-                isLoading={isFetching}
-              />
+              <Card>
+                <CardContent>
+                  <Typography
+                    variant="subtitle1"
+                    fontWeight={600}
+                    sx={{ mb: 1.5 }}
+                  >
+                    📈 {t('Stadistics')}
+                  </Typography>
+                  <StatisticsCards
+                    petsCount={statsData?.petsCount || 0}
+                    vaccinationsCount={statsData?.vaccinationsCount || 0}
+                    appointmentsCount={statsData?.appointmentsCount || 0}
+                    vetVisitsCount={statsData?.vetVisitsCount || 0}
+                    petsNeedingVaccination={
+                      statsData?.petsNeedingVaccination || 0
+                    }
+                    upcomingAppointments={statsData?.upcomingAppointments || 0}
+                    isLoading={isFetching}
+                  />
+                </CardContent>
+              </Card>
             )}
           </Grid>
 

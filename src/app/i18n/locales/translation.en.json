@@ -720,5 +720,17 @@
   "No deworming treatments have been recorded": "No deworming treatments have been recorded",
   "Start by scheduling your pets first deworming": "Start by scheduling your pet's first deworming",
   "There are no medical appointments on record": "There are no medical appointments on record",
-  "Start by adding your pets first vet visit": "Start by adding your pet's first vet visit"
+  "Start by adding your pets first vet visit": "Start by adding your pet's first vet visit",
+  "View offer": "View offer",
+  "No upcoming birthdays": "No upcoming birthdays",
+  "Upcoming Birthdays in the next 30 days": "Upcoming Birthdays in the next 30 days",
+  "Stadistics": "Stadistics",
+  "🎉 It's {{name}}'s birthday today!": "🎉 It's {{name}}'s birthday today!",
+  "Don't forget to celebrate! 🎂": "Don't forget to celebrate! 🎂",
+  "Birthday Reminder": "Birthday Reminder",
+  "Tomorrow is {{name}}'s birthday! 🎈": "Tomorrow is {{name}}'s birthday! 🎈",
+  "In {{days}} days - {{date}}": "In {{days}} days - {{date}}",
+  "Upcoming Birthday": "Upcoming Birthday",
+  "Birthday": "Birthday",
+  "Birthday: {{date}}": "Birthday: {{date}}"
 }

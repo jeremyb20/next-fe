@@ -720,5 +720,17 @@
   "No deworming treatments have been recorded": "Aucun déparasitage enregistré",
   "Start by scheduling your pets first deworming": "Commencez par programmer le premier déparasitage de votre animal",
   "There are no medical appointments on record": "Aucun rendez-vous médical enregistré",
-  "Start by adding your pets first vet visit": "Commencez par ajouter la première visite chez le vétérinaire de votre animal"
+  "Start by adding your pets first vet visit": "Commencez par ajouter la première visite chez le vétérinaire de votre animal",
+  "View offer": "Voir l'offre",
+  "No upcoming birthdays": "Aucun anniversaire à venir",
+  "Upcoming Birthdays in the next 30 days": "Anniversaires à venir dans les 30 prochains jours",
+  "Stadistics": "Statistiques",
+  "🎉 It's {{name}}'s birthday today!": "🎉 C'est l'anniversaire de {{name}} aujourd'hui !",
+  "Don't forget to celebrate! 🎂": "N'oubliez pas de fêter ! 🎂",
+  "Birthday Reminder": "Rappel d'anniversaire",
+  "Tomorrow is {{name}}'s birthday! 🎈": "Demain est l'anniversaire de {{name}} ! 🎈",
+  "In {{days}} days - {{date}}": "Dans {{days}} jours - {{date}}",
+  "Upcoming Birthday": "Anniversaire à venir",
+  "Birthday": "Anniversaire",
+  "Birthday: {{date}}": "Anniversaire : {{date}}"
 }

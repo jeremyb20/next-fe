@@ -244,12 +244,12 @@ export function useNavData(userRole: string) {
             roles: ['admin', 'client'],
           },
 
-          // CALENDAR
-          {
-            title: t('Calendar'),
-            path: paths.dashboard.calendar,
-            icon: ICONS.calendar,
-          },
+          // CALENDAR Funcionalidad para luego
+          // {
+          //   title: t('Calendar'),
+          //   path: paths.dashboard.calendar,
+          //   icon: ICONS.calendar,
+          // },
           // {
           // title: t('pets market'),
           // path: authenticated

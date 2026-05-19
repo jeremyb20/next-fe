@@ -720,5 +720,17 @@
   "No deworming treatments have been recorded": "لم يتم تسجيل أي علاجات للديدان",
   "Start by scheduling your pets first deworming": "ابدأ بجدولة أول علاج للديدان لحيوانك الأليف",
   "There are no medical appointments on record": "لا توجد مواعيد طبية مسجلة",
-  "Start by adding your pets first vet visit": "ابدأ بإضافة أول زيارة بيطرية لحيوانك الأليف"
+  "Start by adding your pets first vet visit": "ابدأ بإضافة أول زيارة بيطرية لحيوانك الأليف",
+  "View offer": "عرض العرض",
+  "No upcoming birthdays": "لا توجد أعياد ميلاد قادمة",
+  "Upcoming Birthdays in the next 30 days": "أعياد الميلاد القادمة في الثلاثين يومًا التالية",
+  "Stadistics": "الإحصائيات",
+  "🎉 It's {{name}}'s birthday today!": "🎉 اليوم هو عيد ميلاد {{name}}!",
+  "Don't forget to celebrate! 🎂": "لا تنسى الاحتفال! 🎂",
+  "Birthday Reminder": "تذكير بعيد الميلاد",
+  "Tomorrow is {{name}}'s birthday! 🎈": "غدًا هو عيد ميلاد {{name}}! 🎈",
+  "In {{days}} days - {{date}}": "بعد {{days}} يومًا - {{date}}",
+  "Upcoming Birthday": "عيد ميلاد قادم",
+  "Birthday": "عيد الميلاد",
+  "Birthday: {{date}}": "عيد الميلاد: {{date}}"
 }

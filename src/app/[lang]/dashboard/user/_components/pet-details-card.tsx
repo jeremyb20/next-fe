@@ -10,6 +10,7 @@ import { formatPetAge, getSpeciesFromBreed } from '@/utils/pet-age.utils';
 
 // Importar los componentes reutilizables
 
+import { BirthdayReminder } from '@/components/pet/BirthdayReminder';
 import CustomPopover, { usePopover } from '@/components/custom-popover';
 import { PetAvatarWithBadge } from '@/components/badge/PetAvatarWithBage';
 import VaccinesList from '@/app/[lang]/pet/_components/view/vaccines-list';
@@ -799,12 +800,25 @@ export function PetDetailsCard({
           </Grid>
         </Grid>
 
+        {/* Versión mejorada con diferentes niveles de recordatorio */}
+        <Box mt={1}>
+          {pet.birthDate && (
+            <BirthdayReminder
+              birthDate={pet.birthDate}
+              petName={pet.petName}
+              variant="alert"
+              showAlways
+              onClose={() => console.log('closed')}
+            />
+          )}
+        </Box>
+
         <Box
           component="img"
           src={
             pet.petStatus === 'deceased'
               ? '/assets/images/ribbon.png'
-              : `/assets/images/paw-${detectedSpecies}.png`
+              : `/assets/images/paw-${detectedSpecies || 'dog'}.png`
           }
           alt="Decorative"
           sx={{

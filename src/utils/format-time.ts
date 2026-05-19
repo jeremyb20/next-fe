@@ -98,3 +98,59 @@ export const formatDate = (dateString: string) =>
     month: 'long',
     day: 'numeric',
   });
+
+
+// Agrega estas funciones a tu archivo de utilidades de fechas
+
+export function getNextBirthday(birthDate: string | Date) {
+  const today = new Date();
+  const birth = new Date(birthDate);
+
+  let nextBirthday = new Date(
+    today.getFullYear(),
+    birth.getMonth(),
+    birth.getDate()
+  );
+
+  if (nextBirthday < today) {
+    nextBirthday = new Date(
+      today.getFullYear() + 1,
+      birth.getMonth(),
+      birth.getDate()
+    );
+  }
+
+  return nextBirthday;
+}
+
+export function getDaysUntilNextBirthday(birthDate: string | Date) {
+  const nextBirthday = getNextBirthday(birthDate);
+  const today = new Date();
+
+  const diffTime = nextBirthday.getTime() - today.getTime();
+  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+  return diffDays;
+}
+
+export function getAge(birthDate: string | Date) {
+  const today = new Date();
+  const birth = new Date(birthDate);
+  let age = today.getFullYear() - birth.getFullYear();
+  const monthDiff = today.getMonth() - birth.getMonth();
+
+  if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birth.getDate())) {
+    age -= 1;
+  }
+
+  return age;
+}
+
+export function formatDateSpanish(date: string | Date) {
+  const d = new Date(date);
+  return d.toLocaleDateString('es-ES', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
+}

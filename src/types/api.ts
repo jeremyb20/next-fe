@@ -284,6 +284,17 @@ export interface IQRStats {
   byStatus: ByStatu[];
 }
 
+export interface UpcomingBirthDays {
+  memberPetId: string
+  petName: string
+  birthDate: string
+  nextBirthday: string
+  daysUntil: number
+  age: number
+  photo: string;
+  petStatus?: string;
+}
+
 export interface IPetStats {
   appointmentsCount: number;
   date: string;
@@ -293,6 +304,8 @@ export interface IPetStats {
   upcomingAppointments: number;
   vaccinationsCount: number;
   vetVisitsCount: number;
+  upcomingBirthdays: UpcomingBirthDays[]
+  upcomingBirthdaysNext30Days: UpcomingBirthDays[]
 }
 
 export interface ByStatu {
