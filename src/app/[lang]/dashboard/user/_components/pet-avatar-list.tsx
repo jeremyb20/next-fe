@@ -34,6 +34,30 @@ export function PetAvatarList({
   const showAddButton = pets.length < maxPets;
   const { t } = useTranslation();
 
+  // Función para determinar la variante del Badge según el estado
+  const getBadgeVariant = (pet: IPetProfile): 'dot' | 'standard' => {
+    if (pet.petStatus === 'deceased' || pet.petStatus === 'lost') {
+      return 'standard';
+    }
+    return 'dot';
+  };
+
+  // Función para determinar el color del Badge según el estado
+  const getBadgeColor = (
+    pet: IPetProfile
+  ): 'success' | 'default' | 'error' | 'warning' => {
+    switch (pet.petStatus) {
+      case 'active':
+        return 'success';
+      case 'lost':
+        return 'error';
+      case 'inactive':
+        return 'warning';
+      default:
+        return 'default';
+    }
+  };
+
   // Función para determinar el contenido del Badge según el estado de la mascota
   const getBadgeContent = (pet: IPetProfile) => {
     if (pet.petStatus === 'deceased') {
@@ -55,7 +79,109 @@ export function PetAvatarList({
         />
       );
     }
+
+    if (pet.petStatus === 'lost') {
+      return (
+        <Iconify
+          icon="mdi:paw"
+          width={22}
+          sx={{
+            position: 'absolute',
+            bottom: -10,
+            right: -9,
+            color: 'white',
+            bgcolor: 'error.main',
+            borderRadius: '50%',
+            p: '3px',
+            fontSize: '1rem',
+            border: '2px solid white',
+            animation: 'pulse 1.5s ease-in-out infinite',
+            '@keyframes pulse': {
+              '0%': {
+                transform: 'scale(1)',
+                opacity: 1,
+              },
+              '50%': {
+                transform: 'scale(1.1)',
+                opacity: 0.8,
+              },
+              '100%': {
+                transform: 'scale(1)',
+                opacity: 1,
+              },
+            },
+          }}
+        />
+      );
+    }
+
+    if (pet.petStatus === 'inactive') {
+      return (
+        <Iconify
+          icon="mdi:sleep"
+          width={20}
+          sx={{
+            position: 'absolute',
+            bottom: -10,
+            right: -9,
+            color: 'white',
+            bgcolor: 'warning.main',
+            borderRadius: '50%',
+            p: '2px',
+            fontSize: '0.875rem',
+            border: '2px solid white',
+          }}
+        />
+      );
+    }
+
     return undefined; // Para el Badge con variant="dot"
+  };
+
+  // Función para obtener el tooltip según el estado
+  const getTooltipTitle = (pet: IPetProfile): string => {
+    const statusMessages: Record<string, string> = {
+      active: pet.petName,
+      inactive: `${pet.petName} (Inactivo)`,
+      lost: `🚨 ${pet.petName} (EXTRAVIADO)`,
+      deceased: `🕊️ ${pet.petName} (En memoria)`,
+    };
+    return statusMessages[pet.petStatus] || pet.petName;
+  };
+
+  // Función para obtener el estilo del avatar según el estado
+  const getAvatarStyles = (pet: IPetProfile) => {
+    const baseStyles = {
+      opacity: 1,
+      filter: 'none',
+    };
+
+    switch (pet.petStatus) {
+      case 'deceased':
+        return {
+          opacity: 0.7,
+          filter: 'grayscale(0.3)',
+        };
+      case 'lost':
+        return {
+          opacity: 0.9,
+          filter: 'brightness(1.05) contrast(1.1)',
+          animation: 'pulse-border 1.5s ease-in-out infinite',
+          '@keyframes pulse-border': {
+            '0%': {
+              boxShadow: '0 0 0 0 rgba(211, 47, 47, 0.4)',
+            },
+            '70%': {
+              boxShadow: '0 0 0 10px rgba(211, 47, 47, 0)',
+            },
+            '100%': {
+              boxShadow: '0 0 0 0 rgba(211, 47, 47, 0)',
+            },
+          },
+        };
+      default:
+        return baseStyles;
+    }
   };
 
   if (isFetching) {
@@ -144,7 +270,12 @@ export function PetAvatarList({
     >
       {/* Lista de mascotas */}
       {pets.map((pet) => (
-        <Tooltip key={pet._id} title={pet.petName} placement="top">
+        <Tooltip
+          key={pet._id}
+          title={getTooltipTitle(pet)}
+          placement="top"
+          arrow
+        >
           <Box
             onClick={() => onSelectPet(pet)}
             sx={{
@@ -166,17 +297,32 @@ export function PetAvatarList({
             <Badge
               overlap="circular"
               anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-              variant={pet.petStatus === 'deceased' ? 'standard' : 'dot'}
-              color={pet.petStatus === 'active' ? 'success' : 'default'}
+              variant={getBadgeVariant(pet)}
+              color={getBadgeColor(pet)}
               badgeContent={getBadgeContent(pet)}
               sx={{
                 '& .MuiBadge-badge': {
                   border: '2px solid white',
-                  ...(pet.petStatus === 'deceased' && {
+                  ...((pet.petStatus === 'deceased' ||
+                    pet.petStatus === 'lost') && {
                     bgcolor: 'transparent',
                     p: 0,
                     minWidth: 'auto',
                     height: 'auto',
+                  }),
+                  ...(pet.petStatus === 'lost' && {
+                    animation: 'pulse-badge 1.5s ease-in-out infinite',
+                    '@keyframes pulse-badge': {
+                      '0%': {
+                        transform: 'scale(1)',
+                      },
+                      '50%': {
+                        transform: 'scale(1.15)',
+                      },
+                      '100%': {
+                        transform: 'scale(1)',
+                      },
+                    },
                   }),
                 },
               }}
@@ -186,14 +332,21 @@ export function PetAvatarList({
                 sx={{
                   width: 70,
                   height: 70,
-                  border: selectedPetId === pet._id ? '3px solid' : '2px solid',
+                  border:
+                    selectedPetId === pet._id
+                      ? pet.petStatus === 'lost'
+                        ? '3px solid'
+                        : '3px solid'
+                      : '2px solid',
                   borderColor:
-                    selectedPetId === pet._id ? 'primary.main' : 'transparent',
+                    selectedPetId === pet._id
+                      ? pet.petStatus === 'lost'
+                        ? 'error.main'
+                        : 'primary.main'
+                      : 'transparent',
                   boxShadow: selectedPetId === pet._id ? 2 : 0,
                   bgcolor: 'primary.lighter',
-                  opacity: pet.petStatus === 'deceased' ? 0.7 : 1,
-                  filter:
-                    pet.petStatus === 'deceased' ? 'grayscale(0.3)' : 'none',
+                  ...getAvatarStyles(pet),
                 }}
               >
                 {pet.petName?.charAt(0).toUpperCase()}
@@ -204,9 +357,16 @@ export function PetAvatarList({
               fontWeight={selectedPetId === pet._id ? 600 : 400}
               sx={{
                 color:
-                  selectedPetId === pet._id ? 'primary.main' : 'text.secondary',
+                  selectedPetId === pet._id
+                    ? pet.petStatus === 'lost'
+                      ? 'error.main'
+                      : 'primary.main'
+                    : pet.petStatus === 'lost'
+                      ? 'error.dark'
+                      : 'text.secondary',
                 textDecoration:
                   pet.petStatus === 'deceased' ? 'line-through' : 'none',
+                fontWeight: pet.petStatus === 'lost' ? 600 : 'normal',
               }}
             >
               {pet.petName.length > 10

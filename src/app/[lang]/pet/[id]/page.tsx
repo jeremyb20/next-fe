@@ -1,109 +1,104 @@
+// src/app/[lang]/pets/[id]/page.tsx
 import { Metadata } from 'next';
+import { notFound } from 'next/navigation';
 
 import { endpoints } from '@/utils/axios';
-import NotFoundPage from '@/app/not-found';
-import { PetApiResponse } from '@/types/global';
-import { DOMAIN, HOST_API } from '@/config-global';
+import { DOMAIN, HOST_API, APP_NAME } from '@/config-global';
+import { generatePetMetadata, PetData } from '@/utils/pet-metadata';
 
 import RegistrationPetView from '../_components/view/registration-pet-view';
 import PetPublickProfileView from '../_components/view/pet-public-profile-view';
 
 type Props = {
-  params: Promise<{
-    id: string;
-  }>;
+  params: Promise<{ id: string; lang: string }>;
 };
 
-async function getPetData(identifier: string): Promise<PetApiResponse> {
+async function getPetData(identifier: string) {
   try {
     const response = await fetch(
       `${HOST_API}${endpoints.pet.getPublicProfileById}/${identifier}`,
       {
-        cache: 'no-store', // ← Esto es clave
-        headers: {
-          'Cache-Control': 'no-cache',
-          'Content-Type': 'application/json',
-        },
+        next: { revalidate: 3600 },
+        headers: { 'Content-Type': 'application/json' },
       }
     );
 
     if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+      return {
+        success: false,
+        type: 'not_found',
+        message: `HTTP ${response.status}`,
+      };
     }
 
     return await response.json();
   } catch (error) {
     console.error('Error fetching pet data:', error);
-    return {
-      success: false,
-      type: 'not_found',
-      message: 'Error al conectar con el servidor',
-    };
+    return { success: false, type: 'error', message: 'Error de conexión' };
   }
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { id } = await params;
+  const { id, lang } = await params;
 
   try {
     const data = await getPetData(id);
 
-    const pet = data.payload;
+    // Mascota no encontrada
     if (data.type === 'not_found') {
       return {
-        title: 'No Encontrado | Plaquitas CR',
-        description: 'El código o mascota que buscas no existe.',
+        title: 'Mascota no encontrada | Plaquitas CR',
+        description:
+          'El código o mascota que buscas no existe en nuestra plataforma.',
+        robots: { index: false },
         metadataBase: new URL(DOMAIN),
       };
     }
 
-    if (data.type === 'pet_profile' && data.payload) {
-      const baseTitle = `¡Hola! Me llamo ${pet?.petName} | Plaquitas CR`;
-      const description = `Para conocer todos los detalles de ${pet?.petName} visita mi perfil en este link. 👆`;
-
-      return {
-        title: baseTitle,
-        description: description,
-        metadataBase: new URL(DOMAIN),
-        alternates: {
-          canonical: `/pets/${id}`,
-        },
-        openGraph: {
-          title: baseTitle,
-          description: description,
-          images: pet?.photo ? [{ url: pet.photo }] : [],
-          type: 'profile',
-          url: `${DOMAIN}/pets/${id}`,
-        },
-        twitter: {
-          card: 'summary_large_image',
-          title: baseTitle,
-          description: description,
-          images: pet?.photo ? [pet.photo] : [],
-        },
-      };
-    }
-
-    // Metadata para QR no registrado
+    // QR no registrado
     if (data.type === 'qr_code_unregistered') {
       return {
         title: 'Registra tu Mascota | Plaquitas CR',
         description:
-          'Activa tu código QR y registra a tu mascota en nuestra plataforma.',
+          'Activa este código QR y registra a tu mascota en nuestra plataforma. Protege su información de forma segura.',
+        robots: { index: false },
         metadataBase: new URL(DOMAIN),
       };
     }
 
+    // Perfil de mascota encontrado
+    if (data.type === 'pet_profile' && data.payload) {
+      const pet = data.payload as PetData;
+
+      // Generar metadata dinámica
+      const metadata = generatePetMetadata(pet);
+
+      // Ajustes específicos por idioma
+      return {
+        ...metadata,
+        alternates: {
+          canonical: `/${lang}/pets/${id}`,
+          languages: {
+            es: `/${lang}/pets/${id}`,
+            en: `/en/pets/${id}`,
+          },
+        },
+      };
+    }
+
+    // Fallback genérico
     return {
-      title: 'Plataforma de Mascotas | Plaquitas CR',
-      description: 'Gestiona y protege la información de tu mascota.',
+      title: `Perfil de Mascota | ${APP_NAME}`,
+      description: `Información y detalles de la mascota en ${APP_NAME}. Protege a tu mascota con nuestra plataforma.`,
       metadataBase: new URL(DOMAIN),
+      robots: { index: true, follow: true },
     };
   } catch (error) {
+    console.error('Error generating metadata:', error);
     return {
-      title: 'Error | Plaquitas CR',
-      description: `Ocurrió un error al cargar la información. ${error instanceof Error ? error.message : 'Desconocido'}`,
-      metadataBase: new URL(DOMAIN),
+      title: `Error | ${APP_NAME}`,
+      description: 'Ocurrió un error al cargar el perfil de la mascota.',
+      robots: { index: false },
     };
   }
 }
@@ -112,16 +107,13 @@ export default async function Page({ params }: Props) {
   const { id } = await params;
   const data = await getPetData(id);
 
-  // Si es perfil de mascota (QR ya convertido)
   if (data.type === 'pet_profile' && data.payload) {
     return <PetPublickProfileView petProfile={data.payload} />;
   }
 
-  // Si es código QR no registrado
   if (data.type === 'qr_code_unregistered' && data.qrCode) {
     return <RegistrationPetView registerPet={data} />;
   }
 
-  // Si no se encuentra nada
-  return <NotFoundPage />;
+  notFound();
 }

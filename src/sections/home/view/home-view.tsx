@@ -3,14 +3,14 @@
 import Box from '@mui/material/Box';
 import { useScroll } from 'motion/react';
 import { styled } from '@mui/material/styles';
-import { useState, useEffect, useCallback } from 'react';
+import { useEffect, useCallback } from 'react';
 
 import { paths } from '@/routes/paths';
 import MainLayout from '@/layouts/main';
 import { useSearchParams } from '@/routes/hooks';
 import { useRouter } from '@/routes/hooks/use-router';
 import ScrollProgress from '@/components/scroll-progress';
-import { SplashScreen } from '@/components/loading-screen';
+// import { SplashScreen } from '@/components/loading-screen';
 import { useAuthContext } from '@/auth/hooks/use-auth-context';
 
 import HomeHero from '../home-hero';
@@ -55,7 +55,7 @@ const StyledPolygon = styled('div')<StyledPolygonProps>(
 export default function HomeView() {
   const { scrollYProgress } = useScroll();
 
-  const [isClient, setIsClient] = useState(false);
+  // const [isClient, setIsClient] = useState(false);
   const router = useRouter();
 
   const searchParams = useSearchParams();
@@ -74,11 +74,11 @@ export default function HomeView() {
     check();
   }, [check]);
 
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
+  // useEffect(() => {
+  //   setIsClient(true);
+  // }, []);
 
-  return isClient ? (
+  return (
     <MainLayout>
       <ScrollProgress scrollYProgress={scrollYProgress} />
 
@@ -114,7 +114,5 @@ export default function HomeView() {
         <HomeBlog />
       </Box>
     </MainLayout>
-  ) : (
-    <SplashScreen />
   );
 }

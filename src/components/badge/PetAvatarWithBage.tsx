@@ -50,6 +50,46 @@ export const PetAvatarWithBadge = ({
           avatarFilter: 'grayscale(0.3)',
         };
 
+      case 'lost':
+        return {
+          variant: 'standard' as const,
+          color: 'error' as const,
+          badgeContent: (
+            <Iconify
+              icon="mdi:paw"
+              width={22}
+              sx={{
+                position: 'absolute',
+                bottom: -10,
+                right: -9,
+                color: 'white',
+                bgcolor: 'error.main',
+                borderRadius: '50%',
+                p: '3px',
+                fontSize: '1rem',
+                border: '2px solid white',
+                animation: 'pulse 1.5s ease-in-out infinite',
+                '@keyframes pulse': {
+                  '0%': {
+                    transform: 'scale(1)',
+                    opacity: 1,
+                  },
+                  '50%': {
+                    transform: 'scale(1.1)',
+                    opacity: 0.8,
+                  },
+                  '100%': {
+                    transform: 'scale(1)',
+                    opacity: 1,
+                  },
+                },
+              }}
+            />
+          ),
+          avatarOpacity: allowOpacity ? 0.9 : 1,
+          avatarFilter: 'brightness(1.05) contrast(1.1)',
+        };
+
       case 'active':
         return {
           variant: 'dot' as const,
@@ -103,6 +143,21 @@ export const PetAvatarWithBadge = ({
             minWidth: 'auto',
             height: 'auto',
           }),
+          ...(pet.petStatus === 'lost' && {
+            bgcolor: 'transparent',
+            p: 0,
+            minWidth: 'auto',
+            height: 'auto',
+            animation: 'pulse 1.5s ease-in-out infinite',
+            '@keyframes pulse': {
+              '0%, 100%': {
+                transform: 'scale(1)',
+              },
+              '50%': {
+                transform: 'scale(1.15)',
+              },
+            },
+          }),
         },
         ...badgeSx,
       }}
@@ -114,7 +169,7 @@ export const PetAvatarWithBadge = ({
           width: size,
           height: size,
           border: '3px solid',
-          borderColor: 'primary.main',
+          borderColor: pet.petStatus === 'lost' ? 'error.main' : 'primary.main',
           opacity: config.avatarOpacity,
           filter: config.avatarFilter,
           cursor: onClick ? 'pointer' : 'default',
