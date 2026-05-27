@@ -1,25 +1,36 @@
 import * as Yup from 'yup';
 import { useMemo } from 'react';
-import { IUser } from '@/types/api';
+import Box from '@mui/material/Box';
+import { Stack } from '@mui/system';
+import Alert from '@mui/material/Alert';
 import { useForm } from 'react-hook-form';
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import MenuItem from '@mui/material/MenuItem';
+import { InputAdornment } from '@mui/material';
+import DialogTitle from '@mui/material/DialogTitle';
+import { yupResolver } from '@hookform/resolvers/yup';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import {
+  CountryCode,
+  isValidPhoneNumber,
+  parsePhoneNumberFromString,
+} from 'libphonenumber-js';
+
+import { IUser } from '@/types/api';
 import { countries } from '@/assets/data';
 import { endpoints } from '@/utils/axios';
 import Iconify from '@/components/iconify';
 import { HOST_API } from '@/config-global';
 import { useSnackbar } from '@/components/snackbar';
 import { IPInfoResponse } from '@/hooks/use-ip-info';
-import { yupResolver } from '@hookform/resolvers/yup';
 import { useTranslation } from '@/hooks/use-translation';
 import { useCreateGenericMutation } from '@/hooks/user-generic-mutation';
 import {
   USER_ROLE_OPTIONS,
   USER_STATUS_OPTIONS,
 } from '@/components/filters/filter-constants';
-import {
-  CountryCode,
-  isValidPhoneNumber,
-  parsePhoneNumberFromString,
-} from 'libphonenumber-js';
 import FormProvider, {
   RHFSelect,
   RHFTextField,
@@ -30,18 +41,6 @@ import {
   getPhonePlaceholder,
   simplePhoneValidation,
 } from '@/utils/phone-validation';
-
-import Box from '@mui/material/Box';
-import { Stack } from '@mui/system';
-import Alert from '@mui/material/Alert';
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import MenuItem from '@mui/material/MenuItem';
-import { InputAdornment } from '@mui/material';
-import LoadingButton from '@mui/lab/LoadingButton';
-import DialogTitle from '@mui/material/DialogTitle';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
 
 // ----------------------------------------------------------------------
 
@@ -67,7 +66,7 @@ export default function UserQuickEditModalForm({
   currentUser,
   open,
   onClose,
-  ipDataInfo,
+  ipDataInfo: _ipDataInfo,
   refetch,
 }: Props) {
   const { enqueueSnackbar } = useSnackbar();
@@ -282,13 +281,9 @@ export default function UserQuickEditModalForm({
             Cancel
           </Button>
 
-          <LoadingButton
-            type="submit"
-            variant="contained"
-            loading={isSubmitting}
-          >
+          <Button type="submit" variant="contained" loading={isSubmitting}>
             Update
-          </LoadingButton>
+          </Button>
         </DialogActions>
       </FormProvider>
     </Dialog>

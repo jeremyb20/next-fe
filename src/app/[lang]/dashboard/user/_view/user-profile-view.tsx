@@ -1,13 +1,13 @@
 'use client';
 
 import { useState } from 'react';
+import Container from '@mui/material/Container';
+
 import { paths } from '@/routes/paths';
 import { AccountView } from '@/sections/account/view';
 import { useManagerUser } from '@/hooks/use-manager-user';
 import { useSettingsContext } from '@/components/settings';
 import CustomBreadcrumbs from '@/components/custom-breadcrumbs';
-
-import Container from '@mui/material/Container';
 
 // import ProfileFriends from '../_components/profile-friends';
 // import ProfileGallery from '../_components/profile-gallery';

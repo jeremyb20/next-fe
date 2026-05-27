@@ -2,10 +2,14 @@
 
 import orderBy from 'lodash/orderBy';
 import isEqual from 'lodash/isEqual';
+import Stack from '@mui/material/Stack';
+import Button from '@mui/material/Button';
+import { useState, useCallback } from 'react';
+import Container from '@mui/material/Container';
+
 import { paths } from '@/routes/paths';
 import { countries } from '@/assets/data';
 import Iconify from '@/components/iconify';
-import { useState, useCallback } from 'react';
 import { RouterLink } from '@/routes/components';
 import { useBoolean } from '@/hooks/use-boolean';
 import EmptyContent from '@/components/empty-content';
@@ -20,10 +24,6 @@ import {
   JOB_EXPERIENCE_OPTIONS,
   JOB_EMPLOYMENT_TYPE_OPTIONS,
 } from '@/_mock';
-
-import Stack from '@mui/material/Stack';
-import Button from '@mui/material/Button';
-import Container from '@mui/material/Container';
 
 import JobList from '../job-list';
 import JobSort from '../job-sort';
@@ -168,7 +168,7 @@ export default function JobListView() {
       <CustomBreadcrumbs
         heading="List"
         links={[
-          { name: 'Inicio', href: paths.dashboard.root },
+          { name: 'Dashboard', href: paths.dashboard.root },
           {
             name: 'Job',
             href: paths.dashboard.job.root,

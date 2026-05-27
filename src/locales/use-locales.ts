@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useCallback } from 'react';
+
 import { useRouter, usePathname } from '@/routes/hooks';
 import { useTranslation } from '@/hooks/use-translation';
 import { localStorageGetItem } from '@/utils/storage-available';

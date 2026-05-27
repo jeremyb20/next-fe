@@ -1,8 +1,10 @@
+import { Metadata } from 'next';
+
 import { OverviewBankingView } from '@/sections/overview/banking/view';
 
 // ----------------------------------------------------------------------
 
-export const metadata = {
+export const metadata: Metadata = {
   title: 'Dashboard: Banking',
 };
 

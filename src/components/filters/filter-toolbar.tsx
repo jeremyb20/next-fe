@@ -1,7 +1,5 @@
-import Iconify from '@/components/iconify';
-import { useState, useCallback } from 'react';
-
 import Stack from '@mui/material/Stack';
+import { useState, useCallback } from 'react';
 import TextField from '@mui/material/TextField';
 import InputAdornment from '@mui/material/InputAdornment';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
@@ -16,6 +14,8 @@ import {
   IconButton,
   FormControlLabel,
 } from '@mui/material';
+
+import Iconify from '@/components/iconify';
 
 interface FilterToolbarProps {
   filters: any;
@@ -214,13 +214,11 @@ export default function FilterToolbar({
           vertical: 'top',
           horizontal: 'right',
         }}
-        slotProps={{
-          paper: {
-            sx: {
-              p: 2,
-              width: 280,
-              borderRadius: 1,
-            },
+        PaperProps={{
+          sx: {
+            p: 2,
+            width: 280,
+            borderRadius: 1,
           },
         }}
       >

@@ -1,7 +1,6 @@
 import { useEffect } from 'react';
-import { Controller, useFormContext } from 'react-hook-form';
-
 import FormHelperText from '@mui/material/FormHelperText';
+import { Controller, useFormContext } from 'react-hook-form';
 
 import Editor, { EditorProps } from '../editor';
 
@@ -36,8 +35,6 @@ export default function RHFEditor({ name, helperText, ...other }: Props) {
       render={({ field, fieldState: { error } }) => (
         <Editor
           id={name}
-          value={field.value}
-          onChange={field.onChange}
           error={!!error}
           helperText={
             (!!error || helperText) && (
@@ -46,6 +43,7 @@ export default function RHFEditor({ name, helperText, ...other }: Props) {
               </FormHelperText>
             )
           }
+          {...field}
           {...other}
         />
       )}

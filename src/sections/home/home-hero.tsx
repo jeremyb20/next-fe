@@ -1,21 +1,21 @@
+import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid';
+import Stack from '@mui/material/Stack';
+import Button from '@mui/material/Button';
+import { m, useScroll } from 'motion/react';
+import Container from '@mui/material/Container';
+import Typography from '@mui/material/Typography';
+import { alpha, styled } from '@mui/material/styles';
+import { useRef, useState, useEffect, useCallback } from 'react';
+
 import { paths } from '@/routes/paths';
 import Iconify from '@/components/iconify';
 import { APP_NAME } from '@/config-global';
-import { m, useScroll } from 'framer-motion';
 import { RouterLink } from '@/routes/components';
 import { HEADER } from '@/layouts/config-layout';
 import { bgGradient, textGradient } from '@/theme/css';
 import { useTranslation } from '@/hooks/use-translation';
 import { varFade, MotionContainer } from '@/components/animate';
-import { useRef, useState, useEffect, useCallback } from 'react';
-
-import Box from '@mui/material/Box';
-import Stack from '@mui/material/Stack';
-import Button from '@mui/material/Button';
-import Container from '@mui/material/Container';
-import Grid from '@mui/material/Unstable_Grid2';
-import Typography from '@mui/material/Typography';
-import { alpha, styled } from '@mui/material/styles';
 
 // ----------------------------------------------------------------------
 
@@ -139,8 +139,6 @@ export default function HomeHero() {
 
       <m.div variants={varFade().in} initial={false}>
         <Typography variant="body2" sx={{ textAlign: 'center', py: 2 }}>
-          {/* Registra hasta 10 mascotas, gestiona su salud, agenda citas y disfruta
-          de descuentos exclusivos */}
           {t(
             'Register up to 10 pets, manage their health, schedule appointments and enjoy exclusive discounts'
           )}
@@ -157,7 +155,6 @@ export default function HomeHero() {
             <Button
               component={RouterLink}
               href={paths.auth.signUp}
-              color="primary"
               size="large"
               variant="contained"
               startIcon={<Iconify icon="mdi:paw" width={24} />}
@@ -194,9 +191,7 @@ export default function HomeHero() {
         <StyledWrapper>
           <Container component={MotionContainer} sx={{ height: 1 }}>
             <Grid container columnSpacing={{ md: 10 }} sx={{ height: 1 }}>
-              <Grid xs={12} md={12}>
-                {renderDescription}
-              </Grid>
+              <Grid size={{ xs: 12, md: 12 }}>{renderDescription}</Grid>
 
               {/* {mdUp && (
                 <Grid md={6}>

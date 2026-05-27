@@ -1,9 +1,21 @@
 import { useCallback } from 'react';
+import Box from '@mui/material/Box';
+import { Button } from '@mui/material';
+import Divider from '@mui/material/Divider';
+import MenuItem from '@mui/material/MenuItem';
+import Backdrop from '@mui/material/Backdrop';
+import IconButton from '@mui/material/IconButton';
+import Typography from '@mui/material/Typography';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { useForm, Controller } from 'react-hook-form';
+import Stack, { StackProps } from '@mui/material/Stack';
+import InputAdornment from '@mui/material/InputAdornment';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import CircularProgress from '@mui/material/CircularProgress';
+
 import { countries } from '@/assets/data';
 import Iconify from '@/components/iconify';
 import { useBoolean } from '@/hooks/use-boolean';
-import { yupResolver } from '@hookform/resolvers/yup';
-import { useForm, Controller } from 'react-hook-form';
 import FormProvider, {
   RHFEditor,
   RHFSelect,
@@ -17,18 +29,6 @@ import FormProvider, {
   RHFAutocomplete,
   RHFMultiCheckbox,
 } from '@/components/hook-form';
-
-import Box from '@mui/material/Box';
-import Divider from '@mui/material/Divider';
-import MenuItem from '@mui/material/MenuItem';
-import Backdrop from '@mui/material/Backdrop';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import LoadingButton from '@mui/lab/LoadingButton';
-import Stack, { StackProps } from '@mui/material/Stack';
-import InputAdornment from '@mui/material/InputAdornment';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import CircularProgress from '@mui/material/CircularProgress';
 
 import { FormSchema } from './schema';
 import ValuesPreview from './values-preview';
@@ -408,7 +408,7 @@ export default function ReactHookForm({ debug }: Props) {
               <RHFSlider name="sliderRange" />
             </Block>
 
-            <LoadingButton
+            <Button
               fullWidth
               color="info"
               size="large"
@@ -417,7 +417,7 @@ export default function ReactHookForm({ debug }: Props) {
               loading={isSubmitting}
             >
               Submit to Check
-            </LoadingButton>
+            </Button>
           </Stack>
         </Box>
 

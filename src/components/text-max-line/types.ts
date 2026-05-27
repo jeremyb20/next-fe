@@ -1,11 +1,10 @@
 import { LinkProps } from '@mui/material/Link';
 import { TypographyProps } from '@mui/material/Typography';
-import { Variant } from '@mui/material/styles/createTypography';
 
 // ----------------------------------------------------------------------
 
 type IProps = TypographyProps & LinkProps;
-
+type Variant = TypographyProps['variant'];
 export interface TextMaxLineProps extends IProps {
   line?: number;
   asLink?: boolean;

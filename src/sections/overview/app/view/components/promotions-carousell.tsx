@@ -2,25 +2,24 @@
 
 'use client';
 
-import { m } from 'framer-motion';
-import { IPromotions } from '@/types/api';
-import Iconify from '@/components/iconify';
+import { m } from 'motion/react';
 import { useTranslation } from 'react-i18next';
-import { varFade, MotionContainer } from '@/components/animate';
-import Carousel, { useCarousel, CarouselDots } from '@/components/carousel';
-
+import { alpha, useTheme } from '@mui/material/styles';
 import {
   Box,
   Card,
   Chip,
   Stack,
-  alpha,
   Button,
   Divider,
-  useTheme,
   Typography,
   useMediaQuery,
 } from '@mui/material';
+
+import { IPromotions } from '@/types/api';
+import Iconify from '@/components/iconify';
+import { varFade, MotionContainer } from '@/components/animate';
+import Carousel, { useCarousel, CarouselDots } from '@/components/carousel';
 
 interface PromotionsCardProps {
   promotions: IPromotions[];

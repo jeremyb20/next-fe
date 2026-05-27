@@ -1,7 +1,3 @@
-// components/dashboard/user/quick-actions.tsx
-import Iconify from '@/components/iconify';
-import { useTranslation } from '@/hooks/use-translation';
-
 import {
   Box,
   Grid,
@@ -10,6 +6,10 @@ import {
   IconButton,
   CardContent,
 } from '@mui/material';
+
+// components/dashboard/user/quick-actions.tsx
+import Iconify from '@/components/iconify';
+import { useTranslation } from '@/hooks/use-translation';
 
 interface QuickActionsProps {
   onAddPet?: () => void;
@@ -70,7 +70,7 @@ export function QuickActions({
 
         <Grid container spacing={1}>
           {actions.map((action) => (
-            <Grid item xs={3} key={action.id}>
+            <Grid size={{ xs: 3 }} key={action.id}>
               <Box
                 sx={{
                   display: 'flex',

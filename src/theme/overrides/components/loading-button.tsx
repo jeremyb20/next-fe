@@ -1,28 +1,29 @@
 import { Theme } from '@mui/material/styles';
-import {
-  LoadingButtonProps,
-  loadingButtonClasses,
-} from '@mui/lab/LoadingButton';
+import { LoadingButtonProps } from '@mui/lab/LoadingButton';
 
 // ----------------------------------------------------------------------
 
-export function loadingButton(theme: Theme) {
+export function loadingButton(_theme: Theme) {
   return {
     MuiLoadingButton: {
       styleOverrides: {
         root: ({ ownerState }: { ownerState: LoadingButtonProps }) => ({
           ...(ownerState.variant === 'soft' && {
-            [`& .${loadingButtonClasses.loadingIndicatorStart}`]: {
+            // Usar los nombres de clase estándar de MUI
+            '& .MuiLoadingButton-loadingIndicator': {
+              // Estilos generales si los necesitas
+            },
+            '& .MuiLoadingButton-loadingIndicatorStart': {
               left: 10,
             },
-            [`& .${loadingButtonClasses.loadingIndicatorEnd}`]: {
+            '& .MuiLoadingButton-loadingIndicatorEnd': {
               right: 14,
             },
             ...(ownerState.size === 'small' && {
-              [`& .${loadingButtonClasses.loadingIndicatorStart}`]: {
+              '& .MuiLoadingButton-loadingIndicatorStart': {
                 left: 10,
               },
-              [`& .${loadingButtonClasses.loadingIndicatorEnd}`]: {
+              '& .MuiLoadingButton-loadingIndicatorEnd': {
                 right: 10,
               },
             }),

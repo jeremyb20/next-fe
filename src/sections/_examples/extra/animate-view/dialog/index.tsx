@@ -1,8 +1,8 @@
-import { useState, useCallback } from 'react';
-import { useBoolean } from '@/hooks/use-boolean';
-
 import Card from '@mui/material/Card';
-import Grid from '@mui/material/Unstable_Grid2';
+import Grid from '@mui/material/Grid';
+import { useState, useCallback } from 'react';
+
+import { useBoolean } from '@/hooks/use-boolean';
 
 import ContainerView from './container';
 import ControlPanel from '../control-panel';
@@ -24,7 +24,7 @@ export default function DialogView() {
   return (
     <Card sx={{ p: 3 }}>
       <Grid container spacing={3}>
-        <Grid xs={12} md={9}>
+        <Grid size={{ xs: 12, md: 9 }}>
           <ContainerView
             open={view.value}
             onOpen={view.onTrue}
@@ -32,7 +32,7 @@ export default function DialogView() {
             selectVariant={selectVariant}
           />
         </Grid>
-        <Grid xs={12} md={3}>
+        <Grid size={{ xs: 12, md: 3 }}>
           <ControlPanel
             variantKey={variantKey}
             selectVariant={selectVariant}

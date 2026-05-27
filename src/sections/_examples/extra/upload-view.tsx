@@ -1,22 +1,22 @@
 'use client';
 
-import { paths } from '@/routes/paths';
-import Iconify from '@/components/iconify';
-import { useState, useCallback } from 'react';
-import { fData } from '@/utils/format-number';
-import { useBoolean } from '@/hooks/use-boolean';
-import CustomBreadcrumbs from '@/components/custom-breadcrumbs';
-import ComponentHero from '@/sections/_examples/component-hero';
-import { Upload, UploadBox, UploadAvatar } from '@/components/upload';
-
 import Card from '@mui/material/Card';
 import Stack from '@mui/material/Stack';
 import Switch from '@mui/material/Switch';
+import { useState, useCallback } from 'react';
 import Container from '@mui/material/Container';
 import CardHeader from '@mui/material/CardHeader';
 import Typography from '@mui/material/Typography';
 import CardContent from '@mui/material/CardContent';
 import FormControlLabel from '@mui/material/FormControlLabel';
+
+import { paths } from '@/routes/paths';
+import Iconify from '@/components/iconify';
+import { fData } from '@/utils/format-number';
+import { useBoolean } from '@/hooks/use-boolean';
+import CustomBreadcrumbs from '@/components/custom-breadcrumbs';
+import ComponentHero from '@/sections/_examples/component-hero';
+import { Upload, UploadBox, UploadAvatar } from '@/components/upload';
 
 // ----------------------------------------------------------------------
 

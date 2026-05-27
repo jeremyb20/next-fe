@@ -1,19 +1,19 @@
-import Editor from '@/components/editor';
-import Iconify from '@/components/iconify';
-import { useState, useCallback } from 'react';
-import { useBoolean } from '@/hooks/use-boolean';
-import { useResponsive } from '@/hooks/use-responsive';
-
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import Portal from '@mui/material/Portal';
 import { alpha } from '@mui/material/styles';
+import { useState, useCallback } from 'react';
 import Backdrop from '@mui/material/Backdrop';
 import InputBase from '@mui/material/InputBase';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
+
+import Editor from '@/components/editor';
+import Iconify from '@/components/iconify';
+import { useBoolean } from '@/hooks/use-boolean';
+import { useResponsive } from '@/hooks/use-responsive';
 
 // ----------------------------------------------------------------------
 

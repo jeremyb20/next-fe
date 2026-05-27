@@ -1,8 +1,10 @@
+import { Metadata } from 'next';
+
 import StepperView from '@/sections/_examples/mui/stepper-view';
 
 // ----------------------------------------------------------------------
 
-export const metadata = {
+export const metadata: Metadata = {
   title: 'MUI: Stepper',
 };
 

@@ -1,15 +1,14 @@
-import Markdown from '@/components/markdown';
-import Scrollbar from '@/components/scrollbar';
-import EmptyContent from '@/components/empty-content';
-
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import Divider from '@mui/material/Divider';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
-import LoadingButton from '@mui/lab/LoadingButton';
 import DialogActions from '@mui/material/DialogActions';
+
+import Markdown from '@/components/markdown';
+import Scrollbar from '@/components/scrollbar';
+import EmptyContent from '@/components/empty-content';
 
 import PostDetailsHero from './post-details-hero';
 
@@ -55,7 +54,7 @@ export default function PostDetailsPreview({
           Cancel
         </Button>
 
-        <LoadingButton
+        <Button
           type="submit"
           variant="contained"
           disabled={!isValid}
@@ -63,7 +62,7 @@ export default function PostDetailsPreview({
           onClick={onSubmit}
         >
           Post
-        </LoadingButton>
+        </Button>
       </DialogActions>
 
       <Divider />

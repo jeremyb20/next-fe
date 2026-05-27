@@ -1,8 +1,10 @@
+import { Metadata } from 'next';
+
 import { PostListView } from '@/sections/blog/view';
 
 // ----------------------------------------------------------------------
 
-export const metadata = {
+export const metadata: Metadata = {
   title: 'Dashboard: Post List',
 };
 

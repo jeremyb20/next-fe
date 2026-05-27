@@ -1,8 +1,10 @@
+import { Metadata } from 'next';
+
 import TooltipView from '@/sections/_examples/mui/tooltip-view';
 
 // ----------------------------------------------------------------------
 
-export const metadata = {
+export const metadata: Metadata = {
   title: 'MUI: Tooltip',
 };
 

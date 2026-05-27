@@ -1,5 +1,11 @@
 'use client';
 
+import Grid from '@mui/material/Grid';
+import Stack from '@mui/material/Stack';
+import Button from '@mui/material/Button';
+import { Container } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
+
 import { SeoIllustration } from '@/assets/illustrations';
 import { useManagerUser } from '@/hooks/use-manager-user';
 import { processByMonthData } from '@/utils/chart-data-processor';
@@ -12,12 +18,6 @@ import {
   useGetProductGrowth,
   useGetAdminProductStats,
 } from '@/hooks/use-fetch';
-
-import Stack from '@mui/material/Stack';
-import Button from '@mui/material/Button';
-import { Container } from '@mui/material';
-import { useTheme } from '@mui/material/styles';
-import Grid from '@mui/material/Unstable_Grid2';
 
 import AppWidget from '../app-widget';
 import AppWelcome from '../app-welcome';
@@ -52,7 +52,7 @@ export default function OverviewAppAdmin() {
   return (
     <Container>
       <Grid container spacing={3}>
-        <Grid xs={12} md={8}>
+        <Grid size={{ xs: 12, md: 8 }}>
           <AppWelcome
             title={`Welcome back 👋 \n ${user?.displayName}`}
             description="If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything."
@@ -65,11 +65,11 @@ export default function OverviewAppAdmin() {
           />
         </Grid>
 
-        <Grid xs={12} md={4}>
+        <Grid size={{ xs: 12, md: 4 }}>
           <AppFeatured list={_appFeatured} />
         </Grid>
 
-        <Grid xs={12} md={4}>
+        <Grid size={{ xs: 12, md: 4 }}>
           <AppWidgetSummary
             title="Total Active Users"
             subtitle={`${userGrowth?.newThisMonth || 0} new this month`}
@@ -81,7 +81,7 @@ export default function OverviewAppAdmin() {
           />
         </Grid>
 
-        <Grid xs={12} md={4}>
+        <Grid size={{ xs: 12, md: 4 }}>
           <AppWidgetSummary
             title="Total Pets Registered"
             subtitle={`${userPetGrowth?.newThisMonth || 0} new this month`}
@@ -94,7 +94,7 @@ export default function OverviewAppAdmin() {
           />
         </Grid>
 
-        <Grid xs={12} md={4}>
+        <Grid size={{ xs: 12, md: 4 }}>
           <AppWidgetSummary
             title="Total Products Registered"
             subtitle={`${productGrowth?.newThisMonth || 0} new this month`}
@@ -107,7 +107,7 @@ export default function OverviewAppAdmin() {
           />
         </Grid>
 
-        <Grid xs={12} md={6} lg={4}>
+        <Grid size={{ xs: 12, md: 6, lg: 4 }}>
           {/* Gráfico de Usuarios */}
           <AppAreaInstalled
             title="User Registrations"
@@ -138,7 +138,7 @@ export default function OverviewAppAdmin() {
           />
         </Grid>
 
-        <Grid xs={12} md={6} lg={4}>
+        <Grid size={{ xs: 12, md: 6, lg: 4 }}>
           {/* Gráfico de Mascotas */}
           <AppAreaInstalled
             title="Pet Registrations"
@@ -173,7 +173,7 @@ export default function OverviewAppAdmin() {
           />
         </Grid>
 
-        <Grid xs={12} md={6} lg={4}>
+        <Grid size={{ xs: 12, md: 6, lg: 4 }}>
           {/* Gráfico de Productos */}
           <AppAreaInstalled
             title="Product Registrations"
@@ -209,7 +209,7 @@ export default function OverviewAppAdmin() {
         </Grid>
 
         {/* Alternativa: Gráfico combinado */}
-        <Grid xs={12} md={12} lg={8}>
+        <Grid size={{ xs: 12, md: 12, lg: 8 }}>
           <AppAreaInstalled
             title="All Registrations Comparison"
             subheader="Current Year vs Last Year"
@@ -266,7 +266,7 @@ export default function OverviewAppAdmin() {
           />
         </Grid>
 
-        <Grid xs={12} md={6} lg={4}>
+        <Grid size={{ xs: 12, md: 6, lg: 4 }}>
           <AppCurrentDownload
             title="All Registrations Comparison"
             chart={{
@@ -302,7 +302,7 @@ export default function OverviewAppAdmin() {
         />
       </Grid> */}
 
-        <Grid xs={12} md={6} lg={4}>
+        <Grid size={{ xs: 12, md: 6, lg: 4 }}>
           <AppTopRelated
             title="Products by Category"
             list={
@@ -321,7 +321,7 @@ export default function OverviewAppAdmin() {
           />
         </Grid>
 
-        <Grid xs={12} md={6} lg={4}>
+        <Grid size={{ xs: 12, md: 6, lg: 4 }}>
           <AppTopInstalledCountries
             title="User Types Distribution"
             list={
@@ -336,7 +336,7 @@ export default function OverviewAppAdmin() {
           />
         </Grid>
 
-        <Grid xs={12} md={6} lg={4}>
+        <Grid size={{ xs: 12, md: 6, lg: 4 }}>
           <Stack spacing={2} direction="row">
             <AppWidget
               title="Stock Alert"

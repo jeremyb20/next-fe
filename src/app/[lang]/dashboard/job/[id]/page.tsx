@@ -1,21 +1,23 @@
 // import { _jobs } from '@/_mock/_job';
 
+import { Metadata } from 'next';
+
 import { JobDetailsView } from '@/sections/job/view';
 
 // ----------------------------------------------------------------------
 
-export const metadata = {
+export const metadata: Metadata = {
   title: 'Dashboard: Job Details',
 };
 
 type Props = {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 };
 
-export default function JobDetailsPage({ params }: Props) {
-  const { id } = params;
+export default async function JobDetailsPage({ params }: Props) {
+  const { id } = await params;
 
   return <JobDetailsView id={id} />;
   // return <>JobDetailsView</>;

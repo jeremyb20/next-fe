@@ -1,10 +1,12 @@
 // import { _invoices } from '@/_mock/_invoice';
 
+import { Metadata } from 'next';
+
 // import { InvoiceEditView } from '@/sections/invoice/view';
 
 // ----------------------------------------------------------------------
 
-export const metadata = {
+export const metadata: Metadata = {
   title: 'Dashboard: Invoice Edit',
 };
 
@@ -14,7 +16,7 @@ type Props = {
   };
 };
 
-export default function InvoiceEditPage({ params }: Props) {
+export default function InvoiceEditPage({ params: _params }: Props) {
   // const { id } = params;
 
   // return <InvoiceEditView id={id} />;

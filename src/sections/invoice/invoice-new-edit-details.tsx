@@ -1,20 +1,20 @@
 import sum from 'lodash/sum';
-import Iconify from '@/components/iconify';
-import { useEffect, useCallback } from 'react';
-import { IInvoiceItem } from '@/types/invoice';
-import { fCurrency } from '@/utils/format-number';
-import { INVOICE_SERVICE_OPTIONS } from '@/_mock';
-import { useFieldArray, useFormContext } from 'react-hook-form';
-import { RHFSelect, RHFTextField } from '@/components/hook-form';
-
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
 import MenuItem from '@mui/material/MenuItem';
+import { useEffect, useCallback } from 'react';
 import Typography from '@mui/material/Typography';
 import InputAdornment from '@mui/material/InputAdornment';
 import { inputBaseClasses } from '@mui/material/InputBase';
+import { useFieldArray, useFormContext } from 'react-hook-form';
+
+import Iconify from '@/components/iconify';
+import { IInvoiceItem } from '@/types/invoice';
+import { fCurrency } from '@/utils/format-number';
+import { INVOICE_SERVICE_OPTIONS } from '@/_mock';
+import { RHFSelect, RHFTextField } from '@/components/hook-form';
 
 // ----------------------------------------------------------------------
 
@@ -186,21 +186,21 @@ export default function InvoiceNewEditDetails() {
                 size="small"
                 name={`items[${index}].title`}
                 label="Title"
-                InputLabelProps={{ shrink: true }}
+                slotProps={{ inputLabel: { shrink: true } }}
               />
 
               <RHFTextField
                 size="small"
                 name={`items[${index}].description`}
                 label="Description"
-                InputLabelProps={{ shrink: true }}
+                slotProps={{ inputLabel: { shrink: true } }}
               />
 
               <RHFSelect
                 name={`items[${index}].service`}
                 size="small"
                 label="Service"
-                InputLabelProps={{ shrink: true }}
+                slotProps={{ inputLabel: { shrink: true } }}
                 sx={{
                   maxWidth: { md: 160 },
                 }}
@@ -233,7 +233,7 @@ export default function InvoiceNewEditDetails() {
                 label="Quantity"
                 placeholder="0"
                 onChange={(event) => handleChangeQuantity(event, index)}
-                InputLabelProps={{ shrink: true }}
+                slotProps={{ inputLabel: { shrink: true } }}
                 sx={{ maxWidth: { md: 96 } }}
               />
 

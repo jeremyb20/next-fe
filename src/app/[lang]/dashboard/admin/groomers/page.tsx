@@ -1,8 +1,10 @@
+import { Metadata } from 'next';
+
 import GroomersView from './_components/view';
 
 // ----------------------------------------------------------------------
 
-export const metadata = {
+export const metadata: Metadata = {
   title: 'Admin Users',
 };
 

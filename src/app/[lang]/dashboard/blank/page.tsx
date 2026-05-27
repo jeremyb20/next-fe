@@ -1,8 +1,10 @@
+import { Metadata } from 'next';
+
 import BlankView from '@/sections/blank/view';
 
 // ----------------------------------------------------------------------
 
-export const metadata = {
+export const metadata: Metadata = {
   title: 'Dashboard: Blank',
 };
 

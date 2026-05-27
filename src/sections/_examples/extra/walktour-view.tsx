@@ -1,11 +1,26 @@
 'use client';
 
+import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid';
+import Stack from '@mui/material/Stack';
+import Paper from '@mui/material/Paper';
+import Button from '@mui/material/Button';
+import Switch from '@mui/material/Switch';
+import Divider from '@mui/material/Divider';
+import ListItem from '@mui/material/ListItem';
+import { useTheme } from '@mui/material/styles';
+import Container from '@mui/material/Container';
+import TextField from '@mui/material/TextField';
+import Typography from '@mui/material/Typography';
+import InputAdornment from '@mui/material/InputAdornment';
+
 import { paths } from '@/routes/paths';
 import Iconify from '@/components/iconify';
-import Walktour, { useWalktour } from '@/components/walktour';
+import Walktour from '@/components/walktour/walktour';
 import { MotivationIllustration } from '@/assets/illustrations';
 import CustomBreadcrumbs from '@/components/custom-breadcrumbs';
 import ComponentHero from '@/sections/_examples/component-hero';
+import { useWalktour } from '@/components/walktour/use-walktour';
 import EcommerceWelcome from '@/sections/overview/e-commerce/ecommerce-welcome';
 import EcommerceNewProducts from '@/sections/overview/e-commerce/ecommerce-new-products';
 import EcommerceYearlySales from '@/sections/overview/e-commerce/ecommerce-yearly-sales';
@@ -23,20 +38,6 @@ import {
   _ecommerceLatestProducts,
 } from '@/_mock';
 
-import Box from '@mui/material/Box';
-import Stack from '@mui/material/Stack';
-import Paper from '@mui/material/Paper';
-import Button from '@mui/material/Button';
-import Switch from '@mui/material/Switch';
-import Divider from '@mui/material/Divider';
-import ListItem from '@mui/material/ListItem';
-import { useTheme } from '@mui/material/styles';
-import Container from '@mui/material/Container';
-import Grid from '@mui/material/Unstable_Grid2';
-import TextField from '@mui/material/TextField';
-import Typography from '@mui/material/Typography';
-import InputAdornment from '@mui/material/InputAdornment';
-
 // ----------------------------------------------------------------------
 
 export default function WalktourView() {
@@ -49,7 +50,7 @@ export default function WalktourView() {
       {
         target: '#demo__1',
         title: 'Step 1',
-        disableBeacon: true,
+        skipBeacon: true,
         content: (
           <Typography sx={{ color: 'text.secondary' }}>
             Aenean posuere, tortor sed cursus feugiat, nunc augue blandit nunc,
@@ -89,7 +90,7 @@ export default function WalktourView() {
               fullWidth
               label="Email"
               placeholder="example@gmail.com"
-              InputLabelProps={{ shrink: true }}
+              slotProps={{ inputLabel: { shrink: true } }}
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">
@@ -173,9 +174,6 @@ export default function WalktourView() {
         placement: 'left',
         showProgress: false,
         styles: {
-          options: {
-            arrowColor: theme.palette.grey[900],
-          },
           tooltip: {
             width: 480,
             backgroundColor: theme.palette.grey[900],
@@ -186,7 +184,7 @@ export default function WalktourView() {
           buttonBack: {
             color: theme.palette.common.white,
           },
-          buttonNext: {
+          buttonPrimary: {
             marginLeft: theme.spacing(1.25),
             color: theme.palette.primary.contrastText,
             backgroundColor: theme.palette.primary.main,
@@ -225,14 +223,14 @@ export default function WalktourView() {
     <>
       <Walktour
         continuous
-        showProgress
-        showSkipButton
-        disableOverlayClose
         steps={walktour.steps}
         run={walktour.run}
-        callback={walktour.onCallback}
-        getHelpers={walktour.setHelpers}
-        scrollDuration={500}
+        onEvent={walktour.onCallback}
+        options={{
+          overlayClickAction: false,
+          scrollDuration: 500,
+          buttons: ['back', 'close', 'primary', 'skip'],
+        }}
       />
 
       <ComponentHero>
@@ -262,7 +260,7 @@ export default function WalktourView() {
         </Stack>
 
         <Grid container spacing={3}>
-          <Grid xs={12} md={8}>
+          <Grid size={{ xs: 12, md: 8 }}>
             <EcommerceWelcome
               id="demo__1"
               title={`Congratulations! \n Jaydon Frankie`}
@@ -276,11 +274,11 @@ export default function WalktourView() {
             />
           </Grid>
 
-          <Grid xs={12} md={4}>
+          <Grid size={{ xs: 12, md: 4 }}>
             <EcommerceNewProducts id="demo__2" list={_ecommerceNewProducts} />
           </Grid>
 
-          <Grid xs={12} md={4}>
+          <Grid size={{ xs: 12, md: 4 }}>
             <EcommerceWidgetSummary
               title="Product Sold"
               percent={2.6}
@@ -291,7 +289,7 @@ export default function WalktourView() {
             />
           </Grid>
 
-          <Grid xs={12} md={4}>
+          <Grid size={{ xs: 12, md: 4 }}>
             <EcommerceWidgetSummary
               id="demo__3"
               title="Total Balance"
@@ -304,7 +302,7 @@ export default function WalktourView() {
             />
           </Grid>
 
-          <Grid xs={12} md={4}>
+          <Grid size={{ xs: 12, md: 4 }}>
             <EcommerceWidgetSummary
               title="Sales Profit"
               percent={0.6}
@@ -319,7 +317,7 @@ export default function WalktourView() {
             />
           </Grid>
 
-          <Grid xs={12} md={6} lg={4}>
+          <Grid size={{ xs: 12, md: 6, lg: 4 }}>
             <EcommerceSaleByGender
               title="Sale By Gender"
               total={2324}
@@ -332,7 +330,7 @@ export default function WalktourView() {
             />
           </Grid>
 
-          <Grid xs={12} md={6} lg={8}>
+          <Grid size={{ xs: 12, md: 6, lg: 8 }}>
             <EcommerceYearlySales
               id="demo__4"
               title="Yearly Sales"
@@ -384,14 +382,14 @@ export default function WalktourView() {
             />
           </Grid>
 
-          <Grid xs={12} md={6} lg={8}>
+          <Grid size={{ xs: 12, md: 6, lg: 8 }}>
             <EcommerceSalesOverview
               title="Sales Overview"
               data={_ecommerceSalesOverview}
             />
           </Grid>
 
-          <Grid xs={12} md={6} lg={4}>
+          <Grid size={{ xs: 12, md: 6, lg: 4 }}>
             <EcommerceCurrentBalance
               title="Current Balance"
               currentBalance={187650}
@@ -399,7 +397,7 @@ export default function WalktourView() {
             />
           </Grid>
 
-          <Grid xs={12} md={6} lg={8}>
+          <Grid size={{ xs: 12, md: 6, lg: 8 }}>
             <EcommerceBestSalesman
               title="Best Salesman"
               tableData={_ecommerceBestSalesman}
@@ -413,7 +411,7 @@ export default function WalktourView() {
             />
           </Grid>
 
-          <Grid xs={12} md={6} lg={4}>
+          <Grid size={{ xs: 12, md: 6, lg: 4 }}>
             <EcommerceLatestProducts
               id="demo__5"
               title="Latest Products"

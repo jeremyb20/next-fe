@@ -1,7 +1,7 @@
+import { styled } from '@mui/material/styles';
+
 import { fNumber } from '@/utils/format-number';
 import Chart, { useChart } from '@/components/chart';
-
-import { styled } from '@mui/material/styles';
 
 // ----------------------------------------------------------------------
 

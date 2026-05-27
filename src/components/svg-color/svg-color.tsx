@@ -1,5 +1,4 @@
 import { forwardRef } from 'react';
-
 import Box, { BoxProps } from '@mui/material/Box';
 
 // ----------------------------------------------------------------------

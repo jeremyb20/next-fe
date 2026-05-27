@@ -1,6 +1,43 @@
 'use client';
 
 import isEqual from 'lodash/isEqual';
+import Card from '@mui/material/Card';
+import Stack from '@mui/material/Stack';
+import Button from '@mui/material/Button';
+import Container from '@mui/material/Container';
+import { useState, useEffect, useCallback } from 'react';
+// import {
+//   DataGrid,
+//   GridColDef,
+//   GridToolbarExport,
+//   GridActionsCellItem,
+//   GridToolbarContainer,
+//   GridRowSelectionModel,
+//   GridToolbarQuickFilter,
+//   GridToolbarFilterButton,
+//   GridToolbarColumnsButton,
+//   GridColumnVisibilityModel,
+// } from '@mui/x-data-grid';
+import {
+  DataGrid,
+  GridColDef,
+  GridActionsCellItem,
+  GridRowId,
+  GridColumnVisibilityModel,
+  // Herramientas del toolbar - nueva estructura en v8
+  // GridToolbarQuickFilter,
+  // GridToolbarFilterButton,
+  // GridToolbarColumnsButton,
+  // GridToolbarExport,
+  // GridToolbar,
+  // GridToolbarContainer,
+  QuickFilter,
+  ColumnsPanelTrigger,
+  FilterPanelTrigger,
+  ExportPrint,
+  Toolbar, // Este es el nuevo reemplazo de GridToolbarContainer
+} from '@mui/x-data-grid';
+
 import { paths } from '@/routes/paths';
 import { useRouter } from '@/routes/hooks';
 import Iconify from '@/components/iconify';
@@ -10,7 +47,6 @@ import { RouterLink } from '@/routes/components';
 import { useBoolean } from '@/hooks/use-boolean';
 import { useSnackbar } from '@/components/snackbar';
 import EmptyContent from '@/components/empty-content';
-import { useState, useEffect, useCallback } from 'react';
 import { ConfirmDialog } from '@/components/custom-dialog';
 import { useSettingsContext } from '@/components/settings';
 import CustomBreadcrumbs from '@/components/custom-breadcrumbs';
@@ -19,23 +55,6 @@ import {
   IProductTableFilters,
   IProductTableFilterValue,
 } from '@/types/product';
-
-import Card from '@mui/material/Card';
-import Stack from '@mui/material/Stack';
-import Button from '@mui/material/Button';
-import Container from '@mui/material/Container';
-import {
-  DataGrid,
-  GridColDef,
-  GridToolbarExport,
-  GridActionsCellItem,
-  GridToolbarContainer,
-  GridRowSelectionModel,
-  GridToolbarQuickFilter,
-  GridToolbarFilterButton,
-  GridToolbarColumnsButton,
-  GridColumnVisibilityModel,
-} from '@mui/x-data-grid';
 
 import ProductTableToolbar from '../product-table-toolbar';
 import ProductTableFiltersResult from '../product-table-filters-result';
@@ -82,9 +101,7 @@ export default function ProductListView() {
 
   const [filters, setFilters] = useState(defaultFilters);
 
-  const [selectedRowIds, setSelectedRowIds] = useState<GridRowSelectionModel>(
-    []
-  );
+  const [selectedRowIds, setSelectedRowIds] = useState<GridRowId[]>([]);
 
   const [columnVisibilityModel, setColumnVisibilityModel] =
     useState<GridColumnVisibilityModel>(HIDE_COLUMNS);
@@ -225,7 +242,6 @@ export default function ProductListView() {
           onClick={() => {
             handleDeleteRow(params.row.id);
           }}
-          sx={{ color: 'error.main' }}
         />,
       ],
     },
@@ -249,7 +265,7 @@ export default function ProductListView() {
         <CustomBreadcrumbs
           heading="List"
           links={[
-            { name: 'Inicio', href: paths.dashboard.root },
+            { name: 'Dashboard', href: paths.dashboard.root },
             {
               name: 'Product',
               href: paths.dashboard.product.root,
@@ -296,7 +312,7 @@ export default function ProductListView() {
               },
             }}
             onRowSelectionModelChange={(newSelectionModel) => {
-              setSelectedRowIds(newSelectionModel);
+              setSelectedRowIds(newSelectionModel as unknown as GridRowId[]);
             }}
             columnVisibilityModel={columnVisibilityModel}
             onColumnVisibilityModelChange={(newModel) =>
@@ -305,7 +321,7 @@ export default function ProductListView() {
             slots={{
               toolbar: () => (
                 <>
-                  <GridToolbarContainer>
+                  <Toolbar>
                     <ProductTableToolbar
                       filters={filters}
                       onFilters={handleFilters}
@@ -313,7 +329,7 @@ export default function ProductListView() {
                       publishOptions={PUBLISH_OPTIONS}
                     />
 
-                    <GridToolbarQuickFilter />
+                    <QuickFilter />
 
                     <Stack
                       spacing={1}
@@ -335,11 +351,11 @@ export default function ProductListView() {
                         </Button>
                       )}
 
-                      <GridToolbarColumnsButton />
-                      <GridToolbarFilterButton />
-                      <GridToolbarExport />
+                      <ColumnsPanelTrigger />
+                      <FilterPanelTrigger />
+                      <ExportPrint />
                     </Stack>
-                  </GridToolbarContainer>
+                  </Toolbar>
 
                   {canReset && (
                     <ProductTableFiltersResult
@@ -356,7 +372,7 @@ export default function ProductListView() {
               noResultsOverlay: () => <EmptyContent title="No results found" />,
             }}
             slotProps={{
-              columnsPanel: {
+              columnsManagement: {
                 getTogglableColumns,
               },
             }}

@@ -1,7 +1,8 @@
-import axiosInstance, { endpoints } from '@/utils/axios';
-import { IUserCalendarResponse } from '@/types/calendar';
-import { DeviceSuscriptions } from '@/types/service-worker';
 import { useQuery, keepPreviousData } from '@tanstack/react-query';
+
+import { IUserCalendarResponse } from '@/types/calendar';
+import axiosInstance, { endpoints } from '@/utils/axios';
+import { DeviceSuscriptions } from '@/types/service-worker';
 import {
   IQRStats,
   IPetStats,
@@ -245,6 +246,4 @@ export const useGetCalendarEvents = (userId: string | undefined) => {
       enabled: authenticated,
     }
   );
-}
-
-
+};

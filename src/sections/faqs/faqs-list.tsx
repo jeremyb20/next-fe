@@ -1,9 +1,7 @@
 import React from 'react';
-import Iconify from '@/components/iconify';
-
+import { useTheme } from '@mui/material/styles';
 import {
   Box,
-  useTheme,
   Accordion,
   Container,
   Typography,
@@ -11,6 +9,7 @@ import {
   AccordionDetails,
 } from '@mui/material';
 
+import Iconify from '@/components/iconify';
 const FaqsList = () => {
   const theme = useTheme();
 

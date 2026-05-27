@@ -1,13 +1,4 @@
 import { useCallback } from 'react';
-import Label from '@/components/label';
-import Iconify from '@/components/iconify';
-import FileThumbnail from '@/components/file-thumbnail';
-import { IFileFilters, IFileFilterValue } from '@/types/file';
-import CustomPopover, { usePopover } from '@/components/custom-popover';
-import CustomDateRangePicker, {
-  shortDateLabel,
-} from '@/components/custom-date-range-picker';
-
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
@@ -16,6 +7,15 @@ import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import CardActionArea from '@mui/material/CardActionArea';
 import InputAdornment from '@mui/material/InputAdornment';
+
+import Label from '@/components/label';
+import Iconify from '@/components/iconify';
+import FileThumbnail from '@/components/file-thumbnail';
+import { IFileFilters, IFileFilterValue } from '@/types/file';
+import CustomPopover, { usePopover } from '@/components/custom-popover';
+import CustomDateRangePicker, {
+  shortDateLabel,
+} from '@/components/custom-date-range-picker';
 
 // ----------------------------------------------------------------------
 

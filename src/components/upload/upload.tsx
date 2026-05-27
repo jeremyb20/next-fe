@@ -1,12 +1,12 @@
-import { useDropzone } from 'react-dropzone';
-import { UploadIllustration } from '@/assets/illustrations';
-
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
+import { useDropzone } from 'react-dropzone';
 import { alpha } from '@mui/material/styles';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
+
+import { UploadIllustration } from '@/assets/illustrations';
 
 import Iconify from '../iconify';
 import { UploadFile, UploadProps } from './types';
@@ -139,7 +139,6 @@ export default function Upload({
     <>
       <Box sx={{ my: 3 }}>
         <MultiFilePreview
-          // eslint-disable-next-line @typescript-eslint/no-shadow
           files={files.map((file) => {
             // Si es string, mantenerlo como string
             if (typeof file === 'string') return file;

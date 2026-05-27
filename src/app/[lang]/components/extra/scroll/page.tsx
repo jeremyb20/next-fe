@@ -1,8 +1,10 @@
+import { Metadata } from 'next';
+
 import ScrollView from '@/sections/_examples/extra/scroll-view';
 
 // ----------------------------------------------------------------------
 
-export const metadata = {
+export const metadata: Metadata = {
   title: 'Components: Scroll',
 };
 

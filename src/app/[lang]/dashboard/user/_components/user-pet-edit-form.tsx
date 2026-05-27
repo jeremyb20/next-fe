@@ -1,33 +1,50 @@
-/* eslint-disable no-nested-ternary */
-
 'use client';
 
 import * as Yup from 'yup';
+import Box from '@mui/material/Box';
+import { Container } from '@mui/system';
+import Button from '@mui/material/Button';
+import MenuItem from '@mui/material/MenuItem';
+import { useTheme } from '@mui/material/styles';
+import { useSearchParams } from 'next/navigation';
+import { yupResolver } from '@hookform/resolvers/yup';
+import useMediaQuery from '@mui/system/useMediaQuery';
+import { useForm, Controller } from 'react-hook-form';
+import { useQueryClient } from '@tanstack/react-query';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { useMemo, useState, useEffect, useCallback } from 'react';
+import {
+  Tab,
+  Tabs,
+  Card,
+  Stack,
+  Typography,
+  IconButton,
+  ButtonGroup,
+  CardContent,
+  InputAdornment,
+} from '@mui/material';
+
 import { paths } from '@/routes/paths';
-import { endpoints } from '@/utils/axios';
 import { countries } from '@/assets/data';
-import { HOST_API } from '@/config-global';
+import { endpoints } from '@/utils/axios';
 import Iconify from '@/components/iconify';
+import { HOST_API } from '@/config-global';
 import { useRouter } from '@/routes/hooks';
 import { OptionType } from '@/types/global';
 import { PetFormValues } from '@/types/pet';
 import { fData } from '@/utils/format-number';
-import { useSearchParams } from 'next/navigation';
 import { useRedirect } from '@/hooks/use-redirect';
 import { useSnackbar } from '@/components/snackbar';
-import { useForm, Controller } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
-import { useQueryClient } from '@tanstack/react-query';
 import { useGetPetProfileById } from '@/hooks/use-fetch';
 import { useTranslation } from '@/hooks/use-translation';
 import RouterLink from '@/routes/components/router-link';
 import { useManagerUser } from '@/hooks/use-manager-user';
 import { getSpeciesFromBreed } from '@/utils/pet-age.utils';
-import UploadAvatar from '@/components/upload/upload-avatar';
+import { LoadingScreen } from '@/components/loading-screen';
 import StickyHeader from '@/components/header/sticky-header';
+import UploadAvatar from '@/components/upload/upload-avatar';
 import CardComponent from '@/sections/_examples/card-component';
-import { useMemo, useState, useEffect, useCallback } from 'react';
-import SplashScreen from '@/components/loading-screen/splash-screen';
 import CustomPopover, { usePopover } from '@/components/custom-popover';
 import { useCreateGenericMutation } from '@/hooks/user-generic-mutation';
 import { PetAvatarWithBadge } from '@/components/badge/PetAvatarWithBage';
@@ -51,26 +68,6 @@ import FormProvider, {
   RHFTextField,
   RHFAutocomplete,
 } from '@/components/hook-form';
-
-import Box from '@mui/material/Box';
-import { Container } from '@mui/system';
-import Button from '@mui/material/Button';
-import MenuItem from '@mui/material/MenuItem';
-import LoadingButton from '@mui/lab/LoadingButton';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import {
-  Tab,
-  Tabs,
-  Card,
-  Stack,
-  useTheme,
-  Typography,
-  IconButton,
-  ButtonGroup,
-  CardContent,
-  useMediaQuery,
-  InputAdornment,
-} from '@mui/material';
 
 // ----------------------------------------------------------------------
 
@@ -563,7 +560,6 @@ export default function PetEditForm({ petId }: Props) {
       setPetPhoto(null);
       setPhotoIdToDelete(null);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentPet, isLoading, petId, methods]);
 
   // Reemplaza useMemo por useEffect para weightUnit
@@ -628,10 +624,6 @@ export default function PetEditForm({ petId }: Props) {
     }));
   }, [watch]);
 
-  if (isLoading) {
-    return <SplashScreen />;
-  }
-
   // Si no hay datos de mascota
   if (!currentPet) {
     return (
@@ -681,7 +673,7 @@ export default function PetEditForm({ petId }: Props) {
           }}
         >
           <CardContent sx={{ position: 'relative', zIndex: 1, p: 2, pt: 0 }}>
-            <Button onClick={redirectBack}>
+            <Button onClick={redirectBack} sx={{ my: 0.5 }}>
               <Iconify icon="eva:arrow-ios-back-fill" width={24} />
               <Typography variant="subtitle2" ml={1}>
                 {t('Back')}
@@ -697,14 +689,14 @@ export default function PetEditForm({ petId }: Props) {
                   {`${t('Edit')} ${currentPet?.petName || 'Pet'}`}
                 </Typography>
               </Box>
-              <LoadingButton
+              <Button
                 type="submit"
                 onClick={handleSubmit(onSubmit)}
                 variant="contained"
                 loading={isSubmitting}
               >
                 {t('Update Pet')}
-              </LoadingButton>
+              </Button>
             </Box>
           </CardContent>
 
@@ -733,6 +725,7 @@ export default function PetEditForm({ petId }: Props) {
       </StickyHeader>
 
       <FormProvider methods={methods}>
+        {isLoading && <LoadingScreen />}
         <Tabs
           value={tabValue}
           onChange={handleTabChange}
@@ -1083,7 +1076,6 @@ export default function PetEditForm({ petId }: Props) {
             display="grid"
             gridTemplateColumns={{
               xs: 'repeat(1, 1fr)',
-              sm: 'repeat(2, 1fr)',
             }}
           >
             <Stack
@@ -1402,7 +1394,7 @@ export default function PetEditForm({ petId }: Props) {
             },
           }}
         >
-          <LoadingButton
+          <Button
             type="submit"
             onClick={handleSubmit(onSubmit)}
             variant="contained"
@@ -1410,7 +1402,7 @@ export default function PetEditForm({ petId }: Props) {
             loading={isSubmitting}
           >
             {t('Update Pet')}
-          </LoadingButton>
+          </Button>
         </Stack>
       </FormProvider>
     </Container>

@@ -1,11 +1,3 @@
-import Image from '@/components/image';
-import Iconify from '@/components/iconify';
-import { fDate } from '@/utils/format-time';
-import { IUserProfilePost } from '@/types/user';
-import { useRef, useState, useCallback } from 'react';
-import { fShortenNumber } from '@/utils/format-number';
-import { useManagerUser } from '@/hooks/use-manager-user';
-
 import Box from '@mui/material/Box';
 import Link from '@mui/material/Link';
 import Card from '@mui/material/Card';
@@ -18,9 +10,17 @@ import InputBase from '@mui/material/InputBase';
 import IconButton from '@mui/material/IconButton';
 import CardHeader from '@mui/material/CardHeader';
 import Typography from '@mui/material/Typography';
+import { useRef, useState, useCallback } from 'react';
 import InputAdornment from '@mui/material/InputAdornment';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import AvatarGroup, { avatarGroupClasses } from '@mui/material/AvatarGroup';
+
+import Image from '@/components/image';
+import Iconify from '@/components/iconify';
+import { fDate } from '@/utils/format-time';
+import { IUserProfilePost } from '@/types/user';
+import { fShortenNumber } from '@/utils/format-number';
+import { useManagerUser } from '@/hooks/use-manager-user';
 
 // ----------------------------------------------------------------------
 

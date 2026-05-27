@@ -1,7 +1,6 @@
 'use client';
 
 import Image from 'next/image';
-
 import Box from '@mui/material/Box';
 
 export default function CoatOfArms() {

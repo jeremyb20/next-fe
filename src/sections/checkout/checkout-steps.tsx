@@ -1,5 +1,3 @@
-import Iconify from '@/components/iconify';
-
 import Box from '@mui/material/Box';
 import Step from '@mui/material/Step';
 import Stack from '@mui/material/Stack';
@@ -9,6 +7,8 @@ import StepLabel, { stepLabelClasses } from '@mui/material/StepLabel';
 import MuiStepConnector, {
   stepConnectorClasses,
 } from '@mui/material/StepConnector';
+
+import Iconify from '@/components/iconify';
 
 // ----------------------------------------------------------------------
 
@@ -54,7 +54,7 @@ export default function CheckoutSteps({
       {steps.map((label) => (
         <Step key={label}>
           <StepLabel
-            StepIconComponent={StepIcon}
+            slots={{ stepIcon: StepIcon }}
             sx={{
               [`& .${stepLabelClasses.label}`]: {
                 fontWeight: 'fontWeightSemiBold',

@@ -1,23 +1,22 @@
 import * as Yup from 'yup';
-import { IQrCode } from '@/types/api';
-import { useForm } from 'react-hook-form';
-import { endpoints } from '@/utils/axios';
-import { HOST_API } from '@/config-global';
-import { useSnackbar } from '@/components/snackbar';
-import { yupResolver } from '@hookform/resolvers/yup';
-import { useResponsive } from '@/hooks/use-responsive';
-import { useMemo, Dispatch, useEffect, SetStateAction } from 'react';
-import { useCreateGenericMutation } from '@/hooks/user-generic-mutation';
-import FormProvider, { RHFSelect, RHFTextField } from '@/components/hook-form';
-
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
+import Grid from '@mui/material/Grid';
 import Stack from '@mui/material/Stack';
-import Grid from '@mui/material/Unstable_Grid2';
+import { useForm } from 'react-hook-form';
 import { Button, MenuItem } from '@mui/material';
 import CardHeader from '@mui/material/CardHeader';
 import Typography from '@mui/material/Typography';
-import LoadingButton from '@mui/lab/LoadingButton';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { useMemo, Dispatch, useEffect, SetStateAction } from 'react';
+
+import { IQrCode } from '@/types/api';
+import { endpoints } from '@/utils/axios';
+import { HOST_API } from '@/config-global';
+import { useSnackbar } from '@/components/snackbar';
+import { useResponsive } from '@/hooks/use-responsive';
+import { useCreateGenericMutation } from '@/hooks/user-generic-mutation';
+import FormProvider, { RHFSelect, RHFTextField } from '@/components/hook-form';
 
 // ----------------------------------------------------------------------
 
@@ -121,7 +120,7 @@ export default function QrCodeEditForm({
   const renderBasicInfo = (
     <>
       {mdUp && (
-        <Grid md={4}>
+        <Grid size={{ md: 4 }}>
           <Typography variant="h6" sx={{ mb: 0.5 }}>
             Basic Information
           </Typography>
@@ -131,7 +130,7 @@ export default function QrCodeEditForm({
         </Grid>
       )}
 
-      <Grid xs={12} md={8}>
+      <Grid size={{ xs: 12, md: 8 }}>
         <Card>
           {!mdUp && <CardHeader title="Basic Information" />}
 
@@ -156,7 +155,7 @@ export default function QrCodeEditForm({
               <RHFSelect
                 name="status"
                 label="Status"
-                InputLabelProps={{ shrink: true }}
+                slotProps={{ inputLabel: { shrink: true } }}
               >
                 {statusOptions.map((size) => (
                   <MenuItem
@@ -175,7 +174,7 @@ export default function QrCodeEditForm({
                 name="activationDate"
                 label="Activation Date"
                 type="datetime-local"
-                InputLabelProps={{ shrink: true }}
+                slotProps={{ inputLabel: { shrink: true } }}
               />
             </Box>
 
@@ -194,7 +193,7 @@ export default function QrCodeEditForm({
   const renderAssignment = (
     <>
       {mdUp && (
-        <Grid md={4}>
+        <Grid size={{ md: 4 }}>
           <Typography variant="h6" sx={{ mb: 0.5 }}>
             Assignment
           </Typography>
@@ -204,7 +203,7 @@ export default function QrCodeEditForm({
         </Grid>
       )}
 
-      <Grid xs={12} md={8}>
+      <Grid size={{ xs: 12, md: 8 }}>
         <Card>
           {!mdUp && <CardHeader title="Assignment" />}
 
@@ -283,7 +282,7 @@ export default function QrCodeEditForm({
   const renderMetadata = (
     <>
       {mdUp && (
-        <Grid md={4}>
+        <Grid size={{ md: 4 }}>
           <Typography variant="h6" sx={{ mb: 0.5 }}>
             Metadata
           </Typography>
@@ -293,7 +292,7 @@ export default function QrCodeEditForm({
         </Grid>
       )}
 
-      <Grid xs={12} md={8}>
+      <Grid size={{ xs: 12, md: 8 }}>
         <Card>
           {!mdUp && <CardHeader title="Metadata" />}
 
@@ -346,10 +345,9 @@ export default function QrCodeEditForm({
 
   const renderActions = (
     <>
-      {mdUp && <Grid md={4} />}
+      {mdUp && <Grid size={{ md: 4 }} />}
       <Grid
-        xs={12}
-        md={8}
+        size={{ xs: 12, md: 8 }}
         sx={{
           display: 'flex',
           alignItems: 'center',
@@ -359,14 +357,14 @@ export default function QrCodeEditForm({
         <Button variant="outlined" size="large" onClick={() => close(false)}>
           Cancel
         </Button>
-        <LoadingButton
+        <Button
           type="submit"
           variant="contained"
           size="large"
           loading={isSubmitting}
         >
           Save Changes
-        </LoadingButton>
+        </Button>
       </Grid>
     </>
   );

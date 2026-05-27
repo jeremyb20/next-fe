@@ -2,25 +2,23 @@
 
 import * as Yup from 'yup';
 import { useState } from 'react';
-import { paths } from '@/routes/paths';
-import { useForm } from 'react-hook-form';
-import { useRouter } from '@/routes/hooks';
-import { RouterLink } from '@/routes/components';
-import { useBoolean } from '@/hooks/use-boolean';
-import { yupResolver } from '@hookform/resolvers/yup';
-
 import Link from '@mui/material/Link';
+import { Button } from '@mui/material';
 import Alert from '@mui/material/Alert';
 import Stack from '@mui/material/Stack';
+import { useForm } from 'react-hook-form';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
-import LoadingButton from '@mui/lab/LoadingButton';
+import { yupResolver } from '@hookform/resolvers/yup';
 import InputAdornment from '@mui/material/InputAdornment';
 
-// import { useAuthContext } from '@/auth/hooks';
-
+import { paths } from '@/routes/paths';
+import { useRouter } from '@/routes/hooks';
 import Iconify from '@/components/iconify';
+// import { useAuthContext } from '@/auth/hooks';
+import { RouterLink } from '@/routes/components';
+import { useBoolean } from '@/hooks/use-boolean';
 import FormProvider, { RHFTextField } from '@/components/hook-form';
 
 // ----------------------------------------------------------------------
@@ -79,7 +77,13 @@ export default function FirebaseRegisterView() {
     } catch (error) {
       console.error(error);
       reset();
-      setErrorMsg(typeof error === 'string' ? error : error.message);
+      setErrorMsg(
+        typeof error === 'string'
+          ? error
+          : error instanceof Error
+            ? error.message
+            : 'Error saving user information'
+      );
     }
   });
 
@@ -175,7 +179,7 @@ export default function FirebaseRegisterView() {
         }}
       />
 
-      <LoadingButton
+      <Button
         fullWidth
         color="inherit"
         size="large"
@@ -184,7 +188,7 @@ export default function FirebaseRegisterView() {
         loading={isSubmitting}
       >
         Create account
-      </LoadingButton>
+      </Button>
     </Stack>
   );
 

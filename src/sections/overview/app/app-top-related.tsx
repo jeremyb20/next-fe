@@ -1,8 +1,3 @@
-import Label from '@/components/label';
-import Iconify from '@/components/iconify';
-import Scrollbar from '@/components/scrollbar';
-import { fCurrency, fShortenNumber } from '@/utils/format-number';
-
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import Rating from '@mui/material/Rating';
@@ -10,6 +5,11 @@ import Avatar from '@mui/material/Avatar';
 import CardHeader from '@mui/material/CardHeader';
 import Typography from '@mui/material/Typography';
 import Card, { CardProps } from '@mui/material/Card';
+
+import Label from '@/components/label';
+import Iconify from '@/components/iconify';
+import Scrollbar from '@/components/scrollbar';
+import { fCurrency, fShortenNumber } from '@/utils/format-number';
 
 // ----------------------------------------------------------------------
 

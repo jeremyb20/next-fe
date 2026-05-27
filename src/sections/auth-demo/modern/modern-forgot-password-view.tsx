@@ -2,10 +2,16 @@
 
 import * as Yup from 'yup';
 import dynamic from 'next/dynamic';
-import { paths } from '@/routes/paths';
+import Link from '@mui/material/Link';
 import { useSnackbar } from 'notistack';
+import Stack from '@mui/material/Stack';
 import { useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import Typography from '@mui/material/Typography';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { Box, Alert, CircularProgress, Button } from '@mui/material';
+
+import { paths } from '@/routes/paths';
 import { endpoints } from '@/utils/axios';
 import Iconify from '@/components/iconify';
 import { useParams } from '@/routes/hooks';
@@ -13,16 +19,9 @@ import { PasswordIcon } from '@/assets/icons';
 import { RouterLink } from '@/routes/components';
 import { fallbackLng } from '@/app/i18n/settings';
 import { SITEKEY, HOST_API } from '@/config-global';
-import { yupResolver } from '@hookform/resolvers/yup';
 import { useTranslation } from '@/hooks/use-translation';
 import FormProvider, { RHFTextField } from '@/components/hook-form';
 import { useCreateGenericMutation } from '@/hooks/user-generic-mutation';
-
-import Link from '@mui/material/Link';
-import Stack from '@mui/material/Stack';
-import Typography from '@mui/material/Typography';
-import LoadingButton from '@mui/lab/LoadingButton';
-import { Box, Alert, CircularProgress } from '@mui/material';
 
 // ----------------------------------------------------------------------
 const Turnstile = dynamic(
@@ -104,7 +103,9 @@ export default function ModernForgotPasswordView() {
         message: t(
           typeof error === 'string'
             ? error
-            : error.message || 'Something went wrong!'
+            : error instanceof Error
+              ? error.message
+              : 'Something went wrong!'
         ),
       });
     }
@@ -145,7 +146,7 @@ export default function ModernForgotPasswordView() {
           />
         </Box>
       )}
-      <LoadingButton
+      <Button
         fullWidth
         size="large"
         type="submit"
@@ -156,7 +157,7 @@ export default function ModernForgotPasswordView() {
         sx={{ justifyContent: 'space-between', pl: 2, pr: 1.5 }}
       >
         {t('Send Request')}
-      </LoadingButton>
+      </Button>
 
       <Link
         component={RouterLink}

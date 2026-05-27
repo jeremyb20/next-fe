@@ -1,17 +1,12 @@
 'use client';
 
-import { paths } from '@/routes/paths';
-import Iconify from '@/components/iconify';
-import { useState, useCallback } from 'react';
-import CustomBreadcrumbs from '@/components/custom-breadcrumbs';
-import ComponentHero from '@/sections/_examples/component-hero';
-
 import List from '@mui/material/List';
 import Masonry from '@mui/lab/Masonry';
 import Paper from '@mui/material/Paper';
 import Avatar from '@mui/material/Avatar';
 import Switch from '@mui/material/Switch';
 import Divider from '@mui/material/Divider';
+import { useState, useCallback } from 'react';
 import Collapse from '@mui/material/Collapse';
 import Checkbox from '@mui/material/Checkbox';
 import Container from '@mui/material/Container';
@@ -24,6 +19,11 @@ import ListItemSecondaryAction from '@mui/material/ListItemSecondaryAction';
 import ListItemButton, {
   ListItemButtonProps,
 } from '@mui/material/ListItemButton';
+
+import { paths } from '@/routes/paths';
+import Iconify from '@/components/iconify';
+import CustomBreadcrumbs from '@/components/custom-breadcrumbs';
+import ComponentHero from '@/sections/_examples/component-hero';
 
 import ComponentBlock from '../component-block';
 

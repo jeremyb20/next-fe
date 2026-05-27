@@ -1,15 +1,6 @@
-/* eslint-disable no-nested-ternary */
-
 'use client';
 
 import sumBy from 'lodash/sumBy';
-import { paths } from '@/routes/paths';
-import { useRouter } from '@/routes/hooks';
-import { RouterLink } from '@/routes/components';
-import { useBoolean } from '@/hooks/use-boolean';
-import { useMemo, useState, useCallback } from 'react';
-import { isAfter, isBetween } from '@/utils/format-time';
-
 import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
 import Card from '@mui/material/Card';
@@ -21,22 +12,36 @@ import Tooltip from '@mui/material/Tooltip';
 import Container from '@mui/material/Container';
 import TableBody from '@mui/material/TableBody';
 import IconButton from '@mui/material/IconButton';
+import { useMemo, useState, useCallback } from 'react';
 import { alpha, useTheme } from '@mui/material/styles';
 import TableContainer from '@mui/material/TableContainer';
-
-// import { _invoices, INVOICE_SERVICE_OPTIONS } from '@/_mock';
+import {
+  Box,
+  Paper,
+  Dialog,
+  Typography,
+  DialogTitle,
+  DialogContent,
+  LinearProgress,
+} from '@mui/material';
 
 import { IQrCode } from '@/types/api';
+import { paths } from '@/routes/paths';
 import Label from '@/components/label';
+import { useRouter } from '@/routes/hooks';
+// import { _invoices, INVOICE_SERVICE_OPTIONS } from '@/_mock';
 import Iconify from '@/components/iconify';
 import Scrollbar from '@/components/scrollbar';
+import { RouterLink } from '@/routes/components';
+import { useBoolean } from '@/hooks/use-boolean';
 import { useGetQRStats } from '@/hooks/use-fetch';
 import { useSnackbar } from '@/components/snackbar';
 import EmptyContent from '@/components/empty-content';
+import { isAfter, isBetween } from '@/utils/format-time';
 import { ConfirmDialog } from '@/components/custom-dialog';
 import { useSettingsContext } from '@/components/settings';
-import CustomBreadcrumbs from '@/components/custom-breadcrumbs';
 import FilterToolbar from '@/components/filters/filter-toolbar';
+import CustomBreadcrumbs from '@/components/custom-breadcrumbs';
 import { ADMIN_QRCODE_FILTER_TOOLBAR } from '@/components/filters/filter-constants';
 import {
   UserQueryParams,
@@ -50,16 +55,6 @@ import {
   TableSelectedAction,
   TablePaginationCustom,
 } from '@/components/table';
-
-import {
-  Box,
-  Paper,
-  Dialog,
-  Typography,
-  DialogTitle,
-  DialogContent,
-  LinearProgress,
-} from '@mui/material';
 
 import QrCodeAnalytic from '../qrcode-analytic';
 import QrCodeTableRow from '../qrcode-table-row';
@@ -94,7 +89,7 @@ const defaultFilters: IQRcodeTableFilters = {
 
 // ----------------------------------------------------------------------
 
-export default function PromotionsListView() {
+export default function QrCodeListView() {
   const { enqueueSnackbar } = useSnackbar();
   const table = useTable({ defaultOrderBy: 'createdAt' });
   const settings = useSettingsContext();
@@ -230,6 +225,7 @@ export default function PromotionsListView() {
 
   const handleDeleteRow = useCallback(
     (id: string) => {
+      console.log('Deleting row with id:', id);
       enqueueSnackbar('Delete success!');
     },
     [enqueueSnackbar]

@@ -1,11 +1,4 @@
-import { m } from 'framer-motion';
-import Image from '@/components/image';
-import Iconify from '@/components/iconify';
-import { useBoolean } from '@/hooks/use-boolean';
-import TextMaxLine from '@/components/text-max-line';
-import { useResponsive } from '@/hooks/use-responsive';
-import { varFade, MotionViewport } from '@/components/animate';
-
+import { m } from 'motion/react';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Drawer from '@mui/material/Drawer';
@@ -14,6 +7,13 @@ import AppBar from '@mui/material/AppBar';
 import Divider from '@mui/material/Divider';
 import Toolbar from '@mui/material/Toolbar';
 import ListItemButton from '@mui/material/ListItemButton';
+
+import Image from '@/components/image';
+import Iconify from '@/components/iconify';
+import { useBoolean } from '@/hooks/use-boolean';
+import TextMaxLine from '@/components/text-max-line';
+import { useResponsive } from '@/hooks/use-responsive';
+import { varFade, MotionViewport } from '@/components/animate';
 
 // ----------------------------------------------------------------------
 

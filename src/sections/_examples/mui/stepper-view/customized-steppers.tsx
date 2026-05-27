@@ -1,7 +1,4 @@
 import { useState } from 'react';
-import { bgGradient } from '@/theme/css';
-import Iconify from '@/components/iconify';
-
 import Box from '@mui/material/Box';
 import Step from '@mui/material/Step';
 import Paper from '@mui/material/Paper';
@@ -14,6 +11,9 @@ import { StepIconProps } from '@mui/material/StepIcon';
 import StepConnector, {
   stepConnectorClasses,
 } from '@mui/material/StepConnector';
+
+import { bgGradient } from '@/theme/css';
+import Iconify from '@/components/iconify';
 
 // ----------------------------------------------------------------------
 
@@ -204,7 +204,7 @@ export default function CustomizedSteppers() {
       >
         {STEPS.map((label) => (
           <Step key={label}>
-            <StepLabel StepIconComponent={QontoStepIcon}>{label}</StepLabel>
+            <StepLabel slots={{ stepIcon: QontoStepIcon }}>{label}</StepLabel>
           </Step>
         ))}
       </Stepper>
@@ -218,7 +218,9 @@ export default function CustomizedSteppers() {
       >
         {STEPS.map((label) => (
           <Step key={label}>
-            <StepLabel StepIconComponent={ColorlibStepIcon}>{label}</StepLabel>
+            <StepLabel slots={{ stepIcon: ColorlibStepIcon }}>
+              {label}
+            </StepLabel>
           </Step>
         ))}
       </Stepper>

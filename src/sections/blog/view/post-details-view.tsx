@@ -1,15 +1,5 @@
 'use client';
 
-import { paths } from '@/routes/paths';
-import { useGetPost } from '@/api/blog';
-import Iconify from '@/components/iconify';
-import Markdown from '@/components/markdown';
-import { POST_PUBLISH_OPTIONS } from '@/_mock';
-import { RouterLink } from '@/routes/components';
-import EmptyContent from '@/components/empty-content';
-import { fShortenNumber } from '@/utils/format-number';
-import { useState, useEffect, useCallback } from 'react';
-
 import Chip from '@mui/material/Chip';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
@@ -18,8 +8,18 @@ import Divider from '@mui/material/Divider';
 import Checkbox from '@mui/material/Checkbox';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
+import { useState, useEffect, useCallback } from 'react';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import AvatarGroup, { avatarGroupClasses } from '@mui/material/AvatarGroup';
+
+import { paths } from '@/routes/paths';
+import { useGetPost } from '@/api/blog';
+import Iconify from '@/components/iconify';
+import Markdown from '@/components/markdown';
+import { POST_PUBLISH_OPTIONS } from '@/_mock';
+import { RouterLink } from '@/routes/components';
+import EmptyContent from '@/components/empty-content';
+import { fShortenNumber } from '@/utils/format-number';
 
 import PostDetailsHero from '../post-details-hero';
 import PostCommentList from '../post-comment-list';

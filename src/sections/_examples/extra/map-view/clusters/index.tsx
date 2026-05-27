@@ -1,5 +1,4 @@
 import { memo, useRef } from 'react';
-import { MapBoxProps } from '@/components/map';
 import Map, {
   Layer,
   Source,
@@ -7,6 +6,8 @@ import Map, {
   LngLatLike,
   MapLayerMouseEvent,
 } from 'react-map-gl';
+
+import { MapBoxProps } from '@/components/map';
 
 import {
   clusterLayer,
@@ -18,6 +19,12 @@ import {
 
 function MapClusters({ ...other }: MapBoxProps) {
   const mapRef = useRef<MapRef>(null);
+
+  const {
+    projection: _projection,
+    logoPosition: _logoPosition,
+    ...mapProps
+  } = other;
 
   const onClick = (event: MapLayerMouseEvent) => {
     const feature = event.features?.[0];
@@ -54,7 +61,7 @@ function MapClusters({ ...other }: MapBoxProps) {
       interactiveLayerIds={[clusterLayer.id || '']}
       onClick={onClick}
       ref={mapRef}
-      {...other}
+      {...mapProps}
     >
       <Source
         id="earthquakes"

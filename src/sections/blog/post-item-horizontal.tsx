@@ -1,3 +1,11 @@
+import Box from '@mui/material/Box';
+import Link from '@mui/material/Link';
+import Card from '@mui/material/Card';
+import Stack from '@mui/material/Stack';
+import Avatar from '@mui/material/Avatar';
+import MenuItem from '@mui/material/MenuItem';
+import IconButton from '@mui/material/IconButton';
+
 import { paths } from '@/routes/paths';
 import Label from '@/components/label';
 import Image from '@/components/image';
@@ -10,14 +18,6 @@ import TextMaxLine from '@/components/text-max-line';
 import { useResponsive } from '@/hooks/use-responsive';
 import { fShortenNumber } from '@/utils/format-number';
 import CustomPopover, { usePopover } from '@/components/custom-popover';
-
-import Box from '@mui/material/Box';
-import Link from '@mui/material/Link';
-import Card from '@mui/material/Card';
-import Stack from '@mui/material/Stack';
-import Avatar from '@mui/material/Avatar';
-import MenuItem from '@mui/material/MenuItem';
-import IconButton from '@mui/material/IconButton';
 
 // ----------------------------------------------------------------------
 

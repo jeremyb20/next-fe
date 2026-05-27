@@ -1,15 +1,10 @@
-import { m, MotionProps } from 'framer-motion';
-
 import Stack from '@mui/material/Stack';
+import { m, MotionProps } from 'motion/react';
 import Container from '@mui/material/Container';
-// import TextField from '@mui/material/TextField';
 import Box, { BoxProps } from '@mui/material/Box';
 import { alpha, useTheme } from '@mui/material/styles';
-// import InputAdornment from '@mui/material/InputAdornment';
-// import { outlinedInputClasses } from '@mui/material/OutlinedInput';
 
 import { bgGradient } from '@/theme/css';
-// import Iconify from '@/components/iconify';
 import { varFade, MotionContainer } from '@/components/animate';
 
 // ----------------------------------------------------------------------

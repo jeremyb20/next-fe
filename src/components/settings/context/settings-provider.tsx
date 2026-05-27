@@ -1,6 +1,8 @@
 'use client';
 
 import isEqual from 'lodash/isEqual';
+import { useRef, useMemo, useState, useEffect, useCallback } from 'react';
+
 import { endpoints } from '@/utils/axios';
 import { HOST_API } from '@/config-global';
 import { useAuthContext } from '@/auth/hooks';
@@ -8,7 +10,6 @@ import { useGetUserSettings } from '@/hooks/use-fetch';
 import { useLocalStorage } from '@/hooks/use-local-storage';
 import { localStorageGetItem } from '@/utils/storage-available';
 import { useCreateGenericMutation } from '@/hooks/user-generic-mutation';
-import { useRef, useMemo, useState, useEffect, useCallback } from 'react';
 
 import { SettingsValueProps } from '../types';
 import { SettingsContext } from './settings-context';
@@ -55,13 +56,12 @@ export function SettingsProvider({
     refetch: refetchSettings,
   } = useGetUserSettings();
 
-  const isArabic = localStorageGetItem('i18nextLng') === 'ar';
+  const isArabic = localStorageGetItem('i18next') === 'ar';
 
   useEffect(() => {
     if (isArabic) {
       onChangeDirectionByLang('ar');
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isArabic]);
 
   // Cargar configuraciones cuando se obtengan datos del hook

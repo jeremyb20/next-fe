@@ -1,4 +1,4 @@
-/* eslint-disable no-nested-ternary */
+ 
 // src/hooks/useCurrency.ts
 
 import { useLocales } from '../locales/use-locales';

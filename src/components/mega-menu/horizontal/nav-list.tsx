@@ -1,11 +1,11 @@
-import { hideScroll } from '@/theme/css';
-import { usePathname, useActiveLink } from '@/routes/hooks';
-import { useRef, useState, useEffect, useCallback } from 'react';
-
 import Masonry from '@mui/lab/Masonry';
 import Stack from '@mui/material/Stack';
-import Popover from '@mui/material/Popover';
 import Divider from '@mui/material/Divider';
+import Popover from '@mui/material/Popover';
+import { useRef, useState, useEffect, useCallback } from 'react';
+
+import { hideScroll } from '@/theme/css';
+import { usePathname, useActiveLink } from '@/routes/hooks';
 
 import NavItem from './nav-item';
 import { NavListProps } from '../types';
@@ -33,7 +33,6 @@ export default function NavList({ data, slotProps }: NavListProps) {
     if (openMenu) {
       handleCloseMenu();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname]);
 
   useEffect(() => {

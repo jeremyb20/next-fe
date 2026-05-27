@@ -2,7 +2,7 @@
 
 export const TRANSITION = {
   duration: 2,
-  ease: [0.43, 0.13, 0.23, 0.96],
+  ease: [0.43, 0.13, 0.23, 0.96] as const,
 };
 
 export const varPath = {

@@ -1,16 +1,6 @@
 'use client';
 
 import merge from 'lodash/merge';
-// date fns
-import {
-  fr as frFRAdapter,
-  vi as viVNAdapter,
-  es as esESAdapter,
-  enUS as enUSAdapter,
-  zhCN as zhCNAdapter,
-  arSA as arSAAdapter,
-} from 'date-fns/locale';
-
 // core (MUI)
 import {
   enUS as enUSCore,
@@ -27,6 +17,15 @@ import {
   zhCN as zhCNDate,
   esES as esESDate,
 } from '@mui/x-date-pickers/locales';
+// date fns
+import {
+  fr as frFRAdapter,
+  vi as viVNAdapter,
+  es as esESAdapter,
+  enUS as enUSAdapter,
+  zhCN as zhCNAdapter,
+  arSA as arSAAdapter,
+} from 'date-fns/locale';
 // data grid (MUI)
 import {
   enUS as enUSDataGrid,
@@ -35,7 +34,7 @@ import {
   zhCN as zhCNDataGrid,
   arSD as arSDDataGrid,
   esES as esESDataGrid,
-} from '@mui/x-data-grid';
+} from '@mui/x-data-grid/locales';
 
 // PLEASE REMOVE `LOCAL STORAGE` WHEN YOU CHANGE SETTINGS.
 // ----------------------------------------------------------------------

@@ -1,14 +1,14 @@
 'use client';
 
+import Stack from '@mui/material/Stack';
+import Tooltip from '@mui/material/Tooltip';
+import Container from '@mui/material/Container';
+
 import { paths } from '@/routes/paths';
 import Label from '@/components/label';
 import Iconify from '@/components/iconify';
 import CustomBreadcrumbs from '@/components/custom-breadcrumbs';
 import ComponentHero from '@/sections/_examples/component-hero';
-
-import Stack from '@mui/material/Stack';
-import Tooltip from '@mui/material/Tooltip';
-import Container from '@mui/material/Container';
 
 import ComponentBlock from '../component-block';
 

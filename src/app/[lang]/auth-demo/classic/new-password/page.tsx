@@ -1,8 +1,10 @@
+import { Metadata } from 'next';
+
 import { ClassicNewPasswordView } from '@/sections/auth-demo/classic';
 
 // ----------------------------------------------------------------------
 
-export const metadata = {
+export const metadata: Metadata = {
   title: 'Auth Classic: New Password',
 };
 

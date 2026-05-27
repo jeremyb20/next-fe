@@ -1,5 +1,6 @@
 // hooks/use-pet-age-calculator.ts
 import { useState, useCallback } from 'react';
+
 import { useTranslation } from '@/hooks/use-translation';
 import {
   calculatePetAge,

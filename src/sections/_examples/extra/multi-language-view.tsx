@@ -1,9 +1,23 @@
 'use client';
 
+import Box from '@mui/material/Box';
+import Card from '@mui/material/Card';
+import Grid from '@mui/material/Grid';
+import Radio from '@mui/material/Radio';
+import Stack from '@mui/material/Stack';
+import { CardContent } from '@mui/material';
+import { alpha } from '@mui/material/styles';
+import Container from '@mui/material/Container';
+import CardHeader from '@mui/material/CardHeader';
+import Typography from '@mui/material/Typography';
+import RadioGroup from '@mui/material/RadioGroup';
+import { useState, useEffect, useCallback } from 'react';
+import TablePagination from '@mui/material/TablePagination';
+import FormControlLabel from '@mui/material/FormControlLabel';
+
 import { paths } from '@/routes/paths';
 import Iconify from '@/components/iconify';
 import { useLocales, useTranslate } from '@/locales';
-import { useState, useEffect, useCallback } from 'react';
 import CustomBreadcrumbs from '@/components/custom-breadcrumbs';
 import ComponentHero from '@/sections/_examples/component-hero';
 import {
@@ -13,20 +27,6 @@ import {
   fCurrency,
   fShortenNumber,
 } from '@/utils/format-number';
-
-import Box from '@mui/material/Box';
-import Card from '@mui/material/Card';
-import Radio from '@mui/material/Radio';
-import Stack from '@mui/material/Stack';
-import { CardContent } from '@mui/material';
-import { alpha } from '@mui/material/styles';
-import Container from '@mui/material/Container';
-import Grid from '@mui/material/Unstable_Grid2';
-import CardHeader from '@mui/material/CardHeader';
-import Typography from '@mui/material/Typography';
-import RadioGroup from '@mui/material/RadioGroup';
-import TablePagination from '@mui/material/TablePagination';
-import FormControlLabel from '@mui/material/FormControlLabel';
 
 // ----------------------------------------------------------------------
 
@@ -78,8 +78,8 @@ export default function MultiLanguageView() {
       </ComponentHero>
 
       <Container sx={{ my: 10 }}>
-        <Grid container spacing={5} disableEqualOverflow>
-          <Grid xs={12} md={4}>
+        <Grid container spacing={5}>
+          <Grid size={{ xs: 12, md: 4 }}>
             <Card>
               <CardHeader title="Langs" />
 
@@ -101,7 +101,7 @@ export default function MultiLanguageView() {
             </Card>
           </Grid>
 
-          <Grid xs={12} md={8}>
+          <Grid size={{ xs: 12, md: 8 }}>
             <Stack spacing={5}>
               <Card>
                 <CardHeader title="Flexible" />

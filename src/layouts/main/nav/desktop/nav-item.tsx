@@ -1,14 +1,14 @@
-import { m } from 'framer-motion';
+import { m } from 'motion/react';
 import { forwardRef } from 'react';
-import Iconify from '@/components/iconify';
-import { RouterLink } from '@/routes/components';
-import { useTranslation } from '@/hooks/use-translation';
-
 import Box from '@mui/material/Box';
 import { styled } from '@mui/material/styles';
+import { useTranslation } from 'react-i18next';
 import Link, { LinkProps } from '@mui/material/Link';
 import CardActionArea from '@mui/material/CardActionArea';
 import ListItemButton from '@mui/material/ListItemButton';
+
+import Iconify from '@/components/iconify';
+import { RouterLink } from '@/routes/components';
 
 import { NavItemProps, NavItemStateProps } from '../types';
 

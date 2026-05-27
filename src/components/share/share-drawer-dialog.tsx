@@ -2,21 +2,20 @@
 
 'use client';
 
-import React from 'react';
-import { IPetProfile } from '@/types/api';
-import Iconify from '@/components/iconify';
-import ShareButtons from '@/app/[lang]/pet/_components/share/share-buttons';
-
+import { useTheme } from '@mui/material/styles';
+import useMediaQuery from '@mui/system/useMediaQuery';
 import {
   Box,
   Theme,
   Dialog,
   SxProps,
-  useTheme,
   IconButton,
-  useMediaQuery,
   SwipeableDrawer,
 } from '@mui/material';
+
+import { IPetProfile } from '@/types/api';
+import Iconify from '@/components/iconify';
+import ShareButtons from '@/app/[lang]/pet/_components/share/share-buttons';
 
 interface ShareDrawerDialogProps {
   open: boolean;
@@ -62,8 +61,6 @@ export default function ShareDrawerDialog({
     },
   },
   showDragHandle = true,
-  onShareSuccess,
-  onShareError,
 }: ShareDrawerDialogProps) {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));

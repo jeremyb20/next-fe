@@ -1,8 +1,10 @@
+import { Metadata } from 'next';
+
 import { CheckoutView } from '@/sections/checkout/view';
 
 // ----------------------------------------------------------------------
 
-export const metadata = {
+export const metadata: Metadata = {
   title: 'Checkout',
 };
 

@@ -1,8 +1,10 @@
+import { Metadata } from 'next';
+
 import { KanbanView } from '@/sections/kanban/view';
 
 // ----------------------------------------------------------------------
 
-export const metadata = {
+export const metadata: Metadata = {
   title: 'Dashboard: Kanban',
 };
 

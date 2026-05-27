@@ -1,16 +1,16 @@
 'use client';
 
+import Grid from '@mui/material/Grid';
+import Stack from '@mui/material/Stack';
+import { useTheme } from '@mui/material/styles';
+import Container from '@mui/material/Container';
+
 import { useSettingsContext } from '@/components/settings';
 import {
   _bankingContacts,
   _bankingCreditCard,
   _bankingRecentTransitions,
 } from '@/_mock';
-
-import Stack from '@mui/material/Stack';
-import { useTheme } from '@mui/material/styles';
-import Container from '@mui/material/Container';
-import Grid from '@mui/material/Unstable_Grid2';
 
 import BankingContacts from '../banking-contacts';
 import BankingQuickTransfer from '../banking-quick-transfer';
@@ -31,7 +31,7 @@ export default function OverviewBankingView() {
   return (
     <Container maxWidth={settings.themeStretch ? false : 'xl'}>
       <Grid container spacing={3}>
-        <Grid xs={12} md={7}>
+        <Grid size={{ xs: 12, md: 7 }}>
           <Stack direction={{ xs: 'column', sm: 'row' }} spacing={3}>
             <BankingWidgetSummary
               title="Income"
@@ -86,11 +86,11 @@ export default function OverviewBankingView() {
           </Stack>
         </Grid>
 
-        <Grid xs={12} md={5}>
+        <Grid size={{ xs: 12, md: 5 }}>
           <BankingCurrentBalance list={_bankingCreditCard} />
         </Grid>
 
-        <Grid xs={12} md={8}>
+        <Grid size={{ xs: 12, md: 8 }}>
           <Stack spacing={3}>
             <BankingBalanceStatistics
               title="Balance Statistics"
@@ -168,10 +168,10 @@ export default function OverviewBankingView() {
                 colors: [
                   theme.palette.primary.main,
                   theme.palette.warning.dark,
-                  theme.palette.success.darker,
+                  theme.palette.success.dark,
                   theme.palette.error.main,
                   theme.palette.info.dark,
-                  theme.palette.info.darker,
+                  theme.palette.info.dark,
                   theme.palette.success.main,
                   theme.palette.warning.main,
                   theme.palette.info.main,
@@ -193,7 +193,7 @@ export default function OverviewBankingView() {
           </Stack>
         </Grid>
 
-        <Grid xs={12} md={4}>
+        <Grid size={{ xs: 12, md: 4 }}>
           <Stack spacing={3}>
             <BankingQuickTransfer
               title="Quick Transfer"

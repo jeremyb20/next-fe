@@ -1,9 +1,9 @@
+import Button from '@mui/material/Button';
+import { Theme, SxProps } from '@mui/material/styles';
+
 import { PATH_AFTER_LOGIN } from '@/config-global';
 import { useTranslation } from '@/hooks/use-translation';
 import RouterLink from '@/routes/components/router-link';
-
-import Button from '@mui/material/Button';
-import { Theme, SxProps } from '@mui/material/styles';
 
 type Props = {
   sx?: SxProps<Theme>;

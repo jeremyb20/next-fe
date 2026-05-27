@@ -1,10 +1,12 @@
 // import { _tours } from '@/_mock/_tour';
 
+import { Metadata } from 'next';
+
 // import { TourEditView } from '@/sections/tour/view';
 
 // ----------------------------------------------------------------------
 
-export const metadata = {
+export const metadata: Metadata = {
   title: 'Dashboard: Tour Edit',
 };
 
@@ -14,7 +16,7 @@ type Props = {
   };
 };
 
-export default function TourEditPage({ params }: Props) {
+export default function TourEditPage({ params: _params }: Props) {
   // const { id } = params;
 
   // return <TourEditView id={id} />;

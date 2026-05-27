@@ -1,6 +1,7 @@
+import { useState, useCallback } from 'react';
+
 import { DOMAIN } from '@/config-global';
 import { IPetProfile } from '@/types/api';
-import { useState, useCallback } from 'react';
 
 import { useTranslation } from './use-translation';
 

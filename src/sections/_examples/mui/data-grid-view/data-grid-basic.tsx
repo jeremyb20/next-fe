@@ -1,6 +1,6 @@
-import Iconify from '@/components/iconify';
-
 import { DataGrid, GridColDef, GridActionsCellItem } from '@mui/x-data-grid';
+
+import Iconify from '@/components/iconify';
 
 // ----------------------------------------------------------------------
 
@@ -66,7 +66,6 @@ const columns: GridColDef[] = [
         icon={<Iconify icon="solar:trash-bin-trash-bold" />}
         label="Delete"
         onClick={() => console.info('DELETE', params.row.id)}
-        sx={{ color: 'error.main' }}
       />,
     ],
   },

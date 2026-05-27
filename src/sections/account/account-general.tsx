@@ -1,40 +1,35 @@
 import * as Yup from 'yup';
 import { useMemo } from 'react';
-import { IUser } from '@/types/api';
+import Box from '@mui/material/Box';
+import Card from '@mui/material/Card';
+import Grid from '@mui/material/Grid';
+import Stack from '@mui/material/Stack';
 import { useForm } from 'react-hook-form';
-import { endpoints } from '@/utils/axios';
-import Iconify from '@/components/iconify';
-import { HOST_API } from '@/config-global';
+import Button from '@mui/material/Button';
+import { InputAdornment } from '@mui/material';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useManagerUser } from '@/hooks/use-manager-user';
-import { useCreateGenericMutation } from '@/hooks/user-generic-mutation';
-import {
-  getPhoneHelperText,
-  getPhonePlaceholder,
-} from '@/utils/phone-validation';
 import {
   CountryCode,
   isValidPhoneNumber,
   parsePhoneNumberFromString,
 } from 'libphonenumber-js';
 
-import Box from '@mui/material/Box';
-import Card from '@mui/material/Card';
-import Stack from '@mui/material/Stack';
-import Button from '@mui/material/Button';
-import { InputAdornment } from '@mui/material';
-import Grid from '@mui/material/Unstable_Grid2';
-// import Typography from '@mui/material/Typography';
-import LoadingButton from '@mui/lab/LoadingButton';
-
-// import { fData } from '@/utils/format-number';
-
+import { IUser } from '@/types/api';
+import { endpoints } from '@/utils/axios';
 import { countries } from '@/assets/data';
+import Iconify from '@/components/iconify';
+import { HOST_API } from '@/config-global';
 import { useAuthContext } from '@/auth/hooks';
 import { useBoolean } from '@/hooks/use-boolean';
 import { useSnackbar } from '@/components/snackbar';
 import { useTranslation } from '@/hooks/use-translation';
+import { useManagerUser } from '@/hooks/use-manager-user';
 import StyledAvatar from '@/components/avatar/styled-avatar';
+import { useCreateGenericMutation } from '@/hooks/user-generic-mutation';
+import {
+  getPhoneHelperText,
+  getPhonePlaceholder,
+} from '@/utils/phone-validation';
 import FormProvider, {
   RHFSwitch,
   RHFTextField,
@@ -218,7 +213,7 @@ export default function AccountGeneral() {
       avatarDialog.onFalse();
       enqueueSnackbar(t('Update success!'), { variant: 'success' });
     } catch (error) {
-      enqueueSnackbar('Error updating avatar', { variant: 'error' });
+      enqueueSnackbar(`Error updating avatar ${error}`, { variant: 'error' });
     }
   };
 
@@ -226,7 +221,7 @@ export default function AccountGeneral() {
     <>
       <FormProvider methods={methods} onSubmit={onSubmit}>
         <Grid container spacing={3}>
-          <Grid xs={12} md={12}>
+          <Grid size={{ xs: 12, md: 12 }}>
             <Card
               sx={{
                 pt: 10,
@@ -261,7 +256,7 @@ export default function AccountGeneral() {
             </Card>
           </Grid>
 
-          <Grid xs={12} md={12}>
+          <Grid size={{ xs: 12, md: 12 }}>
             <Card sx={{ p: 3 }}>
               <Box
                 rowGap={3}
@@ -341,20 +336,20 @@ export default function AccountGeneral() {
                   label={t('Address')}
                 />
 
-                <LoadingButton
+                <Button
                   type="submit"
                   variant="contained"
                   loading={isSubmitting}
                 >
                   {t('Save Changes')}
-                </LoadingButton>
+                </Button>
               </Stack>
             </Card>
           </Grid>
         </Grid>
       </FormProvider>
-      <Grid container spacing={3}>
-        <Grid xs={12} md={12}>
+      <Grid container spacing={3} mt={3}>
+        <Grid size={{ xs: 12, md: 12 }}>
           <AccountChangePassword />
         </Grid>
       </Grid>

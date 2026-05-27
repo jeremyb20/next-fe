@@ -1,14 +1,14 @@
 'use client';
 
 import { useCallback } from 'react';
-import { useAuthContext } from '@/auth/hooks';
-import { useSearchParams } from '@/routes/hooks';
-import { PATH_AFTER_LOGIN } from '@/config-global';
-
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
 import Typography from '@mui/material/Typography';
+
+import { useAuthContext } from '@/auth/hooks';
+import { useSearchParams } from '@/routes/hooks';
+import { PATH_AFTER_LOGIN } from '@/config-global';
 
 // ----------------------------------------------------------------------
 

@@ -1,14 +1,14 @@
 'use client';
 
 import { useState } from 'react';
-import Iconify from '@/components/iconify';
-import { PetApiResponse } from '@/types/global';
-import { useTranslation } from '@/hooks/use-translation';
-
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import { Button } from '@mui/material';
 import Stack from '@mui/material/Stack';
+
+import Iconify from '@/components/iconify';
+import { PetApiResponse } from '@/types/global';
+import { useTranslation } from '@/hooks/use-translation';
 
 import { RegistrationTypeSelector } from '../cards/registration-type-selector';
 import { PetRegistrationExistingUser } from '../forms/pet-registration-existing-user';
@@ -69,13 +69,13 @@ export default function RegistrationPetView({
         {registrationType === 'new' && (
           <PetRegistrationCodeStepperFirstTime
             code={registerPet?.qrCode?.randomCode}
-            onBackToSelection={handleBackToSelection}
+            onBackToSelectionAction={handleBackToSelection}
           />
         )}
         {registrationType === 'existing' && (
           <PetRegistrationExistingUser
             code={registerPet?.qrCode?.randomCode}
-            onBackToSelection={handleBackToSelection}
+            onBackToSelectionAction={handleBackToSelection}
           />
         )}
       </Card>

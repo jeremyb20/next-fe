@@ -1,24 +1,24 @@
 'use client';
 
-import { _mock } from '@/_mock';
 import { useState } from 'react';
-import { paths } from '@/routes/paths';
-import Image from '@/components/image';
-import { Slide, SlideImage } from 'yet-another-react-lightbox';
-import CustomBreadcrumbs from '@/components/custom-breadcrumbs';
-import ComponentHero from '@/sections/_examples/component-hero';
-import Lightbox, { SlideVideo, useLightBox } from '@/components/lightbox';
-
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
+import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
 import Switch from '@mui/material/Switch';
 import Container from '@mui/material/Container';
-import Grid from '@mui/material/Unstable_Grid2';
 import FormLabel from '@mui/material/FormLabel';
 import FormControl from '@mui/material/FormControl';
 import FormControlLabel from '@mui/material/FormControlLabel';
+import { Slide, SlideImage } from 'yet-another-react-lightbox';
+
+import { _mock } from '@/_mock';
+import { paths } from '@/routes/paths';
+import Image from '@/components/image';
+import CustomBreadcrumbs from '@/components/custom-breadcrumbs';
+import ComponentHero from '@/sections/_examples/component-hero';
+import Lightbox, { SlideVideo, useLightBox } from '@/components/lightbox';
 
 // ----------------------------------------------------------------------
 
@@ -88,7 +88,7 @@ export default function LightboxView() {
       <Container sx={{ my: 10 }}>
         <Card sx={{ p: 3 }}>
           <Grid container spacing={3}>
-            <Grid xs={12} md={9}>
+            <Grid size={{ xs: 12, md: 9 }}>
               <Box
                 gap={1}
                 display="grid"
@@ -121,7 +121,7 @@ export default function LightboxView() {
               </Box>
             </Grid>
 
-            <Grid xs={12} md={3}>
+            <Grid size={{ xs: 12, md: 3 }}>
               <Paper
                 sx={{ p: 3, bgcolor: 'background.neutral', borderRadius: 2 }}
               >

@@ -1,5 +1,4 @@
 import { MaterialDesignContent } from 'notistack';
-
 import { alpha, styled } from '@mui/material/styles';
 
 // ----------------------------------------------------------------------

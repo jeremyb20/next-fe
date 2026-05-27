@@ -1,5 +1,6 @@
 import Map from 'react-map-gl';
 import { memo, useState, useCallback } from 'react';
+
 import { MapControl, MapBoxProps } from '@/components/map';
 
 import ControlPanel from './control-panel';
@@ -20,6 +21,12 @@ function MapChangeTheme({ themes, ...other }: Props) {
     []
   );
 
+  const {
+    projection: _projection,
+    logoPosition: _logoPosition,
+    ...mapProps
+  } = other;
+
   return (
     <>
       <Map
@@ -31,7 +38,7 @@ function MapChangeTheme({ themes, ...other }: Props) {
           pitch: 0,
         }}
         mapStyle={themes?.[selectTheme]}
-        {...other}
+        {...mapProps}
       >
         <MapControl />
       </Map>

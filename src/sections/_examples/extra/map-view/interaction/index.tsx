@@ -1,5 +1,6 @@
 import Map from 'react-map-gl';
 import { memo, useState, useCallback } from 'react';
+
 import { MapControl, MapBoxProps } from '@/components/map';
 
 import ControlPanel from './control-panel';
@@ -24,6 +25,12 @@ function MapInteraction({ ...other }: MapBoxProps) {
     touchZoomRotate: true,
   });
 
+  const {
+    projection: _projection,
+    logoPosition: _logoPosition,
+    ...mapProps
+  } = other;
+
   const updateSettings = useCallback(
     (name: string, value: boolean | number) =>
       setSettings((prevSettings) => ({
@@ -43,7 +50,7 @@ function MapInteraction({ ...other }: MapBoxProps) {
         bearing: 0,
         pitch: 50,
       }}
-      {...other}
+      {...mapProps}
     >
       <MapControl />
 

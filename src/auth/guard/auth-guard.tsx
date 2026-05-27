@@ -1,5 +1,6 @@
-import { paths } from '@/routes/paths';
 import { useState, useEffect, useCallback } from 'react'; // Exporta la función
+
+import { paths } from '@/routes/paths';
 import { fallbackLng } from '@/app/i18n/settings';
 import { useParams, useRouter } from '@/routes/hooks';
 import { SplashScreen } from '@/components/loading-screen';

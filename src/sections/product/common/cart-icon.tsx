@@ -1,10 +1,10 @@
+import Box from '@mui/material/Box';
+import Badge from '@mui/material/Badge';
+
 import { paths } from '@/routes/paths';
 import Iconify from '@/components/iconify';
 import { useAuthContext } from '@/auth/hooks';
 import { RouterLink } from '@/routes/components';
-
-import Box from '@mui/material/Box';
-import Badge from '@mui/material/Badge';
 
 // ----------------------------------------------------------------------
 

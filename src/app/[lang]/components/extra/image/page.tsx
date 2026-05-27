@@ -1,8 +1,10 @@
+import { Metadata } from 'next';
+
 import ImageView from '@/sections/_examples/extra/image-view';
 
 // ----------------------------------------------------------------------
 
-export const metadata = {
+export const metadata: Metadata = {
   title: 'Components: Image',
 };
 

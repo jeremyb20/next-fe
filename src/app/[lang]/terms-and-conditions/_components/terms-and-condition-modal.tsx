@@ -1,20 +1,20 @@
 import React, { useState } from 'react';
-import Iconify from '@/components/iconify';
-
+import { useTheme } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
 import {
   Box,
   Dialog,
   Button,
   Checkbox,
-  useTheme,
   Typography,
   IconButton,
   DialogTitle,
   DialogContent,
   DialogActions,
-  useMediaQuery,
   FormControlLabel,
 } from '@mui/material';
+
+import Iconify from '@/components/iconify';
 
 import TermsAndConditions from './terms-and-conditions-view';
 

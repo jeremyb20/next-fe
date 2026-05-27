@@ -1,7 +1,14 @@
 'use client';
 
-import Iconify from '@/components/iconify';
+import Stack from '@mui/material/Stack';
+import Button from '@mui/material/Button';
 import { useState, useCallback } from 'react';
+import Container from '@mui/material/Container';
+import Typography from '@mui/material/Typography';
+import ToggleButton from '@mui/material/ToggleButton';
+import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
+
+import Iconify from '@/components/iconify';
 import { useBoolean } from '@/hooks/use-boolean';
 import { useSnackbar } from '@/components/snackbar';
 import EmptyContent from '@/components/empty-content';
@@ -12,13 +19,6 @@ import { ConfirmDialog } from '@/components/custom-dialog';
 import { useSettingsContext } from '@/components/settings';
 import { useTable, getComparator } from '@/components/table';
 import { IFile, IFileFilters, IFileFilterValue } from '@/types/file';
-
-import Stack from '@mui/material/Stack';
-import Button from '@mui/material/Button';
-import Container from '@mui/material/Container';
-import Typography from '@mui/material/Typography';
-import ToggleButton from '@mui/material/ToggleButton';
-import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 
 import FileManagerTable from '../file-manager-table';
 import FileManagerFilters from '../file-manager-filters';

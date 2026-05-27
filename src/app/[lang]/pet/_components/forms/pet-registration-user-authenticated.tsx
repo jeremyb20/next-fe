@@ -1,18 +1,32 @@
 'use client';
 
 import * as Yup from 'yup';
+import Box from '@mui/material/Box';
 import { useSnackbar } from 'notistack';
+import Alert from '@mui/material/Alert';
+import Paper from '@mui/material/Paper';
+import Button from '@mui/material/Button';
+import { useTranslation } from 'react-i18next';
+import Typography from '@mui/material/Typography';
+import { useForm, Controller } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { useState, useEffect, useCallback } from 'react';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import {
+  Card,
+  MenuItem,
+  CardHeader,
+  ButtonGroup,
+  CardContent,
+} from '@mui/material';
+
 import { endpoints } from '@/utils/axios';
 import { useRouter } from '@/routes/hooks';
 import { OptionType } from '@/types/global';
 import { useAuthContext } from '@/auth/hooks';
 import { fData } from '@/utils/format-number';
-import { useForm, Controller } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
-import { useTranslation } from '@/hooks/use-translation';
-import { useState, useEffect, useCallback } from 'react';
-import UploadAvatar from '@/components/upload/upload-avatar';
 import { HOST_API, PATH_AFTER_LOGIN } from '@/config-global';
+import UploadAvatar from '@/components/upload/upload-avatar';
 import { PetAgeCalculator } from '@/utils/pet-age-calculator';
 import { BreedOptions, GENDER_OPTIONS } from '@/utils/constants';
 import useCelebrationConfetti from '@/hooks/use-celebration-confetti';
@@ -23,21 +37,6 @@ import FormProvider, {
   RHFTextField,
   RHFAutocomplete,
 } from '@/components/hook-form';
-
-import Box from '@mui/material/Box';
-import Alert from '@mui/material/Alert';
-import Paper from '@mui/material/Paper';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
-import LoadingButton from '@mui/lab/LoadingButton';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import {
-  Card,
-  MenuItem,
-  CardHeader,
-  ButtonGroup,
-  CardContent,
-} from '@mui/material';
 
 // ----------------------------------------------------------------------
 
@@ -66,11 +65,10 @@ export function PetRegistrationUserAuthenticated({
   const [petPhotoPreview, setPetPhotoPreview] = useState<string | null>(null);
 
   const router = useRouter();
+
   // Esquema de validación para la mascota
   const PetSchema = Yup.object().shape({
     petName: Yup.string().required(t('Pet name is required')),
-    petFirstSurname: Yup.string().optional().default(''),
-    petSecondSurname: Yup.string().optional().default(''),
     breed: Yup.string().required(t('Breed is required')),
     genderSelected: Yup.string().required(t('Gender is required')),
     birthDate: Yup.string().optional(),
@@ -104,8 +102,6 @@ export function PetRegistrationUserAuthenticated({
     resolver: yupResolver(PetSchema),
     defaultValues: {
       petName: '',
-      petFirstSurname: '',
-      petSecondSurname: '',
       breed: '',
       genderSelected: '',
       birthDate: '',
@@ -237,45 +233,6 @@ export function PetRegistrationUserAuthenticated({
     router.push(PATH_AFTER_LOGIN);
   };
 
-  const renderAgeResult = (
-    <>
-      {ageResult && (
-        <Paper sx={{ p: 2, mb: 3 }}>
-          <Typography variant="h6" gutterBottom>
-            {t('Pet Age Information')}
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            <strong>{t('Species')}:</strong> {t(ageResult.species)}
-            {ageResult.size &&
-              ageResult.species === 'dog' &&
-              ` (${ageResult.size})`}
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            {ageResult.years} {t('years and')} {ageResult.months} {t('months')}
-          </Typography>
-          <Typography variant="body2" sx={{ mt: 1 }}>
-            {t(ageResult.description)}
-          </Typography>
-
-          {recommendations.length > 0 && (
-            <Box sx={{ mt: 2 }}>
-              <Typography variant="subtitle2" gutterBottom>
-                {t('Recommendations')}:
-              </Typography>
-              <ul style={{ margin: 0, paddingLeft: '20px' }}>
-                {recommendations.map((rec, index) => (
-                  <li key={index}>
-                    <Typography variant="body2">{t(rec)}</Typography>
-                  </li>
-                ))}
-              </ul>
-            </Box>
-          )}
-        </Paper>
-      )}
-    </>
-  );
-
   // Efecto para calcular edad cuando cambia la raza o fecha de nacimiento
   useEffect(() => {
     const currentBreed = watchPetForm('breed');
@@ -370,14 +327,12 @@ export function PetRegistrationUserAuthenticated({
           }}
         >
           <RHFTextField name="petName" label={t('Pet Name')} />
-          <RHFTextField name="petFirstSurname" label={t('First Surname')} />
-          <RHFTextField name="petSecondSurname" label={t('Second Surname')} />
+
           <RHFAutocomplete
             name="breed"
             label={t('Breed')}
             options={BreedOptions.todos}
             getOptionLabel={(option: OptionType | string) => {
-              if (!option) return t('Choose breed');
               if (typeof option === 'string') {
                 const foundOption = BreedOptions.todos.find(
                   (opt) => opt.value === option
@@ -486,7 +441,42 @@ export function PetRegistrationUserAuthenticated({
         </Box>
 
         {/* Mostrar resultado de edad */}
-        {renderAgeResult}
+        {ageResult && (
+          <Paper sx={{ p: 2, mb: 3 }}>
+            <Typography variant="h6" gutterBottom>
+              {t('Pet Age Information')}
+            </Typography>
+            <Typography variant="body2" color="text.secondary">
+              <strong>{t('Species')}:</strong>{' '}
+              {ageResult.species === 'dog' ? 'Dog' : 'Cat'}
+              {ageResult.size &&
+                ageResult.species === 'dog' &&
+                ` (${ageResult.size})`}
+            </Typography>
+            <Typography variant="body2" color="text.secondary">
+              {ageResult.years} {t('years and')} {ageResult.months}{' '}
+              {t('months')}
+            </Typography>
+            <Typography variant="body2" sx={{ mt: 1 }}>
+              {t(ageResult.description)}
+            </Typography>
+
+            {recommendations.length > 0 && (
+              <Box sx={{ mt: 2 }}>
+                <Typography variant="subtitle2" gutterBottom>
+                  {t('Recommendations')}:
+                </Typography>
+                <ul style={{ margin: 0, paddingLeft: '20px' }}>
+                  {recommendations.map((rec, index) => (
+                    <li key={index}>
+                      <Typography variant="body2">{t(rec)}</Typography>
+                    </li>
+                  ))}
+                </ul>
+              </Box>
+            )}
+          </Paper>
+        )}
 
         <RHFTextField
           name="favoriteActivities"
@@ -515,13 +505,13 @@ export function PetRegistrationUserAuthenticated({
             </Button>
           )}
 
-          <LoadingButton
+          <Button
             type="submit"
             variant="contained"
             loading={isSubmitting || isPetSubmitting}
           >
             {t('Add New Pet')}
-          </LoadingButton>
+          </Button>
         </Box>
       </FormProvider>
     </Box>

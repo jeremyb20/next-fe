@@ -19,7 +19,7 @@ export const processMonthlyChartData = (
   const currentYearData = [];
   const lastYearData = [];
 
-  // eslint-disable-next-line no-plusplus
+   
   for (let i = monthsToShow - 1; i >= 0; i--) {
     const date = new Date();
     date.setMonth(date.getMonth() - i);
@@ -70,7 +70,7 @@ export const processChartData = (
   const currentYearData = [];
   const lastYearData = [];
 
-  // eslint-disable-next-line no-plusplus
+   
   for (let i = months - 1; i >= 0; i--) {
     const date = new Date();
     date.setMonth(date.getMonth() - i);
@@ -115,7 +115,7 @@ export const processByMonthData = (
   const currentYearData = [];
   const lastYearData = [];
 
-  // eslint-disable-next-line no-plusplus
+   
   for (let i = monthsToShow - 1; i >= 0; i--) {
     const date = new Date();
     date.setMonth(date.getMonth() - i);

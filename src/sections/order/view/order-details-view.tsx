@@ -1,13 +1,13 @@
 'use client';
 
-import { paths } from '@/routes/paths';
+import Grid from '@mui/material/Grid';
+import Stack from '@mui/material/Stack';
 import { useState, useCallback } from 'react';
+import Container from '@mui/material/Container';
+
+import { paths } from '@/routes/paths';
 import { _orders, ORDER_STATUS_OPTIONS } from '@/_mock';
 import { useSettingsContext } from '@/components/settings';
-
-import Stack from '@mui/material/Stack';
-import Container from '@mui/material/Container';
-import Grid from '@mui/material/Unstable_Grid2';
 
 import OrderDetailsInfo from '../order-details-info';
 import OrderDetailsItems from '../order-details-item';
@@ -43,7 +43,7 @@ export default function OrderDetailsView({ id }: Props) {
       />
 
       <Grid container spacing={3}>
-        <Grid xs={12} md={8}>
+        <Grid size={{ xs: 12, md: 8 }}>
           <Stack spacing={3} direction={{ xs: 'column-reverse', md: 'column' }}>
             <OrderDetailsItems
               items={currentOrder.items}
@@ -58,7 +58,7 @@ export default function OrderDetailsView({ id }: Props) {
           </Stack>
         </Grid>
 
-        <Grid xs={12} md={4}>
+        <Grid size={{ xs: 12, md: 4 }}>
           <OrderDetailsInfo
             customer={currentOrder.customer}
             delivery={currentOrder.delivery}

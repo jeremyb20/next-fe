@@ -1,6 +1,19 @@
+import Box from '@mui/material/Box';
+import Paper from '@mui/material/Paper';
+import Stack from '@mui/material/Stack';
+import Button from '@mui/material/Button';
+import Avatar from '@mui/material/Avatar';
+import Divider from '@mui/material/Divider';
+import { useState, useCallback } from 'react';
+import MenuItem from '@mui/material/MenuItem';
+import Checkbox from '@mui/material/Checkbox';
+import { CardProps } from '@mui/material/Card';
+import IconButton from '@mui/material/IconButton';
+import Typography from '@mui/material/Typography';
+import AvatarGroup, { avatarGroupClasses } from '@mui/material/AvatarGroup';
+
 import Iconify from '@/components/iconify';
 import { IFileManager } from '@/types/file';
-import { useState, useCallback } from 'react';
 import { fData } from '@/utils/format-number';
 import { fDateTime } from '@/utils/format-time';
 import { useBoolean } from '@/hooks/use-boolean';
@@ -10,19 +23,6 @@ import FileThumbnail from '@/components/file-thumbnail';
 import { ConfirmDialog } from '@/components/custom-dialog';
 import { useCopyToClipboard } from '@/hooks/use-copy-to-clipboard';
 import CustomPopover, { usePopover } from '@/components/custom-popover';
-
-import Box from '@mui/material/Box';
-import Paper from '@mui/material/Paper';
-import Stack from '@mui/material/Stack';
-import Button from '@mui/material/Button';
-import Avatar from '@mui/material/Avatar';
-import Divider from '@mui/material/Divider';
-import MenuItem from '@mui/material/MenuItem';
-import Checkbox from '@mui/material/Checkbox';
-import { CardProps } from '@mui/material/Card';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import AvatarGroup, { avatarGroupClasses } from '@mui/material/AvatarGroup';
 
 import FileManagerShareDialog from './file-manager-share-dialog';
 import FileManagerFileDetails from './file-manager-file-details';

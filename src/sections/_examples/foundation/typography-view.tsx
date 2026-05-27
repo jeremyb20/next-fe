@@ -1,19 +1,21 @@
 'use client';
 
+import Grid from '@mui/material/Grid';
+import Paper from '@mui/material/Paper';
+import Stack from '@mui/material/Stack';
+import Container from '@mui/material/Container';
+import Typography from '@mui/material/Typography';
+// ----------------------------------------------------------------------
+import { TypographyProps } from '@mui/material/Typography';
+
 import { paths } from '@/routes/paths';
 import { useTypography } from '@/components/text-max-line';
 import CustomBreadcrumbs from '@/components/custom-breadcrumbs';
 import ComponentHero from '@/sections/_examples/component-hero';
 
-import Paper from '@mui/material/Paper';
-import Stack from '@mui/material/Stack';
-import Container from '@mui/material/Container';
-import Grid from '@mui/material/Unstable_Grid2';
-import Typography from '@mui/material/Typography';
-import { Variant } from '@mui/material/styles/createTypography';
-
 // ----------------------------------------------------------------------
 
+type Variant = TypographyProps['variant'];
 const TYPOGRAPHYS = [
   { label: 'h1. Heading', variant: 'h1' },
   { label: 'h2. Heading', variant: 'h2' },
@@ -67,11 +69,11 @@ export default function TypographyView() {
 
       <Container sx={{ my: 10 }}>
         <Grid container rowSpacing={5}>
-          <Grid xs={12} md={3}>
+          <Grid size={{ xs: 12, md: 3 }}>
             <Typography variant="h6">Default Text</Typography>
           </Grid>
 
-          <Grid xs={12} md={9}>
+          <Grid size={{ xs: 12, md: 9 }}>
             <Stack spacing={3}>
               {TYPOGRAPHYS.map((font) => (
                 <BlockVariant key={font.variant} font={font} />
@@ -79,11 +81,11 @@ export default function TypographyView() {
             </Stack>
           </Grid>
 
-          <Grid xs={12} md={3}>
+          <Grid size={{ xs: 12, md: 3 }}>
             <Typography variant="h6">Colors Text</Typography>
           </Grid>
 
-          <Grid xs={12} md={9}>
+          <Grid size={{ xs: 12, md: 9 }}>
             <Stack spacing={3}>
               {['primary', 'secondary', 'disabled'].map((color) => (
                 <Paper

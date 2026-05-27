@@ -1,8 +1,10 @@
+import { Metadata } from 'next';
+
 import { UserListView } from '@/sections/user/view';
 
 // ----------------------------------------------------------------------
 
-export const metadata = {
+export const metadata: Metadata = {
   title: 'Dashboard: User List',
 };
 

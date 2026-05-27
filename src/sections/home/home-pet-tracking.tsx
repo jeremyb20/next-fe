@@ -1,12 +1,12 @@
-import { m } from 'framer-motion';
-import Iconify from '@/components/iconify';
-import { useTranslation } from '@/hooks/use-translation';
-import { varFade, MotionViewport } from '@/components/animate';
-
+import { m } from 'motion/react';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
+
+import Iconify from '@/components/iconify';
+import { useTranslation } from '@/hooks/use-translation';
+import { varFade, MotionViewport } from '@/components/animate';
 
 export default function HomePetTracking() {
   const { t } = useTranslation();
@@ -42,7 +42,7 @@ export default function HomePetTracking() {
                 'Health records and medical history',
                 'Appointment scheduling with vets and groomers',
                 'Personalized care recommendations',
-              ].map((item, index) => (
+              ].map((item) => (
                 <m.div key={item} variants={varFade().inUp}>
                   <Stack direction="row" spacing={2} alignItems="center">
                     <Box

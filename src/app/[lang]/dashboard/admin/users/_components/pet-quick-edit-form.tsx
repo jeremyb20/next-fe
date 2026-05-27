@@ -1,20 +1,40 @@
-/* eslint-disable no-nested-ternary */
 import * as Yup from 'yup';
-import { endpoints } from '@/utils/axios';
+import Box from '@mui/material/Box';
+import Alert from '@mui/material/Alert';
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import MenuItem from '@mui/material/MenuItem';
+import { useTheme } from '@mui/material/styles';
+import DialogTitle from '@mui/material/DialogTitle';
+import { yupResolver } from '@hookform/resolvers/yup';
+import useMediaQuery from '@mui/system/useMediaQuery';
+import { useForm, Controller } from 'react-hook-form';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { useMemo, useState, useEffect, useCallback } from 'react';
+import {
+  Tab,
+  Tabs,
+  Stack,
+  Typography,
+  IconButton,
+  ButtonGroup,
+  InputAdornment,
+} from '@mui/material';
+
 import { countries } from '@/assets/data';
-import { HOST_API } from '@/config-global';
+import { endpoints } from '@/utils/axios';
 import Iconify from '@/components/iconify';
+import { HOST_API } from '@/config-global';
 import { OptionType } from '@/types/global';
 import { PetFormValues } from '@/types/pet';
 import { fData } from '@/utils/format-number';
 import { IUser, IPetProfile } from '@/types/api';
 import { useSnackbar } from '@/components/snackbar';
-import { useForm, Controller } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
 import { useTranslation } from '@/hooks/use-translation';
 import UploadAvatar from '@/components/upload/upload-avatar';
 import CardComponent from '@/sections/_examples/card-component';
-import { useMemo, useState, useEffect, useCallback } from 'react';
 import CustomPopover, { usePopover } from '@/components/custom-popover';
 import { useCreateGenericMutation } from '@/hooks/user-generic-mutation';
 import { parseWeight, BreedOptions, GENDER_OPTIONS } from '@/utils/constants';
@@ -29,29 +49,6 @@ import FormProvider, {
   RHFTextField,
   RHFAutocomplete,
 } from '@/components/hook-form';
-
-import Box from '@mui/material/Box';
-import Alert from '@mui/material/Alert';
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import MenuItem from '@mui/material/MenuItem';
-import LoadingButton from '@mui/lab/LoadingButton';
-import DialogTitle from '@mui/material/DialogTitle';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import {
-  Tab,
-  Tabs,
-  Stack,
-  useTheme,
-  Typography,
-  IconButton,
-  ButtonGroup,
-  useMediaQuery,
-  InputAdornment,
-} from '@mui/material';
-
 // ----------------------------------------------------------------------
 
 interface TabPanelProps {
@@ -312,7 +309,6 @@ export default function PetQuickEditForm({
 
       // Crear el payload según el formato que espera tu API
       const payload = {
-        // eslint-disable-next-line object-shorthand
         petData: petData,
         userId: userPetId,
         // Solo agregar la imagen si existe
@@ -641,7 +637,7 @@ export default function PetQuickEditForm({
                   name="birthDate"
                   control={control}
                   defaultValue={defaultValues.birthDate}
-                  render={({ field, fieldState: { error } }) => (
+                  render={({ field }) => (
                     <DatePicker
                       views={['year', 'month', 'day']}
                       label="Year and Month"
@@ -990,14 +986,14 @@ export default function PetQuickEditForm({
           Cancel
         </Button>
 
-        <LoadingButton
+        <Button
           type="submit"
           onClick={handleSubmit(onSubmit)}
           variant="contained"
           loading={isSubmitting}
         >
           Update Pet
-        </LoadingButton>
+        </Button>
       </DialogActions>
     </Dialog>
   );

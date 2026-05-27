@@ -1,9 +1,3 @@
-import React from 'react';
-import { SecurityLevel } from '@/types/security';
-import { useTranslation } from '@/hooks/use-translation';
-import { useManagerUser } from '@/hooks/use-manager-user';
-import { getSecurityColor, getSecurityLevelText } from '@/utils/constants';
-
 import {
   Box,
   Card,
@@ -13,18 +7,23 @@ import {
   LinearProgress,
 } from '@mui/material';
 
+import { SecurityLevel } from '@/types/security';
+import { useTranslation } from '@/hooks/use-translation';
+import { useManagerUser } from '@/hooks/use-manager-user';
+import { getSecurityColor, getSecurityLevelText } from '@/utils/constants';
+
 import Iconify from '../iconify';
 
 export default function UserSecurityLevel() {
   const { t } = useTranslation();
   const { user } = useManagerUser();
   const { security } = user;
-  // ✅ Calcular nivel de seguridad
+
   const securityLevel: SecurityLevel = {
     level: 0,
     items: {
-      emailVerified: security.isEmailVerified,
-      twoFactorEnabled: security.twoFactorEnabled,
+      emailVerified: security?.isEmailVerified,
+      twoFactorEnabled: security?.twoFactorEnabled,
       backupEmailSet: !!security?.backupEmail,
     },
   };

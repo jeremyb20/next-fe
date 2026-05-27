@@ -1,9 +1,4 @@
 import { Metadata } from 'next';
-import { bgBlur } from '@/theme/css';
-import Logo from '@/components/logo';
-import { useOffSetTop } from '@/hooks/use-off-set-top';
-import { useResponsive } from '@/hooks/use-responsive';
-
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import AppBar from '@mui/material/AppBar';
@@ -11,6 +6,11 @@ import Toolbar from '@mui/material/Toolbar';
 import { useTheme } from '@mui/material/styles';
 import Container from '@mui/material/Container';
 import Badge, { badgeClasses } from '@mui/material/Badge';
+
+import { bgBlur } from '@/theme/css';
+import Logo from '@/components/logo';
+import { useOffSetTop } from '@/hooks/use-off-set-top';
+import { useResponsive } from '@/hooks/use-responsive';
 
 import NavMobile from './nav/mobile';
 import NavDesktop from './nav/desktop';
@@ -23,9 +23,9 @@ import LanguagePopover from '../common/language-popover';
 // ----------------------------------------------------------------------
 
 export async function generateMetadata({
-  params,
+  params: _params,
 }: {
-  params: { lang: string };
+  params: Promise<{ lang: string }>;
 }): Promise<Metadata> {
   return {
     title: '***Plaquitas para mascotas CR***',

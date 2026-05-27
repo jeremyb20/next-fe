@@ -2,25 +2,25 @@
 
 import * as Yup from 'yup';
 import { useState } from 'react';
-import { paths } from '@/routes/paths';
+import Link from '@mui/material/Link';
+import { Button } from '@mui/material';
+import Alert from '@mui/material/Alert';
+import Stack from '@mui/material/Stack';
 import { useForm } from 'react-hook-form';
+import Divider from '@mui/material/Divider';
+import IconButton from '@mui/material/IconButton';
+import Typography from '@mui/material/Typography';
+import { yupResolver } from '@hookform/resolvers/yup';
+import InputAdornment from '@mui/material/InputAdornment';
+
+import { paths } from '@/routes/paths';
 import Iconify from '@/components/iconify';
 import { useAuthContext } from '@/auth/hooks';
 import { RouterLink } from '@/routes/components';
 import { useBoolean } from '@/hooks/use-boolean';
 import { PATH_AFTER_LOGIN } from '@/config-global';
-import { yupResolver } from '@hookform/resolvers/yup';
 import { useRouter, useSearchParams } from '@/routes/hooks';
 import FormProvider, { RHFTextField } from '@/components/hook-form';
-
-import Link from '@mui/material/Link';
-import Alert from '@mui/material/Alert';
-import Stack from '@mui/material/Stack';
-import Divider from '@mui/material/Divider';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import LoadingButton from '@mui/lab/LoadingButton';
-import InputAdornment from '@mui/material/InputAdornment';
 
 // ----------------------------------------------------------------------
 
@@ -69,7 +69,13 @@ export default function FirebaseLoginView() {
     } catch (error) {
       console.error(error);
       reset();
-      setErrorMsg(typeof error === 'string' ? error : error.message);
+      setErrorMsg(
+        typeof error === 'string'
+          ? error
+          : error instanceof Error
+            ? error.message
+            : 'Error saving user information'
+      );
     }
   });
 
@@ -149,7 +155,7 @@ export default function FirebaseLoginView() {
         Forgot password?
       </Link>
 
-      <LoadingButton
+      <Button
         fullWidth
         color="inherit"
         size="large"
@@ -158,7 +164,7 @@ export default function FirebaseLoginView() {
         loading={isSubmitting}
       >
         Login
-      </LoadingButton>
+      </Button>
     </Stack>
   );
 

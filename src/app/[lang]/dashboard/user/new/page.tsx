@@ -1,8 +1,10 @@
+import { Metadata } from 'next';
+
 import { UserCreateView } from '@/sections/user/view';
 
 // ----------------------------------------------------------------------
 
-export const metadata = {
+export const metadata: Metadata = {
   title: 'Dashboard: Create a new user',
 };
 

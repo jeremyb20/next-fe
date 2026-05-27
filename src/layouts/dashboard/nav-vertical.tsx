@@ -1,4 +1,10 @@
 import { useEffect } from 'react';
+import Box from '@mui/material/Box';
+import Stack from '@mui/material/Stack';
+// ----------------------------------------------------------------------
+import { useTheme } from '@mui/material/styles';
+import Drawer, { drawerClasses } from '@mui/material/Drawer';
+
 import { paper } from '@/theme/css';
 import Logo from '@/components/logo';
 import { usePathname } from '@/routes/hooks';
@@ -7,16 +13,10 @@ import { useResponsive } from '@/hooks/use-responsive';
 import { useManagerUser } from '@/hooks/use-manager-user';
 import { NavSectionVertical } from '@/components/nav-section';
 
-import Box from '@mui/material/Box';
-import Stack from '@mui/material/Stack';
-import { useTheme } from '@mui/material';
-import Drawer, { drawerClasses } from '@mui/material/Drawer';
-
 import { NAV } from '../config-layout';
 import NavUpgrade from '../common/nav-upgrade';
 import { useNavData } from './config-navigation';
 import NavToggleButton from '../common/nav-toggle-button';
-// ----------------------------------------------------------------------
 
 type Props = {
   openNav: boolean;
@@ -38,7 +38,6 @@ export default function NavVertical({ openNav, onCloseNav }: Props) {
     if (openNav) {
       onCloseNav();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname]);
 
   const renderContent = (
@@ -46,7 +45,7 @@ export default function NavVertical({ openNav, onCloseNav }: Props) {
       sx={{
         height: 1,
         '& .simplebar-content': {
-          height: 1,
+          height: '100vh',
           display: 'flex',
           flexDirection: 'column',
         },

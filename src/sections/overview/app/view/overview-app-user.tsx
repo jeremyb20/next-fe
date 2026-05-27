@@ -1,15 +1,29 @@
 'use client';
 
+import { useState, useCallback } from 'react';
+import { alpha, useTheme } from '@mui/material/styles';
+import {
+  Box,
+  Card,
+  Grid,
+  Alert,
+  Paper,
+  Avatar,
+  Container,
+  Typography,
+  CardContent,
+  useMediaQuery,
+} from '@mui/material';
+
 import { IUser } from '@/types/api';
 import { paths } from '@/routes/paths';
 import { useRouter } from '@/routes/hooks';
-import { useState, useCallback } from 'react';
 import { useBoolean } from '@/hooks/use-boolean';
 import { useRedirect } from '@/hooks/use-redirect';
 import { useSnackbar } from '@/components/snackbar';
 import { useGetUserPetStats } from '@/hooks/use-fetch';
-import { useTranslation } from '@/hooks/use-translation';
 import { ALLOW_MAX_PETS_BY_USER } from '@/config-global';
+import { useTranslation } from '@/hooks/use-translation';
 import { useManagerUser } from '@/hooks/use-manager-user';
 import { BirthdayReminder } from '@/components/pet/BirthdayReminder';
 import UserSecurityLevel from '@/components/security/user-security-level';
@@ -19,21 +33,6 @@ import {
   useGetActivePromotions,
   useGetUserUpcomingAppointments,
 } from '@/hooks/use-fetch-paginated';
-
-import {
-  Box,
-  Card,
-  Grid,
-  Alert,
-  Paper,
-  alpha,
-  Avatar,
-  useTheme,
-  Container,
-  Typography,
-  CardContent,
-  useMediaQuery,
-} from '@mui/material';
 
 import { QuickActions } from './components/quick-actions';
 import { StatisticsCards } from './components/statistics-cards';
@@ -120,7 +119,7 @@ export default function OverviewAppUser() {
       <Container maxWidth="sm" sx={{ py: { xs: 2, md: 3 } }}>
         <Grid container spacing={getSpacing()}>
           {/* Fila 1: Perfil de Usuario + App Featured */}
-          <Grid item xs={12}>
+          <Grid size={{ xs: 12 }}>
             <Card
               sx={{
                 backgroundColor: 'background.paper',
@@ -162,12 +161,12 @@ export default function OverviewAppUser() {
               />
             </Card>
           </Grid>
-          <Grid item xs={12}>
+          <Grid size={{ xs: 12 }}>
             <UserSecurityLevel />
           </Grid>
 
           {/* Fila 2: Quick Actions + Promotions */}
-          <Grid item xs={12}>
+          <Grid size={{ xs: 12 }}>
             <QuickActions
               onAddPet={handleAddPet}
               onMyPets={() => handleRedirect(paths.dashboard.user.pets)}
@@ -179,7 +178,7 @@ export default function OverviewAppUser() {
               }
             />
           </Grid>
-          <Grid item xs={12}>
+          <Grid size={{ xs: 12 }}>
             <Card>
               <CardContent>
                 <Typography
@@ -260,7 +259,7 @@ export default function OverviewAppUser() {
             </Card>
           </Grid>
 
-          <Grid item xs={12} my={2}>
+          <Grid size={{ xs: 12 }} my={2}>
             <PromotionsCardCaroussell
               promotions={promotionsData?.payload || []}
               onViewOffer={(promotion) => {
@@ -275,7 +274,7 @@ export default function OverviewAppUser() {
             />
           </Grid>
 
-          <Grid item xs={12}>
+          <Grid size={{ xs: 12 }}>
             {isError ? (
               <Box sx={{ p: 3 }}>
                 <Alert severity="error">
@@ -309,7 +308,7 @@ export default function OverviewAppUser() {
           </Grid>
 
           {/* Fila 4: Upcoming Appointments - Ocupa todo el ancho */}
-          <Grid item xs={12}>
+          <Grid size={{ xs: 12 }}>
             {isMedicalError ? (
               <Box sx={{ p: 3 }}>
                 <Alert severity="error">
@@ -328,7 +327,7 @@ export default function OverviewAppUser() {
               />
             )}
           </Grid>
-          <Grid item xs={12}>
+          <Grid size={{ xs: 12 }}>
             <Paper
               elevation={0}
               sx={{

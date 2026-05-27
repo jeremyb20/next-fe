@@ -1,17 +1,4 @@
 // components/medical-records/medical-visits-list.tsx
-import React from 'react';
-import Iconify from '@/components/iconify';
-import { formatDate } from '@/utils/format-time';
-import { useTranslation } from '@/hooks/use-translation';
-import { IMedicalVisitFormData } from '@/interfaces/medical-record';
-import {
-  isOverdue,
-  isUpcoming,
-  getDaysLabel,
-  getDaysUntil,
-  getDateColor,
-  getProgressBarColor,
-} from '@/utils/constants';
 
 import {
   Box,
@@ -24,6 +11,19 @@ import {
   CardContent,
   CircularProgress,
 } from '@mui/material';
+
+import Iconify from '@/components/iconify';
+import { formatDate } from '@/utils/format-time';
+import { useTranslation } from '@/hooks/use-translation';
+import { IMedicalVisitFormData } from '@/interfaces/medical-record';
+import {
+  isOverdue,
+  isUpcoming,
+  getDaysLabel,
+  getDaysUntil,
+  getDateColor,
+  getProgressBarColor,
+} from '@/utils/constants';
 
 interface MedicalVisitsListProps {
   data: IMedicalVisitFormData[];
@@ -56,7 +56,7 @@ const getReasonLabel = (reason: string): string => {
 export default function MedicalVisitsList({
   data,
   onEdit,
-  refetchTrigger,
+  refetchTrigger: _refetchTrigger,
   isLoading,
 }: MedicalVisitsListProps) {
   const { t } = useTranslation();

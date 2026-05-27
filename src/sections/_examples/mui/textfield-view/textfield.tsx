@@ -1,11 +1,11 @@
-import Iconify from '@/components/iconify';
-import { useState, useCallback } from 'react';
-
 import Masonry from '@mui/lab/Masonry';
+import { useState, useCallback } from 'react';
 import MenuItem from '@mui/material/MenuItem';
 import TextField from '@mui/material/TextField';
 import IconButton from '@mui/material/IconButton';
 import InputAdornment from '@mui/material/InputAdornment';
+
+import Iconify from '@/components/iconify';
 
 import ComponentBlock from '../../component-block';
 
@@ -213,7 +213,7 @@ export default function Textfield({ variant }: Props) {
           type="number"
           label="Number"
           defaultValue={0}
-          InputLabelProps={{ shrink: true }}
+          slotProps={{ inputLabel: { shrink: true } }}
         />
 
         <TextField variant={variant} fullWidth label="Search" type="search" />

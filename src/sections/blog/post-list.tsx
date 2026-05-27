@@ -1,9 +1,9 @@
-import { IPostItem } from '@/types/blog';
-import Iconify from '@/components/iconify';
-
+import Grid from '@mui/material/Grid';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
-import Grid from '@mui/material/Unstable_Grid2';
+
+import { IPostItem } from '@/types/blog';
+import Iconify from '@/components/iconify';
 
 import PostItem from './post-item';
 import { PostItemSkeleton } from './post-skeleton';
@@ -20,7 +20,7 @@ export default function PostList({ posts, loading, disabledIndex }: Props) {
   const renderSkeleton = (
     <>
       {[...Array(16)].map((_, index) => (
-        <Grid key={index} xs={12} sm={6} md={3}>
+        <Grid key={index} size={{ xs: 12, sm: 6, md: 3 }}>
           <PostItemSkeleton />
         </Grid>
       ))}
@@ -32,9 +32,7 @@ export default function PostList({ posts, loading, disabledIndex }: Props) {
       {posts.map((post, index) => (
         <Grid
           key={post.id}
-          xs={12}
-          sm={6}
-          md={!disabledIndex && index === 0 ? 6 : 3}
+          size={{ xs: 12, sm: 6, md: !disabledIndex && index === 0 ? 6 : 3 }}
         >
           <PostItem post={post} index={!disabledIndex ? index : undefined} />
         </Grid>

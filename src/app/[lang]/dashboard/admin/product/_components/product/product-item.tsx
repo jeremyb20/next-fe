@@ -1,3 +1,10 @@
+import Fab from '@mui/material/Fab';
+import Box from '@mui/material/Box';
+import Link from '@mui/material/Link';
+import Card from '@mui/material/Card';
+import Stack from '@mui/material/Stack';
+import Tooltip from '@mui/material/Tooltip';
+
 import { paths } from '@/routes/paths';
 import Label from '@/components/label';
 import Image from '@/components/image';
@@ -7,13 +14,6 @@ import { RouterLink } from '@/routes/components';
 import { fCurrency } from '@/utils/format-number';
 import { ColorPreview } from '@/components/color-utils';
 import { useCheckoutContext } from '@/sections/checkout/context';
-
-import Fab from '@mui/material/Fab';
-import Box from '@mui/material/Box';
-import Link from '@mui/material/Link';
-import Card from '@mui/material/Card';
-import Stack from '@mui/material/Stack';
-import Tooltip from '@mui/material/Tooltip';
 
 // ----------------------------------------------------------------------
 

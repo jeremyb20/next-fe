@@ -1,23 +1,23 @@
 'use client';
 
-import { paths } from '@/routes/paths';
-import Iconify from '@/components/iconify';
-import { useState, useCallback } from 'react';
-import { useSnackbar } from '@/components/snackbar';
-import { useDoubleClick } from '@/hooks/use-double-click';
-import CustomBreadcrumbs from '@/components/custom-breadcrumbs';
-import ComponentHero from '@/sections/_examples/component-hero';
-import { useCopyToClipboard } from '@/hooks/use-copy-to-clipboard';
-
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import Stack from '@mui/material/Stack';
 import Tooltip from '@mui/material/Tooltip';
+import { useState, useCallback } from 'react';
 import Container from '@mui/material/Container';
 import TextField from '@mui/material/TextField';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import InputAdornment from '@mui/material/InputAdornment';
+
+import { paths } from '@/routes/paths';
+import Iconify from '@/components/iconify';
+import { useSnackbar } from '@/components/snackbar';
+import { useDoubleClick } from '@/hooks/use-double-click';
+import CustomBreadcrumbs from '@/components/custom-breadcrumbs';
+import ComponentHero from '@/sections/_examples/component-hero';
+import { useCopyToClipboard } from '@/hooks/use-copy-to-clipboard';
 
 // ----------------------------------------------------------------------
 

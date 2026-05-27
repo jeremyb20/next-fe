@@ -1,8 +1,10 @@
+import { Metadata } from 'next';
+
 import { JwtRegisterView } from '@/sections/auth/jwt';
 
 // ----------------------------------------------------------------------
 
-export const metadata = {
+export const metadata: Metadata = {
   title: 'Jwt: Register',
 };
 

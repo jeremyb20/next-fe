@@ -1,16 +1,3 @@
-import { paths } from '@/routes/paths';
-import Label from '@/components/label';
-import { useRouter } from '@/routes/hooks';
-import Iconify from '@/components/iconify';
-import { useEffect, useCallback } from 'react';
-import { IProductItem } from '@/types/product';
-import { ICheckoutItem } from '@/types/checkout';
-import { useForm, Controller } from 'react-hook-form';
-import { ColorPicker } from '@/components/color-utils';
-import { inventoryStatusOptions } from '@/utils/constants';
-import FormProvider, { RHFSelect } from '@/components/hook-form';
-import { fCurrency, fShortenNumber } from '@/utils/format-number';
-
 import Box from '@mui/material/Box';
 import Link from '@mui/material/Link';
 import Stack from '@mui/material/Stack';
@@ -18,8 +5,21 @@ import Rating from '@mui/material/Rating';
 import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
 import MenuItem from '@mui/material/MenuItem';
+import { useEffect, useCallback } from 'react';
 import Typography from '@mui/material/Typography';
+import { useForm, Controller } from 'react-hook-form';
 import { formHelperTextClasses } from '@mui/material/FormHelperText';
+
+import { paths } from '@/routes/paths';
+import Label from '@/components/label';
+import { useRouter } from '@/routes/hooks';
+import Iconify from '@/components/iconify';
+import { IProductItem } from '@/types/product';
+import { ICheckoutItem } from '@/types/checkout';
+import { ColorPicker } from '@/components/color-utils';
+import { inventoryStatusOptions } from '@/utils/constants';
+import FormProvider, { RHFSelect } from '@/components/hook-form';
+import { fCurrency, fShortenNumber } from '@/utils/format-number';
 
 // ----------------------------------------------------------------------
 
@@ -90,12 +90,14 @@ export default function ProductDetailsSummary({
     if (product) {
       reset(defaultValues);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [product]);
 
   const onSubmit = handleSubmit(async (data) => {
     try {
       if (!existProduct) {
+        console.log(data);
+        console.log(onAddCart);
+        console.log(disabledActions);
         // onAddCart?.({
         //   ...data,
         //   colors: [values.colors],

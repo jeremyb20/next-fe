@@ -1,6 +1,7 @@
-import { MapBoxProps } from '@/components/map';
 import Map, { Layer, Source } from 'react-map-gl';
 import { memo, useMemo, useState, useEffect } from 'react';
+
+import { MapBoxProps } from '@/components/map';
 
 import ControlPanel from './control-panel';
 import { heatmapLayer } from './map-style';
@@ -15,6 +16,12 @@ function MapHeatmap({ ...other }: MapBoxProps) {
   const [selectedTime, selectTime] = useState(0);
 
   const [earthquakes, setEarthQuakes] = useState();
+
+  const {
+    projection: _projection,
+    logoPosition: _logoPosition,
+    ...mapProps
+  } = other;
 
   useEffect(() => {
     fetch('https://docs.mapbox.com/mapbox-gl-js/assets/earthquakes.geojson')
@@ -49,7 +56,7 @@ function MapHeatmap({ ...other }: MapBoxProps) {
           longitude: -100,
           zoom: 3,
         }}
-        {...other}
+        {...mapProps}
       >
         {data && (
           <Source type="geojson" data={data}>

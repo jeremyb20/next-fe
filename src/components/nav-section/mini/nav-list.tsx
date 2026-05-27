@@ -1,9 +1,9 @@
-import { usePathname } from '@/routes/hooks';
-import { useActiveLink } from '@/routes/hooks/use-active-link';
-import { useRef, useState, useEffect, useCallback } from 'react';
-
 import Stack from '@mui/material/Stack';
 import Popover from '@mui/material/Popover';
+import { useRef, useState, useEffect, useCallback } from 'react';
+
+import { usePathname } from '@/routes/hooks';
+import { useActiveLink } from '@/routes/hooks/use-active-link';
 
 import NavItem from './nav-item';
 import { NavListProps, NavSubListProps } from '../types';
@@ -23,7 +23,6 @@ export default function NavList({ data, depth, slotProps }: NavListProps) {
     if (openMenu) {
       handleCloseMenu();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname]);
 
   const handleOpenMenu = useCallback(() => {

@@ -1,8 +1,10 @@
+import { Metadata } from 'next';
+
 import ComingSoonView from '@/sections/coming-soon/view';
 
 // ----------------------------------------------------------------------
 
-export const metadata = {
+export const metadata: Metadata = {
   title: 'Coming Soon',
 };
 

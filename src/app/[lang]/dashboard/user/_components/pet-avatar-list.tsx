@@ -1,18 +1,18 @@
-// components/pets/pet-avatar-list.tsx
-import { IPetProfile } from '@/types/api';
-import Iconify from '@/components/iconify';
-import { ALLOW_MAX_PETS_BY_USER } from '@/config-global';
-import { useTranslation } from '@/hooks/use-translation';
-
+import { alpha } from '@mui/material/styles';
 import {
   Box,
   Badge,
-  alpha,
   Avatar,
   Tooltip,
   Skeleton,
   Typography,
 } from '@mui/material';
+
+// components/pets/pet-avatar-list.tsx
+import { IPetProfile } from '@/types/api';
+import Iconify from '@/components/iconify';
+import { ALLOW_MAX_PETS_BY_USER } from '@/config-global';
+import { useTranslation } from '@/hooks/use-translation';
 
 interface PetAvatarListProps {
   pets: IPetProfile[];

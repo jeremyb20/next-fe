@@ -1,6 +1,5 @@
 // types.ts
 import { DropzoneOptions } from 'react-dropzone';
-
 import { Theme, SxProps } from '@mui/material/styles';
 
 // ----------------------------------------------------------------------

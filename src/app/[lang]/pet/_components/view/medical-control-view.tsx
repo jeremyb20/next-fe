@@ -1,20 +1,6 @@
-import { useSnackbar } from 'notistack';
-import { IPetProfile } from '@/types/api';
-import Iconify from '@/components/iconify';
-import { isAfter } from '@/utils/format-time';
-import { useTranslation } from '@/hooks/use-translation';
-import { useSettingsContext } from '@/components/settings';
-import React, { useMemo, useState, useCallback } from 'react';
-import CardComponent from '@/sections/_examples/card-component';
-import FilterToolbar from '@/components/filters/filter-toolbar';
-import { useMedicalRecordForm } from '@/hooks/user-medical-record-form';
-import { MEDICAL_RECORD_FILTER_TOOLBAR } from '@/components/filters/filter-constants';
-import {
-  UserQueryParams,
-  useGetMedicalRecordsByPet,
-} from '@/hooks/use-fetch-paginated';
-
 import { Box } from '@mui/system';
+import { useSnackbar } from 'notistack';
+import React, { useMemo, useState, useCallback } from 'react';
 import {
   Tab,
   Tabs,
@@ -26,6 +12,20 @@ import {
   CardContent,
   CircularProgress,
 } from '@mui/material';
+
+import { IPetProfile } from '@/types/api';
+import Iconify from '@/components/iconify';
+import { isAfter } from '@/utils/format-time';
+import { useTranslation } from '@/hooks/use-translation';
+import { useSettingsContext } from '@/components/settings';
+import CardComponent from '@/sections/_examples/card-component';
+import FilterToolbar from '@/components/filters/filter-toolbar';
+import { useMedicalRecordForm } from '@/hooks/user-medical-record-form';
+import { MEDICAL_RECORD_FILTER_TOOLBAR } from '@/components/filters/filter-constants';
+import {
+  UserQueryParams,
+  useGetMedicalRecordsByPet,
+} from '@/hooks/use-fetch-paginated';
 
 import VaccinesList from './vaccines-list';
 import DewormingList from './deworming-list';
@@ -327,7 +327,7 @@ export default function MedicalControlView({
         petId={petId}
         currentRecord={currentRecord}
         refetch={refetchMedicalRecords}
-        onSubmitSuccess={(data) => {
+        onSubmitSuccess={() => {
           refetchMedicalRecords();
         }}
       />

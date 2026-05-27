@@ -1,16 +1,16 @@
-import { m } from 'framer-motion';
+import { m } from 'motion/react';
+import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid';
+import Button from '@mui/material/Button';
+import Container from '@mui/material/Container';
+import Typography from '@mui/material/Typography';
+import { alpha, useTheme } from '@mui/material/styles';
+
 import { paths } from '@/routes/paths';
 import Iconify from '@/components/iconify';
 import { useResponsive } from '@/hooks/use-responsive';
 import { bgGradient, textGradient } from '@/theme/css';
 import { varFade, MotionViewport } from '@/components/animate';
-
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import Container from '@mui/material/Container';
-import Grid from '@mui/material/Unstable_Grid2';
-import Typography from '@mui/material/Typography';
-import { alpha, useTheme } from '@mui/material/styles';
 
 // ----------------------------------------------------------------------
 
@@ -104,11 +104,9 @@ export default function HomeForDesigner() {
     >
       <Container component={MotionViewport}>
         <Grid container>
-          <Grid xs={12} md={6}>
-            {renderDescription}
-          </Grid>
+          <Grid size={{ xs: 12, md: 6 }}>{renderDescription}</Grid>
 
-          {mdUp && <Grid md={6}>{renderImg}</Grid>}
+          {mdUp && <Grid size={{ md: 6 }}>{renderImg}</Grid>}
         </Grid>
       </Container>
     </Box>

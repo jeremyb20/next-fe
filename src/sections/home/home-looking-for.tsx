@@ -1,15 +1,15 @@
-import { m } from 'framer-motion';
+import { m } from 'motion/react';
+import Grid from '@mui/material/Grid';
+import Stack from '@mui/material/Stack';
+import Button from '@mui/material/Button';
+import Container from '@mui/material/Container';
+import Typography from '@mui/material/Typography';
+
 import { paths } from '@/routes/paths';
 import Image from '@/components/image';
 import Iconify from '@/components/iconify';
 import { useResponsive } from '@/hooks/use-responsive';
 import { varFade, MotionViewport } from '@/components/animate';
-
-import Stack from '@mui/material/Stack';
-import Button from '@mui/material/Button';
-import Container from '@mui/material/Container';
-import Grid from '@mui/material/Unstable_Grid2';
-import Typography from '@mui/material/Typography';
 
 // ----------------------------------------------------------------------
 
@@ -78,11 +78,9 @@ export default function HomeLookingFor() {
         justifyContent="space-between"
         spacing={{ xs: 5, md: 0 }}
       >
-        <Grid xs={12} md={4}>
-          {renderDescription}
-        </Grid>
+        <Grid size={{ xs: 12, md: 4 }}>{renderDescription}</Grid>
 
-        <Grid xs={12} md={7}>
+        <Grid size={{ xs: 12, md: 7 }}>
           <m.div variants={varFade().inUp}>
             <Image
               disabledEffect
@@ -93,7 +91,7 @@ export default function HomeLookingFor() {
         </Grid>
 
         {!mdUp && (
-          <Grid xs={12} sx={{ textAlign: 'center' }}>
+          <Grid size={{ xs: 12 }} sx={{ textAlign: 'center' }}>
             {renderBtn}
           </Grid>
         )}

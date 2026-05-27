@@ -1,12 +1,12 @@
+import Box from '@mui/material/Box';
+import { useTheme } from '@mui/material/styles';
+
 import Image from '@/components/image';
 import Carousel, {
   useCarousel,
   CarouselDots,
   CarouselArrows,
 } from '@/components/carousel';
-
-import Box from '@mui/material/Box';
-import { useTheme } from '@mui/material/styles';
 
 // ----------------------------------------------------------------------
 

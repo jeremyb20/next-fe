@@ -1,9 +1,11 @@
 'use client';
 
-import { paths } from '@/routes/paths';
 import { useSnackbar } from 'notistack';
-import { useRouter } from '@/routes/hooks';
 import { useState, useCallback } from 'react';
+import { Card, Alert, Container } from '@mui/material';
+
+import { paths } from '@/routes/paths';
+import { useRouter } from '@/routes/hooks';
 import { IUser, IPetProfile } from '@/types/api';
 import { useBoolean } from '@/hooks/use-boolean';
 import { useTranslation } from '@/hooks/use-translation';
@@ -16,8 +18,6 @@ import {
   useGetAllPetsByUser,
 } from '@/hooks/use-fetch-paginated';
 import RegisterPetByUserModal from '@/app/[lang]/pet/_components/modals/register-pet-by-user-modal';
-
-import { Card, Alert, Container } from '@mui/material';
 
 import { PetDashboard } from './pet-dashboard';
 import PetQuickEditForm from '../../admin/users/_components/pet-quick-edit-form';
@@ -52,6 +52,7 @@ export default function UserPetCardsView() {
   } = useGetAllPetsByUser(activeFilters);
 
   const handlePetDelete = (pet: IPetProfile) => {
+    console.log(pet);
     enqueueSnackbar(t('Coming Soon!'), {
       variant: 'info',
     });

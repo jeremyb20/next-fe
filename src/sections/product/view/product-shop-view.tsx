@@ -1,12 +1,16 @@
 'use client';
 
 import isEqual from 'lodash/isEqual';
+import Stack from '@mui/material/Stack';
+import Container from '@mui/material/Container';
+import Typography from '@mui/material/Typography';
+import { useState, useEffect, useCallback } from 'react';
+
 import { paths } from '@/routes/paths';
 import { useBoolean } from '@/hooks/use-boolean';
 import { useSearchProducts } from '@/api/product';
 import { useDebounce } from '@/hooks/use-debounce';
 import EmptyContent from '@/components/empty-content';
-import { useState, useEffect, useCallback } from 'react';
 import { useTranslation } from '@/hooks/use-translation';
 import { useSettingsContext } from '@/components/settings';
 import { useAuthContext } from '@/auth/hooks/use-auth-context';
@@ -27,10 +31,6 @@ import {
   PRODUCT_RATING_OPTIONS,
   PRODUCT_CATEGORY_OPTIONS,
 } from '@/_mock';
-
-import Stack from '@mui/material/Stack';
-import Container from '@mui/material/Container';
-import Typography from '@mui/material/Typography';
 
 import ProductList from '../product-list';
 import ProductSort from '../product-sort';
@@ -215,7 +215,7 @@ export default function ProductShopView() {
 function applyFilter({
   inputData,
   filters,
-  sortBy,
+  sortBy: _sortBy,
 }: {
   inputData: IProductItem[];
   filters: IProductFilters;

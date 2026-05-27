@@ -1,17 +1,16 @@
 import * as Yup from 'yup';
+import Grid from '@mui/material/Grid';
 import { useForm } from 'react-hook-form';
+import Button from '@mui/material/Button';
+import { yupResolver } from '@hookform/resolvers/yup';
+
 import Iconify from '@/components/iconify';
 import FormProvider from '@/components/hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
 import {
   ICheckoutCardOption,
   ICheckoutPaymentOption,
   ICheckoutDeliveryOption,
 } from '@/types/checkout';
-
-import Button from '@mui/material/Button';
-import Grid from '@mui/material/Unstable_Grid2';
-import LoadingButton from '@mui/lab/LoadingButton';
 
 import { useCheckoutContext } from './context';
 import CheckoutSummary from './checkout-summary';
@@ -99,7 +98,7 @@ export default function CheckoutPayment() {
   return (
     <FormProvider methods={methods} onSubmit={onSubmit}>
       <Grid container spacing={3}>
-        <Grid xs={12} md={8}>
+        <Grid size={{ xs: 12, md: 8 }}>
           <CheckoutDelivery
             onApplyShipping={checkout.onApplyShipping}
             options={DELIVERY_OPTIONS}
@@ -121,7 +120,7 @@ export default function CheckoutPayment() {
           </Button>
         </Grid>
 
-        <Grid xs={12} md={4}>
+        <Grid size={{ xs: 12, md: 4 }}>
           <CheckoutBillingInfo
             billing={checkout.billing}
             onBackStep={checkout.onBackStep}
@@ -135,7 +134,7 @@ export default function CheckoutPayment() {
             onEdit={() => checkout.onGotoStep(0)}
           />
 
-          <LoadingButton
+          <Button
             fullWidth
             size="large"
             type="submit"
@@ -143,7 +142,7 @@ export default function CheckoutPayment() {
             loading={isSubmitting}
           >
             Complete Order
-          </LoadingButton>
+          </Button>
         </Grid>
       </Grid>
     </FormProvider>

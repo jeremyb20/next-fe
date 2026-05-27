@@ -1,7 +1,26 @@
-/* eslint-disable no-nested-ternary */
-/* eslint-disable no-plusplus */
-
 'use client';
+
+import useMediaQuery from '@mui/system/useMediaQuery';
+import { alpha, useTheme } from '@mui/material/styles';
+import { useQueryClient } from '@tanstack/react-query';
+import React, { useRef, useMemo, useState, useEffect } from 'react';
+import {
+  Box,
+  Card,
+  Grid,
+  Chip,
+  Stack,
+  Paper,
+  Avatar,
+  Dialog,
+  Button,
+  Divider,
+  Tooltip,
+  Container,
+  Typography,
+  IconButton,
+  CircularProgress,
+} from '@mui/material';
 
 import Image from '@/components/image';
 import { paths } from '@/routes/paths';
@@ -13,43 +32,20 @@ import axios, { endpoints } from '@/utils/axios';
 import { useRedirect } from '@/hooks/use-redirect';
 import { useSnackbar } from '@/components/snackbar';
 import { formatPetAge } from '@/utils/pet-age.utils';
-import { useQueryClient } from '@tanstack/react-query';
 import { useTranslation } from '@/hooks/use-translation';
 import { useManagerUser } from '@/hooks/use-manager-user';
 import { useSettingsContext } from '@/components/settings';
 import { BreedOptions, GENDER_OPTIONS } from '@/utils/constants';
-import React, { useRef, useMemo, useState, useEffect } from 'react';
 import SplashScreen from '@/components/loading-screen/splash-screen';
 import { usePetAgeCalculator } from '@/hooks/use-pet-age-calculator';
-import { DOMAIN, EMAIL_SUPPORT, PHONE_SUPPORT } from '@/config-global';
 import ShareDrawerDialog from '@/components/share/share-drawer-dialog';
+import { DOMAIN, EMAIL_SUPPORT, PHONE_SUPPORT } from '@/config-global';
 import { PetAvatarWithBadge } from '@/components/badge/PetAvatarWithBage';
 import { PetCondolenceMessage } from '@/components/pet/PetCondolenceMessage';
 import PetStickyNote from '@/app/[lang]/pet/_components/view/pet-sticky-note';
 import CostaRicaIDCard from '@/components/country-cards/Costa-Rica/costa-rica-card';
-import PetLocationMap from '@/app/[lang]/pet/_components/locations/pet-location-map';
 
-import {
-  Box,
-  Card,
-  Grid,
-  Chip,
-  Stack,
-  alpha,
-  Paper,
-  Avatar,
-  Dialog,
-  Button,
-  Divider,
-  Tooltip,
-  useTheme,
-  Container,
-  Typography,
-  IconButton,
-  useMediaQuery,
-  CircularProgress,
-} from '@mui/material';
-
+import PetLocationMap from '../locations/pet-location-map';
 import LocationConsentOverlay from '../locations/location-consent-overlay';
 
 interface Props {
@@ -294,7 +290,7 @@ export default function PetProfileViewComponent({
 
           <Grid container spacing={3}>
             {/* Columna izquierda - Foto e información básica */}
-            <Grid item xs={12} md={5}>
+            <Grid size={{ xs: 12, md: 5 }}>
               {/* Perfil de la mascota */}
               <Card sx={{ textAlign: 'left', overflow: 'hidden' }}>
                 {/* Imagen de portada */}
@@ -594,7 +590,7 @@ export default function PetProfileViewComponent({
 
                     <Grid container spacing={3}>
                       {/* Columna izquierda */}
-                      <Grid item xs={6} sm={6}>
+                      <Grid size={{ xs: 6, md: 6 }}>
                         <Stack spacing={2.5}>
                           <Box
                             sx={{
@@ -750,7 +746,7 @@ export default function PetProfileViewComponent({
                       </Grid>
 
                       {/* Columna derecha */}
-                      <Grid item xs={6} sm={6}>
+                      <Grid size={{ xs: 6, md: 6 }}>
                         <Stack spacing={2.5}>
                           {canShowBirthDate && petProfile.birthDate && (
                             <Box
@@ -1095,7 +1091,7 @@ export default function PetProfileViewComponent({
             </Grid>
 
             {/* Columna derecha - Información detallada */}
-            <Grid item xs={12} md={7}>
+            <Grid size={{ xs: 12, md: 7 }}>
               <Stack spacing={3}>
                 {/* Información del propietario */}
                 <Card sx={{ p: 3, borderRadius: 3 }}>
@@ -1103,7 +1099,7 @@ export default function PetProfileViewComponent({
                     {t('Owner Information')}
                   </Typography>
                   <Grid container spacing={2}>
-                    <Grid item xs={12} sm={6}>
+                    <Grid size={{ xs: 12, md: 6 }}>
                       <Stack spacing={2}>
                         {canShowOwnerPetName && (
                           <Box>
@@ -1141,7 +1137,7 @@ export default function PetProfileViewComponent({
                         )}
                       </Stack>
                     </Grid>
-                    <Grid item xs={12} sm={6}>
+                    <Grid size={{ xs: 12, md: 6 }}>
                       <Stack spacing={2}>
                         {canShowAddressInfo && (
                           <Box>
@@ -1185,7 +1181,7 @@ export default function PetProfileViewComponent({
                     </Typography>
                     <Grid container spacing={2}>
                       {canShowVeterinarianContact && (
-                        <Grid item xs={12} sm={6}>
+                        <Grid size={{ xs: 12, md: 6 }}>
                           <Box>
                             <Typography
                               variant="caption"
@@ -1200,7 +1196,7 @@ export default function PetProfileViewComponent({
                         </Grid>
                       )}
                       {canShowPhoneVeterinarian && (
-                        <Grid item xs={12} sm={6}>
+                        <Grid size={{ xs: 12, md: 6 }}>
                           <Box>
                             <Typography
                               variant="caption"

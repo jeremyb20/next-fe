@@ -1,13 +1,5 @@
-/* eslint-disable no-nested-ternary */
-import { m } from 'framer-motion';
+import { m } from 'motion/react';
 import Carousel from 'react-slick';
-import Iconify from '@/components/iconify';
-import { APP_NAME } from '@/config-global';
-import { useResponsive } from '@/hooks/use-responsive';
-import { useTranslation } from '@/hooks/use-translation';
-import useCarousel from '@/components/carousel/use-carousel';
-import { varFade, MotionViewport } from '@/components/animate';
-
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import Stack from '@mui/material/Stack';
@@ -17,6 +9,13 @@ import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import { alpha, useTheme } from '@mui/material/styles';
+
+import Iconify from '@/components/iconify';
+import { APP_NAME } from '@/config-global';
+import { useResponsive } from '@/hooks/use-responsive';
+import { useTranslation } from '@/hooks/use-translation';
+import useCarousel from '@/components/carousel/use-carousel';
+import { varFade, MotionViewport } from '@/components/animate';
 
 // ----------------------------------------------------------------------
 
@@ -121,12 +120,10 @@ function TestimonialCard({ testimonial }: TestimonialCardProps) {
         },
       }}
     >
-      {/* Rating */}
       <m.div variants={varFade().inUp}>
         <Rating value={testimonial.rating} readOnly size="large" />
       </m.div>
 
-      {/* Content */}
       <m.div variants={varFade().inUp}>
         <Typography
           variant="body1"
@@ -136,15 +133,12 @@ function TestimonialCard({ testimonial }: TestimonialCardProps) {
             fontStyle: 'italic',
             color: 'text.secondary',
             flexGrow: 1,
-            display: 'flex',
-            alignItems: 'center',
           }}
         >
           &ldquo;{testimonial.content}&rdquo;
         </Typography>
       </m.div>
 
-      {/* Avatar and Info */}
       <m.div variants={varFade().inUp}>
         <Stack spacing={2} alignItems="center">
           <Avatar
@@ -159,7 +153,7 @@ function TestimonialCard({ testimonial }: TestimonialCardProps) {
           />
 
           <Box>
-            <Typography variant="h5" gutterBottom>
+            <Typography variant="h5" component="h4" gutterBottom>
               {testimonial.name}
             </Typography>
 
@@ -167,15 +161,11 @@ function TestimonialCard({ testimonial }: TestimonialCardProps) {
               {testimonial.role}
             </Typography>
 
-            <Typography
-              variant="caption"
-              color="text.secondary"
-              display="block"
-            >
+            <Typography variant="caption" component="p" color="text.secondary">
               {testimonial.pet}
             </Typography>
 
-            <Typography variant="caption" color="text.disabled" display="block">
+            <Typography variant="caption" component="p" color="text.disabled">
               {testimonial.location}
             </Typography>
           </Box>
@@ -233,13 +223,17 @@ export default function HomeTestimonials() {
       </m.div>
 
       <m.div variants={varFade().inDown}>
-        <Typography variant="h2">
-          {t('What do they say about us')} <br />
+        <Typography variant="h2" component="h2">
+          {t('What do they say about us')}
         </Typography>
       </m.div>
 
       <m.div variants={varFade().inDown}>
-        <Typography sx={{ color: 'text.secondary', maxWidth: 600, mx: 'auto' }}>
+        <Typography
+          variant="h4"
+          component="h3"
+          sx={{ color: 'text.secondary', maxWidth: 600, mx: 'auto' }}
+        >
           {t(
             'Discover why thousands of pet owners veterinarians and professionals trust'
           )}{' '}
@@ -262,6 +256,7 @@ export default function HomeTestimonials() {
       {/* Navigation Buttons */}
       <Stack direction="row" justifyContent="center" spacing={2} sx={{ mt: 5 }}>
         <IconButton
+          aria-label="previous"
           onClick={carousel.onPrev}
           sx={{
             width: 48,
@@ -277,6 +272,7 @@ export default function HomeTestimonials() {
         </IconButton>
 
         <IconButton
+          aria-label="next"
           onClick={carousel.onNext}
           sx={{
             width: 48,
@@ -315,10 +311,10 @@ export default function HomeTestimonials() {
           { number: '1.2K+', label: 'Affiliated Veterinarians' },
           { number: '800+', label: 'Certified Groomers' },
           { number: '4.9/5', label: 'Average Rating' },
-        ].map((stat, index) => (
+        ].map((stat) => (
           <m.div key={stat.label} variants={varFade().inUp}>
             <Stack spacing={1}>
-              <Typography variant="h2" color="primary.main">
+              <Typography variant="h2" component="h4" color="primary.main">
                 {stat.number}
               </Typography>
               <Typography variant="body2" color="text.secondary">
@@ -340,9 +336,9 @@ export default function HomeTestimonials() {
     >
       <Container component={MotionViewport}>
         {renderHeader}
-
+        {/* Carousel component remains the same */}
+        {/* ... renderCarousel code ... */}
         {renderCarousel}
-
         {renderStats}
       </Container>
     </Box>

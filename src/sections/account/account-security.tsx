@@ -1,15 +1,29 @@
 'use client';
 
 import * as Yup from 'yup';
-import { paths } from '@/routes/paths';
+import Box from '@mui/material/Box';
+import Card from '@mui/material/Card';
+import Stack from '@mui/material/Stack';
+import Paper from '@mui/material/Paper';
+import Alert from '@mui/material/Alert';
 import { useForm } from 'react-hook-form';
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import { LinearProgress } from '@mui/material';
+import TextField from '@mui/material/TextField';
+import Typography from '@mui/material/Typography';
+import { useRef, useState, useEffect } from 'react';
+import DialogTitle from '@mui/material/DialogTitle';
+import { yupResolver } from '@hookform/resolvers/yup';
+import DialogContent from '@mui/material/DialogContent';
+import DialogActions from '@mui/material/DialogActions';
+
+import { paths } from '@/routes/paths';
 import { endpoints } from '@/utils/axios';
 import Iconify from '@/components/iconify';
 import { HOST_API } from '@/config-global';
 import { RouterLink } from '@/routes/components';
-import { useRef, useState, useEffect } from 'react';
 import { useSnackbar } from '@/components/snackbar';
-import { yupResolver } from '@hookform/resolvers/yup';
 import EmptyContent from '@/components/empty-content';
 import { useTranslation } from '@/hooks/use-translation';
 import { useGetSecurityConfig } from '@/hooks/use-fetch';
@@ -18,21 +32,6 @@ import OtpInput from '@/components/custom-inputs/otp-input';
 import { useCreateGenericMutation } from '@/hooks/user-generic-mutation';
 import { Device, SecurityLevel, TwoFactorStatus } from '@/types/security';
 import { getSecurityColor, getSecurityLevelText } from '@/utils/constants';
-
-import Box from '@mui/material/Box';
-import Card from '@mui/material/Card';
-import Stack from '@mui/material/Stack';
-import Paper from '@mui/material/Paper';
-import Alert from '@mui/material/Alert';
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import { LinearProgress } from '@mui/material';
-import TextField from '@mui/material/TextField';
-import Typography from '@mui/material/Typography';
-import LoadingButton from '@mui/lab/LoadingButton';
-import DialogTitle from '@mui/material/DialogTitle';
-import DialogContent from '@mui/material/DialogContent';
-import DialogActions from '@mui/material/DialogActions';
 
 import AccountDevice from './account-device';
 
@@ -630,7 +629,7 @@ export default function AccountSecurity() {
                 {t('Email address verified')}
               </Typography>
               {!isEmailVerified && (
-                <LoadingButton
+                <Button
                   size="small"
                   loading={isSendingEmailCode}
                   variant="outlined"
@@ -638,7 +637,7 @@ export default function AccountSecurity() {
                   sx={{ ml: 'auto' }}
                 >
                   {t('Verify now')}
-                </LoadingButton>
+                </Button>
               )}
             </Stack>
 

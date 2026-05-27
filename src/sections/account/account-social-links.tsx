@@ -1,13 +1,13 @@
+import Card from '@mui/material/Card';
+import { Button } from '@mui/material';
+import Stack from '@mui/material/Stack';
 import { useForm } from 'react-hook-form';
+import InputAdornment from '@mui/material/InputAdornment';
+
 import Iconify from '@/components/iconify';
 import { IUserSocialLink } from '@/types/user';
 import { useSnackbar } from '@/components/snackbar';
 import FormProvider, { RHFTextField } from '@/components/hook-form';
-
-import Card from '@mui/material/Card';
-import Stack from '@mui/material/Stack';
-import LoadingButton from '@mui/lab/LoadingButton';
-import InputAdornment from '@mui/material/InputAdornment';
 
 // ----------------------------------------------------------------------
 
@@ -77,14 +77,14 @@ export default function AccountSocialLinks({ socialLinks }: Props) {
           />
         ))}
 
-        <LoadingButton
+        <Button
           type="submit"
           variant="contained"
           loading={isSubmitting}
           sx={{ ml: 'auto' }}
         >
           Save Changes
-        </LoadingButton>
+        </Button>
       </Stack>
     </FormProvider>
   );

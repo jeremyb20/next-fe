@@ -1,13 +1,19 @@
+import { useTheme } from '@mui/material/styles';
 import { memo, useState, useEffect } from 'react';
-import { MapControl, MapBoxProps } from '@/components/map';
 import Map, { Layer, Source, LayerProps } from 'react-map-gl';
 
-import { useTheme } from '@mui/material/styles';
+import { MapControl, MapBoxProps } from '@/components/map';
 
 // ----------------------------------------------------------------------
 
 function MapGeoJSONAnimation({ ...other }: MapBoxProps) {
   const theme = useTheme();
+
+  const {
+    projection: _projection,
+    logoPosition: _logoPosition,
+    ...mapProps
+  } = other;
 
   const pointLayer: LayerProps = {
     id: 'point',
@@ -48,7 +54,7 @@ function MapGeoJSONAnimation({ ...other }: MapBoxProps) {
         zoom: 3,
       }}
       mapStyle="mapbox://styles/mapbox/satellite-streets-v11"
-      {...other}
+      {...mapProps}
     >
       <MapControl />
 

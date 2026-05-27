@@ -1,18 +1,18 @@
 'use client';
 
 import * as Yup from 'yup';
-import { paths } from '@/routes/paths';
+import Link from '@mui/material/Link';
+import { Button } from '@mui/material';
+import Stack from '@mui/material/Stack';
 import { useForm } from 'react-hook-form';
+import Typography from '@mui/material/Typography';
+import { yupResolver } from '@hookform/resolvers/yup';
+
+import { paths } from '@/routes/paths';
 import Iconify from '@/components/iconify';
 import { PasswordIcon } from '@/assets/icons';
 import { RouterLink } from '@/routes/components';
-import { yupResolver } from '@hookform/resolvers/yup';
 import FormProvider, { RHFTextField } from '@/components/hook-form';
-
-import Link from '@mui/material/Link';
-import Stack from '@mui/material/Stack';
-import Typography from '@mui/material/Typography';
-import LoadingButton from '@mui/lab/LoadingButton';
 
 // ----------------------------------------------------------------------
 
@@ -50,7 +50,7 @@ export default function ClassicForgotPasswordView() {
     <Stack spacing={3} alignItems="center">
       <RHFTextField name="email" label="Email address" />
 
-      <LoadingButton
+      <Button
         fullWidth
         size="large"
         type="submit"
@@ -58,7 +58,7 @@ export default function ClassicForgotPasswordView() {
         loading={isSubmitting}
       >
         Send Request
-      </LoadingButton>
+      </Button>
 
       <Link
         component={RouterLink}

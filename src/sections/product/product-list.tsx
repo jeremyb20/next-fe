@@ -1,10 +1,10 @@
 import { useCallback } from 'react';
+import { TablePagination } from '@mui/material';
+import Box, { BoxProps } from '@mui/material/Box';
+
 import { IProductItem } from '@/types/product';
 import { UserQueryParams } from '@/hooks/use-fetch-paginated';
 import { ROWS_PER_PAGE_OPTIONS } from '@/components/filters/filter-constants';
-
-import { TablePagination } from '@mui/material';
-import Box, { BoxProps } from '@mui/material/Box';
 
 import ProductItem from './product-item';
 import { ProductItemSkeleton } from './product-skeleton';

@@ -1,7 +1,3 @@
-// components/dashboard/user/promotions-card.tsx
-import Iconify from '@/components/iconify';
-import { useTranslation } from '@/hooks/use-translation';
-
 import {
   Box,
   Card,
@@ -10,6 +6,10 @@ import {
   Typography,
   CardContent,
 } from '@mui/material';
+
+// components/dashboard/user/promotions-card.tsx
+import Iconify from '@/components/iconify';
+import { useTranslation } from '@/hooks/use-translation';
 
 interface Promotion {
   id: string;

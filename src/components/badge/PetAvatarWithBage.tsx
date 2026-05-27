@@ -1,7 +1,7 @@
+import { Badge, Theme, Avatar, SxProps } from '@mui/material';
+
 // components/PetAvatarWithBadge.tsx
 import { IPetProfile } from '@/types/api';
-
-import { Badge, Theme, Avatar, SxProps } from '@mui/material';
 
 import Iconify from '../iconify';
 

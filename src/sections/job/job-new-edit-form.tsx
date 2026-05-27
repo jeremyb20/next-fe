@@ -1,13 +1,28 @@
 import * as Yup from 'yup';
+import Box from '@mui/material/Box';
+import Chip from '@mui/material/Chip';
+import Card from '@mui/material/Card';
+import Grid from '@mui/material/Grid';
+import { Button } from '@mui/material';
+import Paper from '@mui/material/Paper';
+import Stack from '@mui/material/Stack';
+import Switch from '@mui/material/Switch';
+import { useMemo, useEffect } from 'react';
+import ButtonBase from '@mui/material/ButtonBase';
+import CardHeader from '@mui/material/CardHeader';
+import Typography from '@mui/material/Typography';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { useForm, Controller } from 'react-hook-form';
+import InputAdornment from '@mui/material/InputAdornment';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import FormControlLabel from '@mui/material/FormControlLabel';
+
 import { paths } from '@/routes/paths';
 import { IJobItem } from '@/types/job';
 import { countries } from '@/assets/data';
-import { useMemo, useEffect } from 'react';
 import { useRouter } from '@/routes/hooks';
 import Iconify from '@/components/iconify';
 import { useSnackbar } from '@/components/snackbar';
-import { yupResolver } from '@hookform/resolvers/yup';
-import { useForm, Controller } from 'react-hook-form';
 import { useResponsive } from '@/hooks/use-responsive';
 import FormProvider, {
   RHFEditor,
@@ -25,21 +40,6 @@ import {
   JOB_EMPLOYMENT_TYPE_OPTIONS,
   JOB_WORKING_SCHEDULE_OPTIONS,
 } from '@/_mock';
-
-import Box from '@mui/material/Box';
-import Chip from '@mui/material/Chip';
-import Card from '@mui/material/Card';
-import Paper from '@mui/material/Paper';
-import Stack from '@mui/material/Stack';
-import Switch from '@mui/material/Switch';
-import Grid from '@mui/material/Unstable_Grid2';
-import ButtonBase from '@mui/material/ButtonBase';
-import CardHeader from '@mui/material/CardHeader';
-import Typography from '@mui/material/Typography';
-import LoadingButton from '@mui/lab/LoadingButton';
-import InputAdornment from '@mui/material/InputAdornment';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import FormControlLabel from '@mui/material/FormControlLabel';
 
 // ----------------------------------------------------------------------
 
@@ -128,7 +128,7 @@ export default function JobNewEditForm({ currentJob }: Props) {
   const renderDetails = (
     <>
       {mdUp && (
-        <Grid md={4}>
+        <Grid size={{ md: 4 }}>
           <Typography variant="h6" sx={{ mb: 0.5 }}>
             Details
           </Typography>
@@ -138,7 +138,7 @@ export default function JobNewEditForm({ currentJob }: Props) {
         </Grid>
       )}
 
-      <Grid xs={12} md={8}>
+      <Grid size={{ xs: 12, md: 8 }}>
         <Card>
           {!mdUp && <CardHeader title="Details" />}
 
@@ -164,7 +164,7 @@ export default function JobNewEditForm({ currentJob }: Props) {
   const renderProperties = (
     <>
       {mdUp && (
-        <Grid md={4}>
+        <Grid size={{ md: 4 }}>
           <Typography variant="h6" sx={{ mb: 0.5 }}>
             Properties
           </Typography>
@@ -174,7 +174,7 @@ export default function JobNewEditForm({ currentJob }: Props) {
         </Grid>
       )}
 
-      <Grid xs={12} md={8}>
+      <Grid size={{ xs: 12, md: 8 }}>
         <Card>
           {!mdUp && <CardHeader title="Properties" />}
 
@@ -404,15 +404,18 @@ export default function JobNewEditForm({ currentJob }: Props) {
 
   const renderActions = (
     <>
-      {mdUp && <Grid md={4} />}
-      <Grid xs={12} md={8} sx={{ display: 'flex', alignItems: 'center' }}>
+      {mdUp && <Grid size={{ md: 4 }} />}
+      <Grid
+        size={{ xs: 12, md: 8 }}
+        sx={{ display: 'flex', alignItems: 'center' }}
+      >
         <FormControlLabel
           control={<Switch defaultChecked />}
           label="Publish"
           sx={{ flexGrow: 1, pl: 3 }}
         />
 
-        <LoadingButton
+        <Button
           type="submit"
           variant="contained"
           size="large"
@@ -420,7 +423,7 @@ export default function JobNewEditForm({ currentJob }: Props) {
           sx={{ ml: 2 }}
         >
           {!currentJob ? 'Create Job' : 'Save Changes'}
-        </LoadingButton>
+        </Button>
       </Grid>
     </>
   );

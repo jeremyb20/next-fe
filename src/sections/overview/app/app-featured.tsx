@@ -1,4 +1,10 @@
-import { m } from 'framer-motion';
+import { m } from 'motion/react';
+import Link from '@mui/material/Link';
+import Stack from '@mui/material/Stack';
+import Typography from '@mui/material/Typography';
+import Card, { CardProps } from '@mui/material/Card';
+import { alpha, useTheme } from '@mui/material/styles';
+
 import Image from '@/components/image';
 import { varFade, MotionContainer } from '@/components/animate';
 import Carousel, {
@@ -6,12 +12,6 @@ import Carousel, {
   CarouselDots,
   CarouselArrows,
 } from '@/components/carousel';
-
-import Link from '@mui/material/Link';
-import Stack from '@mui/material/Stack';
-import Typography from '@mui/material/Typography';
-import Card, { CardProps } from '@mui/material/Card';
-import { alpha, useTheme } from '@mui/material/styles';
 
 // ----------------------------------------------------------------------
 
@@ -32,9 +32,12 @@ export default function AppFeatured({ list, ...other }: Props) {
     autoplay: true,
     ...CarouselDots({
       sx: {
-        top: 16,
-        left: 16,
         position: 'absolute',
+        top: {
+          xs: -250,
+          sm: -290,
+        },
+        left: -140,
         color: 'primary.light',
       },
     }),

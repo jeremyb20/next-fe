@@ -1,13 +1,13 @@
 'use client';
 
-import { m } from 'framer-motion';
+import { m } from 'motion/react';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
+
 import CompactLayout from '@/layouts/compact';
 import { RouterLink } from '@/routes/components';
 import { PageNotFoundIllustration } from '@/assets/illustrations';
 import { varBounce, MotionContainer } from '@/components/animate';
-
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
 
 // ----------------------------------------------------------------------
 

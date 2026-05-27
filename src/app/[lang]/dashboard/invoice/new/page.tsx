@@ -1,8 +1,10 @@
+import { Metadata } from 'next';
+
 import { InvoiceCreateView } from '@/sections/invoice/view';
 
 // ----------------------------------------------------------------------
 
-export const metadata = {
+export const metadata: Metadata = {
   title: 'Dashboard: Create a new invoice',
 };
 

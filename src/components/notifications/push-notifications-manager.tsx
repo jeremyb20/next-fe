@@ -1,17 +1,6 @@
-/* eslint-disable no-nested-ternary */
-
 'use client';
 
-import { paths } from '@/routes/paths';
-import { endpoints } from '@/utils/axios';
-import Iconify from '@/components/iconify';
-import { NotificationData } from '@/types/api';
-import { LOGO, HOST_API } from '@/config-global';
-import { useLocales } from '@/locales/use-locales';
-import { getApplicationServerKey } from '@/utils/notifications';
 import { useRef, useState, useEffect, useCallback } from 'react';
-import { useCreateGenericMutation } from '@/hooks/user-generic-mutation';
-
 import {
   Box,
   Card,
@@ -22,14 +11,21 @@ import {
   CircularProgress,
 } from '@mui/material';
 
+import { endpoints } from '@/utils/axios';
+import Iconify from '@/components/iconify';
+import { HOST_API } from '@/config-global';
+import { NotificationData } from '@/types/api';
+import { getApplicationServerKey } from '@/utils/notifications';
+import { useCreateGenericMutation } from '@/hooks/user-generic-mutation';
+
 interface PushNotificationProps {
   onNotificationScheduled: () => void;
   setNotifications: React.Dispatch<React.SetStateAction<NotificationData[]>>;
 }
 
 const PushNotificationManager = ({
-  onNotificationScheduled,
-  setNotifications,
+  onNotificationScheduled: _onNotificationScheduled,
+  setNotifications: _setNotifications,
 }: PushNotificationProps) => {
   const initializedRef = useRef(false);
   const [isSupported, setIsSupported] = useState<boolean>(false);
@@ -40,13 +36,13 @@ const PushNotificationManager = ({
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [swRegistered, setSwRegistered] = useState<boolean>(false);
   const [errors, setError] = useState<string>('');
-  const { currentLang } = useLocales();
 
   const checkExistingSubscription = useCallback(async () => {
     try {
       const registration = await navigator.serviceWorker.ready;
-      const existingSubscription =
-        await registration.pushManager.getSubscription();
+      const existingSubscription = await (
+        registration as any
+      ).pushManager.getSubscription();
 
       if (existingSubscription) {
         setIsSubscribed(true);
@@ -122,7 +118,7 @@ const PushNotificationManager = ({
       }
 
       // Suscribirse a push notifications
-      const subscription = await registration.pushManager.subscribe({
+      const subscription = await (registration as any).pushManager.subscribe({
         userVisibleOnly: true,
         applicationServerKey: getApplicationServerKey(vapidPublicKey),
       });
@@ -156,23 +152,15 @@ const PushNotificationManager = ({
 
       setIsSubscribed(true);
       console.log('Suscripción completada exitosamente');
-      console.log(window.location.href);
-      // Test: Enviar notificación de prueba
 
+      // Test: Enviar notificación de prueba
       setTimeout(async () => {
         try {
-          const newURL = `${window.location.origin}/${currentLang.value}${paths.notifications}`;
-
           await mutateAsync({
             payload: {
               title: '¡Notificaciones activadas!',
               body: 'Ahora recibirás notificaciones importantes.',
               type: 'system',
-              icon: LOGO,
-              lang: currentLang.value,
-              data: {
-                url: newURL,
-              },
             },
             pEndpoint: `${HOST_API}${endpoints.notification.send}`,
             method: 'POST',
@@ -189,12 +177,14 @@ const PushNotificationManager = ({
     } finally {
       setIsLoading(false);
     }
-  }, [currentLang.value, mutateAsync]);
+  }, [mutateAsync]);
 
   const unsubscribeFromNotifications = useCallback(async () => {
     try {
       const registration = await navigator.serviceWorker.ready;
-      const subscription = await registration.pushManager.getSubscription();
+      const subscription = await (
+        registration as any
+      ).pushManager.getSubscription();
 
       if (subscription) {
         const success = await subscription.unsubscribe();

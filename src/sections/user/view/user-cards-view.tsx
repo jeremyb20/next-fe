@@ -1,14 +1,14 @@
 'use client';
 
+import Button from '@mui/material/Button';
+import Container from '@mui/material/Container';
+
 import { _userCards } from '@/_mock';
 import { paths } from '@/routes/paths';
 import Iconify from '@/components/iconify';
 import { RouterLink } from '@/routes/components';
 import { useSettingsContext } from '@/components/settings';
 import CustomBreadcrumbs from '@/components/custom-breadcrumbs';
-
-import Button from '@mui/material/Button';
-import Container from '@mui/material/Container';
 
 import UserCardList from '../user-card-list';
 
@@ -22,7 +22,7 @@ export default function UserCardsView() {
       <CustomBreadcrumbs
         heading="User Cards"
         links={[
-          { name: 'Inicio', href: paths.dashboard.root },
+          { name: 'Dashboard', href: paths.dashboard.root },
           { name: 'User', href: paths.dashboard.user.root },
           { name: 'Cards' },
         ]}

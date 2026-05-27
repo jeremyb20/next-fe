@@ -1,8 +1,10 @@
+import { Metadata } from 'next';
+
 import { FirebaseForgotPasswordView } from '@/sections/auth/firebase';
 
 // ----------------------------------------------------------------------
 
-export const metadata = {
+export const metadata: Metadata = {
   title: 'Firebase: Forgot Password',
 };
 

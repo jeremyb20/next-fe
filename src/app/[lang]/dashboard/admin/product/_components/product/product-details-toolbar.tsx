@@ -1,15 +1,14 @@
-import Iconify from '@/components/iconify';
-import { RoleBasedGuard } from '@/auth/guard';
-import { RouterLink } from '@/routes/components';
-import CustomPopover, { usePopover } from '@/components/custom-popover';
-
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import IconButton from '@mui/material/IconButton';
-import LoadingButton from '@mui/lab/LoadingButton';
 import Stack, { StackProps } from '@mui/material/Stack';
+
+import Iconify from '@/components/iconify';
+import { RoleBasedGuard } from '@/auth/guard';
+import { RouterLink } from '@/routes/components';
+import CustomPopover, { usePopover } from '@/components/custom-popover';
 
 // ----------------------------------------------------------------------
 
@@ -72,7 +71,7 @@ export default function ProductDetailsToolbar({
             </IconButton>
           </Tooltip>
 
-          <LoadingButton
+          <Button
             color="inherit"
             variant="contained"
             loading={!publish}
@@ -82,7 +81,7 @@ export default function ProductDetailsToolbar({
             sx={{ textTransform: 'capitalize' }}
           >
             {publish}
-          </LoadingButton>
+          </Button>
         </RoleBasedGuard>
       </Stack>
       <RoleBasedGuard roles={['admin']} sx={{ py: 10 }}>

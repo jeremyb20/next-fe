@@ -1,8 +1,10 @@
+import { Metadata } from 'next';
+
 import { SupabaseForgotPasswordView } from '@/sections/auth/supabase';
 
 // ----------------------------------------------------------------------
 
-export const metadata = {
+export const metadata: Metadata = {
   title: 'Supabase: Forgot Password',
 };
 

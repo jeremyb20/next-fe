@@ -1,9 +1,4 @@
 import React from 'react';
-import { Device } from '@/types/security';
-import Iconify from '@/components/iconify';
-import { fToNowRefactor } from '@/utils/format-time';
-import { useTranslation } from '@/hooks/use-translation';
-
 import {
   Box,
   Card,
@@ -13,6 +8,11 @@ import {
   IconButton,
   Typography,
 } from '@mui/material';
+
+import { Device } from '@/types/security';
+import Iconify from '@/components/iconify';
+import { fToNowRefactor } from '@/utils/format-time';
+import { useTranslation } from '@/hooks/use-translation';
 
 interface Props {
   handleSignOutFromAllDevices: () => void;

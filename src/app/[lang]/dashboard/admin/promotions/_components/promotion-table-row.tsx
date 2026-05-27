@@ -1,13 +1,4 @@
-/* eslint-disable no-nested-ternary */
 import { useState } from 'react';
-import Label from '@/components/label';
-import { IPromotions } from '@/types/api';
-import Iconify from '@/components/iconify';
-import { useBoolean } from '@/hooks/use-boolean';
-import { fDate, fTime } from '@/utils/format-time';
-import { ConfirmDialog } from '@/components/custom-dialog';
-import CustomPopover, { usePopover } from '@/components/custom-popover';
-
 import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
@@ -18,6 +9,14 @@ import TableCell from '@mui/material/TableCell';
 import IconButton from '@mui/material/IconButton';
 import ListItemText from '@mui/material/ListItemText';
 import { Dialog, Typography, DialogTitle, DialogContent } from '@mui/material';
+
+import Label from '@/components/label';
+import { IPromotions } from '@/types/api';
+import Iconify from '@/components/iconify';
+import { useBoolean } from '@/hooks/use-boolean';
+import { fDate, fTime } from '@/utils/format-time';
+import { ConfirmDialog } from '@/components/custom-dialog';
+import CustomPopover, { usePopover } from '@/components/custom-popover';
 
 import PromotionEditForm from './promotion-edit-form';
 

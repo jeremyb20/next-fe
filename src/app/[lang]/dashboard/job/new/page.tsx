@@ -1,8 +1,10 @@
+import { Metadata } from 'next';
+
 import { JobCreateView } from '@/sections/job/view';
 
 // ----------------------------------------------------------------------
 
-export const metadata = {
+export const metadata: Metadata = {
   title: 'Dashboard: Create a new job',
 };
 

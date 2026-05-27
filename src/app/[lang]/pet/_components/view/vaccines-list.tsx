@@ -1,17 +1,4 @@
 // components/medical-records/vaccines-list.tsx
-import React from 'react';
-import Iconify from '@/components/iconify';
-import { formatDate } from '@/utils/format-time';
-import { useTranslation } from '@/hooks/use-translation';
-import { IVaccineFormData } from '@/interfaces/medical-record';
-import {
-  isOverdue,
-  isUpcoming,
-  getDateColor,
-  getDaysLabel,
-  getDaysUntil,
-  getProgressBarColor,
-} from '@/utils/constants';
 
 import {
   Box,
@@ -24,6 +11,19 @@ import {
   CardContent,
   CircularProgress,
 } from '@mui/material';
+
+import Iconify from '@/components/iconify';
+import { formatDate } from '@/utils/format-time';
+import { useTranslation } from '@/hooks/use-translation';
+import { IVaccineFormData } from '@/interfaces/medical-record';
+import {
+  isOverdue,
+  isUpcoming,
+  getDateColor,
+  getDaysLabel,
+  getDaysUntil,
+  getProgressBarColor,
+} from '@/utils/constants';
 
 interface VaccinesListProps {
   data: IVaccineFormData[];
@@ -38,7 +38,7 @@ interface VaccinesListProps {
 export default function VaccinesList({
   data,
   onEdit,
-  refetchTrigger,
+  refetchTrigger: _refetchTrigger,
   isLoading,
 }: VaccinesListProps) {
   const { t } = useTranslation();

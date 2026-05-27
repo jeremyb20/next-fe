@@ -1,8 +1,8 @@
+import { Box, Alert, Paper, AlertTitle, Typography } from '@mui/material';
+
 // components/PetCondolenceMessage.tsx
 import { IPetProfile } from '@/types/api';
 import { useTranslation } from '@/hooks/use-translation';
-
-import { Box, Alert, Paper, AlertTitle, Typography } from '@mui/material';
 
 import Iconify from '../iconify';
 

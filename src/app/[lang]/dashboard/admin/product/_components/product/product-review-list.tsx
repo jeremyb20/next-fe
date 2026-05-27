@@ -1,6 +1,6 @@
-import { IProductReview } from '@/types/product';
-
 import Pagination, { paginationClasses } from '@mui/material/Pagination';
+
+import { IProductReview } from '@/types/product';
 
 import ProductReviewItem from './product-review-item';
 

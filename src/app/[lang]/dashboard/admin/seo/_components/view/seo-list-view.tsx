@@ -1,5 +1,16 @@
 'use client';
 
+import Card from '@mui/material/Card';
+import Table from '@mui/material/Table';
+import Button from '@mui/material/Button';
+import Tooltip from '@mui/material/Tooltip';
+import Container from '@mui/material/Container';
+import TableBody from '@mui/material/TableBody';
+import IconButton from '@mui/material/IconButton';
+import { Box, LinearProgress } from '@mui/material';
+import { useMemo, useState, useCallback } from 'react';
+import TableContainer from '@mui/material/TableContainer';
+
 import { ISeo } from '@/types/api';
 import { paths } from '@/routes/paths';
 import Iconify from '@/components/iconify';
@@ -8,12 +19,11 @@ import { RouterLink } from '@/routes/components';
 import { useBoolean } from '@/hooks/use-boolean';
 import { useSnackbar } from '@/components/snackbar';
 import EmptyContent from '@/components/empty-content';
-import { useMemo, useState, useCallback } from 'react';
 import { isAfter, isBetween } from '@/utils/format-time';
 import { ConfirmDialog } from '@/components/custom-dialog';
 import { useSettingsContext } from '@/components/settings';
-import CustomBreadcrumbs from '@/components/custom-breadcrumbs';
 import FilterToolbar from '@/components/filters/filter-toolbar';
+import CustomBreadcrumbs from '@/components/custom-breadcrumbs';
 import { SEO_FILTER_TOOLBAR } from '@/components/filters/filter-constants';
 import { useGetAllSeo, UserQueryParams } from '@/hooks/use-fetch-paginated';
 import {
@@ -24,16 +34,6 @@ import {
   TableSelectedAction,
   TablePaginationCustom,
 } from '@/components/table';
-
-import Card from '@mui/material/Card';
-import Table from '@mui/material/Table';
-import Button from '@mui/material/Button';
-import Tooltip from '@mui/material/Tooltip';
-import Container from '@mui/material/Container';
-import TableBody from '@mui/material/TableBody';
-import IconButton from '@mui/material/IconButton';
-import { Box, LinearProgress } from '@mui/material';
-import TableContainer from '@mui/material/TableContainer';
 
 import SeoTableRow from '../seo-table-row';
 import SeoQuickEditForm from '../seo-quick-edit-form';
@@ -153,6 +153,7 @@ export default function SeoListView() {
   const handleDeleteRow = useCallback(
     (id: string) => {
       // Aquí iría la llamada a la API para eliminar
+      console.log('Deleting SEO with id:', id);
       enqueueSnackbar('SEO deleted successfully!');
       refetch();
     },
@@ -212,6 +213,7 @@ export default function SeoListView() {
 
   const handleViewRow = useCallback(
     (id: string) => {
+      console.log('Viewing SEO with id:', id);
       //   router.push(paths.dashboard.seo.details(id));
     },
     // [router]

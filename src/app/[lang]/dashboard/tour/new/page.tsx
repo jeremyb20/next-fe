@@ -1,8 +1,10 @@
+import { Metadata } from 'next';
+
 import { TourCreateView } from '@/sections/tour/view';
 
 // ----------------------------------------------------------------------
 
-export const metadata = {
+export const metadata: Metadata = {
   title: 'Dashboard: Create a new tour',
 };
 

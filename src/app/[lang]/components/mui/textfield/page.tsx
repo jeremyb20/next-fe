@@ -1,8 +1,10 @@
+import { Metadata } from 'next';
+
 import TextfieldView from '@/sections/_examples/mui/textfield-view';
 
 // ----------------------------------------------------------------------
 
-export const metadata = {
+export const metadata: Metadata = {
   title: 'MUI: TextField',
 };
 

@@ -1,21 +1,21 @@
-import { m } from 'framer-motion';
-import { _homePlans } from '@/_mock';
-import { paths } from '@/routes/paths';
-import Iconify from '@/components/iconify';
-import { useState, useCallback } from 'react';
-import { EMAIL_SUPPORT } from '@/config-global';
-import { useResponsive } from '@/hooks/use-responsive';
-import { varFade, MotionViewport } from '@/components/animate';
-
+import { m } from 'motion/react';
 import Box from '@mui/material/Box';
 import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
 import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
 import { alpha } from '@mui/material/styles';
+import { useState, useCallback } from 'react';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import Stack, { StackProps } from '@mui/material/Stack';
+
+import { _homePlans } from '@/_mock';
+import { paths } from '@/routes/paths';
+import Iconify from '@/components/iconify';
+import { EMAIL_SUPPORT } from '@/config-global';
+import { useResponsive } from '@/hooks/use-responsive';
+import { varFade, MotionViewport } from '@/components/animate';
 
 // ----------------------------------------------------------------------
 

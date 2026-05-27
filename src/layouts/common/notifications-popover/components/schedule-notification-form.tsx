@@ -1,10 +1,5 @@
 // schedule-notification-form.tsx
 import { useState } from 'react';
-import { endpoints } from '@/utils/axios';
-import { LOGO, HOST_API } from '@/config-global';
-import { NotificationData, NotificationFormData } from '@/types/api';
-import { useCreateGenericMutation } from '@/hooks/user-generic-mutation';
-
 import {
   Box,
   Alert,
@@ -14,13 +9,18 @@ import {
   Typography,
 } from '@mui/material';
 
+import { endpoints } from '@/utils/axios';
+import { LOGO, HOST_API } from '@/config-global';
+import { NotificationData, NotificationFormData } from '@/types/api';
+import { useCreateGenericMutation } from '@/hooks/user-generic-mutation';
+
 interface ScheduleNotificationFormProps {
   onNotificationScheduled: () => void;
   setNotifications: React.Dispatch<React.SetStateAction<NotificationData[]>>;
 }
 
 const ScheduleNotificationForm = ({
-  onNotificationScheduled,
+  onNotificationScheduled: _onNotificationScheduled,
   setNotifications,
 }: ScheduleNotificationFormProps) => {
   const [formData, setFormData] = useState<NotificationFormData>({
@@ -176,7 +176,7 @@ const ScheduleNotificationForm = ({
             type="date"
             value={formData.date}
             onChange={handleFormChange('date')}
-            InputLabelProps={{ shrink: true }}
+            slotProps={{ inputLabel: { shrink: true } }}
             inputProps={{ min: getMinDate() }} // Establecer fecha mínima como hoy
             fullWidth
             required
@@ -188,7 +188,7 @@ const ScheduleNotificationForm = ({
             type="time"
             value={formData.time}
             onChange={handleFormChange('time')}
-            InputLabelProps={{ shrink: true }}
+            slotProps={{ inputLabel: { shrink: true } }}
             inputProps={{
               min: getMinTime(), // Si la fecha es hoy, establecer hora mínima
             }}

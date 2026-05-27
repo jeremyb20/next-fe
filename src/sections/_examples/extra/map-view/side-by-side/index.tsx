@@ -1,6 +1,9 @@
-import { MapBoxProps } from '@/components/map';
+'use client';
+
 import Map, { ViewStateChangeEvent } from 'react-map-gl';
-import { memo, useMemo, useState, useCallback } from 'react';
+import { memo, useMemo, useState, useCallback, useEffect } from 'react';
+
+import { MapBoxProps } from '@/components/map';
 
 import ControlPanel, { ModeProps } from './control-panel';
 
@@ -30,19 +33,31 @@ function MapSideBySide({ ...other }: MapBoxProps) {
   });
 
   const [mode, setMode] = useState<ModeProps>('side-by-side');
-
   const [activeMap, setActiveMap] = useState<'left' | 'right'>('left');
+  const [width, setWidth] = useState(100); // Valor inicial para SSR
+
+  const {
+    projection: _projection,
+    logoPosition: _logoPosition,
+    ...mapProps
+  } = other;
+
+  // Efecto para obtener el ancho real del cliente
+  useEffect(() => {
+    setWidth(window.innerWidth);
+
+    const handleResize = () => setWidth(window.innerWidth);
+    window.addEventListener('resize', handleResize);
+
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const onLeftMoveStart = useCallback(() => setActiveMap('left'), []);
-
   const onRightMoveStart = useCallback(() => setActiveMap('right'), []);
-
   const onMove = useCallback(
     (event: ViewStateChangeEvent) => setViewState(event.viewState),
     []
   );
-
-  const width = typeof window === 'undefined' ? 100 : window.innerWidth;
 
   const leftMapPadding = useMemo(
     () => ({
@@ -87,7 +102,7 @@ function MapSideBySide({ ...other }: MapBoxProps) {
         }}
         style={LeftMapStyle}
         mapStyle="mapbox://styles/mapbox/light-v10"
-        {...other}
+        {...mapProps}
       />
 
       <Map
@@ -102,7 +117,7 @@ function MapSideBySide({ ...other }: MapBoxProps) {
         }}
         style={RightMapStyle}
         mapStyle="mapbox://styles/mapbox/dark-v10"
-        {...other}
+        {...mapProps}
       />
 
       <ControlPanel mode={mode} onModeChange={handleChangeMode} />

@@ -1,9 +1,3 @@
-import { _socials } from '@/_mock';
-import Iconify from '@/components/iconify';
-import { IUserProfileFriend } from '@/types/user';
-import SearchNotFound from '@/components/search-not-found';
-import CustomPopover, { usePopover } from '@/components/custom-popover';
-
 import Box from '@mui/material/Box';
 import Link from '@mui/material/Link';
 import Card from '@mui/material/Card';
@@ -15,6 +9,12 @@ import TextField from '@mui/material/TextField';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import InputAdornment from '@mui/material/InputAdornment';
+
+import { _socials } from '@/_mock';
+import Iconify from '@/components/iconify';
+import { IUserProfileFriend } from '@/types/user';
+import SearchNotFound from '@/components/search-not-found';
+import CustomPopover, { usePopover } from '@/components/custom-popover';
 
 // ----------------------------------------------------------------------
 

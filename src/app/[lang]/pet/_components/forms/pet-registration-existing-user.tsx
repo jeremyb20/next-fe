@@ -4,34 +4,9 @@
 
 import * as Yup from 'yup';
 import dynamic from 'next/dynamic';
-import { useSnackbar } from 'notistack';
-import { endpoints } from '@/utils/axios';
-import { useRouter } from '@/routes/hooks';
-import Iconify from '@/components/iconify';
-import { OptionType } from '@/types/global';
-import { useAuthContext } from '@/auth/hooks';
-import { fData } from '@/utils/format-number';
-import { useBoolean } from '@/hooks/use-boolean';
-import { useForm, Controller } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
-import { getValidationCode } from '@/hooks/use-fetch';
-import { useTranslation } from '@/hooks/use-translation';
-import UploadAvatar from '@/components/upload/upload-avatar';
-import { PetAgeCalculator } from '@/utils/pet-age-calculator';
-import { useRef, useState, useEffect, useCallback } from 'react';
-import { BreedOptions, GENDER_OPTIONS } from '@/utils/constants';
-import { SITEKEY, HOST_API, PATH_AFTER_LOGIN } from '@/config-global';
-import useCelebrationConfetti from '@/hooks/use-celebration-confetti';
-import { useCreateGenericMutation } from '@/hooks/user-generic-mutation';
-import { getDogSizeFromBreed, getSpeciesFromBreed } from '@/utils/pet-utils';
-import FormProvider, {
-  RHFSelect,
-  RHFTextField,
-  RHFAutocomplete,
-} from '@/components/hook-form';
-
 import Box from '@mui/material/Box';
 import Step from '@mui/material/Step';
+import { useSnackbar } from 'notistack';
 import Paper from '@mui/material/Paper';
 import Alert from '@mui/material/Alert';
 import Button from '@mui/material/Button';
@@ -39,9 +14,11 @@ import Stepper from '@mui/material/Stepper';
 import { alpha } from '@mui/material/styles';
 import StepLabel from '@mui/material/StepLabel';
 import Typography from '@mui/material/Typography';
-import LoadingButton from '@mui/lab/LoadingButton';
 import StepContent from '@mui/material/StepContent';
+import { useForm, Controller } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { useRef, useState, useEffect, useCallback } from 'react';
 import {
   Card,
   MenuItem,
@@ -52,6 +29,28 @@ import {
   InputAdornment,
   CircularProgress,
 } from '@mui/material';
+
+import { endpoints } from '@/utils/axios';
+import { useRouter } from '@/routes/hooks';
+import Iconify from '@/components/iconify';
+import { OptionType } from '@/types/global';
+import { useAuthContext } from '@/auth/hooks';
+import { fData } from '@/utils/format-number';
+import { useBoolean } from '@/hooks/use-boolean';
+import { getValidationCode } from '@/hooks/use-fetch';
+import { useTranslation } from '@/hooks/use-translation';
+import UploadAvatar from '@/components/upload/upload-avatar';
+import { PetAgeCalculator } from '@/utils/pet-age-calculator';
+import { BreedOptions, GENDER_OPTIONS } from '@/utils/constants';
+import { SITEKEY, HOST_API, PATH_AFTER_LOGIN } from '@/config-global';
+import useCelebrationConfetti from '@/hooks/use-celebration-confetti';
+import { useCreateGenericMutation } from '@/hooks/user-generic-mutation';
+import { getDogSizeFromBreed, getSpeciesFromBreed } from '@/utils/pet-utils';
+import FormProvider, {
+  RHFSelect,
+  RHFTextField,
+  RHFAutocomplete,
+} from '@/components/hook-form';
 
 // ----------------------------------------------------------------------
 
@@ -100,12 +99,12 @@ const Turnstile = dynamic(
 
 interface PetRegistrationExistingUserProps {
   code?: string;
-  onBackToSelection?: () => void;
+  onBackToSelectionAction?: () => void;
 }
 
 export function PetRegistrationExistingUser({
   code,
-  onBackToSelection,
+  onBackToSelectionAction,
 }: PetRegistrationExistingUserProps) {
   const password = useBoolean();
   const router = useRouter();
@@ -427,17 +426,17 @@ export function PetRegistrationExistingUser({
         />
 
         <Box sx={{ mt: 3 }}>
-          <Button onClick={onBackToSelection} sx={{ mr: 1 }}>
+          <Button onClick={onBackToSelectionAction} sx={{ mr: 1 }}>
             Back
           </Button>
-          <LoadingButton
+          <Button
             type="submit"
             variant="contained"
             loading={isCodeSubmitting}
             disabled={!watchCodeValue || watchCodeValue.length !== 6}
           >
             Validate Code
-          </LoadingButton>
+          </Button>
         </Box>
 
         {code && (
@@ -543,7 +542,7 @@ export function PetRegistrationExistingUser({
           </Box>
         )}
 
-        <LoadingButton
+        <Button
           fullWidth
           color="inherit"
           size="large"
@@ -553,7 +552,7 @@ export function PetRegistrationExistingUser({
           disabled={!turnstileToken || !watchedPassword} // Deshabilitar hasta que se complete el captcha
         >
           {t('Sign In')}
-        </LoadingButton>
+        </Button>
       </Box>
     </FormProvider>
   );
@@ -770,13 +769,9 @@ export function PetRegistrationExistingUser({
           <Button onClick={handleBack} sx={{ mr: 1 }}>
             {t('Back')}
           </Button>
-          <LoadingButton
-            type="submit"
-            variant="contained"
-            loading={isPetSubmitting}
-          >
+          <Button type="submit" variant="contained" loading={isPetSubmitting}>
             {t('Continue')}
-          </LoadingButton>
+          </Button>
         </Box>
       </Box>
     </FormProvider>
@@ -922,14 +917,14 @@ export function PetRegistrationExistingUser({
         <Button onClick={handleBack} sx={{ mr: 1 }}>
           {t('Back')}
         </Button>
-        <LoadingButton
+        <Button
           type="submit"
           variant="contained"
           loading={isSubmitting}
           onClick={handleCompleteRegistration}
         >
           {t('Complete Registration')}
-        </LoadingButton>
+        </Button>
       </Box>
     </Box>
   );
