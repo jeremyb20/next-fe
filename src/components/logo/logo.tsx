@@ -1,11 +1,11 @@
 import Image from 'next/image';
 import { forwardRef } from 'react';
+import Link from '@mui/material/Link';
+import Box, { BoxProps } from '@mui/material/Box';
+
 import { LOGO } from '@/config-global';
 import { useAuthContext } from '@/auth/hooks';
 import { RouterLink } from '@/routes/components';
-
-import Link from '@mui/material/Link';
-import Box, { BoxProps } from '@mui/material/Box';
 
 // ----------------------------------------------------------------------
 

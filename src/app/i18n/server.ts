@@ -11,8 +11,7 @@ export const initI18next = async (lng: string, ns: string = defaultNS) => {
     .use(initReactI18next)
     .use(
       resourcesToBackend(
-        (language: string, namespace: string) =>
-          import(`./locales/translation.${language}.json`)
+        (language: string) => import(`./locales/translation.${language}.json`)
       )
     )
     .init({

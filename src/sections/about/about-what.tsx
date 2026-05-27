@@ -1,18 +1,18 @@
-import { m } from 'framer-motion';
+import { m } from 'motion/react';
+import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid';
+import Stack from '@mui/material/Stack';
+import Button from '@mui/material/Button';
+import Container from '@mui/material/Container';
+import Typography from '@mui/material/Typography';
+import { alpha, useTheme } from '@mui/material/styles';
+import LinearProgress from '@mui/material/LinearProgress';
+
 import Image from '@/components/image';
 import Iconify from '@/components/iconify';
 import { fPercent } from '@/utils/format-number';
 import { useResponsive } from '@/hooks/use-responsive';
 import { varFade, MotionViewport } from '@/components/animate';
-
-import Box from '@mui/material/Box';
-import Stack from '@mui/material/Stack';
-import Button from '@mui/material/Button';
-import Container from '@mui/material/Container';
-import Grid from '@mui/material/Unstable_Grid2';
-import Typography from '@mui/material/Typography';
-import { alpha, useTheme } from '@mui/material/styles';
-import LinearProgress from '@mui/material/LinearProgress';
 
 // ----------------------------------------------------------------------
 
@@ -47,13 +47,11 @@ export default function AboutWhat() {
         {mdUp && (
           <Grid
             container
-            xs={12}
-            md={6}
-            lg={7}
+            size={{ xs: 12, md: 6, lg: 7 }}
             alignItems="center"
             sx={{ pr: { md: 7 } }}
           >
-            <Grid xs={6}>
+            <Grid size={{ xs: 6 }}>
               <m.div variants={varFade().inUp}>
                 <Image
                   alt="our office 2"
@@ -64,7 +62,7 @@ export default function AboutWhat() {
               </m.div>
             </Grid>
 
-            <Grid xs={6}>
+            <Grid size={{ xs: 6 }}>
               <m.div variants={varFade().inUp}>
                 <Image
                   alt="our office 1"
@@ -77,7 +75,7 @@ export default function AboutWhat() {
           </Grid>
         )}
 
-        <Grid xs={12} md={6} lg={5}>
+        <Grid size={{ xs: 12, md: 6, lg: 5 }}>
           <m.div variants={varFade().inRight}>
             <Typography variant="h2" sx={{ mb: 3 }}>
               What is Minimal?

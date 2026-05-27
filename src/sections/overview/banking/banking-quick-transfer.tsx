@@ -1,9 +1,3 @@
-import Iconify from '@/components/iconify';
-import { useBoolean } from '@/hooks/use-boolean';
-import { fCurrency } from '@/utils/format-number';
-import { useState, useEffect, useCallback } from 'react';
-import Carousel, { useCarousel, CarouselArrows } from '@/components/carousel';
-
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
@@ -18,8 +12,14 @@ import Typography from '@mui/material/Typography';
 import DialogTitle from '@mui/material/DialogTitle';
 import ListItemText from '@mui/material/ListItemText';
 import DialogActions from '@mui/material/DialogActions';
+import { useState, useEffect, useCallback } from 'react';
 import Dialog, { DialogProps } from '@mui/material/Dialog';
 import Input, { InputProps, inputClasses } from '@mui/material/Input';
+
+import Iconify from '@/components/iconify';
+import { useBoolean } from '@/hooks/use-boolean';
+import { fCurrency } from '@/utils/format-number';
+import Carousel, { useCarousel, CarouselArrows } from '@/components/carousel';
 
 // ----------------------------------------------------------------------
 
@@ -105,7 +105,6 @@ export default function BankingQuickTransfer({
     if (amount) {
       handleAutoWidth();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [amount]);
 
   const handleAutoWidth = useCallback(() => {

@@ -1,8 +1,10 @@
+import { Metadata } from 'next';
+
 import PricingView from '@/sections/pricing/view';
 
 // ----------------------------------------------------------------------
 
-export const metadata = {
+export const metadata: Metadata = {
   title: 'Pricing',
 };
 

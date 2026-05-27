@@ -1,7 +1,6 @@
-import { m, AnimatePresence } from 'framer-motion';
-
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
+import { m, AnimatePresence } from 'motion/react';
 import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
 import Paper, { PaperProps } from '@mui/material/Paper';

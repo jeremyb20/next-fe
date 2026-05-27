@@ -1,4 +1,21 @@
-import { m } from 'framer-motion';
+import { m } from 'motion/react';
+import Tab from '@mui/material/Tab';
+import Box from '@mui/material/Box';
+import Tabs from '@mui/material/Tabs';
+import List from '@mui/material/List';
+import Stack from '@mui/material/Stack';
+import Badge from '@mui/material/Badge';
+import Button from '@mui/material/Button';
+import Divider from '@mui/material/Divider';
+import Tooltip from '@mui/material/Tooltip';
+import { useTheme } from '@mui/material/styles';
+import IconButton from '@mui/material/IconButton';
+import Typography from '@mui/material/Typography';
+import useMediaQuery from '@mui/system/useMediaQuery';
+import Drawer, { drawerClasses } from '@mui/material/Drawer';
+import { useMemo, useState, useEffect, useCallback } from 'react';
+
+import { paper } from '@/theme/css';
 import Label from '@/components/label';
 import { endpoints } from '@/utils/axios';
 import Iconify from '@/components/iconify';
@@ -9,22 +26,8 @@ import { varHover } from '@/components/animate';
 import { useBoolean } from '@/hooks/use-boolean';
 import { useManagerUser } from '@/hooks/use-manager-user';
 import { useFetchGetNotifications } from '@/hooks/use-fetch';
-import { useMemo, useState, useEffect, useCallback } from 'react';
 import { useCreateGenericMutation } from '@/hooks/user-generic-mutation';
 import PushNotificationManager from '@/components/notifications/push-notifications-manager';
-
-import Tab from '@mui/material/Tab';
-import Box from '@mui/material/Box';
-import Tabs from '@mui/material/Tabs';
-import List from '@mui/material/List';
-import Stack from '@mui/material/Stack';
-import Badge from '@mui/material/Badge';
-import Drawer from '@mui/material/Drawer';
-import Button from '@mui/material/Button';
-import Divider from '@mui/material/Divider';
-import Tooltip from '@mui/material/Tooltip';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
 
 import NotificationItem from './notification-item';
 import ScheduleNotificationForm from './components/schedule-notification-form';
@@ -46,6 +49,8 @@ export default function NotificationsPopover() {
   const { user } = useManagerUser();
   const currentRole = user?.role;
   const { mutateAsync } = useCreateGenericMutation();
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   // Usar el hook para obtener notificaciones reales
   const { data: fetchedNotifications = [], refetch: refetchNotifications } =
@@ -318,13 +323,16 @@ export default function NotificationsPopover() {
         anchor="right"
         slotProps={{
           backdrop: { invisible: true },
+          paper: { sx: { width: 1, maxWidth: 420 } },
         }}
-        PaperProps={{
-          sx: { width: 1, maxWidth: 420 },
+        sx={{
+          [`& .${drawerClasses.paper}`]: {
+            ...paper({ theme, bgcolor: theme.palette.background.default }),
+            width: isMobile ? '100%' : 350,
+          },
         }}
       >
         {renderHead}
-        <Divider />
 
         <Stack
           direction="row"

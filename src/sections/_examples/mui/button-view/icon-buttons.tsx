@@ -1,9 +1,9 @@
-import { m } from 'framer-motion';
-import Iconify from '@/components/iconify';
-import { varHover } from '@/components/animate';
-
+import { m } from 'motion/react';
 import Masonry from '@mui/lab/Masonry';
 import IconButton from '@mui/material/IconButton';
+
+import Iconify from '@/components/iconify';
+import { varHover } from '@/components/animate';
 
 import ComponentBlock from '../../component-block';
 

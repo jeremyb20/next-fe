@@ -1,6 +1,7 @@
 import Map, { MapRef } from 'react-map-gl';
-import { MapControl, MapBoxProps } from '@/components/map';
 import { memo, useRef, useState, useCallback } from 'react';
+
+import { MapControl, MapBoxProps } from '@/components/map';
 
 import ControlPanel, { CityProps } from './control-panel';
 
@@ -14,6 +15,12 @@ function MapViewportAnimation({ data, ...other }: Props) {
   const mapRef = useRef<MapRef>(null);
 
   const [selectedCity, setSelectedCity] = useState(data[2].city);
+
+  const {
+    projection: _projection,
+    logoPosition: _logoPosition,
+    ...mapProps
+  } = other;
 
   const onSelectCity = useCallback(
     (
@@ -36,7 +43,7 @@ function MapViewportAnimation({ data, ...other }: Props) {
         pitch: 0,
       }}
       ref={mapRef}
-      {...other}
+      {...mapProps}
     >
       <MapControl />
 

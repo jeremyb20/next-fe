@@ -1,5 +1,6 @@
 import { memo, useState, useCallback } from 'react';
 import Map, { MarkerDragEvent } from 'react-map-gl';
+
 import { MapMarker, MapControl, MapBoxProps } from '@/components/map';
 
 import ControlPanel from './control-panel';
@@ -13,6 +14,12 @@ function MapDraggableMarkers({ ...other }: MapBoxProps) {
   });
 
   const [events, logEvents] = useState({});
+
+  const {
+    projection: _projection,
+    logoPosition: _logoPosition,
+    ...mapProps
+  } = other;
 
   const onMarkerDragStart = useCallback((event: MarkerDragEvent) => {
     logEvents((prevEvents) => ({ ...prevEvents, onDragStart: event.lngLat }));
@@ -35,7 +42,7 @@ function MapDraggableMarkers({ ...other }: MapBoxProps) {
     <>
       <Map
         initialViewState={{ latitude: 40, longitude: -100, zoom: 3.5 }}
-        {...other}
+        {...mapProps}
       >
         <MapControl />
 

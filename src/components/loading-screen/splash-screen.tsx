@@ -1,6 +1,5 @@
-import { m } from 'framer-motion';
+import { m } from 'motion/react';
 import { useState, useEffect } from 'react';
-
 import { alpha } from '@mui/material/styles';
 import Box, { BoxProps } from '@mui/material/Box';
 

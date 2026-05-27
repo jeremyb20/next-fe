@@ -2,17 +2,25 @@
 
 import * as Yup from 'yup';
 import dynamic from 'next/dynamic';
+import Link from '@mui/material/Link';
+import Alert from '@mui/material/Alert';
+import Stack from '@mui/material/Stack';
+import { useForm } from 'react-hook-form';
+import IconButton from '@mui/material/IconButton';
+import Typography from '@mui/material/Typography';
+import { useRef, useState, useEffect } from 'react';
+import { yupResolver } from '@hookform/resolvers/yup';
+import InputAdornment from '@mui/material/InputAdornment';
+import { Box, Container, CircularProgress, Button } from '@mui/material';
+
 import { paths } from '@/routes/paths';
 import Image from '@/components/image';
-import { useForm } from 'react-hook-form';
 import { countries } from '@/assets/data';
 import Iconify from '@/components/iconify';
 import useIPInfo from '@/hooks/use-ip-info';
 import { useAuthContext } from '@/auth/hooks';
 import { RouterLink } from '@/routes/components';
 import { useBoolean } from '@/hooks/use-boolean';
-import { useRef, useState, useEffect } from 'react';
-import { yupResolver } from '@hookform/resolvers/yup';
 import { useTranslation } from '@/hooks/use-translation';
 import { useSettingsContext } from '@/components/settings';
 import { useRouter, useSearchParams } from '@/routes/hooks';
@@ -28,15 +36,6 @@ import {
   getPhonePlaceholder,
   simplePhoneValidation,
 } from '@/utils/phone-validation';
-
-import Link from '@mui/material/Link';
-import Alert from '@mui/material/Alert';
-import Stack from '@mui/material/Stack';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import LoadingButton from '@mui/lab/LoadingButton';
-import InputAdornment from '@mui/material/InputAdornment';
-import { Box, Container, CircularProgress } from '@mui/material';
 
 // ----------------------------------------------------------------------
 const Turnstile = dynamic(
@@ -163,7 +162,14 @@ export default function JwtRegisterView() {
       router.push(returnTo || PATH_AFTER_LOGIN);
     } catch (error) {
       console.error(error);
-      setErrorMsg(typeof error === 'string' ? error : error.message);
+      setErrorMsg(
+        typeof error === 'string'
+          ? error
+          : error instanceof Error
+            ? error.message
+            : 'Error saving user information'
+      );
+
       // Resetear Turnstile en caso de error
       setValue('password', '');
       // if (turnstileRef.current) {
@@ -342,7 +348,7 @@ export default function JwtRegisterView() {
           />
         </Box>
       )}
-      <LoadingButton
+      <Button
         fullWidth
         color="inherit"
         size="large"
@@ -354,7 +360,7 @@ export default function JwtRegisterView() {
         sx={{ justifyContent: 'space-between', pl: 2, pr: 1.5 }}
       >
         {t('Create Account')}
-      </LoadingButton>
+      </Button>
 
       <Stack
         direction="row"

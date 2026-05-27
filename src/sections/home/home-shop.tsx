@@ -1,7 +1,13 @@
 import { useState } from 'react';
 import { isEqual } from 'lodash';
-import { m } from 'framer-motion';
+import { m } from 'motion/react';
+import Box from '@mui/material/Box';
 import orderBy from 'lodash/orderBy';
+import Stack from '@mui/material/Stack';
+import Button from '@mui/material/Button';
+import Container from '@mui/material/Container';
+import Typography from '@mui/material/Typography';
+
 import { paths } from '@/routes/paths';
 import { useRouter } from '@/routes/hooks';
 import EmptyContent from '@/components/empty-content';
@@ -11,12 +17,6 @@ import { UserQueryParams } from '@/hooks/use-fetch-paginated';
 import { varFade, MotionViewport } from '@/components/animate';
 import { IProductItem, IProductFilters } from '@/types/product';
 import { getSortOrder, getSortByField } from '@/utils/constants';
-
-import Box from '@mui/material/Box';
-import Stack from '@mui/material/Stack';
-import Button from '@mui/material/Button';
-import Container from '@mui/material/Container';
-import Typography from '@mui/material/Typography';
 
 import ProductList from '../product/product-list';
 
@@ -56,10 +56,12 @@ export default function HomeShop() {
     <Container component={MotionViewport} sx={{ py: { xs: 10, md: 15 } }}>
       <Stack spacing={3} sx={{ textAlign: 'center', mb: 8 }}>
         <m.div variants={varFade().inUp}>
-          <Typography variant="h2"> {t('Affiliate Store')}</Typography>
+          <Typography variant="h2" component="h2">
+            {t('Affiliate Store')}
+          </Typography>
         </m.div>
         <m.div variants={varFade().inUp}>
-          <Typography variant="h5" color="text.secondary">
+          <Typography variant="h5" component="h3" color="text.secondary">
             {t('Exclusive discounts on products for your pet')}
           </Typography>
         </m.div>

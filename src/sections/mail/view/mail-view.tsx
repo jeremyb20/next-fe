@@ -1,7 +1,11 @@
 'use client';
 
-import { paths } from '@/routes/paths';
+import Stack from '@mui/material/Stack';
 import { useEffect, useCallback } from 'react';
+import Container from '@mui/material/Container';
+import Typography from '@mui/material/Typography';
+
+import { paths } from '@/routes/paths';
 import { useBoolean } from '@/hooks/use-boolean';
 import EmptyContent from '@/components/empty-content';
 import { useResponsive } from '@/hooks/use-responsive';
@@ -9,10 +13,6 @@ import { useSettingsContext } from '@/components/settings';
 import { useRouter, useSearchParams } from '@/routes/hooks';
 import { LoadingScreen } from '@/components/loading-screen';
 import { useGetMail, useGetMails, useGetLabels } from '@/api/mail';
-
-import Stack from '@mui/material/Stack';
-import Container from '@mui/material/Container';
-import Typography from '@mui/material/Typography';
 
 import MailNav from '../mail-nav';
 import MailList from '../mail-list';

@@ -1,11 +1,4 @@
-import { m } from 'framer-motion';
-import { paths } from '@/routes/paths';
-import { bgGradient } from '@/theme/css';
-import Iconify from '@/components/iconify';
-import { RouterLink } from '@/routes/components';
-import { useResponsive } from '@/hooks/use-responsive';
-import { varFade, MotionViewport } from '@/components/animate';
-
+import { m } from 'motion/react';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import Stack from '@mui/material/Stack';
@@ -13,6 +6,13 @@ import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import { alpha, useTheme } from '@mui/material/styles';
+
+import { paths } from '@/routes/paths';
+import { bgGradient } from '@/theme/css';
+import Iconify from '@/components/iconify';
+import { RouterLink } from '@/routes/components';
+import { useResponsive } from '@/hooks/use-responsive';
+import { varFade, MotionViewport } from '@/components/animate';
 
 // ----------------------------------------------------------------------
 
@@ -71,7 +71,7 @@ export default function HomeVeterinarians() {
         },
       }}
     >
-      {BENEFITS.map((benefit, index) => (
+      {BENEFITS.map((benefit) => (
         <m.div key={benefit.title} variants={varFade().inUp}>
           <Card
             sx={{
@@ -130,7 +130,7 @@ export default function HomeVeterinarians() {
           },
         }}
       >
-        {SERVICES.map((service, index) => (
+        {SERVICES.map((service) => (
           <m.div key={service} variants={varFade().inUp}>
             <Stack direction="row" spacing={2} alignItems="center">
               <Box

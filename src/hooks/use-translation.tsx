@@ -1,10 +1,11 @@
-// hooks/useTranslate.ts
-
+// hooks/use-translation.ts (modificado)
 'use client';
 
 import { useParams } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import { useTranslation as useTranslationOrg } from 'react-i18next';
+
+import { setDateTimeLocale } from '@/utils/format-time';
 
 import { fallbackLng } from '../app/i18n/settings';
 
@@ -16,6 +17,8 @@ export function useTranslation(ns?: string) {
 
   useEffect(() => {
     setMounted(true);
+    // Actualizar el locale global cuando cambie el idioma
+    setDateTimeLocale(lng as 'es' | 'en' | 'vi' | 'fr' | 'zh' | 'ar');
   }, [lng, i18n]);
 
   return {
@@ -23,9 +26,8 @@ export function useTranslation(ns?: string) {
     i18n,
     mounted,
     lng,
-    // Versión segura para SSR
     tSafe: (key: string, options?: any) => {
-      if (!mounted) return key; // Placeholder durante SSR
+      if (!mounted) return key;
       return t(key, options);
     },
   };

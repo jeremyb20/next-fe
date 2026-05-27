@@ -1,9 +1,7 @@
-import { useState, useCallback } from 'react';
-import { useBoolean } from '@/hooks/use-boolean';
-
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Switch from '@mui/material/Switch';
+import { useState, useCallback } from 'react';
 import MenuItem from '@mui/material/MenuItem';
 import InputLabel from '@mui/material/InputLabel';
 import Typography from '@mui/material/Typography';
@@ -14,6 +12,8 @@ import DialogContent from '@mui/material/DialogContent';
 import Dialog, { DialogProps } from '@mui/material/Dialog';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
+
+import { useBoolean } from '@/hooks/use-boolean';
 
 // ----------------------------------------------------------------------
 

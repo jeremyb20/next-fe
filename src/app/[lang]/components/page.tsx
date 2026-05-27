@@ -1,8 +1,10 @@
+import { Metadata } from 'next';
+
 import ComponentsView from '@/sections/_examples/view';
 
 // ----------------------------------------------------------------------
 
-export const metadata = {
+export const metadata: Metadata = {
   title: 'Components',
 };
 

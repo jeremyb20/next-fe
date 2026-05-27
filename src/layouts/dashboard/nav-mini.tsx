@@ -1,10 +1,10 @@
+import Box from '@mui/material/Box';
+import Stack from '@mui/material/Stack';
+
 import Logo from '@/components/logo';
 import { hideScroll } from '@/theme/css';
 import { NavSectionMini } from '@/components/nav-section';
 import { useManagerUser } from '@/hooks/use-manager-user';
-
-import Box from '@mui/material/Box';
-import Stack from '@mui/material/Stack';
 
 import { NAV } from '../config-layout';
 import { useNavData } from './config-navigation';

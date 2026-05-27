@@ -1,8 +1,10 @@
+import { Metadata } from 'next';
+
 import { ModernVerifyView } from '@/sections/auth-demo/modern';
 
 // ----------------------------------------------------------------------
 
-export const metadata = {
+export const metadata: Metadata = {
   title: 'Auth Modern: Verify',
 };
 

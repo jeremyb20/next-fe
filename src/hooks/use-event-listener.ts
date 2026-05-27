@@ -65,7 +65,7 @@ export function useEventListener<
     targetElement.addEventListener(eventName, eventListener, options);
 
     // Remove event listener on cleanup
-    // eslint-disable-next-line consistent-return
+     
     return () => {
       targetElement.removeEventListener(eventName, eventListener);
     };

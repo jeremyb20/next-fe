@@ -1,6 +1,7 @@
 'use client';
 
 import { useContext, createContext } from 'react';
+
 import { CheckoutContextProps } from '@/types/checkout';
 
 // ----------------------------------------------------------------------

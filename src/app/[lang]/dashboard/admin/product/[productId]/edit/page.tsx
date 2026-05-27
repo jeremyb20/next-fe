@@ -1,23 +1,25 @@
 // import axios, { endpoints } from '@/utils/axios';
 
+import { Metadata } from 'next';
+
 import { ProductEditView } from '../../_components/product/view';
 
 // import { ProductEditView } from '@/sections/product/view';
 
 // ----------------------------------------------------------------------
 
-export const metadata = {
+export const metadata: Metadata = {
   title: 'Dashboard: Product Edit',
 };
 
 type Props = {
-  params: {
+  params: Promise<{
     productId: string;
-  };
+  }>;
 };
 
-export default function ProductEditPage({ params }: Props) {
-  const { productId } = params;
+export default async function ProductEditPage({ params }: Props) {
+  const { productId } = await params;
 
   return <ProductEditView productId={productId} />;
   // return <>ProductEditView</>;

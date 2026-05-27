@@ -1,8 +1,8 @@
 import { cookies, headers } from 'next/headers';
 
 export async function getServerLanguage(): Promise<string> {
-  const cookieStore = cookies();
-  const headersList = headers();
+  const cookieStore = await cookies();
+  const headersList = await headers();
 
   const i18nCookie = cookieStore.get('i18nextLng');
   const acceptLanguage = headersList.get('accept-language');

@@ -1,15 +1,15 @@
-import { IJobItem } from '@/types/job';
-import { useRouter } from '@/routes/hooks';
-import Iconify from '@/components/iconify';
+import Box from '@mui/material/Box';
 import parse from 'autosuggest-highlight/parse';
 import match from 'autosuggest-highlight/match';
-import SearchNotFound from '@/components/search-not-found';
-
-import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import Autocomplete from '@mui/material/Autocomplete';
 import InputAdornment from '@mui/material/InputAdornment';
+
+import { IJobItem } from '@/types/job';
+import { useRouter } from '@/routes/hooks';
+import Iconify from '@/components/iconify';
+import SearchNotFound from '@/components/search-not-found';
 
 // ----------------------------------------------------------------------
 

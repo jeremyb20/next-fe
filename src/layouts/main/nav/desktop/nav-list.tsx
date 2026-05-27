@@ -1,14 +1,14 @@
-import { paper } from '@/theme/css';
-import { usePathname } from '@/routes/hooks';
-import { useState, useEffect, useCallback } from 'react';
-import { useActiveLink } from '@/routes/hooks/use-active-link';
-
 import Fade from '@mui/material/Fade';
 import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
 import Portal from '@mui/material/Portal';
 import { useTheme } from '@mui/material/styles';
 import ListSubheader from '@mui/material/ListSubheader';
+import { useState, useEffect, useCallback } from 'react';
+
+import { paper } from '@/theme/css';
+import { usePathname } from '@/routes/hooks';
+import { useActiveLink } from '@/routes/hooks/use-active-link';
 
 import { HEADER } from '../../../config-layout';
 import { NavItem, NavItemDashboard } from './nav-item';
@@ -29,7 +29,6 @@ export default function NavList({ data }: NavListProps) {
     if (openMenu) {
       handleCloseMenu();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname]);
 
   const handleOpenMenu = useCallback(() => {

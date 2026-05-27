@@ -1,4 +1,3 @@
-import React from 'react';
 import { useTranslation } from '@/hooks/use-translation';
 
 import OtpDialog from './otp-dialog';

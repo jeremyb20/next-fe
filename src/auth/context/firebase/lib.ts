@@ -1,4 +1,5 @@
 import { initializeApp } from 'firebase/app';
+
 import { FIREBASE_API } from '@/config-global';
 
 // ----------------------------------------------------------------------

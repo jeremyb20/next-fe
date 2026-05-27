@@ -1,24 +1,27 @@
-const { version } = require('./package.json');
+import type { NextConfig } from 'next';
+import { readFileSync } from 'fs';
 
-module.exports = {
+const packageJson = JSON.parse(readFileSync('./package.json', 'utf8'));
+const appVersion = packageJson.version;
+const nextConfig: NextConfig = {
+  reactStrictMode: true,
   trailingSlash: false,
 
-  // AGREGAR ESTO: Rewrites para API
+  // 1. Rewrites para API
   async rewrites() {
     return [
       {
         source: '/api/:path*',
         destination: 'https://petsqrbackend.fly.dev/api/:path*',
       },
-      // También puedes agregar otras rutas si es necesario
       {
         source: '/health',
-        destination: 'https://petsqrbackend.fly.dev/health',
+        destination: 'https://petsqrbackend.fly.dev/api/health',
       },
     ];
   },
 
-  // AGREGAR ESTO: Headers CORS
+  // 2. Headers CORS
   async headers() {
     return [
       {
@@ -30,7 +33,7 @@ module.exports = {
           },
           {
             key: 'Access-Control-Allow-Origin',
-            value: '*', // O especifica tu dominio: 'https://petsqrbackend.fly.dev'
+            value: '*',
           },
           {
             key: 'Access-Control-Allow-Methods',
@@ -46,6 +49,7 @@ module.exports = {
     ];
   },
 
+  // 3. Modularize imports
   modularizeImports: {
     '@mui/icons-material': {
       transform: '@mui/icons-material/{{member}}',
@@ -58,33 +62,16 @@ module.exports = {
     },
   },
 
-  webpack(config, { dev, isServer }) {
-    // Deshabilitar cache solo en desarrollo
-    if (dev) {
-      config.cache = false;
-    }
-
-    config.module.rules.push({
-      test: /\.svg$/,
-      use: ['@svgr/webpack'],
-    });
-    return config;
-  },
-
+  // 4. Configuración de imágenes
   images: {
     remotePatterns: [
       {
         protocol: 'https',
         hostname: 'res.cloudinary.com',
-        port: '',
-        pathname: '/**',
       },
-      // Opcional: agregar el hostname de tu backend para imágenes
       {
         protocol: 'https',
         hostname: 'petsqrbackend.fly.dev',
-        port: '',
-        pathname: '/**',
       },
       {
         protocol: 'https',
@@ -93,19 +80,19 @@ module.exports = {
         pathname: '/**',
       },
     ],
+    formats: ['image/webp'],
+    deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
+    imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
   },
 
-  onDemandEntries: {
-    maxInactiveAge: 25 * 1000,
-    pagesBufferLength: 2,
-  },
-
+  // 5. Variables de entorno
   env: {
-    APP_VERSION: version,
-    // AGREGAR ESTO: Variable de entorno para la URL de la API
+    APP_VERSION: appVersion,
     NEXT_PUBLIC_API_URL:
       process.env.NODE_ENV === 'production'
         ? 'https://petsqrbackend.fly.dev'
         : 'http://localhost:8080',
   },
 };
+
+export default nextConfig;

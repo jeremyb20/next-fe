@@ -1,37 +1,36 @@
 'use client';
 
 import * as Yup from 'yup';
+import { Box } from '@mui/system';
 import dynamic from 'next/dynamic';
+import Link from '@mui/material/Link';
+import Alert from '@mui/material/Alert';
+import Stack from '@mui/material/Stack';
+import { useForm } from 'react-hook-form';
+import Dialog from '@mui/material/Dialog';
+import IconButton from '@mui/material/IconButton';
+import Typography from '@mui/material/Typography';
+import { useRef, useState, useEffect } from 'react';
+import DialogTitle from '@mui/material/DialogTitle';
+import { yupResolver } from '@hookform/resolvers/yup';
+import DialogContent from '@mui/material/DialogContent';
+import DialogActions from '@mui/material/DialogActions';
+import InputAdornment from '@mui/material/InputAdornment';
+import { Button, Container, CircularProgress } from '@mui/material';
+
 import { paths } from '@/routes/paths';
 import Image from '@/components/image';
-import { useForm } from 'react-hook-form';
 import Iconify from '@/components/iconify';
 import { useAuthContext } from '@/auth/hooks';
 import { RouterLink } from '@/routes/components';
 import { useBoolean } from '@/hooks/use-boolean';
-import { useRef, useState, useEffect } from 'react';
 import { useSnackbar } from '@/components/snackbar';
-import { yupResolver } from '@hookform/resolvers/yup';
 import { useDeviceInfo } from '@/hooks/use-device-info';
 import { useTranslation } from '@/hooks/use-translation';
 import { useRouter, useSearchParams } from '@/routes/hooks';
 import OtpInput from '@/components/custom-inputs/otp-input';
 import FormProvider, { RHFTextField } from '@/components/hook-form';
 import { SITEKEY, APP_NAME, HOST_API, PATH_AFTER_LOGIN } from '@/config-global';
-
-import { Box } from '@mui/system';
-import Link from '@mui/material/Link';
-import Alert from '@mui/material/Alert';
-import Stack from '@mui/material/Stack';
-import Dialog from '@mui/material/Dialog';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import LoadingButton from '@mui/lab/LoadingButton';
-import DialogTitle from '@mui/material/DialogTitle';
-import DialogContent from '@mui/material/DialogContent';
-import DialogActions from '@mui/material/DialogActions';
-import InputAdornment from '@mui/material/InputAdornment';
-import { Button, Container, CircularProgress } from '@mui/material';
 
 // ----------------------------------------------------------------------
 
@@ -484,7 +483,7 @@ export default function JwtLoginView() {
         </Box>
       )}
 
-      <LoadingButton
+      <Button
         fullWidth
         color="inherit"
         size="large"
@@ -494,7 +493,7 @@ export default function JwtLoginView() {
         disabled={!turnstileToken || !watchedPassword}
       >
         {t('Sign In')}
-      </LoadingButton>
+      </Button>
     </Stack>
   );
 
@@ -580,14 +579,14 @@ export default function JwtLoginView() {
         >
           {t('Cancel')}
         </Button>
-        <LoadingButton
+        <Button
           onClick={handleVerify2FA}
           variant="contained"
           loading={isVerifying2FA}
           disabled={!twoFactorCode || twoFactorCode.length !== 6}
         >
           {t('Verify & Sign In')}
-        </LoadingButton>
+        </Button>
       </DialogActions>
     </Dialog>
   );

@@ -1,13 +1,15 @@
 import dynamic from 'next/dynamic';
 import { Props as WalktourProps } from 'react-joyride';
-
 import { alpha, useTheme } from '@mui/material/styles';
 
 // ----------------------------------------------------------------------
 
-const Joyride = dynamic(() => import('react-joyride'), {
-  ssr: false,
-});
+const Joyride = dynamic(
+  () => import('react-joyride').then((m) => ({ default: m.Joyride })),
+  {
+    ssr: false,
+  }
+);
 
 export default function Walktour({ locale, ...other }: WalktourProps) {
   const theme = useTheme();
@@ -34,23 +36,19 @@ export default function Walktour({ locale, ...other }: WalktourProps) {
 
   return (
     <Joyride
-      scrollOffset={120}
-      spotlightPadding={16}
       locale={{
         last: 'Close',
         ...locale,
       }}
+      options={{
+        zIndex: 9999,
+        arrowColor: arrowStyles.color,
+        overlayColor: alpha(theme.palette.grey[900], 0.8),
+        spotlightRadius: (theme.shape.borderRadius as number) * 2,
+        scrollOffset: 120,
+        spotlightPadding: 16,
+      }}
       styles={{
-        options: {
-          zIndex: 9999,
-          arrowColor: arrowStyles.color,
-        },
-        overlay: {
-          backgroundColor: alpha(theme.palette.grey[900], 0.8),
-        },
-        spotlight: {
-          borderRadius: theme.shape.borderRadius * 2,
-        },
         // Beacon
         beacon: {
           outline: 0,
@@ -68,7 +66,7 @@ export default function Walktour({ locale, ...other }: WalktourProps) {
           overflow: 'hidden',
           color: theme.palette.text.primary,
           boxShadow: theme.customShadows.dialog,
-          borderRadius: theme.shape.borderRadius * 2,
+          borderRadius: Number(theme.shape.borderRadius) * 2,
           backgroundColor: theme.palette.background.paper,
         },
         tooltipContainer: {
@@ -92,7 +90,7 @@ export default function Walktour({ locale, ...other }: WalktourProps) {
           borderTop: `solid 1px ${theme.palette.divider}`,
         },
         // Button
-        buttonNext: {
+        buttonPrimary: {
           ...btnStyles,
           marginLeft: theme.spacing(1.25),
           color: lightMode
@@ -121,16 +119,12 @@ export default function Walktour({ locale, ...other }: WalktourProps) {
           padding: theme.spacing(1.5),
           color: theme.palette.grey[500],
         },
-      }}
-      floaterProps={{
-        styles: {
-          floater: {
-            filter: 'none',
-          },
-          arrow: {
-            spread: arrowStyles.width,
-            length: arrowStyles.height,
-          },
+        floater: {
+          filter: 'none',
+        },
+        arrow: {
+          width: arrowStyles.width,
+          height: arrowStyles.height,
         },
       }}
       {...other}

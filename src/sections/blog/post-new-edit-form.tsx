@@ -1,32 +1,31 @@
 import * as Yup from 'yup';
+import { Grid } from '@mui/material';
+import Chip from '@mui/material/Chip';
+import Card from '@mui/material/Card';
+import Stack from '@mui/material/Stack';
+import { useForm } from 'react-hook-form';
+import Button from '@mui/material/Button';
+import Switch from '@mui/material/Switch';
+import CardHeader from '@mui/material/CardHeader';
+import Typography from '@mui/material/Typography';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { useMemo, useEffect, useCallback } from 'react';
+import FormControlLabel from '@mui/material/FormControlLabel';
+
 import { _tags } from '@/_mock';
 import { paths } from '@/routes/paths';
 import { IPostItem } from '@/types/blog';
-import { useForm } from 'react-hook-form';
 import { useRouter } from '@/routes/hooks';
 import { useBoolean } from '@/hooks/use-boolean';
 import { CustomFile } from '@/components/upload';
 import { useSnackbar } from '@/components/snackbar';
-import { yupResolver } from '@hookform/resolvers/yup';
 import { useResponsive } from '@/hooks/use-responsive';
-import { useMemo, useEffect, useCallback } from 'react';
 import FormProvider, {
   RHFEditor,
   RHFUpload,
   RHFTextField,
   RHFAutocomplete,
 } from '@/components/hook-form';
-
-import Chip from '@mui/material/Chip';
-import Card from '@mui/material/Card';
-import Stack from '@mui/material/Stack';
-import Button from '@mui/material/Button';
-import Switch from '@mui/material/Switch';
-import Grid from '@mui/material/Unstable_Grid2';
-import CardHeader from '@mui/material/CardHeader';
-import Typography from '@mui/material/Typography';
-import LoadingButton from '@mui/lab/LoadingButton';
-import FormControlLabel from '@mui/material/FormControlLabel';
 
 import PostDetailsPreview from './post-details-preview';
 
@@ -78,13 +77,11 @@ export default function PostNewEditForm({ currentPost }: Props) {
 
   const {
     reset,
-    watch,
+    getValues,
     setValue,
     handleSubmit,
     formState: { isSubmitting, isValid },
   } = methods;
-
-  const values = watch();
 
   useEffect(() => {
     if (currentPost) {
@@ -127,7 +124,7 @@ export default function PostNewEditForm({ currentPost }: Props) {
   const renderDetails = (
     <>
       {mdUp && (
-        <Grid md={4}>
+        <Grid size={{ md: 4 }}>
           <Typography variant="h6" sx={{ mb: 0.5 }}>
             Details
           </Typography>
@@ -137,7 +134,7 @@ export default function PostNewEditForm({ currentPost }: Props) {
         </Grid>
       )}
 
-      <Grid xs={12} md={8}>
+      <Grid size={{ xs: 12, md: 8 }}>
         <Card>
           {!mdUp && <CardHeader title="Details" />}
 
@@ -174,7 +171,7 @@ export default function PostNewEditForm({ currentPost }: Props) {
   const renderProperties = (
     <>
       {mdUp && (
-        <Grid md={4}>
+        <Grid size={{ md: 4 }}>
           <Typography variant="h6" sx={{ mb: 0.5 }}>
             Properties
           </Typography>
@@ -184,7 +181,7 @@ export default function PostNewEditForm({ currentPost }: Props) {
         </Grid>
       )}
 
-      <Grid xs={12} md={8}>
+      <Grid size={{ xs: 12, md: 8 }}>
         <Card>
           {!mdUp && <CardHeader title="Properties" />}
 
@@ -266,8 +263,11 @@ export default function PostNewEditForm({ currentPost }: Props) {
 
   const renderActions = (
     <>
-      {mdUp && <Grid md={4} />}
-      <Grid xs={12} md={8} sx={{ display: 'flex', alignItems: 'center' }}>
+      {mdUp && <Grid size={{ md: 4 }} />}
+      <Grid
+        size={{ xs: 12, md: 8 }}
+        sx={{ display: 'flex', alignItems: 'center' }}
+      >
         <FormControlLabel
           control={<Switch defaultChecked />}
           label="Publish"
@@ -283,7 +283,7 @@ export default function PostNewEditForm({ currentPost }: Props) {
           Preview
         </Button>
 
-        <LoadingButton
+        <Button
           type="submit"
           variant="contained"
           size="large"
@@ -291,7 +291,7 @@ export default function PostNewEditForm({ currentPost }: Props) {
           sx={{ ml: 2 }}
         >
           {!currentPost ? 'Create Post' : 'Save Changes'}
-        </LoadingButton>
+        </Button>
       </Grid>
     </>
   );
@@ -307,13 +307,13 @@ export default function PostNewEditForm({ currentPost }: Props) {
       </Grid>
 
       <PostDetailsPreview
-        title={values.title}
-        content={values.content}
-        description={values.description}
+        title={getValues('title')}
+        content={getValues('content')}
+        description={getValues('description')}
         coverUrl={
-          typeof values.coverUrl === 'string'
-            ? values.coverUrl
-            : `${(values.coverUrl as CustomFile)?.preview}`
+          typeof getValues('coverUrl') === 'string'
+            ? getValues('coverUrl')
+            : `${(getValues('coverUrl') as CustomFile)?.preview}`
         }
         //
         open={preview.value}

@@ -1,5 +1,5 @@
-/* eslint-disable object-shorthand */
 import { Metadata } from 'next';
+
 import { endpoints } from '@/utils/axios';
 import { PetApiResponse } from '@/types/global';
 import { DOMAIN, HOST_API } from '@/config-global';
@@ -7,9 +7,9 @@ import NotFoundPage from '@/app/[lang]/error/404/page';
 import PetPublickProfileView from '@/app/[lang]/pet/_components/view/pet-public-profile-view';
 
 type Props = {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 };
 
 async function getPetData(identifier: string): Promise<PetApiResponse> {
@@ -41,7 +41,7 @@ async function getPetData(identifier: string): Promise<PetApiResponse> {
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { id } = params;
+  const { id } = await params;
 
   try {
     const data = await getPetData(id);
@@ -100,14 +100,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   } catch (error) {
     return {
       title: 'Error | Plaquitas CR',
-      description: 'Ocurrió un error al cargar la información.',
+      description: ` Ocurrió un error al cargar la información. ${error}`,
       metadataBase: new URL(DOMAIN),
     };
   }
 }
 
 export default async function Page({ params }: Props) {
-  const { id } = params;
+  const { id } = await params;
   const data = await getPetData(id);
 
   // Si es perfil de mascota (QR ya convertido)

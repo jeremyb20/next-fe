@@ -1,14 +1,5 @@
 'use client';
 
-import { paths } from '@/routes/paths';
-import Iconify from '@/components/iconify';
-import Markdown from '@/components/markdown';
-import { RouterLink } from '@/routes/components';
-import EmptyContent from '@/components/empty-content';
-import { fShortenNumber } from '@/utils/format-number';
-import { useGetPost, useGetLatestPosts } from '@/api/blog';
-import CustomBreadcrumbs from '@/components/custom-breadcrumbs';
-
 import Chip from '@mui/material/Chip';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
@@ -19,6 +10,15 @@ import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import AvatarGroup from '@mui/material/AvatarGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
+
+import { paths } from '@/routes/paths';
+import Iconify from '@/components/iconify';
+import Markdown from '@/components/markdown';
+import { RouterLink } from '@/routes/components';
+import EmptyContent from '@/components/empty-content';
+import { fShortenNumber } from '@/utils/format-number';
+import { useGetPost, useGetLatestPosts } from '@/api/blog';
+import CustomBreadcrumbs from '@/components/custom-breadcrumbs';
 
 import PostList from '../post-list';
 import PostCommentList from '../post-comment-list';

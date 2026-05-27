@@ -1,8 +1,8 @@
+import Box from '@mui/material/Box';
+
 import Scrollbar from '@/components/scrollbar';
 import Lightbox, { useLightBox } from '@/components/lightbox';
 import { IChatMessage, IChatParticipant } from '@/types/chat';
-
-import Box from '@mui/material/Box';
 
 import { useMessagesScroll } from './hooks';
 import ChatMessageItem from './chat-message-item';

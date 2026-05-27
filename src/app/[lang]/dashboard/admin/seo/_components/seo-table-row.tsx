@@ -1,15 +1,15 @@
 // components/seo-table-row.tsx
-import { ISeo } from '@/types/api';
-import Iconify from '@/components/iconify';
-import { useBoolean } from '@/hooks/use-boolean';
-import { fDate, fTime } from '@/utils/format-time';
-import CustomPopover, { usePopover } from '@/components/custom-popover';
-
 import MenuItem from '@mui/material/MenuItem';
 import TableRow from '@mui/material/TableRow';
 import TableCell from '@mui/material/TableCell';
 import IconButton from '@mui/material/IconButton';
 import { Chip, Stack, Tooltip, Checkbox, ListItemText } from '@mui/material';
+
+import { ISeo } from '@/types/api';
+import Iconify from '@/components/iconify';
+import { useBoolean } from '@/hooks/use-boolean';
+import { fDate, fTime } from '@/utils/format-time';
+import CustomPopover, { usePopover } from '@/components/custom-popover';
 
 import SeoQuickEditForm from './seo-quick-edit-form';
 
@@ -30,11 +30,12 @@ export default function SeoTableRow({
   selected,
   onSelectRow,
   onDeleteRow,
-  onEditRow,
+  onEditRow: _onEditRow,
   onViewRow,
   refetch,
 }: Props) {
   const {
+    _id,
     pageId,
     route,
     contentType,
@@ -47,12 +48,6 @@ export default function SeoTableRow({
 
   const popover = usePopover();
   const quickEdit = useBoolean();
-
-  // const [menuState, setMenuState] = useState({
-  //   view: false,
-  //   edit: false,
-  //   delete: false,
-  // });
 
   const getStatusColor = (pStatus: string) => {
     switch (pStatus) {
@@ -83,10 +78,6 @@ export default function SeoTableRow({
         return 'default';
     }
   };
-
-  // const languages = multiLanguageContent
-  //   .map((content) => content.language)
-  //   .join(', ');
 
   return (
     <>

@@ -1,19 +1,18 @@
+import React, { useMemo, useCallback } from 'react';
+import { alpha, useTheme } from '@mui/material/styles';
+import {
+  Paper,
+  Badge,
+  BottomNavigation,
+  BottomNavigationAction,
+} from '@mui/material';
+
 import { paths } from '@/routes/paths';
 import { bgGradient } from '@/theme/css';
 import Iconify from '@/components/iconify';
 import SvgColor from '@/components/svg-color';
 import { useLocales } from '@/locales/use-locales';
-import React, { useMemo, useCallback } from 'react';
 import { useRouter, usePathname } from '@/routes/hooks';
-
-import {
-  alpha,
-  Paper,
-  Badge,
-  useTheme,
-  BottomNavigation,
-  BottomNavigationAction,
-} from '@mui/material';
 
 import Searchbar from '../common/searchbar';
 
@@ -60,7 +59,7 @@ export const bottomNavRoutes: NavRoute[] = [
 
 export default function NavBottomNavigation({
   maxItems = 5,
-  userRole,
+  userRole: _userRole,
   notificationCount = 0,
 }: NavBottomNavigationProps) {
   const router = useRouter();

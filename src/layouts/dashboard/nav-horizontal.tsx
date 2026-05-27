@@ -1,12 +1,12 @@
 import { memo } from 'react';
+import AppBar from '@mui/material/AppBar';
+import Toolbar from '@mui/material/Toolbar';
+import { useTheme } from '@mui/material/styles';
+
 import { bgBlur } from '@/theme/css';
 import Scrollbar from '@/components/scrollbar';
 import { useManagerUser } from '@/hooks/use-manager-user';
 import { NavSectionHorizontal } from '@/components/nav-section';
-
-import AppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
-import { useTheme } from '@mui/material/styles';
 
 import { HEADER } from '../config-layout';
 import { useNavData } from './config-navigation';

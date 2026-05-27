@@ -1,8 +1,8 @@
-import { _mock } from '@/_mock';
-import { m } from 'framer-motion';
-
+import { m } from 'motion/react';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
+
+import { _mock } from '@/_mock';
 
 import getVariant from '../get-variant';
 

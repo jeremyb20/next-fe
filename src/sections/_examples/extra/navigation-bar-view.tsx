@@ -1,11 +1,25 @@
 'use client';
 
 import isEqual from 'lodash/isEqual';
+import Paper from '@mui/material/Paper';
+import Badge from '@mui/material/Badge';
+import Stack from '@mui/material/Stack';
+import Switch from '@mui/material/Switch';
+import Drawer from '@mui/material/Drawer';
+import { alpha } from '@mui/material/styles';
+import { useState, useCallback } from 'react';
+import Container from '@mui/material/Container';
+import TextField from '@mui/material/TextField';
+import Typography from '@mui/material/Typography';
+import IconButton from '@mui/material/IconButton';
+import ToggleButton from '@mui/material/ToggleButton';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
+
 import Logo from '@/components/logo';
 import { paths } from '@/routes/paths';
 import Label from '@/components/label';
 import Iconify from '@/components/iconify';
-import { useState, useCallback } from 'react';
 import { useBoolean } from '@/hooks/use-boolean';
 import CustomBreadcrumbs from '@/components/custom-breadcrumbs';
 import ComponentHero from '@/sections/_examples/component-hero';
@@ -15,20 +29,6 @@ import {
   NavSectionVertical,
   NavSectionHorizontal,
 } from '@/components/nav-section';
-
-import Paper from '@mui/material/Paper';
-import Badge from '@mui/material/Badge';
-import Stack from '@mui/material/Stack';
-import Switch from '@mui/material/Switch';
-import Drawer from '@mui/material/Drawer';
-import { alpha } from '@mui/material/styles';
-import Container from '@mui/material/Container';
-import TextField from '@mui/material/TextField';
-import Typography from '@mui/material/Typography';
-import IconButton from '@mui/material/IconButton';
-import ToggleButton from '@mui/material/ToggleButton';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 
 // ----------------------------------------------------------------------
 

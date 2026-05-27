@@ -1,290 +1,22 @@
-// import Label from '@/components/label';
-// import Iconify from '@/components/iconify';
-// import { fToNow } from '@/utils/format-time';
-// import { NotificationData } from '@/types/api';
-// import FileThumbnail from '@/components/file-thumbnail';
+import Box from '@mui/material/Box';
+import Card from '@mui/material/Card';
+import Chip from '@mui/material/Chip';
+import Stack from '@mui/material/Stack';
+import Button from '@mui/material/Button';
+import MenuItem from '@mui/material/MenuItem';
+import Typography from '@mui/material/Typography';
+import IconButton from '@mui/material/IconButton';
+import CardContent from '@mui/material/CardContent';
+import { alpha, useTheme } from '@mui/material/styles';
+import ListItemAvatar from '@mui/material/ListItemAvatar';
 
-// import Box from '@mui/material/Box';
-// import Stack from '@mui/material/Stack';
-// import Button from '@mui/material/Button';
-// import Avatar from '@mui/material/Avatar';
-// import { IconButton } from '@mui/material';
-// import Typography from '@mui/material/Typography';
-// import ListItemText from '@mui/material/ListItemText';
-// import ListItemAvatar from '@mui/material/ListItemAvatar';
-// import ListItemButton from '@mui/material/ListItemButton';
-
-// // ----------------------------------------------------------------------
-
-// type NotificationItemProps = {
-//   notification: NotificationData;
-//   deleteScheduledNotification: (id: string) => void;
-// };
-
-// export default function NotificationItem({
-//   notification,
-//   deleteScheduledNotification,
-// }: NotificationItemProps) {
-//   const renderAvatar = (
-//     <ListItemAvatar>
-//       {notification.avatarUrl ? (
-//         <Avatar
-//           src={notification.avatarUrl}
-//           sx={{ bgcolor: 'background.neutral' }}
-//         />
-//       ) : (
-//         <Stack
-//           alignItems="center"
-//           justifyContent="center"
-//           sx={{
-//             width: 40,
-//             height: 40,
-//             borderRadius: '50%',
-//             bgcolor: 'background.neutral',
-//           }}
-//         >
-//           <Iconify
-//             icon={
-//               (notification.type === 'system' &&
-//                 'solar:bell-bing-bold-duotone') ||
-//               (notification.type === 'schedule' && 'lets-icons:clock') ||
-//               (notification.type === 'order' && 'ic_order') ||
-//               (notification.type === 'chat' && 'ic_chat') ||
-//               (notification.type === 'mail' && 'ic_mail') ||
-//               (notification.type === 'delivery' && 'ic_delivery') ||
-//               ''
-//             }
-//           />
-//         </Stack>
-//       )}
-//     </ListItemAvatar>
-//   );
-
-//   const renderText = (
-//     <ListItemText
-//       disableTypography
-//       primary={reader(notification.title)}
-//       secondary={
-//         <Stack
-//           direction="row"
-//           alignItems="center"
-//           justifyContent="space-between"
-//           sx={{ typography: 'caption', color: 'text.disabled' }}
-//           divider={
-//             <Box
-//               sx={{
-//                 width: 2,
-//                 height: 2,
-//                 bgcolor: 'currentColor',
-//                 mx: 0.5,
-//                 borderRadius: '50%',
-//               }}
-//             />
-//           }
-//         >
-//           {fToNow(notification.createdAt)}
-//           {notification.category}
-//           <IconButton
-//             edge="end"
-//             onClick={() => deleteScheduledNotification(notification._id)}
-//           >
-//             <Iconify width={24} icon="tabler:trash" />
-//           </IconButton>
-//         </Stack>
-//       }
-//     />
-//   );
-
-//   const renderUnReadBadge = notification.read && (
-//     <Box
-//       sx={{
-//         top: 26,
-//         width: 8,
-//         height: 8,
-//         right: 20,
-//         borderRadius: '50%',
-//         bgcolor: 'info.main',
-//         position: 'absolute',
-//       }}
-//     />
-//   );
-
-//   const friendAction = (
-//     <Stack spacing={1} direction="row" sx={{ mt: 1.5 }}>
-//       <Button size="small" variant="contained">
-//         Accept
-//       </Button>
-//       <Button size="small" variant="outlined">
-//         Decline
-//       </Button>
-//     </Stack>
-//   );
-
-//   const projectAction = (
-//     <Stack alignItems="flex-start">
-//       <Box
-//         sx={{
-//           p: 1.5,
-//           my: 1.5,
-//           borderRadius: 1.5,
-//           color: 'text.secondary',
-//           bgcolor: 'background.neutral',
-//         }}
-//       >
-//         {reader(
-//           `<p><strong>@Jaydon Frankie</strong> feedback by asking questions or just leave a note of appreciation.</p>`
-//         )}
-//       </Box>
-
-//       <Button size="small" variant="contained">
-//         Reply
-//       </Button>
-//     </Stack>
-//   );
-
-//   const fileAction = (
-//     <Stack
-//       spacing={1}
-//       direction="row"
-//       sx={{
-//         pl: 1,
-//         p: 1.5,
-//         mt: 1.5,
-//         borderRadius: 1.5,
-//         bgcolor: 'background.neutral',
-//       }}
-//     >
-//       <FileThumbnail
-//         file="http://localhost:8080/httpsdesign-suriname-2015.mp3"
-//         sx={{ width: 40, height: 40 }}
-//       />
-
-//       <Stack
-//         spacing={1}
-//         direction={{ xs: 'column', sm: 'row' }}
-//         flexGrow={1}
-//         sx={{ minWidth: 0 }}
-//       >
-//         <ListItemText
-//           disableTypography
-//           primary={
-//             <Typography
-//               variant="subtitle2"
-//               component="div"
-//               sx={{ color: 'text.secondary' }}
-//               noWrap
-//             >
-//               design-suriname-2015.mp3
-//             </Typography>
-//           }
-//           secondary={
-//             <Stack
-//               direction="row"
-//               alignItems="center"
-//               sx={{ typography: 'caption', color: 'text.disabled' }}
-//               divider={
-//                 <Box
-//                   sx={{
-//                     mx: 0.5,
-//                     width: 2,
-//                     height: 2,
-//                     borderRadius: '50%',
-//                     bgcolor: 'currentColor',
-//                   }}
-//                 />
-//               }
-//             >
-//               <span>2.3 GB</span>
-//               <span>30 min ago</span>
-//             </Stack>
-//           }
-//         />
-
-//         <Button size="small" variant="outlined">
-//           Download
-//         </Button>
-//       </Stack>
-//     </Stack>
-//   );
-
-//   const tagsAction = (
-//     <Stack direction="row" spacing={0.75} flexWrap="wrap" sx={{ mt: 1.5 }}>
-//       <Label variant="outlined" color="info">
-//         Design
-//       </Label>
-//       <Label variant="outlined" color="warning">
-//         Dashboard
-//       </Label>
-//       <Label variant="outlined">Design system</Label>
-//     </Stack>
-//   );
-
-//   const paymentAction = (
-//     <Stack direction="row" spacing={1} sx={{ mt: 1.5 }}>
-//       <Button size="small" variant="contained">
-//         Pay
-//       </Button>
-//       <Button size="small" variant="outlined">
-//         Decline
-//       </Button>
-//     </Stack>
-//   );
-
-//   return (
-//     <ListItemButton
-//       disableRipple
-//       sx={{
-//         p: 2.5,
-//         alignItems: 'flex-start',
-//         borderBottom: (theme) => `dashed 1px ${theme.palette.divider}`,
-//       }}
-//     >
-//       {renderUnReadBadge}
-
-//       {renderAvatar}
-
-//       <Stack sx={{ flexGrow: 1 }}>
-//         {renderText}
-//         {notification.type === 'friend' && friendAction}
-//         {notification.type === 'project' && projectAction}
-//         {notification.type === 'file' && fileAction}
-//         {notification.type === 'tags' && tagsAction}
-//         {notification.type === 'payment' && paymentAction}
-//       </Stack>
-//     </ListItemButton>
-//   );
-// }
-
-// // ----------------------------------------------------------------------
-
-// function reader(data: string) {
-//   return (
-//     <Box
-//       dangerouslySetInnerHTML={{ __html: data }}
-//       sx={{
-//         mb: 0.5,
-//         '& p': { typography: 'body2', m: 0 },
-//         '& a': { color: 'inherit', textDecoration: 'none' },
-//         '& strong': { typography: 'subtitle2' },
-//       }}
-//     />
-//   );
-// }
-
-import Label from '@/components/label';
 import Image from '@/components/image';
+import { bgGradient } from '@/theme/css';
 import Iconify from '@/components/iconify';
 import { fToNow } from '@/utils/format-time';
 import { NotificationData } from '@/types/api';
 import FileThumbnail from '@/components/file-thumbnail';
-
-import Box from '@mui/material/Box';
-import Stack from '@mui/material/Stack';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
-import ListItemText from '@mui/material/ListItemText';
-import ListItemAvatar from '@mui/material/ListItemAvatar';
-import ListItemButton from '@mui/material/ListItemButton';
+import CustomPopover, { usePopover } from '@/components/custom-popover';
 
 // ----------------------------------------------------------------------
 
@@ -299,251 +31,297 @@ export default function NotificationItem({
   deleteNotification,
   markAsRead,
 }: NotificationItemProps) {
-  const renderAvatar = (
-    <ListItemAvatar>
-      <Stack
-        alignItems="center"
-        justifyContent="center"
-        sx={{
-          width: 40,
-          height: 40,
-          borderRadius: '50%',
-          bgcolor: 'background.neutral',
-        }}
-      >
-        <Iconify
-          icon={
-            (notification.type === 'system' &&
-              'solar:bell-bing-bold-duotone') ||
-            (notification.type === 'schedule' && 'lets-icons:clock') ||
-            (notification.type === 'order' && 'ic_order') ||
-            (notification.type === 'chat' && 'ic_chat') ||
-            (notification.type === 'alert' && 'heroicons:user-plus-solid') ||
-            (notification.type === 'mail' && 'ic_mail') ||
-            (notification.type === 'delivery' && 'ic_delivery') ||
-            ''
-          }
-        />
-      </Stack>
-    </ListItemAvatar>
-  );
+  const popover = usePopover();
+  const theme = useTheme();
+  const PRIMARY_MAIN = theme.palette.primary.main;
+  const handleMarkAsRead = () => {
+    markAsRead(notification._id);
+    popover.onClose();
+  };
 
-  const renderText = (
-    <ListItemText
-      disableTypography
-      primary={
-        <Stack direction="column" justifyContent="space-between">
-          <Typography
-            variant="subtitle2"
-            component="div"
-            sx={{ color: 'text.primary' }}
-            noWrap
-          >
-            {notification.title}
-          </Typography>
-          <Typography
-            variant="caption"
-            component="div"
-            sx={{ color: 'text.disabled', mr: 2 }}
-            noWrap
-          >
-            {fToNow(notification.createdAt)}
-          </Typography>
-        </Stack>
+  const handleDelete = () => {
+    deleteNotification(notification._id);
+    popover.onClose();
+  };
+
+  const renderAvatar = () => {
+    // Colores para diferentes tipos de notificaciones
+    const getIconColor = () => {
+      switch (notification.type) {
+        case 'system':
+          return '#FF6B4A';
+        case 'schedule':
+          return '#4CAF50';
+        case 'order':
+          return '#2196F3';
+        case 'chat':
+          return '#9C27B0';
+        case 'alert':
+          return '#FF9800';
+        case 'mail':
+          return '#E91E63';
+        case 'delivery':
+          return '#00BCD4';
+        default:
+          return '#757575';
       }
-      secondary={
-        <Stack direction="column">
-          {notification.body && (
-            <Box
+    };
+
+    const getIcon = () => {
+      switch (notification.type) {
+        case 'system':
+          return 'solar:bell-bing-bold-duotone';
+        case 'schedule':
+          return 'lets-icons:clock';
+        case 'order':
+          return 'ic_order';
+        case 'chat':
+          return 'ic_chat';
+        case 'alert':
+          return 'heroicons:user-plus-solid';
+        case 'mail':
+          return 'ic_mail';
+        case 'delivery':
+          return 'ic_delivery';
+        default:
+          return 'solar:bell-bing-bold-duotone';
+      }
+    };
+
+    return (
+      <ListItemAvatar>
+        {/* Imagen si existe - tamaño pequeño */}
+        {notification.image ? (
+          renderImagePreview()
+        ) : (
+          <Box
+            sx={{
+              width: 48,
+              height: 48,
+              borderRadius: 2.5,
+              bgcolor: 'background.paper',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              border: '1px solid',
+              borderColor: 'divider',
+            }}
+          >
+            <Iconify
+              icon={getIcon()}
               sx={{
-                my: 0.5,
-                borderRadius: 1.5,
-                color: 'text.secondary',
+                fontSize: 24,
+                color: getIconColor(),
               }}
-            >
-              {reader(notification.body)}
-            </Box>
-          )}
-
-          {notification.image && (
-            <Image
-              alt={notification.title}
-              src={notification.image}
-              ratio="16/9"
-              sx={{ cursor: 'zoom-in', borderRadius: 2 }}
             />
-          )}
-        </Stack>
-      }
-    />
-  );
-
-  const renderUnReadBadge = !notification.read && (
-    <Box
-      sx={{
-        top: 26,
-        width: 8,
-        height: 8,
-        right: 20,
-        borderRadius: '50%',
-        bgcolor: 'info.main',
-        position: 'absolute',
-      }}
-    />
-  );
-
-  const buttonActions = (
-    <Stack spacing={1} direction="row" sx={{ mt: 1.5 }}>
-      <Button
-        size="small"
-        variant="contained"
-        onClick={() => markAsRead(notification._id)}
-      >
-        Mark as read
-      </Button>
-      <Button
-        size="small"
-        variant="outlined"
-        onClick={() => deleteNotification(notification._id)}
-      >
-        Delete
-      </Button>
-    </Stack>
-  );
-
-  const projectAction = (
-    <Stack alignItems="flex-start">
-      <Box
-        sx={{
-          p: 1.5,
-          my: 1.5,
-          borderRadius: 1.5,
-          color: 'text.secondary',
-          bgcolor: 'background.neutral',
-        }}
-      >
-        {reader(
-          `<p><strong>@Jaydon Frankie</strong> feedback by asking questions or just leave a note of appreciation.</p>`
+          </Box>
         )}
-      </Box>
+      </ListItemAvatar>
+    );
+  };
 
-      <Button size="small" variant="contained">
-        Reply
-      </Button>
-    </Stack>
+  const renderImagePreview = () => (
+    <Box sx={{ mt: 1.5 }}>
+      <Image
+        alt={notification.title}
+        src={notification.image}
+        sx={{
+          width: 50,
+          height: 50,
+          borderRadius: 2,
+          cursor: 'pointer',
+          objectFit: 'cover',
+        }}
+      />
+    </Box>
   );
 
-  const fileAction = (
-    <Stack
-      spacing={1}
-      direction="row"
-      sx={{
-        pl: 1,
-        p: 1.5,
-        mt: 1.5,
-        borderRadius: 1.5,
-        bgcolor: 'background.neutral',
-      }}
-    >
-      <FileThumbnail
-        file="http://localhost:8080/httpsdesign-suriname-2015.mp3"
-        sx={{ width: 40, height: 40 }}
-      />
-
-      <Stack
-        spacing={1}
-        direction={{ xs: 'column', sm: 'row' }}
-        flexGrow={1}
-        sx={{ minWidth: 0 }}
-      >
-        <ListItemText
-          disableTypography
-          primary={
+  const renderContent = () => (
+    <Box sx={{ flex: 1 }}>
+      <Stack spacing={0.5}>
+        {/* Header con título, hora y menú */}
+        <Stack
+          direction="row"
+          justifyContent="space-between"
+          alignItems="flex-start"
+        >
+          <Stack>
             <Typography
               variant="subtitle2"
-              component="div"
-              sx={{ color: 'text.secondary' }}
-              noWrap
+              sx={{
+                color: notification.read ? 'text.secondary' : 'text.primary',
+                fontWeight: notification.read ? 400 : 600,
+              }}
             >
+              {notification.title}
+            </Typography>
+            <Typography variant="caption" sx={{ color: 'text.disabled' }}>
+              {fToNow(notification.createdAt)}
+            </Typography>
+          </Stack>
+
+          <Stack direction="row" spacing={1} alignItems="center">
+            {/* Botón de menú con tres puntos */}
+            <IconButton
+              size="small"
+              onClick={popover.onOpen}
+              sx={{
+                opacity: 0.7,
+                '&:hover': { opacity: 1 },
+              }}
+            >
+              <Iconify icon="eva:more-vertical-fill" sx={{ fontSize: 18 }} />
+            </IconButton>
+          </Stack>
+        </Stack>
+
+        {/* Cuerpo de la notificación */}
+        {notification.body && (
+          <Box
+            sx={{
+              color: 'text.secondary',
+              typography: 'body2',
+              lineHeight: 1.5,
+            }}
+          >
+            {reader(notification.body)}
+          </Box>
+        )}
+
+        {/* Actions basadas en tipo de notificación */}
+        {notification.type === 'project' && renderProjectAction()}
+        {notification.type === 'file' && renderFileAction()}
+        {notification.type === 'tags' && renderTagsAction()}
+        {notification.type === 'payment' && renderPaymentAction()}
+      </Stack>
+    </Box>
+  );
+
+  const renderProjectAction = () => (
+    <Card variant="outlined" sx={{ mt: 1.5, bgcolor: 'background.default' }}>
+      <CardContent sx={{ p: 1.5, '&:last-child': { pb: 1.5 } }}>
+        <Stack
+          direction="row"
+          justifyContent="space-between"
+          alignItems="center"
+        >
+          <Typography variant="body2" color="text.secondary">
+            <strong>@Jaydon Frankie</strong> dejó un comentario
+          </Typography>
+          <Button size="small" variant="text" sx={{ minWidth: 'auto' }}>
+            Responder
+          </Button>
+        </Stack>
+      </CardContent>
+    </Card>
+  );
+
+  const renderFileAction = () => (
+    <Card variant="outlined" sx={{ mt: 1.5, bgcolor: 'background.default' }}>
+      <CardContent sx={{ p: 1.5, '&:last-child': { pb: 1.5 } }}>
+        <Stack direction="row" spacing={1.5} alignItems="center">
+          <FileThumbnail
+            file="design-suriname-2015.mp3"
+            sx={{ width: 40, height: 40 }}
+          />
+          <Box sx={{ flex: 1 }}>
+            <Typography variant="subtitle2" noWrap>
               design-suriname-2015.mp3
             </Typography>
-          }
-          secondary={
-            <Stack
-              direction="row"
-              alignItems="center"
-              sx={{ typography: 'caption', color: 'text.disabled' }}
-              divider={
-                <Box
-                  sx={{
-                    mx: 0.5,
-                    width: 2,
-                    height: 2,
-                    borderRadius: '50%',
-                    bgcolor: 'currentColor',
-                  }}
-                />
-              }
-            >
-              <span>2.3 GB</span>
-              <span>30 min ago</span>
+            <Stack direction="row" spacing={1} alignItems="center">
+              <Typography variant="caption" color="text.secondary">
+                2.3 GB
+              </Typography>
+              <Box
+                sx={{
+                  width: 4,
+                  height: 4,
+                  borderRadius: '50%',
+                  bgcolor: 'text.disabled',
+                }}
+              />
+              <Typography variant="caption" color="text.secondary">
+                Hace 30 min
+              </Typography>
             </Stack>
-          }
-        />
+          </Box>
+          <Button size="small" variant="outlined">
+            Descargar
+          </Button>
+        </Stack>
+      </CardContent>
+    </Card>
+  );
 
-        <Button size="small" variant="outlined">
-          Download
-        </Button>
-      </Stack>
+  const renderTagsAction = () => (
+    <Stack direction="row" spacing={1} flexWrap="wrap" sx={{ mt: 1.5 }}>
+      <Chip label="Design" size="small" variant="outlined" />
+      <Chip label="Dashboard" size="small" variant="outlined" color="warning" />
+      <Chip label="Design system" size="small" variant="outlined" />
     </Stack>
   );
 
-  const tagsAction = (
-    <Stack direction="row" spacing={0.75} flexWrap="wrap" sx={{ mt: 1.5 }}>
-      <Label variant="outlined" color="info">
-        Design
-      </Label>
-      <Label variant="outlined" color="warning">
-        Dashboard
-      </Label>
-      <Label variant="outlined">Design system</Label>
-    </Stack>
-  );
-
-  const paymentAction = (
-    <Stack direction="row" spacing={1} sx={{ mt: 1.5 }}>
+  const renderPaymentAction = () => (
+    <Stack direction="row" spacing={1.5} sx={{ mt: 1.5 }}>
       <Button size="small" variant="contained">
-        Pay
+        Pagar ahora
       </Button>
-      <Button size="small" variant="outlined">
-        Decline
+      <Button size="small" variant="text" color="inherit">
+        Rechazar
       </Button>
     </Stack>
   );
 
   return (
-    <ListItemButton
-      selected={!notification.read}
-      disableRipple
-      sx={{
-        p: 2.5,
-        alignItems: 'flex-start',
-        borderBottom: (theme) => `dashed 1px ${theme.palette.divider}`,
-      }}
-    >
-      {renderUnReadBadge}
+    <>
+      <Card
+        variant="outlined"
+        sx={{
+          m: 1.5,
+          alignItems: 'flex-start',
+          borderBottom: '1px solid',
+          borderColor: 'divider',
 
-      {renderAvatar}
+          '&:hover': {
+            bgcolor: 'action.hover',
+          },
+          ...(!notification.read && {
+            // bgcolor: 'action.selected',
+            // bgcolor: alpha(theme.palette.primary.main, 0.1),
+            ...bgGradient({
+              direction: '135deg',
+              startColor: alpha(PRIMARY_MAIN, 0.2),
+              endColor: alpha(theme.palette.primary.main, 0.01),
+            }),
+          }),
+        }}
+      >
+        <CardContent sx={{ p: 1, display: 'flex', alignItems: 'flex-start' }}>
+          {renderAvatar()}
+          <Box sx={{ flexGrow: 1 }}>{renderContent()}</Box>
+        </CardContent>
+      </Card>
 
-      <Stack sx={{ flexGrow: 1 }}>
-        {renderText}
-        {buttonActions}
-        {notification.type === 'project' && projectAction}
-        {notification.type === 'file' && fileAction}
-        {notification.type === 'tags' && tagsAction}
-        {notification.type === 'payment' && paymentAction}
-      </Stack>
-    </ListItemButton>
+      {/* Custom Popover para las acciones */}
+      <CustomPopover
+        open={popover.open}
+        onClose={popover.onClose}
+        arrow="right-top"
+        sx={{ width: 180 }}
+      >
+        {!notification.read && (
+          <MenuItem onClick={handleMarkAsRead}>
+            <Iconify icon="solar:check-read-bold" />
+            Marcar como leído
+          </MenuItem>
+        )}
+
+        <MenuItem onClick={handleDelete} sx={{ color: 'error.main' }}>
+          <Iconify icon="solar:trash-bin-trash-bold" />
+          Eliminar
+        </MenuItem>
+      </CustomPopover>
+    </>
   );
 }
 
@@ -554,10 +332,23 @@ function reader(data: string) {
     <Box
       dangerouslySetInnerHTML={{ __html: data }}
       sx={{
-        mb: 0.5,
-        '& p': { typography: 'body2', m: 0 },
-        '& a': { color: 'inherit', textDecoration: 'none' },
-        '& strong': { typography: 'subtitle2' },
+        '& p': {
+          typography: 'body2',
+          m: 0,
+          fontSize: '0.375rem',
+          lineHeight: 1.5,
+        },
+        '& a': {
+          color: 'primary.main',
+          textDecoration: 'none',
+          '&:hover': {
+            textDecoration: 'underline',
+          },
+        },
+        '& strong': {
+          typography: 'subtitle2',
+          fontWeight: 600,
+        },
       }}
     />
   );

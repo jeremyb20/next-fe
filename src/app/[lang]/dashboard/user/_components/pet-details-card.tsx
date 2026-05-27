@@ -1,22 +1,4 @@
-// components/pets/pet-details-card.tsx
-import { IPetProfile } from '@/types/api';
-import Iconify from '@/components/iconify';
 import { useState, useEffect } from 'react';
-import { PHONE_SUPPORT } from '@/config-global';
-import { useTranslation } from '@/hooks/use-translation';
-import { BreedOptions, GENDER_OPTIONS } from '@/utils/constants';
-import { usePetAgeCalculator } from '@/hooks/use-pet-age-calculator';
-import { formatPetAge, getSpeciesFromBreed } from '@/utils/pet-age.utils';
-
-// Importar los componentes reutilizables
-
-import { BirthdayReminder } from '@/components/pet/BirthdayReminder';
-import CustomPopover, { usePopover } from '@/components/custom-popover';
-import { PetAvatarWithBadge } from '@/components/badge/PetAvatarWithBage';
-import VaccinesList from '@/app/[lang]/pet/_components/view/vaccines-list';
-import DewormingList from '@/app/[lang]/pet/_components/view/deworming-list';
-import MedicalVisitsList from '@/app/[lang]/pet/_components/view/medical-visits-list';
-
 import {
   Box,
   Card,
@@ -35,6 +17,22 @@ import {
   ListItemIcon,
   ListItemButton,
 } from '@mui/material';
+
+// components/pets/pet-details-card.tsx
+import { IPetProfile } from '@/types/api';
+import Iconify from '@/components/iconify';
+import { PHONE_SUPPORT } from '@/config-global';
+import { useTranslation } from '@/hooks/use-translation';
+import { BreedOptions, GENDER_OPTIONS } from '@/utils/constants';
+import { usePetAgeCalculator } from '@/hooks/use-pet-age-calculator';
+// Importar los componentes reutilizables
+import { BirthdayReminder } from '@/components/pet/BirthdayReminder';
+import CustomPopover, { usePopover } from '@/components/custom-popover';
+import { formatPetAge, getSpeciesFromBreed } from '@/utils/pet-age.utils';
+import { PetAvatarWithBadge } from '@/components/badge/PetAvatarWithBage';
+import VaccinesList from '@/app/[lang]/pet/_components/view/vaccines-list';
+import DewormingList from '@/app/[lang]/pet/_components/view/deworming-list';
+import MedicalVisitsList from '@/app/[lang]/pet/_components/view/medical-visits-list';
 
 import PetDetailsSkeleton from './pet-details-skeleton';
 
@@ -62,12 +60,12 @@ export function PetDetailsCard({
   pet,
   onEdit,
   onViewDetails,
-  onDelete,
-  onViewMedicalRecords,
+  onDelete: _onDelete,
+  onViewMedicalRecords: _onViewMedicalRecords,
   isFetching,
   onEditMedicalRecord,
   onCreateRecord,
-  onMedicalRecordSuccess,
+  onMedicalRecordSuccess: _onMedicalRecordSuccess,
 }: PetDetailsCardProps) {
   const { ageResult, calculateAge } = usePetAgeCalculator();
   const { t } = useTranslation();
@@ -520,7 +518,7 @@ export function PetDetailsCard({
 
         <Grid container spacing={3}>
           {/* Columna izquierda */}
-          <Grid item xs={6} sm={6}>
+          <Grid size={{ xs: 6, sm: 6 }}>
             <Stack spacing={2.5}>
               <Box
                 sx={{
@@ -617,7 +615,7 @@ export function PetDetailsCard({
           </Grid>
 
           {/* Columna derecha */}
-          <Grid item xs={6} sm={6}>
+          <Grid size={{ xs: 6, sm: 6 }}>
             <Stack spacing={2.5}>
               {pet.breed && (
                 <Box

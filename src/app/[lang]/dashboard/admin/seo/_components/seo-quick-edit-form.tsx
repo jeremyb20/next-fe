@@ -1,11 +1,22 @@
 // front-end/components/seo/SeoQuickEditForm.tsx
 import * as Yup from 'yup';
 import { useMemo } from 'react';
+import Box from '@mui/material/Box';
+import { Stack } from '@mui/system';
+import Alert from '@mui/material/Alert';
 import { useForm } from 'react-hook-form';
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import MenuItem from '@mui/material/MenuItem';
+import DialogTitle from '@mui/material/DialogTitle';
+import { Chip, InputAdornment } from '@mui/material';
+import { yupResolver } from '@hookform/resolvers/yup';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+
 import { endpoints } from '@/utils/axios';
 import { HOST_API } from '@/config-global';
 import { useSnackbar } from '@/components/snackbar';
-import { yupResolver } from '@hookform/resolvers/yup';
 import { useManagerUser } from '@/hooks/use-manager-user';
 import { useCreateGenericMutation } from '@/hooks/user-generic-mutation';
 import FormProvider, {
@@ -13,18 +24,6 @@ import FormProvider, {
   RHFTextField,
   RHFAutocomplete,
 } from '@/components/hook-form';
-
-import Box from '@mui/material/Box';
-import { Stack } from '@mui/system';
-import Alert from '@mui/material/Alert';
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import MenuItem from '@mui/material/MenuItem';
-import LoadingButton from '@mui/lab/LoadingButton';
-import DialogTitle from '@mui/material/DialogTitle';
-import { Chip, InputAdornment } from '@mui/material';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
 
 // ----------------------------------------------------------------------
 
@@ -91,9 +90,11 @@ const CHANGE_FREQUENCY_OPTIONS = [
 const LANGUAGE_OPTIONS = [
   { value: 'ES', label: 'Spanish' },
   { value: 'EN', label: 'English' },
-  { value: 'AR', label: 'Arabic' },
-  { value: 'VI', label: 'Vietnamese' },
   { value: 'FR', label: 'French' },
+  { value: 'DE', label: 'German' },
+  { value: 'IT', label: 'Italian' },
+  { value: 'PT', label: 'Portuguese' },
+  { value: 'JA', label: 'Japanese' },
   { value: 'ZH', label: 'Chinese' },
 ];
 
@@ -260,6 +261,8 @@ export default function SeoQuickEditForm({
 
   const onSubmit = handleSubmit(async (data) => {
     try {
+      console.log('Submitting data:', data);
+
       // Filtrar contenido solo para los idiomas seleccionados
       const filteredContent = data.multiLanguageContent.filter((content) =>
         data.languages.includes(content.language)
@@ -651,14 +654,14 @@ export default function SeoQuickEditForm({
             Cancel
           </Button>
 
-          <LoadingButton
+          <Button
             type="submit"
             variant="contained"
             loading={isSubmitting}
             disabled={!isValid} // Deshabilitar si no es válido
           >
             {currentSeo ? 'Update SEO' : 'Create SEO'}
-          </LoadingButton>
+          </Button>
         </DialogActions>
       </FormProvider>
     </Dialog>

@@ -1,3 +1,9 @@
+import Card from '@mui/material/Card';
+import Grid from '@mui/material/Grid';
+import Button from '@mui/material/Button';
+import CardHeader from '@mui/material/CardHeader';
+import Typography from '@mui/material/Typography';
+
 import { paths } from '@/routes/paths';
 import { countries } from '@/assets/data';
 import Iconify from '@/components/iconify';
@@ -5,12 +11,6 @@ import { useAuthContext } from '@/auth/hooks';
 import { RouterLink } from '@/routes/components';
 import { fCurrency } from '@/utils/format-number';
 import EmptyContent from '@/components/empty-content';
-
-import Card from '@mui/material/Card';
-import Button from '@mui/material/Button';
-import Grid from '@mui/material/Unstable_Grid2';
-import CardHeader from '@mui/material/CardHeader';
-import Typography from '@mui/material/Typography';
 
 import { useCheckoutContext } from './context';
 import CheckoutSummary from './checkout-summary';
@@ -222,7 +222,7 @@ export default function CheckoutCart() {
 
   return (
     <Grid container spacing={3}>
-      <Grid xs={12} md={8}>
+      <Grid size={{ xs: 12, md: 8 }}>
         <Card sx={{ mb: 3 }}>
           <CardHeader
             title={
@@ -267,7 +267,7 @@ export default function CheckoutCart() {
         </Button>
       </Grid>
 
-      <Grid xs={12} md={4}>
+      <Grid size={{ xs: 12, md: 4 }}>
         <CheckoutSummary
           total={checkout.total}
           discount={checkout.discount}

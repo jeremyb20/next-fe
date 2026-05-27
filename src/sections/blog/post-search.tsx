@@ -1,16 +1,16 @@
-import { IPostItem } from '@/types/blog';
-import { useRouter } from '@/routes/hooks';
-import Iconify from '@/components/iconify';
-import parse from 'autosuggest-highlight/parse';
-import match from 'autosuggest-highlight/match';
-import SearchNotFound from '@/components/search-not-found';
-
 import Link from '@mui/material/Link';
 import Avatar from '@mui/material/Avatar';
+import parse from 'autosuggest-highlight/parse';
+import match from 'autosuggest-highlight/match';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import InputAdornment from '@mui/material/InputAdornment';
 import Autocomplete, { autocompleteClasses } from '@mui/material/Autocomplete';
+
+import { IPostItem } from '@/types/blog';
+import { useRouter } from '@/routes/hooks';
+import Iconify from '@/components/iconify';
+import SearchNotFound from '@/components/search-not-found';
 
 // ----------------------------------------------------------------------
 

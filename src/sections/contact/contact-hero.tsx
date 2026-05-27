@@ -1,15 +1,15 @@
-import { bgGradient } from '@/theme/css';
-import { useState, useEffect } from 'react';
-import { m, MotionProps } from 'framer-motion';
-import { useTranslation } from '@/hooks/use-translation';
-import { SplashScreen } from '@/components/loading-screen';
-import { varFade, MotionContainer } from '@/components/animate';
-
 import Stack from '@mui/material/Stack';
+import { useState, useEffect } from 'react';
+import { m, MotionProps } from 'motion/react';
+import { useTranslation } from 'react-i18next';
 import Container from '@mui/material/Container';
 import Box, { BoxProps } from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import { alpha, useTheme } from '@mui/material/styles';
+
+import { bgGradient } from '@/theme/css';
+import { SplashScreen } from '@/components/loading-screen';
+import { varFade, MotionContainer } from '@/components/animate';
 
 // ----------------------------------------------------------------------
 

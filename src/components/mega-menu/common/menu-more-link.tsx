@@ -1,6 +1,6 @@
-import { RouterLink } from '@/routes/components';
-
 import Link from '@mui/material/Link';
+
+import { RouterLink } from '@/routes/components';
 
 import { NavLink } from '../types';
 import Iconify from '../../iconify';

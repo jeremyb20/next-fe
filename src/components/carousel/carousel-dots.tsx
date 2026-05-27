@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-no-useless-fragment */
 import Stack from '@mui/material/Stack';
 import Box, { BoxProps } from '@mui/material/Box';
 import { Theme, styled, SxProps } from '@mui/material/styles';
@@ -49,6 +48,8 @@ const StyledDot = styled('span')(({ theme }) => ({
   }),
 }));
 
+const StyledRootAny = StyledRoot as any;
+
 // ----------------------------------------------------------------------
 
 export interface Props extends BoxProps {
@@ -58,16 +59,13 @@ export interface Props extends BoxProps {
 
 export default function CarouselDots(props?: Props) {
   const rounded = props?.rounded || false;
-
   const sx = props?.sx;
 
   return {
     appendDots: (dots: React.ReactNode) => (
-      <>
-        <StyledRoot component="ul" rounded={rounded} sx={{ ...sx }} {...props}>
-          {dots}
-        </StyledRoot>
-      </>
+      <StyledRootAny component="ul" rounded={rounded} sx={{ ...sx }}>
+        {dots}
+      </StyledRootAny>
     ),
     customPaging: () => (
       <Stack

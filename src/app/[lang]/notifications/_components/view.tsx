@@ -1,11 +1,10 @@
 'use client';
 
-import React from 'react';
+import { Container } from '@mui/material';
+
 import { RoleBasedGuard } from '@/auth/guard';
 import { useSettingsContext } from '@/components/settings';
 import NotificationsPopover from '@/layouts/common/notifications-popover';
-
-import { Container } from '@mui/material';
 
 export default function NotificationsPanelView() {
   const settings = useSettingsContext();

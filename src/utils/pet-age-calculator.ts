@@ -1,4 +1,3 @@
-/* eslint-disable no-lonely-if */
 import { PetAgeResult, AgeCalculationOptions } from '../types/global';
 
 /**
@@ -151,7 +150,6 @@ export class PetAgeCalculator {
 
     // Ajustar por días
     if (now.getDate() < birth.getDate()) {
-      // eslint-disable-next-line no-plusplus
       months--;
     }
 
@@ -224,8 +222,7 @@ export class PetAgeCalculator {
   }
 }
 
-
-export const calculateAnimalAge = (birthDate: string, t?: (key: string) => string) => {
+export const calculateAnimalAge = (birthDate: string) => {
   if (!birthDate) return null;
   const birth = new Date(birthDate);
   const today = new Date();

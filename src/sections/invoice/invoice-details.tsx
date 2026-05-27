@@ -1,25 +1,25 @@
-import Label from '@/components/label';
-import { IInvoice } from '@/types/invoice';
-import { fDate } from '@/utils/format-time';
-import { useState, useCallback } from 'react';
-import Scrollbar from '@/components/scrollbar';
-import { EMAIL_SUPPORT } from '@/config-global';
-import { INVOICE_STATUS_OPTIONS } from '@/_mock';
-import { fCurrency } from '@/utils/format-number';
-
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
+import Grid from '@mui/material/Grid';
 import Table from '@mui/material/Table';
 import Stack from '@mui/material/Stack';
 import Divider from '@mui/material/Divider';
+import { useState, useCallback } from 'react';
 import { styled } from '@mui/material/styles';
 import TableRow from '@mui/material/TableRow';
 import TableHead from '@mui/material/TableHead';
 import TableCell from '@mui/material/TableCell';
 import TableBody from '@mui/material/TableBody';
-import Grid from '@mui/material/Unstable_Grid2';
 import Typography from '@mui/material/Typography';
 import TableContainer from '@mui/material/TableContainer';
+
+import Label from '@/components/label';
+import { IInvoice } from '@/types/invoice';
+import { fDate } from '@/utils/format-time';
+import Scrollbar from '@/components/scrollbar';
+import { EMAIL_SUPPORT } from '@/config-global';
+import { INVOICE_STATUS_OPTIONS } from '@/_mock';
+import { fCurrency } from '@/utils/format-number';
 
 import InvoiceToolbar from './invoice-toolbar';
 
@@ -104,7 +104,7 @@ export default function InvoiceDetails({ invoice }: Props) {
 
   const renderFooter = (
     <Grid container>
-      <Grid xs={12} md={9} sx={{ py: 3 }}>
+      <Grid size={{ xs: 12, md: 9 }} sx={{ py: 3 }}>
         <Typography variant="subtitle2">NOTES</Typography>
 
         <Typography variant="body2">
@@ -113,7 +113,7 @@ export default function InvoiceDetails({ invoice }: Props) {
         </Typography>
       </Grid>
 
-      <Grid xs={12} md={3} sx={{ py: 3, textAlign: 'right' }}>
+      <Grid size={{ xs: 12, md: 3 }} sx={{ py: 3, textAlign: 'right' }}>
         <Typography variant="subtitle2">Have a Question?</Typography>
 
         <Typography variant="body2">{EMAIL_SUPPORT}</Typography>

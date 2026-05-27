@@ -1,38 +1,35 @@
-/* eslint-disable no-nested-ternary */
+import Paper from '@mui/material/Paper';
+import Stack from '@mui/material/Stack';
 import { useSnackbar } from 'notistack';
-import { DOMAIN } from '@/config-global';
-import Iconify from '@/components/iconify';
+import Avatar from '@mui/material/Avatar';
+import Button from '@mui/material/Button';
+import { Box, Tooltip } from '@mui/material';
+import Checkbox from '@mui/material/Checkbox';
+import Collapse from '@mui/material/Collapse';
+import MenuItem from '@mui/material/MenuItem';
+import TableRow from '@mui/material/TableRow';
 import { useState, useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
+import TableCell from '@mui/material/TableCell';
+import IconButton from '@mui/material/IconButton';
+import ListItemText from '@mui/material/ListItemText';
+
+import Iconify from '@/components/iconify';
 import { useBoolean } from '@/hooks/use-boolean';
 // import { IOrderItem } from '@/types/order';
 import { IUser, IPetProfile } from '@/types/api';
 import { fDate, fTime } from '@/utils/format-time';
 import { IPInfoResponse } from '@/hooks/use-ip-info';
 import Label, { LabelColor } from '@/components/label';
-import { useTranslation } from '@/hooks/use-translation';
-import { useManagerUser } from '@/hooks/use-manager-user';
 import { ConfirmDialog } from '@/components/custom-dialog';
-import { openLink, getUserRoleFromState } from '@/utils/constants';
 import { useCopyToClipboard } from '@/hooks/use-copy-to-clipboard';
+import { openLink, getUserRoleFromState } from '@/utils/constants';
 import CustomPopover, { usePopover } from '@/components/custom-popover';
 import { USER_STATUS_OPTIONS } from '@/components/filters/filter-constants';
 import { AvatarWithSkeleton } from '@/components/avatar/avatar-with-skeleton';
 
-import Paper from '@mui/material/Paper';
-import Stack from '@mui/material/Stack';
-import Button from '@mui/material/Button';
-import Avatar from '@mui/material/Avatar';
-import { Box, Tooltip } from '@mui/material';
-import Collapse from '@mui/material/Collapse';
-import MenuItem from '@mui/material/MenuItem';
-import TableRow from '@mui/material/TableRow';
-import Checkbox from '@mui/material/Checkbox';
-import TableCell from '@mui/material/TableCell';
-import IconButton from '@mui/material/IconButton';
-import ListItemText from '@mui/material/ListItemText';
-
 import PetQuickEditForm from './pet-quick-edit-form';
-import UserQuickEditModalForm from './user-quick-edit-form';
+import UserQuickEditForm from './user-quick-edit-form';
 
 // ----------------------------------------------------------------------
 
@@ -59,8 +56,8 @@ export default function UserTableRow({
     row;
 
   const confirm = useBoolean();
-  const { user } = useManagerUser();
-  const { t, lng: currentLang } = useTranslation();
+
+  const { t } = useTranslation();
 
   const collapse = useBoolean();
 
@@ -85,6 +82,7 @@ export default function UserTableRow({
 
   // Función para abrir el modal con la mascota seleccionada
   const handleOpenPetEdit = (pet: IPetProfile) => {
+    console.log('Opening pet edit for:', pet);
     setPetSelected(pet);
     petQuickEdit.onTrue();
   };
@@ -217,8 +215,8 @@ export default function UserTableRow({
         </IconButton>
       </TableCell>
 
-      {/* UserQuickEditModalForm dentro del TableRow está bien porque usa useBoolean */}
-      <UserQuickEditModalForm
+      {/* UserQuickEditForm dentro del TableRow está bien porque usa useBoolean */}
+      <UserQuickEditForm
         currentUser={row}
         open={quickEdit.value}
         onClose={quickEdit.onFalse}
@@ -390,9 +388,7 @@ export default function UserTableRow({
                       <IconButton
                         color="default"
                         onClick={() => {
-                          openLink(
-                            `${DOMAIN}/${currentLang}/pet/${item.memberPetId}`
-                          );
+                          openLink(`/pet/${item.memberPetId}`);
                         }}
                       >
                         <Iconify icon="solar:eye-bold" />
@@ -428,7 +424,6 @@ export default function UserTableRow({
         open={petQuickEdit.value}
         onClose={petQuickEdit.onFalse}
         refetch={refetch}
-        isAdmin={user.role === 'admin'}
       />
 
       <CustomPopover

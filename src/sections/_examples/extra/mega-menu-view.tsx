@@ -1,7 +1,17 @@
 'use client';
 
-import { _mock } from '@/_mock';
 import { useEffect } from 'react';
+import Box from '@mui/material/Box';
+import Card from '@mui/material/Card';
+import Stack from '@mui/material/Stack';
+import AppBar from '@mui/material/AppBar';
+import Button from '@mui/material/Button';
+import Drawer from '@mui/material/Drawer';
+import Toolbar from '@mui/material/Toolbar';
+import Container from '@mui/material/Container';
+import Typography from '@mui/material/Typography';
+
+import { _mock } from '@/_mock';
 import Logo from '@/components/logo';
 import { paths } from '@/routes/paths';
 import Iconify from '@/components/iconify';
@@ -16,16 +26,6 @@ import {
   MegaMenuDesktopHorizontal,
 } from '@/components/mega-menu';
 
-import Box from '@mui/material/Box';
-import Card from '@mui/material/Card';
-import Stack from '@mui/material/Stack';
-import AppBar from '@mui/material/AppBar';
-import Button from '@mui/material/Button';
-import Drawer from '@mui/material/Drawer';
-import Toolbar from '@mui/material/Toolbar';
-import Container from '@mui/material/Container';
-import Typography from '@mui/material/Typography';
-
 // ----------------------------------------------------------------------
 
 export default function MegaMenuView() {
@@ -37,7 +37,6 @@ export default function MegaMenuView() {
     if (mobileOpen) {
       mobileOpen.onFalse();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname]);
 
   const renderHorizontal = (

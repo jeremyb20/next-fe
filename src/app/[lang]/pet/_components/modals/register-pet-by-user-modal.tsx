@@ -1,9 +1,9 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
+import { Dialog, IconButton, DialogTitle, DialogContent } from '@mui/material';
+
 import { IUser } from '@/types/api';
 import Iconify from '@/components/iconify';
-import { useTranslation } from '@/hooks/use-translation';
-
-import { Dialog, IconButton, DialogTitle, DialogContent } from '@mui/material';
 
 import { PetRegistrationUserAuthenticated } from '../forms/pet-registration-user-authenticated';
 

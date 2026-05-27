@@ -1,19 +1,19 @@
-import Label from '@/components/label';
-import Iconify from '@/components/iconify';
-import { useState, useCallback } from 'react';
-import { IPaymentCard } from '@/types/payment';
-import { IAddressItem } from '@/types/address';
-import { useBoolean } from '@/hooks/use-boolean';
-import { PlanFreeIcon, PlanStarterIcon, PlanPremiumIcon } from '@/assets/icons';
-
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
+import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
-import Grid from '@mui/material/Unstable_Grid2';
+import { useState, useCallback } from 'react';
 import CardHeader from '@mui/material/CardHeader';
+
+import Label from '@/components/label';
+import Iconify from '@/components/iconify';
+import { IPaymentCard } from '@/types/payment';
+import { IAddressItem } from '@/types/address';
+import { useBoolean } from '@/hooks/use-boolean';
+import { PlanFreeIcon, PlanStarterIcon, PlanPremiumIcon } from '@/assets/icons';
 
 import { AddressListDialog } from '../address';
 import PaymentCardListDialog from '../payment/payment-card-list-dialog';
@@ -72,7 +72,7 @@ export default function AccountBillingPlan({
   }, []);
 
   const renderPlans = plans.map((plan) => (
-    <Grid xs={12} md={4} key={plan.subscription}>
+    <Grid size={{ xs: 12, md: 4 }} key={plan.subscription}>
       <Stack
         component={Paper}
         variant="outlined"
@@ -144,12 +144,11 @@ export default function AccountBillingPlan({
 
         <Stack spacing={2} sx={{ p: 3, pt: 0, typography: 'body2' }}>
           <Grid container spacing={{ xs: 0.5, md: 2 }}>
-            <Grid xs={12} md={4} sx={{ color: 'text.secondary' }}>
+            <Grid size={{ xs: 12, md: 4 }} sx={{ color: 'text.secondary' }}>
               Plan
             </Grid>
             <Grid
-              xs={12}
-              md={8}
+              size={{ xs: 12, md: 8 }}
               sx={{ typography: 'subtitle2', textTransform: 'capitalize' }}
             >
               {selectedPlan || '-'}
@@ -157,10 +156,10 @@ export default function AccountBillingPlan({
           </Grid>
 
           <Grid container spacing={{ xs: 0.5, md: 2 }}>
-            <Grid xs={12} md={4} sx={{ color: 'text.secondary' }}>
+            <Grid size={{ xs: 12, md: 4 }} sx={{ color: 'text.secondary' }}>
               Billing name
             </Grid>
-            <Grid xs={12} md={8}>
+            <Grid size={{ xs: 12, md: 8 }}>
               <Button
                 onClick={openAddress.onTrue}
                 endIcon={
@@ -174,28 +173,28 @@ export default function AccountBillingPlan({
           </Grid>
 
           <Grid container spacing={{ xs: 0.5, md: 2 }}>
-            <Grid xs={12} md={4} sx={{ color: 'text.secondary' }}>
+            <Grid size={{ xs: 12, md: 4 }} sx={{ color: 'text.secondary' }}>
               Billing address
             </Grid>
-            <Grid xs={12} md={8} sx={{ color: 'text.secondary' }}>
+            <Grid size={{ xs: 12, md: 8 }} sx={{ color: 'text.secondary' }}>
               {selectedAddress?.fullAddress}
             </Grid>
           </Grid>
 
           <Grid container spacing={{ xs: 0.5, md: 2 }}>
-            <Grid xs={12} md={4} sx={{ color: 'text.secondary' }}>
+            <Grid size={{ xs: 12, md: 4 }} sx={{ color: 'text.secondary' }}>
               Billing phone number
             </Grid>
-            <Grid xs={12} md={8} sx={{ color: 'text.secondary' }}>
+            <Grid size={{ xs: 12, md: 8 }} sx={{ color: 'text.secondary' }}>
               {selectedAddress?.phoneNumber}
             </Grid>
           </Grid>
 
           <Grid container spacing={{ xs: 0.5, md: 2 }}>
-            <Grid xs={12} md={4} sx={{ color: 'text.secondary' }}>
+            <Grid size={{ xs: 12, md: 4 }} sx={{ color: 'text.secondary' }}>
               Payment method
             </Grid>
-            <Grid xs={12} md={8}>
+            <Grid size={{ xs: 12, md: 8 }}>
               <Button
                 onClick={openCards.onTrue}
                 endIcon={

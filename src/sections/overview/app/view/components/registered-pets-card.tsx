@@ -1,9 +1,3 @@
-// components/dashboard/user/registered-pets-card.tsx
-import { IPetProfile } from '@/types/api';
-import Iconify from '@/components/iconify';
-import { BreedOptions } from '@/utils/constants';
-import { useTranslation } from '@/hooks/use-translation';
-
 import {
   Box,
   Card,
@@ -12,6 +6,12 @@ import {
   Typography,
   CardContent,
 } from '@mui/material';
+
+// components/dashboard/user/registered-pets-card.tsx
+import { IPetProfile } from '@/types/api';
+import Iconify from '@/components/iconify';
+import { BreedOptions } from '@/utils/constants';
+import { useTranslation } from '@/hooks/use-translation';
 
 interface RegisteredPetsCardProps {
   pets: IPetProfile[];

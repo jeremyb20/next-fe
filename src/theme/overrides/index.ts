@@ -1,5 +1,4 @@
 import merge from 'lodash/merge';
-
 import { Theme } from '@mui/material/styles';
 
 import { fab } from './components/fab';

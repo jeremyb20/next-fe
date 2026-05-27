@@ -1,11 +1,13 @@
-import { MedicalPetCalendarView } from '@/sections/medical-pet-calendar/view';
+import { Metadata } from 'next';
+
+import { CalendarView } from '@/sections/calendar/view';
 
 // ----------------------------------------------------------------------
 
-export const metadata = {
+export const metadata: Metadata = {
   title: 'Dashboard: Calendar',
 };
 
 export default function CalendarPage() {
-  return <MedicalPetCalendarView />;
+  return <CalendarView />;
 }

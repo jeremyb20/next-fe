@@ -1,15 +1,4 @@
-/* eslint-disable no-nested-ternary */
 import { useState } from 'react';
-import { IQrCode } from '@/types/api';
-import Label from '@/components/label';
-import Iconify from '@/components/iconify';
-import { useBoolean } from '@/hooks/use-boolean';
-import { BreedOptions } from '@/utils/constants';
-import { fDate, fTime } from '@/utils/format-time';
-import { ConfirmDialog } from '@/components/custom-dialog';
-import { QrcodeCustom } from '@/components/qr-generator/qr-codes';
-import CustomPopover, { usePopover } from '@/components/custom-popover';
-
 import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
@@ -21,6 +10,16 @@ import TableCell from '@mui/material/TableCell';
 import IconButton from '@mui/material/IconButton';
 import ListItemText from '@mui/material/ListItemText';
 import { Dialog, DialogTitle, DialogContent } from '@mui/material';
+
+import { IQrCode } from '@/types/api';
+import Label from '@/components/label';
+import Iconify from '@/components/iconify';
+import { BreedOptions } from '@/utils/constants';
+import { useBoolean } from '@/hooks/use-boolean';
+import { fDate, fTime } from '@/utils/format-time';
+import { ConfirmDialog } from '@/components/custom-dialog';
+import { QrcodeCustom } from '@/components/qr-generator/qr-codes';
+import CustomPopover, { usePopover } from '@/components/custom-popover';
 
 // ----------------------------------------------------------------------
 
@@ -108,18 +107,7 @@ export default function QrCodeTableRow({
       </TableCell>
 
       <TableCell align="center">{randomCode}</TableCell>
-      <TableCell align="center">
-        <ListItemText
-          primary={hostName || 'N/A'}
-          secondary={`${hostName}es/pet/${randomCode}` || 'N/A'}
-          primaryTypographyProps={{ typography: 'body2', noWrap: true }}
-          secondaryTypographyProps={{
-            mt: 0.5,
-            component: 'span',
-            typography: 'caption',
-          }}
-        />
-      </TableCell>
+      <TableCell align="center">{hostName}</TableCell>
 
       <TableCell>
         <Label
@@ -171,7 +159,7 @@ export default function QrCodeTableRow({
         >
           <Stack direction="row" component={Paper} sx={{ m: 1.5, p: 2 }}>
             <QrcodeCustom
-              value={`${hostName}es/pet/${randomCode}`}
+              value={`${hostName}pet/${randomCode}`}
               fileName={randomCode}
             />
           </Stack>
@@ -192,7 +180,7 @@ export default function QrCodeTableRow({
         arrow="right-top"
         sx={{ width: 140 }}
       >
-        {/* <MenuItem
+        <MenuItem
           onClick={() => {
             onViewRow();
             popover.onClose();
@@ -200,7 +188,7 @@ export default function QrCodeTableRow({
         >
           <Iconify icon="solar:eye-bold" />
           View
-        </MenuItem> */}
+        </MenuItem>
         <MenuItem
           onClick={() => {
             onEditRow();
@@ -258,7 +246,7 @@ export default function QrCodeTableRow({
         </DialogTitle>
         <DialogContent>
           <QrcodeCustom
-            value={`${hostName}es/pet/${randomCode}`}
+            value={`${hostName}pet/${randomCode}`}
             fileName={randomCode}
           />
         </DialogContent>

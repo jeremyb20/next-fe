@@ -1,21 +1,21 @@
 import React, { useState } from 'react';
-import Iconify from '@/components/iconify';
-import { APP_NAME, EMAIL_SUPPORT } from '@/config-global';
-
+import { useTheme } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
 import {
   Box,
   Dialog,
   Button,
   Checkbox,
-  useTheme,
   Typography,
   IconButton,
   DialogTitle,
   DialogContent,
   DialogActions,
-  useMediaQuery,
   FormControlLabel,
 } from '@mui/material';
+
+import Iconify from '@/components/iconify';
+import { APP_NAME, EMAIL_SUPPORT } from '@/config-global';
 
 import PrivacyPolicy from './privacy-policy-view';
 

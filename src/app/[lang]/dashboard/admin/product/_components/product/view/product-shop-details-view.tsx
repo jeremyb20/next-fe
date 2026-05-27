@@ -1,24 +1,24 @@
 'use client';
 
+import Tab from '@mui/material/Tab';
+import Box from '@mui/material/Box';
+import Tabs from '@mui/material/Tabs';
+import Card from '@mui/material/Card';
+import Grid from '@mui/material/Grid';
+import Button from '@mui/material/Button';
+import { alpha } from '@mui/material/styles';
+import { useState, useCallback } from 'react';
+import Container from '@mui/material/Container';
+import Typography from '@mui/material/Typography';
+
 import { paths } from '@/routes/paths';
 import Iconify from '@/components/iconify';
-import { useState, useCallback } from 'react';
 import { useGetProduct } from '@/api/product';
 import { RouterLink } from '@/routes/components';
 import EmptyContent from '@/components/empty-content';
 import { useSettingsContext } from '@/components/settings';
 import CustomBreadcrumbs from '@/components/custom-breadcrumbs';
 import { useCheckoutContext } from '@/sections/checkout/context';
-
-import Tab from '@mui/material/Tab';
-import Box from '@mui/material/Box';
-import Tabs from '@mui/material/Tabs';
-import Card from '@mui/material/Card';
-import Button from '@mui/material/Button';
-import { alpha } from '@mui/material/styles';
-import Container from '@mui/material/Container';
-import Grid from '@mui/material/Unstable_Grid2';
-import Typography from '@mui/material/Typography';
 
 import ProductDetailsReview from '../product-details-review';
 import { ProductDetailsSkeleton } from '../product-skeleton';
@@ -103,11 +103,11 @@ export default function ProductShopDetailsView({ id }: Props) {
       />
 
       <Grid container spacing={{ xs: 3, md: 5, lg: 8 }}>
-        <Grid xs={12} md={6} lg={7}>
+        <Grid size={{ xs: 12, md: 6, lg: 7 }}>
           <ProductDetailsCarousel product={product} />
         </Grid>
 
-        <Grid xs={12} md={6} lg={5}>
+        <Grid size={{ xs: 12, md: 6, lg: 5 }}>
           <ProductDetailsSummary
             product={product}
             items={checkout.items}

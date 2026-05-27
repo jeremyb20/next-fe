@@ -1,8 +1,8 @@
-import Logo from '@/components/logo';
-import { useResponsive } from '@/hooks/use-responsive';
-
 import Stack from '@mui/material/Stack';
 import { Box, Card } from '@mui/material';
+
+import Logo from '@/components/logo';
+import { useResponsive } from '@/hooks/use-responsive';
 
 import SettingsButton from '../common/settings-button';
 
@@ -14,7 +14,7 @@ type Props = {
   children: React.ReactNode;
 };
 
-export default function AuthClassicLayout({ children, image, title }: Props) {
+export default function AuthClassicLayout({ children }: Props) {
   const mdUp = useResponsive('up', 'md');
 
   const renderSection = (

@@ -1,8 +1,10 @@
+import { Metadata } from 'next';
+
 import { OverviewAppView } from '@/sections/overview/app/view';
 
 // ----------------------------------------------------------------------
 
-export const metadata = {
+export const metadata: Metadata = {
   title: 'Welcome',
 };
 

@@ -1,14 +1,14 @@
-import FormProvider from '@/components/hook-form';
-import { useSnackbar } from '@/components/snackbar';
-import { useForm, Controller } from 'react-hook-form';
-
 import Card from '@mui/material/Card';
+import Grid from '@mui/material/Grid';
+import { Button } from '@mui/material';
 import Stack from '@mui/material/Stack';
 import Switch from '@mui/material/Switch';
-import Grid from '@mui/material/Unstable_Grid2';
-import LoadingButton from '@mui/lab/LoadingButton';
+import { useForm, Controller } from 'react-hook-form';
 import ListItemText from '@mui/material/ListItemText';
 import FormControlLabel from '@mui/material/FormControlLabel';
+
+import FormProvider from '@/components/hook-form';
+import { useSnackbar } from '@/components/snackbar';
 
 import AccountSubscriptionNotification from './account-subscription-notification';
 
@@ -83,7 +83,7 @@ export default function AccountNotifications() {
         <Stack component={Card} spacing={3} sx={{ p: 3 }}>
           {NOTIFICATIONS.map((notification) => (
             <Grid key={notification.subheader} container spacing={3}>
-              <Grid xs={12} md={4}>
+              <Grid size={{ xs: 12, md: 4 }}>
                 <ListItemText
                   primary={notification.subheader}
                   secondary={notification.caption}
@@ -92,7 +92,7 @@ export default function AccountNotifications() {
                 />
               </Grid>
 
-              <Grid xs={12} md={8}>
+              <Grid size={{ xs: 12, md: 8 }}>
                 <Stack
                   spacing={1}
                   sx={{ p: 3, borderRadius: 2, bgcolor: 'background.neutral' }}
@@ -132,14 +132,14 @@ export default function AccountNotifications() {
             </Grid>
           ))}
 
-          <LoadingButton
+          <Button
             type="submit"
             variant="contained"
             loading={isSubmitting}
             sx={{ ml: 'auto' }}
           >
             Save Changes
-          </LoadingButton>
+          </Button>
         </Stack>
       </FormProvider>
       <AccountSubscriptionNotification />

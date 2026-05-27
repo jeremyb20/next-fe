@@ -1,8 +1,10 @@
+import { Metadata } from 'next';
+
 import ChartView from '@/sections/_examples/extra/chart-view';
 
 // ----------------------------------------------------------------------
 
-export const metadata = {
+export const metadata: Metadata = {
   title: 'Components: Chart',
 };
 

@@ -1,17 +1,18 @@
 'use client';
 
-import React from 'react';
+import Box from '@mui/material/Box';
 import { Icon } from '@iconify/react';
+import { Stack } from '@mui/material';
+import Paper from '@mui/material/Paper';
+import { useTheme } from '@mui/material/styles';
+import Typography from '@mui/material/Typography';
+import useMediaQuery from '@mui/system/useMediaQuery';
+
 import { IPetProfile } from '@/types/api';
 import Iconify from '@/components/iconify';
 import { useTranslation } from '@/hooks/use-translation';
 import CoatOfArms from '@/components/country-cards/Costa-Rica/coat-of-arms';
 import { CostaRicaFlagAccurate } from '@/components/country-cards/Costa-Rica/costa-rica-flag';
-
-import Box from '@mui/material/Box';
-import Paper from '@mui/material/Paper';
-import Typography from '@mui/material/Typography';
-import { Stack, useTheme, useMediaQuery } from '@mui/material';
 
 interface Props {
   data: IPetProfile | undefined;

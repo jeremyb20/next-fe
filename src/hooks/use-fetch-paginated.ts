@@ -1,10 +1,11 @@
-import { IProductItem } from '@/types/product';
-import axiosInstance, { endpoints } from '@/utils/axios';
 import {
   useQuery,
   UseQueryOptions,
   keepPreviousData,
 } from '@tanstack/react-query';
+
+import { IProductItem } from '@/types/product';
+import axiosInstance, { endpoints } from '@/utils/axios';
 import {
   ISeo,
   IUser,

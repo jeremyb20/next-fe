@@ -9,7 +9,11 @@ interface CostaRicaFlagProps {
   height?: number | string;
 }
 
-export default function CostaRicaFlag({ sx, width, height }: CostaRicaFlagProps) {
+export default function CostaRicaFlag({
+  sx,
+  width,
+  height,
+}: CostaRicaFlagProps) {
   const stripeHeight = typeof height === 'number' ? height / 5 : 0;
 
   return (

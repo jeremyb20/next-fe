@@ -1,7 +1,4 @@
 import React from 'react';
-import Iconify from '@/components/iconify';
-import { useTranslation } from '@/hooks/use-translation';
-
 import {
   Box,
   Grid,
@@ -14,6 +11,9 @@ import {
   DialogActions,
   DialogContent,
 } from '@mui/material';
+
+import Iconify from '@/components/iconify';
+import { useTranslation } from '@/hooks/use-translation';
 
 interface AvatarOption {
   avatarDialog: {
@@ -71,7 +71,7 @@ export default function AccountSelectionModal({
 
         <Grid container spacing={2}>
           {avatars.map((avatar) => (
-            <Grid xs={3} sm={2} key={avatar.id}>
+            <Grid size={{ xs: 3, sm: 2 }} key={avatar.id}>
               <Card
                 onClick={() => handleSelectAvatar(avatar.id.toString())}
                 sx={{

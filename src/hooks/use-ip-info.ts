@@ -76,9 +76,10 @@
 // export default useIPInfo;
 
 import axios from 'axios';
+import { useState, useEffect } from 'react';
+
 // hooks/use-ip-info.ts
 import { endpoints } from '@/utils/axios';
-import { useState, useEffect } from 'react';
 
 import { HOST_API } from '../config-global';
 

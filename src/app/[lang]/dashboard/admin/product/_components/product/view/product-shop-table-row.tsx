@@ -1,14 +1,3 @@
-import Label from '@/components/label';
-import Iconify from '@/components/iconify';
-import { IProductItem } from '@/types/product';
-import { useBoolean } from '@/hooks/use-boolean';
-import { fDate, fTime } from '@/utils/format-time';
-import { useCurrency } from '@/hooks/use-currency';
-import { useTranslation } from '@/hooks/use-translation';
-import { ConfirmDialog } from '@/components/custom-dialog';
-import { inventoryStatusOptions } from '@/utils/constants';
-import CustomPopover, { usePopover } from '@/components/custom-popover';
-
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import Avatar from '@mui/material/Avatar';
@@ -19,6 +8,17 @@ import TableCell from '@mui/material/TableCell';
 import IconButton from '@mui/material/IconButton';
 import { Box, LinearProgress } from '@mui/material';
 import ListItemText from '@mui/material/ListItemText';
+
+import Label from '@/components/label';
+import Iconify from '@/components/iconify';
+import { IProductItem } from '@/types/product';
+import { useBoolean } from '@/hooks/use-boolean';
+import { fDate, fTime } from '@/utils/format-time';
+import { useCurrency } from '@/hooks/use-currency';
+import { useTranslation } from '@/hooks/use-translation';
+import { ConfirmDialog } from '@/components/custom-dialog';
+import { inventoryStatusOptions } from '@/utils/constants';
+import CustomPopover, { usePopover } from '@/components/custom-popover';
 
 // ----------------------------------------------------------------------
 

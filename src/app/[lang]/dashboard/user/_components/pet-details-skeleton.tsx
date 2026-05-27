@@ -1,5 +1,3 @@
-import React from 'react';
-
 import {
   Box,
   Card,
@@ -45,7 +43,7 @@ export default function PetDetailsSkeleton() {
         </Stack>
 
         <Grid container spacing={3}>
-          <Grid item xs={6}>
+          <Grid size={{ xs: 6 }}>
             <Stack spacing={2.5}>
               {[1, 2, 3].map((index) => (
                 <Box
@@ -61,7 +59,7 @@ export default function PetDetailsSkeleton() {
               ))}
             </Stack>
           </Grid>
-          <Grid item xs={6}>
+          <Grid size={{ xs: 6 }}>
             <Stack spacing={2.5}>
               {[1, 2, 3].map((index) => (
                 <Box

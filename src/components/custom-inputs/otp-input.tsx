@@ -1,5 +1,4 @@
 import React, { useRef, useEffect } from 'react';
-
 import { Box, OutlinedInput } from '@mui/material';
 
 type Props = {

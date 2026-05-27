@@ -1,13 +1,4 @@
-import { m } from 'framer-motion';
-import Image from '@/components/image';
-import { ITourItem } from '@/types/tour';
-import Iconify from '@/components/iconify';
-import { fDate } from '@/utils/format-time';
-import Markdown from '@/components/markdown';
-import { TOUR_SERVICE_OPTIONS } from '@/_mock';
-import { varTranHover } from '@/components/animate';
-import Lightbox, { useLightBox } from '@/components/lightbox';
-
+import { m } from 'motion/react';
 import Box from '@mui/material/Box';
 import Link from '@mui/material/Link';
 import Stack from '@mui/material/Stack';
@@ -16,6 +7,15 @@ import Checkbox from '@mui/material/Checkbox';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import ListItemText from '@mui/material/ListItemText';
+
+import Image from '@/components/image';
+import { ITourItem } from '@/types/tour';
+import Iconify from '@/components/iconify';
+import { fDate } from '@/utils/format-time';
+import Markdown from '@/components/markdown';
+import { TOUR_SERVICE_OPTIONS } from '@/_mock';
+import { varTranHover } from '@/components/animate';
+import Lightbox, { useLightBox } from '@/components/lightbox';
 
 // ----------------------------------------------------------------------
 
@@ -66,7 +66,7 @@ export default function TourDetailsContent({ tour }: Props) {
           variants={{
             hover: { opacity: 0.8 },
           }}
-          transition={varTranHover()}
+          transition={varTranHover() as any}
         >
           <Image
             alt={slides[0].src}
@@ -85,7 +85,7 @@ export default function TourDetailsContent({ tour }: Props) {
               variants={{
                 hover: { opacity: 0.8 },
               }}
-              transition={varTranHover()}
+              transition={varTranHover() as any}
             >
               <Image
                 alt={slide.src}

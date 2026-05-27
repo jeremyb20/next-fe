@@ -1,22 +1,21 @@
-// components/dashboard/user/upcoming-appointments-card.tsx
-import Iconify from '@/components/iconify';
-import { IUpcomingAppointment } from '@/types/api';
-import { useTranslation } from '@/hooks/use-translation';
-
+import { alpha, useTheme } from '@mui/material/styles';
 import {
   Box,
   Card,
   Chip,
   Grid,
-  alpha,
   Button,
   Divider,
-  useTheme,
   Skeleton,
   Typography,
   IconButton,
   CardContent,
 } from '@mui/material';
+
+// components/dashboard/user/upcoming-appointments-card.tsx
+import Iconify from '@/components/iconify';
+import { IUpcomingAppointment } from '@/types/api';
+import { useTranslation } from '@/hooks/use-translation';
 
 interface UpcomingAppointmentsCardProps {
   appointments: IUpcomingAppointment[];
@@ -118,7 +117,7 @@ export function UpcomingAppointmentsCard({
       <Box sx={{ mb: 3 }}>
         <Grid container spacing={2}>
           {[1, 2, 3, 4].map((_, index) => (
-            <Grid item xs={6} sm={6} md={3} key={index}>
+            <Grid size={{ xs: 6, sm: 6, md: 3 }} key={index}>
               <Card sx={{ borderRadius: 3, height: '100%' }}>
                 <CardContent sx={{ p: 2, textAlign: 'center' }}>
                   <Skeleton

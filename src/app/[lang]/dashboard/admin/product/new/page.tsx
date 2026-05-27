@@ -1,8 +1,10 @@
 // ----------------------------------------------------------------------
 
+import { Metadata } from 'next';
+
 import { ProductCreateView } from '../_components/product/view';
 
-export const metadata = {
+export const metadata: Metadata = {
   title: 'Dashboard Admin: Create a new product',
 };
 

@@ -1,6 +1,25 @@
-/* eslint-disable no-nested-ternary */
-
 'use client';
+
+import Card from '@mui/material/Card';
+import Table from '@mui/material/Table';
+import Stack from '@mui/material/Stack';
+import Button from '@mui/material/Button';
+import Tooltip from '@mui/material/Tooltip';
+import Container from '@mui/material/Container';
+import TableBody from '@mui/material/TableBody';
+import { useTheme } from '@mui/material/styles';
+import IconButton from '@mui/material/IconButton';
+import { useMemo, useState, useCallback } from 'react';
+import TableContainer from '@mui/material/TableContainer';
+import {
+  Box,
+  Paper,
+  Dialog,
+  Typography,
+  DialogTitle,
+  DialogContent,
+  LinearProgress,
+} from '@mui/material';
 
 import { paths } from '@/routes/paths';
 import { IPromotions } from '@/types/api';
@@ -11,7 +30,6 @@ import { RouterLink } from '@/routes/components';
 import { useBoolean } from '@/hooks/use-boolean';
 import { useSnackbar } from '@/components/snackbar';
 import EmptyContent from '@/components/empty-content';
-import { useMemo, useState, useCallback } from 'react';
 import { isAfter, isBetween } from '@/utils/format-time';
 import { ConfirmDialog } from '@/components/custom-dialog';
 import { useSettingsContext } from '@/components/settings';
@@ -30,26 +48,6 @@ import {
   TableSelectedAction,
   TablePaginationCustom,
 } from '@/components/table';
-
-import Card from '@mui/material/Card';
-import Table from '@mui/material/Table';
-import Stack from '@mui/material/Stack';
-import Button from '@mui/material/Button';
-import Tooltip from '@mui/material/Tooltip';
-import Container from '@mui/material/Container';
-import TableBody from '@mui/material/TableBody';
-import { useTheme } from '@mui/material/styles';
-import IconButton from '@mui/material/IconButton';
-import TableContainer from '@mui/material/TableContainer';
-import {
-  Box,
-  Paper,
-  Dialog,
-  Typography,
-  DialogTitle,
-  DialogContent,
-  LinearProgress,
-} from '@mui/material';
 
 import PromotionTableRow from '../promotion-table-row';
 import PromotionEditForm from '../promotion-edit-form';
@@ -212,6 +210,7 @@ export default function PromotionsListView() {
 
   const handleDeleteRow = useCallback(
     (id: string) => {
+      console.log(id);
       enqueueSnackbar('Delete success!');
     },
     [enqueueSnackbar]

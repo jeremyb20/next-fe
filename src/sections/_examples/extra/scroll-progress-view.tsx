@@ -1,17 +1,17 @@
 'use client';
 
 import { useRef } from 'react';
-import { paths } from '@/routes/paths';
-import { useScroll } from 'framer-motion';
-import ScrollProgress from '@/components/scroll-progress';
-import CustomBreadcrumbs from '@/components/custom-breadcrumbs';
-import ComponentHero from '@/sections/_examples/component-hero';
-
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
+import { useScroll } from 'motion/react';
 import Container from '@mui/material/Container';
 import CardHeader from '@mui/material/CardHeader';
 import CardContent from '@mui/material/CardContent';
+
+import { paths } from '@/routes/paths';
+import ScrollProgress from '@/components/scroll-progress';
+import CustomBreadcrumbs from '@/components/custom-breadcrumbs';
+import ComponentHero from '@/sections/_examples/component-hero';
 
 // ----------------------------------------------------------------------
 

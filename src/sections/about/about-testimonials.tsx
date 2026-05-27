@@ -1,22 +1,22 @@
-import { m } from 'framer-motion';
+import { m } from 'motion/react';
+import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid';
+import Masonry from '@mui/lab/Masonry';
+import Rating from '@mui/material/Rating';
+import Button from '@mui/material/Button';
+import Avatar from '@mui/material/Avatar';
+import Container from '@mui/material/Container';
+import Typography from '@mui/material/Typography';
+import ListItemText from '@mui/material/ListItemText';
+import { alpha, useTheme } from '@mui/material/styles';
+import Stack, { StackProps } from '@mui/material/Stack';
+
 import { _testimonials } from '@/_mock';
 import Iconify from '@/components/iconify';
 import { fDate } from '@/utils/format-time';
 import { useResponsive } from '@/hooks/use-responsive';
 import { bgBlur, bgGradient, hideScroll } from '@/theme/css';
 import { varFade, MotionViewport } from '@/components/animate';
-
-import Box from '@mui/material/Box';
-import Masonry from '@mui/lab/Masonry';
-import Rating from '@mui/material/Rating';
-import Button from '@mui/material/Button';
-import Avatar from '@mui/material/Avatar';
-import Container from '@mui/material/Container';
-import Grid from '@mui/material/Unstable_Grid2';
-import Typography from '@mui/material/Typography';
-import ListItemText from '@mui/material/ListItemText';
-import { alpha, useTheme } from '@mui/material/styles';
-import Stack, { StackProps } from '@mui/material/Stack';
 
 // ----------------------------------------------------------------------
 
@@ -121,14 +121,14 @@ export default function AboutTestimonials() {
           justifyContent={{ xs: 'center', md: 'space-between' }}
           sx={{ height: 1 }}
         >
-          <Grid xs={10} md={4}>
-            {renderDescription}
-          </Grid>
+          <Grid size={{ xs: 10, md: 4 }}>{renderDescription}</Grid>
 
           <Grid
-            xs={12}
-            md={7}
-            lg={6}
+            size={{
+              xs: 12,
+              md: 7,
+              lg: 6,
+            }}
             alignItems="center"
             sx={{
               height: 1,

@@ -1,11 +1,11 @@
+import Drawer from '@mui/material/Drawer';
+import IconButton from '@mui/material/IconButton';
+import { useState, useEffect, useCallback } from 'react';
+
 import Logo from '@/components/logo';
 import { usePathname } from '@/routes/hooks';
 import SvgColor from '@/components/svg-color';
 import Scrollbar from '@/components/scrollbar';
-import { useState, useEffect, useCallback } from 'react';
-
-import Drawer from '@mui/material/Drawer';
-import IconButton from '@mui/material/IconButton';
 
 import NavList from './nav-list';
 import { NavProps } from '../types';
@@ -21,7 +21,6 @@ export default function NavMobile({ data }: NavProps) {
     if (openMenu) {
       handleCloseMenu();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname]);
 
   const handleOpenMenu = useCallback(() => {

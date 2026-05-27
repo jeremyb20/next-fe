@@ -1,8 +1,10 @@
+import { Metadata } from 'next';
+
 import PickerView from '@/sections/_examples/mui/picker-view';
 
 // ----------------------------------------------------------------------
 
-export const metadata = {
+export const metadata: Metadata = {
   title: 'MUI: Picker',
 };
 

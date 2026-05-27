@@ -1,14 +1,14 @@
-import { m } from 'framer-motion';
-import Iconify from '@/components/iconify';
-import { useTranslation } from '@/hooks/use-translation';
-import { varFade, MotionViewport } from '@/components/animate';
-
+import { m } from 'motion/react';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
+
+import Iconify from '@/components/iconify';
+import { useTranslation } from '@/hooks/use-translation';
+import { varFade, MotionViewport } from '@/components/animate';
 
 const SERVICES = [
   {
@@ -38,10 +38,12 @@ export default function HomeServices() {
     <Container component={MotionViewport} sx={{ py: { xs: 10, md: 15 } }}>
       <Stack spacing={3} sx={{ textAlign: 'center', mb: 8 }}>
         <m.div variants={varFade().inUp}>
-          <Typography variant="h2">{t('Available Services')}</Typography>
+          <Typography variant="h2" component="h2">
+            {t('Available Services')}
+          </Typography>
         </m.div>
         <m.div variants={varFade().inUp}>
-          <Typography variant="h4" color="text.secondary">
+          <Typography variant="h4" component="h3">
             {t('Everything you need for your well-being in one place')}
           </Typography>
         </m.div>
@@ -55,7 +57,7 @@ export default function HomeServices() {
           md: 'repeat(3, 1fr)',
         }}
       >
-        {SERVICES.map((service, index) => (
+        {SERVICES.map((service) => (
           <m.div key={service.title} variants={varFade().inUp}>
             <Card
               sx={{
@@ -67,18 +69,12 @@ export default function HomeServices() {
                 },
               }}
             >
-              {/* <Box
-                component="img"
-                src={service.icon}
-                alt={service.title}
-                sx={{ width: 80, height: 80, mx: 'auto', mb: 3 }}
-              /> */}
               <Iconify
                 icon={service.icon}
                 sx={{ width: 80, height: 80, mx: 'auto', mb: 3 }}
               />
 
-              <Typography variant="h5" gutterBottom>
+              <Typography variant="h5" component="h4" gutterBottom>
                 {t(service.title)}
               </Typography>
 

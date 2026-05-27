@@ -1,8 +1,3 @@
-import Iconify from '@/components/iconify';
-import Scrollbar from '@/components/scrollbar';
-import { fCurrency } from '@/utils/format-number';
-import { IOrderProductItem } from '@/types/order';
-
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import Stack from '@mui/material/Stack';
@@ -10,6 +5,11 @@ import Avatar from '@mui/material/Avatar';
 import CardHeader from '@mui/material/CardHeader';
 import IconButton from '@mui/material/IconButton';
 import ListItemText from '@mui/material/ListItemText';
+
+import Iconify from '@/components/iconify';
+import Scrollbar from '@/components/scrollbar';
+import { fCurrency } from '@/utils/format-number';
+import { IOrderProductItem } from '@/types/order';
 
 // ----------------------------------------------------------------------
 

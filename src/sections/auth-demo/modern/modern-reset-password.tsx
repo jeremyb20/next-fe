@@ -2,8 +2,21 @@
 
 import * as Yup from 'yup';
 import dynamic from 'next/dynamic';
-import { paths } from '@/routes/paths';
+import Link from '@mui/material/Link';
+import Stack from '@mui/material/Stack';
 import { useForm } from 'react-hook-form';
+import Dialog from '@mui/material/Dialog';
+import IconButton from '@mui/material/IconButton';
+import Typography from '@mui/material/Typography';
+import { useRef, useState, useEffect } from 'react';
+import DialogTitle from '@mui/material/DialogTitle';
+import { yupResolver } from '@hookform/resolvers/yup';
+import DialogContent from '@mui/material/DialogContent';
+import DialogActions from '@mui/material/DialogActions';
+import InputAdornment from '@mui/material/InputAdornment';
+import { Box, Alert, Button, CircularProgress } from '@mui/material';
+
+import { paths } from '@/routes/paths';
 import { SentIcon } from '@/assets/icons';
 import { endpoints } from '@/utils/axios';
 import Iconify from '@/components/iconify';
@@ -12,24 +25,10 @@ import { HOST_API } from '@/config-global';
 import { RouterLink } from '@/routes/components';
 import { useBoolean } from '@/hooks/use-boolean';
 import { fallbackLng } from '@/app/i18n/settings';
-import { useRef, useState, useEffect } from 'react';
-import { yupResolver } from '@hookform/resolvers/yup';
 import { useTranslation } from '@/hooks/use-translation';
 import OtpInput from '@/components/custom-inputs/otp-input';
 import FormProvider, { RHFTextField } from '@/components/hook-form';
 import { useCreateGenericMutation } from '@/hooks/user-generic-mutation';
-
-import Link from '@mui/material/Link';
-import Stack from '@mui/material/Stack';
-import Dialog from '@mui/material/Dialog';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import LoadingButton from '@mui/lab/LoadingButton';
-import DialogTitle from '@mui/material/DialogTitle';
-import DialogContent from '@mui/material/DialogContent';
-import DialogActions from '@mui/material/DialogActions';
-import InputAdornment from '@mui/material/InputAdornment';
-import { Box, Alert, Button, CircularProgress } from '@mui/material';
 
 // ----------------------------------------------------------------------
 
@@ -495,7 +494,7 @@ export default function ModernResetPasswordView({
         />
       </Box>
 
-      <LoadingButton
+      <Button
         fullWidth
         size="large"
         type="submit"
@@ -504,7 +503,7 @@ export default function ModernResetPasswordView({
         disabled={!turnstileToken}
       >
         {t('Reset Password')}
-      </LoadingButton>
+      </Button>
 
       <Link
         component={RouterLink}
@@ -619,14 +618,14 @@ export default function ModernResetPasswordView({
         >
           {t('Cancel')}
         </Button>
-        <LoadingButton
+        <Button
           onClick={handleVerify2FA}
           variant="contained"
           loading={isVerifying2FA}
           disabled={!twoFactorCode || twoFactorCode.length !== 6}
         >
           {t('Verify & Reset Password')}
-        </LoadingButton>
+        </Button>
       </DialogActions>
     </Dialog>
   );

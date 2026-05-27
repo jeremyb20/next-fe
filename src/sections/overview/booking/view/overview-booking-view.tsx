@@ -1,5 +1,9 @@
 'use client';
 
+import Grid from '@mui/material/Grid';
+import { useTheme } from '@mui/material/styles';
+import Container from '@mui/material/Container';
+
 import { useSettingsContext } from '@/components/settings';
 import {
   _bookings,
@@ -12,10 +16,6 @@ import {
   CheckInIllustration,
   CheckoutIllustration,
 } from '@/assets/illustrations';
-
-import { useTheme } from '@mui/material/styles';
-import Container from '@mui/material/Container';
-import Grid from '@mui/material/Unstable_Grid2';
 
 import BookingBooked from '../booking-booked';
 import BookingNewest from '../booking-newest';
@@ -38,8 +38,8 @@ export default function OverviewBookingView() {
 
   return (
     <Container maxWidth={settings.themeStretch ? false : 'xl'}>
-      <Grid container spacing={SPACING} disableEqualOverflow>
-        <Grid xs={12} md={4}>
+      <Grid container spacing={SPACING}>
+        <Grid size={{ xs: 12, md: 4 }}>
           <BookingWidgetSummary
             title="Total Booking"
             total={714000}
@@ -47,7 +47,7 @@ export default function OverviewBookingView() {
           />
         </Grid>
 
-        <Grid xs={12} md={4}>
+        <Grid size={{ xs: 12, md: 4 }}>
           <BookingWidgetSummary
             title="Sold"
             total={311000}
@@ -55,7 +55,7 @@ export default function OverviewBookingView() {
           />
         </Grid>
 
-        <Grid xs={12} md={4}>
+        <Grid size={{ xs: 12, md: 4 }}>
           <BookingWidgetSummary
             title="Canceled"
             total={124000}
@@ -63,9 +63,9 @@ export default function OverviewBookingView() {
           />
         </Grid>
 
-        <Grid container xs={12}>
-          <Grid container xs={12} md={8}>
-            <Grid xs={12} md={6}>
+        <Grid size={{ xs: 12 }}>
+          <Grid container size={{ xs: 12, md: 8 }}>
+            <Grid size={{ xs: 12, md: 6 }}>
               <BookingTotalIncomes
                 title="Total Incomes"
                 total={18765}
@@ -85,11 +85,11 @@ export default function OverviewBookingView() {
               />
             </Grid>
 
-            <Grid xs={12} md={6}>
+            <Grid size={{ xs: 12, md: 6 }}>
               <BookingBooked title="Booked" data={_bookingsOverview} />
             </Grid>
 
-            <Grid xs={12}>
+            <Grid size={{ xs: 12 }}>
               <BookingCheckInWidgets
                 chart={{
                   series: [
@@ -100,7 +100,7 @@ export default function OverviewBookingView() {
               />
             </Grid>
 
-            <Grid xs={12}>
+            <Grid size={{ xs: 12 }}>
               <BookingStatistics
                 title="Statistics"
                 subheader="(+43% Sold | +12% Canceled) than last year"
@@ -166,7 +166,7 @@ export default function OverviewBookingView() {
             </Grid>
           </Grid>
 
-          <Grid xs={12} md={4}>
+          <Grid size={{ xs: 12, md: 4 }}>
             <BookingAvailable
               title="Tours Available"
               chart={{
@@ -186,7 +186,7 @@ export default function OverviewBookingView() {
           </Grid>
         </Grid>
 
-        <Grid xs={12}>
+        <Grid size={{ xs: 12 }}>
           <BookingNewest
             title="Newest Booking"
             subheader="12 Booking"
@@ -194,7 +194,7 @@ export default function OverviewBookingView() {
           />
         </Grid>
 
-        <Grid xs={12}>
+        <Grid size={{ xs: 12 }}>
           <BookingDetails
             title="Booking Details"
             tableData={_bookings}

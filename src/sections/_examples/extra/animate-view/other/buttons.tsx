@@ -1,10 +1,10 @@
-import { m } from 'framer-motion';
-import Iconify from '@/components/iconify';
-import { varHover } from '@/components/animate';
-
+import { m } from 'motion/react';
 import Fab from '@mui/material/Fab';
 import Stack from '@mui/material/Stack';
 import IconButton from '@mui/material/IconButton';
+
+import Iconify from '@/components/iconify';
+import { varHover } from '@/components/animate';
 
 // ----------------------------------------------------------------------
 

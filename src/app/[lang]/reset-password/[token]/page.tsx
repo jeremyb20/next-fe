@@ -3,12 +3,12 @@
 import ModernResetPasswordView from '@/sections/auth-demo/modern/modern-reset-password';
 
 type Props = {
-  params: {
+  params: Promise<{
     token: string;
-  };
+  }>;
 };
 
-export default function ResetPasswordPage({ params }: Props) {
-  const { token } = params;
+export default async function ResetPasswordPage({ params }: Props) {
+  const { token } = await params;
   return <ModernResetPasswordView token={token} />;
 }

@@ -1,14 +1,14 @@
-import { m } from 'framer-motion';
-import { APP_NAME } from '@/config-global';
-import { useTranslation } from '@/hooks/use-translation';
-import { varFade, MotionViewport } from '@/components/animate';
-
+import { m } from 'motion/react';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
+
+import { APP_NAME } from '@/config-global';
+import { useTranslation } from '@/hooks/use-translation';
+import { varFade, MotionViewport } from '@/components/animate';
 
 const BLOG_POSTS = [
   {
@@ -46,12 +46,12 @@ export default function HomeBlog() {
       <Container component={MotionViewport}>
         <Stack spacing={3} sx={{ textAlign: 'center', mb: 8 }}>
           <m.div variants={varFade().inUp}>
-            <Typography variant="h2">
+            <Typography variant="h2" component="h2">
               {t('Blog')} {APP_NAME}
             </Typography>
           </m.div>
           <m.div variants={varFade().inUp}>
-            <Typography variant="h3" color="text.secondary">
+            <Typography variant="h4" component="h3" color="text.secondary">
               {t('Tips and useful information for your pet care')}
             </Typography>
           </m.div>
@@ -65,7 +65,7 @@ export default function HomeBlog() {
             md: 'repeat(3, 1fr)',
           }}
         >
-          {BLOG_POSTS.map((post, index) => (
+          {BLOG_POSTS.map((post) => (
             <m.div key={post.title} variants={varFade().inUp}>
               <Card
                 sx={{
@@ -81,8 +81,8 @@ export default function HomeBlog() {
                   component="img"
                   src={post.image}
                   alt={t(post.title)}
-                  width="100%" // Mantiene el responsive
-                  height={200} // Altura fija en píxeles
+                  width="100%"
+                  height={200}
                   sx={{
                     objectFit: 'cover',
                   }}
@@ -90,15 +90,23 @@ export default function HomeBlog() {
 
                 <Stack spacing={2} sx={{ p: 3, flexGrow: 1 }}>
                   <Stack direction="row" spacing={2} alignItems="center">
-                    <Typography variant="caption" color="primary.main">
+                    <Typography
+                      variant="caption"
+                      component="span"
+                      color="primary.main"
+                    >
                       {t(post.category)}
                     </Typography>
-                    <Typography variant="caption" color="text.disabled">
+                    <Typography
+                      variant="caption"
+                      component="span"
+                      color="text.disabled"
+                    >
                       {post.date}
                     </Typography>
                   </Stack>
 
-                  <Typography variant="h6" gutterBottom>
+                  <Typography variant="h5" component="h4" gutterBottom>
                     {t(post.title)}
                   </Typography>
 
@@ -106,6 +114,7 @@ export default function HomeBlog() {
                     variant="body2"
                     color="text.secondary"
                     sx={{ flexGrow: 1 }}
+                    component="p"
                   >
                     {t(post.excerpt)}
                   </Typography>

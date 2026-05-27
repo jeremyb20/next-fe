@@ -1,4 +1,15 @@
 import React from 'react';
+import {
+  Box,
+  Card,
+  Paper,
+  Stack,
+  Button,
+  IconButton,
+  Typography,
+  LinearProgress,
+} from '@mui/material';
+
 import { paths } from '@/routes/paths';
 import { endpoints } from '@/utils/axios';
 import Iconify from '@/components/iconify';
@@ -11,17 +22,6 @@ import { useTranslation } from '@/hooks/use-translation';
 import { DeviceSuscriptions } from '@/types/service-worker';
 import { useGetSubscriptionDevices } from '@/hooks/use-fetch';
 import { useCreateGenericMutation } from '@/hooks/user-generic-mutation';
-
-import {
-  Box,
-  Card,
-  Paper,
-  Stack,
-  Button,
-  IconButton,
-  Typography,
-  LinearProgress,
-} from '@mui/material';
 
 export default function AccountSubscriptionNotification() {
   const { t } = useTranslation();

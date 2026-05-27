@@ -1,7 +1,3 @@
-import Scrollbar from '@/components/scrollbar';
-import { fCurrency } from '@/utils/format-number';
-import { ColorPreview } from '@/components/color-utils';
-
 import Box from '@mui/material/Box';
 import Link from '@mui/material/Link';
 import Stack from '@mui/material/Stack';
@@ -9,6 +5,10 @@ import Avatar from '@mui/material/Avatar';
 import CardHeader from '@mui/material/CardHeader';
 import Card, { CardProps } from '@mui/material/Card';
 import ListItemText from '@mui/material/ListItemText';
+
+import Scrollbar from '@/components/scrollbar';
+import { fCurrency } from '@/utils/format-number';
+import { ColorPreview } from '@/components/color-utils';
 
 // ----------------------------------------------------------------------
 

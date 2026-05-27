@@ -1,6 +1,3 @@
-import Iconify from '@/components/iconify';
-import CustomPopover, { usePopover } from '@/components/custom-popover';
-
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
@@ -10,6 +7,9 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import InputAdornment from '@mui/material/InputAdornment';
 import Dialog, { DialogProps } from '@mui/material/Dialog';
+
+import Iconify from '@/components/iconify';
+import CustomPopover, { usePopover } from '@/components/custom-popover';
 
 // ----------------------------------------------------------------------
 
@@ -31,25 +31,25 @@ export default function PaymentNewCardDialog({ onClose, ...other }: Props) {
               autoFocus
               label="Card Number"
               placeholder="XXXX XXXX XXXX XXXX"
-              InputLabelProps={{ shrink: true }}
+              slotProps={{ inputLabel: { shrink: true } }}
             />
 
             <TextField
               label="Card Holder"
               placeholder="JOHN DOE"
-              InputLabelProps={{ shrink: true }}
+              slotProps={{ inputLabel: { shrink: true } }}
             />
 
             <Stack spacing={2} direction="row">
               <TextField
                 label="Expiration Date"
                 placeholder="MM/YY"
-                InputLabelProps={{ shrink: true }}
+                slotProps={{ inputLabel: { shrink: true } }}
               />
               <TextField
                 label="CVV/CVC"
                 placeholder="***"
-                InputLabelProps={{ shrink: true }}
+                slotProps={{ inputLabel: { shrink: true } }}
                 InputProps={{
                   endAdornment: (
                     <InputAdornment position="end">

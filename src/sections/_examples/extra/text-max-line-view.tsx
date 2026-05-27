@@ -1,15 +1,15 @@
 'use client';
 
-import { paths } from '@/routes/paths';
-import TextMaxLine from '@/components/text-max-line';
-import CustomBreadcrumbs from '@/components/custom-breadcrumbs';
-import ComponentHero from '@/sections/_examples/component-hero';
-
 import Card from '@mui/material/Card';
 import Masonry from '@mui/lab/Masonry';
 import Container from '@mui/material/Container';
 import CardHeader from '@mui/material/CardHeader';
 import CardContent from '@mui/material/CardContent';
+
+import { paths } from '@/routes/paths';
+import TextMaxLine from '@/components/text-max-line';
+import CustomBreadcrumbs from '@/components/custom-breadcrumbs';
+import ComponentHero from '@/sections/_examples/component-hero';
 
 // ----------------------------------------------------------------------
 

@@ -1,8 +1,10 @@
+import { Metadata } from 'next';
+
 import { AccountView } from '@/sections/account/view';
 
 // ----------------------------------------------------------------------
 
-export const metadata = {
+export const metadata: Metadata = {
   title: 'Dashboard: Account Settings',
 };
 

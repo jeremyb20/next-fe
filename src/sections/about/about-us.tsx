@@ -1,20 +1,19 @@
 import React from 'react';
-import { APP_NAME } from '@/config-global';
-import Iconify from '@/components/iconify';
-import { useTranslation } from '@/hooks/use-translation';
-
+import { useTranslation } from 'react-i18next';
+import { useTheme } from '@mui/material/styles';
 import {
   Box,
   Grid,
   Card,
   Paper,
   Divider,
-  useTheme,
   Container,
   Typography,
   CardContent,
 } from '@mui/material';
 
+import { APP_NAME } from '@/config-global';
+import Iconify from '@/components/iconify';
 const AboutUs = () => {
   const theme = useTheme();
   const { t } = useTranslation();
@@ -63,7 +62,7 @@ const AboutUs = () => {
         }}
       >
         <Grid container spacing={4} alignItems="center">
-          <Grid item xs={12} md={6}>
+          <Grid size={{ xs: 12, md: 6 }}>
             <Typography
               variant="h2"
               component="h1"
@@ -99,7 +98,7 @@ const AboutUs = () => {
               )}
             </Typography>
           </Grid>
-          <Grid item xs={12} md={6}>
+          <Grid size={{ xs: 12, md: 6 }}>
             <Box
               sx={{
                 position: 'relative',
@@ -124,7 +123,7 @@ const AboutUs = () => {
       {/* Story Section */}
       <Box sx={{ mb: 8 }}>
         <Grid container spacing={4}>
-          <Grid item xs={12} md={6}>
+          <Grid size={{ xs: 12, md: 6 }}>
             <Card elevation={2} sx={{ height: '100%', borderRadius: 2 }}>
               <CardContent sx={{ p: 4 }}>
                 <Box sx={{ display: 'flex', alignItems: 'center', mb: 3 }}>
@@ -150,7 +149,7 @@ const AboutUs = () => {
               </CardContent>
             </Card>
           </Grid>
-          <Grid item xs={12} md={6}>
+          <Grid size={{ xs: 12, md: 6 }}>
             <Card elevation={2} sx={{ height: '100%', borderRadius: 2 }}>
               <CardContent sx={{ p: 4 }}>
                 <Box sx={{ display: 'flex', alignItems: 'center', mb: 3 }}>
@@ -200,7 +199,7 @@ const AboutUs = () => {
           }}
         >
           <Grid container spacing={3}>
-            <Grid item xs={12} md={6}>
+            <Grid size={{ xs: 12, md: 6 }}>
               <Typography
                 variant="h6"
                 gutterBottom
@@ -217,7 +216,7 @@ const AboutUs = () => {
                 <strong>{t('Smart Tags')}</strong>.
               </Typography>
             </Grid>
-            <Grid item xs={12} md={6}>
+            <Grid size={{ xs: 12, md: 6 }}>
               <Typography
                 variant="h6"
                 gutterBottom
@@ -249,7 +248,7 @@ const AboutUs = () => {
         </Typography>
         <Grid container spacing={3}>
           {values.map((value, index) => (
-            <Grid item xs={12} sm={6} md={3} key={index}>
+            <Grid size={{ xs: 12, sm: 6, md: 3 }} key={index}>
               <Card
                 elevation={1}
                 sx={{
@@ -307,7 +306,7 @@ const AboutUs = () => {
           />
           <Grid container spacing={2}>
             {milestones.map((milestone, index) => (
-              <Grid item xs={12} sm={6} md={3} key={index}>
+              <Grid size={{ xs: 12, sm: 6, md: 3 }} key={index}>
                 <Card
                   elevation={2}
                   sx={{

@@ -1,9 +1,10 @@
-import { DeviceInfo } from '@/types/api';
 import {
   LogoutOptions,
   PopupLoginOptions,
   RedirectLoginOptions,
 } from '@auth0/auth0-react';
+
+import { DeviceInfo } from '@/types/api';
 
 // ----------------------------------------------------------------------
 

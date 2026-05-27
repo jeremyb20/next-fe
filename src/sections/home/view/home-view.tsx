@@ -1,17 +1,17 @@
 'use client';
 
+import Box from '@mui/material/Box';
+import { useScroll } from 'motion/react';
+import { styled } from '@mui/material/styles';
+import { useState, useEffect, useCallback } from 'react';
+
 import { paths } from '@/routes/paths';
 import MainLayout from '@/layouts/main';
-import { useScroll } from 'framer-motion';
 import { useSearchParams } from '@/routes/hooks';
 import { useRouter } from '@/routes/hooks/use-router';
-import { useState, useEffect, useCallback } from 'react';
 import ScrollProgress from '@/components/scroll-progress';
 import { SplashScreen } from '@/components/loading-screen';
 import { useAuthContext } from '@/auth/hooks/use-auth-context';
-
-import Box from '@mui/material/Box';
-import { styled } from '@mui/material/styles';
 
 import HomeHero from '../home-hero';
 import HomeShop from '../home-shop';

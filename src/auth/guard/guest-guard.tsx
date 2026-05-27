@@ -1,5 +1,6 @@
-import { paths } from '@/routes/paths';
 import { useEffect, useCallback } from 'react';
+
+import { paths } from '@/routes/paths';
 import { SplashScreen } from '@/components/loading-screen';
 import { useRouter, useSearchParams } from '@/routes/hooks';
 

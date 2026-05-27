@@ -1,7 +1,32 @@
 'use client';
 
 import * as Yup from 'yup';
+import Box from '@mui/material/Box';
+import Step from '@mui/material/Step';
 import { useSnackbar } from 'notistack';
+import Paper from '@mui/material/Paper';
+import Alert from '@mui/material/Alert';
+import Button from '@mui/material/Button';
+import Stepper from '@mui/material/Stepper';
+import { alpha } from '@mui/material/styles';
+import StepLabel from '@mui/material/StepLabel';
+import Typography from '@mui/material/Typography';
+import StepContent from '@mui/material/StepContent';
+import { useForm, Controller } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { useState, useEffect, useCallback } from 'react';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import {
+  Card,
+  Stack,
+  MenuItem,
+  IconButton,
+  CardHeader,
+  ButtonGroup,
+  CardContent,
+  InputAdornment,
+} from '@mui/material';
+
 import { countries } from '@/assets/data';
 import { endpoints } from '@/utils/axios';
 import { useRouter } from '@/routes/hooks';
@@ -10,11 +35,8 @@ import { OptionType } from '@/types/global';
 import useIPInfo from '@/hooks/use-ip-info';
 import { fData } from '@/utils/format-number';
 import { useBoolean } from '@/hooks/use-boolean';
-import { useForm, Controller } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
 import { getValidationCode } from '@/hooks/use-fetch';
 import { useTranslation } from '@/hooks/use-translation';
-import { useState, useEffect, useCallback } from 'react';
 import { HOST_API, PATH_AFTER_LOGIN } from '@/config-global';
 import UploadAvatar from '@/components/upload/upload-avatar';
 import { PetAgeCalculator } from '@/utils/pet-age-calculator';
@@ -32,29 +54,6 @@ import {
   getPhonePlaceholder,
   simplePhoneValidation,
 } from '@/utils/phone-validation';
-
-import Box from '@mui/material/Box';
-import Step from '@mui/material/Step';
-import Paper from '@mui/material/Paper';
-import Alert from '@mui/material/Alert';
-import Button from '@mui/material/Button';
-import Stepper from '@mui/material/Stepper';
-import { alpha } from '@mui/material/styles';
-import StepLabel from '@mui/material/StepLabel';
-import Typography from '@mui/material/Typography';
-import LoadingButton from '@mui/lab/LoadingButton';
-import StepContent from '@mui/material/StepContent';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import {
-  Card,
-  Stack,
-  MenuItem,
-  IconButton,
-  CardHeader,
-  ButtonGroup,
-  CardContent,
-  InputAdornment,
-} from '@mui/material';
 
 // ----------------------------------------------------------------------
 
@@ -79,10 +78,10 @@ const steps = [
 
 export default function PetRegistrationCodeStepperFirstTime({
   code,
-  onBackToSelection,
+  onBackToSelectionAction,
 }: {
   code?: string;
-  onBackToSelection?: () => void;
+  onBackToSelectionAction?: () => void;
 }) {
   const router = useRouter();
   const password = useBoolean();
@@ -329,7 +328,13 @@ export default function PetRegistrationCodeStepperFirstTime({
       handleNext();
     } catch (error) {
       console.error(error);
-      setErrorMsg(typeof error === 'string' ? error : error.message);
+      setErrorMsg(
+        typeof error === 'string'
+          ? error
+          : error instanceof Error
+            ? error.message
+            : 'Error saving user information'
+      );
     }
   });
 
@@ -390,10 +395,12 @@ export default function PetRegistrationCodeStepperFirstTime({
       setActiveStep(4);
     } catch (error) {
       console.error(error);
-      setErrorMsg(error.message || 'Error completing registration');
-      enqueueSnackbar(t(error.message) || t('Error completing registration'), {
-        variant: 'error',
-      });
+      const errMsg =
+        error instanceof Error
+          ? error.message
+          : 'Error completing registration';
+      setErrorMsg(errMsg);
+      enqueueSnackbar(t(errMsg), { variant: 'error' });
       setIsSubmitting(false);
     }
   };
@@ -481,17 +488,17 @@ export default function PetRegistrationCodeStepperFirstTime({
         />
 
         <Box sx={{ mt: 3 }}>
-          <Button onClick={onBackToSelection} sx={{ mr: 1 }}>
+          <Button onClick={onBackToSelectionAction} sx={{ mr: 1 }}>
             {t('Back')}
           </Button>
-          <LoadingButton
+          <Button
             type="submit"
             variant="contained"
             loading={isCodeSubmitting}
             disabled={!watchCodeValue}
           >
             {t('Validate Code')}
-          </LoadingButton>
+          </Button>
         </Box>
 
         {code && (
@@ -611,13 +618,9 @@ export default function PetRegistrationCodeStepperFirstTime({
           <Button onClick={handleBack} sx={{ mr: 1 }}>
             {t('Back')}
           </Button>
-          <LoadingButton
-            type="submit"
-            variant="contained"
-            loading={isUserSubmitting}
-          >
+          <Button type="submit" variant="contained" loading={isUserSubmitting}>
             {t('Continue')}
-          </LoadingButton>
+          </Button>
         </Box>
       </Box>
     </FormProvider>
@@ -829,13 +832,9 @@ export default function PetRegistrationCodeStepperFirstTime({
           <Button onClick={handleBack} sx={{ mr: 1 }}>
             {t('Back')}
           </Button>
-          <LoadingButton
-            type="submit"
-            variant="contained"
-            loading={isPetSubmitting}
-          >
+          <Button type="submit" variant="contained" loading={isPetSubmitting}>
             {t('Continue')}
-          </LoadingButton>
+          </Button>
         </Box>
       </Box>
     </FormProvider>
@@ -981,14 +980,14 @@ export default function PetRegistrationCodeStepperFirstTime({
         <Button onClick={handleBack} sx={{ mr: 1 }}>
           {t('Back')}
         </Button>
-        <LoadingButton
+        <Button
           type="submit"
           variant="contained"
           loading={isSubmitting}
           onClick={handleCompleteRegistration}
         >
           {t('Complete Registration')}
-        </LoadingButton>
+        </Button>
       </Box>
     </Box>
   );

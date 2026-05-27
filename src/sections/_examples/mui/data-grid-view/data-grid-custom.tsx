@@ -1,10 +1,3 @@
-import Label from '@/components/label';
-import Iconify from '@/components/iconify';
-import { fPercent } from '@/utils/format-number';
-import { fDate, fTime } from '@/utils/format-time';
-import EmptyContent from '@/components/empty-content';
-import { useRef, useMemo, useState, useImperativeHandle } from 'react';
-
 import Box from '@mui/material/Box';
 import Link from '@mui/material/Link';
 import Stack from '@mui/material/Stack';
@@ -12,22 +5,52 @@ import Avatar from '@mui/material/Avatar';
 import Typography from '@mui/material/Typography';
 import LinearProgress from '@mui/material/LinearProgress';
 import Rating, { RatingProps } from '@mui/material/Rating';
+import { useRef, useMemo, useState, useImperativeHandle } from 'react';
+// import {
+//   DataGrid,
+//   GridColDef,
+//   GridFilterItem,
+//   GridToolbarExport,
+//   GridFilterOperator,
+//   GridActionsCellItem,
+//   GridToolbarContainer,
+//   GridRowSelectionModel,
+//   GridToolbarQuickFilter,
+//   GridToolbarFilterButton,
+//   GridToolbarColumnsButton,
+//   GridFilterInputValueProps,
+//   GridColumnVisibilityModel,
+//   GridToolbarDensitySelector,
+//   GridRowId,
+// } from '@mui/x-data-grid';
 import {
   DataGrid,
   GridColDef,
-  GridFilterItem,
-  GridToolbarExport,
-  GridFilterOperator,
   GridActionsCellItem,
-  GridToolbarContainer,
-  GridRowSelectionModel,
-  GridToolbarQuickFilter,
-  GridToolbarFilterButton,
-  GridToolbarColumnsButton,
-  GridFilterInputValueProps,
+  GridRowId,
   GridColumnVisibilityModel,
-  GridToolbarDensitySelector,
+  // Herramientas del toolbar - nueva estructura en v8
+  // GridToolbarQuickFilter,
+  // GridToolbarFilterButton,
+  // GridToolbarColumnsButton,
+  // GridToolbarExport,
+  // GridToolbar,
+  // GridToolbarContainer,
+  GridFilterInputValueProps,
+  QuickFilter,
+  ColumnsPanelTrigger,
+  FilterPanelTrigger,
+  ExportPrint,
+  Toolbar,
+  GridFilterOperator,
+  GridFilterItem,
 } from '@mui/x-data-grid';
+
+import Label from '@/components/label';
+import Iconify from '@/components/iconify';
+import { fPercent } from '@/utils/format-number';
+import { fDate, fTime } from '@/utils/format-time';
+import EmptyContent from '@/components/empty-content';
 
 // ----------------------------------------------------------------------
 
@@ -198,7 +221,6 @@ const baseColumns: GridColDef[] = [
         icon={<Iconify icon="solar:trash-bin-trash-bold" />}
         label="Delete"
         onClick={() => console.info('DELETE', params.row.id)}
-        sx={{ color: 'error.main' }}
       />,
     ],
   },
@@ -229,7 +251,7 @@ const HIDE_COLUMNS = {
 const HIDE_COLUMNS_TOGGLABLE = ['id', 'actions'];
 
 export default function DataGridCustom({ data: rows }: Props) {
-  const [selectedRows, setSelectedRows] = useState<GridRowSelectionModel>([]);
+  const [selectedRowIds, setSelectedRowIds] = useState<GridRowId[]>([]);
 
   const [columnVisibilityModel, setColumnVisibilityModel] =
     useState<GridColumnVisibilityModel>(HIDE_COLUMNS);
@@ -253,7 +275,7 @@ export default function DataGridCustom({ data: rows }: Props) {
       .map((column) => column.field);
 
   const selected = rows
-    .filter((row) => selectedRows.includes(row.id))
+    .filter((row) => selectedRowIds.includes(row.id))
     .map((_row) => _row.id);
 
   console.info('SELECTED ROWS', selected);
@@ -265,7 +287,7 @@ export default function DataGridCustom({ data: rows }: Props) {
       rows={rows}
       columns={columns}
       onRowSelectionModelChange={(newSelectionModel) => {
-        setSelectedRows(newSelectionModel);
+        setSelectedRowIds(newSelectionModel as unknown as GridRowId[]);
       }}
       columnVisibilityModel={columnVisibilityModel}
       onColumnVisibilityModelChange={(newModel) =>
@@ -280,7 +302,7 @@ export default function DataGridCustom({ data: rows }: Props) {
         toolbar: {
           showQuickFilter: true,
         },
-        columnsPanel: {
+        columnsManagement: {
           getTogglableColumns,
         },
       }}
@@ -292,14 +314,13 @@ export default function DataGridCustom({ data: rows }: Props) {
 
 function CustomToolbar() {
   return (
-    <GridToolbarContainer>
-      <GridToolbarQuickFilter />
+    <Toolbar>
+      <QuickFilter />
       <Box sx={{ flexGrow: 1 }} />
-      <GridToolbarColumnsButton />
-      <GridToolbarFilterButton />
-      <GridToolbarDensitySelector />
-      <GridToolbarExport />
-    </GridToolbarContainer>
+      <ColumnsPanelTrigger />
+      <FilterPanelTrigger />
+      <ExportPrint />
+    </Toolbar>
   );
 }
 
@@ -349,7 +370,8 @@ const ratingOnlyOperators: GridFilterOperator[] = [
         Number(params.value) >= Number(filterItem.value);
     },
     InputComponent: RatingInputValue,
-    InputComponentProps: { type: 'number' },
+    // InputComponentProps: { type: 'number' },
+    InputComponentProps: {},
     getValueAsString: (value: number) => `${value} Stars`,
   },
 ];

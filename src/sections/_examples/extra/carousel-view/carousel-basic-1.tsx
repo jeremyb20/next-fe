@@ -1,10 +1,10 @@
+import Card from '@mui/material/Card';
+
 import Image from '@/components/image';
 import Carousel, {
   useCarousel,
   CarouselArrowIndex,
 } from '@/components/carousel';
-
-import Card from '@mui/material/Card';
 
 // ----------------------------------------------------------------------
 

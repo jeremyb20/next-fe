@@ -1,7 +1,3 @@
-import Iconify from '@/components/iconify';
-import { IFileShared } from '@/types/file';
-import Scrollbar from '@/components/scrollbar';
-
 import List from '@mui/material/List';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
@@ -10,6 +6,10 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import InputAdornment from '@mui/material/InputAdornment';
 import Dialog, { DialogProps } from '@mui/material/Dialog';
+
+import Iconify from '@/components/iconify';
+import { IFileShared } from '@/types/file';
+import Scrollbar from '@/components/scrollbar';
 
 import FileManagerInvitedItem from './file-manager-invited-item';
 

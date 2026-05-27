@@ -1,9 +1,12 @@
 'use client';
 
 import orderBy from 'lodash/orderBy';
+import Stack from '@mui/material/Stack';
+import { useState, useCallback } from 'react';
+import Container from '@mui/material/Container';
+
 import { paths } from '@/routes/paths';
 import { countries } from '@/assets/data';
-import { useState, useCallback } from 'react';
 import { isAfter } from '@/utils/format-time';
 import { IProductItem } from '@/types/product';
 import { useBoolean } from '@/hooks/use-boolean';
@@ -18,9 +21,6 @@ import {
   TOUR_SORT_OPTIONS,
   TOUR_SERVICE_OPTIONS,
 } from '@/_mock';
-
-import Stack from '@mui/material/Stack';
-import Container from '@mui/material/Container';
 
 import TourSort from '../_components/petsmarket-sort';
 import TourSearch from '../_components/petsmarket-search';
@@ -171,7 +171,7 @@ export default function PetsMarketView() {
       <CustomBreadcrumbs
         heading="List"
         links={[
-          { name: 'Inicio', href: paths.dashboard.root },
+          { name: 'Dashboard', href: paths.dashboard.root },
           {
             name: 'PetsMarket',
             href: paths.dashboard.petsmarket.root,
@@ -205,9 +205,9 @@ export default function PetsMarketView() {
 
 const applyFilter = ({
   inputData,
-  filters,
+  filters: _filters,
   sortBy,
-  dateError,
+  dateError: _dateError,
 }: {
   inputData: IProductItem[];
   filters: ITourFilters;

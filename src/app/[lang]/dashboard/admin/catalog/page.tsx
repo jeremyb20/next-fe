@@ -1,8 +1,10 @@
+import { Metadata } from 'next';
+
 import CatalogView from './_components/view';
 
 // ----------------------------------------------------------------------
 
-export const metadata = {
+export const metadata: Metadata = {
   title: 'Admin Catalogo',
 };
 

@@ -1,19 +1,19 @@
 'use client';
 
 import { useState } from 'react';
-import { paths } from '@/routes/paths';
-import CustomBreadcrumbs from '@/components/custom-breadcrumbs';
-import ComponentHero from '@/sections/_examples/component-hero';
-
+import Grid from '@mui/material/Grid';
 import Radio from '@mui/material/Radio';
 import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
 import Container from '@mui/material/Container';
-import Grid from '@mui/material/Unstable_Grid2';
 import Typography from '@mui/material/Typography';
 import RadioGroup from '@mui/material/RadioGroup';
 import { styled, useTheme } from '@mui/material/styles';
 import FormControlLabel from '@mui/material/FormControlLabel';
+
+import { paths } from '@/routes/paths';
+import CustomBreadcrumbs from '@/components/custom-breadcrumbs';
+import ComponentHero from '@/sections/_examples/component-hero';
 
 import ComponentBlock from '../component-block';
 
@@ -24,7 +24,7 @@ const LABELS = ['1col', '2col', '3col', '4col', '6col', '12col'];
 const StyledBlockContainer = styled(Paper)(({ theme }) => ({
   padding: theme.spacing(5),
   border: `solid 1px ${theme.palette.divider}`,
-  borderRadius: theme.shape.borderRadius * 1.5,
+  borderRadius: Number(theme.shape.borderRadius) * 1.5,
   backgroundColor:
     theme.palette.grey[theme.palette.mode === 'light' ? 100 : 800],
 }));
@@ -71,7 +71,7 @@ export default function GridView() {
 
               <Grid container spacing={spacing}>
                 {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11].map((value) => (
-                  <Grid key={value} xs={1}>
+                  <Grid key={value} size={{ xs: 1 }}>
                     <Paper
                       sx={{
                         height: 80,
@@ -109,7 +109,7 @@ export default function GridView() {
             <StyledBlockContainer variant="outlined">
               <Grid container spacing={3}>
                 {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11].map((value) => (
-                  <Grid key={value} xs={column}>
+                  <Grid key={value} size={column}>
                     <Paper
                       sx={{
                         py: 3,

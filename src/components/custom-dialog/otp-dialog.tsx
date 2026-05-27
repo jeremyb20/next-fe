@@ -1,8 +1,4 @@
 import React from 'react';
-import Iconify from '@/components/iconify';
-import { useTranslation } from '@/hooks/use-translation';
-import OtpInput from '@/components/custom-inputs/otp-input';
-
 import LoadingButton from '@mui/lab/LoadingButton';
 import {
   Box,
@@ -15,6 +11,10 @@ import {
   DialogContent,
   DialogActions,
 } from '@mui/material';
+
+import Iconify from '@/components/iconify';
+import { useTranslation } from '@/hooks/use-translation';
+import OtpInput from '@/components/custom-inputs/otp-input';
 
 interface OtpDialogProps {
   open: boolean;

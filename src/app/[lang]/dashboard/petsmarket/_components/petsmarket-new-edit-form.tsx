@@ -1,13 +1,25 @@
 import * as Yup from 'yup';
+import Chip from '@mui/material/Chip';
+import Card from '@mui/material/Card';
+import Grid from '@mui/material/Grid';
+import { Button } from '@mui/material';
+import Stack from '@mui/material/Stack';
+import Avatar from '@mui/material/Avatar';
+import Switch from '@mui/material/Switch';
+import CardHeader from '@mui/material/CardHeader';
+import Typography from '@mui/material/Typography';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { useForm, Controller } from 'react-hook-form';
+import { useMemo, useEffect, useCallback } from 'react';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import FormControlLabel from '@mui/material/FormControlLabel';
+
 import { paths } from '@/routes/paths';
 import { countries } from '@/assets/data';
 import { useRouter } from '@/routes/hooks';
 import { useSnackbar } from '@/components/snackbar';
 import { ITourItem, ITourGuide } from '@/types/tour';
-import { yupResolver } from '@hookform/resolvers/yup';
-import { useForm, Controller } from 'react-hook-form';
 import { useResponsive } from '@/hooks/use-responsive';
-import { useMemo, useEffect, useCallback } from 'react';
 import { _tags, _tourGuides, TOUR_SERVICE_OPTIONS } from '@/_mock';
 import FormProvider, {
   RHFEditor,
@@ -16,18 +28,6 @@ import FormProvider, {
   RHFAutocomplete,
   RHFMultiCheckbox,
 } from '@/components/hook-form';
-
-import Chip from '@mui/material/Chip';
-import Card from '@mui/material/Card';
-import Stack from '@mui/material/Stack';
-import Avatar from '@mui/material/Avatar';
-import Switch from '@mui/material/Switch';
-import Grid from '@mui/material/Unstable_Grid2';
-import CardHeader from '@mui/material/CardHeader';
-import Typography from '@mui/material/Typography';
-import LoadingButton from '@mui/lab/LoadingButton';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import FormControlLabel from '@mui/material/FormControlLabel';
 
 // ----------------------------------------------------------------------
 
@@ -148,7 +148,7 @@ export default function TourNewEditForm({ currentTour }: Props) {
   const renderDetails = (
     <>
       {mdUp && (
-        <Grid md={4}>
+        <Grid size={{ md: 4 }}>
           <Typography variant="h6" sx={{ mb: 0.5 }}>
             Details
           </Typography>
@@ -158,7 +158,7 @@ export default function TourNewEditForm({ currentTour }: Props) {
         </Grid>
       )}
 
-      <Grid xs={12} md={8}>
+      <Grid size={{ xs: 12, md: 8 }}>
         <Card>
           {!mdUp && <CardHeader title="Details" />}
 
@@ -198,7 +198,7 @@ export default function TourNewEditForm({ currentTour }: Props) {
   const renderProperties = (
     <>
       {mdUp && (
-        <Grid md={4}>
+        <Grid size={{ md: 4 }}>
           <Typography variant="h6" sx={{ mb: 0.5 }}>
             Properties
           </Typography>
@@ -208,7 +208,7 @@ export default function TourNewEditForm({ currentTour }: Props) {
         </Grid>
       )}
 
-      <Grid xs={12} md={8}>
+      <Grid size={{ xs: 12, md: 8 }}>
         <Card>
           {!mdUp && <CardHeader title="Properties" />}
 
@@ -365,15 +365,18 @@ export default function TourNewEditForm({ currentTour }: Props) {
 
   const renderActions = (
     <>
-      {mdUp && <Grid md={4} />}
-      <Grid xs={12} md={8} sx={{ display: 'flex', alignItems: 'center' }}>
+      {mdUp && <Grid size={{ md: 4 }} />}
+      <Grid
+        size={{ xs: 12, md: 8 }}
+        sx={{ display: 'flex', alignItems: 'center' }}
+      >
         <FormControlLabel
           control={<Switch defaultChecked />}
           label="Publish"
           sx={{ flexGrow: 1, pl: 3 }}
         />
 
-        <LoadingButton
+        <Button
           type="submit"
           variant="contained"
           size="large"
@@ -381,7 +384,7 @@ export default function TourNewEditForm({ currentTour }: Props) {
           sx={{ ml: 2 }}
         >
           {!currentTour ? 'Create Tour' : 'Save Changes'}
-        </LoadingButton>
+        </Button>
       </Grid>
     </>
   );

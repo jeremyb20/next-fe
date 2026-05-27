@@ -1,5 +1,3 @@
-import Iconify from '@/components/iconify';
-
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import Avatar from '@mui/material/Avatar';
@@ -8,6 +6,8 @@ import IconButton from '@mui/material/IconButton';
 import CardHeader from '@mui/material/CardHeader';
 import Card, { CardProps } from '@mui/material/Card';
 import ListItemText from '@mui/material/ListItemText';
+
+import Iconify from '@/components/iconify';
 
 // ----------------------------------------------------------------------
 

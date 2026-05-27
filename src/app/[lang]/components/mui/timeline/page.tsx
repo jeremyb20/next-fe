@@ -1,8 +1,10 @@
+import { Metadata } from 'next';
+
 import TimelineView from '@/sections/_examples/mui/timeline-view';
 
 // ----------------------------------------------------------------------
 
-export const metadata = {
+export const metadata: Metadata = {
   title: 'MUI: Timeline',
 };
 

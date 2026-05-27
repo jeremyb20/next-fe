@@ -1,16 +1,16 @@
-import { bgBlur } from '@/theme/css';
-import Iconify from '@/components/iconify';
-import { IKanbanTask } from '@/types/kanban';
-import { Draggable } from '@hello-pangea/dnd';
-import { useBoolean } from '@/hooks/use-boolean';
-
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import Avatar from '@mui/material/Avatar';
+import { Draggable } from '@hello-pangea/dnd';
 import { useTheme } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 import Paper, { PaperProps } from '@mui/material/Paper';
 import AvatarGroup, { avatarGroupClasses } from '@mui/material/AvatarGroup';
+
+import { bgBlur } from '@/theme/css';
+import Iconify from '@/components/iconify';
+import { IKanbanTask } from '@/types/kanban';
+import { useBoolean } from '@/hooks/use-boolean';
 
 import KanbanDetails from './kanban-details';
 

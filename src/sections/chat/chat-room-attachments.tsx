@@ -1,14 +1,14 @@
+import Box from '@mui/material/Box';
+import Stack from '@mui/material/Stack';
+import ListItemText from '@mui/material/ListItemText';
+import ListItemButton from '@mui/material/ListItemButton';
+
 import Iconify from '@/components/iconify';
 import Scrollbar from '@/components/scrollbar';
 import { IChatAttachment } from '@/types/chat';
 import { fDateTime } from '@/utils/format-time';
 import { useBoolean } from '@/hooks/use-boolean';
 import FileThumbnail from '@/components/file-thumbnail';
-
-import Box from '@mui/material/Box';
-import Stack from '@mui/material/Stack';
-import ListItemText from '@mui/material/ListItemText';
-import ListItemButton from '@mui/material/ListItemButton';
 
 // ----------------------------------------------------------------------
 

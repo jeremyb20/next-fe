@@ -1,8 +1,5 @@
 // components/UserProfileCard.tsx
 
-import { useTranslation } from '@/hooks/use-translation';
-import { useManagerUser } from '@/hooks/use-manager-user';
-
 import {
   Box,
   Card,
@@ -13,6 +10,9 @@ import {
   CardContent,
   CircularProgress,
 } from '@mui/material';
+
+import { useTranslation } from '@/hooks/use-translation';
+import { useManagerUser } from '@/hooks/use-manager-user';
 
 interface UserProfileCardProps {
   petCount?: number | string;

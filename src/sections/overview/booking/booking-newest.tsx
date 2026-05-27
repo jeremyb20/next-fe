@@ -1,9 +1,3 @@
-import Label from '@/components/label';
-import Image from '@/components/image';
-import Iconify from '@/components/iconify';
-import { fDateTime } from '@/utils/format-time';
-import Carousel, { useCarousel, CarouselArrows } from '@/components/carousel';
-
 import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
 import Avatar from '@mui/material/Avatar';
@@ -11,6 +5,12 @@ import { useTheme } from '@mui/material/styles';
 import Box, { BoxProps } from '@mui/material/Box';
 import CardHeader from '@mui/material/CardHeader';
 import ListItemText from '@mui/material/ListItemText';
+
+import Label from '@/components/label';
+import Image from '@/components/image';
+import Iconify from '@/components/iconify';
+import { fDateTime } from '@/utils/format-time';
+import Carousel, { useCarousel, CarouselArrows } from '@/components/carousel';
 
 // ----------------------------------------------------------------------
 

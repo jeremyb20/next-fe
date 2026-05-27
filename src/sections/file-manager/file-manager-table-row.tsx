@@ -1,20 +1,8 @@
-import Iconify from '@/components/iconify';
-import { IFileManager } from '@/types/file';
-import { useState, useCallback } from 'react';
-import { fData } from '@/utils/format-number';
-import { useBoolean } from '@/hooks/use-boolean';
-import { fDate, fTime } from '@/utils/format-time';
-import { useSnackbar } from '@/components/snackbar';
-import FileThumbnail from '@/components/file-thumbnail';
-import { useDoubleClick } from '@/hooks/use-double-click';
-import { ConfirmDialog } from '@/components/custom-dialog';
-import { useCopyToClipboard } from '@/hooks/use-copy-to-clipboard';
-import CustomPopover, { usePopover } from '@/components/custom-popover';
-
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import Avatar from '@mui/material/Avatar';
 import Divider from '@mui/material/Divider';
+import { useState, useCallback } from 'react';
 import MenuItem from '@mui/material/MenuItem';
 import Checkbox from '@mui/material/Checkbox';
 import IconButton from '@mui/material/IconButton';
@@ -24,6 +12,18 @@ import { alpha, useTheme } from '@mui/material/styles';
 import TableRow, { tableRowClasses } from '@mui/material/TableRow';
 import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 import AvatarGroup, { avatarGroupClasses } from '@mui/material/AvatarGroup';
+
+import Iconify from '@/components/iconify';
+import { IFileManager } from '@/types/file';
+import { fData } from '@/utils/format-number';
+import { useBoolean } from '@/hooks/use-boolean';
+import { fDate, fTime } from '@/utils/format-time';
+import { useSnackbar } from '@/components/snackbar';
+import FileThumbnail from '@/components/file-thumbnail';
+import { useDoubleClick } from '@/hooks/use-double-click';
+import { ConfirmDialog } from '@/components/custom-dialog';
+import { useCopyToClipboard } from '@/hooks/use-copy-to-clipboard';
+import CustomPopover, { usePopover } from '@/components/custom-popover';
 
 import FileManagerShareDialog from './file-manager-share-dialog';
 import FileManagerFileDetails from './file-manager-file-details';

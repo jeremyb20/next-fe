@@ -1,14 +1,22 @@
 // components/admin/promotion/promotion-edit-form.tsx
 import * as Yup from 'yup';
-import { IPromotions } from '@/types/api';
+import Box from '@mui/material/Box';
+import Card from '@mui/material/Card';
+import Grid from '@mui/material/Grid';
+import Stack from '@mui/material/Stack';
 import { useForm } from 'react-hook-form';
+import CardHeader from '@mui/material/CardHeader';
+import Typography from '@mui/material/Typography';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { useMemo, Dispatch, useEffect, SetStateAction } from 'react';
+import { Chip, Button, MenuItem, FormHelperText } from '@mui/material';
+
+import { IPromotions } from '@/types/api';
 import { endpoints } from '@/utils/axios';
 import { HOST_API } from '@/config-global';
 import Iconify from '@/components/iconify';
 import { useSnackbar } from '@/components/snackbar';
-import { yupResolver } from '@hookform/resolvers/yup';
 import { useResponsive } from '@/hooks/use-responsive';
-import { useMemo, Dispatch, useEffect, SetStateAction } from 'react';
 import { useCreateGenericMutation } from '@/hooks/user-generic-mutation';
 import FormProvider, {
   RHFSelect,
@@ -17,15 +25,6 @@ import FormProvider, {
   RHFSwitch,
   RHFTextField,
 } from '@/components/hook-form';
-
-import Box from '@mui/material/Box';
-import Card from '@mui/material/Card';
-import Stack from '@mui/material/Stack';
-import Grid from '@mui/material/Unstable_Grid2';
-import CardHeader from '@mui/material/CardHeader';
-import Typography from '@mui/material/Typography';
-import LoadingButton from '@mui/lab/LoadingButton';
-import { Chip, Button, MenuItem, FormHelperText } from '@mui/material';
 
 // ----------------------------------------------------------------------
 
@@ -253,7 +252,7 @@ export default function PromotionEditForm({
   const renderBasicInfo = (
     <>
       {mdUp && (
-        <Grid md={4}>
+        <Grid size={{ md: 4 }}>
           <Typography variant="h6" sx={{ mb: 0.5 }}>
             Basic Information
           </Typography>
@@ -263,7 +262,7 @@ export default function PromotionEditForm({
         </Grid>
       )}
 
-      <Grid xs={12} md={8}>
+      <Grid size={{ xs: 12, md: 8 }}>
         <Card>
           {!mdUp && <CardHeader title="Basic Information" />}
 
@@ -339,14 +338,14 @@ export default function PromotionEditForm({
                 label="Valid From"
                 type="datetime-local"
                 required
-                InputLabelProps={{ shrink: true }}
+                slotProps={{ inputLabel: { shrink: true } }}
               />
               <RHFTextField
                 name="validUntil"
                 label="Valid Until"
                 type="datetime-local"
                 required
-                InputLabelProps={{ shrink: true }}
+                slotProps={{ inputLabel: { shrink: true } }}
               />
             </Box>
 
@@ -385,7 +384,7 @@ export default function PromotionEditForm({
   const renderTypeAndImage = (
     <>
       {mdUp && (
-        <Grid md={4}>
+        <Grid size={{ xs: 4 }}>
           <Typography variant="h6" sx={{ mb: 0.5 }}>
             Type & Image
           </Typography>
@@ -395,7 +394,7 @@ export default function PromotionEditForm({
         </Grid>
       )}
 
-      <Grid xs={12} md={8}>
+      <Grid size={{ xs: 12, md: 8 }}>
         <Card>
           {!mdUp && <CardHeader title="Type & Image" />}
 
@@ -477,7 +476,7 @@ export default function PromotionEditForm({
   const renderPromoCode = (
     <>
       {mdUp && (
-        <Grid md={4}>
+        <Grid size={{ md: 4 }}>
           <Typography variant="h6" sx={{ mb: 0.5 }}>
             Promo Code
           </Typography>
@@ -487,7 +486,7 @@ export default function PromotionEditForm({
         </Grid>
       )}
 
-      <Grid xs={12} md={8}>
+      <Grid size={{ xs: 12, md: 8 }}>
         <Card>
           {!mdUp && <CardHeader title="Promo Code" />}
 
@@ -545,7 +544,7 @@ export default function PromotionEditForm({
   const renderApplicableServices = (
     <>
       {mdUp && (
-        <Grid md={4}>
+        <Grid size={{ md: 4 }}>
           <Typography variant="h6" sx={{ mb: 0.5 }}>
             Applicable Services
           </Typography>
@@ -555,7 +554,7 @@ export default function PromotionEditForm({
         </Grid>
       )}
 
-      <Grid xs={12} md={8}>
+      <Grid size={{ xs: 12, md: 8 }}>
         <Card>
           {!mdUp && <CardHeader title="Applicable Services" />}
 
@@ -608,7 +607,7 @@ export default function PromotionEditForm({
   const renderTermsAndConditions = (
     <>
       {mdUp && (
-        <Grid md={4}>
+        <Grid size={{ md: 4 }}>
           <Typography variant="h6" sx={{ mb: 0.5 }}>
             Terms & Conditions
           </Typography>
@@ -618,7 +617,7 @@ export default function PromotionEditForm({
         </Grid>
       )}
 
-      <Grid xs={12} md={8}>
+      <Grid size={{ xs: 12, md: 8 }}>
         <Card>
           {!mdUp && <CardHeader title="Terms & Conditions" />}
 
@@ -633,10 +632,9 @@ export default function PromotionEditForm({
   // Renderizado de acciones
   const renderActions = (
     <>
-      {mdUp && <Grid md={4} />}
+      {mdUp && <Grid size={{ md: 4 }} />}
       <Grid
-        xs={12}
-        md={8}
+        size={{ xs: 12, md: 8 }}
         sx={{
           display: 'flex',
           alignItems: 'center',
@@ -647,14 +645,14 @@ export default function PromotionEditForm({
         <Button variant="outlined" size="large" onClick={() => close(false)}>
           Cancel
         </Button>
-        <LoadingButton
+        <Button
           type="submit"
           variant="contained"
           size="large"
           loading={isSubmitting}
         >
           {currentPromotion?._id ? 'Save Changes' : 'Create Promotion'}
-        </LoadingButton>
+        </Button>
       </Grid>
     </>
   );

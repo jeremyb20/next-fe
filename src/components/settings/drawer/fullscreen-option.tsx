@@ -1,8 +1,6 @@
-import { useState, useCallback } from 'react';
-import { useTranslation } from '@/hooks/use-translation';
-
 import Box from '@mui/material/Box';
 import { alpha } from '@mui/material/styles';
+import { useState, useCallback } from 'react';
 import ButtonBase from '@mui/material/ButtonBase';
 
 import SvgColor from '../../svg-color';
@@ -11,7 +9,6 @@ import SvgColor from '../../svg-color';
 
 export default function FullScreenOption() {
   const [fullscreen, setFullscreen] = useState(false);
-  const { t } = useTranslation();
 
   const onToggleFullScreen = useCallback(() => {
     if (!document.fullscreenElement) {
@@ -55,7 +52,7 @@ export default function FullScreenOption() {
           sx={{ width: 16, height: 16, mr: 1 }}
         />
 
-        {fullscreen ? t('Exit Fullscreen') : t('Fullscreen')}
+        {fullscreen ? 'Exit Fullscreen' : 'Fullscreen'}
       </ButtonBase>
     </Box>
   );

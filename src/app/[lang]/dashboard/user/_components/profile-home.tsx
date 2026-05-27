@@ -1,22 +1,22 @@
 'use client';
 
 import { useRef } from 'react';
-import { _socials } from '@/_mock';
-import Iconify from '@/components/iconify';
-import { fNumber } from '@/utils/format-number';
-import { IUserProfile, IUserProfilePost } from '@/types/user';
-
 import Fab from '@mui/material/Fab';
 import Box from '@mui/material/Box';
 import Link from '@mui/material/Link';
 import Card from '@mui/material/Card';
+import Grid from '@mui/material/Grid';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
 import { alpha } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
-import Grid from '@mui/material/Unstable_Grid2';
 import CardHeader from '@mui/material/CardHeader';
+
+import { _socials } from '@/_mock';
+import Iconify from '@/components/iconify';
+import { fNumber } from '@/utils/format-number';
+import { IUserProfile, IUserProfilePost } from '@/types/user';
 
 import ProfilePostItem from './profile-post-item';
 
@@ -206,7 +206,7 @@ export default function ProfileHome({ info, posts }: Props) {
 
   return (
     <Grid container spacing={3}>
-      <Grid xs={12} md={4}>
+      <Grid size={{ xs: 12, md: 4 }}>
         <Stack spacing={3}>
           {renderFollows}
 
@@ -216,7 +216,7 @@ export default function ProfileHome({ info, posts }: Props) {
         </Stack>
       </Grid>
 
-      <Grid xs={12} md={8}>
+      <Grid size={{ xs: 12, md: 8 }}>
         <Stack spacing={3}>
           {renderPostInput}
 

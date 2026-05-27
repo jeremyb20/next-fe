@@ -1,30 +1,29 @@
 import * as Yup from 'yup';
+import Box from '@mui/material/Box';
+import Card from '@mui/material/Card';
+import Grid from '@mui/material/Grid';
+import Stack from '@mui/material/Stack';
+import Button from '@mui/material/Button';
+import Switch from '@mui/material/Switch';
+import { useMemo, useCallback } from 'react';
+import Typography from '@mui/material/Typography';
+import { useForm, Controller } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+
 import { paths } from '@/routes/paths';
 import Label from '@/components/label';
 import { IUserItem } from '@/types/user';
 import { countries } from '@/assets/data';
 import { useRouter } from '@/routes/hooks';
-import { useMemo, useCallback } from 'react';
 import { fData } from '@/utils/format-number';
 import { useSnackbar } from '@/components/snackbar';
-import { useForm, Controller } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
 import FormProvider, {
   RHFSwitch,
   RHFTextField,
   RHFUploadAvatar,
   RHFAutocomplete,
 } from '@/components/hook-form';
-
-import Box from '@mui/material/Box';
-import Card from '@mui/material/Card';
-import Stack from '@mui/material/Stack';
-import Button from '@mui/material/Button';
-import Switch from '@mui/material/Switch';
-import Grid from '@mui/material/Unstable_Grid2';
-import Typography from '@mui/material/Typography';
-import LoadingButton from '@mui/lab/LoadingButton';
-import FormControlLabel from '@mui/material/FormControlLabel';
 
 // ----------------------------------------------------------------------
 
@@ -121,7 +120,7 @@ export default function UserNewEditForm({ currentUser }: Props) {
   return (
     <FormProvider methods={methods} onSubmit={onSubmit}>
       <Grid container spacing={3}>
-        <Grid xs={12} md={4}>
+        <Grid size={{ xs: 12, md: 4 }}>
           <Card sx={{ pt: 10, pb: 5, px: 3 }}>
             {currentUser && (
               <Label
@@ -223,7 +222,7 @@ export default function UserNewEditForm({ currentUser }: Props) {
           </Card>
         </Grid>
 
-        <Grid xs={12} md={8}>
+        <Grid size={{ xs: 12, md: 8 }}>
           <Card sx={{ p: 3 }}>
             <Box
               rowGap={3}
@@ -257,13 +256,9 @@ export default function UserNewEditForm({ currentUser }: Props) {
             </Box>
 
             <Stack alignItems="flex-end" sx={{ mt: 3 }}>
-              <LoadingButton
-                type="submit"
-                variant="contained"
-                loading={isSubmitting}
-              >
+              <Button type="submit" variant="contained" loading={isSubmitting}>
                 {!currentUser ? 'Create User' : 'Save Changes'}
-              </LoadingButton>
+              </Button>
             </Stack>
           </Card>
         </Grid>

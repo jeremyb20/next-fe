@@ -1,12 +1,12 @@
 import * as Yup from 'yup';
-import { useForm } from 'react-hook-form';
-import Iconify from '@/components/iconify';
-import { yupResolver } from '@hookform/resolvers/yup';
-import FormProvider, { RHFTextField } from '@/components/hook-form';
-
+import { Button } from '@mui/material';
 import Stack from '@mui/material/Stack';
+import { useForm } from 'react-hook-form';
 import IconButton from '@mui/material/IconButton';
-import LoadingButton from '@mui/lab/LoadingButton';
+import { yupResolver } from '@hookform/resolvers/yup';
+
+import Iconify from '@/components/iconify';
+import FormProvider, { RHFTextField } from '@/components/hook-form';
 
 // ----------------------------------------------------------------------
 
@@ -71,13 +71,9 @@ export default function PostCommentForm() {
             </IconButton>
           </Stack>
 
-          <LoadingButton
-            type="submit"
-            variant="contained"
-            loading={isSubmitting}
-          >
+          <Button type="submit" variant="contained" loading={isSubmitting}>
             Post comment
-          </LoadingButton>
+          </Button>
         </Stack>
       </Stack>
     </FormProvider>

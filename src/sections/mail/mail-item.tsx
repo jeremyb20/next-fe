@@ -1,14 +1,14 @@
-import { IMail } from '@/types/mail';
-import { formatDistanceToNowStrict } from 'date-fns';
-
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import Avatar from '@mui/material/Avatar';
 import Typography from '@mui/material/Typography';
+import { formatDistanceToNowStrict } from 'date-fns';
 import ListItemText from '@mui/material/ListItemText';
 import ListItemButton, {
   ListItemButtonProps,
 } from '@mui/material/ListItemButton';
+
+import { IMail } from '@/types/mail';
 
 // ----------------------------------------------------------------------
 

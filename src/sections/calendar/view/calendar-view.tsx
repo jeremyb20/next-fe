@@ -1,16 +1,25 @@
 'use client';
 
+import Card from '@mui/material/Card';
+import Stack from '@mui/material/Stack';
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
 import Calendar from '@fullcalendar/react'; // => request placed at the top
-import Iconify from '@/components/iconify';
 import listPlugin from '@fullcalendar/list';
-import { useBoolean } from '@/hooks/use-boolean';
+import { useTheme } from '@mui/material/styles';
+import Container from '@mui/material/Container';
 import dayGridPlugin from '@fullcalendar/daygrid';
+import Typography from '@mui/material/Typography';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import timelinePlugin from '@fullcalendar/timeline';
-import { useResponsive } from '@/hooks/use-responsive';
+import DialogTitle from '@mui/material/DialogTitle';
 import { useState, useEffect, useCallback } from 'react';
-import { isAfter, isBetween } from '@/utils/format-time';
 import interactionPlugin from '@fullcalendar/interaction';
+
+import Iconify from '@/components/iconify';
+import { useBoolean } from '@/hooks/use-boolean';
+import { useResponsive } from '@/hooks/use-responsive';
+import { isAfter, isBetween } from '@/utils/format-time';
 import { CALENDAR_COLOR_OPTIONS } from '@/_mock/_calendar';
 import { updateEvent, useGetEvents } from '@/api/calendar';
 import { useSettingsContext } from '@/components/settings';
@@ -19,15 +28,6 @@ import {
   ICalendarFilters,
   ICalendarFilterValue,
 } from '@/types/calendar';
-
-import Card from '@mui/material/Card';
-import Stack from '@mui/material/Stack';
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import { useTheme } from '@mui/material/styles';
-import Container from '@mui/material/Container';
-import Typography from '@mui/material/Typography';
-import DialogTitle from '@mui/material/DialogTitle';
 
 import { StyledCalendar } from '../styles';
 import CalendarForm from '../calendar-form';

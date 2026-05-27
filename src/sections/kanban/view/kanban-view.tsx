@@ -1,14 +1,14 @@
 'use client';
 
 import { useCallback } from 'react';
-import Scrollbar from '@/components/scrollbar';
-import EmptyContent from '@/components/empty-content';
-import { moveTask, moveColumn, useGetBoard } from '@/api/kanban';
-import { Droppable, DropResult, DragDropContext } from '@hello-pangea/dnd';
-
 import Stack from '@mui/material/Stack';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
+import { Droppable, DropResult, DragDropContext } from '@hello-pangea/dnd';
+
+import Scrollbar from '@/components/scrollbar';
+import EmptyContent from '@/components/empty-content';
+import { moveTask, moveColumn, useGetBoard } from '@/api/kanban';
 
 import KanbanColumn from '../kanban-column';
 import KanbanColumnAdd from '../kanban-column-add';

@@ -1,17 +1,17 @@
 import * as Yup from 'yup';
 import { useMemo } from 'react';
+import Card from '@mui/material/Card';
+import { Button } from '@mui/material';
+import Stack from '@mui/material/Stack';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+
 import { paths } from '@/routes/paths';
 import { _addressBooks } from '@/_mock';
-import { useForm } from 'react-hook-form';
 import { useRouter } from '@/routes/hooks';
 import { IInvoice } from '@/types/invoice';
 import { useBoolean } from '@/hooks/use-boolean';
 import FormProvider from '@/components/hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
-
-import Card from '@mui/material/Card';
-import Stack from '@mui/material/Stack';
-import LoadingButton from '@mui/lab/LoadingButton';
 
 import InvoiceNewEditDetails from './invoice-new-edit-details';
 import InvoiceNewEditAddress from './invoice-new-edit-address';
@@ -145,7 +145,7 @@ export default function InvoiceNewEditForm({ currentInvoice }: Props) {
         spacing={2}
         sx={{ mt: 3 }}
       >
-        <LoadingButton
+        <Button
           color="inherit"
           size="large"
           variant="outlined"
@@ -153,16 +153,16 @@ export default function InvoiceNewEditForm({ currentInvoice }: Props) {
           onClick={handleSaveAsDraft}
         >
           Save as Draft
-        </LoadingButton>
+        </Button>
 
-        <LoadingButton
+        <Button
           size="large"
           variant="contained"
           loading={loadingSend.value && isSubmitting}
           onClick={handleCreateAndSend}
         >
           {currentInvoice ? 'Update' : 'Create'} & Send
-        </LoadingButton>
+        </Button>
       </Stack>
     </FormProvider>
   );

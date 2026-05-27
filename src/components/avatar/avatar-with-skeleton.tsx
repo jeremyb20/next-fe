@@ -1,5 +1,4 @@
 import { useState } from 'react';
-
 import { Avatar, Skeleton, AvatarProps } from '@mui/material';
 
 interface AvatarWithSkeletonProps extends AvatarProps {

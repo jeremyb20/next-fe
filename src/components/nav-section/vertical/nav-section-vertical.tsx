@@ -1,7 +1,6 @@
-import { memo, useState, useCallback } from 'react';
-
 import Stack from '@mui/material/Stack';
 import Collapse from '@mui/material/Collapse';
+import { memo, useState, useCallback } from 'react';
 import ListSubheader from '@mui/material/ListSubheader';
 
 import NavList from './nav-list';

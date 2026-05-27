@@ -1,10 +1,10 @@
 'use client';
 
 import React from 'react';
+import { Container } from '@mui/material';
+
 import { RoleBasedGuard } from '@/auth/guard';
 import { useSettingsContext } from '@/components/settings';
-
-import { Container } from '@mui/material';
 
 export default function BlogPanelView() {
   const settings = useSettingsContext();

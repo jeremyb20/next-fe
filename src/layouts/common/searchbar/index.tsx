@@ -1,24 +1,23 @@
-import Label from '@/components/label';
-import { useRouter } from '@/routes/hooks';
-import Iconify from '@/components/iconify';
-import Scrollbar from '@/components/scrollbar';
-import parse from 'autosuggest-highlight/parse';
+import Box from '@mui/material/Box';
+import List from '@mui/material/List';
+import Stack from '@mui/material/Stack';
+import InputBase from '@mui/material/InputBase';
+import { useTheme } from '@mui/material/styles';
 import match from 'autosuggest-highlight/match';
-import { useBoolean } from '@/hooks/use-boolean';
+import parse from 'autosuggest-highlight/parse';
 import { memo, useState, useCallback } from 'react';
+import InputAdornment from '@mui/material/InputAdornment';
+import Dialog, { dialogClasses } from '@mui/material/Dialog';
+
+import Label from '@/components/label';
+import Iconify from '@/components/iconify';
+import { useRouter } from '@/routes/hooks';
+import Scrollbar from '@/components/scrollbar';
+import { useBoolean } from '@/hooks/use-boolean';
 import { useResponsive } from '@/hooks/use-responsive';
 import { useManagerUser } from '@/hooks/use-manager-user';
 import SearchNotFound from '@/components/search-not-found';
 import { useEventListener } from '@/hooks/use-event-listener';
-
-import Box from '@mui/material/Box';
-import List from '@mui/material/List';
-import Stack from '@mui/material/Stack';
-import { useTheme } from '@mui/material/styles';
-import InputBase from '@mui/material/InputBase';
-import IconButton from '@mui/material/IconButton';
-import InputAdornment from '@mui/material/InputAdornment';
-import Dialog, { dialogClasses } from '@mui/material/Dialog';
 
 import ResultItem from './result-item';
 import { useNavData } from '../../dashboard/config-navigation';
@@ -115,9 +114,19 @@ function Searchbar({ style }: Props) {
 
   const renderButton = (
     <Stack direction="row" alignItems="center">
-      <IconButton onClick={search.onTrue} sx={style}>
+      <Box
+        component="span"
+        onClick={search.onTrue}
+        sx={{
+          ...style,
+          cursor: 'pointer',
+          display: 'inline-flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+      >
         <Iconify icon="eva:search-fill" />
-      </IconButton>
+      </Box>
 
       {lgUp && (
         <Label sx={{ px: 0.75, fontSize: 12, color: 'text.secondary' }}>

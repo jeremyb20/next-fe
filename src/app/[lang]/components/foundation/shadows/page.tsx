@@ -1,8 +1,10 @@
+import { Metadata } from 'next';
+
 import { ShadowsView } from '@/sections/_examples/foundation';
 
 // ----------------------------------------------------------------------
 
-export const metadata = {
+export const metadata: Metadata = {
   title: 'Foundations: Shadows',
 };
 

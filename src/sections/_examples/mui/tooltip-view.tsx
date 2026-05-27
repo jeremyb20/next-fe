@@ -1,12 +1,6 @@
 'use client';
 
-import { m } from 'framer-motion';
-import { paths } from '@/routes/paths';
-import Iconify from '@/components/iconify';
-import { varHover } from '@/components/animate';
-import CustomBreadcrumbs from '@/components/custom-breadcrumbs';
-import ComponentHero from '@/sections/_examples/component-hero';
-
+import { m } from 'motion/react';
 import Fab from '@mui/material/Fab';
 import Zoom from '@mui/material/Zoom';
 import Fade from '@mui/material/Fade';
@@ -15,6 +9,12 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import Container from '@mui/material/Container';
 import IconButton from '@mui/material/IconButton';
+
+import { paths } from '@/routes/paths';
+import Iconify from '@/components/iconify';
+import { varHover } from '@/components/animate';
+import CustomBreadcrumbs from '@/components/custom-breadcrumbs';
+import ComponentHero from '@/sections/_examples/component-hero';
 
 import ComponentBlock from '../component-block';
 

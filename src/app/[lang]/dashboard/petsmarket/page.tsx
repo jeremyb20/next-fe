@@ -1,8 +1,10 @@
+import { Metadata } from 'next';
+
 import PetsMarketView from './_view/petsmarket-list-view';
 
 // ----------------------------------------------------------------------
 
-export const metadata = {
+export const metadata: Metadata = {
   title: 'Pets Market List',
 };
 

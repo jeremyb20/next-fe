@@ -1,5 +1,4 @@
 import { memo } from 'react';
-
 import Stack from '@mui/material/Stack';
 
 import NavList from './nav-list';

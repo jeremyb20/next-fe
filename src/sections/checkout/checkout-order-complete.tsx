@@ -1,16 +1,16 @@
-import Iconify from '@/components/iconify';
-import { varFade } from '@/components/animate';
-import { m, AnimatePresence } from 'framer-motion';
-import { OrderCompleteIllustration } from '@/assets/illustrations';
-
 import Box from '@mui/material/Box';
 import Link from '@mui/material/Link';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
+import { m, AnimatePresence } from 'motion/react';
 import Typography from '@mui/material/Typography';
 import Paper, { PaperProps } from '@mui/material/Paper';
 import Dialog, { DialogProps } from '@mui/material/Dialog';
+
+import Iconify from '@/components/iconify';
+import { varFade } from '@/components/animate';
+import { OrderCompleteIllustration } from '@/assets/illustrations';
 
 // ----------------------------------------------------------------------
 

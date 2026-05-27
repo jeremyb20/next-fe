@@ -1,4 +1,4 @@
-import { LOGO } from '@/config-global';
+import { Box, Stack } from '@mui/system';
 import { useState, useEffect } from 'react';
 import {
   QrcodeStyle,
@@ -6,8 +6,6 @@ import {
   QrcodeColorEffect,
   useQrcodeDownload,
 } from 'react-qrcode-pretty';
-
-import { Box, Stack } from '@mui/system';
 import {
   Grid,
   Card,
@@ -25,6 +23,8 @@ import {
   CardContent,
   FormControlLabel,
 } from '@mui/material';
+
+import { LOGO } from '@/config-global';
 
 import Iconify from '../iconify';
 
@@ -151,10 +151,10 @@ export function QrcodeCustom({ value, fileName }: Props) {
   return (
     <Grid container spacing={3}>
       {/* Panel de controles */}
-      <Grid item xs={12} sm={12} md={8}>
+      <Grid size={{ xs: 12, sm: 12, md: 8 }}>
         <Grid container spacing={2}>
           {/* Columna 1 - Configuración básica */}
-          <Grid item xs={12} sm={12} md={6}>
+          <Grid size={{ xs: 12, sm: 12, md: 6 }}>
             <Card>
               <CardContent>
                 <Typography variant="h6" gutterBottom>
@@ -256,7 +256,7 @@ export function QrcodeCustom({ value, fileName }: Props) {
           </Grid>
 
           {/* Columna 2 - Estilos y efectos */}
-          <Grid item xs={12} sm={12} md={6}>
+          <Grid size={{ xs: 12, sm: 12, md: 6 }}>
             <Card>
               <CardContent>
                 <Typography variant="h6" gutterBottom>
@@ -407,7 +407,7 @@ export function QrcodeCustom({ value, fileName }: Props) {
       </Grid>
 
       {/* Vista previa del QR */}
-      <Grid item xs={12} sm={12} md={4}>
+      <Grid size={{ xs: 12, sm: 12, md: 4 }}>
         <Card>
           <CardContent>
             <Typography variant="h6" gutterBottom>

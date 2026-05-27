@@ -1,8 +1,10 @@
+import { Metadata } from 'next';
+
 import { SupabaseRegisterView } from '@/sections/auth/supabase';
 
 // ----------------------------------------------------------------------
 
-export const metadata = {
+export const metadata: Metadata = {
   title: 'Supabase: Register',
 };
 

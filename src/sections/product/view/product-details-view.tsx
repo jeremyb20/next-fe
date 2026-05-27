@@ -1,21 +1,21 @@
 'use client';
 
+import Tab from '@mui/material/Tab';
+import Tabs from '@mui/material/Tabs';
+import Card from '@mui/material/Card';
+import Grid from '@mui/material/Grid';
+import Button from '@mui/material/Button';
+import { alpha } from '@mui/material/styles';
+import Container from '@mui/material/Container';
+import { useState, useEffect, useCallback } from 'react';
+
 import { paths } from '@/routes/paths';
 import Iconify from '@/components/iconify';
 import { useGetProduct } from '@/api/product';
 import { RouterLink } from '@/routes/components';
 import { PRODUCT_PUBLISH_OPTIONS } from '@/_mock';
 import EmptyContent from '@/components/empty-content';
-import { useState, useEffect, useCallback } from 'react';
 import { useSettingsContext } from '@/components/settings';
-
-import Tab from '@mui/material/Tab';
-import Tabs from '@mui/material/Tabs';
-import Card from '@mui/material/Card';
-import Button from '@mui/material/Button';
-import { alpha } from '@mui/material/styles';
-import Container from '@mui/material/Container';
-import Grid from '@mui/material/Unstable_Grid2';
 
 import { ProductDetailsSkeleton } from '../product-skeleton';
 import ProductDetailsReview from '../product-details-review';
@@ -108,11 +108,11 @@ export default function ProductDetailsView({ id }: Props) {
       />
 
       <Grid container spacing={{ xs: 3, md: 5, lg: 8 }}>
-        <Grid xs={12} md={6} lg={7}>
+        <Grid size={{ xs: 12, md: 6, lg: 7 }}>
           <ProductDetailsCarousel product={product} />
         </Grid>
 
-        <Grid xs={12} md={6} lg={5}>
+        <Grid size={{ xs: 12, md: 6, lg: 5 }}>
           <ProductDetailsSummary disabledActions product={product} />
         </Grid>
       </Grid>

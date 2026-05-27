@@ -1,11 +1,5 @@
 'use client';
 
-import { _mock } from '@/_mock';
-import { paths } from '@/routes/paths';
-import Iconify from '@/components/iconify';
-import CustomBreadcrumbs from '@/components/custom-breadcrumbs';
-import ComponentHero from '@/sections/_examples/component-hero';
-
 import Masonry from '@mui/lab/Masonry';
 import Stack from '@mui/material/Stack';
 import Badge from '@mui/material/Badge';
@@ -14,6 +8,12 @@ import Tooltip from '@mui/material/Tooltip';
 import { useTheme } from '@mui/material/styles';
 import Container from '@mui/material/Container';
 import AvatarGroup, { avatarGroupClasses } from '@mui/material/AvatarGroup';
+
+import { _mock } from '@/_mock';
+import { paths } from '@/routes/paths';
+import Iconify from '@/components/iconify';
+import CustomBreadcrumbs from '@/components/custom-breadcrumbs';
+import ComponentHero from '@/sections/_examples/component-hero';
 
 import ComponentBlock from '../component-block';
 

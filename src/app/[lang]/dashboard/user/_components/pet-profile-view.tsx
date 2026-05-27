@@ -1,6 +1,5 @@
 'use client';
 
-import React from 'react';
 import { useGetPublicProfilebById } from '@/hooks/use-fetch';
 import PetProfileViewComponent from '@/app/[lang]/pet/_components/view/pet-profile-view-component';
 

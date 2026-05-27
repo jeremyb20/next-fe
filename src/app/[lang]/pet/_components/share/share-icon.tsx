@@ -1,6 +1,6 @@
-import Iconify from '@/components/iconify';
-
 import { Box } from '@mui/material';
+
+import Iconify from '@/components/iconify';
 
 export const ShareIcon = ({
   platform,

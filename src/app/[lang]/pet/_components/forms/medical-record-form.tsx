@@ -1,28 +1,12 @@
 import * as Yup from 'yup';
-import { paths } from '@/routes/paths';
-import { endpoints } from '@/utils/axios';
-import { HOST_API } from '@/config-global';
-import { useEffect, useCallback } from 'react';
-import { useRedirect } from '@/hooks/use-redirect';
-import { useSnackbar } from '@/components/snackbar';
-import { useForm, Controller } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
-import { useTranslation } from '@/hooks/use-translation';
-import { useManagerUser } from '@/hooks/use-manager-user';
-import { useCreateGenericMutation } from '@/hooks/user-generic-mutation';
-import { FormValues, MedicalRecordType } from '@/interfaces/medical-record';
-import FormProvider, {
-  RHFSelect,
-  RHFTextField,
-  RHFAutocomplete,
-} from '@/components/hook-form';
-
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import MenuItem from '@mui/material/MenuItem';
-import LoadingButton from '@mui/lab/LoadingButton';
+import { useEffect, useCallback } from 'react';
 import DialogTitle from '@mui/material/DialogTitle';
+import { useForm, Controller } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
@@ -35,6 +19,21 @@ import {
   Typography,
   FormControlLabel,
 } from '@mui/material';
+
+import { paths } from '@/routes/paths';
+import { endpoints } from '@/utils/axios';
+import { HOST_API } from '@/config-global';
+import { useRedirect } from '@/hooks/use-redirect';
+import { useSnackbar } from '@/components/snackbar';
+import { useTranslation } from '@/hooks/use-translation';
+import { useManagerUser } from '@/hooks/use-manager-user';
+import { useCreateGenericMutation } from '@/hooks/user-generic-mutation';
+import { FormValues, MedicalRecordType } from '@/interfaces/medical-record';
+import FormProvider, {
+  RHFSelect,
+  RHFTextField,
+  RHFAutocomplete,
+} from '@/components/hook-form';
 
 // ----------------------------------------------------------------------
 
@@ -783,13 +782,9 @@ export default function MedicalRecordForm({
             Cancelar
           </Button>
 
-          <LoadingButton
-            type="submit"
-            variant="contained"
-            loading={isSubmitting}
-          >
+          <Button type="submit" variant="contained" loading={isSubmitting}>
             {t(currentRecord ? 'Update' : 'Create')}
-          </LoadingButton>
+          </Button>
         </DialogActions>
       </FormProvider>
     </Dialog>

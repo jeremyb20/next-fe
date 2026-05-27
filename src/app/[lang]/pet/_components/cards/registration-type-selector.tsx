@@ -2,15 +2,15 @@
 
 'use client';
 
-import Iconify from '@/components/iconify';
-import { APP_NAME } from '@/config-global';
-import { useTranslation } from '@/hooks/use-translation';
-
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
+
+import Iconify from '@/components/iconify';
+import { APP_NAME } from '@/config-global';
+import { useTranslation } from '@/hooks/use-translation';
 
 // ----------------------------------------------------------------------
 

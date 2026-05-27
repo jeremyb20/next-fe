@@ -1,12 +1,11 @@
 'use client';
 
-import React from 'react';
+import { Container } from '@mui/system';
+
 import { IPetProfile } from '@/types/api';
 import { useTranslation } from '@/hooks/use-translation';
 import { SplashScreen } from '@/components/loading-screen';
 import { useSettingsContext } from '@/components/settings';
-
-import { Container } from '@mui/system';
 
 import PetProfileViewComponent from './pet-profile-view-component';
 

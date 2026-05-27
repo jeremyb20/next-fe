@@ -1,13 +1,13 @@
-import { ApexOptions } from 'apexcharts';
-import { fNumber } from '@/utils/format-number';
-import Chart, { useChart } from '@/components/chart';
-import { useResponsive } from '@/hooks/use-responsive';
-
 import Stack from '@mui/material/Stack';
+import { ApexOptions } from 'apexcharts';
 import Divider from '@mui/material/Divider';
 import { useTheme } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 import Card, { CardProps } from '@mui/material/Card';
+
+import { fNumber } from '@/utils/format-number';
+import Chart, { useChart } from '@/components/chart';
+import { useResponsive } from '@/hooks/use-responsive';
 
 // ----------------------------------------------------------------------
 

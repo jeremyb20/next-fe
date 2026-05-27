@@ -1,20 +1,20 @@
 'use client';
 
 import { useState } from 'react';
+import Card from '@mui/material/Card';
+import Grid from '@mui/material/Grid';
+import Stack from '@mui/material/Stack';
+import Divider from '@mui/material/Divider';
+import Container from '@mui/material/Container';
+import CardHeader from '@mui/material/CardHeader';
+import Typography from '@mui/material/Typography';
+import CardContent from '@mui/material/CardContent';
+
 import { paths } from '@/routes/paths';
 import Editor from '@/components/editor';
 import Markdown from '@/components/markdown';
 import CustomBreadcrumbs from '@/components/custom-breadcrumbs';
 import ComponentHero from '@/sections/_examples/component-hero';
-
-import Card from '@mui/material/Card';
-import Stack from '@mui/material/Stack';
-import Divider from '@mui/material/Divider';
-import Container from '@mui/material/Container';
-import Grid from '@mui/material/Unstable_Grid2';
-import CardHeader from '@mui/material/CardHeader';
-import Typography from '@mui/material/Typography';
-import CardContent from '@mui/material/CardContent';
 
 // ----------------------------------------------------------------------
 
@@ -41,7 +41,7 @@ export default function EditorView() {
 
       <Container sx={{ my: 10 }}>
         <Grid container spacing={3}>
-          <Grid xs={12} md={8}>
+          <Grid size={{ xs: 12, md: 8 }}>
             <Card sx={{ mb: 3 }}>
               <CardHeader title="Editor Simple" />
               <CardContent>
@@ -49,7 +49,7 @@ export default function EditorView() {
                   simple
                   id="simple-editor"
                   value={quillSimple}
-                  onChange={(value) => setQuillSimple(value)}
+                  onChange={(value: string) => setQuillSimple(value)}
                 />
               </CardContent>
             </Card>
@@ -60,13 +60,13 @@ export default function EditorView() {
                 <Editor
                   id="full-editor"
                   value={quillFull}
-                  onChange={(value) => setQuillFull(value)}
+                  onChange={(value: string) => setQuillFull(value)}
                 />
               </CardContent>
             </Card>
           </Grid>
 
-          <Grid xs={12} md={4}>
+          <Grid size={{ xs: 12, md: 4 }}>
             <Stack
               sx={{ p: 3, borderRadius: 2, bgcolor: 'background.neutral' }}
             >

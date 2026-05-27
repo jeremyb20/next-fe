@@ -1,11 +1,11 @@
 'use client';
 
-import { RoleBasedGuard } from '@/auth/guard';
-
 import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid';
 import Container from '@mui/material/Container';
-import Grid from '@mui/material/Unstable_Grid2';
 import Typography from '@mui/material/Typography';
+
+import { RoleBasedGuard } from '@/auth/guard';
 
 import PaymentSummary from '../payment-summary';
 import PaymentMethods from '../payment-methods';
@@ -36,7 +36,7 @@ export default function PaymentView() {
           rowSpacing={{ xs: 5, md: 0 }}
           columnSpacing={{ xs: 0, md: 5 }}
         >
-          <Grid xs={12} md={8}>
+          <Grid size={{ xs: 12, md: 8 }}>
             <Box
               gap={5}
               display="grid"
@@ -58,7 +58,7 @@ export default function PaymentView() {
             </Box>
           </Grid>
 
-          <Grid xs={12} md={4}>
+          <Grid size={{ xs: 12, md: 4 }}>
             <PaymentSummary />
           </Grid>
         </Grid>

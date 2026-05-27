@@ -1,14 +1,14 @@
 // components/pets/pet-dashboard.tsx
 
+import { useRef, useState, useEffect, useCallback } from 'react';
+import { Box, Grid, Card, Button, Typography } from '@mui/material';
+
 import { IPetProfile } from '@/types/api';
 import Iconify from '@/components/iconify';
 import { ALLOW_MAX_PETS_BY_USER } from '@/config-global';
 import { useTranslation } from '@/hooks/use-translation';
-import { useRef, useState, useEffect, useCallback } from 'react';
 import { useMedicalRecordForm } from '@/hooks/user-medical-record-form';
 import MedicalRecordForm from '@/app/[lang]/pet/_components/forms/medical-record-form';
-
-import { Box, Grid, Card, Button, Typography } from '@mui/material';
 
 import { PetAvatarList } from './pet-avatar-list';
 import { PetDetailsCard } from './pet-details-card';
@@ -41,7 +41,7 @@ export function PetDashboard({
   const [selectedPetId, setSelectedPetId] = useState<string | undefined>(
     undefined
   );
-  const [refreshKey, setRefreshKey] = useState(0);
+  // const [refreshKey, setRefreshKey] = useState(0);
   const refreshingRef = useRef(false);
   const { t } = useTranslation();
   const {
@@ -67,8 +67,8 @@ export function PetDashboard({
     // Solo refrescar la lista de mascotas una vez
     refetchPets();
 
-    // Forzar re-render del PetDetailsCard
-    setRefreshKey((prev) => prev + 1);
+    // // Forzar re-render del PetDetailsCard
+    // setRefreshKey((prev) => prev + 1);
 
     // Resetear el flag después de un tiempo
     setTimeout(() => {
@@ -123,7 +123,7 @@ export function PetDashboard({
   return (
     <Grid container spacing={3}>
       {/* Lista de mascotas estilo avatares */}
-      <Grid item xs={12}>
+      <Grid size={{ xs: 12 }}>
         <Box sx={{ borderRadius: 3 }}>
           <PetAvatarList
             pets={usersData}
@@ -137,10 +137,10 @@ export function PetDashboard({
       </Grid>
 
       {/* Detalles de la mascota seleccionada */}
-      <Grid item xs={12}>
+      <Grid size={{ xs: 12 }}>
         {selectedPet ? (
           <PetDetailsCard
-            key={`${selectedPet._id}-${refreshKey}`}
+            // key={`${selectedPet._id}-${refreshKey}`}
             pet={selectedPet}
             onEdit={onPetEdit}
             onViewDetails={onViewDetails}

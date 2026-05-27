@@ -1,16 +1,16 @@
-// components/dashboard/user/statistics-cards.tsx
-import Iconify from '@/components/iconify';
-import { useTranslation } from '@/hooks/use-translation';
-
+import { useTheme } from '@mui/material/styles';
 import {
   Box,
   Card,
   Grid,
-  useTheme,
   Skeleton,
   Typography,
   CardContent,
 } from '@mui/material';
+
+// components/dashboard/user/statistics-cards.tsx
+import Iconify from '@/components/iconify';
+import { useTranslation } from '@/hooks/use-translation';
 
 interface StatisticsCardsProps {
   petsCount: number;
@@ -103,7 +103,7 @@ export const StatisticsCards = ({
       <Box sx={{ mb: 3 }}>
         <Grid container spacing={2}>
           {[1, 2, 3, 4].map((_, index) => (
-            <Grid item xs={6} sm={6} md={3} key={index}>
+            <Grid size={{ xs: 6, sm: 6, md: 3 }} key={index}>
               <Card sx={{ borderRadius: 3, height: '100%' }}>
                 <CardContent sx={{ p: 2, textAlign: 'center' }}>
                   <Skeleton
@@ -130,7 +130,7 @@ export const StatisticsCards = ({
     <Box>
       <Grid container spacing={2}>
         {allStats.map((stat) => (
-          <Grid item xs={6} sm={6} md={4} key={stat.id}>
+          <Grid size={{ xs: 6, sm: 6, md: 4 }} key={stat.id}>
             <Card
               sx={{
                 borderRadius: 3,

@@ -1,11 +1,11 @@
 import Map from 'react-map-gl';
 import { useState } from 'react';
+import Typography from '@mui/material/Typography';
+import { styled, useTheme } from '@mui/material/styles';
+
 import Iconify from '@/components/iconify';
 import { MAPBOX_API } from '@/config-global';
 import { MapPopup, MapMarker, MapControl } from '@/components/map';
-
-import Typography from '@mui/material/Typography';
-import { styled, useTheme } from '@mui/material/styles';
 
 // ----------------------------------------------------------------------
 
@@ -39,24 +39,7 @@ export default function ContactMap({ contacts }: Props) {
 
   const [popupInfo, setPopupInfo] = useState<CountryData | null>(null);
 
-  const [contactsMap] = useState<CountryData[]>(contacts);
-
-  // const marker = (e: any) => {
-  //   // For regular map clicks, use lngLat to get coordinates
-  //   if (e.lngLat) {
-  //     const { lng, lat } = e.lngLat;
-  //     // You can handle map click coordinates here if needed
-  //     console.log('Map clicked at:', lat, lng);
-  //     setContactsMap((prevContacts) => [
-  //       ...prevContacts,
-  //       {
-  //         latlng: [lat, lng],
-  //         address: `New Address at (${lat.toFixed(4)}, ${lng.toFixed(4)})`,
-  //         phoneNumber: 'New Phone Number',
-  //       },
-  //     ]);
-  //   }
-  // };
+  const [contactsMap, _setContactsMap] = useState<CountryData[]>(contacts);
 
   return (
     <StyledRoot>

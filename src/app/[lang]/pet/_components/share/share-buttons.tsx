@@ -1,6 +1,6 @@
 import React from 'react';
-import { IPetProfile } from '@/types/api';
-import { useTranslation } from '@/hooks/use-translation';
+import { useTranslation } from 'react-i18next';
+import { Box, Grid, Button, Typography } from '@mui/material';
 import {
   EmailShareButton,
   TwitterShareButton,
@@ -9,7 +9,7 @@ import {
   TelegramShareButton,
 } from 'react-share';
 
-import { Box, Grid, Button, Typography } from '@mui/material';
+import { IPetProfile } from '@/types/api';
 
 import { ShareIcon } from './share-icon';
 
@@ -39,7 +39,7 @@ export default function ShareButtons({
       </Typography>
 
       <Grid container spacing={3} justifyContent="center">
-        <Grid item xs={2.4} sm={2.4} sx={{ textAlign: 'center' }}>
+        <Grid size={{ xs: 2.4, sm: 2.4 }} sx={{ textAlign: 'center' }}>
           <FacebookShareButton url={shareUrl} hashtag="#Mascotas">
             <ShareIcon platform="facebook" size={isMobile ? 56 : 64} />
           </FacebookShareButton>
@@ -48,7 +48,7 @@ export default function ShareButtons({
           </Typography>
         </Grid>
 
-        <Grid item xs={2.4} sm={2.4} sx={{ textAlign: 'center' }}>
+        <Grid size={{ xs: 2.4, sm: 2.4 }} sx={{ textAlign: 'center' }}>
           <TwitterShareButton
             url={shareUrl}
             title={shareTitle}
@@ -61,7 +61,7 @@ export default function ShareButtons({
           </Typography>
         </Grid>
 
-        <Grid item xs={2.4} sm={2.4} sx={{ textAlign: 'center' }}>
+        <Grid size={{ xs: 2.4, sm: 2.4 }} sx={{ textAlign: 'center' }}>
           <WhatsappShareButton url={shareUrl} title={shareTitle} separator=": ">
             <ShareIcon platform="whatsapp" size={isMobile ? 56 : 64} />
           </WhatsappShareButton>
@@ -70,7 +70,7 @@ export default function ShareButtons({
           </Typography>
         </Grid>
 
-        <Grid item xs={2.4} sm={2.4} sx={{ textAlign: 'center' }}>
+        <Grid size={{ xs: 2.4, sm: 2.4 }} sx={{ textAlign: 'center' }}>
           <TelegramShareButton url={shareUrl} title={shareTitle}>
             <ShareIcon platform="telegram" size={isMobile ? 56 : 64} />
           </TelegramShareButton>
@@ -79,7 +79,7 @@ export default function ShareButtons({
           </Typography>
         </Grid>
 
-        <Grid item xs={2.4} sm={2.4} sx={{ textAlign: 'center' }}>
+        <Grid size={{ xs: 2.4, sm: 2.4 }} sx={{ textAlign: 'center' }}>
           <EmailShareButton
             url={shareUrl}
             subject={shareTitle}

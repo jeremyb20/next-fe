@@ -1,9 +1,4 @@
 import sumBy from 'lodash/sumBy';
-import Iconify from '@/components/iconify';
-import { useBoolean } from '@/hooks/use-boolean';
-import { IProductReview } from '@/types/product';
-import { fShortenNumber } from '@/utils/format-number';
-
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import Rating from '@mui/material/Rating';
@@ -11,6 +6,11 @@ import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
 import Typography from '@mui/material/Typography';
 import LinearProgress from '@mui/material/LinearProgress';
+
+import Iconify from '@/components/iconify';
+import { useBoolean } from '@/hooks/use-boolean';
+import { IProductReview } from '@/types/product';
+import { fShortenNumber } from '@/utils/format-number';
 
 import ProductReviewList from './product-review-list';
 import ProductReviewNewForm from './product-review-new-form';

@@ -1,5 +1,6 @@
 // hooks/useRedirect.ts
 import { useCallback } from 'react';
+
 import { useRouter } from '@/routes/hooks';
 
 export const useRedirect = () => {

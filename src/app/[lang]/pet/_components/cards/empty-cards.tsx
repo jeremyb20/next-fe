@@ -1,6 +1,6 @@
-import Iconify from '@/components/iconify';
-
 import { Box, Card, Button, Typography } from '@mui/material';
+
+import Iconify from '@/components/iconify';
 
 interface EmptyStateProps {
   message?: string;

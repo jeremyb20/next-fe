@@ -2,8 +2,12 @@
 
 import orderBy from 'lodash/orderBy';
 import isEqual from 'lodash/isEqual';
-import { paths } from '@/routes/paths';
+import Stack from '@mui/material/Stack';
 import { useState, useCallback } from 'react';
+import Container from '@mui/material/Container';
+import Typography from '@mui/material/Typography';
+
+import { paths } from '@/routes/paths';
 import { useBoolean } from '@/hooks/use-boolean';
 import { useDebounce } from '@/hooks/use-debounce';
 import EmptyContent from '@/components/empty-content';
@@ -21,10 +25,6 @@ import {
   PRODUCT_RATING_OPTIONS,
   PRODUCT_CATEGORY_OPTIONS,
 } from '@/_mock';
-
-import Stack from '@mui/material/Stack';
-import Container from '@mui/material/Container';
-import Typography from '@mui/material/Typography';
 
 import ProductList from '../product-list';
 import ProductSort from '../product-sort';

@@ -1,10 +1,11 @@
 'use client';
 
+import { useRef, useMemo, useEffect, useReducer, useCallback } from 'react';
+
 import { DeviceInfo } from '@/types/api';
 import { STORAGE_KEY } from '@/config-global';
 import axios, { endpoints } from '@/utils/axios';
 import { SettingsValueProps } from '@/components/settings';
-import { useRef, useMemo, useEffect, useReducer, useCallback } from 'react';
 
 import { AuthContext } from './auth-context';
 import { setSession, isValidToken } from './utils';
@@ -122,7 +123,7 @@ export function AuthProvider({ children }: Props) {
         });
       }
     } catch (error) {
-      console.error(error);
+      console.log(error);
       dispatch({
         type: Types.INITIAL,
         payload: {

@@ -2,9 +2,6 @@
 
 import { useMemo } from 'react';
 import merge from 'lodash/merge';
-import { useLocales } from '@/locales';
-import { useSettingsContext } from '@/components/settings';
-
 import CssBaseline from '@mui/material/CssBaseline';
 import {
   createTheme,
@@ -12,15 +9,18 @@ import {
   ThemeProvider as MuiThemeProvider,
 } from '@mui/material/styles';
 
+import { useLocales } from '@/locales';
+import { useSettingsContext } from '@/components/settings';
+
 // system
 import { palette } from './palette';
 import { shadows } from './shadows';
-import { getScaledTypography } from './typography'; // Cambia esta importación
 // options
 import RTL from './options/right-to-left';
 import { customShadows } from './custom-shadows';
-import { componentsOverrides } from './overrides';
 import { createPresets } from './options/presets';
+import { componentsOverrides } from './overrides';
+import { getScaledTypography } from './typography'; // Cambia esta importación
 import { createContrast } from './options/contrast';
 import NextAppDirEmotionCacheProvider from './next-emotion-cache';
 

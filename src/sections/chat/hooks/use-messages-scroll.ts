@@ -1,5 +1,6 @@
-import { IChatMessage } from '@/types/chat';
 import { useRef, useEffect, useCallback } from 'react';
+
+import { IChatMessage } from '@/types/chat';
 
 // ----------------------------------------------------------------------
 
@@ -20,13 +21,9 @@ export default function useMessagesScroll(messages: IChatMessage[]) {
     }
   }, [messages]);
 
-  useEffect(
-    () => {
-      scrollMessagesToBottom();
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [messages]
-  );
+  useEffect(() => {
+    scrollMessagesToBottom();
+  }, [messages]);
 
   return {
     messagesEndRef,

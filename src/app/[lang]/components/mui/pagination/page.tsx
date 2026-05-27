@@ -1,8 +1,10 @@
+import { Metadata } from 'next';
+
 import PaginationView from '@/sections/_examples/mui/pagination-view';
 
 // ----------------------------------------------------------------------
 
-export const metadata = {
+export const metadata: Metadata = {
   title: 'MUI: Pagination',
 };
 

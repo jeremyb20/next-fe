@@ -4,14 +4,14 @@ import AppProviders from '../components/providers/AppProviders';
 
 type Props = {
   children: React.ReactNode;
-  params: { lang: string };
+  params: Promise<{}>;
 };
 
-export default async function RootLayout({ children, params }: Props) {
-  const lang = params.lang?.toLowerCase() || 'es';
-  const isRTL = lang === 'ar';
+export default async function RootLayout({ children }: Props) {
+  const language: string = 'es';
+  const isRTL = language === 'ar';
   return (
-    <html lang={lang} dir={isRTL ? 'rtl' : 'ltr'} translate="no">
+    <html lang={language} dir={isRTL ? 'rtl' : 'ltr'} translate="no">
       <head>
         {/* Meta tags para SEO multilingüe */}
         <link rel="alternate" hrefLang="x-default" href={DOMAIN} />

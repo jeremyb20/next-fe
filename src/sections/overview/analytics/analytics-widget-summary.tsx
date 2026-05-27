@@ -1,12 +1,12 @@
-import { bgGradient } from '@/theme/css';
-import { ColorSchema } from '@/theme/palette';
-import { fShortenNumber } from '@/utils/format-number';
-
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import { CardProps } from '@mui/material/Card';
 import Typography from '@mui/material/Typography';
 import { alpha, useTheme } from '@mui/material/styles';
+
+import { bgGradient } from '@/theme/css';
+import { ColorSchema } from '@/theme/palette';
+import { fShortenNumber } from '@/utils/format-number';
 
 // ----------------------------------------------------------------------
 

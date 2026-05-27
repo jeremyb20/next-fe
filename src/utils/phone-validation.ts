@@ -73,6 +73,7 @@ export const getPhoneHelperText = (
     }
   } catch (error) {
     // Ignorar errores de parsing
+    console.log('Error parsing phone number:', error);
   }
 
   return t('Enter valid phone number for {{country}}', {
