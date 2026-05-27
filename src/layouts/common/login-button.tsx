@@ -19,7 +19,7 @@ export default function LoginButton({ sx }: Props) {
       variant="outlined"
       sx={{ mr: 1, ...sx }}
     >
-      {t('Sign In')}
+      <span suppressHydrationWarning>{t('Sign In')}</span>
     </Button>
   );
 }

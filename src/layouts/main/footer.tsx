@@ -49,6 +49,31 @@ export default function Footer() {
 
   const homePage = pathname === '/';
 
+  const version = (
+    <Typography variant="caption" component="div">
+      © {new Date().getFullYear()} {t('All rights reserved')}.
+      <br /> {t('made by')}
+      <Link href="https://jeremy-bacca-portfolio.netlify.app/">
+        {' '}
+        {APP_NAME}.{' '}
+      </Link>
+      <Link
+        href={paths.auth.signIn}
+        target="_blank"
+        rel="noopener"
+        underline="none"
+        sx={{ ml: 1 }}
+      >
+        <Typography
+          color="info"
+          sx={{ textTransform: 'unset', height: 22, px: 0.5 }}
+        >
+          v{process.env.APP_VERSION}
+        </Typography>
+      </Link>
+    </Typography>
+  );
+
   const simpleFooter = (
     <Box
       component="footer"
@@ -62,28 +87,7 @@ export default function Footer() {
       <Container>
         <Logo sx={{ mb: 1, mx: 'auto' }} />
 
-        <Typography variant="caption" component="div">
-          © {new Date().getFullYear()} {t('All rights reserved')}.
-          <br /> {t('made by')}
-          <Link href="https://jeremy-bacca-portfolio.netlify.app/">
-            {' '}
-            {APP_NAME}.{' '}
-          </Link>
-          <Link
-            href={paths.auth.signIn}
-            target="_blank"
-            rel="noopener"
-            underline="none"
-            sx={{ ml: 1 }}
-          >
-            <Typography
-              color="info"
-              sx={{ textTransform: 'unset', height: 22, px: 0.5 }}
-            >
-              v{process.env.APP_VERSION}
-            </Typography>
-          </Link>
-        </Typography>
+        {version}
       </Container>
     </Box>
   );
@@ -180,28 +184,7 @@ export default function Footer() {
           </Grid>
         </Grid>
 
-        <Typography variant="caption" component="div">
-          © {new Date().getFullYear()} {t('All rights reserved')}.
-          <br /> {t('made by')}
-          <Link href="https://jeremy-bacca-portfolio.netlify.app/">
-            {' '}
-            {APP_NAME}.{' '}
-          </Link>
-          <Link
-            href={paths.auth.signIn}
-            target="_blank"
-            rel="noopener"
-            underline="none"
-            sx={{ ml: 1 }}
-          >
-            <Typography
-              color="info"
-              sx={{ textTransform: 'unset', height: 22, px: 0.5 }}
-            >
-              v{process.env.APP_VERSION}
-            </Typography>
-          </Link>
-        </Typography>
+        {version}
       </Container>
     </Box>
   );
