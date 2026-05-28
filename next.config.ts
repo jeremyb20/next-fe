@@ -34,8 +34,7 @@ const nextConfig: NextConfig = {
 
   // Configuración experimental optimizada
   experimental: {
-    // Deshabilitar temporalmente optimizeCss hasta que beasties funcione
-    optimizeCss: true, // 🔥 Cambiar a false para probar
+    optimizeCss: true,
     optimizePackageImports: [
       '@mui/material',
       '@mui/icons-material',
@@ -112,6 +111,15 @@ const nextConfig: NextConfig = {
           {
             key: 'Cache-Control',
             value: 'public, max-age=31536000, immutable',
+          },
+        ],
+      },
+      {
+        source: '/manifest.json',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=86400, must-revalidate', // 24 horas, no 0
           },
         ],
       },
