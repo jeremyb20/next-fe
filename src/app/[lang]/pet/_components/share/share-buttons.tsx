@@ -1,5 +1,3 @@
-import React from 'react';
-import { useTranslation } from 'react-i18next';
 import { Box, Grid, Button, Typography } from '@mui/material';
 import {
   EmailShareButton,
@@ -10,6 +8,7 @@ import {
 } from 'react-share';
 
 import { IPetProfile } from '@/types/api';
+import { useTranslation } from '@/hooks/use-translation';
 
 import { ShareIcon } from './share-icon';
 

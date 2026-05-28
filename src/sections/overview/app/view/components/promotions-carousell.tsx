@@ -3,7 +3,6 @@
 'use client';
 
 import { m } from 'motion/react';
-import { useTranslation } from 'react-i18next';
 import { alpha, useTheme } from '@mui/material/styles';
 import {
   Box,
@@ -18,6 +17,7 @@ import {
 
 import { IPromotions } from '@/types/api';
 import Iconify from '@/components/iconify';
+import { useTranslation } from '@/hooks/use-translation';
 import { varFade, MotionContainer } from '@/components/animate';
 import Carousel, { useCarousel, CarouselDots } from '@/components/carousel';
 
@@ -35,22 +35,17 @@ export function PromotionsCardCaroussell({
   autoplaySpeed = 5000,
 }: PromotionsCardProps) {
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
-  const isTablet = useMediaQuery(theme.breakpoints.between('sm', 'md'));
-
-  // Configuración responsive similar a MenuProducts
-  const getSlidesToShow = () => {
-    if (isMobile) return 1.02;
-    if (isTablet) return 1.2;
-    return 1;
-  };
 
   const carousel = useCarousel({
-    slidesToShow: getSlidesToShow(),
+    slidesToShow: 1,
     slidesToScroll: 1,
     autoplay,
     autoplaySpeed,
     infinite: promotions.length > 1,
+    variableWidth: false, // 🔥 Desactivar ancho variable
+    centerMode: false,
+    centerPadding: '0px',
+    edgeFriction: 0, // 🔥 Eliminar fricción en bordes
     ...CarouselDots({
       sx: { mt: 2, position: 'absolute', bottom: -20, left: 0, right: 0 },
     }),

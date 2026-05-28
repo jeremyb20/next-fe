@@ -1,5 +1,3 @@
-import React from 'react';
-import { useTranslation } from 'react-i18next';
 import { useTheme } from '@mui/material/styles';
 import {
   Box,
@@ -14,6 +12,7 @@ import {
 
 import { APP_NAME } from '@/config-global';
 import Iconify from '@/components/iconify';
+import { useTranslation } from '@/hooks/use-translation';
 const AboutUs = () => {
   const theme = useTheme();
   const { t } = useTranslation();

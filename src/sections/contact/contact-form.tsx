@@ -5,12 +5,12 @@ import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import { useState, useEffect } from 'react';
 import Snackbar from '@mui/material/Snackbar';
-import { useTranslation } from 'react-i18next';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import CircularProgress from '@mui/material/CircularProgress';
 
 import { EMAIL_SUPPORT } from '@/config-global';
+import { useTranslation } from '@/hooks/use-translation';
 import { varFade, MotionViewport } from '@/components/animate';
 
 // ----------------------------------------------------------------------
