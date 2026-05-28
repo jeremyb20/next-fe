@@ -19,6 +19,23 @@
     "ts": "tsc --noEmit --incremental",
     "ts:watch": "yarn ts --watch"
   },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all",
+      "not ie 11",
+      "chrome >= 60",
+      "firefox >= 60",
+      "safari >= 12",
+      "edge >= 79"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
   "dependencies": {
     "@auth0/auth0-react": "^2.12.0",
     "@emotion/cache": "^11.14.0",
@@ -112,6 +129,7 @@
     "@types/stylis": "^4.2.7",
     "@typescript-eslint/eslint-plugin": "^8.54.0",
     "@typescript-eslint/parser": "^8.54.0",
+    "beasties": "^0.4.2",
     "eslint": "^9",
     "eslint-config-next": "15.3.0",
     "eslint-config-prettier": "^10.1.8",

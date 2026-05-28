@@ -1,6 +1,12 @@
-import { Barlow, Public_Sans } from 'next/font/google';
+// src/theme/typography.ts
+
+import { primaryFont, secondaryFont } from './fonts';
 
 // ----------------------------------------------------------------------
+// 🔥 IMPORTANTE: Las fuentes deben declararse PRIMERO, antes que cualquier otra cosa
+
+// ----------------------------------------------------------------------
+// Funciones auxiliares (después de las fuentes)
 
 export function remToPx(value: string) {
   return Math.round(parseFloat(value) * 16);
@@ -51,7 +57,7 @@ export function getScaledTypography(fontSizeScale: number = 1) {
     h1: {
       fontWeight: 800,
       lineHeight: 80 / 64,
-      fontSize: pxToRem(32 * scaleFactor), // Valor base para móviles muy pequeños
+      fontSize: pxToRem(32 * scaleFactor),
       ...responsiveFontSizes({
         xs: 36 * scaleFactor,
         sm: 44 * scaleFactor,
@@ -244,19 +250,5 @@ declare module '@mui/material/styles' {
   }
 }
 
-export const primaryFont = Public_Sans({
-  weight: ['400', '500', '600', '700', '800', '900'],
-  subsets: ['latin'],
-  display: 'swap',
-  fallback: ['Helvetica', 'Arial', 'sans-serif'],
-});
-
-export const secondaryFont = Barlow({
-  weight: ['400', '500', '600', '700', '800', '900'],
-  subsets: ['latin'],
-  display: 'swap',
-  fallback: ['Helvetica', 'Arial', 'sans-serif'],
-});
-
-// Tipografía por defecto (sin escala) - mantén esta exportación para compatibilidad
+// Tipografía por defecto (sin escala)
 export const typography = getScaledTypography(1);

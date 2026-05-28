@@ -1,0 +1,17 @@
+# .browserslistrc
+[production]
+>0.2%
+not dead
+not op_mini all
+not ie 11
+not and_qq 1
+not android 4
+chrome >= 60
+firefox >= 60
+safari >= 12
+edge >= 80
+
+[development]
+last 1 chrome version
+last 1 firefox version
+last 1 safari version

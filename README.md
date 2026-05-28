@@ -52,3 +52,8 @@ pnpm exec eslint src/\*_/_.{ts,tsx}
 # command to view all files in the src folder
 
 ls -R src > estructura.txt
+
+# improve css lighthouse
+
+add .browserlistrc file
+update packagejson browserslist
