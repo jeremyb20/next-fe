@@ -59,14 +59,14 @@ export default async function RootLayout({ children }: Props) {
 
         {/*  agregar meta title y description  */}
 
-        {/* <meta
+        <meta
           name="description"
           content="Plataforma para el cuidado de tus mascotas"
         />
         <meta
           name="title"
           content="PlaquitasCR - Plataforma para el cuidado de tus mascotas"
-        /> */}
+        />
       </head>
       <body>
         <AppProviders>{children}</AppProviders>
