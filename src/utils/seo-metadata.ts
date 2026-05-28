@@ -1,8 +1,7 @@
- 
 // lib/seo-metadata.ts
 import { Metadata } from 'next';
 
-import { DOMAIN, HOST_API } from '../config-global';
+import { APP_NAME, DOMAIN, HOST_API } from '../config-global';
 
 interface SeoMetadata {
   title: string;
@@ -147,7 +146,7 @@ function generateMetadataFromSeo(
       title: content.ogTitle || content.title,
       description: content.ogDescription || content.description,
       url: canonical,
-      siteName: 'PlaquitasCR',
+      siteName: APP_NAME,
       images: [
         {
           url: content.ogImage || `${baseUrl}/assets/images/plaquitascr.png`,

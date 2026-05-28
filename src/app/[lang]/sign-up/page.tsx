@@ -18,7 +18,7 @@ export async function generateMetadata({
   const supportedLanguages = ['ES', 'EN', 'AR', 'VI', 'ZH', 'FR'];
   const validLang = supportedLanguages.includes(lang) ? language : 'ES';
 
-  return getSeoMetadata('sign-up', validLang);
+  return await getSeoMetadata('sign-up', validLang);
 }
 
 // Componente de carga para Suspense

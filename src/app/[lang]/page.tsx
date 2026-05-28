@@ -18,7 +18,7 @@ export async function generateMetadata({
   const supportedLanguages = ['ES', 'EN', 'AR', 'VI', 'ZH', 'FR'];
   const validLang = supportedLanguages.includes(lang) ? lang : 'ES';
 
-  return getSeoMetadata('home-page-platform', validLang);
+  return await getSeoMetadata('home-page-platform', validLang);
 }
 
 export default function HomePage() {

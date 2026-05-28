@@ -56,6 +56,17 @@ export default async function RootLayout({ children }: Props) {
 
         {/* Preconnect */}
         <link rel="preconnect" href={HOST_API} />
+
+        {/*  agregar meta title y description  */}
+
+        <meta
+          name="description"
+          content="Plataforma para el cuidado de tus mascotaas"
+        />
+        <meta
+          name="title"
+          content="PlaquitasCR - Plataforma para el Cuidado de tus Mascotassss"
+        />
       </head>
       <body>
         <AppProviders>{children}</AppProviders>

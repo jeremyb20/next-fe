@@ -77,10 +77,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       return {
         ...metadata,
         alternates: {
-          canonical: `/${lang}/pets/${id}`,
+          canonical: `/${lang}/pet/${id}`,
           languages: {
-            es: `/${lang}/pets/${id}`,
-            en: `/en/pets/${id}`,
+            'x-default': `/${lang}/pet/${id}`,
+            es: `/${lang}/pet/${id}`,
+            en: `/en/pet/${id}`,
+            ar: `/ar/pet/${id}`,
+            fr: `/ar/pet/${id}`,
+            vi: `/vi/pet/${id}`,
+            zh: `/zh/pet/${id}`,
           },
         },
       };
