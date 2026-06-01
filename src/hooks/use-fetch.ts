@@ -113,7 +113,7 @@ export const useGetPublicProfilebById = (identifier: string | undefined) =>
 
 export const getValidationCode = async (code: string) => {
   const response = await axiosInstance.get(
-    `${endpoints.user.validateQrCode}?code=${code}`
+    `${endpoints.user.validateQrCode}/${code}`
   );
   return response.data;
 };

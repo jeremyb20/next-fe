@@ -18,8 +18,11 @@ async function getPetData(identifier: string) {
     const response = await fetch(
       `${HOST_API}${endpoints.pet.getPublicProfileById}/${identifier}`,
       {
-        next: { revalidate: 3600 },
-        headers: { 'Content-Type': 'application/json' },
+        cache: 'no-store', // ← Esto es clave
+        headers: {
+          'Cache-Control': 'no-cache',
+          'Content-Type': 'application/json',
+        },
       }
     );
 

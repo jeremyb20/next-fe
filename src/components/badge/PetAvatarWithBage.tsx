@@ -165,6 +165,7 @@ export const PetAvatarWithBadge = ({
       <Avatar
         src={pet.photo}
         onClick={onClick}
+        alt={pet.petName}
         sx={{
           width: size,
           height: size,

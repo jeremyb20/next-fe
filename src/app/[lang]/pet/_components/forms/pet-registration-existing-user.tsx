@@ -28,6 +28,11 @@ import {
   CardContent,
   InputAdornment,
   CircularProgress,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  Stack,
 } from '@mui/material';
 
 import { endpoints } from '@/utils/axios';
@@ -39,6 +44,7 @@ import { fData } from '@/utils/format-number';
 import { useBoolean } from '@/hooks/use-boolean';
 import { getValidationCode } from '@/hooks/use-fetch';
 import { useTranslation } from '@/hooks/use-translation';
+import OtpInput from '@/components/custom-inputs/otp-input';
 import UploadAvatar from '@/components/upload/upload-avatar';
 import { PetAgeCalculator } from '@/utils/pet-age-calculator';
 import { BreedOptions, GENDER_OPTIONS } from '@/utils/constants';
@@ -129,6 +135,25 @@ export function PetRegistrationExistingUser({
   const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
   const turnstileRef = useRef<any>(null);
 
+  // Estados para 2FA
+  const [requiresTwoFactor, setRequiresTwoFactor] = useState(false);
+  const [twoFactorCode, setTwoFactorCode] = useState('');
+  const [tempToken, setTempToken] = useState('');
+  const [twoFactorMethod, setTwoFactorMethod] = useState<
+    'app' | 'email' | null
+  >(null);
+  const [isVerifying2FA, setIsVerifying2FA] = useState(false);
+  const [loginCredentials, setLoginCredentials] = useState<{
+    email: string;
+    password: string;
+    turnstileToken: string;
+  } | null>(null);
+
+  // Estados para cooldown del botón de reenvío
+  const [resendCooldown, setResendCooldown] = useState(0);
+  const [isResending, setIsResending] = useState(false);
+  const resendTimerRef = useRef<NodeJS.Timeout | null>(null);
+
   // Esquema de validación para el código - 6 dígitos
   const CodeSchema = Yup.object().shape({
     code: Yup.string()
@@ -162,7 +187,6 @@ export function PetRegistrationExistingUser({
     const newFile = acceptedFiles[0];
     if (newFile) {
       setPetPhoto(newFile);
-      // Crear preview para mostrar
       const previewUrl = URL.createObjectURL(newFile);
       setPetPhotoPreview(previewUrl);
     }
@@ -176,6 +200,38 @@ export function PetRegistrationExistingUser({
     }
     setPetPhotoPreview(null);
   }, [petPhotoPreview]);
+
+  // Limpiar timer al desmontar
+  useEffect(() => {
+    return () => {
+      if (resendTimerRef.current) {
+        clearInterval(resendTimerRef.current);
+      }
+    };
+  }, []);
+
+  // Efecto para manejar el cooldown
+  useEffect(() => {
+    if (resendCooldown > 0) {
+      resendTimerRef.current = setInterval(() => {
+        setResendCooldown((prev) => {
+          if (prev <= 1) {
+            if (resendTimerRef.current) {
+              clearInterval(resendTimerRef.current);
+            }
+            return 0;
+          }
+          return prev - 1;
+        });
+      }, 1000);
+    }
+
+    return () => {
+      if (resendTimerRef.current) {
+        clearInterval(resendTimerRef.current);
+      }
+    };
+  }, [resendCooldown]);
 
   // Formulario para código
   const codeMethods = useForm({
@@ -220,6 +276,7 @@ export function PetRegistrationExistingUser({
     setValue: setLoginValue,
     watch: watchLogin,
   } = loginMethods;
+
   const {
     handleSubmit: handlePetSubmit,
     setValue: setPetValue,
@@ -242,6 +299,14 @@ export function PetRegistrationExistingUser({
 
   const handleWeightUnitChange = (unit: 'kg' | 'lb') => {
     setWeightUnit(unit);
+  };
+
+  // Función para resetear Turnstile
+  const resetTurnstile = () => {
+    if (turnstileRef.current) {
+      turnstileRef.current.reset();
+      setTurnstileToken(null);
+    }
   };
 
   // Función para calcular la edad de la mascota
@@ -294,13 +359,11 @@ export function PetRegistrationExistingUser({
 
       const { data: res, error, isError } = await getValidationCode(data.code);
 
-      // Si hay error en la petición (network, etc.)
       if (isError) {
         setErrorMsg(error?.message || 'Network error. Please try again.');
         return;
       }
 
-      // Si no hay respuesta
       if (!res) {
         setErrorMsg('No response from server. Please try again.');
         return;
@@ -317,31 +380,222 @@ export function PetRegistrationExistingUser({
     }
   });
 
-  // Paso 2: Login
+  // Paso 2: Login (actualizado para soportar 2FA)
   const onLoginSubmit = handleLoginSubmit(async (data) => {
     try {
       setErrorMsg('');
-      await login?.(data.email, data.password, turnstileToken);
-      setUserData(data);
-      handleNext();
+      setIsVerifying2FA(false);
+
+      // Validar Turnstile
+      if (!turnstileToken) {
+        enqueueSnackbar(t('Please verify that you are not a robot'), {
+          variant: 'warning',
+        });
+        return;
+      }
+
+      const savedTurnstileToken = turnstileToken;
+
+      // Intentar login
+      const result = await login?.(
+        data.email,
+        data.password,
+        savedTurnstileToken,
+        undefined
+      );
+
+      // Login exitoso (sin 2FA)
+      if (result?.success) {
+        setUserData(data);
+        resetTurnstile();
+        handleNext();
+        return;
+      }
+
+      // Se requiere 2FA
+      if (result?.requiresTwoFactor) {
+        setLoginCredentials({
+          email: data.email,
+          password: data.password,
+          turnstileToken: savedTurnstileToken,
+        });
+        setRequiresTwoFactor(true);
+        setTempToken(result.tempToken);
+        setTwoFactorMethod(result.method);
+
+        if (result.method === 'email') {
+          setResendCooldown(30);
+        }
+        return;
+      }
+
+      // Error de credenciales
+      enqueueSnackbar(t(result?.message || 'Invalid credentials'), {
+        variant: 'warning',
+      });
+      setLoginValue('password', '');
+      resetTurnstile();
     } catch (error: any) {
       console.error('Login error:', error);
-      setErrorMsg(error.message || 'Invalid email or password');
+      enqueueSnackbar(t(error.message || 'Invalid email or password'), {
+        variant: 'warning',
+      });
       setLoginValue('password', '');
-      // if (turnstileRef.current) {
-      //   turnstileRef.current.reset();
-      // }
-      // setTurnstileToken(null);
+      resetTurnstile();
     }
   });
+
+  // Función para verificar 2FA
+  const handleVerify2FA = async () => {
+    if (!twoFactorCode || twoFactorCode.length !== 6) {
+      enqueueSnackbar(t('Please enter a valid 6-digit verification code'), {
+        variant: 'warning',
+      });
+      return;
+    }
+
+    if (!loginCredentials) {
+      enqueueSnackbar(t('Session expired. Please try again'), {
+        variant: 'warning',
+      });
+      setRequiresTwoFactor(false);
+      resetTurnstile();
+      return;
+    }
+
+    try {
+      setIsVerifying2FA(true);
+
+      const result = await login?.(
+        loginCredentials.email,
+        loginCredentials.password,
+        loginCredentials.turnstileToken,
+        twoFactorCode
+      );
+
+      if (result?.success) {
+        setUserData(loginCredentials);
+        resetTurnstile();
+        setRequiresTwoFactor(false);
+        setTwoFactorCode('');
+        handleNext();
+      } else {
+        enqueueSnackbar(t(result?.message || 'Invalid verification code'), {
+          variant: 'warning',
+        });
+        setTwoFactorCode('');
+      }
+    } catch (error: any) {
+      console.error(error);
+      enqueueSnackbar(t(error.message || 'Error verifying code'), {
+        variant: 'warning',
+      });
+      setTwoFactorCode('');
+    } finally {
+      setIsVerifying2FA(false);
+    }
+  };
+
+  // Función para reenviar código 2FA
+  const handleResend2FACode = async () => {
+    if (resendCooldown > 0) {
+      enqueueSnackbar(
+        t(
+          `Please wait ${resendCooldown} seconds before requesting another code`
+        ),
+        { variant: 'warning' }
+      );
+      return;
+    }
+
+    if (!tempToken) {
+      enqueueSnackbar(t('Session expired. Please try again'), {
+        variant: 'warning',
+      });
+      setRequiresTwoFactor(false);
+      resetTurnstile();
+      return;
+    }
+
+    try {
+      setIsResending(true);
+
+      const response = await fetch(`${HOST_API}/api/user/resend2FACode`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${tempToken}`,
+        },
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        setResendCooldown(30);
+        enqueueSnackbar(t('New verification code sent to your email'), {
+          variant: 'success',
+        });
+        setTwoFactorCode('');
+
+        const otpInputs = document.querySelectorAll('input[type="tel"]');
+        otpInputs.forEach((input) => {
+          (input as HTMLInputElement).value = '';
+        });
+      } else {
+        enqueueSnackbar(t(result.message || 'Error sending code'), {
+          variant: 'error',
+        });
+      }
+    } catch (error: any) {
+      console.error(error);
+      enqueueSnackbar(t('Error sending verification code'), {
+        variant: 'error',
+      });
+    } finally {
+      setIsResending(false);
+    }
+  };
+
+  // Función para cerrar diálogo de 2FA
+  const closeTwoFactorDialog = () => {
+    setRequiresTwoFactor(false);
+    setTwoFactorCode('');
+    setTempToken('');
+    setLoginCredentials(null);
+    setResendCooldown(0);
+    if (resendTimerRef.current) {
+      clearInterval(resendTimerRef.current);
+    }
+  };
+
+  const getResendIcon = () => {
+    if (isResending) return <CircularProgress size={16} />;
+    if (resendCooldown > 0)
+      return <Iconify icon="solar:clock-circle-bold" width={16} />;
+    return <Iconify icon="solar:refresh-bold" width={16} />;
+  };
+
+  const getResendLabel = () => {
+    if (isResending) return t('Sending...');
+    if (resendCooldown > 0)
+      return `${t('Resend code')} (${formatCooldownTime(resendCooldown)})`;
+    return t('Resend code');
+  };
+
+  const formatCooldownTime = (seconds: number): string => {
+    if (seconds <= 0) return '';
+    if (seconds < 60) return `${seconds}s`;
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${mins}:${secs.toString().padStart(2, '0')}`;
+  };
 
   // Paso 3: Información de la mascota
   const onPetSubmit = handlePetSubmit(async (data) => {
     try {
-      //   setPetData(data);
       setPetData({
         ...data,
-        photo: petPhoto, // Incluir el archivo de la foto
+        photo: petPhoto,
       });
       handleNext();
     } catch (error) {
@@ -512,6 +766,7 @@ export function PetRegistrationExistingUser({
             ),
           }}
         />
+
         {/* Widget de Cloudflare Turnstile */}
         {SITEKEY && (
           <Box sx={{ display: 'flex', justifyContent: 'center', my: 1 }}>
@@ -549,12 +804,87 @@ export function PetRegistrationExistingUser({
           type="submit"
           variant="contained"
           loading={isLoginSubmitting}
-          disabled={!turnstileToken || !watchedPassword} // Deshabilitar hasta que se complete el captcha
+          disabled={!turnstileToken || !watchedPassword}
         >
           {t('Sign In')}
         </Button>
       </Box>
     </FormProvider>
+  );
+
+  // Diálogo para 2FA
+  const render2FADialog = (
+    <Dialog
+      open={requiresTwoFactor}
+      onClose={(event, reason) => {
+        if (reason !== 'backdropClick' && reason !== 'escapeKeyDown') {
+          closeTwoFactorDialog();
+        }
+      }}
+      maxWidth="xs"
+      fullWidth
+    >
+      <DialogTitle>
+        <Stack direction="row" alignItems="center" spacing={1}>
+          <Iconify icon="solar:shield-keyhole-bold" width={28} />
+          <Typography variant="h6">
+            {t('Two-Factor Authentication Required')}
+          </Typography>
+        </Stack>
+      </DialogTitle>
+      <DialogContent>
+        <Stack spacing={2} sx={{ mt: 1 }}>
+          <Alert severity="info">
+            {twoFactorMethod === 'app'
+              ? t('Please enter the 6-digit code from your authenticator app')
+              : t('Please enter the verification code sent to your email')}
+          </Alert>
+
+          <OtpInput
+            onChange={(code) => {
+              setTwoFactorCode(code);
+            }}
+            onEnter={() => {
+              if (twoFactorCode.length === 6) {
+                handleVerify2FA();
+              }
+            }}
+          />
+
+          {twoFactorMethod === 'email' && (
+            <Stack
+              direction="row"
+              spacing={1}
+              alignItems="center"
+              sx={{ mt: 1 }}
+            >
+              <Button
+                size="small"
+                onClick={handleResend2FACode}
+                disabled={isResending || resendCooldown > 0}
+                sx={{ alignSelf: 'flex-start' }}
+                startIcon={getResendIcon()}
+              >
+                {getResendLabel()}
+              </Button>
+            </Stack>
+          )}
+        </Stack>
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={closeTwoFactorDialog} disabled={isVerifying2FA}>
+          {t('Cancel')}
+        </Button>
+        <Button
+          onClick={handleVerify2FA}
+          variant="contained"
+          loading={isVerifying2FA}
+          disabled={!twoFactorCode || twoFactorCode.length !== 6}
+        >
+          {t('Verify & Sign In')}
+        </Button>
+      </DialogActions>
+    </Dialog>
   );
 
   // Renderizar paso de información de mascota
@@ -580,7 +910,6 @@ export function PetRegistrationExistingUser({
               onDrop={handleDropPetPhoto}
               onDelete={handleRemovePetPhoto}
               validator={(fileData) => {
-                // Validar tipo de archivo
                 const allowedTypes = [
                   'image/jpeg',
                   'image/jpg',
@@ -594,7 +923,6 @@ export function PetRegistrationExistingUser({
                   };
                 }
 
-                // Validar tamaño (2MB máximo)
                 if (fileData.size > 2 * 1024 * 1024) {
                   return {
                     code: 'file-too-large',
@@ -794,17 +1122,7 @@ export function PetRegistrationExistingUser({
           {t('User Information')}
         </Typography>
         <Typography variant="body2" color="text.secondary">
-          <strong>{t('Name')}:</strong> {userData?.firstName}{' '}
-          {userData?.lastName}
-        </Typography>
-        <Typography variant="body2" color="text.secondary">
           <strong>{t('Email address')}:</strong> {userData?.email}
-        </Typography>
-        <Typography variant="body2" color="text.secondary">
-          <strong>{t('Phone Number')}:</strong> {userData?.phone}
-        </Typography>
-        <Typography variant="body2" color="text.secondary">
-          <strong>{t('Country')}:</strong> {userData?.country}
         </Typography>
       </Paper>
 
@@ -813,7 +1131,6 @@ export function PetRegistrationExistingUser({
           {t('Pet Information')}
         </Typography>
 
-        {/* Mostrar preview de la foto si existe */}
         {petPhotoPreview && (
           <Box sx={{ mb: 2, textAlign: 'center' }}>
             <Typography variant="subtitle2" gutterBottom>
@@ -994,6 +1311,9 @@ export function PetRegistrationExistingUser({
           </Button>
         </Paper>
       )}
+
+      {/* Diálogo de 2FA */}
+      {render2FADialog}
     </>
   );
 }
