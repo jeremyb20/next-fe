@@ -1,3 +1,4 @@
+// components/image/index.tsx
 import { forwardRef } from 'react';
 import Box from '@mui/material/Box';
 import { alpha, useTheme } from '@mui/material/styles';
@@ -8,12 +9,40 @@ import { ImageProps } from './types';
 
 // ----------------------------------------------------------------------
 
+// 🔥 Helper para generar srcSet responsivo con Cloudinary
+const generateSrcSet = (
+  src: string,
+  widths: number[] = [640, 750, 828, 1080, 1200, 1920]
+) => {
+  if (!src?.includes('cloudinary.com')) return undefined;
+
+  return widths
+    .map((width) => {
+      const optimizedUrl = src.replace(
+        '/upload/',
+        `/upload/w_${width},c_fill,q_75,f_auto/`
+      );
+      return `${optimizedUrl} ${width}w`;
+    })
+    .join(', ');
+};
+
+// 🔥 Helper para optimizar URL de Cloudinary
+const optimizeCloudinaryUrl = (src: string, isPriority: boolean = false) => {
+  if (!src?.includes('cloudinary.com')) return src;
+
+  const quality = isPriority ? 85 : 75;
+  return src.replace('/upload/', `/upload/q_${quality},f_auto/`);
+};
+
 const Image = forwardRef<HTMLSpanElement, ImageProps>(
   (
     {
       ratio,
       overlay,
       disabledEffect = false,
+      responsive = true,
+      priority = false,
       //
       alt,
       src,
@@ -49,12 +78,23 @@ const Image = forwardRef<HTMLSpanElement, ImageProps>(
       },
     };
 
+    // 🔥 Optimizar URL según prioridad
+    const optimizedSrc = typeof src === 'string' ? optimizeCloudinaryUrl(src, priority) : src;
+
+    // 🔥 Generar srcSet para imágenes responsivas
+    const srcSet = responsive && typeof src === 'string' ? generateSrcSet(src) : undefined;
+    const sizes = responsive
+      ? '(max-width: 600px) 100vw, (max-width: 1200px) 50vw, 33vw'
+      : undefined;
+
     const content = (
       <Box
         component={LazyLoadImage}
         //
         alt={alt}
-        src={src}
+        src={optimizedSrc}
+        srcSet={srcSet}
+        sizes={sizes}
         afterLoad={afterLoad}
         delayTime={delayTime}
         threshold={threshold}
@@ -63,9 +103,9 @@ const Image = forwardRef<HTMLSpanElement, ImageProps>(
         placeholder={placeholder}
         wrapperProps={wrapperProps}
         scrollPosition={scrollPosition}
-        visibleByDefault={visibleByDefault}
+        visibleByDefault={priority ? true : visibleByDefault}
         effect={disabledEffect ? undefined : effect}
-        useIntersectionObserver={useIntersectionObserver}
+        useIntersectionObserver={priority ? false : useIntersectionObserver}
         wrapperClassName={wrapperClassName || 'component-image-wrapper'}
         placeholderSrc={
           disabledEffect ? '/assets/transparent.png' : '/assets/placeholder.svg'

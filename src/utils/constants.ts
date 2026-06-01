@@ -283,7 +283,10 @@ export const getSecurityColor = (percentage: number) => {
 };
 
 // Determinar texto del nivel
-export const getSecurityLevelText = (percentage: number, t: (key: string) => string) => {
+export const getSecurityLevelText = (
+  percentage: number,
+  t: (key: string) => string
+) => {
   if (percentage >= 80) return t('High Security');
   if (percentage >= 50) return t('Medium Security');
   return t('Low Security');
@@ -297,7 +300,8 @@ export const isUpcoming = (dateString: string) => {
   return date >= today && date <= next30Days;
 };
 
-export const isOverdue = (dateString: string) => new Date(dateString) < new Date();
+export const isOverdue = (dateString: string) =>
+  new Date(dateString) < new Date();
 
 export const getDateColor = (dateString: string) => {
   if (isOverdue(dateString)) return 'error.main';
@@ -305,7 +309,10 @@ export const getDateColor = (dateString: string) => {
   return 'inherit';
 };
 
-export const getDaysLabel = (days: number, t: (key: string, params?: Record<string, unknown>) => string) => {
+export const getDaysLabel = (
+  days: number,
+  t: (key: string, params?: Record<string, unknown>) => string
+) => {
   if (days === 0) return t('Today');
   if (days === 1) return t('Tomorrow');
   return t('in {{days}} days', { days });
@@ -319,9 +326,18 @@ export const getDaysUntil = (dateString: string) => {
   return diffDays;
 };
 
-
 export const getProgressBarColor = (days: number, notifDays: number) => {
   if (days > notifDays) return 'info.main';
   if (days <= 3) return 'error.main';
   return 'warning.main';
+};
+
+export const getTranslationKey = (status: string): string => {
+  const statusMap: Record<string, string> = {
+    active: 'Active',
+    inactive: 'Inactive',
+    lost: 'Lost',
+    deceased: 'Deceased',
+  };
+  return statusMap[status] || status;
 };

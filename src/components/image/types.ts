@@ -1,3 +1,4 @@
+// components/image/types.ts
 import { BoxProps } from '@mui/material/Box';
 import { LazyLoadImageProps } from 'react-lazy-load-image-component';
 
@@ -19,4 +20,6 @@ export type ImageProps = BoxProps &
     overlay?: string;
     ratio?: ImageRatio;
     disabledEffect?: boolean;
+    responsive?: boolean;
+    priority?: boolean;
   };

@@ -35,7 +35,6 @@ import { formatPetAge } from '@/utils/pet-age.utils';
 import { useTranslation } from '@/hooks/use-translation';
 import { useManagerUser } from '@/hooks/use-manager-user';
 import { useSettingsContext } from '@/components/settings';
-import { BreedOptions, GENDER_OPTIONS } from '@/utils/constants';
 import SplashScreen from '@/components/loading-screen/splash-screen';
 import { usePetAgeCalculator } from '@/hooks/use-pet-age-calculator';
 import ShareDrawerDialog from '@/components/share/share-drawer-dialog';
@@ -44,6 +43,11 @@ import { PetAvatarWithBadge } from '@/components/badge/PetAvatarWithBage';
 import { PetCondolenceMessage } from '@/components/pet/PetCondolenceMessage';
 import PetStickyNote from '@/app/[lang]/pet/_components/view/pet-sticky-note';
 import CostaRicaIDCard from '@/components/country-cards/Costa-Rica/costa-rica-card';
+import {
+  BreedOptions,
+  GENDER_OPTIONS,
+  getTranslationKey,
+} from '@/utils/constants';
 
 import PetLocationMap from '../locations/pet-location-map';
 import LocationConsentOverlay from '../locations/location-consent-overlay';
@@ -304,8 +308,10 @@ export default function PetProfileViewComponent({
                   }}
                 >
                   <Image
-                    src={petProfile.photo || petProfile.photo}
+                    src={petProfile.photo}
                     alt={petProfile.petName}
+                    priority={true} // 🔥 Importante para LCP
+                    responsive={true} // 🔥 Activar srcSet responsivo
                     sx={{
                       width: '100%',
                       height: '100%',
@@ -339,6 +345,7 @@ export default function PetProfileViewComponent({
                     )}
                     <IconButton
                       onClick={handleShareOpen}
+                      aria-label={t('Share with friends')}
                       sx={{
                         position: 'absolute',
                         top: 16,
@@ -375,16 +382,45 @@ export default function PetProfileViewComponent({
                           {petProfile.petName}
                         </Typography>
                         <Chip
-                          label={t(petProfile.petStatus)}
+                          label={t(getTranslationKey(petProfile.petStatus))}
                           size="small"
-                          sx={{ textTransform: 'capitalize', fontWeight: 100 }}
-                          color={
-                            petProfile.petStatus === 'lost'
-                              ? 'error'
-                              : petProfile.petStatus === 'active'
-                                ? 'success'
-                                : 'warning'
-                          }
+                          sx={{
+                            textTransform: 'capitalize',
+                            fontWeight: 600,
+                            // Estado lost
+                            ...(petProfile.petStatus === 'lost' && {
+                              bgcolor: '#C62828',
+                              color: '#FFFFFF',
+                              '&:hover': {
+                                bgcolor: '#B71C1C', // Rojo más oscuro en hover
+                              },
+                            }),
+                            // Estado active
+                            ...(petProfile.petStatus === 'active' && {
+                              bgcolor: '#2E7D32',
+                              color: '#FFFFFF',
+                              '&:hover': {
+                                bgcolor: '#1B5E20', // Verde más oscuro en hover
+                              },
+                            }),
+                            // Estado inactive
+                            ...(petProfile.petStatus === 'inactive' && {
+                              bgcolor: '#ED6C02',
+                              color: '#FFFFFF',
+                              '&:hover': {
+                                bgcolor: '#E65100', // Naranja más oscuro en hover
+                              },
+                            }),
+                            // Estado deceased
+                            ...(petProfile.petStatus === 'deceased' && {
+                              bgcolor: '#616161',
+                              color: '#FFFFFF',
+                              '&:hover': {
+                                bgcolor: '#424242', // Gris más oscuro en hover
+                              },
+                              textDecoration: 'line-through',
+                            }),
+                          }}
                         />
                       </Stack>
                       <Stack
@@ -712,33 +748,47 @@ export default function PetProfileViewComponent({
                                 {t('Status')}
                               </Typography>
                               <Chip
-                                label={petProfile.petStatus}
+                                label={t(
+                                  getTranslationKey(petProfile.petStatus)
+                                )}
                                 size="small"
                                 sx={{
-                                  mt: 0.5,
                                   textTransform: 'capitalize',
-                                  fontWeight: 500,
+                                  fontWeight: 600,
+                                  // Estado lost
+                                  ...(petProfile.petStatus === 'lost' && {
+                                    bgcolor: '#C62828',
+                                    color: '#FFFFFF',
+                                    '&:hover': {
+                                      bgcolor: '#B71C1C', // Rojo más oscuro en hover
+                                    },
+                                  }),
+                                  // Estado active
+                                  ...(petProfile.petStatus === 'active' && {
+                                    bgcolor: '#2E7D32',
+                                    color: '#FFFFFF',
+                                    '&:hover': {
+                                      bgcolor: '#1B5E20', // Verde más oscuro en hover
+                                    },
+                                  }),
+                                  // Estado inactive
+                                  ...(petProfile.petStatus === 'inactive' && {
+                                    bgcolor: '#ED6C02',
+                                    color: '#FFFFFF',
+                                    '&:hover': {
+                                      bgcolor: '#E65100', // Naranja más oscuro en hover
+                                    },
+                                  }),
+                                  // Estado deceased
+                                  ...(petProfile.petStatus === 'deceased' && {
+                                    bgcolor: '#616161',
+                                    color: '#FFFFFF',
+                                    '&:hover': {
+                                      bgcolor: '#424242', // Gris más oscuro en hover
+                                    },
+                                    textDecoration: 'line-through',
+                                  }),
                                 }}
-                                color={
-                                  petProfile.petStatus === 'Perdido'
-                                    ? 'error'
-                                    : petProfile.petStatus === 'Encontrado'
-                                      ? 'success'
-                                      : 'primary'
-                                }
-                                icon={
-                                  <Iconify
-                                    icon={
-                                      petProfile.petStatus === 'Perdido'
-                                        ? 'mdi:alert'
-                                        : petProfile.petStatus === 'Encontrado'
-                                          ? 'mdi:check-circle'
-                                          : 'mdi:information'
-                                    }
-                                    width={16}
-                                    height={16}
-                                  />
-                                }
                               />
                             </Box>
                           </Box>
@@ -991,11 +1041,11 @@ export default function PetProfileViewComponent({
                   {!petProfile.isDigitalIdentificationActive && (
                     <Box
                       sx={{
-                        p: 2,
+                        p: { xs: 1.5, sm: 2 }, // 🔥 Mejor padding para móvil
                         borderRadius: 2,
                         border: '1px solid',
                         borderColor: 'warning.main',
-                        bgcolor: alpha(theme.palette.warning.main, 0.1),
+                        bgcolor: alpha(theme.palette.warning.main, 0.08), // 🔥 Fondo más claro
                       }}
                     >
                       <Box
@@ -1003,44 +1053,64 @@ export default function PetProfileViewComponent({
                           display: 'flex',
                           alignItems: 'flex-start',
                           flexDirection: { xs: 'column', sm: 'row' },
-                          gap: 1.5,
+                          gap: { xs: 2, sm: 1.5 }, // 🔥 Más gap en móvil
                         }}
                       >
                         <Iconify
                           icon="mdi:shield-alert"
-                          width={20}
-                          height={20}
+                          width={24}
+                          height={24}
                           sx={{ color: 'warning.main', mt: 0.2 }}
                         />
+
                         <Box sx={{ flex: 1 }}>
                           <Stack
-                            sx={{ flexDirection: { xs: 'column', sm: 'row' } }}
+                            sx={{
+                              flexDirection: { xs: 'column', md: 'row' }, // 🔥 Cambiar a columna en móvil
+                            }}
                             justifyContent="space-between"
-                            spacing={1}
+                            spacing={2}
                             mb={2}
                           >
-                            <Stack>
+                            <Stack sx={{ flex: 1 }}>
                               <Typography
                                 variant="subtitle2"
                                 fontWeight={600}
-                                sx={{ mb: 0.5 }}
+                                sx={{
+                                  mb: 0.5,
+                                  color: 'warning.dark', // 🔥 Resaltar el título
+                                }}
                               >
                                 {t('Digital ID not activated')}
                               </Typography>
+
                               <Typography
                                 variant="body2"
-                                color="text.secondary"
-                                sx={{ mb: 1 }}
+                                sx={{
+                                  mb: 2,
+                                  color: 'text.primary', // 🔥 Contraste mejorado
+                                  maxWidth: '90%', // 🔥 Limitar ancho para mejor legibilidad
+                                }}
                               >
                                 {t(
                                   'Activate your pet digital ID to access exclusive benefits and keep your pet safe.'
                                 )}
                               </Typography>
                             </Stack>
-                            <Stack>
+
+                            {/* Imagen visible solo en desktop, en móvil se oculta o se muestra abajo */}
+                            <Box
+                              sx={{
+                                display: { xs: 'block', md: 'none' },
+                                mt: 2,
+                                textAlign: 'center',
+                              }}
+                            >
                               <Image
                                 src="/assets/images/digital-id/Costa-Rica-ID.png"
                                 alt={petProfile.petName}
+                                priority={false}
+                                responsive={true}
                                 sx={{
                                   width: '100%',
                                   height: '100%',
@@ -1048,42 +1118,56 @@ export default function PetProfileViewComponent({
                                   borderRadius: 1.5,
                                 }}
                               />
-                            </Stack>
+                            </Box>
+                          </Stack>
+
+                          {/* 🔥 Botones en columna en móvil */}
+                          <Stack
+                            direction={{ xs: 'column', sm: 'row' }}
+                            spacing={1.5}
+                          >
+                            <Button
+                              size="medium"
+                              fullWidth
+                              variant="outlined"
+                              startIcon={
+                                <Iconify icon="mdi:email" width={18} />
+                              }
+                              href={mailtoHref}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              sx={{
+                                textTransform: 'none',
+                                borderRadius: 2,
+                              }}
+                            >
+                              {t('Contact by Email')}
+                            </Button>
+
+                            <Button
+                              size="medium"
+                              fullWidth
+                              variant="contained"
+                              startIcon={
+                                <Iconify icon="mdi:whatsapp" width={18} />
+                              }
+                              href={`https://wa.me/${PHONE_SUPPORT}?text=${encodeURIComponent(
+                                'Hola, me interesa activar la cédula digital para mi mascota. ¿Podrían ayudarme? 🐾'
+                              )}`}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              sx={{
+                                textTransform: 'none',
+                                bgcolor: '#25D366',
+                                borderRadius: 2,
+                                '&:hover': { bgcolor: '#128C7E' },
+                              }}
+                            >
+                              {t('Contact by WhatsApp')}
+                            </Button>
                           </Stack>
                         </Box>
                       </Box>
-                      <Stack direction="row" spacing={1}>
-                        <Button
-                          size="small"
-                          fullWidth
-                          variant="outlined"
-                          startIcon={<Iconify icon="mdi:email" width={16} />}
-                          href={mailtoHref}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          sx={{ textTransform: 'none' }}
-                        >
-                          {t('Contact by Email')}
-                        </Button>
-                        <Button
-                          size="small"
-                          fullWidth
-                          variant="contained"
-                          startIcon={<Iconify icon="mdi:whatsapp" width={16} />}
-                          href={`https://wa.me/${PHONE_SUPPORT}?text=${encodeURIComponent(
-                            'Hola, me interesa activar la cédula digital para mi mascota. ¿Podrían ayudarme? 🐾'
-                          )}`}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          sx={{
-                            textTransform: 'none',
-                            bgcolor: '#25D366',
-                            '&:hover': { bgcolor: '#128C7E' },
-                          }}
-                        >
-                          {t('Contact by WhatsApp')}
-                        </Button>
-                      </Stack>
                     </Box>
                   )}
                 </Box>

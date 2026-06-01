@@ -10,10 +10,11 @@ type Props = {
 export default function SimpleLayout({ children }: Props) {
   return (
     <>
-      <Header />
-
-      {children}
-      <Footer />
+      <Header /> {/* Si tienes header */}
+      <main id="main-content" tabIndex={-1}>
+        {children}
+      </main>
+      <Footer /> {/* Si tienes footer */}
     </>
   );
 }
