@@ -14,8 +14,8 @@ export default async function RootLayout({ children }: Props) {
     <html lang={language} dir={isRTL ? 'rtl' : 'ltr'} translate="no">
       <head>
         {/* Meta tags para SEO multilingüe */}
-        <link rel="alternate" hrefLang="x-default" href={DOMAIN} />
-        <link rel="alternate" hrefLang="es" href={DOMAIN} />
+        <link rel="alternate" hrefLang="x-default" href={`${DOMAIN}/es`} />
+        <link rel="alternate" hrefLang="es" href={`${DOMAIN}/es`} />
         <link rel="alternate" hrefLang="en" href={`${DOMAIN}/en`} />
         <link rel="alternate" hrefLang="fr" href={`${DOMAIN}/fr`} />
         <link rel="alternate" hrefLang="ar" href={`${DOMAIN}/ar`} />

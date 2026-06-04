@@ -261,7 +261,7 @@ function getDefaultKeywords(language: string): string {
 
 function generateDefaultMetadata(language: string = 'ES'): Metadata {
   const titles: Record<string, string> = {
-    ES: 'PlaquitasCR - Plataforma para el Cuidado de tus Mascotas',
+    ES: 'PlaquitasCR - Plataforma para el cuidado de tus mascotas',
     EN: 'PlaquitasCR - Platform for Your Pet Care',
     AR: 'PlaquitasCR - منصة لرعاية حيواناتك الأليفة',
     VI: 'PlaquitasCR - Nền tảng Chăm sóc Thú cưng của Bạn',

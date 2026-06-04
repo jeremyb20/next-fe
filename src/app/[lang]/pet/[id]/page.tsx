@@ -86,7 +86,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
             es: `/${lang}/pet/${id}`,
             en: `/en/pet/${id}`,
             ar: `/ar/pet/${id}`,
-            fr: `/ar/pet/${id}`,
+            fr: `/fr/pet/${id}`,
             vi: `/vi/pet/${id}`,
             zh: `/zh/pet/${id}`,
           },
