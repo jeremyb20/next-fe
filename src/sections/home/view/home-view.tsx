@@ -15,10 +15,9 @@ import { useAuthContext } from '@/auth/hooks/use-auth-context';
 
 import HomeHero from '../home-hero';
 import HomeShop from '../home-shop';
-import HomeBlog from '../home-blog';
 import HomeFeatures from '../home-features';
 import HomeServices from '../home-services';
-import HomeGrooming from '../home-grooming';
+import HomeLostPets from '../home-lost-pets';
 import HomePetTracking from '../home-pet-tracking';
 import HomeTestimonials from '../home-testimonials';
 
@@ -101,8 +100,9 @@ export default function HomeView() {
           <StyledPolygon anchor="bottom" />
         </Box>
 
-        <HomeGrooming />
+        {/* <HomeGrooming /> */}
 
+        <HomeLostPets />
         {/* <HomeVeterinarians /> */}
 
         <HomeShop />
@@ -111,7 +111,7 @@ export default function HomeView() {
 
         <HomeTestimonials />
 
-        <HomeBlog />
+        {/* <HomeBlog /> */}
       </Box>
     </MainLayout>
   ) : (

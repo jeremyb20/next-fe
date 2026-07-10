@@ -36,11 +36,9 @@ export default function HomePetTracking() {
 
             <Stack spacing={2}>
               {[
-                'Complete Health Monitoring',
                 'Monitor your pets health and receive personalized recommendations.',
                 'Vaccination tracking and reminders',
                 'Health records and medical history',
-                'Appointment scheduling with vets and groomers',
                 'Personalized care recommendations',
               ].map((item) => (
                 <m.div key={item} variants={varFade().inUp}>

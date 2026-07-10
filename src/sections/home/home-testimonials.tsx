@@ -60,7 +60,7 @@ const TESTIMONIALS = [
     avatar: '/assets/images/avatars/avatar-4.webp',
     rating: 5,
     content:
-      'El servicio de grooming a través de la app es excelente. Puedo ver disponibilidad, precios y reviews de cada profesional. Mi perro siempre sale feliz!',
+      'Agradezco mucho el mensaje de en memoria de mi Perrito Rocky, Sé que está en un mejor lugar',
     pet: 'Perro - Rocky',
     location: 'Alajuela, Costa Rica',
   },
@@ -339,7 +339,7 @@ export default function HomeTestimonials() {
         {/* Carousel component remains the same */}
         {/* ... renderCarousel code ... */}
         {renderCarousel}
-        {renderStats}
+        {/* {renderStats} */}
       </Container>
     </Box>
   );

@@ -10,6 +10,7 @@ import Typography from '@mui/material/Typography';
 import CircularProgress from '@mui/material/CircularProgress';
 
 import { EMAIL_SUPPORT } from '@/config-global';
+import { useTranslation } from '@/hooks/use-translation';
 import { varFade, MotionViewport } from '@/components/animate';
 
 // ----------------------------------------------------------------------
@@ -29,6 +30,8 @@ interface FormErrors {
 }
 
 export default function FaqsForm() {
+  const { t } = useTranslation();
+
   const [formData, setFormData] = useState<ContactFormData>({
     name: '',
     email: '',
@@ -167,11 +170,12 @@ export default function FaqsForm() {
       <Stack component={MotionViewport} spacing={3} sx={{ width: '100%' }}>
         <m.div variants={varFade().inUp}>
           <Typography variant="h4">
-            ¿No encontraste la respuesta que buscabas?
+            {t('Didnt find the answer you were looking for?')}
           </Typography>
           <Typography variant="body1" color="text.secondary" sx={{ mt: 1 }}>
-            Estamos aquí para ayudarte. Completa el formulario y nuestro equipo
-            te responderá pronto.
+            {t(
+              'Were here to help you. Fill out the form, and our team will get back to you soon.'
+            )}
           </Typography>
         </m.div>
 
@@ -179,21 +183,21 @@ export default function FaqsForm() {
           <m.div variants={varFade().inUp}>
             <TextField
               fullWidth
-              label="Nombre completo"
+              label={t('Full Name')}
               name="name"
               value={formData.name}
               onChange={handleChange}
               error={!!errors.name}
               helperText={errors.name}
               disabled={isSubmitting}
-              placeholder="Ej: María Rodríguez"
+              placeholder={t('Ex: María Rodríguez')}
             />
           </m.div>
 
           <m.div variants={varFade().inUp}>
             <TextField
               fullWidth
-              label="Email"
+              label={t('Email address')}
               name="email"
               type="email"
               value={formData.email}
@@ -208,21 +212,21 @@ export default function FaqsForm() {
           <m.div variants={varFade().inUp}>
             <TextField
               fullWidth
-              label="Asunto"
+              label={t('Subject')}
               name="subject"
               value={formData.subject}
               onChange={handleChange}
               error={!!errors.subject}
               helperText={errors.subject}
               disabled={isSubmitting}
-              placeholder="Ej: Consulta sobre placas para perros grandes"
+              placeholder={t('Example: Inquiry about tags for large dogs')}
             />
           </m.div>
 
           <m.div variants={varFade().inUp}>
             <TextField
               fullWidth
-              label="Escribe tu mensaje aquí"
+              label={t('Write your message here')}
               name="message"
               value={formData.message}
               onChange={handleChange}
@@ -231,7 +235,7 @@ export default function FaqsForm() {
               disabled={isSubmitting}
               multiline
               rows={4}
-              placeholder="Describe detalladamente tu consulta o pregunta..."
+              placeholder={t('Describe your query or question in detail...')}
             />
           </m.div>
 
@@ -245,7 +249,7 @@ export default function FaqsForm() {
                 sx={{ minWidth: 180 }}
                 startIcon={isSubmitting ? null : undefined}
               >
-                {isSubmitting ? 'Enviando...' : 'Enviar Mensaje'}
+                {isSubmitting ? t('Sending...') : t('Send Message')}
               </Button>
               {isSubmitting && (
                 <CircularProgress
@@ -265,7 +269,7 @@ export default function FaqsForm() {
               color="text.secondary"
               sx={{ mt: 1, display: 'block' }}
             >
-              También puedes escribirnos directamente a: {EMAIL_SUPPORT}
+              {t('You can also write to us directly at')}: {EMAIL_SUPPORT}
             </Typography>
           </m.div>
         </Stack>

@@ -10,69 +10,70 @@ import {
 } from '@mui/material';
 
 import Iconify from '@/components/iconify';
+import { useTranslation } from '@/hooks/use-translation';
 const FaqsList = () => {
   const theme = useTheme();
-
+  const { t } = useTranslation();
   const faqs = [
     {
       id: 1,
-      heading: '¿Qué son las Plaquitas Inteligentes?',
+      heading: 'What Are Smart Pet Tags?',
       detail:
-        'Las Plaquitas Inteligentes son dispositivos de identificación permanente para mascotas que utilizan tecnología QR. Cada placa tiene un código único vinculado a un perfil en línea donde puedes almacenar información vital de tu mascota: datos de contacto, historial médico, alergias, vacunas y más. Esto permite que cualquier persona que encuentre a tu mascota pueda contactarte rápidamente escaneando el código QR con su smartphone.',
+        'Smart Tags are permanent identification devices for pets that use QR technology. Each tag has a unique code linked to an online profile where you can store vital information about your pet: contact information, medical history, allergies, vaccinations, and more. This allows anyone who finds your pet to contact you quickly by scanning the QR code with their smartphone.',
     },
     {
       id: 2,
-      heading: '¿Cómo se instalan las placas?',
+      heading: 'How are pet tags installed?',
       detail:
-        'Nuestras placas vienen con diferentes sistemas de sujeción según el tipo de collar. Ofrecemos placas para collar con argolla, placas con sistema de enganche rápido, y placas para arnés. La instalación es sencilla y no requiere herramientas especiales. Incluimos instrucciones detalladas con cada pedido y videos tutoriales en nuestro sitio web.',
+        'Our tags come with different attachment systems depending on the type of collar. We offer tags for collars with rings, tags with a quick-release system, and tags for harnesses. Installation is simple and does not require any special tools. We include detailed instructions with every order and tutorial videos on our website.',
     },
     {
       id: 3,
-      heading: '¿Qué información puedo incluir en el perfil de mi mascota?',
+      heading: 'What information can I include in my pets profile?',
       detail:
-        'Puedes incluir: datos de contacto del dueño (múltiples teléfonos), nombre de la mascota, fotos recientes, raza, edad, peso, información médica (enfermedades crónicas, alergias, medicamentos), datos del veterinario, contactos de emergencia, instrucciones especiales, y hasta recompensa ofrecida en caso de extravío. La información es editable en cualquier momento desde tu cuenta.',
+        'You can include: the owners contact information (multiple phone numbers), the pets name, recent photos, breed, age, weight, medical information (chronic conditions, allergies, medications), veterinarians information, emergency contacts, special instructions, and even a reward offered if the pet goes missing. You can edit this information at any time from your account.',
     },
     {
       id: 4,
-      heading: '¿Qué pasa si mi mascota se pierde?',
+      heading: 'What happens if my pet gets lost?',
       detail:
-        'Si tu mascota se pierde: 1) Actualiza inmediatamente el estado en su perfil a "Perdida", 2) Recibirás notificaciones cuando alguien escanee el código QR, 3) Nuestro sistema generará alertas en tu zona, 4) Te ayudaremos a crear carteles digitales para compartir en redes sociales, 5) Mantendremos comunicación directa contigo durante el proceso de búsqueda.',
+        'If your pet goes missing: 1) Immediately update the status on its profile to “Missing,” 2) Youll receive notifications when someone scans the QR code, 3) Well help you create digital posters to share on social media, 5) Well stay in direct contact with you throughout the search process.',
     },
     {
       id: 5,
-      heading: '¿Funciona sin conexión a internet?',
+      heading: 'Does it work without an internet connection?',
       detail:
-        'El código QR funciona incluso sin conexión a internet. Al escanearlo, se abre una página con información básica de contacto. Si el dispositivo tiene internet, mostrará el perfil completo de la mascota con todos los datos. También incluimos un número de teléfono grabado en la placa para aquellos que no puedan escanear el código QR.',
+        'The QR code works even without an internet connection. When you scan it, a page opens with basic contact information. If the device has an internet connection, it will display the pet’s complete profile with all the details. We also include a phone number engraved on the tag for those who are unable to scan the QR code.',
     },
     {
       id: 6,
-      heading: '¿Es segura la información de mi mascota?',
+      heading: 'Is my pets information secure?',
       detail:
-        'Sí, la seguridad es nuestra prioridad. Utilizamos encriptación de extremo a extremo, servidores seguros en Costa Rica, y cumplimos con la Ley 8968 de Protección de Datos. Solo tú tienes acceso completo al perfil de tu mascota. La información de contacto básica es visible para quienes escanean el código, pero datos médicos sensibles requieren tu autorización previa.',
+        'Yes, security is our top priority. We use end-to-end encryption, secure servers in Costa Rica, and comply with Data Protection Law 8968. Only you have full access to your pet’s profile. Basic contact information is visible to anyone who scans the code, but sensitive medical information requires your prior authorization.',
     },
-    {
-      id: 7,
-      heading: '¿Cuánto dura la suscripción? ¿Hay renovación?',
-      detail:
-        'Ofrecemos diferentes planes: Plaquita Básica (sin suscripción - solo código QR grabado), Plaquita Inteligente (suscripción anual que incluye perfil online editable), y Plan Familiar (múltiples mascotas con descuento). Las renovaciones son automáticas con notificación previa. Puedes cancelar en cualquier momento desde tu cuenta.',
-    },
+    // {
+    //   id: 7,
+    //   heading: '¿Cuánto dura la suscripción? ¿Hay renovación?',
+    //   detail:
+    //     'Ofrecemos diferentes planes: Plaquita Básica (sin suscripción - solo código QR grabado), Plaquita Inteligente (suscripción anual que incluye perfil online editable), y Plan Familiar (múltiples mascotas con descuento). Las renovaciones son automáticas con notificación previa. Puedes cancelar en cualquier momento desde tu cuenta.',
+    // },
     {
       id: 8,
-      heading: '¿Hacen envíos a todo el país? ¿Cuánto tardan?',
+      heading: 'Do you ship nationwide? How long does it take?',
       detail:
-        'Sí, hacemos envíos a las 7 provincias de Costa Rica. En el GAM: 1-2 días hábiles. Fuera del GAM: 2-3 días hábiles. Para envíos urgentes contamos con servicio express (mismo día en GAM). Los costos de envío varían según la zona y se calculan al momento de la compra. También puedes recoger en nuestro centro de distribución en San José.',
+        'Yes, we ship to all 7 provinces in Costa Rica. Within the Greater San José Metropolitan Area (GAM): 1–2 business days. Outside the GAM: 2–3 business days. For urgent shipments, we offer express service (same-day delivery within the GAM). Shipping costs vary by region and are calculated at checkout. You can also pick up your order at our distribution center in San José.',
     },
     {
       id: 9,
-      heading: '¿Qué pasa si la placa se daña o pierde?',
+      heading: 'What happens if the pet tag gets damaged or lost?',
       detail:
-        'Ofrecemos garantía de 1 año por defectos de fabricación. Si la placa se daña dentro de este período, la reemplazamos sin costo. Si pierdes la placa, podemos emitir una nueva manteniendo el mismo código QR y perfil. Existe un costo reducido por reemplazo que varía según el tipo de placa y plan contratado.',
+        'We offer a 1-year warranty against manufacturing defects. If the tag is damaged within this period, we will replace it at no cost. If you lose the tag, we can issue a new one with the same QR code and profile. There is a small replacement fee that varies depending on the type of tag and your plan.',
     },
     {
       id: 10,
-      heading: '¿Puedo registrar más de una mascota?',
+      heading: 'Can I register more than one pet?',
       detail:
-        '¡Claro! Ofrecemos planes familiares con descuento para múltiples mascotas. Puedes gestionar todos los perfiles desde una sola cuenta. Cada mascota tendrá su placa con código QR único. También ofrecemos paquetes especiales para protectoras de animales y veterinarias con necesidades de múltiples registros.',
+        'Of course! We offer discounted family plans for multiple pets. You can manage all their profiles from a single account. Each pet will have its own tag with a unique QR code.',
     },
   ];
 
@@ -80,7 +81,7 @@ const FaqsList = () => {
     <Container maxWidth="lg" sx={{ pb: 8 }}>
       {/* Header */}
       <Box sx={{ textAlign: 'center', mb: 6 }}>
-        <Typography
+        {/* <Typography
           variant="h2"
           component="h1"
           gutterBottom
@@ -94,14 +95,15 @@ const FaqsList = () => {
           }}
         >
           Preguntas Frecuentes
-        </Typography>
+        </Typography> */}
         <Typography
           variant="h6"
           color="text.secondary"
           sx={{ maxWidth: 800, mx: 'auto', mb: 4 }}
         >
-          Encuentra respuestas a las preguntas más comunes sobre nuestras
-          Plaquitas Inteligentes
+          {t(
+            'Find answers to the most common questions about our Smart Plates'
+          )}
         </Typography>
       </Box>
 
@@ -129,7 +131,7 @@ const FaqsList = () => {
               }}
             >
               <Typography variant="h6" component="div" sx={{ fontWeight: 600 }}>
-                {faq.heading}
+                {t(faq.heading)}
               </Typography>
             </AccordionSummary>
             <AccordionDetails sx={{ p: 3 }}>
@@ -138,7 +140,7 @@ const FaqsList = () => {
                 color="text.secondary"
                 sx={{ lineHeight: 1.8 }}
               >
-                {faq.detail}
+                {t(faq.detail)}
               </Typography>
             </AccordionDetails>
           </Accordion>

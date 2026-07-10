@@ -57,7 +57,7 @@ export default function HomeShop() {
       <Stack spacing={3} sx={{ textAlign: 'center', mb: 8 }}>
         <m.div variants={varFade().inUp}>
           <Typography variant="h2" component="h2">
-            {t('Affiliate Store')}
+            {t('Pets Store')}
           </Typography>
         </m.div>
         <m.div variants={varFade().inUp}>

@@ -1015,7 +1015,7 @@ export default function PetEditForm({ petId }: Props) {
                 label={t('Veterinarian Phone')}
                 placeholder={getPhonePlaceholder(
                   currentUser?.profile?.country || '',
-                  'Veterinanrian Phone'
+                  t('Veterinarian Phone')
                 )}
                 helperText={getPhoneHelperText(
                   currentUser?.profile?.country || '',

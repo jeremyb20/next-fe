@@ -1,4 +1,5 @@
-import { useState, useEffect } from 'react';
+import { useSnackbar } from 'notistack';
+import { useState, useEffect, useCallback } from 'react';
 import {
   Box,
   Card,
@@ -21,12 +22,14 @@ import {
 // components/pets/pet-details-card.tsx
 import { IPetProfile } from '@/types/api';
 import Iconify from '@/components/iconify';
-import { PHONE_SUPPORT } from '@/config-global';
+import { DOMAIN, PHONE_SUPPORT } from '@/config-global';
 import { useTranslation } from '@/hooks/use-translation';
 import { BreedOptions, GENDER_OPTIONS } from '@/utils/constants';
+import { useCopyToClipboard } from '@/hooks/use-copy-to-clipboard';
 import { usePetAgeCalculator } from '@/hooks/use-pet-age-calculator';
 // Importar los componentes reutilizables
 import { BirthdayReminder } from '@/components/pet/BirthdayReminder';
+import ShareDrawerDialog from '@/components/share/share-drawer-dialog';
 import CustomPopover, { usePopover } from '@/components/custom-popover';
 import { formatPetAge, getSpeciesFromBreed } from '@/utils/pet-age.utils';
 import { PetAvatarWithBadge } from '@/components/badge/PetAvatarWithBage';
@@ -68,12 +71,24 @@ export function PetDetailsCard({
   onMedicalRecordSuccess: _onMedicalRecordSuccess,
 }: PetDetailsCardProps) {
   const { ageResult, calculateAge } = usePetAgeCalculator();
-  const { t } = useTranslation();
+  const { t, lng: currentLang } = useTranslation();
+  const [shareOpen, setShareOpen] = useState(false);
   const [selectedSection, setSelectedSection] =
     useState<MedicalSection>('summary');
   const [localRefreshTrigger, setLocalRefreshTrigger] = useState(0);
   const popover = usePopover();
   const detectedSpecies = pet?.breed ? getSpeciesFromBreed(pet.breed) : null;
+  const shareUrl = `${DOMAIN}/${currentLang}/pet/${pet?.memberPetId}`;
+  const shareTitle = `${t('View the profile of')} ${
+    pet?.petName || t('this pet')
+  }`;
+
+  const shareDescription = `${t('Meet')} ${pet?.petName}, ${t(
+    'a pet who needs your attention.'
+  )}`;
+  const { copy } = useCopyToClipboard();
+
+  const { enqueueSnackbar } = useSnackbar();
   useEffect(() => {
     // Solo refrescar cuando los datos médicos realmente cambien
     setLocalRefreshTrigger((prev) => prev + 1);
@@ -110,6 +125,22 @@ export function PetDetailsCard({
   ) => {
     onCreateRecord?.(type, petId);
   };
+
+  const handleShareOpen = () => {
+    setShareOpen(true);
+  };
+
+  const handleShareClose = () => {
+    setShareOpen(false);
+  };
+
+  const handleCopy = useCallback(
+    (item: string) => {
+      enqueueSnackbar(`${item} Copied!`);
+      copy(item);
+    },
+    [copy, enqueueSnackbar]
+  );
 
   // Transformar datos para los componentes específicos
   const transformToVaccineData = () => {
@@ -432,9 +463,24 @@ export function PetDetailsCard({
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
             <PetAvatarWithBadge pet={pet} size={100} />
             <Box>
-              <Typography variant="h4" fontWeight={700}>
-                {pet.petName} ({pet.memberPetId})
-              </Typography>
+              <Stack direction="row" alignItems="end" gap={1}>
+                <Typography variant="h4" fontWeight={700}>
+                  {pet.petName}
+                </Typography>
+                <Box
+                  sx={{
+                    cursor: 'pointer',
+                    color: 'text.secondary',
+                    '&:hover': {
+                      color: 'primary.main',
+                    },
+                  }}
+                  onClick={() => handleCopy(pet.memberPetId)}
+                >
+                  <Iconify icon="solar:copy-bold" width={15} />(
+                  {pet.memberPetId || 'N/A'})
+                </Box>
+              </Stack>
               <Box sx={{ display: 'flex', gap: 1, mt: 1 }}>
                 <Chip
                   label={t(
@@ -482,6 +528,15 @@ export function PetDetailsCard({
         >
           <MenuItem
             onClick={() => {
+              handleShareOpen();
+              popover.onClose();
+            }}
+          >
+            <Iconify icon="solar:share-bold" />
+            {t('Share')}
+          </MenuItem>
+          <MenuItem
+            onClick={() => {
               // onViewRow();
               onViewDetails?.(pet);
               popover.onClose();
@@ -501,7 +556,9 @@ export function PetDetailsCard({
             {t('Edit')}
           </MenuItem>
 
-          <MenuItem
+          {/* compartir */}
+
+          {/* <MenuItem
             onClick={() => {
               // confirm.onTrue();
               popover.onClose();
@@ -510,7 +567,7 @@ export function PetDetailsCard({
           >
             <Iconify icon="solar:trash-bin-trash-bold" />
             {t('Delete')}
-          </MenuItem>
+          </MenuItem> */}
         </CustomPopover>
         <Divider sx={{ my: 1 }} />
 
@@ -836,6 +893,15 @@ export function PetDetailsCard({
       <Card sx={{ mt: 3, p: 2, borderRadius: 3 }}>
         <Box>{renderMedicalContent()}</Box>
       </Card>
+
+      <ShareDrawerDialog
+        open={shareOpen}
+        onClose={handleShareClose}
+        shareUrl={shareUrl}
+        shareTitle={shareTitle}
+        shareDescription={shareDescription}
+        petProfile={pet || ''}
+      />
     </Box>
   );
 }

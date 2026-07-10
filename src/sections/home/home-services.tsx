@@ -17,12 +17,12 @@ const SERVICES = [
     icon: 'wpf:medical-doctor',
     color: 'primary',
   },
-  {
-    title: 'Grooming',
-    description: 'Professional grooming services for your pet',
-    icon: 'temaki:pet-grooming',
-    color: 'secondary',
-  },
+  // {
+  //   title: 'Grooming',
+  //   description: 'Professional grooming services for your pet',
+  //   icon: 'temaki:pet-grooming',
+  //   color: 'secondary',
+  // },
   {
     title: 'Stores',
     description: 'Products and accessories with exclusive discounts',
@@ -54,7 +54,7 @@ export default function HomeServices() {
         display="grid"
         gridTemplateColumns={{
           xs: 'repeat(1, 1fr)',
-          md: 'repeat(3, 1fr)',
+          md: 'repeat(2, 1fr)',
         }}
       >
         {SERVICES.map((service) => (

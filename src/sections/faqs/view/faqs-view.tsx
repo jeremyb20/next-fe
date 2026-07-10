@@ -3,9 +3,10 @@
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 
+import ContactForm from '@/sections/contact/contact-form';
+
 import FaqsHero from '../faqs-hero';
 import FaqsList from '../faqs-list';
-import FaqsForm from '../faqs-form';
 
 // ----------------------------------------------------------------------
 
@@ -42,7 +43,7 @@ export default function FaqsView() {
         >
           <FaqsList />
 
-          <FaqsForm />
+          <ContactForm />
         </Box>
       </Container>
     </>

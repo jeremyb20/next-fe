@@ -739,7 +739,7 @@ export default function PetQuickEditForm({
                   label="Veterinarian Phone"
                   placeholder={getPhonePlaceholder(
                     currentUser?.profile?.country || '',
-                    'Veterinanrian Phone'
+                    'Veterinarian Phone'
                   )}
                   helperText={getPhoneHelperText(
                     currentUser?.profile?.country || '',

@@ -5,13 +5,14 @@ import Box, { BoxProps } from '@mui/material/Box';
 import { alpha, useTheme } from '@mui/material/styles';
 
 import { bgGradient } from '@/theme/css';
+import { useTranslation } from '@/hooks/use-translation';
 import { varFade, MotionContainer } from '@/components/animate';
 
 // ----------------------------------------------------------------------
 
 export default function FaqsHero() {
   const theme = useTheme();
-
+  const { t } = useTranslation();
   return (
     <Box
       sx={{
@@ -35,22 +36,15 @@ export default function FaqsHero() {
         >
           <div>
             <TextAnimate
-              text="How"
+              text={t('Frequently')}
               sx={{ color: 'primary.main' }}
               variants={varFade().inRight}
             />
             <br />
 
-            <Stack
-              spacing={2}
-              display="inline-flex"
-              direction="row"
-              sx={{ color: 'common.white' }}
-            >
-              <TextAnimate text="can" />
-              <TextAnimate text="we" />
-              <TextAnimate text="help" />
-              <TextAnimate text="you?" />
+            <Stack spacing={2} direction="row" sx={{ color: 'common.white' }}>
+              <TextAnimate text={t('Asked')} />
+              <TextAnimate text={t('Questions')} />
             </Stack>
           </div>
 
