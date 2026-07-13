@@ -170,7 +170,7 @@ export default function UserQuickEditModalForm({
       });
       refetch();
       onClose();
-      enqueueSnackbar('Update success!');
+      enqueueSnackbar(t('Update success!'));
     } catch (error) {
       console.error(error);
       enqueueSnackbar('Error updating user', { variant: 'error' });

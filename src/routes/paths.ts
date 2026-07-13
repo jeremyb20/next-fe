@@ -33,6 +33,7 @@ export const paths = {
   about: withLang('about-us'),
   contact: withLang('contact-us'),
   faqs: withLang('faqs'),
+  adoptMe: withLang('adopt-me'),
   page403: withLang('error/403'),
   page404: withLang('error/404'),
   page500: withLang('error/500'),
@@ -257,7 +258,11 @@ export const paths = {
       },
     },
   },
-
+  pet: {
+    details: (id: string) => `/pet/${id}`,
+    lostPetHome: withLang('/lost-pet/home'),
+    lostPetList: withLang('/lost-pet'),
+  },
   veterinarian: {
     register: withLang('register'),
   },

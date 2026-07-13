@@ -9,7 +9,7 @@ export interface FilterParams {
   [key: string]: any;
 }
 
-export interface QueryParams extends PaginationParams, FilterParams { }
+export interface QueryParams extends PaginationParams, FilterParams {}
 export interface UsePaginatedOptions {
   refetchOnMount?: boolean;
   refetchOnWindowFocus?: boolean;
@@ -172,21 +172,24 @@ export interface IBaseMedicalRecord {
 }
 
 // Vacunas con notificaciones
-export interface IVaccinesControl extends IBaseMedicalRecord, INotificationSettings {
+export interface IVaccinesControl
+  extends IBaseMedicalRecord, INotificationSettings {
   dateOfApplication: string;
   nextVaccineDate: string;
   vaccineName: string;
 }
 
 // Desparasitaciones con notificaciones
-export interface IDewormingControl extends IBaseMedicalRecord, INotificationSettings {
+export interface IDewormingControl
+  extends IBaseMedicalRecord, INotificationSettings {
   dateOfApplication: string;
   nextDewormingDate: string;
   dewormerName: string;
 }
 
 // Visitas médicas con notificaciones
-export interface IMedicalVisits extends IBaseMedicalRecord, INotificationSettings {
+export interface IMedicalVisits
+  extends IBaseMedicalRecord, INotificationSettings {
   visitDate: string;
   reasonForVisit: string;
   veterinarianName: string;
@@ -248,6 +251,16 @@ export interface IPetProfile {
   owner?: IUserProfile;
   medicalRecord?: IMedicalRecord;
   notes?: string;
+  petStatusReport: IPetStatusReport;
+}
+
+interface IPetStatusReport {
+  lostDate: string;
+  lastSeenLocation: string;
+  lostDescription: string;
+  rewardAmount: string;
+  isMicrochipped: boolean;
+  microchipNumber: string;
 }
 
 interface ILocation {
@@ -285,12 +298,12 @@ export interface IQRStats {
 }
 
 export interface UpcomingBirthDays {
-  memberPetId: string
-  petName: string
-  birthDate: string
-  nextBirthday: string
-  daysUntil: number
-  age: number
+  memberPetId: string;
+  petName: string;
+  birthDate: string;
+  nextBirthday: string;
+  daysUntil: number;
+  age: number;
   photo: string;
   petStatus?: string;
 }
@@ -304,8 +317,8 @@ export interface IPetStats {
   upcomingAppointments: number;
   vaccinationsCount: number;
   vetVisitsCount: number;
-  upcomingBirthdays: UpcomingBirthDays[]
-  upcomingBirthdaysNext30Days: UpcomingBirthDays[]
+  upcomingBirthdays: UpcomingBirthDays[];
+  upcomingBirthdaysNext30Days: UpcomingBirthDays[];
 }
 
 export interface ByStatu {
@@ -457,7 +470,6 @@ export interface IPromotions {
   isExternalLink: boolean;
   buttonTextRedirect: string;
 }
-
 
 export interface DeviceInfo {
   name: string;

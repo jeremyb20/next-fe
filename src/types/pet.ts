@@ -15,6 +15,14 @@ export type PetFormValues = {
   phoneVeterinarian: string;
   veterinarianContact: string;
   notes: string;
+
+  lostDate: string;
+  lastSeenLocation: string;
+  lostDescription: string;
+  rewardAmount: string;
+  isMicrochipped: boolean;
+  microchipNumber: string;
+
   // Permissions fields
   showPhoneInfo: boolean;
   showOwnerPetName: boolean;
@@ -30,4 +38,5 @@ export type PetFormValues = {
   showBreedInfo: boolean;
   showWeightInfo: boolean;
   showGenderInfo: boolean;
+  isDigitalIdentificationActive: boolean;
 };

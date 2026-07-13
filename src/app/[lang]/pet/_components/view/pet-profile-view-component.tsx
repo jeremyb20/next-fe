@@ -49,6 +49,7 @@ import {
   getTranslationKey,
 } from '@/utils/constants';
 
+import LostPetReport from './lost-pet-report';
 import PetLocationMap from '../locations/pet-location-map';
 import LocationConsentOverlay from '../locations/location-consent-overlay';
 
@@ -617,6 +618,17 @@ export default function PetProfileViewComponent({
                     </Box>
                   )}
                   <Divider sx={{ borderStyle: 'dashed', my: 3 }} />
+
+                  {petProfile.petStatus === 'lost' && (
+                    <>
+                      {petProfile.petStatusReport && (
+                        <LostPetReport
+                          petProfile={petProfile}
+                          handleShareOpen={handleShareOpen}
+                        />
+                      )}
+                    </>
+                  )}
 
                   {/* Información básica de la mascota */}
                   <Box sx={{ pt: 2, pb: 3, px: 0 }}>

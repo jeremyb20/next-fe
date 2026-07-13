@@ -248,6 +248,13 @@ export default function PetEditForm({ petId }: Props) {
     showWeightInfo: Yup.boolean().optional().default(true),
     showGenderInfo: Yup.boolean().optional().default(true),
     notes: Yup.string().optional().default(''),
+    lostDate: Yup.string().optional().default(''),
+    lastSeenLocation: Yup.string().optional().default(''),
+    lostDescription: Yup.string().optional().default(''),
+    rewardAmount: Yup.string().optional().default(''),
+    isMicrochipped: Yup.boolean().optional().default(false),
+    microchipNumber: Yup.string().optional().default(''),
+    isDigitalIdentificationActive: Yup.boolean().optional().default(false),
   });
 
   const methods = useForm<PetFormValues>({
@@ -283,6 +290,13 @@ export default function PetEditForm({ petId }: Props) {
       showWeightInfo: true,
       showGenderInfo: true,
       notes: '',
+      lostDate: '',
+      lastSeenLocation: '',
+      lostDescription: '',
+      rewardAmount: '',
+      isMicrochipped: false,
+      microchipNumber: '',
+      isDigitalIdentificationActive: false,
     },
   });
 
@@ -293,7 +307,8 @@ export default function PetEditForm({ petId }: Props) {
     control,
     formState: { isSubmitting },
   } = methods;
-
+  const watchPetStatus = watch('petStatus');
+  const showLostFields = watchPetStatus === 'lost';
   const watchPhone = watch('phone');
   const watchPhoneVeterinarian = watch('phoneVeterinarian');
 
@@ -416,6 +431,7 @@ export default function PetEditForm({ petId }: Props) {
     try {
       const weightWithUnit = data.weight ? `${data.weight} ${weightUnit}` : '';
       const userPetId = currentUser?._id || '';
+
       const petData = {
         ...data,
         id: currentPet?._id,
@@ -447,8 +463,15 @@ export default function PetEditForm({ petId }: Props) {
           showWeightInfo: data.showWeightInfo,
           showGenderInfo: data.showGenderInfo,
         },
+        petStatusReport: {
+          lostDate: data.lostDate || undefined,
+          lastSeenLocation: data.lastSeenLocation || undefined,
+          lostDescription: data.lostDescription || undefined,
+          rewardAmount: data.rewardAmount || undefined,
+          isMicrochipped: data.isMicrochipped,
+          microchipNumber: data.microchipNumber || undefined,
+        },
       };
-
       // Crear el payload según el formato que espera tu API
       const payload = {
         petData,
@@ -472,9 +495,7 @@ export default function PetEditForm({ petId }: Props) {
 
       refetch();
       enqueueSnackbar(
-        currentPet?._id
-          ? 'Pet updated successfully!'
-          : 'Pet created successfully!',
+        currentPet?._id ? t('Update success!') : t('Pet created successfully!'),
         {
           variant: 'success',
         }
@@ -527,6 +548,12 @@ export default function PetEditForm({ petId }: Props) {
         showWeightInfo: currentPet?.permissions?.showWeightInfo ?? true,
         showGenderInfo: currentPet?.permissions?.showGenderInfo ?? true,
         notes: currentPet?.notes || '',
+        lostDate: currentPet?.petStatusReport.lostDate || '',
+        lastSeenLocation: currentPet?.petStatusReport.lastSeenLocation || '',
+        lostDescription: currentPet?.petStatusReport.lostDescription || '',
+        rewardAmount: currentPet?.petStatusReport.rewardAmount || '',
+        isMicrochipped: currentPet?.petStatusReport.isMicrochipped ?? false, // Usar nullish coalescing
+        microchipNumber: currentPet?.petStatusReport.microchipNumber || '',
       });
 
       setPetLocation({
@@ -828,6 +855,99 @@ export default function PetEditForm({ petId }: Props) {
                   </MenuItem>
                 ))}
               </RHFSelect>
+              {showLostFields && (
+                <Box
+                  sx={{
+                    gridColumn: '1 / -1',
+                    border: '1.5px solid',
+                    borderColor: 'warning.main',
+                    borderRadius: 2,
+                    bgcolor: (th) =>
+                      th.palette.mode === 'dark'
+                        ? 'rgba(255, 171, 0, 0.08)'
+                        : 'warning.lighter',
+                    p: 2,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: 2,
+                  }}
+                >
+                  <Stack direction="row" alignItems="center" spacing={1}>
+                    <Iconify
+                      icon="solar:danger-triangle-bold"
+                      width={22}
+                      sx={{ color: 'warning.dark' }}
+                    />
+                    <Typography
+                      variant="subtitle2"
+                      sx={{ color: 'warning.dark', fontWeight: 700 }}
+                    >
+                      {t('Lost Pet Information')}
+                    </Typography>
+                  </Stack>
+
+                  <Controller
+                    name="lostDate"
+                    control={control}
+                    render={({ field }) => (
+                      <DatePicker
+                        views={['year', 'month', 'day']}
+                        label={t('Date Lost')}
+                        maxDate={new Date()}
+                        value={field.value ? new Date(field.value) : null}
+                        onChange={(newValue) => {
+                          field.onChange(
+                            newValue ? newValue.toISOString() : ''
+                          );
+                        }}
+                        slotProps={{ textField: { fullWidth: true } }}
+                      />
+                    )}
+                  />
+                  <RHFTextField
+                    name="lastSeenLocation"
+                    label={t('Last Seen Location')}
+                    multiline
+                    rows={2}
+                  />
+                  <RHFTextField
+                    name="lostDescription"
+                    label={t('Description of Lost Pet')}
+                    multiline
+                    rows={3}
+                    placeholder={t(
+                      'Describe the circumstances, physical characteristics, etc.'
+                    )}
+                  />
+                  <RHFTextField
+                    name="rewardAmount"
+                    label={t('Reward Amount (optional)')}
+                    type="number"
+                    InputProps={{
+                      startAdornment: (
+                        <InputAdornment position="start">₡</InputAdornment>
+                      ),
+                    }}
+                  />
+                  <RHFSwitch
+                    name="isMicrochipped"
+                    label={t('Is Microchipped?')}
+                    labelPlacement="start"
+                    sx={{
+                      justifyContent: 'space-between',
+                      flexDirection: 'row-reverse',
+                      width: '100%',
+                      mx: 0,
+                    }}
+                  />
+                  <RHFTextField
+                    name="microchipNumber"
+                    label={t('Microchip Number')}
+                    placeholder={t('Enter microchip number')}
+                    sx={{ display: watch('isMicrochipped') ? 'block' : 'none' }}
+                  />
+                </Box>
+              )}
               <RHFSelect name="genderSelected" label={t('Gender')}>
                 {GENDER_OPTIONS.map((gender) => (
                   <MenuItem key={gender.value} value={gender.value}>

@@ -20,6 +20,7 @@ import { useRouter } from '@/routes/hooks';
 import { useSnackbar } from '@/components/snackbar';
 import { ITourItem, ITourGuide } from '@/types/tour';
 import { useResponsive } from '@/hooks/use-responsive';
+import { useTranslation } from '@/hooks/use-translation';
 import { _tags, _tourGuides, TOUR_SERVICE_OPTIONS } from '@/_mock';
 import FormProvider, {
   RHFEditor,
@@ -37,7 +38,7 @@ type Props = {
 
 export default function TourNewEditForm({ currentTour }: Props) {
   const router = useRouter();
-
+  const { t } = useTranslation();
   const mdUp = useResponsive('up', 'md');
 
   const { enqueueSnackbar } = useSnackbar();
@@ -109,7 +110,7 @@ export default function TourNewEditForm({ currentTour }: Props) {
     try {
       await new Promise((resolve) => setTimeout(resolve, 500));
       reset();
-      enqueueSnackbar(currentTour ? 'Update success!' : 'Create success!');
+      enqueueSnackbar(currentTour ? t('Update success!') : 'Create success!');
       router.push(paths.dashboard.tour.root);
       console.info('DATA', data);
     } catch (error) {

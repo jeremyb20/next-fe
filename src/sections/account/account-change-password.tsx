@@ -74,7 +74,7 @@ export default function AccountChangePassword() {
         method: 'PUT',
       });
       reset();
-      enqueueSnackbar('Update success!');
+      enqueueSnackbar(t('Update success!'));
     } catch (error) {
       console.error(error);
     }

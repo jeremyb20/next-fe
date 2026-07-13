@@ -54,7 +54,7 @@ export const endpoints = {
     sendToAdmin: '/api/notifications/sendToAdmin',
     markAsRead: '/api/notifications/markAsRead',
     getSubscriptionDevices: '/api/notifications/getSubscriptionDevices',
-    deleteAllSubscriptions: '/api/notifications/deleteAllSubscriptions'
+    deleteAllSubscriptions: '/api/notifications/deleteAllSubscriptions',
   },
   admin: {
     users: {
@@ -110,6 +110,8 @@ export const endpoints = {
     getUserUpcomingAppointments: '/api/pet/upcoming-appointments',
     getUserUpcomingAppointmentsGrouped:
       '/api/pet/upcoming-appointments/grouped',
+    getAllPetsByStatus: '/api/pet/getAllPetsByStatus',
+    searchPetsByName: '/api/pet/searchPetsByName',
   },
   user: {
     getAllPetsByUser: '/api/user/getAllPetsByUser',
@@ -148,7 +150,7 @@ export const endpoints = {
     sendEmailVerification: '/api/user/sendEmailVerification',
     verifyEmailCode: '/api/user/verifyEmailCode',
     resendEmailVerification: '/api/user/resendEmailVerification',
-    resend2FACodeForReset: '/api/user/resend2FACodeForReset'
+    resend2FACodeForReset: '/api/user/resend2FACodeForReset',
   },
   mail: {
     list: '/api/mail/list',
@@ -169,7 +171,8 @@ export const endpoints = {
   kanban: '/api/kanban',
   calendar: '/api/calendar',
   calendarEvents: {
-    getAllMedicalAppointmentsByUser: '/api/user/getAllMedicalAppointmentsByUser',
+    getAllMedicalAppointmentsByUser:
+      '/api/user/getAllMedicalAppointmentsByUser',
   },
   petsmarket: {
     listPublished: '/api/user/getAllPublishedProductList',

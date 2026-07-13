@@ -13,6 +13,7 @@ import TableCell from '@mui/material/TableCell';
 import IconButton from '@mui/material/IconButton';
 import ListItemText from '@mui/material/ListItemText';
 
+import { DOMAIN } from '@/config-global';
 import Iconify from '@/components/iconify';
 import { useBoolean } from '@/hooks/use-boolean';
 // import { IOrderItem } from '@/types/order';
@@ -57,7 +58,7 @@ export default function UserTableRow({
 
   const confirm = useBoolean();
 
-  const { t } = useTranslation();
+  const { t, lng } = useTranslation();
 
   const collapse = useBoolean();
 
@@ -82,7 +83,6 @@ export default function UserTableRow({
 
   // Función para abrir el modal con la mascota seleccionada
   const handleOpenPetEdit = (pet: IPetProfile) => {
-    console.log('Opening pet edit for:', pet);
     setPetSelected(pet);
     petQuickEdit.onTrue();
   };
@@ -388,7 +388,8 @@ export default function UserTableRow({
                       <IconButton
                         color="default"
                         onClick={() => {
-                          openLink(`/pet/${item.memberPetId}`);
+                          const shareUrl = `${DOMAIN}/${lng}/pet/${item?.memberPetId}`;
+                          openLink(shareUrl);
                         }}
                       >
                         <Iconify icon="solar:eye-bold" />
@@ -424,6 +425,7 @@ export default function UserTableRow({
         open={petQuickEdit.value}
         onClose={petQuickEdit.onFalse}
         refetch={refetch}
+        isAdmin
       />
 
       <CustomPopover

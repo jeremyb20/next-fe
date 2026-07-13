@@ -14,6 +14,7 @@ import DialogContent from '@mui/material/DialogContent';
 import { IUserItem } from '@/types/user';
 import { countries } from '@/assets/data';
 import { useSnackbar } from '@/components/snackbar';
+import { useTranslation } from '@/hooks/use-translation';
 import { USER_STATUS_OPTIONS } from '@/components/filters/filter-constants';
 import FormProvider, {
   RHFSelect,
@@ -35,7 +36,7 @@ export default function UserQuickEditModalForm({
   onClose,
 }: Props) {
   const { enqueueSnackbar } = useSnackbar();
-
+  const { t } = useTranslation();
   const NewUserSchema = Yup.object().shape({
     name: Yup.string().required('Name is required'),
     email: Yup.string()
@@ -83,7 +84,7 @@ export default function UserQuickEditModalForm({
       await new Promise((resolve) => setTimeout(resolve, 500));
       reset();
       onClose();
-      enqueueSnackbar('Update success!');
+      enqueueSnackbar(t('Update success!'));
       console.info('DATA', data);
     } catch (error) {
       console.error(error);
