@@ -32,21 +32,14 @@ type Props = {
 
 export default function ThemeProvider({ children }: Props) {
   const { currentLang } = useLocales();
-
   const settings = useSettingsContext();
 
-  const presets = createPresets(settings.themeColorPresets);
+  const themeWithLocale = useMemo(() => {
+    const presets = createPresets(settings.themeColorPresets);
+    const contrast = createContrast(settings.themeContrast, settings.themeMode);
+    const scaledTypography = getScaledTypography(settings.fontSizeScale || 1);
 
-  const contrast = createContrast(settings.themeContrast, settings.themeMode);
-
-  // Obtener la tipografía escalada según la configuración
-  const scaledTypography = useMemo(
-    () => getScaledTypography(settings.fontSizeScale || 1),
-    [settings.fontSizeScale]
-  );
-
-  const memoizedValue = useMemo(
-    () => ({
+    const baseTheme = createTheme({
       palette: {
         ...palette(settings.themeMode),
         ...presets.palette,
@@ -59,35 +52,26 @@ export default function ThemeProvider({ children }: Props) {
       direction: settings.themeDirection,
       shadows: shadows(settings.themeMode),
       shape: { borderRadius: 8 },
-      typography: scaledTypography, // Usa la tipografía escalada
+      typography: scaledTypography,
       breakpoints: {
-        values: {
-          xs: 0,
-          sm: 600,
-          md: 960,
-          lg: 1280,
-          xl: 1440,
-        },
+        values: { xs: 0, sm: 600, md: 960, lg: 1280, xl: 1440 },
       },
-    }),
-    [
-      settings.themeMode,
-      settings.themeDirection,
-      presets.palette,
-      presets.customShadows,
-      contrast.palette,
-      scaledTypography, // scaledTypography ya incluye la dependencia de fontSizeScale
-    ]
-  );
+    } as ThemeOptions);
 
-  const theme = createTheme(memoizedValue as ThemeOptions);
+    baseTheme.components = merge(
+      componentsOverrides(baseTheme),
+      contrast.components
+    );
 
-  theme.components = merge(componentsOverrides(theme), contrast.components);
-
-  const themeWithLocale = useMemo(
-    () => createTheme(theme, currentLang.systemValue),
-    [currentLang.systemValue, theme]
-  );
+    return createTheme(baseTheme, currentLang.systemValue);
+  }, [
+    settings.themeMode,
+    settings.themeDirection,
+    settings.themeColorPresets,
+    settings.themeContrast,
+    settings.fontSizeScale,
+    currentLang.systemValue,
+  ]);
 
   return (
     <NextAppDirEmotionCacheProvider options={{ key: 'css' }}>

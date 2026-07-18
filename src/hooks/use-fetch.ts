@@ -119,12 +119,12 @@ export const getValidationCode = async (code: string) => {
 };
 
 export const useGetUserSettings = () => {
-  const { authenticated } = useAuthContext();
+  const { authenticated, user } = useAuthContext();
   return useFetch<Partial<IUserSettingsResponse>>(
-    'useGetUserSettings',
+    ['useGetUserSettings', user?.memberId ?? user?.id ?? ''],
     endpoints.user.getSettings,
     {
-      staleTime: 5 * 60 * 1000,
+      staleTime: 0,
       retry: 2,
       enabled: authenticated,
     }

@@ -45,7 +45,17 @@ export function SettingsProvider({
   const [lastSaved, setLastSaved] = useState<Date | null>(null);
   const saveTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
-  const { authenticated } = useAuthContext();
+  const { authenticated, user } = useAuthContext();
+
+  // Limpiar settings del localStorage al cambiar de usuario
+  const prevUserIdRef = useRef<string | null>(null);
+  useEffect(() => {
+    const currentUserId = user?.memberId ?? user?.id ?? null;
+    if (prevUserIdRef.current && prevUserIdRef.current !== currentUserId) {
+      reset();
+    }
+    prevUserIdRef.current = currentUserId;
+  }, [user, reset]);
 
   // Usar el custom hook para obtener configuraciones
   const {
@@ -131,8 +141,8 @@ export function SettingsProvider({
       // Actualizar la hora del último guardado
       setLastSaved(new Date());
 
-      // Invalidar y refetch para obtener datos actualizados
-      refetchSettings();
+      // Invalidar y refetch solo si el servidor devuelve datos diferentes
+      // No es necesario refetch porque ya actualizamos localmente
     } catch (error) {
       console.error('Error saving settings via mutation:', error);
     } finally {
