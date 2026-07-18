@@ -33,6 +33,7 @@ export const paths = {
   about: withLang('about-us'),
   contact: withLang('contact-us'),
   faqs: withLang('faqs'),
+  feedback: withLang('feedback'),
   adoptMe: withLang('adopt-me'),
   page403: withLang('error/403'),
   page404: withLang('error/404'),
@@ -166,6 +167,7 @@ export const paths = {
       seoAdmin: `${ROOTS.DASHBOARD}/admin/seo`,
       blogPanel: `${ROOTS.DASHBOARD}/admin/blog`,
       promotions: `${ROOTS.DASHBOARD}/admin/promotions`,
+      feedback: `${ROOTS.DASHBOARD}/admin/feedback`,
     },
 
     general: {

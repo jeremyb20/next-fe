@@ -1,8 +1,10 @@
 import { Metadata } from 'next';
 
 import { getSeoMetadata } from '@/utils/seo-metadata';
+import { FeedbackView } from '@/sections/feedback/view';
 
-import PrivacyPolicy from './_components/privacy-policy-view';
+// ----------------------------------------------------------------------
+
 export async function generateMetadata({
   params,
 }: {
@@ -11,10 +13,11 @@ export async function generateMetadata({
   const { lang } = await params;
   const language = lang?.toUpperCase() || 'ES';
 
-  const metadata = await getSeoMetadata('privacy-policy', language);
+  const metadata = await getSeoMetadata('feedback', language);
 
   return metadata;
 }
+
 export default function Page() {
-  return <PrivacyPolicy />;
+  return <FeedbackView />;
 }

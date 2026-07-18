@@ -62,11 +62,11 @@ export function QrcodeCustom({ value, fileName }: Props) {
   const [size, setSize] = useState(250);
   const [padding, setPadding] = useState(16);
   const [margin, setMargin] = useState(20);
-  const [bgColor, setBgColor] = useState('#ddeeff');
+  const [bgColor, setBgColor] = useState('#ffffff');
 
   // Colores
-  const [eyesColor, setEyesColor] = useState('#223344');
-  const [bodyColor, setBodyColor] = useState('#335577');
+  const [eyesColor, setEyesColor] = useState('#000000');
+  const [bodyColor, setBodyColor] = useState('#000000');
 
   // Variantes
   const [eyesVariant, setEyesVariant] = useState<EyeVariant>('gravity');
@@ -82,8 +82,8 @@ export function QrcodeCustom({ value, fileName }: Props) {
 
   // Configuración de imagen
   const [logoSize, setLogoSize] = useState(80);
-  const [logoPositionX, setLogoPositionX] = useState(120);
-  const [logoPositionY, setLogoPositionY] = useState(125);
+  const [logoPositionX, setLogoPositionX] = useState(105);
+  const [logoPositionY, setLogoPositionY] = useState(105);
   const [showLogo, setShowLogo] = useState(true);
 
   useEffect(() => {
@@ -128,9 +128,9 @@ export function QrcodeCustom({ value, fileName }: Props) {
     setSize(250);
     setPadding(16);
     setMargin(20);
-    setBgColor('#ddeeff');
-    setEyesColor('#223344');
-    setBodyColor('#335577');
+    setBgColor('#ffffff');
+    setEyesColor('#000000');
+    setBodyColor('#000000');
     setEyesVariant('gravity');
     setBodyVariant('fluid');
     setEyesEffect('none');
@@ -138,8 +138,8 @@ export function QrcodeCustom({ value, fileName }: Props) {
     setBgRounded(true);
     setDivider(true);
     setLogoSize(80);
-    setLogoPositionX(120);
-    setLogoPositionY(125);
+    setLogoPositionX(105);
+    setLogoPositionY(105);
     setShowLogo(true);
     setLogoURL(LOGO);
   };

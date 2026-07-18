@@ -1,7 +1,8 @@
-// proxy.ts (antes middleware.ts)
+// proxy.ts
+import type { NextRequest } from 'next/server';
+
 import { NextResponse } from 'next/server';
 import acceptLanguage from 'accept-language';
-import type { NextRequest } from 'next/server';
 
 import { languages, cookieName, fallbackLng } from './src/app/i18n/settings';
 
@@ -13,11 +14,40 @@ export const config = {
   ],
 };
 
-// ✅ Solo cambia el nombre de la función
 export function proxy(req: NextRequest) {
-  const { pathname } = req.nextUrl;
+  const { pathname, search } = req.nextUrl;
 
-  // El resto del código NO CAMBIA
+  // ✅ PRIMERO: Redirigir la raíz sin idioma
+  if (pathname === '/') {
+    let detectedLng = fallbackLng;
+
+    // Intentar obtener idioma de la cookie
+    const cookieLng = req.cookies.get(cookieName)?.value;
+    if (cookieLng && languages.includes(cookieLng as any)) {
+      detectedLng = cookieLng;
+    } else {
+      // Usar Accept-Language del navegador
+      const acceptLng = acceptLanguage.get(req.headers.get('Accept-Language'));
+      if (acceptLng && languages.includes(acceptLng as any)) {
+        detectedLng = acceptLng;
+      }
+    }
+
+    // ✅ Redirigir 301 (permanente) a la versión con idioma
+    const newUrl = new URL(`/${detectedLng}${search}`, req.url);
+    const response = NextResponse.redirect(newUrl, 301);
+
+    // Establecer cookie para futuras visitas
+    response.cookies.set(cookieName, detectedLng, {
+      path: '/',
+      maxAge: 60 * 60 * 24 * 30,
+      sameSite: 'lax',
+    });
+
+    return response;
+  }
+
+  // ✅ SEGUNDO: Verificar si el idioma ya está en la ruta
   const lngInPath = languages.find(
     (locale) => pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`
   );
@@ -32,8 +62,8 @@ export function proxy(req: NextRequest) {
     return response;
   }
 
+  // ✅ TERCERO: Redirigir otras rutas sin idioma a la versión con idioma
   let detectedLng = fallbackLng;
-
   const cookieLng = req.cookies.get(cookieName)?.value;
   if (cookieLng && languages.includes(cookieLng as any)) {
     detectedLng = cookieLng;
@@ -44,12 +74,9 @@ export function proxy(req: NextRequest) {
     }
   }
 
-  const newUrl = new URL(
-    `/${detectedLng}${pathname}${req.nextUrl.search}`,
-    req.url
-  );
+  const newUrl = new URL(`/${detectedLng}${pathname}${search}`, req.url);
 
-  const response = NextResponse.redirect(newUrl);
+  const response = NextResponse.redirect(newUrl, 301);
   response.cookies.set(cookieName, detectedLng, {
     path: '/',
     maxAge: 60 * 60 * 24 * 30,

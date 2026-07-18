@@ -4,6 +4,7 @@ import {
   keepPreviousData,
 } from '@tanstack/react-query';
 
+import { IFeedback } from '@/types/feedback';
 import { IProductItem } from '@/types/product';
 import axiosInstance, { endpoints } from '@/utils/axios';
 import {
@@ -165,6 +166,17 @@ export const useGetAllSeo = (params: Partial<UserQueryParams> = {}) =>
   useFetchPaginated<ISeo[]>({
     queryKey: ['seo'],
     endpoint: endpoints.admin.seo.list,
+    params: {
+      page: 1,
+      limit: 10,
+      ...params,
+    },
+  });
+
+export const useGetAllFeedback = (params: Partial<UserQueryParams> = {}) =>
+  useFetchPaginated<IFeedback[]>({
+    queryKey: ['feedback-list'],
+    endpoint: endpoints.admin.feedback.getAllFeedback,
     params: {
       page: 1,
       limit: 10,

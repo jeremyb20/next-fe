@@ -9,6 +9,7 @@ import Logo from '@/components/logo';
 import SvgColor from '@/components/svg-color';
 import { useOffSetTop } from '@/hooks/use-off-set-top';
 import { useResponsive } from '@/hooks/use-responsive';
+import { useManagerUser } from '@/hooks/use-manager-user';
 import { useSettingsContext } from '@/components/settings';
 
 import Searchbar from '../common/searchbar';
@@ -39,6 +40,8 @@ export default function Header({ onOpenNav }: Props) {
 
   const offsetTop = offset && !isNavHorizontal;
 
+  const { user } = useManagerUser();
+
   const renderContent = (
     <>
       {lgUp && isNavHorizontal && <Logo sx={{ mr: 2.5 }} />}
@@ -59,9 +62,7 @@ export default function Header({ onOpenNav }: Props) {
         spacing={{ xs: 0.5, sm: 1 }}
       >
         <LanguagePopover />
-
-        <NotificationsPopover />
-
+        {user.role === 'admin' && <NotificationsPopover />}
         {/* <ContactsPopover /> */}
 
         <SettingsButton />

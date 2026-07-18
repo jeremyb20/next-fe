@@ -664,14 +664,15 @@ export function PetRegistrationExistingUser({
         )}
 
         <Typography variant="body1" sx={{ mb: 3 }}>
-          Please enter your 6-digit invitation code to start the registration
-          process.
+          {t(
+            'Please enter your 6-digit invitation code to start the registration process.'
+          )}
         </Typography>
 
         <RHFTextField
           name="code"
-          label="Invitation Code"
-          placeholder="Enter 6-digit code"
+          label={t('Invitation Code')}
+          placeholder={t('Enter 6-digit code')}
           autoComplete="off"
           autoFocus
           inputProps={{
@@ -681,7 +682,7 @@ export function PetRegistrationExistingUser({
 
         <Box sx={{ mt: 3 }}>
           <Button onClick={onBackToSelectionAction} sx={{ mr: 1 }}>
-            Back
+            {t('Back')}
           </Button>
           <Button
             type="submit"
@@ -689,7 +690,7 @@ export function PetRegistrationExistingUser({
             loading={isCodeSubmitting}
             disabled={!watchCodeValue || watchCodeValue.length !== 6}
           >
-            Validate Code
+            {t('Validate Code')}
           </Button>
         </Box>
 

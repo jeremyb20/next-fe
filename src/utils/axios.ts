@@ -88,6 +88,10 @@ export const endpoints = {
       deleteSeo: '/api/admin/deleteSeo',
       updateSeoById: '/api/admin/updateSeoById',
     },
+    feedback: {
+      getAllFeedback: '/api/admin/getAllFeedback',
+      deleteFeedback: '/api/admin/deleteFeedback',
+    },
     promotions: {
       getAllPromotions: '/api/admin/getAllPromotions',
       createPromotion: '/api/admin/createPromotion',
@@ -151,6 +155,7 @@ export const endpoints = {
     verifyEmailCode: '/api/user/verifyEmailCode',
     resendEmailVerification: '/api/user/resendEmailVerification',
     resend2FACodeForReset: '/api/user/resend2FACodeForReset',
+    submitFeedback: '/api/user/submitFeedback',
   },
   mail: {
     list: '/api/mail/list',

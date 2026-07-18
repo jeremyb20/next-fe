@@ -12,6 +12,7 @@ import Scrollbar from '@/components/scrollbar';
 import { useResponsive } from '@/hooks/use-responsive';
 import { useManagerUser } from '@/hooks/use-manager-user';
 import { NavSectionVertical } from '@/components/nav-section';
+import FeedbackButton from '@/components/feedback/FeedbackButton';
 
 import { NAV } from '../config-layout';
 import NavUpgrade from '../common/nav-upgrade';
@@ -61,7 +62,9 @@ export default function NavVertical({ openNav, onCloseNav }: Props) {
       />
 
       <Box sx={{ flexGrow: 1 }} />
-
+      <Box sx={{ my: 2, mx: 2 }}>
+        <FeedbackButton />
+      </Box>
       <NavUpgrade />
     </Scrollbar>
   );

@@ -50,6 +50,16 @@ const textDirectionMap: Record<string, 'ltr' | 'rtl'> = {
   FR: 'ltr',
 };
 
+// ✅ Nuevo: Mapeo de idiomas para hreflang (formato ISO)
+const hreflangMap: Record<string, string> = {
+  ES: 'es',
+  EN: 'en',
+  AR: 'ar',
+  VI: 'vi',
+  ZH: 'zh',
+  FR: 'fr',
+};
+
 export async function getSeoMetadata(
   pageId: string,
   language: string = 'ES'
@@ -86,7 +96,7 @@ export async function getSeoMetadata(
     const content =
       seoData.payload.multiLanguageContent.find(
         (item) => item.language === normalizedLanguage
-      ) || seoData.payload.multiLanguageContent[0]; // Fallback al primer idioma disponible
+      ) || seoData.payload.multiLanguageContent[0];
 
     if (!content) {
       console.warn(`No content found for language: ${normalizedLanguage}`);
@@ -111,45 +121,78 @@ function generateMetadataFromSeo(
 ): Metadata {
   const baseUrl = DOMAIN || 'https://plaquitascr.com';
 
+  // ✅ Asegurar que baseUrl no tenga trailing slash
+  const cleanBaseUrl = baseUrl.replace(/\/+$/, '');
+
   // Construir la URL canónica con el idioma correspondiente
   const languagePath = languagePathMap[currentLanguage] || '';
-  const canonical =
-    content.canonicalUrl ||
-    `${baseUrl}${languagePath ? `/${languagePath}` : ''}${route}`;
+
+  // ✅ Si content.canonicalUrl existe, usarlo; sino construirla
+  let canonicalUrl = content.canonicalUrl;
+
+  if (!canonicalUrl) {
+    // Construir la URL canónica
+    const pathWithLang = languagePath ? `/${languagePath}` : '';
+    canonicalUrl = `${cleanBaseUrl}${pathWithLang}${route}`;
+  }
+
+  // ✅ Asegurar que canonicalUrl sea absoluta y sin trailing slash
+  canonicalUrl = canonicalUrl.replace(/\/+$/, '');
 
   // Asegurar que keywords sea un string
   const keywordsString = Array.isArray(content.keywords)
     ? content.keywords.join(', ')
     : content.keywords || getDefaultKeywords(currentLanguage);
 
-  // Generar URLs alternas para todos los idiomas disponibles
-  const alternates: Record<string, string> = {};
+  // ✅ Generar URLs alternas para todos los idiomas (hreflang)
+  const languages: Record<string, string> = {};
 
+  // Agregar todas las variantes de idioma
   Object.entries(languagePathMap).forEach(([lang, path]) => {
-    if (lang !== currentLanguage) {
-      // No incluir el idioma actual en alternates
-      const langCode = getLanguageCodeForAlternate(lang);
-      alternates[langCode] = `${baseUrl}${path ? `/${path}` : ''}${route}`;
-    }
+    const langKey = hreflangMap[lang] || lang.toLowerCase();
+    const pathWithLang = path ? `/${path}` : '';
+    languages[langKey] = `${cleanBaseUrl}${pathWithLang}${route}`.replace(
+      /\/+$/,
+      ''
+    );
   });
+
+  // ✅ Eliminar la URL actual de languages (no es necesario incluirla)
+  const currentLangKey =
+    hreflangMap[currentLanguage] || currentLanguage.toLowerCase();
+  delete languages[currentLangKey];
 
   // Metadatos específicos para RTL
   const isRTL = textDirectionMap[currentLanguage] === 'rtl';
 
+  // ✅ Asegurar que la imagen OG sea absoluta
+  const ogImageUrl = content.ogImage?.startsWith('http')
+    ? content.ogImage
+    : `${cleanBaseUrl}${content.ogImage || '/assets/images/plaquitascr.png'}`;
+
   return {
+    // ✅ Configurar metadataBase para resolver URLs relativas
+    metadataBase: new URL(cleanBaseUrl),
+
     title: content.title,
     description: content.description,
     keywords: keywordsString,
+
+    // ✅ Alternates (para multiidioma) - FORMA CORRECTA
+    alternates: {
+      canonical: canonicalUrl,
+      languages: languages,
+    },
 
     // Open Graph con locale específico
     openGraph: {
       title: content.ogTitle || content.title,
       description: content.ogDescription || content.description,
-      url: canonical,
+      url: canonicalUrl,
       siteName: APP_NAME,
       images: [
         {
-          url: content.ogImage || `${baseUrl}/assets/images/plaquitascr.png`,
+          url: ogImageUrl,
           width: 1200,
           height: 630,
           alt: content.ogTitle || content.title,
@@ -157,9 +200,13 @@ function generateMetadataFromSeo(
       ],
       locale: localeMap[currentLanguage] || 'es_ES',
       type: 'website',
-      // Agregar URLs alternas para Open Graph
-      ...(Object.keys(alternates).length && {
-        alternateLocale: Object.keys(alternates),
+      // ✅ Agregar URLs alternas para Open Graph
+      ...(Object.keys(languages).length > 0 && {
+        alternateLocale: Object.keys(languages).map((key) => {
+          // Convertir hreflang a locale (ej: 'es' -> 'es_ES')
+          const langCode = key.split('-')[0].toUpperCase();
+          return localeMap[langCode] || key;
+        }),
       }),
     },
 
@@ -168,7 +215,7 @@ function generateMetadataFromSeo(
       card: 'summary_large_image',
       title: content.ogTitle || content.title,
       description: content.ogDescription || content.description,
-      images: [content.ogImage || `${baseUrl}/assets/images/plaquitascr.png`],
+      images: [ogImageUrl],
       creator: '@PlaquitasCR',
     },
 
@@ -185,12 +232,6 @@ function generateMetadataFromSeo(
         'max-image-preview': 'large',
         'max-snippet': -1,
       },
-    },
-
-    // Alternates (para multiidioma)
-    alternates: {
-      canonical: canonical,
-      languages: alternates,
     },
 
     // Icons
@@ -229,13 +270,26 @@ function generateMetadataFromSeo(
     // Metadatos adicionales para SEO internacional
     other: {
       'og:locale:alternate': Object.values(localeMap).join(', '),
-      ...(isRTL && { 'html-direction': 'rtl' }), // Indicador para RTL
+      ...(isRTL && { 'html-direction': 'rtl' }),
     },
   };
 }
 
+// ✅ Función auxiliar para obtener el código hreflang
+function getHreflangKey(lang: string): string {
+  const map: Record<string, string> = {
+    ES: 'es',
+    EN: 'en',
+    AR: 'ar',
+    VI: 'vi',
+    ZH: 'zh',
+    FR: 'fr',
+  };
+  return map[lang] || lang.toLowerCase();
+}
+
+// ✅ Función auxiliar para obtener el código de idioma para alternates (formato ISO)
 function getLanguageCodeForAlternate(lang: string): string {
-  // Convertir códigos de idioma al formato que espera Google (ej: 'es-ES')
   const map: Record<string, string> = {
     ES: 'es-ES',
     EN: 'en-US',
@@ -260,6 +314,9 @@ function getDefaultKeywords(language: string): string {
 }
 
 function generateDefaultMetadata(language: string = 'ES'): Metadata {
+  const baseUrl = DOMAIN || 'https://plaquitascr.com';
+  const cleanBaseUrl = baseUrl.replace(/\/+$/, '');
+
   const titles: Record<string, string> = {
     ES: 'PlaquitasCR - Plataforma para el cuidado de tus mascotas',
     EN: 'PlaquitasCR - Platform for Your Pet Care',
@@ -278,13 +335,24 @@ function generateDefaultMetadata(language: string = 'ES'): Metadata {
     FR: "Gérez les profils d'animaux, étiquettes personnalisées, achetez des produits, planifiez des services vétérinaires, toilettage et découvrez des événements.",
   };
 
+  const title = titles[language] || titles.ES;
+  const description = descriptions[language] || descriptions.ES;
+
   return {
-    title: titles[language] || titles.ES,
-    description: descriptions[language] || descriptions.ES,
+    metadataBase: new URL(cleanBaseUrl),
+    title,
+    description,
+    alternates: {
+      canonical: `${cleanBaseUrl}/${language.toLowerCase()}`,
+    },
     openGraph: {
-      title: titles[language] || titles.ES,
-      description: descriptions[language] || descriptions.ES,
-      images: ['/assets/images/plaquitascr.png'],
+      title,
+      description,
+      url: `${cleanBaseUrl}/${language.toLowerCase()}`,
+      images: [`${cleanBaseUrl}/assets/images/plaquitascr.png`],
     },
   };
 }
+
+// ✅ Exportar utilidades para usar en páginas específicas
+export { getHreflangKey, getLanguageCodeForAlternate, languagePathMap };

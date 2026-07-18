@@ -290,42 +290,42 @@ export default function HomeTestimonials() {
     </Box>
   );
 
-  const renderStats = (
-    <Box
-      sx={{
-        mt: { xs: 10, md: 15 },
-        p: 5,
-        borderRadius: 3,
-        bgcolor: 'background.neutral',
-        textAlign: 'center',
-      }}
-    >
-      <Stack
-        direction={{ xs: 'column', md: 'row' }}
-        spacing={{ xs: 5, md: 10 }}
-        justifyContent="center"
-        alignItems="center"
-      >
-        {[
-          { number: '50K+', label: 'Pets Registered' },
-          { number: '1.2K+', label: 'Affiliated Veterinarians' },
-          { number: '800+', label: 'Certified Groomers' },
-          { number: '4.9/5', label: 'Average Rating' },
-        ].map((stat) => (
-          <m.div key={stat.label} variants={varFade().inUp}>
-            <Stack spacing={1}>
-              <Typography variant="h2" component="h4" color="primary.main">
-                {stat.number}
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                {t(stat.label)}
-              </Typography>
-            </Stack>
-          </m.div>
-        ))}
-      </Stack>
-    </Box>
-  );
+  // const renderStats = (
+  //   <Box
+  //     sx={{
+  //       mt: { xs: 10, md: 15 },
+  //       p: 5,
+  //       borderRadius: 3,
+  //       bgcolor: 'background.neutral',
+  //       textAlign: 'center',
+  //     }}
+  //   >
+  //     <Stack
+  //       direction={{ xs: 'column', md: 'row' }}
+  //       spacing={{ xs: 5, md: 10 }}
+  //       justifyContent="center"
+  //       alignItems="center"
+  //     >
+  //       {[
+  //         { number: '50K+', label: 'Pets Registered' },
+  //         { number: '1.2K+', label: 'Affiliated Veterinarians' },
+  //         { number: '800+', label: 'Certified Groomers' },
+  //         { number: '4.9/5', label: 'Average Rating' },
+  //       ].map((stat) => (
+  //         <m.div key={stat.label} variants={varFade().inUp}>
+  //           <Stack spacing={1}>
+  //             <Typography variant="h2" component="h4" color="primary.main">
+  //               {stat.number}
+  //             </Typography>
+  //             <Typography variant="body2" color="text.secondary">
+  //               {t(stat.label)}
+  //             </Typography>
+  //           </Stack>
+  //         </m.div>
+  //       ))}
+  //     </Stack>
+  //   </Box>
+  // );
 
   return (
     <Box

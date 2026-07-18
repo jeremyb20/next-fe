@@ -78,6 +78,7 @@ const ICONS = {
   blogPanel: icon('meteor-icons:blogger'),
   inventory: icon('material-symbols:inventory'),
   home: icon('solar:home-2-linear'),
+  feedback: icon('material-symbols:feedback-outline'),
 };
 
 const filterByRole = (
@@ -150,6 +151,12 @@ export function useNavData(userRole: string) {
             title: t('Promotions'),
             path: paths.dashboard.admin.promotions,
             icon: ICONS.promotions,
+            roles: ['admin'],
+          },
+          {
+            title: t('Feedback'),
+            path: paths.dashboard.admin.feedback,
+            icon: ICONS.feedback,
             roles: ['admin'],
           },
           // {

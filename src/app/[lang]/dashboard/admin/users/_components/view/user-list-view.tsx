@@ -73,7 +73,7 @@ const defaultFilters: IUserTableFilters = {
 
 export default function UserListView() {
   const { enqueueSnackbar } = useSnackbar();
-  const table = useTable({ defaultOrderBy: 'createdAt', defaultOrder: 'desc' });
+  const table = useTable({ defaultOrder: 'desc' });
   const settings = useSettingsContext();
   const router = useRouter();
   const confirm = useBoolean();

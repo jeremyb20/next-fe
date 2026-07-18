@@ -17,6 +17,7 @@ import Iconify from '@/components/iconify';
 import { BreedOptions } from '@/utils/constants';
 import { useBoolean } from '@/hooks/use-boolean';
 import { fDate, fTime } from '@/utils/format-time';
+import { useTranslation } from '@/hooks/use-translation';
 import { ConfirmDialog } from '@/components/custom-dialog';
 import { QrcodeCustom } from '@/components/qr-generator/qr-codes';
 import CustomPopover, { usePopover } from '@/components/custom-popover';
@@ -57,6 +58,8 @@ export default function QrCodeTableRow({
   const popover = usePopover();
 
   const [editQrCode, setEditQrCode] = useState(false);
+
+  const { lng } = useTranslation();
 
   const renderPrimary = (
     <TableRow hover selected={selected}>
@@ -159,7 +162,7 @@ export default function QrCodeTableRow({
         >
           <Stack direction="row" component={Paper} sx={{ m: 1.5, p: 2 }}>
             <QrcodeCustom
-              value={`${hostName}pet/${randomCode}`}
+              value={`${hostName}${lng}/pet/${randomCode}`}
               fileName={randomCode}
             />
           </Stack>
@@ -246,7 +249,7 @@ export default function QrCodeTableRow({
         </DialogTitle>
         <DialogContent>
           <QrcodeCustom
-            value={`${hostName}pet/${randomCode}`}
+            value={`${hostName}${lng}/pet/${randomCode}`}
             fileName={randomCode}
           />
         </DialogContent>
