@@ -1,0 +1,751 @@
+import Draggable from 'react-draggable';
+import React, { useState, useRef } from 'react';
+import {
+  Box,
+  Paper,
+  Typography,
+  Slider,
+  IconButton,
+  Tooltip,
+} from '@mui/material';
+
+import Iconify from '@/components/iconify';
+
+import { shapeImages } from '../../utils/pet-tag-utils';
+import {
+  TagOption,
+  PersonalizationData,
+  TagFilters,
+} from '../../types/pet-tag.types';
+
+interface TagPreviewProps {
+  tag: TagOption | null;
+  filters: TagFilters;
+  personalization: PersonalizationData;
+  onPersonalizationChange?: (data: PersonalizationData) => void;
+  showControls?: boolean;
+}
+
+export default function TagPreview({
+  tag,
+  filters,
+  personalization,
+  onPersonalizationChange,
+  showControls = false,
+}: TagPreviewProps) {
+  const [isHovering, setIsHovering] = useState(false);
+  const [draggingElement, setDraggingElement] = useState<string | null>(null);
+  const [isDraggingMold, setIsDraggingMold] = useState(false);
+
+  // Estado local para las posiciones durante el arrastre
+  const [localPositions, setLocalPositions] = useState<{
+    name?: { x: number; y: number };
+    phone?: { x: number; y: number };
+    icon?: { x: number; y: number };
+  }>({});
+
+  // Estado local para la posición del molde
+  const [moldPosition, setMoldPosition] = useState({ x: 0, y: 0 });
+
+  const containerRef = useRef<HTMLDivElement>(null);
+  const iconRef = useRef<HTMLDivElement>(null);
+  const nameRef = useRef<HTMLDivElement>(null);
+  const phoneRef = useRef<HTMLDivElement>(null);
+  const moldImgRef = useRef<HTMLImageElement>(null);
+  const moldContainerRef = useRef<HTMLDivElement>(null);
+
+  // Ref para rastrear si estamos arrastrando
+  const isDraggingRef = useRef(false);
+
+  // Ref para la posición del molde (para evitar re-renders)
+  const moldPositionRef = useRef({ x: 0, y: 0 });
+
+  if (!tag) {
+    return (
+      <Paper
+        sx={{
+          p: 4,
+          textAlign: 'center',
+          minHeight: 200,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          bgcolor: 'background.default',
+        }}
+      >
+        <Typography color="text.secondary">
+          Selecciona una plaquita para ver la vista previa
+        </Typography>
+      </Paper>
+    );
+  }
+
+  const getMoldImage = () => shapeImages[filters.shape] || shapeImages.circle;
+
+  // Generar el estilo del texto con stroke - Ahora con tamaño específico
+  const getTextStyles = (isPhone: boolean = false) => {
+    // Usar tamaños específicos si están disponibles, si no usar el tamaño base
+    let baseSize = personalization.fontSize || 36;
+    if (isPhone && personalization.phoneFontSize !== undefined) {
+      baseSize = personalization.phoneFontSize;
+    } else if (!isPhone && personalization.nameFontSize !== undefined) {
+      baseSize = personalization.nameFontSize;
+    }
+
+    // Reducir ligeramente el teléfono si no tiene tamaño específico
+    if (isPhone && personalization.phoneFontSize === undefined) {
+      baseSize = baseSize * 0.7;
+    }
+
+    const baseStyles = {
+      fontWeight: 'bold',
+      color: personalization.fontColor || '#ffffff',
+      fontSize: `${baseSize}px !important`,
+      fontFamily: personalization.fontFamily || 'Comic Sans MS',
+      textShadow: '1px 1px 2px rgba(255,255,255,0.3)',
+    };
+
+    if (!personalization.strokeWidth || personalization.strokeWidth === 0) {
+      return baseStyles;
+    }
+
+    const strokeColor = personalization.strokeColor || '#000000';
+    const strokeWidth = personalization.strokeWidth;
+    const position = personalization.strokePosition || 'outside';
+
+    switch (position) {
+      case 'inside':
+        return {
+          ...baseStyles,
+          WebkitTextStroke: `${strokeWidth}px ${strokeColor}`,
+          textStroke: `${strokeWidth}px ${strokeColor}`,
+          color: personalization.fontColor || '#ffffff',
+          paintOrder: 'stroke fill',
+        };
+      case 'center':
+        return {
+          ...baseStyles,
+          WebkitTextStroke: `${strokeWidth}px ${strokeColor}`,
+          textStroke: `${strokeWidth}px ${strokeColor}`,
+          color: personalization.fontColor || '#ffffff',
+        };
+      case 'outside':
+      default: {
+        const shadows = [];
+        const steps = 8;
+        const angleStep = (Math.PI * 2) / steps;
+        for (let i = 0; i < steps; i++) {
+          const angle = i * angleStep;
+          const x = Math.cos(angle) * strokeWidth;
+          const y = Math.sin(angle) * strokeWidth;
+          shadows.push(`${x}px ${y}px 0 ${strokeColor}`);
+        }
+        return { ...baseStyles, textShadow: shadows.join(', ') };
+      }
+    }
+  };
+
+  const handleScaleChange = (event: Event, newValue: number | number[]) => {
+    if (onPersonalizationChange) {
+      onPersonalizationChange({
+        ...personalization,
+        moldScale: newValue as number,
+      });
+    }
+  };
+
+  const handleScaleAdjust = (delta: number) => {
+    if (onPersonalizationChange) {
+      const currentScale = personalization.moldScale || 1;
+      const newScale = Math.max(0.5, Math.min(2, currentScale + delta));
+      onPersonalizationChange({ ...personalization, moldScale: newScale });
+    }
+  };
+
+  const getMoldBounds = () => {
+    if (!moldImgRef.current) return null;
+    const paper = moldImgRef.current.closest('.mold-paper') as HTMLElement;
+    if (!paper) return null;
+    const imgRect = moldImgRef.current.getBoundingClientRect();
+    const paperRect = paper.getBoundingClientRect();
+
+    const scale = personalization.moldScale || 1;
+    const imgWidth = imgRect.width;
+    const imgHeight = imgRect.height;
+
+    const visibleWidth = imgWidth / scale;
+    const visibleHeight = imgHeight / scale;
+
+    const offsetX = (imgWidth - visibleWidth) / 2;
+    const offsetY = (imgHeight - visibleHeight) / 2;
+
+    return {
+      left: imgRect.left - paperRect.left + offsetX,
+      top: imgRect.top - paperRect.top + offsetY,
+      width: visibleWidth,
+      height: visibleHeight,
+    };
+  };
+
+  const getElementPosition = (element: 'name' | 'phone' | 'icon') => {
+    const positionKey = `${element}Position` as keyof PersonalizationData;
+
+    // Si estamos arrastrando y hay posición local, usarla
+    if (isDraggingRef.current && localPositions[element]) {
+      return localPositions[element]!;
+    }
+
+    const position = personalization[positionKey] as
+      | { x: number; y: number }
+      | undefined;
+
+    if (!position) {
+      switch (element) {
+        case 'icon':
+          return { x: 50, y: 25 };
+        case 'name':
+          return { x: 50, y: 45 };
+        case 'phone':
+          return { x: 50, y: 65 };
+        default:
+          return { x: 50, y: 50 };
+      }
+    }
+
+    return {
+      x: Math.max(0, Math.min(100, position.x)),
+      y: Math.max(0, Math.min(100, position.y)),
+    };
+  };
+
+  const getTextOffset = (text: string, isPhone: boolean = false) => {
+    // Usar el tamaño real del texto para calcular el offset
+    let fontSize = personalization.fontSize || 36;
+    if (isPhone && personalization.phoneFontSize !== undefined) {
+      fontSize = personalization.phoneFontSize;
+    } else if (!isPhone && personalization.nameFontSize !== undefined) {
+      fontSize = personalization.nameFontSize;
+    } else if (isPhone && personalization.phoneFontSize === undefined) {
+      fontSize = fontSize * 0.7;
+    }
+
+    const charWidth = isPhone ? fontSize * 0.3 : fontSize * 0.4;
+    return {
+      width: (text.length * charWidth) / 2,
+      height: fontSize / 2,
+    };
+  };
+
+  // Obtener el offset actual del elemento basado en su tamaño real
+  const getElementOffset = (element: 'name' | 'phone' | 'icon') => {
+    if (element === 'icon') {
+      return { width: 24, height: 24 };
+    }
+
+    const text =
+      element === 'name'
+        ? personalization.name || tag.name || ''
+        : personalization.phone || '';
+    return getTextOffset(text, element === 'phone');
+  };
+
+  const getDraggablePosition = (
+    element: 'name' | 'phone' | 'icon',
+    offsetW = 0,
+    offsetH = 0
+  ) => {
+    const pos = getElementPosition(element);
+    const b = getMoldBounds();
+    if (!b) return { x: 0, y: 0 };
+
+    // La posición del elemento en píxeles relativos al contenedor
+    const elementX = b.left + (pos.x / 100) * b.width;
+    const elementY = b.top + (pos.y / 100) * b.height;
+
+    // Restamos el offset para que el cursor apunte al centro del elemento
+    return {
+      x: elementX - offsetW,
+      y: elementY - offsetH,
+    };
+  };
+
+  const getDraggableBounds = (offsetW = 0, offsetH = 0) => {
+    const b = getMoldBounds();
+    if (!b) return 'parent' as const;
+    return {
+      left: b.left - offsetW,
+      top: b.top - offsetH,
+      right: b.left + b.width - offsetW,
+      bottom: b.top + b.height - offsetH,
+    };
+  };
+
+  const handleDragStart = (element: 'name' | 'phone' | 'icon') => {
+    isDraggingRef.current = true;
+    setDraggingElement(element);
+  };
+
+  const handleDrag =
+    (element: 'name' | 'phone' | 'icon') => (e: any, data: any) => {
+      const b = getMoldBounds();
+      if (!b) return;
+
+      // El offset del elemento
+      const offset = getElementOffset(element);
+
+      // La posición real del elemento (centro) basada en la posición del draggable + offset
+      const elementX = data.x + offset.width;
+      const elementY = data.y + offset.height;
+
+      // Calcular la nueva posición en porcentaje
+      const x = Math.max(
+        0,
+        Math.min(100, ((elementX - b.left) / b.width) * 100)
+      );
+      const y = Math.max(
+        0,
+        Math.min(100, ((elementY - b.top) / b.height) * 100)
+      );
+
+      // Actualizar posición local durante el arrastre
+      setLocalPositions((prev) => ({
+        ...prev,
+        [element]: { x, y },
+      }));
+    };
+
+  const handleDragStop = (element: 'name' | 'phone' | 'icon') => {
+    isDraggingRef.current = false;
+    setDraggingElement(null);
+
+    // Si hay una posición local, guardarla en el estado padre
+    if (localPositions[element] && onPersonalizationChange) {
+      const positionKey = `${element}Position` as keyof PersonalizationData;
+      onPersonalizationChange({
+        ...personalization,
+        [positionKey]: localPositions[element],
+      });
+    }
+
+    // Limpiar posición local
+    setLocalPositions((prev) => ({
+      ...prev,
+      [element]: undefined,
+    }));
+  };
+
+  // Manejadores para arrastrar el molde (la imagen del molde)
+  const handleMoldDragStart = () => {
+    setIsDraggingMold(true);
+  };
+
+  const handleMoldDrag = (e: any, data: any) => {
+    moldPositionRef.current = { x: data.x, y: data.y };
+    setMoldPosition({ x: data.x, y: data.y });
+  };
+
+  const handleMoldDragStop = (e: any, data: any) => {
+    setIsDraggingMold(false);
+  };
+
+  const moldScale = personalization.moldScale || 1;
+  const showName = personalization.name || tag.name || '';
+  const showPhone = personalization.phone || '';
+  const nameOffset = getTextOffset(showName);
+  const phoneOffset = getTextOffset(showPhone, true);
+
+  // Combinar la posición y la escala en una sola transformación
+  const getMoldTransform = () => {
+    const { x, y } = moldPosition;
+    return `translate(${x}px, ${y}px) scale(${moldScale})`;
+  };
+
+  return (
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        gap: 2,
+        width: '100%',
+      }}
+    >
+      <Box
+        ref={containerRef}
+        sx={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          p: { xs: 0, sm: 3 },
+          width: '100%',
+          position: 'relative',
+        }}
+        onMouseEnter={() => setIsHovering(true)}
+        onMouseLeave={() => setIsHovering(false)}
+      >
+        <Paper
+          elevation={3}
+          className="mold-paper"
+          sx={{
+            width: 380,
+            height: 240,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            position: 'relative',
+            overflow: 'hidden',
+            backgroundImage: tag.background ? `url(${tag.background})` : 'red',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            transition: 'all 0.3s ease',
+            backgroundColor: 'red',
+            cursor: draggingElement ? 'grabbing' : 'default',
+          }}
+        >
+          {/* Contenedor de la imagen del molde con transform combinada */}
+          <Box
+            ref={moldContainerRef}
+            sx={{
+              position: 'absolute',
+              inset: 0,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              transform: getMoldTransform(),
+              transition: isDraggingMold ? 'none' : 'transform 0.3s ease',
+              pointerEvents: showControls ? 'auto' : 'none',
+              cursor: isDraggingMold
+                ? 'grabbing'
+                : showControls
+                  ? 'grab'
+                  : 'default',
+              touchAction: 'none',
+              zIndex: 0,
+            }}
+            onMouseDown={() => {
+              if (showControls) {
+                setIsDraggingMold(true);
+              }
+            }}
+            onMouseUp={() => {
+              setIsDraggingMold(false);
+            }}
+          >
+            {/* Indicador de arrastre para el molde */}
+            {showControls &&
+              isHovering &&
+              !draggingElement &&
+              !isDraggingMold && (
+                <Box
+                  sx={{
+                    position: 'absolute',
+                    top: 4,
+                    right: 4,
+                    zIndex: 10,
+                    bgcolor: 'rgba(0,0,0,0.5)',
+                    borderRadius: 1,
+                    p: 0.5,
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 0.5,
+                    pointerEvents: 'none',
+                  }}
+                >
+                  <Iconify
+                    icon="iconoir:drag"
+                    sx={{ fontSize: 16, color: 'white' }}
+                  />
+                  <Typography variant="caption" sx={{ color: 'white' }}>
+                    Mover molde
+                  </Typography>
+                </Box>
+              )}
+
+            <img
+              ref={moldImgRef}
+              src={getMoldImage()}
+              alt={`Molde ${tag.shape}`}
+              style={{
+                width: '100%',
+                height: '100%',
+                objectFit: 'contain',
+                pointerEvents: 'none',
+                userSelect: 'none',
+              }}
+            />
+          </Box>
+
+          {/* Contenedor para elementos draggable */}
+          <Box
+            sx={{
+              position: 'absolute',
+              inset: 0,
+              zIndex: 1,
+              pointerEvents: 'none',
+            }}
+          >
+            {/* Icono */}
+            {personalization.icon && (
+              <Draggable
+                nodeRef={iconRef}
+                position={getDraggablePosition('icon', 24, 24)}
+                onStart={() => handleDragStart('icon')}
+                onDrag={handleDrag('icon')}
+                onStop={() => handleDragStop('icon')}
+                bounds={getDraggableBounds(24, 24)}
+                disabled={!showControls}
+              >
+                <Box
+                  ref={iconRef}
+                  sx={{
+                    position: 'absolute',
+                    pointerEvents: showControls ? 'auto' : 'none',
+                    cursor: showControls ? 'grab' : 'default',
+                    '&:active': { cursor: 'grabbing' },
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    width: 48,
+                    height: 48,
+                    borderRadius: '50%',
+                    bgcolor:
+                      draggingElement === 'icon'
+                        ? 'rgba(255,255,255,0.2)'
+                        : 'transparent',
+                    transition: 'background-color 0.2s ease',
+                  }}
+                >
+                  <Typography
+                    variant="h1"
+                    sx={{
+                      fontSize: 36,
+                      position: 'relative',
+                      zIndex: 2,
+                      textShadow: '0 2px 4px rgba(0,0,0,0.1)',
+                      userSelect: 'none',
+                      pointerEvents: 'none',
+                    }}
+                  >
+                    {personalization.icon}
+                  </Typography>
+                  {showControls && isHovering && (
+                    <Tooltip title="Arrastrar ícono">
+                      <Iconify
+                        icon="iconoir:drag"
+                        sx={{
+                          position: 'absolute',
+                          bottom: -4,
+                          right: -4,
+                          fontSize: 14,
+                          color: 'rgba(0,0,0,0.4)',
+                          pointerEvents: 'none',
+                        }}
+                      />
+                    </Tooltip>
+                  )}
+                </Box>
+              </Draggable>
+            )}
+
+            {/* Nombre */}
+            <Draggable
+              nodeRef={nameRef}
+              position={getDraggablePosition(
+                'name',
+                nameOffset.width,
+                nameOffset.height
+              )}
+              onStart={() => handleDragStart('name')}
+              onDrag={handleDrag('name')}
+              onStop={() => handleDragStop('name')}
+              bounds={getDraggableBounds(nameOffset.width, nameOffset.height)}
+              disabled={!showControls}
+            >
+              <Box
+                ref={nameRef}
+                sx={{
+                  position: 'absolute',
+                  pointerEvents: showControls ? 'auto' : 'none',
+                  cursor: showControls ? 'grab' : 'default',
+                  '&:active': { cursor: 'grabbing' },
+                  padding: '4px 8px',
+                  borderRadius: 1,
+                  bgcolor:
+                    draggingElement === 'name'
+                      ? 'rgba(255,255,255,0.2)'
+                      : 'transparent',
+                  transition: 'background-color 0.2s ease',
+                }}
+              >
+                <Typography
+                  sx={{
+                    ...getTextStyles(false),
+                    pointerEvents: 'none',
+                    userSelect: 'none',
+                  }}
+                >
+                  {showName}
+                </Typography>
+                {showControls && isHovering && (
+                  <Tooltip title="Arrastrar nombre">
+                    <Iconify
+                      icon="iconoir:drag"
+                      sx={{
+                        position: 'absolute',
+                        top: -4,
+                        right: -4,
+                        fontSize: 14,
+                        color: 'rgba(0,0,0,0.4)',
+                        pointerEvents: 'none',
+                      }}
+                    />
+                  </Tooltip>
+                )}
+              </Box>
+            </Draggable>
+
+            {/* Teléfono */}
+            {showPhone && (
+              <Draggable
+                nodeRef={phoneRef}
+                position={getDraggablePosition(
+                  'phone',
+                  phoneOffset.width,
+                  phoneOffset.height
+                )}
+                onStart={() => handleDragStart('phone')}
+                onDrag={handleDrag('phone')}
+                onStop={() => handleDragStop('phone')}
+                bounds={getDraggableBounds(
+                  phoneOffset.width,
+                  phoneOffset.height
+                )}
+                disabled={!showControls}
+              >
+                <Box
+                  ref={phoneRef}
+                  sx={{
+                    position: 'absolute',
+                    pointerEvents: showControls ? 'auto' : 'none',
+                    cursor: showControls ? 'grab' : 'default',
+                    '&:active': { cursor: 'grabbing' },
+                    padding: '4px 8px',
+                    borderRadius: 1,
+                    bgcolor:
+                      draggingElement === 'phone'
+                        ? 'rgba(255,255,255,0.2)'
+                        : 'transparent',
+                    transition: 'background-color 0.2s ease',
+                  }}
+                >
+                  <Typography
+                    sx={{
+                      ...getTextStyles(true),
+                      pointerEvents: 'none',
+                      userSelect: 'none',
+                    }}
+                  >
+                    {showPhone}
+                  </Typography>
+                  {showControls && isHovering && (
+                    <Tooltip title="Arrastrar teléfono">
+                      <Iconify
+                        icon="iconoir:drag"
+                        sx={{
+                          position: 'absolute',
+                          bottom: -4,
+                          right: -4,
+                          fontSize: 14,
+                          color: 'rgba(0,0,0,0.4)',
+                          pointerEvents: 'none',
+                        }}
+                      />
+                    </Tooltip>
+                  )}
+                </Box>
+              </Draggable>
+            )}
+          </Box>
+
+          {/* Controles de escala (hover) */}
+          {showControls && onPersonalizationChange && (
+            <Box
+              sx={{
+                position: 'absolute',
+                bottom: 10,
+                right: 10,
+                display: 'flex',
+                gap: 1,
+                zIndex: 10,
+                bgcolor: 'rgba(0,0,0,0.7)',
+                borderRadius: 2,
+                p: 0.5,
+                opacity: isHovering ? 1 : 0,
+                transition: 'opacity 0.3s ease',
+                pointerEvents: isHovering ? 'auto' : 'none',
+              }}
+            >
+              <IconButton
+                size="small"
+                sx={{ color: 'white' }}
+                onClick={() => handleScaleAdjust(-0.1)}
+                disabled={moldScale <= 0.5}
+              >
+                <Iconify icon="gg:remove" />
+              </IconButton>
+              <Typography
+                variant="caption"
+                sx={{
+                  color: 'white',
+                  display: 'flex',
+                  alignItems: 'center',
+                  px: 1,
+                }}
+              >
+                {Math.round(moldScale * 100)}%
+              </Typography>
+              <IconButton
+                size="small"
+                sx={{ color: 'white' }}
+                onClick={() => handleScaleAdjust(0.1)}
+                disabled={moldScale >= 2}
+              >
+                <Iconify icon="gg:add" />
+              </IconButton>
+            </Box>
+          )}
+        </Paper>
+      </Box>
+
+      {/* Control deslizante para la escala */}
+      {showControls && onPersonalizationChange && (
+        <Box sx={{ width: '80%', maxWidth: 280 }}>
+          <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1 }}>
+            <Typography variant="caption" color="text.secondary">
+              Tamaño del molde
+            </Typography>
+            <Typography variant="caption" color="text.secondary">
+              {Math.round(moldScale * 100)}%
+            </Typography>
+          </Box>
+          <Slider
+            value={moldScale}
+            onChange={handleScaleChange}
+            min={0.5}
+            max={2}
+            step={0.05}
+            marks={[
+              { value: 0.5, label: '50%' },
+              { value: 1, label: '100%' },
+              { value: 1.5, label: '150%' },
+              { value: 2, label: '200%' },
+            ]}
+            valueLabelDisplay="auto"
+            valueLabelFormat={(value) => `${Math.round(value * 100)}%`}
+          />
+        </Box>
+      )}
+    </Box>
+  );
+}
