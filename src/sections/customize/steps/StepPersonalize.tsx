@@ -86,15 +86,6 @@ export default function StepPersonalize({
       });
     };
 
-  const handleSelectChange =
-    (field: keyof PersonalizationData) =>
-    (event: React.ChangeEvent<{ value: unknown }>) => {
-      onPersonalizationChange({
-        ...personalization,
-        [field]: event.target.value,
-      });
-    };
-
   const handleIconSelect = (icon: string) => {
     onPersonalizationChange({
       ...personalization,

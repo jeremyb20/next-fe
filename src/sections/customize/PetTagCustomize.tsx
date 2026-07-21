@@ -35,7 +35,7 @@ export default function PetTagCustomize() {
     material: '',
     shape: 'bone',
   });
-  const [filteredTags, setFilteredTags] = useState<TagOption[]>(mockTags);
+  const [filteredTags] = useState<TagOption[]>(mockTags);
   const [selectedTag, setSelectedTag] = useState<TagOption | null>(null);
   const [personalization, setPersonalization] = useState<PersonalizationData>({
     name: '',
