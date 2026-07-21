@@ -44,21 +44,16 @@ export default function TagPreview({
     icon?: { x: number; y: number };
   }>({});
 
-  // Estado local para la posición del molde
-  const [moldPosition, setMoldPosition] = useState({ x: 0, y: 0 });
-
   const containerRef = useRef<HTMLDivElement>(null);
   const iconRef = useRef<HTMLDivElement>(null);
   const nameRef = useRef<HTMLDivElement>(null);
   const phoneRef = useRef<HTMLDivElement>(null);
   const moldImgRef = useRef<HTMLImageElement>(null);
   const moldContainerRef = useRef<HTMLDivElement>(null);
+  const moldInnerRef = useRef<HTMLDivElement>(null);
 
   // Ref para rastrear si estamos arrastrando
   const isDraggingRef = useRef(false);
-
-  // Ref para la posición del molde (para evitar re-renders)
-  const moldPositionRef = useRef({ x: 0, y: 0 });
 
   if (!tag) {
     return (
@@ -82,9 +77,8 @@ export default function TagPreview({
 
   const getMoldImage = () => shapeImages[filters.shape] || shapeImages.circle;
 
-  // Generar el estilo del texto con stroke - Ahora con tamaño específico
+  // Generar el estilo del texto con stroke
   const getTextStyles = (isPhone: boolean = false) => {
-    // Usar tamaños específicos si están disponibles, si no usar el tamaño base
     let baseSize = personalization.fontSize || 36;
     if (isPhone && personalization.phoneFontSize !== undefined) {
       baseSize = personalization.phoneFontSize;
@@ -92,7 +86,6 @@ export default function TagPreview({
       baseSize = personalization.nameFontSize;
     }
 
-    // Reducir ligeramente el teléfono si no tiene tamaño específico
     if (isPhone && personalization.phoneFontSize === undefined) {
       baseSize = baseSize * 0.7;
     }
@@ -190,7 +183,6 @@ export default function TagPreview({
   const getElementPosition = (element: 'name' | 'phone' | 'icon') => {
     const positionKey = `${element}Position` as keyof PersonalizationData;
 
-    // Si estamos arrastrando y hay posición local, usarla
     if (isDraggingRef.current && localPositions[element]) {
       return localPositions[element]!;
     }
@@ -219,7 +211,6 @@ export default function TagPreview({
   };
 
   const getTextOffset = (text: string, isPhone: boolean = false) => {
-    // Usar el tamaño real del texto para calcular el offset
     let fontSize = personalization.fontSize || 36;
     if (isPhone && personalization.phoneFontSize !== undefined) {
       fontSize = personalization.phoneFontSize;
@@ -236,7 +227,6 @@ export default function TagPreview({
     };
   };
 
-  // Obtener el offset actual del elemento basado en su tamaño real
   const getElementOffset = (element: 'name' | 'phone' | 'icon') => {
     if (element === 'icon') {
       return { width: 24, height: 24 };
@@ -258,11 +248,9 @@ export default function TagPreview({
     const b = getMoldBounds();
     if (!b) return { x: 0, y: 0 };
 
-    // La posición del elemento en píxeles relativos al contenedor
     const elementX = b.left + (pos.x / 100) * b.width;
     const elementY = b.top + (pos.y / 100) * b.height;
 
-    // Restamos el offset para que el cursor apunte al centro del elemento
     return {
       x: elementX - offsetW,
       y: elementY - offsetH,
@@ -290,14 +278,10 @@ export default function TagPreview({
       const b = getMoldBounds();
       if (!b) return;
 
-      // El offset del elemento
       const offset = getElementOffset(element);
-
-      // La posición real del elemento (centro) basada en la posición del draggable + offset
       const elementX = data.x + offset.width;
       const elementY = data.y + offset.height;
 
-      // Calcular la nueva posición en porcentaje
       const x = Math.max(
         0,
         Math.min(100, ((elementX - b.left) / b.width) * 100)
@@ -307,7 +291,6 @@ export default function TagPreview({
         Math.min(100, ((elementY - b.top) / b.height) * 100)
       );
 
-      // Actualizar posición local durante el arrastre
       setLocalPositions((prev) => ({
         ...prev,
         [element]: { x, y },
@@ -318,7 +301,6 @@ export default function TagPreview({
     isDraggingRef.current = false;
     setDraggingElement(null);
 
-    // Si hay una posición local, guardarla en el estado padre
     if (localPositions[element] && onPersonalizationChange) {
       const positionKey = `${element}Position` as keyof PersonalizationData;
       onPersonalizationChange({
@@ -327,24 +309,27 @@ export default function TagPreview({
       });
     }
 
-    // Limpiar posición local
     setLocalPositions((prev) => ({
       ...prev,
       [element]: undefined,
     }));
   };
 
-  // Manejadores para arrastrar el molde (la imagen del molde)
+  // Manejadores para arrastrar el molde
   const handleMoldDragStart = () => {
     setIsDraggingMold(true);
   };
 
   const handleMoldDrag = (e: any, data: any) => {
-    moldPositionRef.current = { x: data.x, y: data.y };
-    setMoldPosition({ x: data.x, y: data.y });
+    if (onPersonalizationChange) {
+      onPersonalizationChange({
+        ...personalization,
+        moldPosition: { x: data.x, y: data.y },
+      });
+    }
   };
 
-  const handleMoldDragStop = (e: any, data: any) => {
+  const handleMoldDragStop = () => {
     setIsDraggingMold(false);
   };
 
@@ -354,11 +339,7 @@ export default function TagPreview({
   const nameOffset = getTextOffset(showName);
   const phoneOffset = getTextOffset(showPhone, true);
 
-  // Combinar la posición y la escala en una sola transformación
-  const getMoldTransform = () => {
-    const { x, y } = moldPosition;
-    return `translate(${x}px, ${y}px) scale(${moldScale})`;
-  };
+  const moldPosition = personalization.moldPosition || { x: 0, y: 0 };
 
   return (
     <Box
@@ -400,81 +381,149 @@ export default function TagPreview({
             backgroundPosition: 'center',
             transition: 'all 0.3s ease',
             backgroundColor: 'red',
-            cursor: draggingElement ? 'grabbing' : 'default',
+            cursor: draggingElement || isDraggingMold ? 'grabbing' : 'default',
           }}
         >
-          {/* Contenedor de la imagen del molde con transform combinada */}
-          <Box
-            ref={moldContainerRef}
-            sx={{
-              position: 'absolute',
-              inset: 0,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              transform: getMoldTransform(),
-              transition: isDraggingMold ? 'none' : 'transform 0.3s ease',
-              pointerEvents: showControls ? 'auto' : 'none',
-              cursor: isDraggingMold
-                ? 'grabbing'
-                : showControls
-                  ? 'grab'
-                  : 'default',
-              touchAction: 'none',
-              zIndex: 0,
+          {/* Draggable para la posición del molde */}
+          <Draggable
+            position={moldPosition}
+            onStart={handleMoldDragStart}
+            onDrag={handleMoldDrag}
+            onStop={handleMoldDragStop}
+            disabled={!showControls}
+            bounds={{
+              left: -190,
+              top: -120,
+              right: 190,
+              bottom: 120,
             }}
-            onMouseDown={() => {
-              if (showControls) {
-                setIsDraggingMold(true);
-              }
-            }}
-            onMouseUp={() => {
-              setIsDraggingMold(false);
-            }}
+            nodeRef={moldContainerRef}
           >
-            {/* Indicador de arrastre para el molde */}
-            {showControls &&
-              isHovering &&
-              !draggingElement &&
-              !isDraggingMold && (
-                <Box
-                  sx={{
-                    position: 'absolute',
-                    top: 4,
-                    right: 4,
-                    zIndex: 10,
-                    bgcolor: 'rgba(0,0,0,0.5)',
-                    borderRadius: 1,
-                    p: 0.5,
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: 0.5,
-                    pointerEvents: 'none',
-                  }}
-                >
-                  <Iconify
-                    icon="iconoir:drag"
-                    sx={{ fontSize: 16, color: 'white' }}
-                  />
-                  <Typography variant="caption" sx={{ color: 'white' }}>
-                    Mover molde
-                  </Typography>
-                </Box>
-              )}
-
-            <img
-              ref={moldImgRef}
-              src={getMoldImage()}
-              alt={`Molde ${tag.shape}`}
-              style={{
-                width: '100%',
-                height: '100%',
-                objectFit: 'contain',
-                pointerEvents: 'none',
-                userSelect: 'none',
+            <Box
+              ref={moldContainerRef}
+              sx={{
+                position: 'absolute',
+                inset: 0,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                pointerEvents: showControls ? 'auto' : 'none',
+                cursor: isDraggingMold
+                  ? 'grabbing'
+                  : showControls
+                    ? 'grab'
+                    : 'default',
+                touchAction: 'none',
+                zIndex: 0,
               }}
-            />
-          </Box>
+            >
+              {/* Contenedor interno con la escala */}
+              <Box
+                ref={moldInnerRef}
+                sx={{
+                  width: '100%',
+                  height: '100%',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  transform: `scale(${moldScale})`,
+                  transition: isDraggingMold ? 'none' : 'transform 0.3s ease',
+                  position: 'relative',
+                }}
+              >
+                {/* Indicador de arrastre para el molde */}
+                {showControls &&
+                  isHovering &&
+                  !draggingElement &&
+                  !isDraggingMold && (
+                    <Box
+                      sx={{
+                        position: 'absolute',
+                        top: 57,
+                        right: 58,
+                        zIndex: 10,
+                        bgcolor: 'rgba(0,0,0,0.7)',
+                        borderRadius: 2,
+                        p: 0.5,
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: 0.5,
+                        pointerEvents: 'none',
+                        animation: 'pulse 2s ease-in-out infinite',
+                        '@keyframes pulse': {
+                          '0%': { opacity: 0.6 },
+                          '50%': { opacity: 1 },
+                          '100%': { opacity: 0.6 },
+                        },
+                      }}
+                    >
+                      <Iconify
+                        icon="iconoir:drag"
+                        width={10}
+                        sx={{ color: 'white' }}
+                      />
+                      <Typography
+                        variant="h6"
+                        sx={{
+                          color: 'white',
+                          fontSize: '8px !important',
+                        }}
+                      >
+                        Mover molde
+                      </Typography>
+                    </Box>
+                  )}
+
+                {/* Indicador cuando está arrastrando */}
+                {isDraggingMold && (
+                  <Box
+                    sx={{
+                      position: 'absolute',
+                      top: 57,
+                      right: 58,
+                      zIndex: 10,
+                      bgcolor: 'rgba(0,0,0,0.8)',
+                      borderRadius: 2,
+                      p: 0.5,
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: 0.5,
+                      pointerEvents: 'none',
+                    }}
+                  >
+                    <Iconify
+                      icon="mdi:gesture-tap"
+                      width={10}
+                      sx={{ color: '#4CAF50' }}
+                    />
+                    <Typography
+                      variant="h6"
+                      sx={{
+                        color: '#4CAF50',
+                        fontWeight: 'bold',
+                        fontSize: '8px !important',
+                      }}
+                    >
+                      Arrastrando...
+                    </Typography>
+                  </Box>
+                )}
+
+                <img
+                  ref={moldImgRef}
+                  src={getMoldImage()}
+                  alt={`Molde ${tag.shape}`}
+                  style={{
+                    width: '100%',
+                    height: '100%',
+                    objectFit: 'contain',
+                    pointerEvents: 'none',
+                    userSelect: 'none',
+                  }}
+                />
+              </Box>
+            </Box>
+          </Draggable>
 
           {/* Contenedor para elementos draggable */}
           <Box
