@@ -1,5 +1,7 @@
 import Draggable from 'react-draggable';
 import React, { useState, useRef } from 'react';
+import { useTheme } from '@mui/material/styles';
+import useMediaQuery from '@mui/system/useMediaQuery';
 import {
   Box,
   Paper,
@@ -7,10 +9,17 @@ import {
   Slider,
   IconButton,
   Tooltip,
+  Button,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
 } from '@mui/material';
 
 import Iconify from '@/components/iconify';
 
+import StepShape from './steps/StepShape';
+import StepBackground from './steps/StepBackground';
 import { shapeImages } from '../../utils/pet-tag-utils';
 import {
   TagOption,
@@ -23,6 +32,8 @@ interface TagPreviewProps {
   filters: TagFilters;
   personalization: PersonalizationData;
   onPersonalizationChange?: (data: PersonalizationData) => void;
+  onFilterChange?: (filters: Partial<TagFilters>) => void;
+  onSelectBackground?: (background: string) => void;
   showControls?: boolean;
 }
 
@@ -31,9 +42,15 @@ export default function TagPreview({
   filters,
   personalization,
   onPersonalizationChange,
+  onFilterChange,
+  onSelectBackground,
   showControls = false,
 }: TagPreviewProps) {
+  const [shapeModalOpen, setShapeModalOpen] = useState(false);
+  const [bgModalOpen, setBgModalOpen] = useState(false);
+  const [localBackground, setLocalBackground] = useState(tag?.background || '');
   const [isHovering, setIsHovering] = useState(false);
+  const [localFilters, setLocalFilters] = useState<TagFilters>(filters);
   const [draggingElement, setDraggingElement] = useState<string | null>(null);
   const [isDraggingMold, setIsDraggingMold] = useState(false);
 
@@ -54,7 +71,8 @@ export default function TagPreview({
 
   // Ref para rastrear si estamos arrastrando
   const isDraggingRef = useRef(false);
-
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   if (!tag) {
     return (
       <Paper
@@ -340,6 +358,11 @@ export default function TagPreview({
   const phoneOffset = getTextOffset(showPhone, true);
 
   const moldPosition = personalization.moldPosition || { x: 0, y: 0 };
+
+  const handleShapeConfirm = () => {
+    if (onFilterChange) onFilterChange(localFilters);
+    setShapeModalOpen(false);
+  };
 
   return (
     <Box
@@ -766,6 +789,87 @@ export default function TagPreview({
           )}
         </Paper>
       </Box>
+
+      {/* Botones de acción */}
+      {showControls && (
+        <Box sx={{ display: 'flex', gap: 2, mt: 1 }}>
+          {onSelectBackground && (
+            <Button
+              variant="outlined"
+              size="small"
+              onClick={() => {
+                setLocalBackground(tag?.background || '');
+                setBgModalOpen(true);
+              }}
+            >
+              Cambiar fondos
+            </Button>
+          )}
+          {onFilterChange && (
+            <Button
+              variant="outlined"
+              size="small"
+              onClick={() => {
+                setLocalFilters(filters);
+                setShapeModalOpen(true);
+              }}
+            >
+              Cambiar forma
+            </Button>
+          )}
+        </Box>
+      )}
+
+      {/* Modal de fondos */}
+      <Dialog
+        open={bgModalOpen}
+        onClose={() => setBgModalOpen(false)}
+        maxWidth="md"
+        scroll="body"
+        fullWidth
+        fullScreen={isMobile}
+      >
+        <DialogTitle>Cambiar fondo</DialogTitle>
+        <DialogContent>
+          <StepBackground
+            selectedBackground={localBackground}
+            onSelectBackground={setLocalBackground}
+            onNext={() => {
+              if (onSelectBackground) onSelectBackground(localBackground);
+              setBgModalOpen(false);
+            }}
+            onBack={() => setBgModalOpen(false)}
+          />
+        </DialogContent>
+      </Dialog>
+
+      {/* Modal de forma */}
+      <Dialog
+        open={shapeModalOpen}
+        onClose={() => setShapeModalOpen(false)}
+        maxWidth="md"
+        fullWidth
+        fullScreen={isMobile}
+      >
+        <DialogTitle>Cambiar forma</DialogTitle>
+        <DialogContent>
+          <StepShape
+            filters={localFilters}
+            onFilterChange={(f) =>
+              setLocalFilters((prev) => ({ ...prev, ...f }))
+            }
+            onNext={handleShapeConfirm}
+            isShapeStep
+            hideBackButtom
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setShapeModalOpen(false)}>Cancelar</Button>
+          <Button variant="contained" onClick={handleShapeConfirm}>
+            Confirmar
+          </Button>
+        </DialogActions>
+      </Dialog>
 
       {/* Control deslizante para la escala */}
       {showControls && onPersonalizationChange && (

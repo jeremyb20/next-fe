@@ -36,50 +36,17 @@ export const petSizes = {
 };
 
 // Datos de ejemplo para fondos
-export const backgroundOptions: TagBackground[] = [
-  {
-    id: 'bg1',
-    name: 'Sólido Rojo',
-    imageUrl: '/images/backgrounds/red.jpg',
-    category: 'solid',
-  },
-  {
-    id: 'bg2',
-    name: 'Sólido Azul',
-    imageUrl: '/images/backgrounds/blue.jpg',
-    category: 'solid',
-  },
-  {
-    id: 'bg3',
-    name: 'Pata Huella',
-    imageUrl: '/images/backgrounds/paw.jpg',
-    category: 'pattern',
-  },
-  {
-    id: 'bg4',
-    name: 'Corazones',
-    imageUrl: '/images/backgrounds/hearts.jpg',
-    category: 'pattern',
-  },
-  {
-    id: 'bg5',
-    name: 'Fondo Personalizado',
-    imageUrl: '/images/backgrounds/custom.jpg',
-    category: 'image',
-  },
-];
+export const backgroundOptions: TagBackground[] = Array.from(
+  { length: 21 },
+  (_, i) => ({
+    id: `bg${i}`,
+    name: `Fondo ${i + 1}`,
+    imageUrl: `/assets/images/customize/shapes/bg-${i}.png`,
+    category: i >= 13 ? ('solid' as const) : ('pattern' as const),
+  })
+);
 
 export const mockTags: TagOption[] = [
-  {
-    id: '0',
-    shape: 'bone',
-    material: 'resin',
-    background: '/assets/images/customize/shapes/bg-0.png',
-    name: 'Max',
-    phone: '555-1234',
-    imageUrl: '/assets/images/customize/shapes/bg-0.png',
-    isCustomizable: true,
-  },
   {
     id: '1',
     shape: 'bone',
@@ -126,7 +93,7 @@ export const mockTags: TagOption[] = [
     material: 'resin',
     background: '/assets/images/customize/shapes/bg-5.png',
     name: 'Coco',
-    phone: '555-7890',
+    phone: '8555-7890',
     imageUrl: '/assets/images/customize/shapes/bg-5.png',
     isCustomizable: false,
   },
@@ -279,5 +246,15 @@ export const mockTags: TagOption[] = [
     phone: '555-8901',
     imageUrl: '/assets/images/customize/shapes/bg-20.png',
     isCustomizable: false,
+  },
+  {
+    id: '21',
+    shape: 'bone',
+    material: 'resin',
+    background: '/assets/images/customize/shapes/bg-0.png',
+    name: 'Max',
+    phone: '555-1234',
+    imageUrl: '/assets/images/customize/shapes/bg-0.png',
+    isCustomizable: true,
   },
 ];

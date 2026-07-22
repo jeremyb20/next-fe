@@ -17,7 +17,7 @@ import {
 
 import { mockTags } from '@/utils/pet-tag-utils';
 
-import TagGallery from './TagGallery';
+// import TagGallery from './TagGallery';
 import StepShape from './steps/StepShape';
 import StepMaterial from './steps/StepMaterial';
 import StepPersonalize from './steps/StepPersonalize';
@@ -36,7 +36,7 @@ export default function PetTagCustomize() {
     shape: 'bone',
   });
   const [filteredTags] = useState<TagOption[]>(mockTags);
-  const [selectedTag, setSelectedTag] = useState<TagOption | null>(null);
+
   const [personalization, setPersonalization] = useState<PersonalizationData>({
     name: '',
     phone: '',
@@ -56,6 +56,17 @@ export default function PetTagCustomize() {
       y: 65, // Cambiado de 0.7 a 65 (porcentaje)
     },
   });
+
+  const [selectedTag, setSelectedTag] = useState<TagOption | null>({
+    id: 'custom',
+    shape: filters.shape || 'circle',
+    material: filters.material || 'resin',
+    background: '/assets/images/customize/shapes/bg-1.png',
+    name: personalization.name || 'Tobby',
+    phone: personalization.phone || '8888-8888',
+    imageUrl: '',
+    isCustomizable: true,
+  });
   const [errorMsg, setErrorMsg] = useState('');
   const [isClient, setIsClient] = useState(false);
 
@@ -73,10 +84,10 @@ export default function PetTagCustomize() {
       description: 'Selecciona el tipo y tamaño de tu mascota',
     },
 
-    {
-      label: 'Fondos disponibles',
-      description: 'Explora los fondos para plaquitas disponibles',
-    },
+    // {
+    //   label: 'Fondos disponibles',
+    //   description: 'Explora los fondos para plaquitas disponibles',
+    // },
     {
       label: 'Personalización',
       description: 'Personaliza tu plaquita',
@@ -95,27 +106,27 @@ export default function PetTagCustomize() {
     setFilters((prev) => ({ ...prev, ...newFilters }));
   };
 
-  const handleSelectTag = (tag: TagOption) => {
-    setSelectedTag(tag);
-    handleNext();
-  };
+  // const handleSelectTag = (tag: TagOption) => {
+  //   setSelectedTag(tag);
+  //   handleNext();
+  // };
 
-  const handleCustomize = () => {
-    // Si no hay tag seleccionado, crear uno nuevo
-    if (!selectedTag) {
-      setSelectedTag({
-        id: 'custom',
-        shape: filters.shape || 'circle',
-        material: filters.material || 'resin',
-        background: '/images/default-background.jpg',
-        name: personalization.name || 'Mi mascota',
-        phone: personalization.phone || '',
-        imageUrl: '',
-        isCustomizable: true,
-      });
-    }
-    handleNext();
-  };
+  // const handleCustomize = () => {
+  //   // Si no hay tag seleccionado, crear uno nuevo
+  //   if (!selectedTag) {
+  //     setSelectedTag({
+  //       id: 'custom',
+  //       shape: filters.shape || 'circle',
+  //       material: filters.material || 'resin',
+  //       background: '/images/default-background.jpg',
+  //       name: personalization.name || 'Mi mascota',
+  //       phone: personalization.phone || '',
+  //       imageUrl: '',
+  //       isCustomizable: true,
+  //     });
+  //   }
+  //   handleNext();
+  // };
 
   const renderStepContent = (step: number) => {
     switch (step) {
@@ -146,35 +157,40 @@ export default function PetTagCustomize() {
             onBack={handleBack}
           />
         );
+      // case 3:
+      //   return (
+      //     <Box>
+      //       <Box sx={{ mt: 2 }}>
+      //         <Button onClick={handleBack}>Atrás</Button>
+      //       </Box>
+      //       <TagGallery
+      //         filters={filters}
+      //         tags={filteredTags}
+      //         onSelectTag={handleSelectTag}
+      //         onCustomize={handleCustomize}
+      //         personalization={personalization}
+      //         onPersonalizationChange={setPersonalization}
+      //       />
+      //     </Box>
+      //   );
       case 3:
-        return (
-          <Box>
-            <Box sx={{ mt: 2 }}>
-              <Button onClick={handleBack}>Atrás</Button>
-            </Box>
-            <TagGallery
-              filters={filters}
-              tags={filteredTags}
-              onSelectTag={handleSelectTag}
-              onCustomize={handleCustomize}
-              personalization={personalization}
-              onPersonalizationChange={setPersonalization}
-            />
-          </Box>
-        );
-      case 4:
         return (
           <StepPersonalize
             filters={filters}
+            onFilterChange={handleFilterChange}
             tag={selectedTag}
             personalization={personalization}
             onPersonalizationChange={setPersonalization}
             onComplete={() => {
-              // Aquí iría la lógica para finalizar el proceso
               setErrorMsg('');
               console.log('Proceso completado');
             }}
             onBack={handleBack}
+            onSelectBackground={(bg) =>
+              setSelectedTag((prev) =>
+                prev ? { ...prev, background: bg } : prev
+              )
+            }
           />
         );
       default:

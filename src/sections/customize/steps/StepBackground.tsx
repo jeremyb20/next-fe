@@ -1,5 +1,6 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
+import { alpha, useTheme } from '@mui/material/styles';
 import {
   Box,
   Grid,
@@ -11,6 +12,8 @@ import {
   Chip,
   Stack,
 } from '@mui/material';
+
+import Iconify from '@/components/iconify';
 
 import { backgroundOptions } from '../../../utils/pet-tag-utils';
 
@@ -34,10 +37,22 @@ export default function StepBackground({
   onBack,
 }: StepBackgroundProps) {
   const [filterCategory, setFilterCategory] = useState<string | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const theme = useTheme();
 
-  const filteredBackgrounds = filterCategory
-    ? backgroundOptions.filter((bg) => bg.category === filterCategory)
-    : backgroundOptions;
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const url = URL.createObjectURL(file);
+    onSelectBackground(url);
+  };
+
+  const filteredBackgrounds =
+    filterCategory && filterCategory !== 'image'
+      ? backgroundOptions.filter((bg) => bg.category === filterCategory)
+      : filterCategory === 'image'
+        ? []
+        : backgroundOptions;
 
   return (
     <Box>
@@ -67,41 +82,103 @@ export default function StepBackground({
         ))}
       </Stack>
 
-      <Grid container spacing={2}>
-        {filteredBackgrounds.map((bg) => (
-          <Grid size={{ xs: 12, sm: 6, md: 4 }} key={bg.id}>
-            <Card
-              sx={{
-                cursor: 'pointer',
-                border:
-                  selectedBackground === bg.imageUrl
-                    ? '3px solid #1976d2'
-                    : 'none',
-                transition: 'transform 0.2s',
-                '&:hover': {
-                  transform: 'scale(1.02)',
-                },
-              }}
-              onClick={() => onSelectBackground(bg.imageUrl)}
-            >
-              <CardMedia
-                component="img"
-                height="140"
-                image={bg.imageUrl}
-                alt={bg.name}
-                sx={{ objectFit: 'cover' }}
-              />
-              <CardContent>
-                <Typography variant="body2" align="center">
-                  {bg.name}
-                </Typography>
-              </CardContent>
-            </Card>
-          </Grid>
-        ))}
-      </Grid>
+      {/* Subir imagen desde dispositivo */}
+      {(filterCategory === 'image' || !filterCategory) && (
+        <Box
+          sx={{
+            mb: 3,
+            p: 3,
+            border: '2px dashed',
+            borderColor: 'divider',
+            borderRadius: 2,
+            textAlign: 'center',
+            cursor: 'pointer',
+            '&:hover': { borderColor: 'primary.main', bgcolor: 'action.hover' },
+          }}
+          onClick={() => fileInputRef.current?.click()}
+        >
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept="image/*"
+            style={{ display: 'none' }}
+            onChange={handleFileChange}
+          />
+          <Iconify
+            icon="mdi:cloud-upload-outline"
+            width={40}
+            sx={{ color: 'text.secondary', mb: 1 }}
+          />
+          <Typography variant="body2" color="text.secondary">
+            Haz clic para subir una imagen desde tu dispositivo
+          </Typography>
+        </Box>
+      )}
 
-      <Box sx={{ mt: 3 }}>
+      <Box
+        sx={{
+          maxHeight: 400, // Altura máxima del contenedor
+          overflowY: 'auto', // Scroll vertical
+          overflowX: 'hidden', // Ocultar scroll horizontal
+          pr: 1, // Padding right para espacio del scroll
+          '&::-webkit-scrollbar': {
+            height: '8px',
+          },
+          '&::-webkit-scrollbar-track': {
+            background: alpha(theme.palette.grey[500], 0.1),
+            borderRadius: '10px',
+          },
+          '&::-webkit-scrollbar-thumb': {
+            background: alpha(theme.palette.grey[500], 0.3),
+            borderRadius: '10px',
+            '&:hover': {
+              background: alpha(theme.palette.grey[500], 0.5),
+            },
+          },
+          // Soporte para Firefox
+          scrollbarWidth: 'thin',
+          scrollbarColor: `${alpha(
+            theme.palette.grey[500],
+            0.3
+          )} ${alpha(theme.palette.grey[500], 0.1)}`,
+        }}
+      >
+        <Grid container spacing={2}>
+          {filteredBackgrounds.map((bg) => (
+            <Grid size={{ xs: 12, sm: 4, md: 3 }} key={bg.id}>
+              <Card
+                sx={{
+                  cursor: 'pointer',
+                  border:
+                    selectedBackground === bg.imageUrl
+                      ? '3px solid #1976d2'
+                      : 'none',
+                  transition: 'transform 0.2s',
+                  '&:hover': {
+                    transform: 'scale(1.02)',
+                  },
+                }}
+                onClick={() => onSelectBackground(bg.imageUrl)}
+              >
+                <CardMedia
+                  component="img"
+                  height="140"
+                  image={bg.imageUrl}
+                  alt={bg.name}
+                  sx={{ objectFit: 'cover' }}
+                />
+                <CardContent>
+                  <Typography variant="body2" align="center">
+                    {bg.name}
+                  </Typography>
+                </CardContent>
+              </Card>
+            </Grid>
+          ))}
+        </Grid>
+      </Box>
+
+      <Box sx={{ my: 3 }}>
         <Button onClick={onBack} sx={{ mr: 1 }}>
           Atrás
         </Button>

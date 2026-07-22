@@ -30,12 +30,13 @@ import {
 
 interface StepPersonalizeProps {
   filters: TagFilters;
-
+  onFilterChange?: (filters: Partial<TagFilters>) => void;
   tag: TagOption | null;
   personalization: PersonalizationData;
   onPersonalizationChange: (data: PersonalizationData) => void;
   onComplete: () => void;
   onBack: () => void;
+  onSelectBackground?: (background: string) => void;
 }
 
 const fontOptions = [
@@ -59,15 +60,18 @@ const strokePositionOptions = [
 
 export default function StepPersonalize({
   filters,
+  onFilterChange,
   tag,
   personalization,
   onPersonalizationChange,
   onComplete,
   onBack,
+  onSelectBackground,
 }: StepPersonalizeProps) {
   const [showColorPicker, setShowColorPicker] = useState(false);
   const [showStrokeColorPicker, setShowStrokeColorPicker] = useState(false);
   console.log(personalization, 'personalizationpersonalization');
+  console.log(tag, 'tagtagtag');
   const handleChange =
     (field: keyof PersonalizationData) =>
     (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -156,6 +160,8 @@ export default function StepPersonalize({
               tag={tag}
               personalization={personalization}
               onPersonalizationChange={onPersonalizationChange}
+              onFilterChange={onFilterChange}
+              onSelectBackground={onSelectBackground}
               showControls={true}
             />
           </Paper>

@@ -25,6 +25,7 @@ interface StepShapeProps {
   onNext: () => void;
   onBack?: () => void;
   isShapeStep?: boolean;
+  hideBackButtom?: boolean;
 }
 
 const shapeData: Array<{
@@ -65,21 +66,22 @@ export default function StepShape({
   onNext,
   onBack,
   isShapeStep = false,
+  hideBackButtom = false,
 }: StepShapeProps) {
   const handleShapeSelect = (shape: TagShape) => {
     onFilterChange({ shape });
-    if (isShapeStep) {
-      onNext();
-    }
+    // if (isShapeStep) {
+    //   onNext();
+    // }
   };
 
   if (isShapeStep) {
     return (
-      <Box>
+      <Box mb={3}>
         <Typography variant="h6" gutterBottom>
           Selecciona la forma de tu plaquita
         </Typography>
-        <Grid container spacing={2} sx={{ mt: 1 }}>
+        <Grid container spacing={2} sx={{ m: 1 }}>
           {shapeData.map((shape) => (
             <Grid size={{ xs: 12, sm: 4 }} key={shape.value}>
               <Card
@@ -122,20 +124,22 @@ export default function StepShape({
             </Grid>
           ))}
         </Grid>
-        <Box sx={{ mt: 3 }}>
-          {onBack && (
-            <Button onClick={onBack} sx={{ mr: 1 }}>
-              Atrás
+        {!hideBackButtom && (
+          <Box sx={{ mt: 3 }}>
+            {onBack && (
+              <Button onClick={onBack} sx={{ mr: 1 }}>
+                Atrás
+              </Button>
+            )}
+            <Button
+              variant="contained"
+              onClick={onNext}
+              disabled={!filters.shape}
+            >
+              Continuar
             </Button>
-          )}
-          <Button
-            variant="contained"
-            onClick={onNext}
-            disabled={!filters.shape}
-          >
-            Continuar
-          </Button>
-        </Box>
+          </Box>
+        )}
       </Box>
     );
   }
