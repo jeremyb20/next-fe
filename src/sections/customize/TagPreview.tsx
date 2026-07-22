@@ -35,6 +35,7 @@ interface TagPreviewProps {
   onFilterChange?: (filters: Partial<TagFilters>) => void;
   onSelectBackground?: (background: string) => void;
   showControls?: boolean;
+  activeSide?: 'front' | 'back';
 }
 
 export default function TagPreview({
@@ -45,6 +46,7 @@ export default function TagPreview({
   onFilterChange,
   onSelectBackground,
   showControls = false,
+  activeSide = 'front',
 }: TagPreviewProps) {
   const [shapeModalOpen, setShapeModalOpen] = useState(false);
   const [bgModalOpen, setBgModalOpen] = useState(false);
@@ -93,36 +95,63 @@ export default function TagPreview({
     );
   }
 
+  // Datos de la cara activa
+  const isBack = activeSide === 'back';
+  const activePersonalization = isBack
+    ? { ...personalization, ...(personalization.backPersonalization || {}) }
+    : personalization;
+  const activeBackground = isBack
+    ? (personalization.backBackground || tag?.background || '')
+    : (tag?.background || '');
+
+  const handleActivePersonalizationChange = (data: PersonalizationData) => {
+    if (!onPersonalizationChange) return;
+    if (isBack) {
+      const { doubleSided, backPersonalization, backBackground, ...rest } = data;
+      onPersonalizationChange({ ...personalization, backPersonalization: rest });
+    } else {
+      onPersonalizationChange(data);
+    }
+  };
+
+  const handleActiveBackgroundSelect = (bg: string) => {
+    if (!onPersonalizationChange) return;
+    if (isBack) {
+      onPersonalizationChange({ ...personalization, backBackground: bg });
+    } else if (onSelectBackground) {
+      onSelectBackground(bg);
+    }
+  };
+
   const getMoldImage = () => shapeImages[filters.shape] || shapeImages.circle;
 
-  // Generar el estilo del texto con stroke
   const getTextStyles = (isPhone: boolean = false) => {
-    let baseSize = personalization.fontSize || 36;
-    if (isPhone && personalization.phoneFontSize !== undefined) {
-      baseSize = personalization.phoneFontSize;
-    } else if (!isPhone && personalization.nameFontSize !== undefined) {
-      baseSize = personalization.nameFontSize;
+    let baseSize = activePersonalization.fontSize || 36;
+    if (isPhone && activePersonalization.phoneFontSize !== undefined) {
+      baseSize = activePersonalization.phoneFontSize;
+    } else if (!isPhone && activePersonalization.nameFontSize !== undefined) {
+      baseSize = activePersonalization.nameFontSize;
     }
 
-    if (isPhone && personalization.phoneFontSize === undefined) {
+    if (isPhone && activePersonalization.phoneFontSize === undefined) {
       baseSize = baseSize * 0.7;
     }
 
     const baseStyles = {
       fontWeight: 'bold',
-      color: personalization.fontColor || '#ffffff',
+      color: activePersonalization.fontColor || '#ffffff',
       fontSize: `${baseSize}px !important`,
-      fontFamily: personalization.fontFamily || 'Comic Sans MS',
+      fontFamily: activePersonalization.fontFamily || 'Comic Sans MS',
       textShadow: '1px 1px 2px rgba(255,255,255,0.3)',
     };
 
-    if (!personalization.strokeWidth || personalization.strokeWidth === 0) {
+    if (!activePersonalization.strokeWidth || activePersonalization.strokeWidth === 0) {
       return baseStyles;
     }
 
-    const strokeColor = personalization.strokeColor || '#000000';
-    const strokeWidth = personalization.strokeWidth;
-    const position = personalization.strokePosition || 'outside';
+    const strokeColor = activePersonalization.strokeColor || '#000000';
+    const strokeWidth = activePersonalization.strokeWidth;
+    const position = activePersonalization.strokePosition || 'outside';
 
     switch (position) {
       case 'inside':
@@ -130,7 +159,7 @@ export default function TagPreview({
           ...baseStyles,
           WebkitTextStroke: `${strokeWidth}px ${strokeColor}`,
           textStroke: `${strokeWidth}px ${strokeColor}`,
-          color: personalization.fontColor || '#ffffff',
+          color: activePersonalization.fontColor || '#ffffff',
           paintOrder: 'stroke fill',
         };
       case 'center':
@@ -138,7 +167,7 @@ export default function TagPreview({
           ...baseStyles,
           WebkitTextStroke: `${strokeWidth}px ${strokeColor}`,
           textStroke: `${strokeWidth}px ${strokeColor}`,
-          color: personalization.fontColor || '#ffffff',
+          color: activePersonalization.fontColor || '#ffffff',
         };
       case 'outside':
       default: {
@@ -158,8 +187,8 @@ export default function TagPreview({
 
   const handleScaleChange = (event: Event, newValue: number | number[]) => {
     if (onPersonalizationChange) {
-      onPersonalizationChange({
-        ...personalization,
+      handleActivePersonalizationChange({
+        ...activePersonalization,
         moldScale: newValue as number,
       });
     }
@@ -167,9 +196,9 @@ export default function TagPreview({
 
   const handleScaleAdjust = (delta: number) => {
     if (onPersonalizationChange) {
-      const currentScale = personalization.moldScale || 1;
+      const currentScale = activePersonalization.moldScale || 1;
       const newScale = Math.max(0.5, Math.min(2, currentScale + delta));
-      onPersonalizationChange({ ...personalization, moldScale: newScale });
+      handleActivePersonalizationChange({ ...activePersonalization, moldScale: newScale });
     }
   };
 
@@ -205,7 +234,7 @@ export default function TagPreview({
       return localPositions[element]!;
     }
 
-    const position = personalization[positionKey] as
+    const position = activePersonalization[positionKey] as
       | { x: number; y: number }
       | undefined;
 
@@ -229,12 +258,12 @@ export default function TagPreview({
   };
 
   const getTextOffset = (text: string, isPhone: boolean = false) => {
-    let fontSize = personalization.fontSize || 36;
-    if (isPhone && personalization.phoneFontSize !== undefined) {
-      fontSize = personalization.phoneFontSize;
-    } else if (!isPhone && personalization.nameFontSize !== undefined) {
-      fontSize = personalization.nameFontSize;
-    } else if (isPhone && personalization.phoneFontSize === undefined) {
+    let fontSize = activePersonalization.fontSize || 36;
+    if (isPhone && activePersonalization.phoneFontSize !== undefined) {
+      fontSize = activePersonalization.phoneFontSize;
+    } else if (!isPhone && activePersonalization.nameFontSize !== undefined) {
+      fontSize = activePersonalization.nameFontSize;
+    } else if (isPhone && activePersonalization.phoneFontSize === undefined) {
       fontSize = fontSize * 0.7;
     }
 
@@ -321,8 +350,8 @@ export default function TagPreview({
 
     if (localPositions[element] && onPersonalizationChange) {
       const positionKey = `${element}Position` as keyof PersonalizationData;
-      onPersonalizationChange({
-        ...personalization,
+      handleActivePersonalizationChange({
+        ...activePersonalization,
         [positionKey]: localPositions[element],
       });
     }
@@ -340,8 +369,8 @@ export default function TagPreview({
 
   const handleMoldDrag = (e: any, data: any) => {
     if (onPersonalizationChange) {
-      onPersonalizationChange({
-        ...personalization,
+      handleActivePersonalizationChange({
+        ...activePersonalization,
         moldPosition: { x: data.x, y: data.y },
       });
     }
@@ -351,13 +380,13 @@ export default function TagPreview({
     setIsDraggingMold(false);
   };
 
-  const moldScale = personalization.moldScale || 1;
-  const showName = personalization.name || tag.name || '';
-  const showPhone = personalization.phone || '';
+  const moldScale = activePersonalization.moldScale || 1;
+  const showName = activePersonalization.name || tag.name || '';
+  const showPhone = activePersonalization.phone || '';
   const nameOffset = getTextOffset(showName);
   const phoneOffset = getTextOffset(showPhone, true);
 
-  const moldPosition = personalization.moldPosition || { x: 0, y: 0 };
+  const moldPosition = activePersonalization.moldPosition || { x: 0, y: 0 };
 
   const handleShapeConfirm = () => {
     if (onFilterChange) onFilterChange(localFilters);
@@ -399,7 +428,7 @@ export default function TagPreview({
             justifyContent: 'center',
             position: 'relative',
             overflow: 'hidden',
-            backgroundImage: tag.background ? `url(${tag.background})` : 'red',
+            backgroundImage: activeBackground ? `url(${activeBackground})` : 'red',
             backgroundSize: 'cover',
             backgroundPosition: 'center',
             transition: 'all 0.3s ease',
@@ -790,15 +819,14 @@ export default function TagPreview({
         </Paper>
       </Box>
 
-      {/* Botones de acción */}
       {showControls && (
         <Box sx={{ display: 'flex', gap: 2, mt: 1 }}>
-          {onSelectBackground && (
+          {(onSelectBackground || isBack) && (
             <Button
               variant="outlined"
               size="small"
               onClick={() => {
-                setLocalBackground(tag?.background || '');
+                setLocalBackground(activeBackground);
                 setBgModalOpen(true);
               }}
             >
@@ -835,7 +863,7 @@ export default function TagPreview({
             selectedBackground={localBackground}
             onSelectBackground={setLocalBackground}
             onNext={() => {
-              if (onSelectBackground) onSelectBackground(localBackground);
+              handleActiveBackgroundSelect(localBackground);
               setBgModalOpen(false);
             }}
             onBack={() => setBgModalOpen(false)}
@@ -871,7 +899,6 @@ export default function TagPreview({
         </DialogActions>
       </Dialog>
 
-      {/* Control deslizante para la escala */}
       {showControls && onPersonalizationChange && (
         <Box sx={{ width: '80%', maxWidth: 280 }}>
           <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1 }}>

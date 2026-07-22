@@ -20,6 +20,10 @@ import {
   Stack,
   FormHelperText,
   IconButton,
+  Switch,
+  FormControlLabel,
+  ToggleButtonGroup,
+  ToggleButton,
 } from '@mui/material';
 
 import Iconify from '@/components/iconify';
@@ -76,9 +80,28 @@ export default function StepPersonalize({
   const [showStrokeColorPicker, setShowStrokeColorPicker] = useState(false);
   const [drawerHeight, setDrawerHeight] = useState<number | null>(null);
   const [drawerWidth, setDrawerWidth] = useState(380);
+  const [activeSide, setActiveSide] = useState<'front' | 'back'>('front');
 
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+
+  const isBack = activeSide === 'back' && !!personalization.doubleSided;
+  const activePersonalization: PersonalizationData = isBack
+    ? { ...personalization, ...(personalization.backPersonalization || {}) }
+    : personalization;
+
+  const handleActivePersonalizationChange = (data: PersonalizationData) => {
+    if (isBack) {
+      const { doubleSided, backPersonalization, backBackground, ...rest } =
+        data;
+      onPersonalizationChange({
+        ...personalization,
+        backPersonalization: rest,
+      });
+    } else {
+      onPersonalizationChange(data);
+    }
+  };
 
   const handleResizeStart = (e: React.PointerEvent) => {
     e.preventDefault();
@@ -109,8 +132,8 @@ export default function StepPersonalize({
   const handleChange =
     (field: keyof PersonalizationData) =>
     (event: React.ChangeEvent<HTMLInputElement>) => {
-      onPersonalizationChange({
-        ...personalization,
+      handleActivePersonalizationChange({
+        ...activePersonalization,
         [field]: event.target.value,
       });
     };
@@ -118,16 +141,22 @@ export default function StepPersonalize({
   const handleSliderChange =
     (field: keyof PersonalizationData) =>
     (event: Event, value: number | number[]) => {
-      onPersonalizationChange({ ...personalization, [field]: value });
+      handleActivePersonalizationChange({
+        ...activePersonalization,
+        [field]: value,
+      });
     };
 
   const handleIconSelect = (icon: string) => {
-    onPersonalizationChange({ ...personalization, icon });
+    handleActivePersonalizationChange({ ...activePersonalization, icon });
   };
 
   const handleColorChange =
     (field: keyof PersonalizationData) => (color: string) => {
-      onPersonalizationChange({ ...personalization, [field]: color });
+      handleActivePersonalizationChange({
+        ...activePersonalization,
+        [field]: color,
+      });
     };
 
   const StrokePreview = ({
@@ -153,7 +182,7 @@ export default function StepPersonalize({
         variant="body1"
         sx={{
           fontWeight: 'bold',
-          color: personalization.fontColor || '#000000',
+          color: activePersonalization.fontColor || '#000000',
           WebkitTextStroke: `${width || 0}px ${color || '#000000'}`,
           fontSize: 18,
         }}
@@ -253,20 +282,61 @@ export default function StepPersonalize({
           gap: 3,
         }}
       >
-        {/* Información básica */}
+        {/* Doble cara toggle */}
         <Paper variant="outlined" sx={{ p: 2, mt: 1 }}>
+          <FormControlLabel
+            control={
+              <Switch
+                checked={!!personalization.doubleSided}
+                onChange={(e) => {
+                  onPersonalizationChange({
+                    ...personalization,
+                    doubleSided: e.target.checked,
+                  });
+                  if (!e.target.checked) setActiveSide('front');
+                }}
+              />
+            }
+            label={
+              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                <Iconify icon="mdi:card-multiple" fontSize={20} />
+                <Typography variant="subtitle2">
+                  {personalization.doubleSided ? 'Doble cara' : 'Una sola cara'}
+                </Typography>
+              </Box>
+            }
+          />
+          {personalization.doubleSided && (
+            <ToggleButtonGroup
+              value={activeSide}
+              exclusive
+              onChange={(_, val) => val && setActiveSide(val)}
+              size="small"
+              sx={{ mt: 1 }}
+            >
+              <ToggleButton value="front">Cara frontal</ToggleButton>
+              <ToggleButton value="back">Cara trasera</ToggleButton>
+            </ToggleButtonGroup>
+          )}
+        </Paper>
+
+        {/* Información básica */}
+        <Paper variant="outlined" sx={{ p: 2 }}>
           <Typography
             variant="subtitle2"
             gutterBottom
             sx={{ display: 'flex', alignItems: 'center', gap: 1 }}
           >
             <Iconify icon="mdi:format-text" fontSize={20} />
-            Información
+            Información{' '}
+            {personalization.doubleSided
+              ? `(${activeSide === 'front' ? 'Frontal' : 'Trasera'})`
+              : ''}
           </Typography>
           <Stack spacing={2}>
             <TextField
               label="Nombre de la mascota"
-              value={personalization.name}
+              value={activePersonalization.name}
               onChange={handleChange('name')}
               fullWidth
               required
@@ -274,7 +344,7 @@ export default function StepPersonalize({
             />
             <TextField
               label="Número de teléfono"
-              value={personalization.phone}
+              value={activePersonalization.phone}
               onChange={handleChange('phone')}
               fullWidth
               placeholder="8888-8888"
@@ -297,16 +367,20 @@ export default function StepPersonalize({
             <Box>
               <Typography variant="body2" gutterBottom>
                 Tamaño del nombre:{' '}
-                {personalization.nameFontSize || personalization.fontSize || 36}
+                {activePersonalization.nameFontSize ||
+                  activePersonalization.fontSize ||
+                  36}
                 px
               </Typography>
               <Slider
                 value={
-                  personalization.nameFontSize || personalization.fontSize || 36
+                  activePersonalization.nameFontSize ||
+                  activePersonalization.fontSize ||
+                  36
                 }
                 onChange={(e, value) =>
-                  onPersonalizationChange({
-                    ...personalization,
+                  handleActivePersonalizationChange({
+                    ...activePersonalization,
                     nameFontSize: value as number,
                   })
                 }
@@ -323,20 +397,20 @@ export default function StepPersonalize({
             <Box>
               <Typography variant="body2" gutterBottom>
                 Tamaño del teléfono:{' '}
-                {(personalization.phoneFontSize ||
-                  personalization.fontSize ||
+                {(activePersonalization.phoneFontSize ||
+                  activePersonalization.fontSize ||
                   36) * 0.7}
                 px
               </Typography>
               <Slider
                 value={
-                  personalization.phoneFontSize ||
-                  personalization.fontSize ||
+                  activePersonalization.phoneFontSize ||
+                  activePersonalization.fontSize ||
                   36
                 }
                 onChange={(e, value) =>
-                  onPersonalizationChange({
-                    ...personalization,
+                  handleActivePersonalizationChange({
+                    ...activePersonalization,
                     phoneFontSize: value as number,
                   })
                 }
@@ -353,11 +427,11 @@ export default function StepPersonalize({
             <FormControl fullWidth>
               <InputLabel>Fuente</InputLabel>
               <Select
-                value={personalization.fontFamily || 'Comic Sans MS'}
+                value={activePersonalization.fontFamily || 'Comic Sans MS'}
                 label="Fuente"
                 onChange={(e) =>
-                  onPersonalizationChange({
-                    ...personalization,
+                  handleActivePersonalizationChange({
+                    ...activePersonalization,
                     fontFamily: e.target.value,
                   })
                 }
@@ -383,7 +457,7 @@ export default function StepPersonalize({
                     width: 40,
                     height: 40,
                     borderRadius: 1,
-                    bgcolor: personalization.fontColor || '#000000',
+                    bgcolor: activePersonalization.fontColor || '#000000',
                     border: '1px solid #ddd',
                     cursor: 'pointer',
                   }}
@@ -402,7 +476,7 @@ export default function StepPersonalize({
                   <MuiColorInput
                     format="hex"
                     value={
-                      (personalization.fontColor as MuiColorInputValue) ||
+                      (activePersonalization.fontColor as MuiColorInputValue) ||
                       '#000000'
                     }
                     onChange={handleColorChange('fontColor')}
@@ -427,15 +501,15 @@ export default function StepPersonalize({
           </Typography>
           <Stack spacing={2}>
             <StrokePreview
-              color={personalization.strokeColor}
-              width={personalization.strokeWidth}
+              color={activePersonalization.strokeColor}
+              width={activePersonalization.strokeWidth}
             />
             <Box>
               <Typography variant="body2" gutterBottom>
-                Grosor del contorno: {personalization.strokeWidth || 0}px
+                Grosor del contorno: {activePersonalization.strokeWidth || 0}px
               </Typography>
               <Slider
-                value={personalization.strokeWidth || 0}
+                value={activePersonalization.strokeWidth || 0}
                 onChange={handleSliderChange('strokeWidth')}
                 min={0}
                 max={10}
@@ -447,19 +521,19 @@ export default function StepPersonalize({
                 valueLabelDisplay="auto"
               />
               <FormHelperText>
-                {personalization.strokeWidth === 0
+                {activePersonalization.strokeWidth === 0
                   ? 'Sin contorno'
-                  : `${personalization.strokeWidth}px de grosor`}
+                  : `${activePersonalization.strokeWidth}px de grosor`}
               </FormHelperText>
             </Box>
             <FormControl fullWidth>
               <InputLabel>Posición del contorno</InputLabel>
               <Select
-                value={personalization.strokePosition || 'outside'}
+                value={activePersonalization.strokePosition || 'outside'}
                 label="Posición del contorno"
                 onChange={(e) =>
-                  onPersonalizationChange({
-                    ...personalization,
+                  handleActivePersonalizationChange({
+                    ...activePersonalization,
                     strokePosition: e.target.value as
                       | 'inside'
                       | 'outside'
@@ -467,8 +541,8 @@ export default function StepPersonalize({
                   })
                 }
                 disabled={
-                  !personalization.strokeWidth ||
-                  personalization.strokeWidth === 0
+                  !activePersonalization.strokeWidth ||
+                  activePersonalization.strokeWidth === 0
                 }
               >
                 {strokePositionOptions.map((option) => (
@@ -478,10 +552,10 @@ export default function StepPersonalize({
                 ))}
               </Select>
               <FormHelperText>
-                {!personalization.strokeWidth ||
-                personalization.strokeWidth === 0
+                {!activePersonalization.strokeWidth ||
+                activePersonalization.strokeWidth === 0
                   ? 'Habilita el contorno para cambiar la posición'
-                  : `Contorno: ${strokePositionOptions.find((o) => o.value === personalization.strokePosition)?.label}`}
+                  : `Contorno: ${strokePositionOptions.find((o) => o.value === activePersonalization.strokePosition)?.label}`}
               </FormHelperText>
             </FormControl>
             <Box>
@@ -494,19 +568,19 @@ export default function StepPersonalize({
                     width: 40,
                     height: 40,
                     borderRadius: 1,
-                    bgcolor: personalization.strokeColor || '#000000',
+                    bgcolor: activePersonalization.strokeColor || '#000000',
                     border: '1px solid #ddd',
                     cursor: 'pointer',
                     opacity:
-                      !personalization.strokeWidth ||
-                      personalization.strokeWidth === 0
+                      !activePersonalization.strokeWidth ||
+                      activePersonalization.strokeWidth === 0
                         ? 0.3
                         : 1,
                   }}
                   onClick={() => {
                     if (
-                      personalization.strokeWidth &&
-                      personalization.strokeWidth > 0
+                      activePersonalization.strokeWidth &&
+                      activePersonalization.strokeWidth > 0
                     )
                       setShowStrokeColorPicker(!showStrokeColorPicker);
                   }}
@@ -515,15 +589,15 @@ export default function StepPersonalize({
                   variant="outlined"
                   onClick={() => {
                     if (
-                      personalization.strokeWidth &&
-                      personalization.strokeWidth > 0
+                      activePersonalization.strokeWidth &&
+                      activePersonalization.strokeWidth > 0
                     )
                       setShowStrokeColorPicker(!showStrokeColorPicker);
                   }}
                   startIcon={<Iconify icon="mdi:border-color" />}
                   disabled={
-                    !personalization.strokeWidth ||
-                    personalization.strokeWidth === 0
+                    !activePersonalization.strokeWidth ||
+                    activePersonalization.strokeWidth === 0
                   }
                 >
                   {showStrokeColorPicker ? 'Cerrar' : 'Seleccionar color'}
@@ -534,7 +608,7 @@ export default function StepPersonalize({
                   <MuiColorInput
                     format="hex"
                     value={
-                      (personalization.strokeColor as MuiColorInputValue) ||
+                      (activePersonalization.strokeColor as MuiColorInputValue) ||
                       '#000000'
                     }
                     onChange={handleColorChange('strokeColor')}
@@ -563,16 +637,20 @@ export default function StepPersonalize({
                 key={icon}
                 label={icon}
                 onClick={() => handleIconSelect(icon)}
-                variant={personalization.icon === icon ? 'filled' : 'outlined'}
-                color={personalization.icon === icon ? 'primary' : 'default'}
+                variant={
+                  activePersonalization.icon === icon ? 'filled' : 'outlined'
+                }
+                color={
+                  activePersonalization.icon === icon ? 'primary' : 'default'
+                }
                 sx={{ fontSize: '1.2rem', minWidth: 40 }}
               />
             ))}
             <Chip
               label="Quitar ícono"
               onClick={() => handleIconSelect('')}
-              variant={!personalization.icon ? 'filled' : 'outlined'}
-              color={!personalization.icon ? 'secondary' : 'default'}
+              variant={!activePersonalization.icon ? 'filled' : 'outlined'}
+              color={!activePersonalization.icon ? 'secondary' : 'default'}
             />
           </Stack>
         </Paper>
@@ -599,6 +677,19 @@ export default function StepPersonalize({
         <Typography variant="subtitle2" gutterBottom align="center">
           Vista previa
         </Typography>
+        {personalization.doubleSided && (
+          <Box sx={{ display: 'flex', justifyContent: 'center', mb: 1 }}>
+            <ToggleButtonGroup
+              value={activeSide}
+              exclusive
+              onChange={(_, val) => val && setActiveSide(val)}
+              size="small"
+            >
+              <ToggleButton value="front">Cara frontal</ToggleButton>
+              <ToggleButton value="back">Cara trasera</ToggleButton>
+            </ToggleButtonGroup>
+          </Box>
+        )}
         <TagPreview
           filters={filters}
           tag={tag}
@@ -607,6 +698,7 @@ export default function StepPersonalize({
           onFilterChange={onFilterChange}
           onSelectBackground={onSelectBackground}
           showControls
+          activeSide={activeSide}
         />
       </Paper>
 
@@ -620,7 +712,6 @@ export default function StepPersonalize({
           Personalizar
         </Button>
       </Box>
-
       <SwipeableDrawer
         anchor={isMobile ? 'bottom' : 'right'}
         open={drawerOpen}

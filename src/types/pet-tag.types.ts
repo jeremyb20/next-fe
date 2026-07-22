@@ -30,9 +30,9 @@ export interface TagBackground {
 export interface PersonalizationData {
   name: string;
   phone: string;
-  fontSize?: number; // Tamaño base (se mantiene para compatibilidad)
-  nameFontSize?: number; // Tamaño específico para el nombre
-  phoneFontSize?: number; // Tamaño específico para el teléfono
+  fontSize?: number;
+  nameFontSize?: number;
+  phoneFontSize?: number;
   fontColor: string;
   strokeColor?: string;
   strokeWidth?: number;
@@ -44,4 +44,8 @@ export interface PersonalizationData {
   namePosition?: { x: number; y: number };
   phonePosition?: { x: number; y: number };
   iconPosition?: { x: number; y: number };
+  // Doble cara
+  doubleSided?: boolean;
+  backPersonalization?: Omit<PersonalizationData, 'doubleSided' | 'backPersonalization'>;
+  backBackground?: string;
 }
