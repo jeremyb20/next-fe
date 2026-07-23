@@ -41,7 +41,7 @@ interface StepPersonalizeProps {
   tag: TagOption | null;
   personalization: PersonalizationData;
   onPersonalizationChange: (data: PersonalizationData) => void;
-  onComplete: () => void;
+  onComplete: (value: any) => void;
   onBack: () => void;
   onSelectBackground?: (background: string) => void;
 }
@@ -92,8 +92,7 @@ export default function StepPersonalize({
 
   const handleActivePersonalizationChange = (data: PersonalizationData) => {
     if (isBack) {
-      const { doubleSided, backPersonalization, backBackground, ...rest } =
-        data;
+      const { ...rest } = data;
       onPersonalizationChange({
         ...personalization,
         backPersonalization: rest,
@@ -657,7 +656,7 @@ export default function StepPersonalize({
 
         <Button
           variant="contained"
-          onClick={onComplete}
+          onClick={() => onComplete({ activePersonalization, tag })}
           disabled={!personalization.name}
           fullWidth
         >

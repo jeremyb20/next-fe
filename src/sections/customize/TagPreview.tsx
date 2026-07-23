@@ -281,8 +281,8 @@ export default function TagPreview({
 
     const text =
       element === 'name'
-        ? personalization.name || tag.name || ''
-        : personalization.phone || '';
+        ? activePersonalization.name || ''
+        : activePersonalization.phone || '';
     return getTextOffset(text, element === 'phone');
   };
 
@@ -381,7 +381,7 @@ export default function TagPreview({
   };
 
   const moldScale = activePersonalization.moldScale || 1;
-  const showName = activePersonalization.name || tag.name || '';
+  const showName = activePersonalization.name || '';
   const showPhone = activePersonalization.phone || '';
   const nameOffset = getTextOffset(showName);
   const phoneOffset = getTextOffset(showPhone, true);

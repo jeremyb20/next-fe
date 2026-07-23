@@ -1,8 +1,8 @@
 // src/components/catalog/PetTagCatalog.tsx
 'use client';
 
-import { useEffect, useState } from 'react';
 import { m, AnimatePresence } from 'motion/react';
+import { useEffect, useRef, useState } from 'react';
 import {
   Box,
   Stepper,
@@ -38,7 +38,7 @@ export default function PetTagCustomize() {
   const [filteredTags] = useState<TagOption[]>(mockTags);
 
   const [personalization, setPersonalization] = useState<PersonalizationData>({
-    name: '',
+    name: 'Tobby',
     phone: '',
     fontSize: 36,
     fontColor: '#ffffff',
@@ -69,6 +69,10 @@ export default function PetTagCustomize() {
   });
   const [errorMsg, setErrorMsg] = useState('');
   const [isClient, setIsClient] = useState(false);
+  const topRef = useRef<HTMLDivElement>(null);
+
+  const scrollToTop = () =>
+    topRef.current?.scrollIntoView({ behavior: 'smooth' });
 
   const steps = [
     {
@@ -96,10 +100,12 @@ export default function PetTagCustomize() {
 
   const handleNext = () => {
     setActiveStep((prev) => prev + 1);
+    scrollToTop();
   };
 
   const handleBack = () => {
     setActiveStep((prev) => prev - 1);
+    scrollToTop();
   };
 
   const handleFilterChange = (newFilters: Partial<TagFilters>) => {
@@ -181,9 +187,9 @@ export default function PetTagCustomize() {
             tag={selectedTag}
             personalization={personalization}
             onPersonalizationChange={setPersonalization}
-            onComplete={() => {
+            onComplete={(value) => {
               setErrorMsg('');
-              console.log('Proceso completado');
+              console.log('Proceso completado', value);
             }}
             onBack={handleBack}
             onSelectBackground={(bg) =>
@@ -204,7 +210,7 @@ export default function PetTagCustomize() {
     return null;
   }
   return (
-    <Box sx={{ maxWidth: 1200, mx: 'auto', p: { xs: 0, sm: 3 } }}>
+    <Box ref={topRef} sx={{ maxWidth: 1200, mx: 'auto', p: { xs: 0, sm: 3 } }}>
       <Typography variant="h4" component="h1" gutterBottom align="center">
         🐾 Personaliza tu plaquita
       </Typography>
