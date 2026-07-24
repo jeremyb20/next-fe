@@ -108,6 +108,7 @@ function buildSidePreview(
     doubleSided: !!petTag.back,
     namePosition: p?.namePosition,
     phonePosition: p?.phonePosition,
+    moldPosition: p?.moldPosition,
   };
 
   return { tag, filters, personalization };

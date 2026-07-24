@@ -162,6 +162,7 @@ export default function PetTagCustomize() {
             strokePosition: frontP.strokePosition || 'outside',
             fontFamily: frontP.fontFamily || 'Comic Sans MS',
             moldScale: frontP.moldScale ?? 1.45,
+            moldPosition: frontP.moldPosition ?? { x: 0, y: 0 },
             doubleSided: frontP.doubleSided ?? false,
             namePosition: frontP.namePosition ?? { x: 50, y: 45 },
             phonePosition: frontP.phonePosition ?? { x: 50, y: 65 },
@@ -188,6 +189,7 @@ export default function PetTagCustomize() {
             fontFamily:
               backP?.fontFamily || frontP.fontFamily || 'Comic Sans MS',
             moldScale: backP?.moldScale ?? frontP.moldScale ?? 1.45,
+            moldPosition: backP?.moldPosition ?? frontP.moldPosition ?? { x: 0, y: 0 },
             doubleSided: true,
             namePosition: backP?.namePosition ?? { x: 50, y: 45 },
             phonePosition: backP?.phonePosition ?? { x: 50, y: 65 },

@@ -69,6 +69,7 @@ export interface IPersonalization {
   strokePosition: 'inside' | 'outside' | 'center';
   fontFamily: string;
   moldScale: number;
+  moldPosition?: IPosition;
   namePosition: IPosition;
   phonePosition: IPosition;
   doubleSided: boolean;
