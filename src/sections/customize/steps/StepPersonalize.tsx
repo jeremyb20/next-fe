@@ -290,11 +290,32 @@ export default function StepPersonalize({
               <Switch
                 checked={!!personalization.doubleSided}
                 onChange={(e) => {
+                  const enabled = e.target.checked;
                   onPersonalizationChange({
                     ...personalization,
-                    doubleSided: e.target.checked,
+                    doubleSided: enabled,
+                    ...(enabled && !personalization.backPersonalization
+                      ? {
+                          backBackground: (tag as any)?.background || '',
+                          backPersonalization: {
+                            name: personalization.name,
+                            phone: personalization.phone,
+                            fontSize: personalization.fontSize,
+                            nameFontSize: personalization.nameFontSize,
+                            phoneFontSize: personalization.phoneFontSize,
+                            fontColor: personalization.fontColor,
+                            strokeColor: personalization.strokeColor,
+                            strokeWidth: personalization.strokeWidth,
+                            strokePosition: personalization.strokePosition,
+                            fontFamily: personalization.fontFamily,
+                            moldScale: personalization.moldScale,
+                            namePosition: personalization.namePosition,
+                            phonePosition: personalization.phonePosition,
+                          },
+                        }
+                      : {}),
                   });
-                  if (!e.target.checked) setActiveSide('front');
+                  if (!enabled) setActiveSide('front');
                 }}
               />
             }

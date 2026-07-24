@@ -154,6 +154,8 @@ export default function PetTagCustomize() {
             name: frontP.name,
             phone: frontP.phone || '',
             fontSize: frontP.fontSize ?? 36,
+            nameFontSize: frontP.nameFontSize ?? 36,
+            phoneFontSize: frontP.phoneFontSize ?? 24,
             fontColor: frontP.fontColor || '#ffffff',
             strokeColor: frontP.strokeColor || '#000000',
             strokeWidth: frontP.strokeWidth ?? 3,
@@ -176,11 +178,15 @@ export default function PetTagCustomize() {
             name: backP?.name || frontP.name,
             phone: backP?.phone || frontP.phone || '',
             fontSize: backP?.fontSize ?? frontP.fontSize ?? 36,
+            nameFontSize: backP?.nameFontSize ?? frontP.nameFontSize,
+            phoneFontSize: backP?.phoneFontSize ?? frontP.phoneFontSize,
             fontColor: backP?.fontColor || frontP.fontColor || '#ffffff',
             strokeColor: backP?.strokeColor || frontP.strokeColor || '#000000',
             strokeWidth: backP?.strokeWidth ?? frontP.strokeWidth ?? 3,
-            strokePosition: backP?.strokePosition || frontP.strokePosition || 'outside',
-            fontFamily: backP?.fontFamily || frontP.fontFamily || 'Comic Sans MS',
+            strokePosition:
+              backP?.strokePosition || frontP.strokePosition || 'outside',
+            fontFamily:
+              backP?.fontFamily || frontP.fontFamily || 'Comic Sans MS',
             moldScale: backP?.moldScale ?? frontP.moldScale ?? 1.45,
             doubleSided: true,
             namePosition: backP?.namePosition ?? { x: 50, y: 45 },
@@ -189,7 +195,6 @@ export default function PetTagCustomize() {
         });
         if (back) payload['backImage'] = back;
       }
-
       await mutateAsync({
         payload,
         pEndpoint: `${HOST_API}${endpoints.admin.petTags.create}`,
