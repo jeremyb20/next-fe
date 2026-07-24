@@ -20,9 +20,9 @@ import {
   ToggleButton,
 } from '@mui/material';
 
-import { IPetTag } from '@/types/pet-tag';
 import Iconify from '@/components/iconify';
 import { fDate, fTime } from '@/utils/format-time';
+import { IPetTagOrder, ITagSide } from '@/types/pet-tag';
 import TagPreview from '@/sections/customize/TagPreview';
 import {
   TagOption,
@@ -32,71 +32,85 @@ import {
 
 type Props = {
   open: boolean;
-  petTag?: IPetTag;
+  petTag?: IPetTagOrder;
   onCloseAction: VoidFunction;
   onRefetchAction: VoidFunction;
   onUpdateStatusAction: (id: string, status: string) => void;
 };
 
-type TagStatus = 'pending' | 'in-progress' | 'completed' | 'cancelled';
+type TagStatus =
+  | 'pending'
+  | 'in-progress'
+  | 'completed'
+  | 'cancelled'
+  | 'rejected';
 
 const STATUS_OPTIONS = [
   { value: 'pending', label: 'Pendiente' },
   { value: 'in-progress', label: 'En proceso' },
   { value: 'completed', label: 'Completado' },
   { value: 'cancelled', label: 'Cancelado' },
+  { value: 'rejected', label: 'Rechazado' },
 ];
 
-const STATUS_COLOR: Record<string, 'warning' | 'info' | 'success' | 'error'> = {
+const STATUS_COLOR: Record<
+  string,
+  'warning' | 'info' | 'success' | 'error' | 'default'
+> = {
   pending: 'warning',
   'in-progress': 'info',
   completed: 'success',
   cancelled: 'error',
+  rejected: 'error',
 };
 
-function buildPreviewProps(petTag: IPetTag): {
+function buildSidePreview(
+  side: ITagSide | undefined,
+  petTag: IPetTagOrder
+): {
   tag: TagOption;
   filters: TagFilters;
-  activePersonalization: PersonalizationData;
+  personalization: PersonalizationData;
 } {
+  const p = side?.personalization;
+  const bg = side?.image?.imageURL || side?.background || '';
+
   const tag: TagOption = {
-    id: petTag.tag?.id || 'custom',
-    shape: (petTag.tag?.shape as any) || 'circle',
-    material: (petTag.tag?.material as any) || 'resin',
-    background:
-      (petTag.images?.length ?? 0) > 0
-        ? petTag.images![0]?.imageURL
-        : petTag.tag?.background,
-    name: petTag.activePersonalization?.name || '',
-    phone: petTag.activePersonalization?.phone || '',
-    imageUrl: petTag.images?.[0]?.imageURL || '',
+    id: 'custom',
+    shape: petTag.shape || 'circle',
+    material: petTag.material || 'resin',
+    background: bg,
+    name: p?.name || '',
+    phone: p?.phone || '',
+    imageUrl: side?.image?.imageURL || '',
     isCustomizable: false,
   };
 
   const filters: TagFilters = {
-    petType: (petTag.filters?.petType as any) || '',
-    size: (petTag.filters?.size as any) || '',
-    material: (petTag.tag?.material as any) || '',
+    petType: (petTag.petType as any) || '',
+    size: (petTag.size as any) || '',
+    material: (petTag.material as any) || '',
     shape: (petTag.shape as any) || 'circle',
   };
 
-  const activePersonalization: PersonalizationData = {
-    name: petTag.activePersonalization?.name || '',
-    phone: petTag.activePersonalization?.phone || '',
-    fontSize: petTag.activePersonalization?.fontSize,
-    nameFontSize: petTag.activePersonalization?.nameFontSize,
-    phoneFontSize: petTag.activePersonalization?.phoneFontSize,
-    fontColor: petTag.activePersonalization?.fontColor || '#ffffff',
-    strokeColor: petTag.activePersonalization?.strokeColor,
-    strokeWidth: petTag.activePersonalization?.strokeWidth,
-    strokePosition: petTag.activePersonalization?.strokePosition,
-    fontFamily: petTag.activePersonalization?.fontFamily,
-    icon: petTag.activePersonalization?.icon,
-    moldScale: petTag.activePersonalization?.moldScale,
-    doubleSided: petTag.activePersonalization?.doubleSided,
+  const personalization: PersonalizationData = {
+    name: p?.name || '',
+    phone: p?.phone || '',
+    fontSize: p?.fontSize,
+    nameFontSize: p?.nameFontSize,
+    phoneFontSize: p?.phoneFontSize,
+    fontColor: p?.fontColor || '#ffffff',
+    strokeColor: p?.strokeColor,
+    strokeWidth: p?.strokeWidth,
+    strokePosition: p?.strokePosition,
+    fontFamily: p?.fontFamily,
+    moldScale: p?.moldScale,
+    doubleSided: !!petTag.back,
+    namePosition: p?.namePosition,
+    phonePosition: p?.phonePosition,
   };
 
-  return { tag, filters, activePersonalization };
+  return { tag, filters, personalization };
 }
 
 export default function PetTagQuickView({
@@ -117,16 +131,20 @@ export default function PetTagQuickView({
     _id,
     contactName,
     contactPhone,
-    activePersonalization,
-    tag,
-    images,
+    contactNote,
+    front,
+    back,
     status,
     createdAt,
     updatedAt,
-    shape,
   } = petTag;
-  console.log(shape);
-  const preview = buildPreviewProps(petTag);
+
+  const isDoubleSided = !!back;
+  const activeSideData = previewSide === 'back' && isDoubleSided ? back : front;
+  const preview = buildSidePreview(activeSideData, petTag);
+
+  const frontP = front?.personalization;
+  const backP = back?.personalization;
 
   const handleStatusUpdate = () => {
     onUpdateStatusAction(_id, newStatus);
@@ -158,7 +176,7 @@ export default function PetTagQuickView({
             <Typography variant="subtitle2" sx={{ mb: 1 }}>
               Vista previa
             </Typography>
-            {activePersonalization?.doubleSided && (
+            {isDoubleSided && (
               <Box sx={{ display: 'flex', justifyContent: 'center', mb: 1 }}>
                 <ToggleButtonGroup
                   value={previewSide}
@@ -174,7 +192,7 @@ export default function PetTagQuickView({
             <TagPreview
               tag={preview.tag}
               filters={preview.filters}
-              personalization={preview.activePersonalization}
+              personalization={preview.personalization}
               activeSide={previewSide}
               showControls={false}
             />
@@ -207,6 +225,14 @@ export default function PetTagQuickView({
                   <Typography variant="body2">{contactPhone}</Typography>
                 </Stack>
               </Grid>
+              {contactNote && (
+                <Grid size={{ xs: 12 }}>
+                  <Typography variant="caption" color="text.secondary">
+                    Nota
+                  </Typography>
+                  <Typography variant="body2">{contactNote}</Typography>
+                </Grid>
+              )}
             </Grid>
           </Box>
 
@@ -218,17 +244,42 @@ export default function PetTagQuickView({
               Plaquita
             </Typography>
             <Grid container spacing={2}>
-              <Grid size={{ xs: 12, sm: 4 }}>
+              <Grid size={{ xs: 6, sm: 3 }}>
                 <Typography variant="caption" color="text.secondary">
                   Forma
                 </Typography>
-                <Typography variant="body2">{tag?.shape || '-'}</Typography>
+                <Typography variant="body2">{petTag.shape || '-'}</Typography>
               </Grid>
-              <Grid size={{ xs: 12, sm: 4 }}>
+              <Grid size={{ xs: 6, sm: 3 }}>
                 <Typography variant="caption" color="text.secondary">
                   Material
                 </Typography>
-                <Typography variant="body2">{tag?.material || '-'}</Typography>
+                <Typography variant="body2">
+                  {petTag.material || '-'}
+                </Typography>
+              </Grid>
+              <Grid size={{ xs: 6, sm: 3 }}>
+                <Typography variant="caption" color="text.secondary">
+                  Tamaño
+                </Typography>
+                <Typography variant="body2">{petTag.size || '-'}</Typography>
+              </Grid>
+              <Grid size={{ xs: 6, sm: 3 }}>
+                <Typography variant="caption" color="text.secondary">
+                  Tipo mascota
+                </Typography>
+                <Typography variant="body2">{petTag.petType || '-'}</Typography>
+              </Grid>
+              <Grid size={{ xs: 12, sm: 4 }}>
+                <Typography variant="caption" color="text.secondary">
+                  Doble cara
+                </Typography>
+                <Chip
+                  label={isDoubleSided ? 'Sí' : 'No'}
+                  size="small"
+                  color={isDoubleSided ? 'primary' : 'default'}
+                  variant="outlined"
+                />
               </Grid>
               <Grid size={{ xs: 12, sm: 4 }}>
                 <Typography variant="caption" color="text.secondary">
@@ -248,40 +299,36 @@ export default function PetTagQuickView({
 
           <Divider />
 
-          {/* Personalización */}
+          {/* Personalización cara frontal */}
           <Box>
             <Typography variant="subtitle2" sx={{ mb: 1 }}>
-              Personalización
+              Personalización — Cara frontal
             </Typography>
             <Grid container spacing={2}>
-              <Grid size={{ xs: 12, sm: 6 }}>
+              <Grid size={{ xs: 6, sm: 3 }}>
                 <Typography variant="caption" color="text.secondary">
                   Nombre mascota
                 </Typography>
-                <Typography variant="body2">
-                  {activePersonalization?.name || '-'}
-                </Typography>
+                <Typography variant="body2">{frontP?.name || '-'}</Typography>
               </Grid>
-              <Grid size={{ xs: 12, sm: 6 }}>
+              <Grid size={{ xs: 6, sm: 3 }}>
                 <Typography variant="caption" color="text.secondary">
-                  Teléfono en plaquita
+                  Teléfono
                 </Typography>
-                <Typography variant="body2">
-                  {activePersonalization?.phone || '-'}
-                </Typography>
+                <Typography variant="body2">{frontP?.phone || '-'}</Typography>
               </Grid>
-              <Grid size={{ xs: 12, sm: 4 }}>
+              <Grid size={{ xs: 6, sm: 3 }}>
                 <Typography variant="caption" color="text.secondary">
                   Fuente
                 </Typography>
                 <Typography
                   variant="body2"
-                  style={{ fontFamily: activePersonalization?.fontFamily }}
+                  style={{ fontFamily: frontP?.fontFamily }}
                 >
-                  {activePersonalization?.fontFamily || '-'}
+                  {frontP?.fontFamily || '-'}
                 </Typography>
               </Grid>
-              <Grid size={{ xs: 12, sm: 4 }}>
+              <Grid size={{ xs: 6, sm: 3 }}>
                 <Typography variant="caption" color="text.secondary">
                   Color texto
                 </Typography>
@@ -291,61 +338,136 @@ export default function PetTagQuickView({
                       width: 20,
                       height: 20,
                       borderRadius: 0.5,
-                      bgcolor: activePersonalization?.fontColor || '#fff',
+                      bgcolor: frontP?.fontColor || '#fff',
                       border: '1px solid',
                       borderColor: 'divider',
                     }}
                   />
                   <Typography variant="body2">
-                    {activePersonalization?.fontColor}
+                    {frontP?.fontColor || '-'}
                   </Typography>
                 </Stack>
               </Grid>
-              <Grid size={{ xs: 12, sm: 4 }}>
-                <Typography variant="caption" color="text.secondary">
-                  Doble cara
-                </Typography>
-                <Chip
-                  label={activePersonalization?.doubleSided ? 'Sí' : 'No'}
-                  size="small"
-                  color={
-                    activePersonalization?.doubleSided ? 'primary' : 'default'
-                  }
-                  variant="outlined"
-                />
-              </Grid>
+              {front?.background && (
+                <Grid size={{ xs: 12, sm: 6 }}>
+                  <Typography variant="caption" color="text.secondary">
+                    Fondo
+                  </Typography>
+                  <Box
+                    component="img"
+                    src={front.image?.imageURL || front.background}
+                    alt="Fondo frontal"
+                    onClick={() =>
+                      window.open(
+                        front.image?.imageURL || front.background,
+                        '_blank'
+                      )
+                    }
+                    sx={{
+                      display: 'block',
+                      mt: 0.5,
+                      width: 80,
+                      height: 80,
+                      objectFit: 'cover',
+                      borderRadius: 1,
+                      border: '1px solid',
+                      borderColor: 'divider',
+                      cursor: 'pointer',
+                      '&:hover': { opacity: 0.8 },
+                    }}
+                  />
+                </Grid>
+              )}
             </Grid>
           </Box>
 
-          {/* Imágenes de fondo subidas */}
-          {images && images.length > 0 && (
+          {/* Personalización cara trasera */}
+          {isDoubleSided && (
             <>
               <Divider />
               <Box>
                 <Typography variant="subtitle2" sx={{ mb: 1 }}>
-                  Imágenes de fondo ({images.length})
+                  Personalización — Cara trasera
                 </Typography>
-                <Stack direction="row" spacing={1} flexWrap="wrap" gap={1}>
-                  {images.map((img, i) => (
-                    <Box
-                      key={img.imageID || i}
-                      component="img"
-                      src={img.imageURL}
-                      alt={`Imagen ${i + 1}`}
-                      onClick={() => window.open(img.imageURL, '_blank')}
-                      sx={{
-                        width: 80,
-                        height: 80,
-                        objectFit: 'cover',
-                        borderRadius: 1,
-                        border: '1px solid',
-                        borderColor: 'divider',
-                        cursor: 'pointer',
-                        '&:hover': { opacity: 0.8 },
-                      }}
-                    />
-                  ))}
-                </Stack>
+                <Grid container spacing={2}>
+                  <Grid size={{ xs: 6, sm: 3 }}>
+                    <Typography variant="caption" color="text.secondary">
+                      Nombre mascota
+                    </Typography>
+                    <Typography variant="body2">
+                      {backP?.name || '-'}
+                    </Typography>
+                  </Grid>
+                  <Grid size={{ xs: 6, sm: 3 }}>
+                    <Typography variant="caption" color="text.secondary">
+                      Teléfono
+                    </Typography>
+                    <Typography variant="body2">
+                      {backP?.phone || '-'}
+                    </Typography>
+                  </Grid>
+                  <Grid size={{ xs: 6, sm: 3 }}>
+                    <Typography variant="caption" color="text.secondary">
+                      Fuente
+                    </Typography>
+                    <Typography
+                      variant="body2"
+                      style={{ fontFamily: backP?.fontFamily }}
+                    >
+                      {backP?.fontFamily || '-'}
+                    </Typography>
+                  </Grid>
+                  <Grid size={{ xs: 6, sm: 3 }}>
+                    <Typography variant="caption" color="text.secondary">
+                      Color texto
+                    </Typography>
+                    <Stack direction="row" alignItems="center" spacing={1}>
+                      <Box
+                        sx={{
+                          width: 20,
+                          height: 20,
+                          borderRadius: 0.5,
+                          bgcolor: backP?.fontColor || '#fff',
+                          border: '1px solid',
+                          borderColor: 'divider',
+                        }}
+                      />
+                      <Typography variant="body2">
+                        {backP?.fontColor || '-'}
+                      </Typography>
+                    </Stack>
+                  </Grid>
+                  {back?.background && (
+                    <Grid size={{ xs: 12, sm: 6 }}>
+                      <Typography variant="caption" color="text.secondary">
+                        Fondo
+                      </Typography>
+                      <Box
+                        component="img"
+                        src={back.image?.imageURL || back.background}
+                        alt="Fondo trasero"
+                        onClick={() =>
+                          window.open(
+                            back.image?.imageURL || back.background,
+                            '_blank'
+                          )
+                        }
+                        sx={{
+                          display: 'block',
+                          mt: 0.5,
+                          width: 80,
+                          height: 80,
+                          objectFit: 'cover',
+                          borderRadius: 1,
+                          border: '1px solid',
+                          borderColor: 'divider',
+                          cursor: 'pointer',
+                          '&:hover': { opacity: 0.8 },
+                        }}
+                      />
+                    </Grid>
+                  )}
+                </Grid>
               </Box>
             </>
           )}
@@ -362,14 +484,16 @@ export default function PetTagQuickView({
                 {fDate(createdAt)} {fTime(createdAt)}
               </Typography>
             </Grid>
-            <Grid size={{ xs: 12, sm: 6 }}>
-              <Typography variant="caption" color="text.secondary">
-                Actualizado
-              </Typography>
-              <Typography variant="body2">
-                {fDate(updatedAt)} {fTime(updatedAt)}
-              </Typography>
-            </Grid>
+            {updatedAt && (
+              <Grid size={{ xs: 12, sm: 6 }}>
+                <Typography variant="caption" color="text.secondary">
+                  Actualizado
+                </Typography>
+                <Typography variant="body2">
+                  {fDate(updatedAt)} {fTime(updatedAt)}
+                </Typography>
+              </Grid>
+            )}
           </Grid>
         </Stack>
       </DialogContent>

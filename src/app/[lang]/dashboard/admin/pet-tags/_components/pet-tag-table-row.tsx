@@ -13,8 +13,8 @@ import {
   Typography,
 } from '@mui/material';
 
-import { IPetTag } from '@/types/pet-tag';
 import Iconify from '@/components/iconify';
+import { IPetTagOrder } from '@/types/pet-tag';
 import { useBoolean } from '@/hooks/use-boolean';
 import { fDate, fTime } from '@/utils/format-time';
 import CustomPopover, { usePopover } from '@/components/custom-popover';
@@ -22,7 +22,7 @@ import CustomPopover, { usePopover } from '@/components/custom-popover';
 import PetTagQuickView from './pet-tag-quick-view';
 
 type Props = {
-  row: IPetTag;
+  row: IPetTagOrder;
   selected: boolean;
   onSelectRow: VoidFunction;
   onDeleteRow: VoidFunction;
@@ -65,9 +65,10 @@ export default function PetTagTableRow({
     _id,
     contactName,
     contactPhone,
-    tag,
-    activePersonalization,
-    images,
+    material,
+    size,
+    front,
+    back,
     status,
     createdAt,
     shape,
@@ -111,7 +112,7 @@ export default function PetTagTableRow({
         <TableCell>
           <ListItemText
             primary={SHAPE_LABELS[shape] || shape}
-            secondary={MATERIAL_LABELS[tag?.material] || tag?.material}
+            secondary={MATERIAL_LABELS[material] || material}
             primaryTypographyProps={{ typography: 'body2', noWrap: true }}
             secondaryTypographyProps={{
               component: 'span',
@@ -120,23 +121,15 @@ export default function PetTagTableRow({
           />
         </TableCell>
 
-        {/* Mascota */}
+        {/* Tamaño */}
         <TableCell>
-          <ListItemText
-            primary={activePersonalization?.name || '-'}
-            secondary={activePersonalization?.phone || '-'}
-            primaryTypographyProps={{ typography: 'body2', noWrap: true }}
-            secondaryTypographyProps={{
-              component: 'span',
-              color: 'text.disabled',
-            }}
-          />
+          <Typography variant="body2">{size}</Typography>
         </TableCell>
 
         {/* Imágenes */}
         <TableCell align="center">
           <Chip
-            label={images?.length || 0}
+            label={(front?.image?.imageURL ? 1 : 0) + (back?.image?.imageURL ? 1 : 0)}
             size="small"
             icon={<Iconify icon="mdi:image-outline" width={14} />}
             variant="outlined"

@@ -12,8 +12,8 @@ import { useMemo, useState, useCallback } from 'react';
 import TableContainer from '@mui/material/TableContainer';
 
 import { paths } from '@/routes/paths';
-import { IPetTag } from '@/types/pet-tag';
 import Iconify from '@/components/iconify';
+import { IPetTagOrder } from '@/types/pet-tag';
 import Scrollbar from '@/components/scrollbar';
 import { RouterLink } from '@/routes/components';
 import { useBoolean } from '@/hooks/use-boolean';
@@ -41,7 +41,7 @@ const TABLE_HEAD = [
   { id: 'contactName', label: 'Contacto' },
   { id: 'contactPhone', label: 'WhatsApp', width: 140 },
   { id: 'tag', label: 'Plaquita', width: 160 },
-  { id: 'personalization', label: 'Mascota', width: 140 },
+  { id: 'personalization', label: 'Tamaño', width: 140 },
   { id: 'images', label: 'Imágenes', width: 100, align: 'center' },
   { id: 'status', label: 'Estado', width: 120, align: 'center' },
   { id: 'createdAt', label: 'Fecha', width: 140 },
@@ -78,7 +78,7 @@ export default function PetTagListView() {
   const confirm = useBoolean();
 
   const [openModal, setOpenModal] = useState(false);
-  const [selectedTag, setSelectedTag] = useState<IPetTag | undefined>(
+  const [selectedTag, setSelectedTag] = useState<IPetTagOrder | undefined>(
     undefined
   );
   const [activeFilters, setActiveFilters] = useState<Partial<UserQueryParams>>({
@@ -89,7 +89,7 @@ export default function PetTagListView() {
   const { data, isFetching, isError, error, refetch } =
     useGetAllPetTags(activeFilters);
 
-  const tableData: IPetTag[] = useMemo(
+  const tableData: IPetTagOrder[] = useMemo(
     () => data?.payload || [],
     [data?.payload]
   );
@@ -144,7 +144,7 @@ export default function PetTagListView() {
     table.onResetPage();
   }, [activeFilters.limit, table]);
 
-  const handleViewRow = useCallback((item: IPetTag) => {
+  const handleViewRow = useCallback((item: IPetTagOrder) => {
     setSelectedTag(item);
     setOpenModal(true);
   }, []);

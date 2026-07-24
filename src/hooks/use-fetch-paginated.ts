@@ -4,9 +4,9 @@ import {
   keepPreviousData,
 } from '@tanstack/react-query';
 
-import { IPetTag } from '@/types/pet-tag';
 import { IFeedback } from '@/types/feedback';
 import { IProductItem } from '@/types/product';
+import { IPetTagOrder } from '@/types/pet-tag';
 import axiosInstance, { endpoints } from '@/utils/axios';
 import {
   ISeo,
@@ -186,7 +186,7 @@ export const useGetAllFeedback = (params: Partial<UserQueryParams> = {}) =>
   });
 
 export const useGetAllPetTags = (params: Partial<UserQueryParams> = {}) =>
-  useFetchPaginated<IPetTag[]>({
+  useFetchPaginated<IPetTagOrder[]>({
     queryKey: ['pet-tags-list'],
     endpoint: endpoints.admin.petTags.getAll,
     params: {
