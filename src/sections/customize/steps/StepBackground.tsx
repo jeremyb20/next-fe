@@ -1,5 +1,6 @@
 'use client';
 import React, { useState, useRef } from 'react';
+import useMediaQuery from '@mui/system/useMediaQuery';
 import { alpha, useTheme } from '@mui/material/styles';
 import {
   Box,
@@ -20,6 +21,7 @@ import { backgroundOptions } from '../../../utils/pet-tag-utils';
 interface StepBackgroundProps {
   selectedBackground: string;
   onSelectBackground: (background: string) => void;
+  onSelectBackgroundFile?: (file: File) => void;
   onNext: () => void;
   onBack: () => void;
 }
@@ -33,18 +35,25 @@ const categories = {
 export default function StepBackground({
   selectedBackground,
   onSelectBackground,
+  onSelectBackgroundFile,
   onNext,
   onBack,
 }: StepBackgroundProps) {
   const [filterCategory, setFilterCategory] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const theme = useTheme();
+  const [fileName, setFileName] = useState<File | undefined>(undefined);
+  const [fileURL, setFileURL] = useState<string>('');
 
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
+    setFileName(file);
     if (!file) return;
     const url = URL.createObjectURL(file);
+    setFileURL(url);
     onSelectBackground(url);
+    onSelectBackgroundFile?.(file);
   };
 
   const filteredBackgrounds =
@@ -97,27 +106,58 @@ export default function StepBackground({
           }}
           onClick={() => fileInputRef.current?.click()}
         >
-          <input
-            ref={fileInputRef}
-            type="file"
-            accept="image/*"
-            style={{ display: 'none' }}
-            onChange={handleFileChange}
-          />
-          <Iconify
-            icon="mdi:cloud-upload-outline"
-            width={40}
-            sx={{ color: 'text.secondary', mb: 1 }}
-          />
-          <Typography variant="body2" color="text.secondary">
-            Haz clic para subir una imagen desde tu dispositivo
-          </Typography>
+          <Stack
+            direction="row"
+            alignItems="center"
+            justifyContent="center"
+            gap={3}
+          >
+            <Box>
+              <input
+                ref={fileInputRef}
+                type="file"
+                accept="image/*"
+                style={{ display: 'none' }}
+                onChange={handleFileChange}
+              />
+              <Iconify
+                icon="mdi:cloud-upload-outline"
+                width={40}
+                sx={{ color: 'text.secondary', mb: 1 }}
+              />
+              <Typography variant="body2" color="text.secondary">
+                {fileName
+                  ? fileName.name
+                  : 'Haz clic para subir una imagen desde tu dispositivo'}
+              </Typography>
+              {fileName && (
+                <Typography variant="caption" color="text.secondary">
+                  {fileName.size > 1024 * 1024
+                    ? `${(fileName.size / (1024 * 1024)).toFixed(2)} MB`
+                    : `${(fileName.size / 1024).toFixed(2)} KB`}
+                </Typography>
+              )}
+            </Box>
+            <Box>
+              {fileName && (
+                <Box>
+                  <CardMedia
+                    component="img"
+                    height="140"
+                    image={fileURL}
+                    alt={fileName.name}
+                    sx={{ objectFit: 'cover', borderRadius: 2 }}
+                  />
+                </Box>
+              )}
+            </Box>
+          </Stack>
         </Box>
       )}
 
       <Box
         sx={{
-          maxHeight: 400, // Altura máxima del contenedor
+          maxHeight: isMobile ? '50dvh' : 400, // Altura máxima del contenedor
           overflowY: 'auto', // Scroll vertical
           overflowX: 'hidden', // Ocultar scroll horizontal
           pr: 1, // Padding right para espacio del scroll
@@ -145,7 +185,7 @@ export default function StepBackground({
       >
         <Grid container spacing={2}>
           {filteredBackgrounds.map((bg) => (
-            <Grid size={{ xs: 12, sm: 4, md: 3 }} key={bg.id}>
+            <Grid size={{ xs: 6, sm: 4, md: 3 }} key={bg.id}>
               <Card
                 sx={{
                   cursor: 'pointer',
@@ -167,7 +207,7 @@ export default function StepBackground({
                   alt={bg.name}
                   sx={{ objectFit: 'cover' }}
                 />
-                <CardContent>
+                <CardContent sx={{ bgcolor: 'background.neutral' }}>
                   <Typography variant="body2" align="center">
                     {bg.name}
                   </Typography>

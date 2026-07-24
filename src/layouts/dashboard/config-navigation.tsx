@@ -79,6 +79,7 @@ const ICONS = {
   inventory: icon('material-symbols:inventory'),
   home: icon('solar:home-2-linear'),
   feedback: icon('material-symbols:feedback-outline'),
+  petTags: icon('fluent:design-ideas-24-regular'),
 };
 
 const filterByRole = (
@@ -157,6 +158,12 @@ export function useNavData(userRole: string) {
             title: t('Feedback'),
             path: paths.dashboard.admin.feedback,
             icon: ICONS.feedback,
+            roles: ['admin'],
+          },
+          {
+            title: t('Pet Tags'),
+            path: paths.dashboard.admin.petTags,
+            icon: ICONS.petTags,
             roles: ['admin'],
           },
           // {

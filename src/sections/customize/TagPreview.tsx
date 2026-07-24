@@ -34,6 +34,7 @@ interface TagPreviewProps {
   onPersonalizationChange?: (data: PersonalizationData) => void;
   onFilterChange?: (filters: Partial<TagFilters>) => void;
   onSelectBackground?: (background: string) => void;
+  onSelectBackgroundFile?: (file: File, side: 'front' | 'back') => void;
   showControls?: boolean;
   activeSide?: 'front' | 'back';
 }
@@ -45,6 +46,7 @@ export default function TagPreview({
   onPersonalizationChange,
   onFilterChange,
   onSelectBackground,
+  onSelectBackgroundFile,
   showControls = false,
   activeSide = 'front',
 }: TagPreviewProps) {
@@ -101,14 +103,17 @@ export default function TagPreview({
     ? { ...personalization, ...(personalization.backPersonalization || {}) }
     : personalization;
   const activeBackground = isBack
-    ? (personalization.backBackground || tag?.background || '')
-    : (tag?.background || '');
+    ? personalization.backBackground || tag?.background || ''
+    : tag?.background || '';
 
   const handleActivePersonalizationChange = (data: PersonalizationData) => {
     if (!onPersonalizationChange) return;
     if (isBack) {
-      const { doubleSided, backPersonalization, backBackground, ...rest } = data;
-      onPersonalizationChange({ ...personalization, backPersonalization: rest });
+      const { ...rest } = data;
+      onPersonalizationChange({
+        ...personalization,
+        backPersonalization: rest,
+      });
     } else {
       onPersonalizationChange(data);
     }
@@ -145,7 +150,10 @@ export default function TagPreview({
       textShadow: '1px 1px 2px rgba(255,255,255,0.3)',
     };
 
-    if (!activePersonalization.strokeWidth || activePersonalization.strokeWidth === 0) {
+    if (
+      !activePersonalization.strokeWidth ||
+      activePersonalization.strokeWidth === 0
+    ) {
       return baseStyles;
     }
 
@@ -198,7 +206,10 @@ export default function TagPreview({
     if (onPersonalizationChange) {
       const currentScale = activePersonalization.moldScale || 1;
       const newScale = Math.max(0.5, Math.min(2, currentScale + delta));
-      handleActivePersonalizationChange({ ...activePersonalization, moldScale: newScale });
+      handleActivePersonalizationChange({
+        ...activePersonalization,
+        moldScale: newScale,
+      });
     }
   };
 
@@ -428,7 +439,9 @@ export default function TagPreview({
             justifyContent: 'center',
             position: 'relative',
             overflow: 'hidden',
-            backgroundImage: activeBackground ? `url(${activeBackground})` : 'red',
+            backgroundImage: activeBackground
+              ? `url(${activeBackground})`
+              : 'red',
             backgroundSize: 'cover',
             backgroundPosition: 'center',
             transition: 'all 0.3s ease',
@@ -862,6 +875,9 @@ export default function TagPreview({
           <StepBackground
             selectedBackground={localBackground}
             onSelectBackground={setLocalBackground}
+            onSelectBackgroundFile={(file) =>
+              onSelectBackgroundFile?.(file, activeSide)
+            }
             onNext={() => {
               handleActiveBackgroundSelect(localBackground);
               setBgModalOpen(false);

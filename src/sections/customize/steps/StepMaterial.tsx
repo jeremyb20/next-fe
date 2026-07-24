@@ -75,7 +75,7 @@ export default function StepMaterial({
                 alt={material.label}
                 sx={{ objectFit: 'cover' }}
               />
-              <CardContent>
+              <CardContent sx={{ bgcolor: 'background.neutral' }}>
                 <Typography variant="h6" gutterBottom>
                   {material.label}
                 </Typography>

@@ -1,5 +1,7 @@
 // src/components/catalog/steps/StepShape.tsx
 'use client';
+import { useTheme } from '@mui/material/styles';
+import useMediaQuery from '@mui/system/useMediaQuery';
 import {
   Box,
   Card,
@@ -18,7 +20,6 @@ import {
   sizeLabels,
   petTypeLabels,
 } from '../../../utils/pet-tag-utils';
-
 interface StepShapeProps {
   filters: TagFilters;
   onFilterChange: (filters: Partial<TagFilters>) => void;
@@ -68,6 +69,8 @@ export default function StepShape({
   isShapeStep = false,
   hideBackButtom = false,
 }: StepShapeProps) {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const handleShapeSelect = (shape: TagShape) => {
     onFilterChange({ shape });
     // if (isShapeStep) {
@@ -81,9 +84,9 @@ export default function StepShape({
         <Typography variant="h6" gutterBottom>
           Selecciona la forma de tu plaquita
         </Typography>
-        <Grid container spacing={2} sx={{ m: 1 }}>
+        <Grid container spacing={isMobile ? 1 : 2} sx={{ m: isMobile ? 0 : 1 }}>
           {shapeData.map((shape) => (
-            <Grid size={{ xs: 12, sm: 4 }} key={shape.value}>
+            <Grid size={{ xs: 6, sm: 4 }} key={shape.value}>
               <Card
                 sx={{
                   cursor: 'pointer',
@@ -100,12 +103,20 @@ export default function StepShape({
               >
                 <CardMedia
                   component="img"
-                  height="240"
+                  height={isMobile ? '140' : '240'}
                   image={shape.image}
                   alt={shape.label}
                   sx={{ objectFit: 'cover', p: 2, bgcolor: '#fff' }}
                 />
-                <CardContent sx={{ bgcolor: 'background.neutral' }}>
+                <CardContent
+                  sx={{
+                    bgcolor: 'background.neutral',
+                    p: {
+                      xs: 1,
+                      md: 2,
+                    },
+                  }}
+                >
                   <Typography variant="h6" align="center">
                     {shape.label}
                   </Typography>

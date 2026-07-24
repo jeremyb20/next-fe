@@ -13,9 +13,18 @@ import {
   Typography,
   Button,
   Alert,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  TextField,
+  Stack,
 } from '@mui/material';
 
-import { mockTags } from '@/utils/pet-tag-utils';
+import { endpoints } from '@/utils/axios';
+import { HOST_API } from '@/config-global';
+import { useSnackbar } from '@/components/snackbar';
+import { useCreateGenericMutation } from '@/hooks/user-generic-mutation';
 
 // import TagGallery from './TagGallery';
 import StepShape from './steps/StepShape';
@@ -35,8 +44,17 @@ export default function PetTagCustomize() {
     material: '',
     shape: 'bone',
   });
-  const [filteredTags] = useState<TagOption[]>(mockTags);
-
+  const [backgroundFiles, setBackgroundFiles] = useState<{
+    front?: File;
+    back?: File;
+  }>({});
+  const [contactModalOpen, setContactModalOpen] = useState(false);
+  const [completedValue, setCompletedValue] = useState<any>(null);
+  const [contactName, setContactName] = useState('');
+  const [contactPhone, setContactPhone] = useState('');
+  const [contactNote, setContactNote] = useState('');
+  const { mutateAsync } = useCreateGenericMutation();
+  const { enqueueSnackbar } = useSnackbar();
   const [personalization, setPersonalization] = useState<PersonalizationData>({
     name: 'Tobby',
     phone: '',
@@ -48,12 +66,12 @@ export default function PetTagCustomize() {
     fontFamily: 'Comic Sans MS',
     moldScale: 1.45,
     namePosition: {
-      x: 50, // Cambiado de 0.5 a 50 (porcentaje)
-      y: 45, // Cambiado de 0.5 a 45 (porcentaje)
+      x: 50,
+      y: 45,
     },
     phonePosition: {
-      x: 50, // Cambiado de 0.5 a 50 (porcentaje)
-      y: 65, // Cambiado de 0.7 a 65 (porcentaje)
+      x: 50,
+      y: 65,
     },
   });
 
@@ -69,6 +87,7 @@ export default function PetTagCustomize() {
   });
   const [errorMsg, setErrorMsg] = useState('');
   const [isClient, setIsClient] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const topRef = useRef<HTMLDivElement>(null);
 
   const scrollToTop = () =>
@@ -87,11 +106,6 @@ export default function PetTagCustomize() {
       label: 'Tipo y Tamaño',
       description: 'Selecciona el tipo y tamaño de tu mascota',
     },
-
-    // {
-    //   label: 'Fondos disponibles',
-    //   description: 'Explora los fondos para plaquitas disponibles',
-    // },
     {
       label: 'Personalización',
       description: 'Personaliza tu plaquita',
@@ -112,27 +126,90 @@ export default function PetTagCustomize() {
     setFilters((prev) => ({ ...prev, ...newFilters }));
   };
 
-  // const handleSelectTag = (tag: TagOption) => {
-  //   setSelectedTag(tag);
-  //   handleNext();
-  // };
+  const handleComplete = (value: any) => {
+    setErrorMsg('');
+    setCompletedValue(value);
+    setContactModalOpen(true);
+  };
 
-  // const handleCustomize = () => {
-  //   // Si no hay tag seleccionado, crear uno nuevo
-  //   if (!selectedTag) {
-  //     setSelectedTag({
-  //       id: 'custom',
-  //       shape: filters.shape || 'circle',
-  //       material: filters.material || 'resin',
-  //       background: '/images/default-background.jpg',
-  //       name: personalization.name || 'Mi mascota',
-  //       phone: personalization.phone || '',
-  //       imageUrl: '',
-  //       isCustomizable: true,
-  //     });
-  //   }
-  //   handleNext();
-  // };
+  const handleContactSubmit = async () => {
+    try {
+      const { front, back } = backgroundFiles;
+      setIsLoading(true);
+
+      const frontP = personalization;
+      const backP = personalization.backPersonalization;
+
+      const payload: Record<string, any> = {
+        shape: filters.shape,
+        material: filters.material || '',
+        size: filters.size || '',
+        petType: filters.petType || '',
+        contactName,
+        contactPhone,
+        contactNote,
+        front: JSON.stringify({
+          background: selectedTag?.background || '',
+          personalization: {
+            name: frontP.name,
+            phone: frontP.phone || '',
+            fontSize: frontP.fontSize ?? 36,
+            fontColor: frontP.fontColor || '#ffffff',
+            strokeColor: frontP.strokeColor || '#000000',
+            strokeWidth: frontP.strokeWidth ?? 3,
+            strokePosition: frontP.strokePosition || 'outside',
+            fontFamily: frontP.fontFamily || 'Comic Sans MS',
+            moldScale: frontP.moldScale ?? 1.45,
+            doubleSided: frontP.doubleSided ?? false,
+            namePosition: frontP.namePosition ?? { x: 50, y: 45 },
+            phonePosition: frontP.phonePosition ?? { x: 50, y: 65 },
+          },
+        }),
+      };
+
+      if (front) payload['frontImage'] = front;
+
+      if (frontP.doubleSided) {
+        payload.back = JSON.stringify({
+          background: frontP.backBackground || '',
+          personalization: {
+            name: backP?.name || frontP.name,
+            phone: backP?.phone || frontP.phone || '',
+            fontSize: backP?.fontSize ?? frontP.fontSize ?? 36,
+            fontColor: backP?.fontColor || frontP.fontColor || '#ffffff',
+            strokeColor: backP?.strokeColor || frontP.strokeColor || '#000000',
+            strokeWidth: backP?.strokeWidth ?? frontP.strokeWidth ?? 3,
+            strokePosition: backP?.strokePosition || frontP.strokePosition || 'outside',
+            fontFamily: backP?.fontFamily || frontP.fontFamily || 'Comic Sans MS',
+            moldScale: backP?.moldScale ?? frontP.moldScale ?? 1.45,
+            doubleSided: true,
+            namePosition: backP?.namePosition ?? { x: 50, y: 45 },
+            phonePosition: backP?.phonePosition ?? { x: 50, y: 65 },
+          },
+        });
+        if (back) payload['backImage'] = back;
+      }
+
+      await mutateAsync({
+        payload,
+        pEndpoint: `${HOST_API}${endpoints.admin.petTags.create}`,
+        method: 'POST',
+        isFormData: true,
+      });
+      setContactModalOpen(false);
+      setIsLoading(false);
+      enqueueSnackbar(
+        'Has completado el proceso de selección de tu plaquita personalizada.'
+      );
+    } catch (error) {
+      console.error('Error creating order:', error);
+      setIsLoading(false);
+      enqueueSnackbar(`Hubo un inconveniente, intentelo mas tarde`, {
+        variant: 'error',
+        autoHideDuration: 8000,
+      });
+    }
+  };
 
   const renderStepContent = (step: number) => {
     switch (step) {
@@ -163,22 +240,6 @@ export default function PetTagCustomize() {
             onBack={handleBack}
           />
         );
-      // case 3:
-      //   return (
-      //     <Box>
-      //       <Box sx={{ mt: 2 }}>
-      //         <Button onClick={handleBack}>Atrás</Button>
-      //       </Box>
-      //       <TagGallery
-      //         filters={filters}
-      //         tags={filteredTags}
-      //         onSelectTag={handleSelectTag}
-      //         onCustomize={handleCustomize}
-      //         personalization={personalization}
-      //         onPersonalizationChange={setPersonalization}
-      //       />
-      //     </Box>
-      //   );
       case 3:
         return (
           <StepPersonalize
@@ -187,15 +248,15 @@ export default function PetTagCustomize() {
             tag={selectedTag}
             personalization={personalization}
             onPersonalizationChange={setPersonalization}
-            onComplete={(value) => {
-              setErrorMsg('');
-              console.log('Proceso completado', value);
-            }}
+            onComplete={handleComplete}
             onBack={handleBack}
             onSelectBackground={(bg) =>
               setSelectedTag((prev) =>
                 prev ? { ...prev, background: bg } : prev
               )
+            }
+            onSelectBackgroundFile={(file, side) =>
+              setBackgroundFiles((prev) => ({ ...prev, [side]: file }))
             }
           />
         );
@@ -203,12 +264,15 @@ export default function PetTagCustomize() {
         return null;
     }
   };
+
   useEffect(() => {
     setIsClient(true);
   }, []);
+
   if (!isClient) {
     return null;
   }
+
   return (
     <Box ref={topRef} sx={{ maxWidth: 1200, mx: 'auto', p: { xs: 0, sm: 3 } }}>
       <Typography variant="h4" component="h1" gutterBottom align="center">
@@ -281,6 +345,56 @@ export default function PetTagCustomize() {
           </Paper>
         )}
       </Paper>
+
+      <Dialog
+        open={contactModalOpen}
+        onClose={() => setContactModalOpen(false)}
+        maxWidth="xs"
+        fullWidth
+      >
+        <DialogTitle>Datos de contacto</DialogTitle>
+
+        <DialogContent>
+          <Typography variant="body2" color="text.secondary">
+            Una vez enviado el formulario, nos pondremos en contacto contigo
+            para coordinar la entrega.
+          </Typography>
+          <Stack spacing={2} sx={{ mt: 2 }}>
+            <TextField
+              label="Nombre de la persona a contactar"
+              value={contactName}
+              onChange={(e) => setContactName(e.target.value)}
+              fullWidth
+              required
+            />
+            <TextField
+              label="Teléfono de WhatsApp"
+              value={contactPhone}
+              onChange={(e) => setContactPhone(e.target.value)}
+              fullWidth
+              required
+              placeholder="8888-8888"
+            />
+            <TextField
+              label="Nota"
+              value={contactNote}
+              onChange={(e) => setContactNote(e.target.value)}
+              multiline
+              rows={4}
+            />
+          </Stack>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setContactModalOpen(false)}>Cancelar</Button>
+          <Button
+            variant="contained"
+            onClick={handleContactSubmit}
+            disabled={!contactName || !contactPhone || isLoading}
+          >
+            {isLoading ? 'Enviando...' : 'Enviar'}
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Box>
   );
 }

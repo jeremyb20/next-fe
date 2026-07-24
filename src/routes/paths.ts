@@ -168,6 +168,7 @@ export const paths = {
       blogPanel: `${ROOTS.DASHBOARD}/admin/blog`,
       promotions: `${ROOTS.DASHBOARD}/admin/promotions`,
       feedback: `${ROOTS.DASHBOARD}/admin/feedback`,
+      petTags: `${ROOTS.DASHBOARD}/admin/pet-tags`,
     },
 
     general: {

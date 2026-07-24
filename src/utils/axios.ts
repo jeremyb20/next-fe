@@ -92,6 +92,12 @@ export const endpoints = {
       getAllFeedback: '/api/admin/getAllFeedback',
       deleteFeedback: '/api/admin/deleteFeedback',
     },
+    petTags: {
+      create: '/api/pet-tag/createOrder',
+      getAll: '/api/pet-tag/getAllOrders',
+      delete: '/api/pet-tag/deletePetTag',
+      updateStatus: '/api/pet-tag/updatePetTagStatus',
+    },
     promotions: {
       getAllPromotions: '/api/admin/getAllPromotions',
       createPromotion: '/api/admin/createPromotion',

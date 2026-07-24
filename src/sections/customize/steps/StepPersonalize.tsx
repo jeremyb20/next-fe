@@ -44,6 +44,7 @@ interface StepPersonalizeProps {
   onComplete: (value: any) => void;
   onBack: () => void;
   onSelectBackground?: (background: string) => void;
+  onSelectBackgroundFile?: (file: File, side: 'front' | 'back') => void;
 }
 
 const fontOptions = [
@@ -74,6 +75,7 @@ export default function StepPersonalize({
   onComplete,
   onBack,
   onSelectBackground,
+  onSelectBackgroundFile,
 }: StepPersonalizeProps) {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [showColorPicker, setShowColorPicker] = useState(false);
@@ -696,6 +698,7 @@ export default function StepPersonalize({
           onPersonalizationChange={onPersonalizationChange}
           onFilterChange={onFilterChange}
           onSelectBackground={onSelectBackground}
+          onSelectBackgroundFile={onSelectBackgroundFile}
           showControls
           activeSide={activeSide}
         />
@@ -703,13 +706,22 @@ export default function StepPersonalize({
 
       <Box sx={{ mt: 2, display: 'flex', justifyContent: 'space-between' }}>
         <Button onClick={onBack}>Atrás</Button>
-        <Button
-          variant="outlined"
-          startIcon={<Iconify icon="mdi:tune" />}
-          onClick={() => setDrawerOpen(true)}
-        >
-          Personalizar
-        </Button>
+        <Box sx={{ display: 'flex', flexDirection: 'row', gap: 2 }}>
+          <Button
+            variant="outlined"
+            startIcon={<Iconify icon="mdi:tune" />}
+            onClick={() => setDrawerOpen(true)}
+          >
+            Personalizar
+          </Button>
+          <Button
+            variant="contained"
+            onClick={() => onComplete({ activePersonalization, tag })}
+            disabled={!personalization.name}
+          >
+            Finalizar
+          </Button>
+        </Box>
       </Box>
       <SwipeableDrawer
         anchor={isMobile ? 'bottom' : 'right'}
