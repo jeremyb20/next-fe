@@ -13,7 +13,7 @@ export async function generateMetadata({
   const { lang } = await params;
   const language = lang?.toUpperCase() || 'ES';
 
-  const metadata = await getSeoMetadata('sign-in', language);
+  const metadata = await getSeoMetadata('personalizar', language);
 
   return metadata;
 }
