@@ -58,3 +58,4 @@ export const SITEKEY =
   process.env.NODE_ENV === 'development'
     ? '1x00000000000000000000AA' // Test key de Cloudflare
     : RECAPTCHA_SITE_KEY || '';
+export const GOOGLE_AD = process.env.NEXT_PUBLIC_GOOGLE_AD || '';

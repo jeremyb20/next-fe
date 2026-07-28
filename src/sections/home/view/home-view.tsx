@@ -8,6 +8,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { paths } from '@/routes/paths';
 import MainLayout from '@/layouts/main';
 import { useSearchParams } from '@/routes/hooks';
+import GoogleAd from '@/components/adds/GoogleAd';
 import { useRouter } from '@/routes/hooks/use-router';
 import ScrollProgress from '@/components/scroll-progress';
 import { SplashScreen } from '@/components/loading-screen';
@@ -112,6 +113,7 @@ export default function HomeView() {
         <HomeTestimonials />
 
         {/* <HomeBlog /> */}
+        <GoogleAd slot="" />
       </Box>
     </MainLayout>
   ) : (

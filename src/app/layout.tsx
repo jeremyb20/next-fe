@@ -1,4 +1,6 @@
-import { DOMAIN, HOST_API } from '../config-global';
+import Script from 'next/script';
+
+import { DOMAIN, GOOGLE_AD, HOST_API } from '../config-global';
 import AppProviders from '../components/providers/AppProviders';
 // ----------------------------------------------------------------------
 
@@ -70,6 +72,13 @@ export default async function RootLayout({ children }: Props) {
       </head>
       <body>
         <AppProviders>{children}</AppProviders>
+        <Script
+          id="adsense-script"
+          async
+          strategy="afterInteractive"
+          crossOrigin="anonymous"
+          src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-${GOOGLE_AD}`}
+        />
       </body>
     </html>
   );
