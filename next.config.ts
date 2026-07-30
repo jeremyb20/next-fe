@@ -100,6 +100,7 @@ const nextConfig: NextConfig = {
         'https://*.google.com ' +
         'https://*.googleapis.com ' +
         'https://*.gstatic.com ' +
+        'https://pagead2.googlesyndication.com ' +
         'https://res.cloudinary.com ' +
         'https://plaquitascr.com ' +
         'https://cdn.jsdelivr.net ' +
@@ -134,7 +135,8 @@ const nextConfig: NextConfig = {
       'frame-src ' +
         'https://*.google.com ' +
         'https://*.doubleclick.net ' +
-        'https://*.googleadservices.com',
+        'https://*.googleadservices.com ' +
+        'https://*.adtrafficquality.google',
 
       // Otros permisos
       "manifest-src 'self'",
