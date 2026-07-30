@@ -128,7 +128,8 @@ const nextConfig: NextConfig = {
         'https://*.google.com ' +
         'https://*.doubleclick.net ' +
         'https://*.googleadservices.com ' +
-        'https://*.adtrafficquality.google',
+        'https://*.adtrafficquality.google ' +
+        'https://*.cloudflare.com',
 
       // Otros permisos
       "manifest-src 'self'",
