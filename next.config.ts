@@ -87,7 +87,8 @@ const nextConfig: NextConfig = {
         'https://*.googleapis.com ' +
         'https://www.googletagmanager.com ' +
         'https://cdnjs.cloudflare.com ' +
-        'https://*.doubleclick.net',
+        'https://*.doubleclick.net ' +
+        'https://*.adtrafficquality.google',
 
       // Estilos
       "style-src 'self' 'unsafe-inline' " +
@@ -127,7 +128,7 @@ const nextConfig: NextConfig = {
         'https://*.googleadservices.com ' +
         'https://googleads.g.doubleclick.net ' +
         'https://adservice.google.com ' +
-        'https://ep1.adtrafficquality.google',
+        'https://*.adtrafficquality.google',
 
       // Frames
       'frame-src ' +
