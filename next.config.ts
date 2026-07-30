@@ -1,4 +1,4 @@
-// next.config.ts - CSP COMPLETA para todos los servicios de iconos
+// next.config.ts - CSP COMPLETA con todos los dominios de Google
 import type { NextConfig } from 'next';
 import { readFileSync } from 'fs';
 
@@ -75,26 +75,45 @@ const nextConfig: NextConfig = {
     ];
   },
 
-  // Headers - CSP COMPLETA
+  // Headers - CSP COMPLETA para AdSense
   async headers() {
     const cspValue = [
       "default-src 'self'",
 
       // Scripts
-      "script-src 'self' 'unsafe-eval' 'unsafe-inline' https://pagead2.googlesyndication.com https://*.google.com https://*.googleapis.com https://www.googletagmanager.com https://cdnjs.cloudflare.com",
+      "script-src 'self' 'unsafe-eval' 'unsafe-inline' " +
+        'https://pagead2.googlesyndication.com ' +
+        'https://*.google.com ' +
+        'https://*.googleapis.com ' +
+        'https://www.googletagmanager.com ' +
+        'https://cdnjs.cloudflare.com ' +
+        'https://*.doubleclick.net',
 
       // Estilos
-      "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://*.googleapis.com",
+      "style-src 'self' 'unsafe-inline' " +
+        'https://fonts.googleapis.com ' +
+        'https://*.googleapis.com',
 
       // Imágenes
-      "img-src 'self' data: blob: https://*.google.com https://*.googleapis.com https://*.gstatic.com https://res.cloudinary.com https://plaquitascr.com https://cdn.jsdelivr.net",
+      "img-src 'self' data: blob: " +
+        'https://*.google.com ' +
+        'https://*.googleapis.com ' +
+        'https://*.gstatic.com ' +
+        'https://res.cloudinary.com ' +
+        'https://plaquitascr.com ' +
+        'https://cdn.jsdelivr.net ' +
+        'https://*.doubleclick.net',
 
       // Fuentes
-      "font-src 'self' data: https://fonts.gstatic.com https://*.googleapis.com https://fonts.googleapis.com https://cdn.jsdelivr.net",
+      "font-src 'self' data: " +
+        'https://fonts.gstatic.com ' +
+        'https://*.googleapis.com ' +
+        'https://fonts.googleapis.com ' +
+        'https://cdn.jsdelivr.net',
 
-      // Conexiones - AÑADIDOS TODOS los dominios de Iconify
+      // Conexiones - AÑADIDO ep1.adtrafficquality.google
       "connect-src 'self' " +
-        'https://*.google.com ' +
+        'https://*.google.com ' + // <- Esto cubre ep1.adtrafficquality.google
         'https://*.googleapis.com ' +
         'https://petsqrbackend.fly.dev ' +
         'https://api.iconify.design ' +
@@ -103,10 +122,18 @@ const nextConfig: NextConfig = {
         'https://cdn.jsdelivr.net ' +
         'https://unpkg.com ' +
         'https://fonts.googleapis.com ' +
-        'https://fonts.gstatic.com',
+        'https://fonts.gstatic.com ' +
+        'https://*.doubleclick.net ' +
+        'https://*.googleadservices.com ' +
+        'https://googleads.g.doubleclick.net ' +
+        'https://adservice.google.com ' +
+        'https://ep1.adtrafficquality.google',
 
       // Frames
-      'frame-src https://*.google.com https://*.doubleclick.net',
+      'frame-src ' +
+        'https://*.google.com ' +
+        'https://*.doubleclick.net ' +
+        'https://*.googleadservices.com',
 
       // Otros permisos
       "manifest-src 'self'",
