@@ -87,6 +87,7 @@ const nextConfig: NextConfig = {
         'https://*.googleapis.com ' +
         'https://www.googletagmanager.com ' +
         'https://cdnjs.cloudflare.com ' +
+        'https://*.cloudflare.com ' +
         'https://*.doubleclick.net ' +
         'https://*.adtrafficquality.google',
 
