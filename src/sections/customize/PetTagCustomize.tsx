@@ -49,7 +49,6 @@ export default function PetTagCustomize() {
     back?: File;
   }>({});
   const [contactModalOpen, setContactModalOpen] = useState(false);
-  const [completedValue, setCompletedValue] = useState<any>(null);
   const [contactName, setContactName] = useState('');
   const [contactPhone, setContactPhone] = useState('');
   const [contactNote, setContactNote] = useState('');
@@ -128,7 +127,7 @@ export default function PetTagCustomize() {
 
   const handleComplete = (value: any) => {
     setErrorMsg('');
-    setCompletedValue(value);
+    console.log('Completed with:', value);
     setContactModalOpen(true);
   };
 
@@ -189,7 +188,8 @@ export default function PetTagCustomize() {
             fontFamily:
               backP?.fontFamily || frontP.fontFamily || 'Comic Sans MS',
             moldScale: backP?.moldScale ?? frontP.moldScale ?? 1.45,
-            moldPosition: backP?.moldPosition ?? frontP.moldPosition ?? { x: 0, y: 0 },
+            moldPosition: backP?.moldPosition ??
+              frontP.moldPosition ?? { x: 0, y: 0 },
             doubleSided: true,
             namePosition: backP?.namePosition ?? { x: 50, y: 45 },
             phonePosition: backP?.phonePosition ?? { x: 50, y: 65 },
