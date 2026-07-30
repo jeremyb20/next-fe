@@ -95,16 +95,7 @@ const nextConfig: NextConfig = {
         'https://fonts.googleapis.com ' +
         'https://*.googleapis.com',
 
-      // Imágenes
-      "img-src 'self' data: blob: " +
-        'https://*.google.com ' +
-        'https://*.googleapis.com ' +
-        'https://*.gstatic.com ' +
-        'https://pagead2.googlesyndication.com ' +
-        'https://res.cloudinary.com ' +
-        'https://plaquitascr.com ' +
-        'https://cdn.jsdelivr.net ' +
-        'https://*.doubleclick.net',
+      "img-src * data: blob:",
 
       // Fuentes
       "font-src 'self' data: " +
