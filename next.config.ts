@@ -75,17 +75,79 @@ const nextConfig: NextConfig = {
     ];
   },
 
-  // Headers
+  // Headers - ACTUALIZADO para incluir CSP y AdSense
   async headers() {
     // Solo en producción aplicar headers de caché
     if (process.env.NODE_ENV !== 'production') {
-      return [];
+      return [
+        // En desarrollo también necesitamos CSP para probar AdSense
+        {
+          source: '/:path*',
+          headers: [
+            {
+              key: 'Content-Security-Policy',
+              value: [
+                "default-src 'self'",
+                "script-src 'self' 'unsafe-eval' 'unsafe-inline' https://pagead2.googlesyndication.com https://*.google.com https://*.googleapis.com https://www.googletagmanager.com",
+                "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+                "img-src 'self' data: https://*.google.com https://*.googleapis.com https://*.gstatic.com https://res.cloudinary.com https://plaquitascr.com",
+                "font-src 'self' https://fonts.gstatic.com",
+                "connect-src 'self' https://*.google.com https://*.googleapis.com https://petsqrbackend.fly.dev",
+                'frame-src https://*.google.com https://*.doubleclick.net',
+                "manifest-src 'self'",
+                "worker-src 'self' blob:",
+                "child-src 'self' blob:",
+                "object-src 'none'",
+                "base-uri 'self'",
+                "form-action 'self'",
+                'upgrade-insecure-requests',
+              ].join('; '),
+            },
+            {
+              key: 'Access-Control-Allow-Credentials',
+              value: 'true',
+            },
+            {
+              key: 'Access-Control-Allow-Origin',
+              value: '*',
+            },
+            {
+              key: 'Access-Control-Allow-Methods',
+              value: 'GET,OPTIONS,PATCH,DELETE,POST,PUT',
+            },
+            {
+              key: 'Access-Control-Allow-Headers',
+              value:
+                'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version',
+            },
+          ],
+        },
+      ];
     }
 
     return [
       {
         source: '/:path*',
         headers: [
+          {
+            key: 'Content-Security-Policy',
+            value: [
+              "default-src 'self'",
+              "script-src 'self' 'unsafe-eval' 'unsafe-inline' https://pagead2.googlesyndication.com https://*.google.com https://*.googleapis.com https://www.googletagmanager.com",
+              "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+              "img-src 'self' data: https://*.google.com https://*.googleapis.com https://*.gstatic.com https://res.cloudinary.com https://plaquitascr.com",
+              "font-src 'self' https://fonts.gstatic.com",
+              "connect-src 'self' https://*.google.com https://*.googleapis.com https://petsqrbackend.fly.dev",
+              'frame-src https://*.google.com https://*.doubleclick.net',
+              "manifest-src 'self'",
+              "worker-src 'self' blob:",
+              "child-src 'self' blob:",
+              "object-src 'none'",
+              "base-uri 'self'",
+              "form-action 'self'",
+              'upgrade-insecure-requests',
+            ].join('; '),
+          },
           {
             key: 'Access-Control-Allow-Credentials',
             value: 'true',
@@ -119,7 +181,7 @@ const nextConfig: NextConfig = {
         headers: [
           {
             key: 'Cache-Control',
-            value: 'public, max-age=86400, must-revalidate', // 24 horas, no 0
+            value: 'public, max-age=86400, must-revalidate',
           },
         ],
       },
