@@ -113,7 +113,7 @@ export default function HomeView() {
         <HomeTestimonials />
 
         {/* <HomeBlog /> */}
-        <GoogleAd slot="" />
+        <GoogleAd slot="5393711295" />
       </Box>
     </MainLayout>
   ) : (
