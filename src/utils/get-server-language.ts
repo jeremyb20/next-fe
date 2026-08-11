@@ -10,7 +10,7 @@ export async function getServerLanguage(): Promise<string> {
 
   // Obtener idioma del navegador
   const acceptLanguage = headersList.get('accept-language');
-  const browserLang = acceptLanguage?.split(',')[0]?.split('-')[0] || 'es';
+  const browserLang = acceptLanguage?.split(',')[0]?.split(';')[0]?.split('-')[0] || 'es';
 
   // Usar cookie si existe, o el idioma del navegador
   const rawLanguage = i18nCookie?.value || browserLang;
