@@ -165,26 +165,15 @@ const nextConfig: NextConfig = {
     //   "form-action 'self'",
     // ].join('; ');
     const cspValue = [
-      "default-src 'self'",
-
-      // Scripts: Permitir el SDK y sus subdominios
-      "script-src 'self' 'unsafe-eval' 'unsafe-inline' https://connect.facebook.net https://*.facebook.com https://*.facebook.net",
-
-      // Estilos: Necesarios para el renderizado del widget
-      "style-src 'self' 'unsafe-inline' https://*.facebook.com https://*.facebook.net",
-
-      // Imágenes: Facebook usa fbcdn para las fotos de perfil y assets
-      'img-src * data: blob: https://*.fbcdn.net https://*.facebook.com',
-
-      // Conexiones: Incluye WebSockets (wss) para el chat en tiempo real
-      "connect-src 'self' https://*.facebook.com https://*.facebook.net wss://*.facebook.com https://petsqrbackend.fly.dev",
-
-      // Frames: Crucial para que el chat se muestre
-      "frame-src 'self' https://*.facebook.com https://*.messenger.com https://*.facebook.net",
-
-      "child-src 'self' blob:",
-      "object-src 'none'",
-    ].join('; ');
+      "default-src * 'unsafe-inline' 'unsafe-eval' data: blob:;",
+      "script-src * 'unsafe-inline' 'unsafe-eval';",
+      "connect-src * 'unsafe-inline' wss:;",
+      'img-src * data: blob:;',
+      'frame-src *;',
+      "style-src * 'unsafe-inline';",
+      'font-src * data:;',
+      "object-src 'none';",
+    ].join(' ');
     return [
       {
         source: '/:path*',
