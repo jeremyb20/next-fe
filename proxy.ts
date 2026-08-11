@@ -202,10 +202,13 @@ const STATIC_FILE_EXTENSIONS = [
 
 export const config = {
   matcher: [
-    '/((?!api|_next/static|_next/image|assets|favicon.ico|sw.js|site.webmanifest|adsbygoogle|googleads|doubleclick\\.net|google-analytics\\.com|googletagmanager\\.com|googleapis\\.com|pagead2\\.googlesyndication\\.com|connect\\.facebook\\.net|fbcdn\\.net|facebook\\.com|facebook\\.net|messenger\\.com|.*\\.(?:png|jpg|jpeg|gif|webp|svg|ico|css|js|json|xml|txt|pdf|woff|woff2|ttf|eot)$).*)',
+    // Excluir rutas internas de Next.js y archivos estáticos
+    '/((?!api|_next/static|_next/image|assets|favicon.ico|sw.js|site.webmanifest|.*\\.(?:png|jpg|jpeg|gif|webp|svg|ico|css|js|json|xml|txt|pdf|woff|woff2|ttf|eot)$).*)',
+
+    // Excluir explícitamente cualquier solicitud que contenga dominios de terceros
+    '/((?!facebook|messenger|google|doubleclick|googletagmanager).*)',
   ],
 };
-
 // Función principal del middleware
 export function proxy(req: NextRequest) {
   const { pathname, search } = req.nextUrl;
