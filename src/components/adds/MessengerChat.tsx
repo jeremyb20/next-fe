@@ -2,7 +2,12 @@
 
 import Script from 'next/script';
 import { useEffect, useState } from 'react';
-
+declare global {
+  interface Window {
+    fbAsyncInit: () => void;
+    FB: any;
+  }
+}
 export default function MessengerChatWidget() {
   const [isMounted, setIsMounted] = useState(false);
 
@@ -14,6 +19,7 @@ export default function MessengerChatWidget() {
 
   return (
     <>
+      {/* El div debe estar vacío y sin atributos adicionales inicialmente */}
       <div id="fb-root"></div>
       <div id="fb-customer-chat" className="fb-customerchat"></div>
 
@@ -27,15 +33,14 @@ export default function MessengerChatWidget() {
                 xfbml: true,
                 version: 'v18.0'
               });
-              // Forzar el parseo del widget si ya está en el DOM
-              if (window.FB) {
-                window.FB.XFBML.parse();
-              }
             };
 
+            // Configuración manual del chatbox
             var chatbox = document.getElementById('fb-customer-chat');
-            chatbox.setAttribute("page_id", "115795170546124");
-            chatbox.setAttribute("attribution", "biz_inbox");
+            if (chatbox) {
+              chatbox.setAttribute("page_id", "115795170546124");
+              chatbox.setAttribute("attribution", "biz_inbox");
+            }
           `,
         }}
       />
@@ -44,6 +49,12 @@ export default function MessengerChatWidget() {
         id="fb-sdk-loader"
         strategy="afterInteractive"
         src="https://connect.facebook.net/es_LA/sdk.js"
+        onLoad={() => {
+          // Forzar el parseo una vez que el script se haya cargado completamente
+          if (window.FB) {
+            window.FB.XFBML.parse();
+          }
+        }}
       />
     </>
   );
