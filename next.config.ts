@@ -133,7 +133,7 @@ const nextConfig: NextConfig = {
         'https://connect.facebook.net',
 
       // Frames
-      'frame-src blob: ' +
+      'frame-src blob: about: ' +
         "'self' " +
         'https://*.google.com ' +
         'https://*.doubleclick.net ' +
