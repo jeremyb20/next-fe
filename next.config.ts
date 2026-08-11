@@ -81,90 +81,110 @@ const nextConfig: NextConfig = {
 
   // Headers - CSP COMPLETA para AdSense
   async headers() {
+    // const cspValue = [
+    //   "default-src 'self'",
+
+    //   // Scripts
+    //   "script-src 'self' 'unsafe-eval' 'unsafe-inline' " +
+    //     'https://pagead2.googlesyndication.com ' +
+    //     'https://*.google.com ' +
+    //     'https://*.googleapis.com ' +
+    //     'https://www.googletagmanager.com ' +
+    //     'https://cdnjs.cloudflare.com ' +
+    //     'https://*.cloudflare.com ' +
+    //     'https://*.doubleclick.net ' +
+    //     'https://*.adtrafficquality.google ' +
+    //     'https://connect.facebook.net ' +
+    //     'https://*.facebook.com ' +
+    //     'https://*.fbcdn.net ' +
+    //     'https://*.facebook.net',
+
+    //   // Estilos
+    //   "style-src 'self' 'unsafe-inline' " +
+    //     'https://fonts.googleapis.com ' +
+    //     'https://*.googleapis.com ' +
+    //     'https://*.facebook.com',
+
+    //   'img-src * data: blob: https://*.fbcdn.net',
+
+    //   // Fuentes
+    //   "font-src 'self' data: " +
+    //     'https://fonts.gstatic.com ' +
+    //     'https://*.googleapis.com ' +
+    //     'https://fonts.googleapis.com ' +
+    //     'https://cdn.jsdelivr.net',
+
+    //   // Conexiones
+    //   "connect-src 'self' " +
+    //     (process.env.NODE_ENV !== 'production'
+    //       ? 'http://localhost:8080 '
+    //       : '') +
+    //     'https://*.google.com ' +
+    //     'https://*.googleapis.com ' +
+    //     'https://petsqrbackend.fly.dev ' +
+    //     'https://api.iconify.design ' +
+    //     'https://api.simplesvg.com ' +
+    //     'https://api.unisvg.com ' +
+    //     'https://cdn.jsdelivr.net ' +
+    //     'https://unpkg.com ' +
+    //     'https://fonts.googleapis.com ' +
+    //     'https://fonts.gstatic.com ' +
+    //     'https://*.doubleclick.net ' +
+    //     'https://*.googleadservices.com ' +
+    //     'https://googleads.g.doubleclick.net ' +
+    //     'https://adservice.google.com ' +
+    //     'https://*.adtrafficquality.google ' +
+    //     'https://*.facebook.com ' +
+    //     'https://*.fbcdn.net ' +
+    //     'https://*.facebook.net ' +
+    //     'wss://*.facebook.com ' +
+    //     'wss://*.fbcdn.net ' +
+    //     'https://connect.facebook.net',
+
+    //   // Frames - ACTUALIZADO con todos los dominios de Facebook/Messenger
+    //   "frame-src blob: about: 'self' " +
+    //     'https://*.google.com ' +
+    //     'https://*.doubleclick.net ' +
+    //     'https://*.googleadservices.com ' +
+    //     'https://*.adtrafficquality.google ' +
+    //     'https://*.cloudflare.com ' +
+    //     'https://*.facebook.com ' +
+    //     'https://www.facebook.com ' +
+    //     'https://*.fbcdn.net ' +
+    //     'https://*.messenger.com ' + // ✅ AÑADIDO
+    //     'https://*.fb.com ' + // ✅ AÑADIDO
+    //     'https://*.fbsbx.com ' + // ✅ AÑADIDO
+    //     'https://l.facebook.com', // ✅ AÑADIDO
+
+    //   // Otros permisos
+    //   "manifest-src 'self'",
+    //   "worker-src 'self' blob:",
+    //   "child-src 'self' blob:",
+    //   "object-src 'none'",
+    //   "base-uri 'self'",
+    //   "form-action 'self'",
+    // ].join('; ');
     const cspValue = [
       "default-src 'self'",
 
-      // Scripts
-      "script-src 'self' 'unsafe-eval' 'unsafe-inline' " +
-        'https://pagead2.googlesyndication.com ' +
-        'https://*.google.com ' +
-        'https://*.googleapis.com ' +
-        'https://www.googletagmanager.com ' +
-        'https://cdnjs.cloudflare.com ' +
-        'https://*.cloudflare.com ' +
-        'https://*.doubleclick.net ' +
-        'https://*.adtrafficquality.google ' +
-        'https://connect.facebook.net ' +
-        'https://*.facebook.com ' +
-        'https://*.fbcdn.net ' +
-        'https://*.facebook.net',
+      // Scripts: Permitir el SDK y sus subdominios
+      "script-src 'self' 'unsafe-eval' 'unsafe-inline' https://connect.facebook.net https://*.facebook.com https://*.facebook.net",
 
-      // Estilos
-      "style-src 'self' 'unsafe-inline' " +
-        'https://fonts.googleapis.com ' +
-        'https://*.googleapis.com ' +
-        'https://*.facebook.com',
+      // Estilos: Necesarios para el renderizado del widget
+      "style-src 'self' 'unsafe-inline' https://*.facebook.com https://*.facebook.net",
 
-      'img-src * data: blob: https://*.fbcdn.net',
+      // Imágenes: Facebook usa fbcdn para las fotos de perfil y assets
+      'img-src * data: blob: https://*.fbcdn.net https://*.facebook.com',
 
-      // Fuentes
-      "font-src 'self' data: " +
-        'https://fonts.gstatic.com ' +
-        'https://*.googleapis.com ' +
-        'https://fonts.googleapis.com ' +
-        'https://cdn.jsdelivr.net',
+      // Conexiones: Incluye WebSockets (wss) para el chat en tiempo real
+      "connect-src 'self' https://*.facebook.com https://*.facebook.net wss://*.facebook.com https://petsqrbackend.fly.dev",
 
-      // Conexiones
-      "connect-src 'self' " +
-        (process.env.NODE_ENV !== 'production'
-          ? 'http://localhost:8080 '
-          : '') +
-        'https://*.google.com ' +
-        'https://*.googleapis.com ' +
-        'https://petsqrbackend.fly.dev ' +
-        'https://api.iconify.design ' +
-        'https://api.simplesvg.com ' +
-        'https://api.unisvg.com ' +
-        'https://cdn.jsdelivr.net ' +
-        'https://unpkg.com ' +
-        'https://fonts.googleapis.com ' +
-        'https://fonts.gstatic.com ' +
-        'https://*.doubleclick.net ' +
-        'https://*.googleadservices.com ' +
-        'https://googleads.g.doubleclick.net ' +
-        'https://adservice.google.com ' +
-        'https://*.adtrafficquality.google ' +
-        'https://*.facebook.com ' +
-        'https://*.fbcdn.net ' +
-        'https://*.facebook.net ' +
-        'wss://*.facebook.com ' +
-        'wss://*.fbcdn.net ' +
-        'https://connect.facebook.net',
+      // Frames: Crucial para que el chat se muestre
+      "frame-src 'self' https://*.facebook.com https://*.messenger.com https://*.facebook.net",
 
-      // Frames - ACTUALIZADO con todos los dominios de Facebook/Messenger
-      "frame-src blob: about: 'self' " +
-        'https://*.google.com ' +
-        'https://*.doubleclick.net ' +
-        'https://*.googleadservices.com ' +
-        'https://*.adtrafficquality.google ' +
-        'https://*.cloudflare.com ' +
-        'https://*.facebook.com ' +
-        'https://www.facebook.com ' +
-        'https://*.fbcdn.net ' +
-        'https://*.messenger.com ' + // ✅ AÑADIDO
-        'https://*.fb.com ' + // ✅ AÑADIDO
-        'https://*.fbsbx.com ' + // ✅ AÑADIDO
-        'https://l.facebook.com', // ✅ AÑADIDO
-
-      // Otros permisos
-      "manifest-src 'self'",
-      "worker-src 'self' blob:",
       "child-src 'self' blob:",
       "object-src 'none'",
-      "base-uri 'self'",
-      "form-action 'self'",
     ].join('; ');
-
     return [
       {
         source: '/:path*',
