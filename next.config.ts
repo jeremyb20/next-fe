@@ -124,7 +124,7 @@ const nextConfig: NextConfig = {
         'https://*.adtrafficquality.google',
 
       // Frames
-      'frame-src ' +
+      'frame-src blob: ' +
         'https://*.google.com ' +
         'https://*.doubleclick.net ' +
         'https://*.googleadservices.com ' +
