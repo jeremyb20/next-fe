@@ -43,7 +43,7 @@ export default function MessengerChatWidget() {
       <Script
         id="fb-sdk-loader"
         strategy="afterInteractive"
-        src="https://connect.facebook.net/es_LA/sdk/xfbml.customerchat.js"
+        src="https://connect.facebook.net/es_LA/sdk.js"
       />
     </>
   );
