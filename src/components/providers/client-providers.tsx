@@ -14,6 +14,8 @@ import {
   SettingsProvider,
 } from '@/components/settings';
 
+import MessengerChatWidget from '../adds/MessengerChat';
+
 type Props = {
   children: React.ReactNode;
 };
@@ -31,6 +33,7 @@ export default function ClientProviders({ children }: Props) {
                     <SettingsDrawer />
                     <ProgressBar />
                     {children}
+                    <MessengerChatWidget />
                   </CheckoutProvider>
                 </SnackbarProvider>
               </MotionLazy>
