@@ -1,39 +1,54 @@
+// components/MessengerChatWidget.tsx
 'use client';
 
 import Script from 'next/script';
+import { useEffect, useState } from 'react';
 
 export default function MessengerChatWidget() {
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  // No renderizar nada durante la hidratación inicial
+  // Esto asegura que servidor y cliente coincidan (ambos null)
+  if (!isMounted) return null;
+
   return (
     <>
-      <div id="fb-root" />
-      <div
-        className="fb-customerchat"
-        // @ts-expect-error Facebook custom attributes
-        attribution="biz_inbox"
-        page_id="115795170546124"
-        theme_color="#0084FF"
-        logged_in_greeting="¡Hola! ¿En qué podemos ayudar a tu mascota hoy?"
-        logged_out_greeting="¡Hola! Déjanos un mensaje."
-        greeting_dialog_display="show"
-        bottom_spacing="30"
-      />
       <Script
-        id="facebook-sdk"
-        strategy="lazyOnload"
+        id="fb-messenger-sdk"
+        strategy="afterInteractive"
         dangerouslySetInnerHTML={{
           __html: `
             window.fbAsyncInit = function() {
-              FB.init({ xfbml: true, version: 'v18.0' });
+              FB.init({
+                xfbml: true,
+                version: 'v18.0'
+              });
             };
-            (function(d, s, id) {
-              var js, fjs = d.getElementsByTagName(s)[0];
-              if (d.getElementById(id)) return;
-              js = d.createElement(s); js.id = id;
-              js.src = 'https://connect.facebook.net/es_LA/sdk.js#xfbml=1&version=v18.0';
-              fjs.parentNode.insertBefore(js, fjs);
-            }(document, 'script', 'facebook-jssdk'));
           `,
         }}
+      />
+
+      <Script
+        id="fb-sdk-loader"
+        strategy="afterInteractive"
+        src="https://connect.facebook.net/es_LA/sdk/xfbml.customerchat.js"
+      />
+
+      {/* Suppress hydration warning para evitar el mismatch */}
+      <div
+        suppressHydrationWarning
+        {...({
+          className: 'fb-customerchat',
+          page_id: '115795170546124',
+          theme_color: '#0084FF',
+          logged_in_greeting: '¡Hola! ¿En qué podemos ayudar a tu mascota hoy?',
+          logged_out_greeting: '¡Hola! Déjanos un mensaje.',
+          greeting_dialog_display: 'show',
+        } as any)}
       />
     </>
   );

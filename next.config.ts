@@ -95,14 +95,17 @@ const nextConfig: NextConfig = {
         'https://*.doubleclick.net ' +
         'https://*.adtrafficquality.google ' +
         'https://connect.facebook.net ' +
-        'https://*.facebook.com',
+        'https://*.facebook.com ' +
+        'https://*.fbcdn.net ' +
+        'https://*.facebook.net',
 
       // Estilos
       "style-src 'self' 'unsafe-inline' " +
         'https://fonts.googleapis.com ' +
-        'https://*.googleapis.com',
+        'https://*.googleapis.com ' +
+        'https://*.facebook.com',
 
-      'img-src * data: blob:',
+      'img-src * data: blob: ' + 'https://*.fbcdn.net',
 
       // Fuentes
       "font-src 'self' data: " +
@@ -113,7 +116,9 @@ const nextConfig: NextConfig = {
 
       // Conexiones - AÑADIDO ep1.adtrafficquality.google
       "connect-src 'self' " +
-        (process.env.NODE_ENV !== 'production' ? 'http://localhost:8080 ' : '') +
+        (process.env.NODE_ENV !== 'production'
+          ? 'http://localhost:8080 '
+          : '') +
         'https://*.google.com ' + // <- Esto cubre ep1.adtrafficquality.google
         'https://*.googleapis.com ' +
         'https://petsqrbackend.fly.dev ' +
@@ -130,6 +135,10 @@ const nextConfig: NextConfig = {
         'https://adservice.google.com ' +
         'https://*.adtrafficquality.google ' +
         'https://*.facebook.com ' +
+        'https://*.fbcdn.net ' +
+        'https://*.facebook.net ' +
+        'wss://*.facebook.com ' +
+        'wss://*.fbcdn.net ' +
         'https://connect.facebook.net',
 
       // Frames
@@ -141,7 +150,8 @@ const nextConfig: NextConfig = {
         'https://*.adtrafficquality.google ' +
         'https://*.cloudflare.com ' +
         'https://*.facebook.com ' +
-        'https://www.facebook.com',
+        'https://www.facebook.com ' +
+        'https://*.fbcdn.net',
 
       // Otros permisos
       "manifest-src 'self'",

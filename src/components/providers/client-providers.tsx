@@ -33,8 +33,8 @@ export default function ClientProviders({ children }: Props) {
                     <SettingsDrawer />
                     <ProgressBar />
                     {children}
-                    <MessengerChatWidget />
                   </CheckoutProvider>
+                  <MessengerChatWidget />
                 </SnackbarProvider>
               </MotionLazy>
             </ThemeProvider>
