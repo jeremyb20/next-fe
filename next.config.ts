@@ -105,7 +105,7 @@ const nextConfig: NextConfig = {
         'https://*.googleapis.com ' +
         'https://*.facebook.com',
 
-      'img-src * data: blob: ' + 'https://*.fbcdn.net',
+      'img-src * data: blob: https://*.fbcdn.net',
 
       // Fuentes
       "font-src 'self' data: " +
@@ -114,12 +114,12 @@ const nextConfig: NextConfig = {
         'https://fonts.googleapis.com ' +
         'https://cdn.jsdelivr.net',
 
-      // Conexiones - AÑADIDO ep1.adtrafficquality.google
+      // Conexiones
       "connect-src 'self' " +
         (process.env.NODE_ENV !== 'production'
           ? 'http://localhost:8080 '
           : '') +
-        'https://*.google.com ' + // <- Esto cubre ep1.adtrafficquality.google
+        'https://*.google.com ' +
         'https://*.googleapis.com ' +
         'https://petsqrbackend.fly.dev ' +
         'https://api.iconify.design ' +
@@ -141,9 +141,8 @@ const nextConfig: NextConfig = {
         'wss://*.fbcdn.net ' +
         'https://connect.facebook.net',
 
-      // Frames
-      'frame-src blob: about: ' +
-        "'self' " +
+      // Frames - ACTUALIZADO con todos los dominios de Facebook/Messenger
+      "frame-src blob: about: 'self' " +
         'https://*.google.com ' +
         'https://*.doubleclick.net ' +
         'https://*.googleadservices.com ' +
@@ -151,7 +150,11 @@ const nextConfig: NextConfig = {
         'https://*.cloudflare.com ' +
         'https://*.facebook.com ' +
         'https://www.facebook.com ' +
-        'https://*.fbcdn.net',
+        'https://*.fbcdn.net ' +
+        'https://*.messenger.com ' + // ✅ AÑADIDO
+        'https://*.fb.com ' + // ✅ AÑADIDO
+        'https://*.fbsbx.com ' + // ✅ AÑADIDO
+        'https://l.facebook.com', // ✅ AÑADIDO
 
       // Otros permisos
       "manifest-src 'self'",
