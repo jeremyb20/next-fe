@@ -8,46 +8,84 @@
 
 // acceptLanguage.languages(languages);
 
+// // Configuración de rutas excluidas (para AdSense y recursos estáticos)
+// const EXCLUDED_PATHS = [
+//   'api',
+//   '_next/static',
+//   '_next/image',
+//   'assets',
+//   'favicon.ico',
+//   'sw.js',
+//   'site.webmanifest',
+//   'pagead2.googlesyndication.com',
+//   'googleads',
+//   'doubleclick.net',
+//   'google-analytics.com',
+//   'googletagmanager.com',
+//   'googleapis.com',
+//   'adsbygoogle',
+// ];
+
+// const STATIC_FILE_EXTENSIONS = [
+//   'png',
+//   'jpg',
+//   'jpeg',
+//   'gif',
+//   'webp',
+//   'svg',
+//   'ico',
+//   'css',
+//   'js',
+//   'json',
+//   'xml',
+//   'txt',
+//   'pdf',
+// ];
+
 // export const config = {
 //   matcher: [
-//     '/((?!api|_next/static|_next/image|assets|favicon.ico|sw.js|site.webmanifest|.*\\.(?:png|jpg|jpeg|gif|webp|svg|ico|css|js)$).*)',
+//     '/((?!api|_next/static|_next/image|assets|favicon.ico|sw.js|site.webmanifest|adsbygoogle|googleads|doubleclick\\.net|google-analytics\\.com|googletagmanager\\.com|googleapis\\.com|pagead2\\.googlesyndication\\.com|.*\\.(?:png|jpg|jpeg|gif|webp|svg|ico|css|js|json|xml|txt|pdf)$).*)',
 //   ],
 // };
 
+// // ✅ Exportación CORRECTA: función llamada "proxy"
 // export function proxy(req: NextRequest) {
 //   const { pathname, search } = req.nextUrl;
+//   const url = req.url;
 
-//   // ✅ PRIMERO: Redirigir la raíz sin idioma
+//   // Verificar exclusiones por seguridad
+//   const isExcluded = EXCLUDED_PATHS.some((path) => url.includes(path));
+//   const isStaticFile = STATIC_FILE_EXTENSIONS.some((ext) =>
+//     pathname.endsWith(`.${ext}`)
+//   );
+
+//   if (isExcluded || isStaticFile) {
+//     return NextResponse.next();
+//   }
+
+//   // Redirección de idioma (tu lógica existente)
 //   if (pathname === '/') {
 //     let detectedLng = fallbackLng;
-
-//     // Intentar obtener idioma de la cookie
 //     const cookieLng = req.cookies.get(cookieName)?.value;
 //     if (cookieLng && languages.includes(cookieLng as any)) {
 //       detectedLng = cookieLng;
 //     } else {
-//       // Usar Accept-Language del navegador
 //       const acceptLng = acceptLanguage.get(req.headers.get('Accept-Language'));
 //       if (acceptLng && languages.includes(acceptLng as any)) {
 //         detectedLng = acceptLng;
 //       }
 //     }
 
-//     // ✅ Redirigir 301 (permanente) a la versión con idioma
 //     const newUrl = new URL(`/${detectedLng}${search}`, req.url);
 //     const response = NextResponse.redirect(newUrl, 301);
-
-//     // Establecer cookie para futuras visitas
 //     response.cookies.set(cookieName, detectedLng, {
 //       path: '/',
 //       maxAge: 60 * 60 * 24 * 30,
 //       sameSite: 'lax',
 //     });
-
 //     return response;
 //   }
 
-//   // ✅ SEGUNDO: Verificar si el idioma ya está en la ruta
 //   const lngInPath = languages.find(
 //     (locale) => pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`
 //   );
@@ -62,7 +100,6 @@
 //     return response;
 //   }
 
-//   // ✅ TERCERO: Redirigir otras rutas sin idioma a la versión con idioma
 //   let detectedLng = fallbackLng;
 //   const cookieLng = req.cookies.get(cookieName)?.value;
 //   if (cookieLng && languages.includes(cookieLng as any)) {
@@ -75,7 +112,6 @@
 //   }
 
 //   const newUrl = new URL(`/${detectedLng}${pathname}${search}`, req.url);
-
 //   const response = NextResponse.redirect(newUrl, 301);
 //   response.cookies.set(cookieName, detectedLng, {
 //     path: '/',
@@ -85,7 +121,6 @@
 
 //   return response;
 // }
-
 // proxy.ts
 import type { NextRequest } from 'next/server';
 
@@ -96,8 +131,9 @@ import { languages, cookieName, fallbackLng } from './src/app/i18n/settings';
 
 acceptLanguage.languages(languages);
 
-// Configuración de rutas excluidas (para AdSense y recursos estáticos)
+// ✅ CONFIGURACIÓN DE EXCLUSIONES - AMPLIADA PARA FACEBOOK MESSENGER
 const EXCLUDED_PATHS = [
+  // API y recursos internos
   'api',
   '_next/static',
   '_next/image',
@@ -105,6 +141,8 @@ const EXCLUDED_PATHS = [
   'favicon.ico',
   'sw.js',
   'site.webmanifest',
+
+  // Google (AdSense, Analytics, etc.)
   'pagead2.googlesyndication.com',
   'googleads',
   'doubleclick.net',
@@ -112,8 +150,35 @@ const EXCLUDED_PATHS = [
   'googletagmanager.com',
   'googleapis.com',
   'adsbygoogle',
+  'adservice.google.com',
+  'googleadservices.com',
+  'adtrafficquality.google',
+
+  // ✅ FACEBOOK Y MESSENGER - AÑADIDO
+  'facebook.com',
+  'connect.facebook.net',
+  'fbcdn.net',
+  'facebook.net',
+  'messenger.com',
+  'fb.com',
+  'fbsbx.com',
+  'l.facebook.com',
+  'xx.fbcdn.net',
+  'cdninstagram.com',
+  'graph.facebook.com',
+  'api.facebook.com',
+
+  // Otros CDN y servicios
+  'cloudflare.com',
+  'cdnjs.cloudflare.com',
+  'jsdelivr.net',
+  'unpkg.com',
+  'iconify.design',
+  'simplesvg.com',
+  'unisvg.com',
 ];
 
+// Extensiones de archivos estáticos (siempre excluidos)
 const STATIC_FILE_EXTENSIONS = [
   'png',
   'jpg',
@@ -128,30 +193,40 @@ const STATIC_FILE_EXTENSIONS = [
   'xml',
   'txt',
   'pdf',
+  'woff',
+  'woff2',
+  'ttf',
+  'eot',
+  'otf',
 ];
 
 export const config = {
   matcher: [
-    '/((?!api|_next/static|_next/image|assets|favicon.ico|sw.js|site.webmanifest|adsbygoogle|googleads|doubleclick\\.net|google-analytics\\.com|googletagmanager\\.com|googleapis\\.com|pagead2\\.googlesyndication\\.com|.*\\.(?:png|jpg|jpeg|gif|webp|svg|ico|css|js|json|xml|txt|pdf)$).*)',
+    '/((?!api|_next/static|_next/image|assets|favicon.ico|sw.js|site.webmanifest|adsbygoogle|googleads|doubleclick\\.net|google-analytics\\.com|googletagmanager\\.com|googleapis\\.com|pagead2\\.googlesyndication\\.com|connect\\.facebook\\.net|fbcdn\\.net|facebook\\.com|facebook\\.net|messenger\\.com|.*\\.(?:png|jpg|jpeg|gif|webp|svg|ico|css|js|json|xml|txt|pdf|woff|woff2|ttf|eot)$).*)',
   ],
 };
 
-// ✅ Exportación CORRECTA: función llamada "proxy"
+// Función principal del middleware
 export function proxy(req: NextRequest) {
   const { pathname, search } = req.nextUrl;
   const url = req.url;
 
-  // Verificar exclusiones por seguridad
-  const isExcluded = EXCLUDED_PATHS.some((path) => url.includes(path));
+  // 🔍 VERIFICACIÓN DE EXCLUSIÓN MEJORADA
+  const isExcluded = EXCLUDED_PATHS.some((path) =>
+    url.toLowerCase().includes(path.toLowerCase())
+  );
+
   const isStaticFile = STATIC_FILE_EXTENSIONS.some((ext) =>
     pathname.endsWith(`.${ext}`)
   );
 
+  // ✅ SI ES UN RECURSO EXCLUIDO, PASAR DIRECTAMENTE
   if (isExcluded || isStaticFile) {
     return NextResponse.next();
   }
 
-  // Redirección de idioma (tu lógica existente)
+  // 🔄 LÓGICA DE INTERNACIONALIZACIÓN (tu código existente)
+  // Redirección de idioma
   if (pathname === '/') {
     let detectedLng = fallbackLng;
     const cookieLng = req.cookies.get(cookieName)?.value;
