@@ -134,6 +134,7 @@ const nextConfig: NextConfig = {
 
       // Frames
       'frame-src blob: ' +
+        "'self' " +
         'https://*.google.com ' +
         'https://*.doubleclick.net ' +
         'https://*.googleadservices.com ' +
