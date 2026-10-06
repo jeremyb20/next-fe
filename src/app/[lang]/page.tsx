@@ -15,7 +15,7 @@ export async function generateMetadata({
 
   // Obtener el idioma de los params, asegurando que sea válido
   const lang = langParam?.toUpperCase() || 'ES';
-  const supportedLanguages = ['ES', 'EN', 'AR', 'VI', 'ZH', 'FR'];
+  const supportedLanguages = ['ES', 'EN'];
   const validLang = supportedLanguages.includes(lang) ? lang : 'ES';
 
   return await getSeoMetadata('home-page-platform', validLang);

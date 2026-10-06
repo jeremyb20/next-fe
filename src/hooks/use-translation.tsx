@@ -18,7 +18,7 @@ export function useTranslation(ns?: string) {
   useEffect(() => {
     setMounted(true);
     // Actualizar el locale global cuando cambie el idioma
-    setDateTimeLocale(lng as 'es' | 'en' | 'vi' | 'fr' | 'zh' | 'ar');
+    setDateTimeLocale(lng as 'es' | 'en');
   }, [lng, i18n]);
 
   return {

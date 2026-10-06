@@ -6,7 +6,7 @@ import { DOMAIN } from '@/config-global';
 const baseUrl = DOMAIN;
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const languages = ['es', 'en', 'fr', 'ar', 'vi', 'zh'];
+  const languages = ['es', 'en'];
 
   // Rutas estáticas (todas las que quieres indexar)
   const staticRoutes = [

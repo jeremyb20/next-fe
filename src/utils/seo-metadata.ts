@@ -24,40 +24,24 @@ interface SeoData {
 const localeMap: Record<string, string> = {
   ES: 'es_ES',
   EN: 'en_US',
-  AR: 'ar_AR',
-  VI: 'vi_VN',
-  ZH: 'zh_CN',
-  FR: 'fr_FR',
 };
 
 // Mapeo de idiomas para URLs alternas y rutas
 const languagePathMap: Record<string, string> = {
-  ES: '',
+  ES: 'es',
   EN: 'en',
-  AR: 'ar',
-  VI: 'vi',
-  ZH: 'zh',
-  FR: 'fr',
 };
 
 // Dirección del texto por idioma (para RTL)
 const textDirectionMap: Record<string, 'ltr' | 'rtl'> = {
   ES: 'ltr',
   EN: 'ltr',
-  AR: 'rtl', // Árabe es RTL
-  VI: 'ltr',
-  ZH: 'ltr',
-  FR: 'ltr',
 };
 
 // ✅ Nuevo: Mapeo de idiomas para hreflang (formato ISO)
 const hreflangMap: Record<string, string> = {
   ES: 'es',
   EN: 'en',
-  AR: 'ar',
-  VI: 'vi',
-  ZH: 'zh',
-  FR: 'fr',
 };
 
 export async function getSeoMetadata(
@@ -157,10 +141,7 @@ function generateMetadataFromSeo(
     );
   });
 
-  // ✅ Eliminar la URL actual de languages (no es necesario incluirla)
-  const currentLangKey =
-    hreflangMap[currentLanguage] || currentLanguage.toLowerCase();
-  delete languages[currentLangKey];
+  // ✅ languages incluye la URL actual (hreflang auto-referenciado)
 
   // Metadatos específicos para RTL
   const isRTL = textDirectionMap[currentLanguage] === 'rtl';
@@ -280,10 +261,6 @@ function getHreflangKey(lang: string): string {
   const map: Record<string, string> = {
     ES: 'es',
     EN: 'en',
-    AR: 'ar',
-    VI: 'vi',
-    ZH: 'zh',
-    FR: 'fr',
   };
   return map[lang] || lang.toLowerCase();
 }
@@ -293,10 +270,6 @@ function getLanguageCodeForAlternate(lang: string): string {
   const map: Record<string, string> = {
     ES: 'es-ES',
     EN: 'en-US',
-    AR: 'ar-AR',
-    VI: 'vi-VN',
-    ZH: 'zh-CN',
-    FR: 'fr-FR',
   };
   return map[lang] || `${lang.toLowerCase()}-${lang}`;
 }
@@ -305,10 +278,6 @@ function getDefaultKeywords(language: string): string {
   const keywordsMap: Record<string, string> = {
     ES: 'plataforma, mascotas, veterinaria, grooming, eventos, productos para mascotas, plaquitas, plaquitascr, resina, aluminio, subimable, identificacion digital',
     EN: 'platform, pets, veterinary, grooming, events, pet products, plaquitas, plaquitascr, resin, aluminum, subimable, digital identification',
-    AR: 'منصة, حيوانات أليفة, عيادة بيطرية, تنظيف, أحداث, منتجات للحيوانات الأليفة, بلاكيتاس, راتنج, ألومنيوم, تعريف رقمي',
-    VI: 'nền tảng, thú cưng, thú y, chải lông, sự kiện, sản phẩm cho thú cưng, plaquitas, nhựa, nhôm, nhận dạng kỹ thuật số',
-    ZH: '平台, 宠物, 兽医, 美容, 活动, 宠物产品, plaquitas, 树脂, 铝, 数字识别',
-    FR: 'plateforme, animaux de compagnie, vétérinaire, toilettage, événements, produits pour animaux, plaquitas, résine, aluminium, identification numérique',
   };
   return keywordsMap[language] || keywordsMap.ES;
 }
@@ -320,19 +289,11 @@ function generateDefaultMetadata(language: string = 'ES'): Metadata {
   const titles: Record<string, string> = {
     ES: 'PlaquitasCR - Plataforma para el cuidado de tus mascotas',
     EN: 'PlaquitasCR - Platform for Your Pet Care',
-    AR: 'PlaquitasCR - منصة لرعاية حيواناتك الأليفة',
-    VI: 'PlaquitasCR - Nền tảng Chăm sóc Thú cưng của Bạn',
-    ZH: 'PlaquitasCR - 您的宠物护理平台',
-    FR: 'PlaquitasCR - Plateforme pour le Soin de vos Animaux',
   };
 
   const descriptions: Record<string, string> = {
     ES: 'Gestiona perfiles de mascotas, plaquitas personalizadas, compra productos, agenda servicios veterinarios, grooming y descubre eventos.',
     EN: 'Manage pet profiles, custom tags, buy products, schedule veterinary services, grooming and discover events.',
-    AR: 'إدارة ملفات الحيوانات الأليفة، العلامات المخصصة، شراء المنتجات، جدولة الخدمات البيطرية، تنظيف واكتشاف الأحداث.',
-    VI: 'Quản lý hồ sơ thú cưng, thẻ tùy chỉnh, mua sản phẩm, lên lịch dịch vụ thú y, chải lông và khám phá sự kiện.',
-    ZH: '管理宠物档案，定制标签，购买产品，安排兽医服务，美容和发现活动。',
-    FR: "Gérez les profils d'animaux, étiquettes personnalisées, achetez des produits, planifiez des services vétérinaires, toilettage et découvrez des événements.",
   };
 
   const title = titles[language] || titles.ES;
@@ -350,6 +311,54 @@ function generateDefaultMetadata(language: string = 'ES'): Metadata {
       description,
       url: `${cleanBaseUrl}/${language.toLowerCase()}`,
       images: [`${cleanBaseUrl}/assets/images/plaquitascr.png`],
+    },
+  };
+}
+
+// ✅ Metadatos locales (sin API) con canónico e hreflang por idioma
+export function buildStaticMetadata(options: {
+  route: string;
+  language: string;
+  title: string;
+  description: string;
+}): Metadata {
+  const baseUrl = (DOMAIN || 'https://plaquitascr.com').replace(/\/+$/, '');
+  const normalizedLanguage =
+    options.language.toUpperCase() === 'EN' ? 'EN' : 'ES';
+  const route = options.route.startsWith('/')
+    ? options.route
+    : `/${options.route}`;
+
+  const canonicalUrl = `${baseUrl}/${languagePathMap[normalizedLanguage]}${route}`.replace(
+    /\/+$/,
+    ''
+  );
+
+  const languages: Record<string, string> = {};
+  Object.entries(languagePathMap).forEach(([lang, path]) => {
+    languages[hreflangMap[lang] || lang.toLowerCase()] =
+      `${baseUrl}/${path}${route}`.replace(/\/+$/, '');
+  });
+
+  return {
+    metadataBase: new URL(baseUrl),
+    title: options.title,
+    description: options.description,
+    keywords: getDefaultKeywords(normalizedLanguage),
+    alternates: {
+      canonical: canonicalUrl,
+      languages,
+    },
+    openGraph: {
+      title: options.title,
+      description: options.description,
+      url: canonicalUrl,
+      type: 'website',
+      siteName: APP_NAME,
+    },
+    robots: {
+      index: true,
+      follow: true,
     },
   };
 }

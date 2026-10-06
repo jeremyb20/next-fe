@@ -8,7 +8,6 @@ import { HOST_API } from '@/config-global';
 import { useAuthContext } from '@/auth/hooks';
 import { useGetUserSettings } from '@/hooks/use-fetch';
 import { useLocalStorage } from '@/hooks/use-local-storage';
-import { localStorageGetItem } from '@/utils/storage-available';
 import { useCreateGenericMutation } from '@/hooks/user-generic-mutation';
 
 import { SettingsValueProps } from '../types';
@@ -65,14 +64,6 @@ export function SettingsProvider({
     error: errorSettings,
     refetch: refetchSettings,
   } = useGetUserSettings();
-
-  const isArabic = localStorageGetItem('i18next') === 'ar';
-
-  useEffect(() => {
-    if (isArabic) {
-      onChangeDirectionByLang('ar');
-    }
-  }, [isArabic]);
 
   // Cargar configuraciones cuando se obtengan datos del hook
   useEffect(() => {

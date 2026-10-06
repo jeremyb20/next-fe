@@ -1,8 +1,7 @@
 import { Metadata } from 'next';
+import { notFound } from 'next/navigation';
 
-import { paths } from '@/routes/paths';
 import { endpoints } from '@/utils/axios';
-import NotFoundPage from '@/app/not-found';
 import { IProductItem } from '@/types/product';
 import { DOMAIN, HOST_API } from '@/config-global';
 import { ProductShopDetailsView } from '@/sections/product/view';
@@ -16,6 +15,7 @@ interface ProductApiResponse {
 
 type Props = {
   params: Promise<{
+    lang?: string;
     productId: string;
   }>;
 };
@@ -54,19 +54,16 @@ async function getProductData(productId: string): Promise<ProductApiResponse> {
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { productId } = await params; // ← AWAIT aquí
+  const { lang, productId } = await params; // ← AWAIT aquí
+  const language = lang?.toLowerCase() === 'en' ? 'en' : 'es';
+
+  const data = await getProductData(productId);
+
+  if (!data.success || !data.payload) {
+    notFound();
+  }
 
   try {
-    const data = await getProductData(productId);
-
-    if (!data.success || !data.payload) {
-      return {
-        title: 'Producto No Encontrado | Tu Tienda',
-        description: 'El producto que buscas no está disponible.',
-        metadataBase: new URL(DOMAIN),
-      };
-    }
-
     const product = data.payload;
     const priceFormatted = `$${product.price.toFixed(2)}`;
     const baseTitle = `${product.name} | Tu Tienda`;
@@ -75,7 +72,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       product.subDescription ||
       `Compra ${product.name} por solo ${priceFormatted}. ${product.available} disponibles.`;
 
-    const canonicalUrl = `${DOMAIN}${paths.dashboard.product.details}/${productId}`;
+    const canonicalUrl = `${DOMAIN}/${language}/product/${productId}`;
     const images = product.coverUrl
       ? [
           {
@@ -136,5 +133,5 @@ export default async function ProductDetailsPage({ params }: Props) {
     return <ProductShopDetailsView id={productId} product={data.payload} />;
   }
 
-  return <NotFoundPage />;
+  notFound();
 }

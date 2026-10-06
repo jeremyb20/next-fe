@@ -207,45 +207,38 @@ export const LANGUAGE_NORMALIZATION_MAP: Record<string, string> = {
   'es-PA': 'es',
   'es-PR': 'es',
 
-  // Francés (fr)
-  'fr-FR': 'fr',
-  'fr-CA': 'fr',
-  'fr-BE': 'fr',
-  'fr-CH': 'fr',
-  'fr-LU': 'fr',
-  'fr-MC': 'fr',
-  'fr-DZ': 'fr',
-  'fr-MA': 'fr',
-  'fr-TN': 'fr',
-
-  // Chino (cn)
-  // Chino - ¡IMPORTANTE! Convertir a 'cn' que es lo que usas en allLangs
-  'zh-CN': 'zh', // Chino simplificado (China)
-  'zh-Hans': 'zh', // Chino simplificado
-  'zh-Hans-CN': 'zh', // Chino simplificado China
-  'zh-SG': 'zh',
-
-  // Árabe (ar)
-  'ar-SA': 'ar',
-  'ar-AE': 'ar',
-  'ar-EG': 'ar',
-  'ar-DZ': 'ar',
-  'ar-MA': 'ar',
-  'ar-IQ': 'ar',
-  'ar-SY': 'ar',
-  'ar-TN': 'ar',
-  'ar-JO': 'ar',
-  'ar-LB': 'ar',
-  'ar-KW': 'ar',
-  'ar-OM': 'ar',
-  'ar-QA': 'ar',
-  'ar-BH': 'ar',
-  'ar-YE': 'ar',
-  'ar-SD': 'ar',
-  'ar-LY': 'ar',
-
-  // Vietnamita (vi)
-  'vi-VN': 'vi',
+  // Idiomas fuera de soporte (fr, zh, ar, vi) → español (idioma por defecto)
+  'fr-FR': 'es',
+  'fr-CA': 'es',
+  'fr-BE': 'es',
+  'fr-CH': 'es',
+  'fr-LU': 'es',
+  'fr-MC': 'es',
+  'fr-DZ': 'es',
+  'fr-MA': 'es',
+  'fr-TN': 'es',
+  'zh-CN': 'es',
+  'zh-Hans': 'es',
+  'zh-Hans-CN': 'es',
+  'zh-SG': 'es',
+  'ar-SA': 'es',
+  'ar-AE': 'es',
+  'ar-EG': 'es',
+  'ar-DZ': 'es',
+  'ar-MA': 'es',
+  'ar-IQ': 'es',
+  'ar-SY': 'es',
+  'ar-TN': 'es',
+  'ar-JO': 'es',
+  'ar-LB': 'es',
+  'ar-KW': 'es',
+  'ar-OM': 'es',
+  'ar-QA': 'es',
+  'ar-BH': 'es',
+  'ar-YE': 'es',
+  'ar-SD': 'es',
+  'ar-LY': 'es',
+  'vi-VN': 'es',
 };
 
 export function getSortByField(sortValue: string): string {

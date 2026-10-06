@@ -1,11 +1,11 @@
 // utils/format-time.ts
-import { es, enUS, ar, vi, zhCN, fr } from 'date-fns/locale';
+import { es, enUS } from 'date-fns/locale';
 import { format, getTime, formatDistanceToNow, Locale } from 'date-fns';
 
 // ----------------------------------------------------------------------
 
 type InputValue = Date | string | number | null | undefined;
-type SupportedLng = 'es' | 'en' | 'vi' | 'fr' | 'zh' | 'ar';
+type SupportedLng = 'es' | 'en';
 
 // Variable global para almacenar el idioma actual
 let currentLocale: SupportedLng = 'es';
@@ -15,10 +15,6 @@ const getDateFnsLocale = (lng: SupportedLng = 'es'): Locale => {
   const locales: Record<SupportedLng, Locale> = {
     es: es,
     en: enUS,
-    vi: vi,
-    ar: ar,
-    zh: zhCN,
-    fr: fr,
   };
   return locales[lng] || es;
 };

@@ -1,27 +1,20 @@
-import { DOMAIN, GOOGLE_AD, HOST_API } from '../config-global';
+import { headers } from 'next/headers';
+
+import { languages } from './i18n/settings';
+import { GOOGLE_AD, HOST_API } from '../config-global';
 import AppProviders from '../components/providers/AppProviders';
 // ----------------------------------------------------------------------
 
 type Props = {
   children: React.ReactNode;
-  params: Promise<{}>;
 };
 
 export default async function RootLayout({ children }: Props) {
-  const language: string = 'es';
-  const isRTL = language === 'ar';
+  const requestLocale = (await headers()).get('x-locale') || '';
+  const language = languages.includes(requestLocale) ? requestLocale : 'es';
   return (
-    <html lang={language} dir={isRTL ? 'rtl' : 'ltr'} translate="no">
+    <html lang={language} dir="ltr" translate="no">
       <head>
-        {/* Meta tags para SEO multilingüe */}
-        <link rel="alternate" hrefLang="x-default" href={`${DOMAIN}/es`} />
-        <link rel="alternate" hrefLang="es" href={`${DOMAIN}/es`} />
-        <link rel="alternate" hrefLang="en" href={`${DOMAIN}/en`} />
-        <link rel="alternate" hrefLang="fr" href={`${DOMAIN}/fr`} />
-        <link rel="alternate" hrefLang="ar" href={`${DOMAIN}/ar`} />
-        <link rel="alternate" hrefLang="vi" href={`${DOMAIN}/vi`} />
-        <link rel="alternate" hrefLang="zh" href={`${DOMAIN}/zh`} />
-
         {/* Viewport */}
         <meta
           name="viewport"
@@ -62,17 +55,6 @@ export default async function RootLayout({ children }: Props) {
           async
           src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-${GOOGLE_AD}`}
           crossOrigin="anonymous"
-        />
-
-        {/*  agregar meta title y description  */}
-
-        <meta
-          name="description"
-          content="Plataforma para el cuidado de tus mascotas"
-        />
-        <meta
-          name="title"
-          content="PlaquitasCR - Plataforma para el cuidado de tus mascotas"
         />
       </head>
       <body>

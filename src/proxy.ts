@@ -4,7 +4,7 @@
 // import { NextResponse } from 'next/server';
 // import acceptLanguage from 'accept-language';
 
-// import { languages, cookieName, fallbackLng } from './src/app/i18n/settings';
+// import { languages, cookieName, fallbackLng } from './app/i18n/settings';
 
 // acceptLanguage.languages(languages);
 
@@ -127,7 +127,7 @@ import type { NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';
 import acceptLanguage from 'accept-language';
 
-import { languages, cookieName, fallbackLng } from './src/app/i18n/settings';
+import { languages, cookieName, fallbackLng } from './app/i18n/settings';
 
 acceptLanguage.languages(languages);
 
@@ -228,6 +228,27 @@ export function proxy(req: NextRequest) {
     return NextResponse.next();
   }
 
+  // ✅ Idiomas retirados (fr, ar, vi, zh): redirigir a la versión en español
+  const LEGACY_LANGUAGES = ['fr', 'ar', 'vi', 'zh'];
+  const [, firstSegment, ...restSegments] = pathname.split('/');
+
+  if (LEGACY_LANGUAGES.includes(firstSegment)) {
+    const newPath =
+      restSegments.length > 0
+        ? `/${fallbackLng}/${restSegments.join('/')}`
+        : `/${fallbackLng}`;
+    const response = NextResponse.redirect(
+      new URL(`${newPath}${search}`, req.url),
+      301
+    );
+    response.cookies.set(cookieName, fallbackLng, {
+      path: '/',
+      maxAge: 60 * 60 * 24 * 30,
+      sameSite: 'lax',
+    });
+    return response;
+  }
+
   // 🔄 LÓGICA DE INTERNACIONALIZACIÓN (tu código existente)
   // Redirección de idioma
   if (pathname === '/') {
@@ -257,7 +278,12 @@ export function proxy(req: NextRequest) {
   );
 
   if (lngInPath) {
-    const response = NextResponse.next();
+    const requestHeaders = new Headers(req.headers);
+    requestHeaders.set('x-locale', lngInPath);
+
+    const response = NextResponse.next({
+      request: { headers: requestHeaders },
+    });
     response.cookies.set(cookieName, lngInPath, {
       path: '/',
       maxAge: 60 * 60 * 24 * 30,

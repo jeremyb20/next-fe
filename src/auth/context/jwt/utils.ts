@@ -36,7 +36,8 @@ export const isValidToken = (accessToken: string) => {
 
 export const tokenExpired = (exp: number) => {
   let expiredTimer;
-
+  // get current lang
+  const lang = localStorage.getItem('i18nextLng') || 'en';
   const currentTime = Date.now();
 
   // Test token expires after 10s
@@ -51,10 +52,9 @@ export const tokenExpired = (exp: number) => {
     // sessionStorage.removeItem(STORAGE_KEY
     localStorage.removeItem(STORAGE_KEY);
 
-    window.location.href = paths.auth.signIn;
+    window.location.href = `${lang}/${paths.auth.signIn}`;
   }, timeLeft);
 };
-
 // ----------------------------------------------------------------------
 
 export const setSession = (accessToken: string | null) => {

@@ -14,9 +14,9 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   // Obtener el idioma de los params, asegurando que sea válido
   const { lang } = await params;
-  const language = lang?.toLowerCase() || 'ES';
-  const supportedLanguages = ['ES', 'EN', 'AR', 'VI', 'ZH', 'FR'];
-  const validLang = supportedLanguages.includes(lang) ? language : 'ES';
+  const language = lang?.toUpperCase() || 'ES';
+  const supportedLanguages = ['ES', 'EN'];
+  const validLang = supportedLanguages.includes(language) ? language : 'ES';
 
   return await getSeoMetadata('sign-up', validLang);
 }
