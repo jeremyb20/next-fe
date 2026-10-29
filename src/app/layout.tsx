@@ -1,7 +1,7 @@
 import { headers } from 'next/headers';
 
 import { languages } from './i18n/settings';
-import { GOOGLE_AD, HOST_API } from '../config-global';
+import { HOST_API } from '../config-global';
 import AppProviders from '../components/providers/AppProviders';
 // ----------------------------------------------------------------------
 
@@ -45,17 +45,17 @@ export default async function RootLayout({ children }: Props) {
         <link rel="manifest" href="/manifest.json" />
 
         {/* Theme color */}
-        <meta name="theme-color" content="#161C24" />
+        <meta name="theme-color" content="#221e1f" />
 
         {/* Preconnect */}
         <link rel="preconnect" href={HOST_API} />
 
         {/* AdSense */}
-        <script
+        {/* <script
           async
           src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-${GOOGLE_AD}`}
           crossOrigin="anonymous"
-        />
+        /> */}
       </head>
       <body suppressHydrationWarning>
         <AppProviders>{children}</AppProviders>

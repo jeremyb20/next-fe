@@ -122,7 +122,7 @@ export default function HomeServices() {
                 </Typography>
                 <Button
                   component={RouterLink}
-                  href={paths.product.root || '#'}
+                  href={paths.auth.signUp || '#'}
                   variant="contained"
                   size="large"
                   endIcon={<Iconify icon="mdi:arrow-right" />}

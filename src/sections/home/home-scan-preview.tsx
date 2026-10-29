@@ -8,7 +8,9 @@ import Typography from '@mui/material/Typography';
 
 import { paths } from '@/routes/paths';
 import Iconify from '@/components/iconify';
-import { RouterLink } from '@/routes/components';
+import { useRouter } from '@/routes/hooks';
+import { useBoolean } from '@/hooks/use-boolean';
+import QrScannerDialog from '@/components/qr-scanner';
 import { useTranslation } from '@/hooks/use-translation';
 import { useSettingsContext } from '@/components/settings';
 import { varFade, MotionViewport } from '@/components/animate';
@@ -18,6 +20,32 @@ import { varFade, MotionViewport } from '@/components/animate';
 export default function HomeScanPreview() {
   const { t } = useTranslation();
   const settings = useSettingsContext();
+  const router = useRouter();
+  const scanner = useBoolean();
+
+  const handleScanResult = (value: string) => {
+    scanner.onFalse();
+
+    const code = value.trim();
+    if (!code) return;
+
+    if (code.startsWith('/')) {
+      router.push(code);
+      return;
+    }
+
+    try {
+      const url = new URL(code);
+
+      if (url.origin === window.location.origin) {
+        router.push(`${url.pathname}${url.search}${url.hash}`);
+      } else {
+        window.location.href = code;
+      }
+    } catch {
+      router.push(paths.pet.details(encodeURIComponent(code)));
+    }
+  };
 
   return (
     <Box sx={{ bgcolor: '#f8e3d0', py: { xs: 10, md: 15 } }}>
@@ -134,8 +162,7 @@ export default function HomeScanPreview() {
 
               <m.div variants={varFade().inUp}>
                 <Button
-                  component={RouterLink}
-                  href={paths.product.root || '#'} // Ajusta tu ruta
+                  onClick={scanner.onTrue}
                   variant="outlined"
                   size="large"
                   startIcon={<Iconify icon="mdi:qrcode-scan" />}
@@ -204,6 +231,12 @@ export default function HomeScanPreview() {
           </Stack>
         </Card>
       </Container>
+
+      <QrScannerDialog
+        open={scanner.value}
+        onCloseAction={scanner.onFalse}
+        onResultAction={handleScanResult}
+      />
     </Box>
   );
 }
