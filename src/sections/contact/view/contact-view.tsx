@@ -8,6 +8,7 @@ import { _mapContact } from '@/_mock';
 import ContactMap from '../contact-map';
 import ContactForm from '../contact-form';
 import ContactHero from '../contact-hero';
+import ContactWhatsApp from '../contact-whatsapp';
 
 // ----------------------------------------------------------------------
 
@@ -27,7 +28,12 @@ export default function ContactView() {
         >
           <ContactForm />
 
-          <ContactMap contacts={_mapContact} />
+          <Box>
+            <ContactWhatsApp />
+            <Box sx={{ mt: 3 }}>
+              <ContactMap contacts={_mapContact} />
+            </Box>
+          </Box>
         </Box>
       </Container>
     </>

@@ -15,11 +15,10 @@ import { SplashScreen } from '@/components/loading-screen';
 import { useAuthContext } from '@/auth/hooks/use-auth-context';
 
 import HomeHero from '../home-hero';
-import HomeShop from '../home-shop';
 import HomeFeatures from '../home-features';
 import HomeServices from '../home-services';
-import HomeLostPets from '../home-lost-pets';
 import HomePetTracking from '../home-pet-tracking';
+import HomeScanPreview from '../home-scan-preview';
 import HomeTestimonials from '../home-testimonials';
 
 // ----------------------------------------------------------------------
@@ -95,18 +94,19 @@ export default function HomeView() {
 
         <HomePetTracking />
 
-        <Box sx={{ position: 'relative' }}>
+        {/* <Box sx={{ position: 'relative' }}>
           <StyledPolygon />
           <HomeServices />
           <StyledPolygon anchor="bottom" />
-        </Box>
+        </Box> */}
+        <HomeServices />
 
         {/* <HomeGrooming /> */}
-
-        <HomeLostPets />
+        <HomeScanPreview />
+        {/* <HomeLostPets /> */}
         {/* <HomeVeterinarians /> */}
 
-        <HomeShop />
+        {/* <HomeShop /> */}
 
         {/* <HomePricing /> */}
 

@@ -57,7 +57,7 @@ export default async function RootLayout({ children }: Props) {
           crossOrigin="anonymous"
         />
       </head>
-      <body>
+      <body suppressHydrationWarning>
         <AppProviders>{children}</AppProviders>
       </body>
     </html>

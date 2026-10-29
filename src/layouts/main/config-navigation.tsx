@@ -20,6 +20,18 @@ export const navConfig = [
     icon: <Iconify icon="solar:bell-bing-bold-duotone" />,
   },
   {
+    title: 'Personalization',
+    path: paths.personalization,
+    icon: <Iconify icon="solar:palette-bold-duotone" />,
+  },
+
+  {
+    title: 'Pet Shop',
+    // path: paths.petsmarket,
+    path: paths.product.root,
+    icon: <Iconify icon="solar:cart-bold-duotone" />,
+  },
+  {
     title: 'FAQs',
     path: paths.faqs,
     icon: <Iconify icon="solar:question-circle-bold-duotone" />,

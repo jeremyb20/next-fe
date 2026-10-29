@@ -32,6 +32,7 @@ export const paths = {
   payment: withLang('payment'),
   about: withLang('about-us'),
   contact: withLang('contact-us'),
+  personalization: withLang('personalizar'),
   faqs: withLang('faqs'),
   feedback: withLang('feedback'),
   adoptMe: withLang('adopt-me'),

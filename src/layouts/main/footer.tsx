@@ -14,8 +14,10 @@ import { paths } from '@/routes/paths';
 import Iconify from '@/components/iconify';
 import { usePathname } from '@/routes/hooks';
 import { RouterLink } from '@/routes/components';
+import { MotionViewport } from '@/components/animate';
 import { useTranslation } from '@/hooks/use-translation';
 import { APP_NAME, EMAIL_SUPPORT } from '@/config-global';
+import { useSettingsContext } from '@/components/settings';
 
 // ----------------------------------------------------------------------
 
@@ -46,6 +48,7 @@ const LINKS = [
 export default function Footer() {
   const pathname = usePathname();
   const { t } = useTranslation();
+  const settings = useSettingsContext();
 
   const homePage = pathname === '/';
 
@@ -108,6 +111,8 @@ export default function Footer() {
           pb: 5,
           textAlign: { xs: 'center', md: 'unset' },
         }}
+        maxWidth={settings.themeStretch ? false : 'xl'}
+        component={MotionViewport}
       >
         <Logo sx={{ mb: 3 }} />
 

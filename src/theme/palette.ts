@@ -10,94 +10,127 @@ export type ColorSchema =
   | 'warning'
   | 'error';
 
-// declare module '@mui/material/styles/createPalette' {
+// ----------------------------------------------------------------------
+
 declare module '@mui/material/styles' {
   interface TypeBackground {
     neutral: string;
   }
+
   interface SimplePaletteColorOptions {
     lighter: string;
     darker: string;
   }
+
   interface PaletteColor {
     lighter: string;
     darker: string;
   }
 }
 
-// SETUP COLORS
+// ----------------------------------------------------------------------
+// ABI — WARM EARTH PALETTE
+// ----------------------------------------------------------------------
 
 export const grey = {
   0: '#FFFFFF',
-  100: '#F9FAFB',
-  200: '#F4F6F8',
-  300: '#DFE3E8',
-  400: '#C4CDD5',
-  500: '#919EAB',
-  600: '#637381',
-  700: '#454F5B',
-  800: '#212B36',
-  900: '#161C24',
+  100: '#FFF9F5',
+  200: '#F8EEE6',
+  300: '#EBD8CA',
+  400: '#D1B6A3',
+  500: '#AA968A',
+  600: '#78665D',
+  700: '#5C5C5D',
+  800: '#342B28',
+  900: '#221E1F',
 };
+
+// ----------------------------------------------------------------------
+// PRIMARY — TERRACOTTA / BURNT ORANGE
+// ----------------------------------------------------------------------
 
 export const primary = {
-  lighter: '#C8FAD6',
-  light: '#5BE49B',
-  main: '#00A76F',
-  dark: '#007867',
-  darker: '#004B50',
+  lighter: '#FBE7DA',
+  light: '#DF976E',
+  main: '#B24E01',
+  dark: '#8A360F',
+  darker: '#4A1D15',
   contrastText: '#FFFFFF',
 };
+
+// ----------------------------------------------------------------------
+// SECONDARY — WARM BROWN
+// ----------------------------------------------------------------------
 
 export const secondary = {
-  lighter: '#EFD6FF',
-  light: '#C684FF',
-  main: '#8E33FF',
-  dark: '#5119B7',
-  darker: '#27097A',
+  lighter: '#F3DED2',
+  light: '#AA674C',
+  main: '#743319',
+  dark: '#4A1D15',
+  darker: '#221E1F',
   contrastText: '#FFFFFF',
 };
+
+// ----------------------------------------------------------------------
+// INFO — NEUTRAL GRAY
+// ----------------------------------------------------------------------
 
 export const info = {
-  lighter: '#CAFDF5',
-  light: '#61F3F3',
-  main: '#00B8D9',
-  dark: '#006C9C',
-  darker: '#003768',
+  lighter: '#F0F0F0',
+  light: '#A6A6A6',
+  main: '#5C5C5D',
+  dark: '#454545',
+  darker: '#221E1F',
   contrastText: '#FFFFFF',
 };
+
+// ----------------------------------------------------------------------
+// SUCCESS — MUTED EARTH GREEN
+// ----------------------------------------------------------------------
 
 export const success = {
-  lighter: '#D3FCD2',
-  light: '#77ED8B',
-  main: '#22C55E',
-  dark: '#118D57',
-  darker: '#065E49',
-  contrastText: '#ffffff',
-};
-
-export const warning = {
-  lighter: '#FFF5CC',
-  light: '#FFD666',
-  main: '#FFAB00',
-  dark: '#B76E00',
-  darker: '#7A4100',
-  contrastText: grey[800],
-};
-
-export const error = {
-  lighter: '#FFE9D5',
-  light: '#FFAC82',
-  main: '#FF5630',
-  dark: '#B71D18',
-  darker: '#7A0916',
+  lighter: '#E5F0E5',
+  light: '#8EAD91',
+  main: '#47764D',
+  dark: '#315A37',
+  darker: '#1F3D25',
   contrastText: '#FFFFFF',
 };
+
+// ----------------------------------------------------------------------
+// WARNING — GOLDEN EARTH
+// ----------------------------------------------------------------------
+
+export const warning = {
+  lighter: '#FFF0D6',
+  light: '#E9B875',
+  main: '#B97818',
+  dark: '#8A5310',
+  darker: '#59350B',
+  contrastText: '#221E1F',
+};
+
+// ----------------------------------------------------------------------
+// ERROR — WARM RED
+// ----------------------------------------------------------------------
+
+export const error = {
+  lighter: '#FBE5DE',
+  light: '#DF876F',
+  main: '#B83B2D',
+  dark: '#8C261D',
+  darker: '#591711',
+  contrastText: '#FFFFFF',
+};
+
+// ----------------------------------------------------------------------
 
 export const common = {
   black: '#000000',
   white: '#FFFFFF',
 };
+
+// ----------------------------------------------------------------------
 
 export const action = {
   hover: alpha(grey[500], 0.08),
@@ -108,6 +141,8 @@ export const action = {
   hoverOpacity: 0.08,
   disabledOpacity: 0.48,
 };
+
+// ----------------------------------------------------------------------
 
 const base = {
   primary,
@@ -123,43 +158,51 @@ const base = {
 };
 
 // ----------------------------------------------------------------------
+// LIGHT / DARK PALETTES
+// ----------------------------------------------------------------------
 
 export function palette(mode: 'light' | 'dark') {
   const light = {
     ...base,
-    mode: 'light',
+    mode: 'light' as const,
+
     text: {
-      primary: grey[800],
-      secondary: grey[600],
-      disabled: grey[500],
+      primary: '#221E1F',
+      secondary: '#5C5C5D',
+      disabled: '#AA968A',
     },
+
     background: {
       paper: '#FFFFFF',
-      default: '#FFFFFF',
-      neutral: grey[200],
+      default: '#FFF9F5',
+      neutral: '#F8EEE6',
     },
+
     action: {
       ...base.action,
-      active: grey[600],
+      active: '#743319',
     },
   };
 
   const dark = {
     ...base,
-    mode: 'dark',
+    mode: 'dark' as const,
+
     text: {
-      primary: '#FFFFFF',
-      secondary: grey[500],
-      disabled: grey[600],
+      primary: '#FFF9F5',
+      secondary: '#D1B6A3',
+      disabled: '#78665D',
     },
+
     background: {
-      paper: grey[800],
-      default: grey[900],
-      neutral: alpha(grey[500], 0.12),
+      paper: '#342B28',
+      default: '#221E1F',
+      neutral: alpha('#AA674C', 0.16),
     },
+
     action: {
       ...base.action,
-      active: grey[500],
+      active: '#DF976E',
     },
   };
 

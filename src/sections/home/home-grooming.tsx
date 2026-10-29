@@ -6,7 +6,9 @@ import { alpha } from '@mui/material/styles';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 
+import { paths } from '@/routes/paths';
 import Image from '@/components/image';
+import { RouterLink } from '@/routes/components';
 import { useTranslation } from '@/hooks/use-translation';
 import { varFade, MotionViewport } from '@/components/animate';
 
@@ -79,7 +81,13 @@ export default function HomeGrooming() {
             </Stack>
 
             <m.div variants={varFade().inUp}>
-              <Button variant="contained" size="large" sx={{ mt: 3 }}>
+              <Button
+                component={RouterLink}
+                href={paths.contact}
+                variant="contained"
+                size="large"
+                sx={{ mt: 3 }}
+              >
                 {t('Affiliate my Business')}
               </Button>
             </m.div>

@@ -58,7 +58,7 @@ export default function ContactHero() {
             }}
           >
             <TextAnimate
-              text={t('Where')}
+              text={t('Affiliate')}
               sx={{ color: 'primary.main' }}
               variants={varFade().inRight}
             />
@@ -70,10 +70,17 @@ export default function ContactHero() {
               direction="row"
               sx={{ color: 'common.white' }}
             >
-              <TextAnimate text={t('to')} />
-              <TextAnimate text={t('find')} />
-              <TextAnimate text={t('us?')} />
+              <TextAnimate text={t('your')} />
+              <TextAnimate text={t('business')} />
+              <TextAnimate text={t('with us')} />
             </Stack>
+
+            <Typography
+              variant="body1"
+              sx={{ mt: 2, maxWidth: 460, opacity: 0.8 }}
+            >
+              {t('Affiliation for companies and entrepreneurs.')}
+            </Typography>
 
             <Stack
               spacing={5}

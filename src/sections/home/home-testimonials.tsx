@@ -3,6 +3,7 @@ import Carousel from 'react-slick';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import Stack from '@mui/material/Stack';
+import Button from '@mui/material/Button';
 import Rating from '@mui/material/Rating';
 import Avatar from '@mui/material/Avatar';
 import Container from '@mui/material/Container';
@@ -10,10 +11,11 @@ import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import { alpha, useTheme } from '@mui/material/styles';
 
+import { _socials } from '@/_mock';
 import Iconify from '@/components/iconify';
-import { APP_NAME } from '@/config-global';
 import { useResponsive } from '@/hooks/use-responsive';
 import { useTranslation } from '@/hooks/use-translation';
+import { useSettingsContext } from '@/components/settings';
 import useCarousel from '@/components/carousel/use-carousel';
 import { varFade, MotionViewport } from '@/components/animate';
 
@@ -22,155 +24,111 @@ import { varFade, MotionViewport } from '@/components/animate';
 const TESTIMONIALS = [
   {
     id: 1,
-    name: 'María González',
-    role: 'Dueña de 3 mascotas',
+    name: 'Maria G.',
+    content:
+      'The quality is incredible and the design is beautiful. My dog looks great with his tag.',
     avatar: '/assets/images/avatars/avatar-1.webp',
     rating: 5,
-    content:
-      'Increíble aplicación! Perdí a mi gato y gracias al código QR en su placa, me contactaron en menos de 2 horas. La paz mental que me da es invaluable.',
-    pet: 'Gato - Simba',
-    location: 'San José, Costa Rica',
   },
   {
     id: 2,
-    name: 'Carlos Rodríguez',
-    role: 'Dueño de mascotas',
+    name: 'Carlos R.',
+    content:
+      'It helped us find our dog in less than 1 hour. Totally recommended!',
     avatar: '/assets/images/avatars/avatar-2.webp',
     rating: 5,
-    content:
-      'Como dueño de 2 perros y 1 gato, la gestión de vacunas y citas veterinarias se ha vuelto mucho más sencilla. Nunca más olvidaré una vacuna.',
-    pet: 'Perros - Max y Luna',
-    location: 'Cartago, Costa Rica',
   },
   {
     id: 3,
-    name: 'Dr. Alejandro Martínez',
-    role: 'Veterinario Afiliado',
+    name: 'Laura M.',
+    content:
+      'Easy to set up and customer service is excellent. Very satisfying!',
     avatar: '/assets/images/avatars/avatar-3.webp',
     rating: 5,
-    content:
-      'Desde que me afilié, mi consulta ha aumentado en un 40%. La plataforma me permite gestionar citas eficientemente y los historiales médicos digitales son un gran avance.',
-    pet: 'Clínica VetCare',
-    location: 'Heredia, Costa Rica',
   },
   {
     id: 4,
-    name: 'Ana López',
-    role: 'Dueña de mascota',
+    name: 'Ana P.',
+    content:
+      "The material is very good quality, it hasn't worn off with daily use. Excellent purchase.",
     avatar: '/assets/images/avatars/avatar-4.webp',
     rating: 5,
-    content:
-      'Agradezco mucho el mensaje de en memoria de mi Perrito Rocky, Sé que está en un mejor lugar',
-    pet: 'Perro - Rocky',
-    location: 'Alajuela, Costa Rica',
-  },
-  {
-    id: 5,
-    name: 'Pedro Sánchez',
-    role: 'Peluquero Canino',
-    avatar: '/assets/images/avatars/avatar-5.webp',
-    rating: 5,
-    content: `${APP_NAME} ha transformado mi negocio. Ahora tengo agenda completa toda la semana y los clientes llegan con toda la información de sus mascotas. Muy profesional.`,
-    pet: 'PetGroom Studio',
-    location: 'Desamparados, Costa Rica',
-  },
-  {
-    id: 6,
-    name: 'Laura Mendoza',
-    role: 'Dueña de mascotas senior',
-    avatar: '/assets/images/avatars/avatar-6.webp',
-    rating: 5,
-    content:
-      'Para mí que tengo problemas de memoria, esta app es una bendición. Recordatorios de medicamentos, citas y todo el historial de mi perro senior en un lugar.',
-    pet: 'Perro - Toby (12 años)',
-    location: 'Puntarenas, Costa Rica',
   },
 ];
 
 // ----------------------------------------------------------------------
-
 interface TestimonialCardProps {
   testimonial: {
     id: number;
     name: string;
-    role: string;
     avatar: string;
     rating: number;
     content: string;
-    pet: string;
-    location: string;
   };
 }
-
 function TestimonialCard({ testimonial }: TestimonialCardProps) {
+  const theme = useTheme();
+  const { t } = useTranslation();
+
+  const lightMode = theme.palette.mode === 'light';
+
   return (
     <Card
       sx={{
-        px: 4,
-        py: 5,
-        mx: 1,
-        textAlign: 'center',
-        bgcolor: 'background.default',
-        border: (theme) => `1px solid ${alpha(theme.palette.grey[500], 0.16)}`,
-        height: '100%',
+        p: 3,
+        height: '100%', // OBLIGATORIO: Para que ocupe toda la altura del slide
         display: 'flex',
-        flexDirection: 'column',
-        '&:hover': {
-          boxShadow: (theme) => theme.customShadows.z16,
-        },
+        flexDirection: 'row',
+        alignItems: 'flex-start',
+        bgcolor: '#FFFFFF',
+        borderRadius: 3,
+        boxShadow: '0 4px 20px rgba(0,0,0,0.03)',
+        border: 'none',
       }}
     >
-      <m.div variants={varFade().inUp}>
-        <Rating value={testimonial.rating} readOnly size="large" />
-      </m.div>
+      <Avatar
+        src={testimonial.avatar}
+        alt={testimonial.name}
+        sx={{
+          width: 56,
+          height: 56,
+          mr: 2,
+          border: (theme) =>
+            `2px solid ${alpha(theme.palette.warning.main, 0.2)}`,
+        }}
+      />
 
-      <m.div variants={varFade().inUp}>
+      <Stack spacing={1} sx={{ flex: 1, height: '100%' }}>
+        <Rating
+          value={testimonial.rating}
+          readOnly
+          size="small"
+          sx={{ color: '#F5A623' }}
+        />
+
         <Typography
-          variant="body1"
+          variant="body2"
           sx={{
-            mt: 3,
-            mb: 4,
-            fontStyle: 'italic',
             color: 'text.secondary',
-            flexGrow: 1,
+            fontStyle: 'italic',
+            lineHeight: 1.5,
+            fontSize: '0.85rem',
+            flexGrow: 1, // Empuja el autor hacia abajo si el texto es corto
           }}
         >
-          &ldquo;{testimonial.content}&rdquo;
+          {t(testimonial.content)}
         </Typography>
-      </m.div>
 
-      <m.div variants={varFade().inUp}>
-        <Stack spacing={2} alignItems="center">
-          <Avatar
-            src={testimonial.avatar}
-            alt={testimonial.name}
-            sx={{
-              width: 64,
-              height: 64,
-              border: (theme) =>
-                `2px solid ${alpha(theme.palette.primary.main, 0.24)}`,
-            }}
-          />
-
-          <Box>
-            <Typography variant="h5" component="h4" gutterBottom>
-              {testimonial.name}
-            </Typography>
-
-            <Typography variant="body2" color="primary.main" gutterBottom>
-              {testimonial.role}
-            </Typography>
-
-            <Typography variant="caption" component="p" color="text.secondary">
-              {testimonial.pet}
-            </Typography>
-
-            <Typography variant="caption" component="p" color="text.disabled">
-              {testimonial.location}
-            </Typography>
-          </Box>
+        <Stack direction="row" alignItems="center" spacing={1} sx={{ pt: 1 }}>
+          <Avatar src={testimonial.avatar} sx={{ width: 24, height: 24 }} />
+          <Typography
+            variant="caption"
+            sx={{ color: lightMode ? 'text.primary' : '#000', fontWeight: 600 }}
+          >
+            {testimonial.name}
+          </Typography>
         </Stack>
-      </m.div>
+      </Stack>
     </Card>
   );
 }
@@ -178,30 +136,34 @@ function TestimonialCard({ testimonial }: TestimonialCardProps) {
 // ----------------------------------------------------------------------
 
 export default function HomeTestimonials() {
-  const themes = useTheme();
-  const mdUp = useResponsive('up', 'md');
-  const smUp = useResponsive('up', 'sm');
+  const theme = useTheme();
   const { t } = useTranslation();
+  const mdUp = useResponsive('up', 'md');
+  const settings = useSettingsContext();
+  const lightMode = theme.palette.mode === 'light';
 
   const carousel = useCarousel({
     dots: false,
     arrows: false,
     autoplay: true,
-    autoplaySpeed: 4000,
+    autoplaySpeed: 5000,
     speed: 800,
-    slidesToShow: mdUp ? 3 : smUp ? 2 : 1,
-    slidesToScroll: mdUp ? 3 : smUp ? 2 : 1,
+    // MOSTRAMOS 3 EN DESKTOP COMO PEDISTE ORIGINALMENTE
+    slidesToShow: mdUp ? 3 : 1,
+    slidesToScroll: 1,
     infinite: true,
+    // CRUCIAL: Esto hace que react-slick estire los slides a la misma altura
+    adaptiveHeight: false,
     responsive: [
       {
-        breakpoint: themes.breakpoints.values.md,
+        breakpoint: theme.breakpoints.values.lg,
         settings: {
           slidesToShow: 2,
-          slidesToScroll: 2,
+          slidesToScroll: 1,
         },
       },
       {
-        breakpoint: themes.breakpoints.values.sm,
+        breakpoint: theme.breakpoints.values.sm,
         settings: {
           slidesToShow: 1,
           slidesToScroll: 1,
@@ -211,135 +173,150 @@ export default function HomeTestimonials() {
   });
 
   const renderHeader = (
-    <Stack spacing={3} sx={{ textAlign: 'center', mb: { xs: 8, md: 10 } }}>
-      <m.div variants={varFade().inUp}>
+    <Stack
+      spacing={3}
+      sx={{
+        textAlign: { xs: 'center', md: 'left' },
+        maxWidth: { xs: '100%', md: 450 },
+        flexShrink: 0,
+        mb: { xs: 5, md: 0 },
+      }}
+    >
+      <m.div variants={varFade().inLeft}>
         <Typography
-          component="div"
           variant="overline"
-          sx={{ color: 'text.disabled' }}
+          sx={{ color: '#A53D00', fontWeight: 700, letterSpacing: 1.5 }}
         >
-          {t('From our users')}
+          {t('WHAT OUR CUSTOMERS SAY')}
         </Typography>
       </m.div>
 
-      <m.div variants={varFade().inDown}>
-        <Typography variant="h2" component="h2">
-          {t('What do they say about us')}
-        </Typography>
-      </m.div>
-
-      <m.div variants={varFade().inDown}>
+      <m.div variants={varFade().inLeft}>
         <Typography
-          variant="h4"
-          component="h3"
-          sx={{ color: 'text.secondary', maxWidth: 600, mx: 'auto' }}
+          variant="h2"
+          sx={{ color: lightMode ? 'text.primary' : '#000', fontWeight: 800 }}
         >
-          {t(
-            'Discover why thousands of pet owners veterinarians and professionals trust'
-          )}{' '}
-          {APP_NAME} {t('for the care of their animals.')}
+          {t('Real stories,')} <br /> {t('safe pets')}
         </Typography>
+      </m.div>
+
+      <m.div variants={varFade().inLeft}>
+        <Typography sx={{ color: 'text.secondary', mb: 4 }}>
+          {t(
+            'Thousands of families already trust our tags. Discover their experiences.'
+          )}
+        </Typography>
+      </m.div>
+
+      <m.div variants={varFade().inLeft}>
+        <Button
+          onClick={() => window.open(_socials[0].path, '_blank')}
+          variant="contained"
+          size="large"
+          sx={{
+            color: 'common.white',
+            borderRadius: 50,
+            px: 4,
+            py: 1.5,
+            bgcolor: '#A53D00',
+            '&:hover': { bgcolor: '#7A2D00' },
+            fontWeight: 'bold',
+            alignSelf: { xs: 'center', md: 'flex-start' },
+          }}
+        >
+          {t('See more reviews')}
+        </Button>
       </m.div>
     </Stack>
   );
 
   const renderCarousel = (
-    <Box sx={{ position: 'relative' }}>
+    <Box
+      sx={{
+        position: 'relative',
+        width: '100%',
+        // ESTO ES VITAL: Obliga a los slides de slick a tener la misma altura y usar flex
+        '& .slick-track': {
+          display: 'flex',
+          alignItems: 'stretch',
+        },
+        '& .slick-slide': {
+          height: 'auto',
+          '& > div': {
+            height: '100%',
+          },
+        },
+      }}
+    >
       <Carousel ref={carousel.carouselRef} {...carousel.carouselSettings}>
         {TESTIMONIALS.map((testimonial) => (
-          <Box key={testimonial.id} sx={{ px: 1, py: 2 }}>
+          // El padding va aquí para separar las tarjetas
+          <Box key={testimonial.id} sx={{ py: 2, px: 1, height: '100%' }}>
             <TestimonialCard testimonial={testimonial} />
           </Box>
         ))}
       </Carousel>
 
-      {/* Navigation Buttons */}
-      <Stack direction="row" justifyContent="center" spacing={2} sx={{ mt: 5 }}>
-        <IconButton
-          aria-label="previous"
-          onClick={carousel.onPrev}
-          sx={{
-            width: 48,
-            height: 48,
-            border: (theme) =>
-              `1px solid ${alpha(theme.palette.grey[500], 0.24)}`,
-            '&:hover': {
-              bgcolor: 'background.neutral',
-            },
-          }}
-        >
-          <Iconify icon="eva:arrow-ios-back-fill" width={24} />
-        </IconButton>
+      <IconButton
+        onClick={carousel.onPrev}
+        sx={{
+          position: 'absolute',
+          left: { xs: -15, md: -20 },
+          top: '50%',
+          transform: 'translateY(-50%)',
+          bgcolor: 'common.white',
+          boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
+          '&:hover': { bgcolor: 'grey.100' },
+          display: { xs: 'none', md: 'flex' },
+          zIndex: 9,
+        }}
+      >
+        <Iconify icon="eva:arrow-ios-back-fill" width={24} />
+      </IconButton>
 
-        <IconButton
-          aria-label="next"
-          onClick={carousel.onNext}
-          sx={{
-            width: 48,
-            height: 48,
-            border: (theme) =>
-              `1px solid ${alpha(theme.palette.grey[500], 0.24)}`,
-            '&:hover': {
-              bgcolor: 'background.neutral',
-            },
-          }}
-        >
-          <Iconify icon="eva:arrow-ios-forward-fill" width={24} />
-        </IconButton>
-      </Stack>
+      <IconButton
+        onClick={carousel.onNext}
+        sx={{
+          position: 'absolute',
+          right: { xs: -15, md: -20 },
+          top: '50%',
+          transform: 'translateY(-50%)',
+          bgcolor: 'common.white',
+          boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
+          '&:hover': { bgcolor: 'grey.100' },
+          display: { xs: 'none', md: 'flex' },
+          zIndex: 9,
+        }}
+      >
+        <Iconify icon="eva:arrow-ios-forward-fill" width={24} />
+      </IconButton>
     </Box>
   );
-
-  // const renderStats = (
-  //   <Box
-  //     sx={{
-  //       mt: { xs: 10, md: 15 },
-  //       p: 5,
-  //       borderRadius: 3,
-  //       bgcolor: 'background.neutral',
-  //       textAlign: 'center',
-  //     }}
-  //   >
-  //     <Stack
-  //       direction={{ xs: 'column', md: 'row' }}
-  //       spacing={{ xs: 5, md: 10 }}
-  //       justifyContent="center"
-  //       alignItems="center"
-  //     >
-  //       {[
-  //         { number: '50K+', label: 'Pets Registered' },
-  //         { number: '1.2K+', label: 'Affiliated Veterinarians' },
-  //         { number: '800+', label: 'Certified Groomers' },
-  //         { number: '4.9/5', label: 'Average Rating' },
-  //       ].map((stat) => (
-  //         <m.div key={stat.label} variants={varFade().inUp}>
-  //           <Stack spacing={1}>
-  //             <Typography variant="h2" component="h4" color="primary.main">
-  //               {stat.number}
-  //             </Typography>
-  //             <Typography variant="body2" color="text.secondary">
-  //               {t(stat.label)}
-  //             </Typography>
-  //           </Stack>
-  //         </m.div>
-  //       ))}
-  //     </Stack>
-  //   </Box>
-  // );
 
   return (
     <Box
       sx={{
-        py: { xs: 10, md: 15 },
-        bgcolor: 'background.neutral',
+        bgcolor: '#FBF3EA',
+        py: { xs: 10, md: 12 },
+        overflow: 'hidden',
       }}
     >
-      <Container component={MotionViewport}>
-        {renderHeader}
-        {/* Carousel component remains the same */}
-        {/* ... renderCarousel code ... */}
-        {renderCarousel}
-        {/* {renderStats} */}
+      <Container
+        maxWidth={settings.themeStretch ? false : 'xl'}
+        component={MotionViewport}
+      >
+        <Stack
+          direction={{ xs: 'column', md: 'row' }}
+          spacing={{ xs: 5, md: 6 }}
+          alignItems="center"
+          justifyContent="space-between"
+        >
+          {renderHeader}
+
+          <Box sx={{ flex: 1, width: '100%', minWidth: 0 }}>
+            <m.div variants={varFade().inRight}>{renderCarousel}</m.div>
+          </Box>
+        </Stack>
       </Container>
     </Box>
   );
