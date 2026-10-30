@@ -1,11 +1,7 @@
-import Map from 'react-map-gl';
 import { useState } from 'react';
-import Typography from '@mui/material/Typography';
-import { styled, useTheme } from '@mui/material/styles';
-
-import Iconify from '@/components/iconify';
-import { MAPBOX_API } from '@/config-global';
-import { MapPopup, MapMarker, MapControl } from '@/components/map';
+import dynamic from 'next/dynamic';
+import { Box } from '@mui/material';
+import { styled } from '@mui/material/styles';
 
 // ----------------------------------------------------------------------
 
@@ -20,6 +16,15 @@ const StyledRoot = styled('div')(({ theme }) => ({
   },
 }));
 
+const MapPicker = dynamic(() => import('@/components/map/map-picker'), {
+  ssr: false,
+  loading: () => (
+    <Box
+      sx={{ width: '100%', height: 400, bgcolor: '#e5e3df', borderRadius: 2 }}
+    />
+  ),
+});
+
 // ----------------------------------------------------------------------
 
 type CountryData = {
@@ -33,17 +38,16 @@ type Props = {
 };
 
 export default function ContactMap({ contacts }: Props) {
-  const theme = useTheme();
+  const [marker, setMarker] = useState<[number, number] | null>([
+    -84.0907, 9.9281,
+  ]);
 
-  const lightMode = theme.palette.mode === 'light';
-
-  const [popupInfo, setPopupInfo] = useState<CountryData | null>(null);
-
-  const [contactsMap, _setContactsMap] = useState<CountryData[]>(contacts);
-
+  const handlePick = ([lng, lat]: [number, number]) => {
+    setMarker([lng, lat]);
+  };
   return (
     <StyledRoot>
-      <Map
+      {/* <Map
         initialViewState={{
           latitude: 9.9281, // San José
           longitude: -84.0907,
@@ -100,7 +104,13 @@ export default function ContactMap({ contacts }: Props) {
             </Typography>
           </MapPopup>
         )}
-      </Map>
+      </Map> */}
+
+      <MapPicker
+        center={marker ?? undefined}
+        marker={marker}
+        onPickAction={handlePick}
+      />
     </StyledRoot>
   );
 }

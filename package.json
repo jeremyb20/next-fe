@@ -78,6 +78,7 @@
     "libphonenumber-js": "^1.12.36",
     "lodash": "^4.17.23",
     "mapbox-gl": "^3.18.1",
+    "maplibre-gl": "^6.10.0",
     "motion": "^12.40.0",
     "mui-color-input": "^9.0.0",
     "mui-one-time-password-input": "^5.0.0",
