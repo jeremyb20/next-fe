@@ -67,7 +67,7 @@ export default function ProductShopView() {
   // 🔥 Estado de paginación
   const [activeFilters, setActiveFilters] = useState<Partial<UserQueryParams>>({
     page: 1,
-    limit: 10,
+    limit: 12,
     sortBy: getSortByField('featured'),
     sortOrder: getSortOrder('featured'),
   });
@@ -181,7 +181,7 @@ export default function ProductShopView() {
   );
 
   const renderNotFound = (
-    <EmptyContent filled title="No Data" sx={{ py: 10 }} />
+    <EmptyContent filled title={t('No Data')} sx={{ py: 10 }} />
   );
 
   return (

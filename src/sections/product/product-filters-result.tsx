@@ -6,6 +6,7 @@ import { alpha } from '@mui/material/styles';
 import Stack, { StackProps } from '@mui/material/Stack';
 
 import Iconify from '@/components/iconify';
+import { useTranslation } from '@/hooks/use-translation';
 import { IProductFilters, IProductFilterValue } from '@/types/product';
 
 // ----------------------------------------------------------------------
@@ -30,6 +31,7 @@ export default function ProductFiltersResult({
   results,
   ...other
 }: Props) {
+  const { t } = useTranslation();
   const handleRemoveGender = (inputValue: string) => {
     const newValue = filters.gender.filter((item) => item !== inputValue);
     onFilters('gender', newValue);
@@ -59,7 +61,7 @@ export default function ProductFiltersResult({
       <Box sx={{ typography: 'body2' }}>
         <strong>{results}</strong>
         <Box component="span" sx={{ color: 'text.secondary', ml: 0.25 }}>
-          results found
+          {t('results found')}
         </Box>
       </Box>
 
@@ -71,7 +73,7 @@ export default function ProductFiltersResult({
         alignItems="center"
       >
         {!!filters.gender.length && (
-          <Block label="Gender:">
+          <Block label={`${t('Gender')}:`}>
             {filters.gender.map((item) => (
               <Chip
                 key={item}
@@ -84,7 +86,7 @@ export default function ProductFiltersResult({
         )}
 
         {filters.category !== 'all' && (
-          <Block label="Category:">
+          <Block label={`${t('Category')}:`}>
             <Chip
               size="small"
               label={filters.category}
@@ -94,7 +96,7 @@ export default function ProductFiltersResult({
         )}
 
         {!!filters.colors.length && (
-          <Block label="Colors:">
+          <Block label={`${t('Colors')}:`}>
             {filters.colors.map((item) => (
               <Chip
                 key={item}
@@ -119,7 +121,7 @@ export default function ProductFiltersResult({
         )}
 
         {(filters.priceRange[0] !== 0 || filters.priceRange[1] !== 200) && (
-          <Block label="Price:">
+          <Block label={`${t('Price')}:`}>
             <Chip
               size="small"
               label={`$${filters.priceRange[0]} - ${filters.priceRange[1]}`}
@@ -129,7 +131,7 @@ export default function ProductFiltersResult({
         )}
 
         {!!filters.rating && (
-          <Block label="Rating:">
+          <Block label={`${t('Rating')}:`}>
             <Chip
               size="small"
               label={filters.rating}
@@ -144,7 +146,7 @@ export default function ProductFiltersResult({
             onClick={onResetFilters}
             startIcon={<Iconify icon="solar:trash-bin-trash-bold" />}
           >
-            Clear
+            {t('Clear')}
           </Button>
         )}
       </Stack>

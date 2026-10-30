@@ -59,7 +59,7 @@ export default function ProductList({
 
   const renderSkeleton = (
     <>
-      {[...Array(10)].map(
+      {[...Array(12)].map(
         (
           _,
           index // 12 skeletons para 4x3 grid
