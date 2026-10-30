@@ -95,6 +95,7 @@ const nextConfig: NextConfig = {
       "style-src * 'unsafe-inline';",
       'font-src * data:;',
       "object-src 'none';",
+      'worker-src * blob:;',
     ].join(' ');
     return [
       {

@@ -9,13 +9,19 @@ import {
   NavigationControl,
   ScaleControl,
   GeolocateControl,
-  config as maplibreConfig,
+  setWorkerUrl,
+  getVersion,
 } from 'maplibre-gl';
+
+setWorkerUrl(
+  `https://cdn.jsdelivr.net/npm/maplibre-gl@${getVersion()}/dist/maplibre-gl-worker.mjs`
+);
 
 type Props = {
   center?: [number, number];
   zoom?: number;
   marker?: [number, number] | null;
+  markers?: [number, number][];
   onPickAction?: (coords: [number, number]) => void;
   height?: number;
 };
@@ -24,18 +30,19 @@ export default function MapPicker({
   center = [-84.09, 9.93],
   zoom = 12,
   marker,
+  markers,
   onPickAction,
   height = 400,
 }: Props) {
   const containerRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<MLMap | null>(null);
   const markerRef = useRef<Marker | null>(null);
+  const markersRef = useRef<Marker[]>([]);
 
   useEffect(() => {
     if (!containerRef.current || mapRef.current) return;
 
-    // maplibre-gl v6 ships only ESM workers — point to the bundled worker file
-    maplibreConfig.WORKER_URL = '/maplibre-gl-worker.mjs';
+    // maplibreConfig.WORKER_URL = '/maplibre-gl-worker.mjs';
 
     const map = new MLMap({
       container: containerRef.current,
@@ -62,6 +69,10 @@ export default function MapPicker({
 
     map.on('load', () => {
       map.resize();
+      markers?.forEach(([lng, lat]) => {
+        const m = new Marker({ color: '#1976d2' }).setLngLat([lng, lat]).addTo(map);
+        markersRef.current.push(m);
+      });
     });
 
     map.on('styleimagemissing', (e) => {
@@ -83,24 +94,32 @@ export default function MapPicker({
     const map = mapRef.current;
     if (!map) return;
 
+    markersRef.current.forEach((m) => m.remove());
+    markersRef.current = [];
+
+    markers?.forEach(([lng, lat]) => {
+      const m = new Marker({ color: '#1976d2' }).setLngLat([lng, lat]).addTo(map);
+      markersRef.current.push(m);
+    });
+  }, [markers]);
+
+  useEffect(() => {
+    const map = mapRef.current;
+    if (!map) return;
+
     if (markerRef.current) {
       markerRef.current.remove();
       markerRef.current = null;
     }
 
     if (marker) {
-      markerRef.current = new Marker({
-        color: '#FF6B35',
-        draggable: true,
-      })
+      markerRef.current = new Marker({ color: '#FF6B35', draggable: true })
         .setLngLat(marker)
         .addTo(map);
 
       markerRef.current.on('dragend', () => {
         const lngLat = markerRef.current?.getLngLat();
-        if (lngLat) {
-          onPickAction?.([lngLat.lng, lngLat.lat]);
-        }
+        if (lngLat) onPickAction?.([lngLat.lng, lngLat.lat]);
       });
 
       map.flyTo({
