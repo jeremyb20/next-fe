@@ -11,6 +11,7 @@ import InputAdornment from '@mui/material/InputAdornment';
 
 import Iconify from '@/components/iconify';
 import { useCurrency } from '@/hooks/use-currency';
+import { useTranslation } from '@/hooks/use-translation';
 
 // ----------------------------------------------------------------------
 
@@ -33,13 +34,14 @@ export default function CheckoutSummary({
   onEdit,
   onApplyDiscount,
 }: Props) {
-  const displayShipping = shipping !== null ? 'Free' : '-';
+  const { t } = useTranslation();
+  const displayShipping = shipping !== null ? t('Free') : '-';
   const { formatCurrency } = useCurrency();
 
   return (
     <Card sx={{ mb: 3 }}>
       <CardHeader
-        title="Order Summary"
+        title={t('Order Summary')}
         action={
           onEdit && (
             <Button
@@ -47,7 +49,7 @@ export default function CheckoutSummary({
               onClick={onEdit}
               startIcon={<Iconify icon="solar:pen-bold" />}
             >
-              Edit
+              {t('Edit')}
             </Button>
           )
         }
@@ -57,7 +59,7 @@ export default function CheckoutSummary({
         <Stack spacing={2}>
           <Stack direction="row" justifyContent="space-between">
             <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-              Sub Total
+              {t('Sub Total')}
             </Typography>
             <Typography variant="subtitle2">
               {formatCurrency(subTotal)}
@@ -66,7 +68,7 @@ export default function CheckoutSummary({
 
           <Stack direction="row" justifyContent="space-between">
             <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-              Discount
+              {t('Discount')}
             </Typography>
             <Typography variant="subtitle2">
               {discount ? formatCurrency(-discount) : '-'}
@@ -75,7 +77,7 @@ export default function CheckoutSummary({
 
           <Stack direction="row" justifyContent="space-between">
             <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-              Shipping
+              {t('Shipping')}
             </Typography>
             <Typography variant="subtitle2">
               {shipping ? formatCurrency(shipping) : displayShipping}
@@ -85,13 +87,13 @@ export default function CheckoutSummary({
           <Divider sx={{ borderStyle: 'dashed' }} />
 
           <Stack direction="row" justifyContent="space-between">
-            <Typography variant="subtitle1">Total</Typography>
+            <Typography variant="subtitle1">{t('Total')}</Typography>
             <Box sx={{ textAlign: 'right' }}>
               <Typography variant="subtitle1" sx={{ color: 'error.main' }}>
                 {formatCurrency(total)}
               </Typography>
               <Typography variant="caption" sx={{ fontStyle: 'italic' }}>
-                (VAT included if applicable)
+                ({t('VAT included if applicable')})
               </Typography>
             </Box>
           </Stack>
@@ -99,7 +101,7 @@ export default function CheckoutSummary({
           {onApplyDiscount && (
             <TextField
               fullWidth
-              placeholder="Discount codes / Gifts"
+              placeholder={t('Discount codes / Gifts')}
               value="DISCOUNT5"
               InputProps={{
                 endAdornment: (
@@ -109,7 +111,7 @@ export default function CheckoutSummary({
                       onClick={() => onApplyDiscount(5)}
                       sx={{ mr: -0.5 }}
                     >
-                      Apply
+                      {t('Apply')}
                     </Button>
                   </InputAdornment>
                 ),

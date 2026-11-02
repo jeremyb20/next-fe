@@ -300,7 +300,7 @@ export default function CheckoutCart() {
             mb: 1,
           }}
         >
-          Consultar Pedido por WhatsApp
+          Enviar pedido por WhatsApp
         </Button>
 
         {/* Botón de pago normal (opcional, puedes mantenerlo comentado) */}

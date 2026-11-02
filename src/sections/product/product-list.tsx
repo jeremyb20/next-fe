@@ -3,6 +3,7 @@ import { TablePagination } from '@mui/material';
 import Box, { BoxProps } from '@mui/material/Box';
 
 import { IProductItem } from '@/types/product';
+import { useTranslation } from '@/hooks/use-translation';
 import { UserQueryParams } from '@/hooks/use-fetch-paginated';
 import { ROWS_PER_PAGE_OPTIONS } from '@/components/filters/filter-constants';
 
@@ -33,6 +34,8 @@ export default function ProductList({
   pagination,
   ...other
 }: Props) {
+  const { t } = useTranslation();
+
   const handleChangePage = useCallback(
     (event: React.MouseEvent<HTMLButtonElement> | null, newPage: number) => {
       const backendPage = newPage + 1;
@@ -108,7 +111,10 @@ export default function ProductList({
           onPageChange={handleChangePage}
           onRowsPerPageChange={handleRowsPerPageChange}
           rowsPerPageOptions={ROWS_PER_PAGE_OPTIONS}
-          labelRowsPerPage="Products per page"
+          labelRowsPerPage={t('Products per page')}
+          labelDisplayedRows={({ from, to, count }) =>
+            `${from}-${to} ${t('of')} ${count}`
+          }
           sx={{
             mt: 4,
             display: 'flex',
