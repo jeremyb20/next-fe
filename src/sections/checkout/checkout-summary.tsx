@@ -29,13 +29,13 @@ export default function CheckoutSummary({
   total,
   discount,
   subTotal,
-  shipping,
+  shipping: _shipping,
   //
   onEdit,
   onApplyDiscount,
 }: Props) {
   const { t } = useTranslation();
-  const displayShipping = shipping !== null ? t('Free') : '-';
+  // const displayShipping = shipping !== null ? t('Free') : '-';
   const { formatCurrency } = useCurrency();
 
   return (
@@ -75,14 +75,14 @@ export default function CheckoutSummary({
             </Typography>
           </Stack>
 
-          <Stack direction="row" justifyContent="space-between">
+          {/* <Stack direction="row" justifyContent="space-between">
             <Typography variant="body2" sx={{ color: 'text.secondary' }}>
               {t('Shipping')}
             </Typography>
             <Typography variant="subtitle2">
               {shipping ? formatCurrency(shipping) : displayShipping}
             </Typography>
-          </Stack>
+          </Stack> */}
 
           <Divider sx={{ borderStyle: 'dashed' }} />
 

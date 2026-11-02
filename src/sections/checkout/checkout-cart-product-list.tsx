@@ -5,18 +5,11 @@ import TableContainer from '@mui/material/TableContainer';
 import Scrollbar from '@/components/scrollbar';
 import { ICheckoutItem } from '@/types/checkout';
 import { TableHeadCustom } from '@/components/table';
+import { useTranslation } from '@/hooks/use-translation';
 
 import CheckoutCartProduct from './checkout-cart-product';
 
 // ----------------------------------------------------------------------
-
-const TABLE_HEAD = [
-  { id: 'product', label: 'Product' },
-  { id: 'price', label: 'Price' },
-  { id: 'quantity', label: 'Quantity' },
-  { id: 'totalAmount', label: 'Total Price', align: 'right' },
-  { id: '' },
-];
 
 // ----------------------------------------------------------------------
 
@@ -33,6 +26,16 @@ export default function CheckoutCartProductList({
   onIncreaseQuantity,
   onDecreaseQuantity,
 }: Props) {
+  const { t } = useTranslation();
+
+  const TABLE_HEAD = [
+    { id: 'product', label: t('Product') },
+    { id: 'price', label: t('Price') },
+    { id: 'quantity', label: t('Quantity') },
+    { id: 'totalAmount', label: t('Total Price'), align: 'right' },
+    { id: '' },
+  ];
+
   return (
     <TableContainer sx={{ overflow: 'unset' }}>
       <Scrollbar>

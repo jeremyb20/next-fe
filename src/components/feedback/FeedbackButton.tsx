@@ -209,7 +209,7 @@ export default function FeedbackButton() {
           <Iconify icon="mdi:message-bulb-outline" width={28} />
         </Fab> */}
         <Button variant="contained" fullWidth onClick={handleOpen}>
-          Comentarios y mejoras
+          {t('Feedback & Improvements')}
           <Iconify icon="mdi:message-bulb-outline" width={28} />
         </Button>
       </Tooltip>
@@ -333,7 +333,7 @@ export default function FeedbackButton() {
                 >
                   {CATEGORIES.map((category) => (
                     <MenuItem key={category} value={category}>
-                      {category}
+                      {t(category)}
                     </MenuItem>
                   ))}
                 </TextField>
@@ -432,12 +432,12 @@ export default function FeedbackButton() {
               >
                 <Chip
                   size="small"
-                  label={user?.email || 'Not logged in'}
+                  label={user?.email || t('Not logged in')}
                   icon={<Iconify icon="mdi:email" width={14} />}
                 />
                 <Chip
                   size="small"
-                  label={user?.profile?.firstName || 'Guest'}
+                  label={user?.profile?.firstName || t('Guest')}
                   icon={<Iconify icon="mdi:account" width={14} />}
                 />
                 <Chip
