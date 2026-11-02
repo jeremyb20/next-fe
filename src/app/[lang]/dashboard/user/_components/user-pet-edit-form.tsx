@@ -1,6 +1,7 @@
 'use client';
 
 import * as Yup from 'yup';
+import dynamic from 'next/dynamic';
 import Box from '@mui/material/Box';
 import { Container } from '@mui/system';
 import Button from '@mui/material/Button';
@@ -49,7 +50,6 @@ import CustomPopover, { usePopover } from '@/components/custom-popover';
 import { useCreateGenericMutation } from '@/hooks/user-generic-mutation';
 import { PetAvatarWithBadge } from '@/components/badge/PetAvatarWithBage';
 import CostaRicaIDCard from '@/components/country-cards/Costa-Rica/costa-rica-card';
-import PetLocationMap from '@/app/[lang]/pet/_components/locations/pet-location-map';
 import MedicalControlView from '@/app/[lang]/pet/_components/view/medical-control-view';
 import {
   parseWeight,
@@ -68,6 +68,16 @@ import FormProvider, {
   RHFTextField,
   RHFAutocomplete,
 } from '@/components/hook-form';
+
+// ----------------------------------------------------------------------
+
+const PetLocationMap = dynamic(
+  () => import('@/app/[lang]/pet/_components/locations/pet-location-map'),
+  {
+    ssr: false,
+    loading: () => <Box sx={{ height: 500, width: '100%' }} />,
+  }
+);
 
 // ----------------------------------------------------------------------
 

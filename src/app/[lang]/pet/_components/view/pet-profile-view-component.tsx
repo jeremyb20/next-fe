@@ -1,5 +1,6 @@
 'use client';
 
+import dynamic from 'next/dynamic';
 import useMediaQuery from '@mui/system/useMediaQuery';
 import { alpha, useTheme } from '@mui/material/styles';
 import { useQueryClient } from '@tanstack/react-query';
@@ -50,8 +51,12 @@ import {
 } from '@/utils/constants';
 
 import LostPetReport from './lost-pet-report';
-import PetLocationMap from '../locations/pet-location-map';
 import LocationConsentOverlay from '../locations/location-consent-overlay';
+
+const PetLocationMap = dynamic(() => import('../locations/pet-location-map'), {
+  ssr: false,
+  loading: () => <Box sx={{ height: 500, width: '100%' }} />,
+});
 
 interface Props {
   petProfile: IPetProfile | null;
