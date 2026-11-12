@@ -1,12 +1,8 @@
-import { Metadata } from 'next';
+'use client';
 
 import { RoleBasedGuard } from '@/auth/guard';
 
 import ClinicalRecordView from './clinical-record-view';
-
-export const metadata: Metadata = {
-  title: 'Clinical Record',
-};
 
 type Props = {
   veterinaryId: string;
