@@ -1,13 +1,29 @@
-export const getUserRoleFromState = (userState: number): string => {
-  const roleMap: { [key: number]: string } = {
-    0: 'admin',
-    1: 'veterinarian',
-    2: 'groomer',
-    3: 'client',
-  };
+export type UserRole = 'admin' | 'veterinarian' | 'groomer' | 'user';
 
-  return roleMap[userState] || 'user'; // Valor por defecto 'user' si no encuentra el estado
+const LEGACY_ROLE_MAP: Record<number, UserRole> = {
+  0: 'admin',
+  1: 'veterinarian',
+  2: 'groomer',
+  3: 'user',
 };
+
+const VALID_ROLES: UserRole[] = ['admin', 'veterinarian', 'groomer', 'user'];
+
+export const normalizeUserRole = (role: unknown): UserRole => {
+  if (typeof role === 'number') {
+    return LEGACY_ROLE_MAP[role] ?? 'user';
+  }
+
+  if (typeof role === 'string') {
+    if (role === 'client') return 'user';
+    if ((VALID_ROLES as string[]).includes(role)) return role as UserRole;
+  }
+
+  return 'user';
+};
+
+export const getUserRoleFromState = (userState: number | string): UserRole =>
+  normalizeUserRole(userState);
 
 export const getUserStatusFromState = (userState: number): string => {
   const roleMap: { [key: number]: string } = {

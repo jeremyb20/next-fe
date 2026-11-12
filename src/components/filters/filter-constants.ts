@@ -10,11 +10,10 @@ export const USER_STATUS_OPTIONS = [
 ];
 
 export const USER_ROLE_OPTIONS = [
-  { value: '0', label: 'Admin' },
-  { value: '1', label: 'Veterinarian' },
-  { value: '2', label: 'Groomer' },
-  { value: '3', label: 'Client' },
-  { value: '4', label: 'Guest' },
+  { value: 'admin', label: 'Admin' },
+  { value: 'veterinarian', label: 'Veterinarian' },
+  { value: 'groomer', label: 'Groomer' },
+  { value: 'user', label: 'User' },
 ];
 
 export const STATUS_QRCODE_OPTIONS = [

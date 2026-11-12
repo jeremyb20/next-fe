@@ -105,6 +105,43 @@ export const endpoints = {
       deletePromotion: '/api/admin/deletePromotion',
       getPromotionById: '/api/admin/getPromotionById',
     },
+    veterinaries: {
+      list: '/api/admin/veterinaries',
+      create: '/api/admin/veterinaries',
+      details: (id: string) => `/api/admin/veterinaries/${id}`,
+      update: (id: string) => `/api/admin/veterinaries/${id}`,
+      delete: (id: string) => `/api/admin/veterinaries/${id}`,
+    },
+  },
+  veterinary: {
+    me: '/api/veterinary/me',
+    details: (veterinaryId: string) => `/api/veterinary/${veterinaryId}`,
+    members: (veterinaryId: string) =>
+      `/api/veterinary/${veterinaryId}/members`,
+    removeMember: (veterinaryId: string, memberId: string) =>
+      `/api/veterinary/${veterinaryId}/members/${memberId}`,
+    createOwner: (veterinaryId: string) =>
+      `/api/veterinary/${veterinaryId}/owners`,
+    searchOwners: (veterinaryId: string, query: string) =>
+      `/api/veterinary/${veterinaryId}/owners/search?query=${encodeURIComponent(query)}`,
+    pets: (veterinaryId: string) => `/api/veterinary/${veterinaryId}/pets`,
+    associatePet: (veterinaryId: string, petId: string) =>
+      `/api/veterinary/${veterinaryId}/pets/${petId}/associate`,
+    clinicalRecord: (veterinaryId: string, petId: string) =>
+      `/api/veterinary/${veterinaryId}/pets/${petId}/clinical-record`,
+    clinicalRecordEntry: (
+      veterinaryId: string,
+      petId: string,
+      section: string
+    ) =>
+      `/api/veterinary/${veterinaryId}/pets/${petId}/clinical-record/${section}`,
+    clinicalRecordDeleteEntry: (
+      veterinaryId: string,
+      petId: string,
+      section: string,
+      entryId: string
+    ) =>
+      `/api/veterinary/${veterinaryId}/pets/${petId}/clinical-record/${section}/${entryId}`,
   },
   pet: {
     getProfileById: '/api/pet/getProfileById',

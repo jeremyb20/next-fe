@@ -17,7 +17,7 @@ export default function OverviewAppView() {
   return (
     <Container maxWidth={settings.themeStretch ? false : 'xl'}>
       {user.role === 'admin' && <OverviewAppAdmin />}
-      {user.role === 'client' && <OverviewAppUser />}
+      {user.role === 'user' && <OverviewAppUser />}
     </Container>
   );
 }

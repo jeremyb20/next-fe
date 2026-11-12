@@ -152,7 +152,7 @@ export interface IUser {
   updatedAt: string;
   createdAt: string;
   userStatus: string;
-  role: number;
+  role: 'admin' | 'veterinarian' | 'groomer' | 'user';
   pets: IPetProfile[] | null;
   userState: number;
   configuration: IUserConfiguration; // ← Permissions ahora está aquí
@@ -208,6 +208,7 @@ interface IPetPermissions {
   showBirthDate: boolean;
   showAddressInfo: boolean;
   showAgeInfo: boolean;
+  showNotes: boolean;
   showVeterinarianContact: boolean;
   showPhoneVeterinarian: boolean;
   showHealthAndRequirements: boolean;
@@ -217,6 +218,19 @@ interface IPetPermissions {
   showBreedInfo: boolean;
   showWeightInfo: boolean;
   showGenderInfo: boolean;
+  showClinicalRecord: boolean;
+  showAllergies: boolean;
+  showMedications: boolean;
+  showEmergencyContacts: boolean;
+}
+
+export interface IEmergencyContact {
+  _id?: string;
+  name: string;
+  relationship?: string;
+  phone: string;
+  email?: string;
+  isPrimary?: boolean;
 }
 
 export interface IPetProfile {
@@ -252,6 +266,9 @@ export interface IPetProfile {
   medicalRecord?: IMedicalRecord;
   notes?: string;
   petStatusReport: IPetStatusReport;
+  veterinaryId?: string;
+  registeredByUserId?: string;
+  emergencyContacts?: IEmergencyContact[];
 }
 
 interface IPetStatusReport {
@@ -478,3 +495,111 @@ export interface DeviceInfo {
   userAgent: string;
   ipAddress?: string;
 }
+
+export type VeterinaryMemberRole = 'owner' | 'veterinarian' | 'staff';
+
+export interface IVeterinary {
+  _id: string;
+  name: string;
+  legalName?: string;
+  licenseNumber?: string;
+  email: string;
+  phone: string;
+  address?: string;
+  city?: string;
+  state?: string;
+  country?: string;
+  website?: string;
+  logo?: string;
+  isActive: boolean;
+  createdBy: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface IVeterinaryMember {
+  _id: string;
+  userId: IUser | string;
+  veterinaryId: IVeterinary | string;
+  memberRole: VeterinaryMemberRole;
+  isActive: boolean;
+  invitedBy?: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface IClinicalRecordEntry {
+  _id?: string;
+  notes?: string;
+  createdBy: string;
+  createdAt: string;
+}
+
+export interface IConsultation extends IClinicalRecordEntry {
+  date: string;
+  reason: string;
+  diagnosis?: string;
+  treatment?: string;
+  weight?: string;
+  temperature?: string;
+  veterinarianName?: string;
+}
+
+export interface IAllergy extends IClinicalRecordEntry {
+  name: string;
+  severity?: 'mild' | 'moderate' | 'severe';
+  reaction?: string;
+  diagnosedAt?: string;
+}
+
+export interface IDisease extends IClinicalRecordEntry {
+  name: string;
+  status?: 'active' | 'resolved' | 'chronic';
+  diagnosedAt?: string;
+}
+
+export interface IMedication extends IClinicalRecordEntry {
+  name: string;
+  dosage?: string;
+  frequency?: string;
+  startDate?: string;
+  endDate?: string;
+  prescribedBy?: string;
+}
+
+export interface ITreatment extends IClinicalRecordEntry {
+  name: string;
+  description?: string;
+  startDate?: string;
+  endDate?: string;
+}
+
+export interface ISurgery extends IClinicalRecordEntry {
+  name: string;
+  date?: string;
+  veterinarianName?: string;
+}
+
+export interface IClinicalRecord {
+  _id: string;
+  petId: string;
+  veterinaryId: string;
+  consultations: IConsultation[];
+  allergies: IAllergy[];
+  diseases: IDisease[];
+  medications: IMedication[];
+  treatments: ITreatment[];
+  surgeries: ISurgery[];
+  notes?: string;
+  createdBy: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export type ClinicalRecordSection =
+  | 'consultations'
+  | 'allergies'
+  | 'diseases'
+  | 'medications'
+  | 'treatments'
+  | 'surgeries';

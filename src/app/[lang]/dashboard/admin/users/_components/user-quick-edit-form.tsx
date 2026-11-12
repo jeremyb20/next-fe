@@ -101,7 +101,7 @@ export default function UserQuickEditModalForm({
       phone: currentUser?.profile.phone || '',
       address: currentUser?.profile.address || '',
       country: currentUser?.profile.country || '',
-      role: currentUser?.role.toString() || '',
+      role: currentUser?.role || '',
       status: currentUser?.userStatus,
     }),
     [currentUser]
@@ -161,7 +161,7 @@ export default function UserQuickEditModalForm({
         ...data,
         id: currentUser?.id,
         userStatus: Number(data.status),
-        role: Number(data.role),
+        role: data.role,
       };
       await mutateAsync<IUser>({
         payload: updateData as unknown as IUser,

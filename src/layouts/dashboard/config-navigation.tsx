@@ -166,6 +166,12 @@ export function useNavData(userRole: string) {
             icon: ICONS.petTags,
             roles: ['admin'],
           },
+          {
+            title: t('Veterinaries'),
+            path: paths.dashboard.admin.veterinaries,
+            icon: ICONS.paw,
+            roles: ['admin'],
+          },
           // {
           //   title: 'Panel Inventarios',
           //   path: paths.dashboard.admin.inventory.root,
@@ -229,7 +235,7 @@ export function useNavData(userRole: string) {
             title: t('Dashboard'),
             path: paths.dashboard.root,
             icon: ICONS.dashboard,
-            roles: ['client'],
+            roles: ['user'],
           },
           {
             // title: t('app'),
@@ -256,7 +262,13 @@ export function useNavData(userRole: string) {
             title: t('My Pets'),
             path: paths.dashboard.user.pets,
             icon: ICONS.paw,
-            roles: ['admin', 'client'],
+            roles: ['admin', 'user'],
+          },
+          {
+            title: t('My Clinic'),
+            path: paths.dashboard.veterinary.root,
+            icon: ICONS.hospital,
+            roles: ['veterinarian'],
           },
 
           // CALENDAR Funcionalidad para luego

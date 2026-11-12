@@ -163,6 +163,7 @@ export const paths = {
       usersAdmin: `${ROOTS.DASHBOARD}/admin/users`,
       groomersAdmin: `${ROOTS.DASHBOARD}/admin/groomers`,
       veterinarianAdmin: `${ROOTS.DASHBOARD}/admin/veterinarian`,
+      veterinaries: `${ROOTS.DASHBOARD}/admin/veterinaries`,
       qrPanel: `${ROOTS.DASHBOARD}/admin/qrcode`,
       blogAdmin: `${ROOTS.DASHBOARD}/admin/blog`,
       seoAdmin: `${ROOTS.DASHBOARD}/admin/seo`,
@@ -170,6 +171,16 @@ export const paths = {
       promotions: `${ROOTS.DASHBOARD}/admin/promotions`,
       feedback: `${ROOTS.DASHBOARD}/admin/feedback`,
       petTags: `${ROOTS.DASHBOARD}/admin/pet-tags`,
+    },
+
+    veterinary: {
+      root: `${ROOTS.DASHBOARD}/veterinary`,
+      members: `${ROOTS.DASHBOARD}/veterinary/members`,
+      patients: `${ROOTS.DASHBOARD}/veterinary/patients`,
+      patient: (veterinaryId: string, petId: string) =>
+        `${ROOTS.DASHBOARD}/veterinary/${veterinaryId}/patients/${petId}`,
+      clinic: (veterinaryId: string) =>
+        `${ROOTS.DASHBOARD}/veterinary/${veterinaryId}`,
     },
 
     general: {
