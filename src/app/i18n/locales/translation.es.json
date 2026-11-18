@@ -1026,5 +1026,9 @@
   "UI/UX": "UI/UX",
   "Thanks for your feedback! We'll review it shortly.": "¡Gracias por tus comentarios! Los revisaremos pronto.",
   "1. Go to...\n2. Click on...\n3. See error...": "1. Ve a...\n2. Haz clic en...\n3. Observa el error...",
-  "FAQs": "Preguntas frecuentes"
+  "FAQs": "Preguntas frecuentes",
+  "Send birthday email reminder": "Enviar recordatorio de cumpleaños por correo",
+  "Birthday email reminder enabled": "Recordatorio de cumpleaños por correo activado",
+  "Birthday email reminder disabled": "Recordatorio de cumpleaños por correo desactivado",
+  "Error updating birthday reminder": "Error al actualizar el recordatorio de cumpleaños"
 }

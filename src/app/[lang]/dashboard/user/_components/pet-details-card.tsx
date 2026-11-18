@@ -7,6 +7,7 @@ import {
   Grid,
   List,
   Stack,
+  Switch,
   Button,
   Divider,
   Tooltip,
@@ -21,16 +22,18 @@ import {
 
 // components/pets/pet-details-card.tsx
 import { IPetProfile } from '@/types/api';
+import { endpoints } from '@/utils/axios';
 import Iconify from '@/components/iconify';
-import { DOMAIN, PHONE_SUPPORT } from '@/config-global';
 import { useTranslation } from '@/hooks/use-translation';
 import { BreedOptions, GENDER_OPTIONS } from '@/utils/constants';
+import { DOMAIN, HOST_API, PHONE_SUPPORT } from '@/config-global';
 import { useCopyToClipboard } from '@/hooks/use-copy-to-clipboard';
 import { usePetAgeCalculator } from '@/hooks/use-pet-age-calculator';
 // Importar los componentes reutilizables
 import { BirthdayReminder } from '@/components/pet/BirthdayReminder';
 import ShareDrawerDialog from '@/components/share/share-drawer-dialog';
 import CustomPopover, { usePopover } from '@/components/custom-popover';
+import { useCreateGenericMutation } from '@/hooks/user-generic-mutation';
 import { formatPetAge, getSpeciesFromBreed } from '@/utils/pet-age.utils';
 import { PetAvatarWithBadge } from '@/components/badge/PetAvatarWithBage';
 import VaccinesList from '@/app/[lang]/pet/_components/view/vaccines-list';
@@ -76,7 +79,9 @@ export function PetDetailsCard({
   const [selectedSection, setSelectedSection] =
     useState<MedicalSection>('summary');
   const [localRefreshTrigger, setLocalRefreshTrigger] = useState(0);
+  const [birthdayEmailEnabled, setBirthdayEmailEnabled] = useState(false);
   const popover = usePopover();
+  const { mutateAsync } = useCreateGenericMutation();
   const detectedSpecies = pet?.breed ? getSpeciesFromBreed(pet.breed) : null;
   const shareUrl = `${DOMAIN}/${currentLang}/pet/${pet?.memberPetId}`;
   const shareTitle = `${t('View the profile of')} ${
@@ -102,6 +107,10 @@ export function PetDetailsCard({
       calculateAge(pet.birthDate, pet.breed);
     }
   }, [pet?.birthDate, pet?.breed, calculateAge]);
+
+  useEffect(() => {
+    setBirthdayEmailEnabled(!!pet?.birthdayEmailEnabled);
+  }, [pet?._id, pet?.birthdayEmailEnabled]);
 
   const formattedAge = ageResult
     ? formatPetAge(ageResult, 'detailed', t)
@@ -141,6 +150,36 @@ export function PetDetailsCard({
     },
     [copy, enqueueSnackbar]
   );
+
+  const handleBirthdayEmailToggle = async (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    if (!pet?._id) return;
+    const nextValue = event.target.checked;
+    const prevValue = birthdayEmailEnabled;
+    setBirthdayEmailEnabled(nextValue);
+    try {
+      await mutateAsync({
+        pEndpoint: `${HOST_API}${endpoints.pet.updatePetById}`,
+        method: 'PUT',
+        payload: {
+          petData: { id: pet._id, birthdayEmailEnabled: nextValue },
+        },
+      });
+      enqueueSnackbar(
+        nextValue
+          ? t('Birthday email reminder enabled')
+          : t('Birthday email reminder disabled'),
+        { variant: 'success' }
+      );
+    } catch (error) {
+      console.error('Error updating birthday reminder:', error);
+      setBirthdayEmailEnabled(prevValue);
+      enqueueSnackbar(t('Error updating birthday reminder'), {
+        variant: 'error',
+      });
+    }
+  };
 
   // Transformar datos para los componentes específicos
   const transformToVaccineData = () => {
@@ -855,9 +894,30 @@ export function PetDetailsCard({
           </Grid>
         </Grid>
 
-        {/* Versión mejorada con diferentes niveles de recordatorio */}
-        <Box mt={1}>
-          {pet.birthDate && (
+        {/* Recordatorio de cumpleaños y notificación por correo */}
+        {pet.birthDate && (
+          <Box mt={1}>
+            <Box
+              sx={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                mb: 2,
+                gap: 1,
+              }}
+            >
+              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                <Iconify icon="mdi:email-heart-outline" width={20} />
+                <Typography variant="body2" fontWeight={500}>
+                  {t('Send birthday email reminder')}
+                </Typography>
+              </Box>
+              <Switch
+                checked={birthdayEmailEnabled}
+                onChange={handleBirthdayEmailToggle}
+                size="small"
+              />
+            </Box>
             <BirthdayReminder
               birthDate={pet.birthDate}
               petName={pet.petName}
@@ -865,8 +925,8 @@ export function PetDetailsCard({
               showAlways
               onClose={() => console.log('closed')}
             />
-          )}
-        </Box>
+          </Box>
+        )}
 
         <Box
           component="img"

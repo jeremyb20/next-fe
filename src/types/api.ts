@@ -269,6 +269,7 @@ export interface IPetProfile {
   veterinaryId?: string;
   registeredByUserId?: string;
   emergencyContacts?: IEmergencyContact[];
+  birthdayEmailEnabled?: boolean;
 }
 
 interface IPetStatusReport {

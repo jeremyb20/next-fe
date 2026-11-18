@@ -1026,5 +1026,9 @@
   "UI/UX": "UI/UX",
   "Thanks for your feedback! We'll review it shortly.": "Thanks for your feedback! We'll review it shortly.",
   "1. Go to...\n2. Click on...\n3. See error...": "1. Go to...\n2. Click on...\n3. See error...",
-  "FAQs": "FAQs"
+  "FAQs": "FAQs",
+  "Send birthday email reminder": "Send birthday email reminder",
+  "Birthday email reminder enabled": "Birthday email reminder enabled",
+  "Birthday email reminder disabled": "Birthday email reminder disabled",
+  "Error updating birthday reminder": "Error updating birthday reminder"
 }
