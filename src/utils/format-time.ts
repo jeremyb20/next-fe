@@ -130,9 +130,24 @@ export const formatDate = (dateString: string) =>
     day: 'numeric',
   });
 
+export function parseBirthDate(value: string | Date) {
+  if (value instanceof Date) {
+    return new Date(value.getFullYear(), value.getMonth(), value.getDate());
+  }
+
+  const match = value.match(/^(\d{4})-(\d{2})-(\d{2})/);
+  if (match) {
+    return new Date(Number(match[1]), Number(match[2]) - 1, Number(match[3]));
+  }
+
+  const parsed = new Date(value);
+  return new Date(parsed.getFullYear(), parsed.getMonth(), parsed.getDate());
+}
+
 export function getNextBirthday(birthDate: string | Date) {
-  const today = new Date();
-  const birth = new Date(birthDate);
+  const birth = parseBirthDate(birthDate);
+  const now = new Date();
+  const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
 
   let nextBirthday = new Date(
     today.getFullYear(),
@@ -153,7 +168,8 @@ export function getNextBirthday(birthDate: string | Date) {
 
 export function getDaysUntilNextBirthday(birthDate: string | Date) {
   const nextBirthday = getNextBirthday(birthDate);
-  const today = new Date();
+  const now = new Date();
+  const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
 
   const diffTime = nextBirthday.getTime() - today.getTime();
   const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
@@ -163,7 +179,7 @@ export function getDaysUntilNextBirthday(birthDate: string | Date) {
 
 export function getAge(birthDate: string | Date) {
   const today = new Date();
-  const birth = new Date(birthDate);
+  const birth = parseBirthDate(birthDate);
   let age = today.getFullYear() - birth.getFullYear();
   const monthDiff = today.getMonth() - birth.getMonth();
 
